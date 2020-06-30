@@ -21,12 +21,11 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Locale;
 
@@ -40,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrderItem",
 	service = {DTOConverter.class, OrderItemDTOConverter.class}
 )
-public class OrderItemDTOConverter implements DTOConverter {
+public class OrderItemDTOConverter
+	implements DTOConverter<CommerceOrderItem, OrderItem> {
 
 	@Override
 	public String getContentType() {
@@ -52,7 +52,7 @@ public class OrderItemDTOConverter implements DTOConverter {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
@@ -109,11 +109,8 @@ public class OrderItemDTOConverter implements DTOConverter {
 			return new ShippingAddress();
 		}
 
-		DTOConverter shippingAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ShippingAddress");
-
-		return (ShippingAddress)shippingAddressDTOConverter.toDTO(
-			new DefaultDTOConverterContext(locale, shippingAddressId));
+		return _shippingAddressDTOConverter.toDTO(
+			new DefaultDTOConverterContext(shippingAddressId, locale));
 	}
 
 	private String _getSkuExternalReferenceCode(CPInstance cpInstance) {
@@ -136,6 +133,6 @@ public class OrderItemDTOConverter implements DTOConverter {
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ShippingAddressDTOConverter _shippingAddressDTOConverter;
 
 }

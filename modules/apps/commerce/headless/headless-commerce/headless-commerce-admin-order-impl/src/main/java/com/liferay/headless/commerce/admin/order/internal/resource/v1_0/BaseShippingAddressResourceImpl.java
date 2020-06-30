@@ -294,11 +294,6 @@ public abstract class BaseShippingAddressResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ShippingAddress shippingAddress,
-		ShippingAddress existingShippingAddress) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

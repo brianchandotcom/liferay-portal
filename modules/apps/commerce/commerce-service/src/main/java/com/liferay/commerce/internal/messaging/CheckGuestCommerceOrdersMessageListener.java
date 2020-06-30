@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.internal.messaging;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -21,7 +22,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -83,8 +84,8 @@ public class CheckGuestCommerceOrdersMessageListener
 		Date createDate = new Date(
 			System.currentTimeMillis() - (deleteInterval * Time.MINUTE));
 
-		_commerceOrderLocalService.deleteCommerceOrders(
-			UserConstants.USER_ID_DEFAULT, createDate,
+		_commerceOrderLocalService.deleteCommerceOrdersByAccountId(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST, createDate,
 			CommerceOrderConstants.ORDER_STATUS_OPEN);
 	}
 
@@ -103,5 +104,8 @@ public class CheckGuestCommerceOrdersMessageListener
 
 	@Reference
 	private TriggerFactory _triggerFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -61,7 +61,7 @@
 
 			<input name="q" size="23" type="text" />
 
-			<input type="submit" value="<liferay-ui:message key="search" />" />
+			<input type="submit" value='<liferay-ui:message key="search" />' />
 		</form>
 
 		<br />

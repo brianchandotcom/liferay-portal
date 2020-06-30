@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_EXPIRATION</td>
+	<td>//label[contains(.,'Enable Expiration')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_FULLSCREEN</td>
 	<td>//input[contains(@id,'enableFullscreen')]</td>
 	<td></td>

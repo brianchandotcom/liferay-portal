@@ -18,10 +18,10 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=CPDefinitionSpecificationOptionValue",
 	service = {DTOConverter.class, ProductSpecificationDTOConverter.class}
 )
-public class ProductSpecificationDTOConverter implements DTOConverter {
+public class ProductSpecificationDTOConverter
+	implements DTOConverter
+		<CPDefinitionSpecificationOptionValue, ProductSpecification> {
 
 	@Override
 	public String getContentType() {
@@ -47,7 +49,7 @@ public class ProductSpecificationDTOConverter implements DTOConverter {
 			cpDefinitionSpecificationOptionValue =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValue(
-						dtoConverterContext.getResourcePrimKey());
+						(Long)dtoConverterContext.getId());
 
 		String languageId = LanguageUtil.getLanguageId(
 			dtoConverterContext.getLocale());

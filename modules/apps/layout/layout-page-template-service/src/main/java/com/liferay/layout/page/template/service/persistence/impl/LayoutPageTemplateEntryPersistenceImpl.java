@@ -19728,8 +19728,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.status = ?";
 
 	public LayoutPageTemplateEntryPersistenceImpl() {
-		setModelClass(LayoutPageTemplateEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -19748,6 +19746,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(LayoutPageTemplateEntry.class);
 	}
 
 	/**

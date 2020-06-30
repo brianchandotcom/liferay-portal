@@ -190,13 +190,23 @@ public class SubscriptionSerDes {
 				"contentType", String.valueOf(subscription.getContentType()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(subscription.getDateCreated()));
+		if (subscription.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(subscription.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(subscription.getDateModified()));
+		if (subscription.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(subscription.getDateModified()));
+		}
 
 		if (subscription.getFrequency() == null) {
 			map.put("frequency", null);

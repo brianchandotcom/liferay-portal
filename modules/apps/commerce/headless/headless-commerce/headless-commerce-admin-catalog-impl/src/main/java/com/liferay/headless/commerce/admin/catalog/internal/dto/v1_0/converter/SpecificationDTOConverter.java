@@ -19,11 +19,10 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CPSpecificationOption",
 	service = {DTOConverter.class, SpecificationDTOConverter.class}
 )
-public class SpecificationDTOConverter implements DTOConverter {
+public class SpecificationDTOConverter
+	implements DTOConverter<CPSpecificationOption, Specification> {
 
 	@Override
 	public String getContentType() {
@@ -47,14 +47,10 @@ public class SpecificationDTOConverter implements DTOConverter {
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.getCPSpecificationOption(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CPOptionCategory cpOptionCategory =
 			cpSpecificationOption.getCPOptionCategory();
-
-		DTOConverter optionCategoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPOptionCategory.class.getName());
 
 		Specification specification = new Specification() {
 			{
@@ -69,11 +65,10 @@ public class SpecificationDTOConverter implements DTOConverter {
 		};
 
 		if (cpOptionCategory != null) {
-			OptionCategory optionCategory =
-				(OptionCategory)optionCategoryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						dtoConverterContext.getLocale(),
-						cpOptionCategory.getCPOptionCategoryId()));
+			OptionCategory optionCategory = _optionCategoryDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpOptionCategory.getCPOptionCategoryId(),
+					dtoConverterContext.getLocale()));
 
 			specification.setOptionCategory(optionCategory);
 		}
@@ -85,6 +80,6 @@ public class SpecificationDTOConverter implements DTOConverter {
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private OptionCategoryDTOConverter _optionCategoryDTOConverter;
 
 }

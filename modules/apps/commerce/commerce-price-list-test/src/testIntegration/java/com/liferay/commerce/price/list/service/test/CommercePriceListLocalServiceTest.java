@@ -255,6 +255,43 @@ public class CommercePriceListLocalServiceTest {
 	}
 
 	@Test
+	public void testCreateGrossPriceList() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List with gross price entries"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the new list"
+		).when(
+			"The name of the Price List"
+		).and(
+			"The currency code are checked against the input data"
+		).then(
+			"The result should be a new Price List on the given site"
+		);
+
+		Currency currency = Currency.getInstance(LocaleUtil.US);
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_group.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), currency.getCurrencyCode(), false,
+				name, RandomTestUtil.randomDouble(), true, null, null, null);
+
+		_assertPriceListAttributes(currency, name, commercePriceList);
+
+		Assert.assertEquals(false, commercePriceList.isNetPrice());
+	}
+
+	@Test
 	public void testUpdateCommercePriceList1() throws Exception {
 		frutillaRule.scenario(
 			"Update an existing Price List"

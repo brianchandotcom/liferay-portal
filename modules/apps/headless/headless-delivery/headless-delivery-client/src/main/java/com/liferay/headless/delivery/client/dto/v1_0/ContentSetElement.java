@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContentSetElement implements Cloneable {
 
+	public static ContentSetElement toDTO(String json) {
+		return ContentSetElementSerDes.toDTO(json);
+	}
+
 	public Object getContent() {
 		return content;
 	}

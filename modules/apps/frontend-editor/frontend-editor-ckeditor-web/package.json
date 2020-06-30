@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"liferay-ckeditor": "4.13.1-liferay.4",
+		"liferay-ckeditor": "4.13.1-liferay.5",
 		"liferay-module-config-generator": "^1.3.3"
 	},
 	"name": "frontend-editor-ckeditor-web",
-	"version": "2.0.46"
+	"version": "2.0.49"
 }

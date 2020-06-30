@@ -29,6 +29,8 @@ CommerceMoney taxValue = null;
 CommerceDiscountValue totalDiscountValue = null;
 CommerceMoney totalOrder = null;
 
+String priceDisplayType = commerceCartContentMiniDisplayContext.getCommercePriceDisplayType();
+
 CommerceOrderPrice commerceOrderPrice = commerceCartContentMiniDisplayContext.getCommerceOrderPrice();
 
 if (commerceOrderPrice != null) {
@@ -37,6 +39,13 @@ if (commerceOrderPrice != null) {
 	taxValue = commerceOrderPrice.getTaxValue();
 	totalDiscountValue = commerceOrderPrice.getTotalDiscountValue();
 	totalOrder = commerceOrderPrice.getTotal();
+
+	if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+		subtotal = commerceOrderPrice.getSubtotalWithTaxAmount();
+		subtotalDiscountValue = commerceOrderPrice.getSubtotalDiscountValueWithTaxAmount();
+		totalDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
+		totalOrder = commerceOrderPrice.getTotalWithTaxAmount();
+	}
 }
 
 SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentMiniDisplayContext.getSearchContainer();
@@ -205,12 +214,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</div>
 
 				<div class="commerce-value pl-1">
-					(<%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getFormattedPercentage(subtotalDiscountValue.getDiscountPercentage())) %>)
+					(<%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getLocalizedPercentage(subtotalDiscountValue.getDiscountPercentage(), locale)) %>)
 				</div>
 			</c:if>
 		</li>
 		<li class="autofit-row commerce-tax">
-			<c:if test="<%= taxValue != null %>">
+			<c:if test="<%= (taxValue != null) && priceDisplayType.equals(CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE) %>">
 				<div class="autofit-col autofit-col-expand">
 					<div class="commerce-description"><liferay-ui:message key="tax" /></div>
 				</div>
@@ -236,7 +245,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</div>
 
 				<div class="commerce-value pl-1">
-					(<%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getFormattedPercentage(totalDiscountValue.getDiscountPercentage())) %>)
+					(<%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getLocalizedPercentage(totalDiscountValue.getDiscountPercentage(), locale)) %>)
 				</div>
 			</c:if>
 

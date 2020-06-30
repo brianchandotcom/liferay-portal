@@ -230,13 +230,23 @@ public class RoleSerDes {
 			map.put("creator", String.valueOf(role.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(role.getDateCreated()));
+		if (role.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(role.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(role.getDateModified()));
+		if (role.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(role.getDateModified()));
+		}
 
 		if (role.getDescription() == null) {
 			map.put("description", null);

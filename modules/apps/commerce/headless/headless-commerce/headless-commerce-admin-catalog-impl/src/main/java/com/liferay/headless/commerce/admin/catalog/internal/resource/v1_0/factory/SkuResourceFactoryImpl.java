@@ -23,15 +23,15 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,7 +69,7 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 					new Class<?>[] {SkuResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
-						_httpServletRequest, _user));
+						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
@@ -91,6 +91,13 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 			}
 
 			@Override
+			public SkuResource.Builder preferredLocale(Locale preferredLocale) {
+				_preferredLocale = preferredLocale;
+
+				return this;
+			}
+
+			@Override
 			public SkuResource.Builder user(User user) {
 				_user = user;
 
@@ -99,6 +106,7 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 
 			private boolean _checkPermissions = true;
 			private HttpServletRequest _httpServletRequest;
+			private Locale _preferredLocale;
 			private User _user;
 
 		};
@@ -116,7 +124,8 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 
 	private Object _invoke(
 			Method method, Object[] arguments, boolean checkPermissions,
-			HttpServletRequest httpServletRequest, User user)
+			HttpServletRequest httpServletRequest, Locale preferredLocale,
+			User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -137,7 +146,8 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 
 		SkuResource skuResource = _componentServiceObjects.getService();
 
-		skuResource.setContextAcceptLanguage(new AcceptLanguageImpl(user));
+		skuResource.setContextAcceptLanguage(
+			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
@@ -178,13 +188,18 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 
-		public AcceptLanguageImpl(User user) {
+		public AcceptLanguageImpl(
+			HttpServletRequest httpServletRequest, Locale preferredLocale,
+			User user) {
+
+			_httpServletRequest = httpServletRequest;
+			_preferredLocale = preferredLocale;
 			_user = user;
 		}
 
 		@Override
 		public List<Locale> getLocales() {
-			return Collections.emptyList();
+			return Arrays.asList(getPreferredLocale());
 		}
 
 		@Override
@@ -194,10 +209,17 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 
 		@Override
 		public Locale getPreferredLocale() {
-			List<Locale> locales = getLocales();
+			if (_preferredLocale != null) {
+				return _preferredLocale;
+			}
 
-			if (ListUtil.isNotEmpty(locales)) {
-				return locales.get(0);
+			if (_httpServletRequest != null) {
+				Locale locale = (Locale)_httpServletRequest.getAttribute(
+					WebKeys.LOCALE);
+
+				if (locale != null) {
+					return locale;
+				}
 			}
 
 			return _user.getLocale();
@@ -208,6 +230,8 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 			return false;
 		}
 
+		private final HttpServletRequest _httpServletRequest;
+		private final Locale _preferredLocale;
 		private final User _user;
 
 	}

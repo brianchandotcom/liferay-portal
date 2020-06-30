@@ -4,7 +4,8 @@
 			"errorMessage": "",
 			"instanceId": "gfkm",
 			"name": "Text0",
-			"nestedFields": [],
+			"nestedFields": [
+			],
 			"readOnly": false,
 			"required": false,
 			"valid": true,
@@ -15,7 +16,8 @@
 			"errorMessage": "",
 			"instanceId": "wrtf",
 			"name": "Text0",
-			"nestedFields": [],
+			"nestedFields": [
+			],
 			"readOnly": false,
 			"required": false,
 			"valid": true,
@@ -26,7 +28,8 @@
 			"errorMessage": "",
 			"instanceId": "porf",
 			"name": "Text0",
-			"nestedFields": [],
+			"nestedFields": [
+			],
 			"readOnly": false,
 			"required": false,
 			"valid": true,
@@ -37,7 +40,8 @@
 			"errorMessage": "",
 			"instanceId": "abdc",
 			"name": "Text1",
-			"nestedFields": [],
+			"nestedFields": [
+			],
 			"readOnly": false,
 			"required": false,
 			"valid": true,

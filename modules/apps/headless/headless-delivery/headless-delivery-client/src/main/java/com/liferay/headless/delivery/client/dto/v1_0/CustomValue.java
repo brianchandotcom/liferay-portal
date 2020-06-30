@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class CustomValue implements Cloneable {
 
+	public static CustomValue toDTO(String json) {
+		return CustomValueSerDes.toDTO(json);
+	}
+
 	public Object getData() {
 		return data;
 	}

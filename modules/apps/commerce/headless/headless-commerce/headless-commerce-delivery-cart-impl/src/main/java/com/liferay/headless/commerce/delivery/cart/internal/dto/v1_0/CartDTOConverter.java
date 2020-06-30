@@ -23,14 +23,14 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
 
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart",
 	service = {CartDTOConverter.class, DTOConverter.class}
 )
-public class CartDTOConverter implements DTOConverter {
+public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Override
 	public String getContentType() {
@@ -60,7 +60,7 @@ public class CartDTOConverter implements DTOConverter {
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		ExpandoBridge expandoBridge = commerceOrder.getExpandoBridge();
 
@@ -90,6 +90,7 @@ public class CartDTOConverter implements DTOConverter {
 				id = commerceOrder.getCommerceOrderId();
 				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
 				modifiedDate = commerceOrder.getModifiedDate();
+				orderUUID = commerceOrder.getUuid();
 				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
 				paymentStatus = commerceOrder.getPaymentStatus();
 				paymentStatusLabel = commerceOrderPaymentStatusLabel;

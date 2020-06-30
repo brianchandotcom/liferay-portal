@@ -10,7 +10,7 @@
 	grid-gap: 15px;
 	grid-template-areas: 'image content actions price delete';
 	grid-template-columns: $item-image-size 1fr auto minmax(min-content, 122px) min-content;
-	max-height: 120px;
+	max-height: 200px;
 	overflow: hidden;
 	padding: 10px;
 	position: relative;
@@ -33,6 +33,44 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		width: 100%;
+
+		& * {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		&.has-options {
+			display: grid;
+			height: 100%;
+
+			.content-base {
+				align-self: flex-start;
+			}
+		}
+
+		.child-items {
+			font-weight: 600;
+			margin-bottom: 10px;
+
+			.child-item {
+				display: flex;
+
+				&-quantity {
+					flex: 2em;
+				}
+
+				&-content span {
+					display: block;
+
+					&:nth-child(2) {
+						font-weight: 400;
+					}
+				}
+			}
+		}
 
 		big {
 			font-weight: bold;
@@ -91,6 +129,7 @@
 	}
 
 	&__options {
+		align-self: flex-end;
 		font-weight: 600;
 	}
 

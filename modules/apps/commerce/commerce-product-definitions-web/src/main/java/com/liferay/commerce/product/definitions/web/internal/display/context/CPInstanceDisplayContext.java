@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
+import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
@@ -70,7 +71,8 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
 		CPInstanceHelper cpInstanceHelper,
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
+		DDMHelper ddmHelper) {
 
 		super(actionHelper, httpServletRequest);
 
@@ -79,6 +81,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
+		_ddmHelper = ddmHelper;
 	}
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -230,9 +233,11 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 		CPDefinition cpDefinition = getCPDefinition();
 
-		return _cpInstanceHelper.renderCPInstanceOptions(
+		return _ddmHelper.renderCPInstanceOptions(
 			getCPDefinitionId(), null, cpDefinition.isIgnoreSKUCombinations(),
-			true, renderRequest, renderResponse);
+			renderRequest, renderResponse,
+			_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+				getCPDefinitionId(), true, false));
 	}
 
 	public BigDecimal round(BigDecimal value) throws PortalException {
@@ -291,5 +296,6 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	private final DDMHelper _ddmHelper;
 
 }

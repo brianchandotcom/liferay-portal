@@ -26,7 +26,7 @@ String url = (String)request.getAttribute("liferay-application-list:panel-app:ur
 %>
 
 <c:if test="<%= Validator.isNotNull(url) %>">
-	<li class="<%= active ? "active" : StringPool.BLANK %>" role="presentation">
+	<li class='<%= active ? "active" : StringPool.BLANK %>' role="presentation">
 		<aui:a ariaRole="menuitem" data="<%= data %>" href="<%= url %>" id="<%= id %>">
 			<%= label %>
 

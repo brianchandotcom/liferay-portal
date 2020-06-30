@@ -64,16 +64,16 @@
 					"instanceId": "nabr",
 					"name": "HTML",
 					"value": {
-						"en_US": "<p>This is a test. 0<\/p>",
-						"pt_BR": "<p>Isto e um teste. 0<\/p>"
+						"en_US": "<p>This is a test. 0</p>",
+						"pt_BR": "<p>Isto e um teste. 0</p>"
 					}
 				},
 				{
 					"instanceId": "uwyg",
 					"name": "HTML",
 					"value": {
-						"en_US": "<p>This is a test. 1<\/p>",
-						"pt_BR": "<p>Isto e um teste. 1<\/p>"
+						"en_US": "<p>This is a test. 1</p>",
+						"pt_BR": "<p>Isto e um teste. 1</p>"
 					}
 				}
 			],

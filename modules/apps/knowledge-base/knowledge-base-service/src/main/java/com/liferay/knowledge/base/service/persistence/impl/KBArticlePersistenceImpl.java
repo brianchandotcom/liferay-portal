@@ -33837,8 +33837,6 @@ public class KBArticlePersistenceImpl
 		"kbArticle.status IN (";
 
 	public KBArticlePersistenceImpl() {
-		setModelClass(KBArticle.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -33856,6 +33854,8 @@ public class KBArticlePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(KBArticle.class);
 	}
 
 	/**

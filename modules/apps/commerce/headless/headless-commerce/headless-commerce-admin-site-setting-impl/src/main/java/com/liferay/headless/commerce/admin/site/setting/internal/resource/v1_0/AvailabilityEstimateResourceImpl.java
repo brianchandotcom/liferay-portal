@@ -17,11 +17,9 @@ package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
 import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.AvailabilityEstimateHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.AvailabilityEstimateResource;
-import com.liferay.portal.kernel.model.User;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,8 +56,5 @@ public class AvailabilityEstimateResourceImpl
 
 	@Reference
 	private AvailabilityEstimateHelper _availabilityEstimateHelper;
-
-	@Context
-	private User _user;
 
 }

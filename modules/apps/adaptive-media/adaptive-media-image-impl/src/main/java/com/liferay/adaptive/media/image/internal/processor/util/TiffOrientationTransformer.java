@@ -59,8 +59,7 @@ public class TiffOrientationTransformer {
 	}
 
 	private static Optional<Integer> _getTiffOrientationValue(
-			Supplier<InputStream> inputStreamSupplier)
-		throws PortalException {
+		Supplier<InputStream> inputStreamSupplier) {
 
 		try (InputStream inputStream = inputStreamSupplier.get()) {
 			Metadata metadata = ImageMetadataReader.readMetadata(inputStream);
@@ -89,7 +88,7 @@ public class TiffOrientationTransformer {
 
 	private static RenderedImage _transform(
 			Supplier<InputStream> inputStreamSupplier, int tiffOrientationValue)
-		throws IOException {
+		throws IOException, PortalException {
 
 		RenderedImage renderedImage = RenderedImageUtil.readImage(
 			inputStreamSupplier.get());

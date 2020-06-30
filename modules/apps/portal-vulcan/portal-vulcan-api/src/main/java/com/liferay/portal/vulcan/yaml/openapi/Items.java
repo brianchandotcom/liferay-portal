@@ -21,6 +21,10 @@ import java.util.Map;
  */
 public class Items {
 
+	public Schema getAdditionalPropertySchema() {
+		return _additionalPropertySchema;
+	}
+
 	public String getFormat() {
 		return _format;
 	}
@@ -35,6 +39,10 @@ public class Items {
 
 	public String getType() {
 		return _type;
+	}
+
+	public void setAdditionalPropertySchema(Schema additionalPropertySchema) {
+		_additionalPropertySchema = additionalPropertySchema;
 	}
 
 	public void setFormat(String format) {
@@ -53,6 +61,7 @@ public class Items {
 		_type = type;
 	}
 
+	private Schema _additionalPropertySchema;
 	private String _format;
 	private Map<String, Schema> _propertySchemas;
 	private String _reference;

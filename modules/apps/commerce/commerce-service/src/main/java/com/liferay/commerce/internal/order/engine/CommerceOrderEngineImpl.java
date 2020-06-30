@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.internal.order.engine;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -52,7 +55,6 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
@@ -62,9 +64,13 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,8 +83,6 @@ import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alec Sloan
@@ -107,19 +111,21 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				getCommerceShipmentStatusesByCommerceOrderId(
 					commerceOrder.getCommerceOrderId());
 
-		if (shippedCommerceOrderStatus.isTransitionCriteriaMet(commerceOrder)) {
-			commerceOrder = transitionCommerceOrder(
-				commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED, 0);
-		}
-		else if (completedCommerceOrderStatus.isTransitionCriteriaMet(
-					commerceOrder) &&
-				 (commerceShipmentStatuses.length == 1) &&
-				 (commerceShipmentStatuses[0] ==
-					 CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
+		if (completedCommerceOrderStatus.isTransitionCriteriaMet(
+				commerceOrder) &&
+			(commerceShipmentStatuses.length == 1) &&
+			(commerceShipmentStatuses[0] ==
+				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
 
 			commerceOrder = transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 				0);
+		}
+		else if (shippedCommerceOrderStatus.isTransitionCriteriaMet(
+					commerceOrder)) {
+
+			commerceOrder = transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED, 0);
 		}
 		else {
 			commerceOrder = transitionCommerceOrder(
@@ -137,6 +143,12 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	public CommerceOrder checkoutCommerceOrder(
 			CommerceOrder commerceOrder, long userId)
 		throws PortalException {
+
+		if (commerceOrder.isGuestOrder() &&
+			!_isGuestCheckoutEnabled(commerceOrder.getGroupId())) {
+
+			return commerceOrder;
+		}
 
 		_commerceOrderModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), commerceOrder,
@@ -158,6 +170,14 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
+
+		if (userId == 0) {
+			User defaultUser = _userLocalService.getDefaultUser(
+				commerceOrder.getCompanyId());
+
+			userId = defaultUser.getUserId();
+		}
+
 		serviceContext.setUserId(userId);
 
 		long commerceOrderId = commerceOrder.getCommerceOrderId();
@@ -269,14 +289,18 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			for (CommerceOrderStatus commerceOrderStatus :
 					commerceOrderStatuses) {
 
-				if (commerceOrderStatus.isTransitionCriteriaMet(
+				if ((commerceOrderStatus.isTransitionCriteriaMet(
 						commerceOrder) &&
-					(((commerceOrderStatus.getPriority() ==
-						CommerceOrderConstants.ORDER_STATUS_ANY) &&
-					  (currentCommerceOrderStatus.getKey() !=
-						  CommerceOrderConstants.ORDER_STATUS_OPEN)) ||
-					 (commerceOrderStatus.getPriority() ==
-						 nextCommerceOrderStatus.getPriority()))) {
+					 (((commerceOrderStatus.getPriority() ==
+						 CommerceOrderConstants.ORDER_STATUS_ANY) &&
+					   (currentCommerceOrderStatus.getKey() !=
+						   CommerceOrderConstants.ORDER_STATUS_OPEN)) ||
+					  (commerceOrderStatus.getPriority() ==
+						  nextCommerceOrderStatus.getPriority()))) ||
+					(!_commerceShippingHelper.isShippable(commerceOrder) &&
+					 commerceOrderStatus.isValidForOrder(commerceOrder) &&
+					 (commerceOrderStatus.getPriority() >
+						 currentCommerceOrderStatus.getPriority()))) {
 
 					nextCommerceOrderStatuses.add(commerceOrderStatus);
 				}
@@ -328,9 +352,14 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			Map<String, String> context = new HashMap<>();
 
+			context.put(
+				CommerceInventoryAuditTypeConstants.ACCOUNT_NAME,
+				commerceAccount.getName());
 			context.put(
 				CommerceInventoryAuditTypeConstants.ORDER_ID,
 				String.valueOf(commerceOrderItem.getCommerceOrderId()));
@@ -388,6 +417,18 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				commerceLowStockActivity.execute(cpInstance);
 			}
 		}
+	}
+
+	private boolean _isGuestCheckoutEnabled(long groupId)
+		throws PortalException {
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, CommerceConstants.ORDER_SERVICE_NAME));
+
+		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}
 
 	@Transactional(
@@ -505,12 +546,6 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile CommerceOrderService _commerceOrderService;
-
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
@@ -531,6 +566,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		_commerceShippingMethodLocalService;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPDefinitionInventoryEngineRegistry
 		_cpDefinitionInventoryEngineRegistry;
 
@@ -540,5 +578,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

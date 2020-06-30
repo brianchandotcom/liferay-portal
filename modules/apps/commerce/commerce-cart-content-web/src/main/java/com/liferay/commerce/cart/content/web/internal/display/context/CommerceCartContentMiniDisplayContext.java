@@ -19,8 +19,10 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -32,7 +34,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 
 import java.math.BigDecimal;
 
-import java.text.DecimalFormat;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -46,6 +48,7 @@ public class CommerceCartContentMiniDisplayContext
 
 	public CommerceCartContentMiniDisplayContext(
 			HttpServletRequest httpServletRequest,
+			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
@@ -55,14 +58,16 @@ public class CommerceCartContentMiniDisplayContext
 			CPInstanceHelper cpInstanceHelper,
 			ModelResourcePermission<CommerceOrder>
 				commerceOrderModelResourcePermission,
-			PortletResourcePermission commerceProductPortletResourcePermission)
+			PortletResourcePermission commerceProductPortletResourcePermission,
+			PercentageFormatter percentageFormatter)
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceOrderItemService,
-			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
-			commerceProductPriceCalculation, cpDefinitionHelper,
-			cpInstanceHelper, commerceOrderModelResourcePermission,
+			httpServletRequest, commerceChannelLocalService,
+			commerceOrderItemService, commerceOrderPriceCalculation,
+			commerceOrderValidatorRegistry, commerceProductPriceCalculation,
+			cpDefinitionHelper, cpInstanceHelper,
+			commerceOrderModelResourcePermission,
 			commerceProductPortletResourcePermission);
 
 		PortletDisplay portletDisplay =
@@ -73,6 +78,7 @@ public class CommerceCartContentMiniDisplayContext
 				CommerceCartContentMiniPortletInstanceConfiguration.class);
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_percentageFormatter = percentageFormatter;
 	}
 
 	public String getCommerceCartPortletURL() throws PortalException {
@@ -112,7 +118,7 @@ public class CommerceCartContentMiniDisplayContext
 		return _displayStyleGroupId;
 	}
 
-	public String getFormattedPercentage(BigDecimal percentage)
+	public String getLocalizedPercentage(BigDecimal percentage, Locale locale)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = getCommerceOrder();
@@ -123,21 +129,15 @@ public class CommerceCartContentMiniDisplayContext
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		DecimalFormat decimalFormat = new DecimalFormat();
-
-		decimalFormat.setMaximumFractionDigits(
-			commerceCurrency.getMaxFractionDigits());
-		decimalFormat.setMinimumFractionDigits(
-			commerceCurrency.getMinFractionDigits());
-		decimalFormat.setNegativeSuffix(StringPool.PERCENT);
-		decimalFormat.setPositiveSuffix(StringPool.PERCENT);
-
-		return decimalFormat.format(percentage);
+		return _percentageFormatter.getLocalizedPercentage(
+			locale, commerceCurrency.getMaxFractionDigits(),
+			commerceCurrency.getMinFractionDigits(), percentage);
 	}
 
 	private final CommerceCartContentMiniPortletInstanceConfiguration
 		_commerceCartContentMiniPortletInstanceConfiguration;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private long _displayStyleGroupId;
+	private final PercentageFormatter _percentageFormatter;
 
 }

@@ -32,7 +32,7 @@ if ((commerceDiscount != null) && !commerceDiscount.getUsePercentage()) {
 		<aui:input bean="<%= commerceDiscount %>" checked="<%= useCouponCode %>" model="<%= CommerceDiscount.class %>" name="useCouponCode" type="toggle-switch" value="<%= useCouponCode %>" />
 	</div>
 
-	<div class="<%= useCouponCode ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />couponCodeInput">
+	<div class='<%= useCouponCode ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />couponCodeInput">
 		<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="couponCode" />
 	</div>
 </div>
@@ -44,10 +44,28 @@ boolean level2Disabled = true;
 boolean level3Disabled = true;
 boolean level4Disabled = true;
 
+String level1 = StringPool.BLANK;
+String level2 = StringPool.BLANK;
+String level3 = StringPool.BLANK;
+String level4 = StringPool.BLANK;
+
 if (commerceDiscount != null) {
 	level2Disabled = commerceDiscount.getLevel2().doubleValue() <= 0;
 	level3Disabled = commerceDiscount.getLevel3().doubleValue() <= 0;
 	level4Disabled = commerceDiscount.getLevel4().doubleValue() <= 0;
+
+	if (usePercentage) {
+		level1 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel1(), locale);
+		level2 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel2(), locale);
+		level3 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel3(), locale);
+		level4 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel4(), locale);
+	}
+	else {
+		level1 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel1()));
+		level2 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel2()));
+		level3 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel3()));
+		level4 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel4()));
+	}
 }
 
 String level2CssClass = "form-group level2Container";
@@ -78,6 +96,7 @@ if (!usePercentage) {
 <div id="<portlet:namespace />maximumDiscountAmountContainer">
 	<div class="<%= itemRetractableCssClass %>">
 		<aui:input name="maximumDiscountAmount" suffix="<%= HtmlUtil.escape(commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getMaximumDiscountAmount()) %>">
+			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>
 	</div>
@@ -88,7 +107,7 @@ if (!usePercentage) {
 		<label for="<portlet:namespace />level1" id="<portlet:namespace />level1Label"><%= level1Label %></label>
 
 		<div class="input-group">
-			<aui:input label="" name="level1" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getLevel1()) %>" wrapperCssClass="input-group-append input-group-item">
+			<aui:input label="" name="level1" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : level1 %>" wrapperCssClass="input-group-append input-group-item">
 				<aui:validator name="number" />
 			</aui:input>
 
@@ -106,7 +125,7 @@ if (!usePercentage) {
 		<label for="<portlet:namespace />level2"><liferay-ui:message key="level2" /></label>
 
 		<div class="input-group">
-			<aui:input disabled="<%= level2Disabled %>" label="" name="level2" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getLevel2()) %>" wrapperCssClass="input-group-append input-group-item">
+			<aui:input disabled="<%= level2Disabled %>" label="" name="level2" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : level2 %>" wrapperCssClass="input-group-append input-group-item">
 				<aui:validator name="number" />
 			</aui:input>
 
@@ -124,7 +143,7 @@ if (!usePercentage) {
 		<label for="<portlet:namespace />level3"><liferay-ui:message key="level3" /></label>
 
 		<div class="input-group">
-			<aui:input disabled="<%= level3Disabled %>" label="" name="level3" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getLevel3()) %>" wrapperCssClass="input-group-append input-group-item">
+			<aui:input disabled="<%= level3Disabled %>" label="" name="level3" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : level3 %>" wrapperCssClass="input-group-append input-group-item">
 				<aui:validator name="number" />
 			</aui:input>
 
@@ -139,7 +158,7 @@ if (!usePercentage) {
 	</div>
 
 	<div class="<%= level4CssClass %>">
-		<aui:input disabled="<%= level4Disabled %>" name="level4" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getLevel4()) %>">
+		<aui:input disabled="<%= level4Disabled %>" name="level4" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : level4 %>">
 			<aui:validator name="number" />
 		</aui:input>
 	</div>
@@ -167,6 +186,9 @@ if (!usePercentage) {
 			);
 			A.one('#<portlet:namespace />level1Label').html(
 				'<liferay-ui:message key="level1" />'
+			);
+			A.one('#<portlet:namespace />level1Value').val(
+				'<%= (commerceDiscount == null) ? 0 : commerceDiscountDisplayContext.round(commerceDiscount.getLevel1()) %>'
 			);
 
 			A.all(

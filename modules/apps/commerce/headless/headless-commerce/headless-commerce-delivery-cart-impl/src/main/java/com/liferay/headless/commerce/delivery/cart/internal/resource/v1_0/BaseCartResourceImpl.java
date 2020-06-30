@@ -225,6 +225,10 @@ public abstract class BaseCartResourceImpl
 			existingCart.setNotes(cart.getNotes());
 		}
 
+		if (cart.getOrderUUID() != null) {
+			existingCart.setOrderUUID(cart.getOrderUUID());
+		}
+
 		if (cart.getPaymentMethod() != null) {
 			existingCart.setPaymentMethod(cart.getPaymentMethod());
 		}

@@ -219,9 +219,14 @@ public class WorkflowLogSerDes {
 			map.put("commentLog", String.valueOf(workflowLog.getCommentLog()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(workflowLog.getDateCreated()));
+		if (workflowLog.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(workflowLog.getDateCreated()));
+		}
 
 		if (workflowLog.getId() == null) {
 			map.put("id", null);

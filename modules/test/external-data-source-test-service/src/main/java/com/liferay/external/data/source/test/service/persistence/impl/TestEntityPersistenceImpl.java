@@ -77,8 +77,6 @@ public class TestEntityPersistenceImpl
 	private FinderPath _finderPathCountAll;
 
 	public TestEntityPersistenceImpl() {
-		setModelClass(TestEntity.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("id", "id_");
@@ -97,6 +95,8 @@ public class TestEntityPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(TestEntity.class);
 	}
 
 	/**

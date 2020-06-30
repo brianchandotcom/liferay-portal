@@ -3,7 +3,7 @@ definition {
 	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
 
-		//group
+		// Group
 
 		JSONGroup.addGroup(groupName = "group name");
 
@@ -13,7 +13,7 @@ definition {
 			groupName = "child group name",
 			parentGroupName = "group name");
 
-		//user
+		// User
 
 		JSONUser.addUser(
 			userEmailAddress = "test2@liferay.com",
@@ -25,7 +25,7 @@ definition {
 			groupName = "group name",
 			userEmailAddress = "test2@liferay.com");
 
-		//role
+		// Role
 
 		JSONRole.addSiteRole(roleTitle = "role title");
 
@@ -34,7 +34,7 @@ definition {
 			roleTitle = "role title",
 			userEmailAddress = "test2@liferay.com");
 
-		//delete
+		// Delete
 
 		JSONGroup.deleteGroupByName(groupName = "group name 2");
 	}

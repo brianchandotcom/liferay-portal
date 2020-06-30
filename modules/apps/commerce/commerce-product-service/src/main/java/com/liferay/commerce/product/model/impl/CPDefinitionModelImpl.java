@@ -211,7 +211,9 @@ public class CPDefinitionModelImpl
 
 	public static final long UUID_COLUMN_BITMASK = 128L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
+	public static final long VERSION_COLUMN_BITMASK = 256L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -2598,7 +2600,19 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setVersion(int version) {
+		_columnBitmask |= VERSION_COLUMN_BITMASK;
+
+		if (!_setOriginalVersion) {
+			_setOriginalVersion = true;
+
+			_originalVersion = _version;
+		}
+
 		_version = version;
+	}
+
+	public int getOriginalVersion() {
+		return _originalVersion;
 	}
 
 	@JSON
@@ -2956,6 +2970,10 @@ public class CPDefinitionModelImpl
 
 		cpDefinitionModelImpl._setOriginalSubscriptionEnabled = false;
 
+		cpDefinitionModelImpl._originalVersion = cpDefinitionModelImpl._version;
+
+		cpDefinitionModelImpl._setOriginalVersion = false;
+
 		cpDefinitionModelImpl._originalStatus = cpDefinitionModelImpl._status;
 
 		cpDefinitionModelImpl._setOriginalStatus = false;
@@ -3309,6 +3327,8 @@ public class CPDefinitionModelImpl
 	private boolean _accountGroupFilterEnabled;
 	private boolean _channelFilterEnabled;
 	private int _version;
+	private int _originalVersion;
+	private boolean _setOriginalVersion;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

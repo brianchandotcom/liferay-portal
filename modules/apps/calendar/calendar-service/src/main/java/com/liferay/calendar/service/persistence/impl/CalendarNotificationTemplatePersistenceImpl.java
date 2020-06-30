@@ -2372,8 +2372,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			"(calendarNotificationTemplate.notificationTemplateType IS NULL OR calendarNotificationTemplate.notificationTemplateType = '')";
 
 	public CalendarNotificationTemplatePersistenceImpl() {
-		setModelClass(CalendarNotificationTemplate.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2391,6 +2389,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CalendarNotificationTemplate.class);
 	}
 
 	/**

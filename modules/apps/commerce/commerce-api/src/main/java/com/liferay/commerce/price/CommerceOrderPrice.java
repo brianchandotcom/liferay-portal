@@ -28,16 +28,28 @@ public interface CommerceOrderPrice {
 
 	public CommerceDiscountValue getShippingDiscountValue();
 
+	public CommerceDiscountValue getShippingDiscountValueWithTaxAmount();
+
 	public CommerceMoney getShippingValue();
+
+	public CommerceMoney getShippingValueWithTaxAmount();
 
 	public CommerceMoney getSubtotal();
 
 	public CommerceDiscountValue getSubtotalDiscountValue();
+
+	public CommerceDiscountValue getSubtotalDiscountValueWithTaxAmount();
+
+	public CommerceMoney getSubtotalWithTaxAmount();
 
 	public CommerceMoney getTaxValue();
 
 	public CommerceMoney getTotal();
 
 	public CommerceDiscountValue getTotalDiscountValue();
+
+	public CommerceDiscountValue getTotalDiscountValueWithTaxAmount();
+
+	public CommerceMoney getTotalWithTaxAmount();
 
 }

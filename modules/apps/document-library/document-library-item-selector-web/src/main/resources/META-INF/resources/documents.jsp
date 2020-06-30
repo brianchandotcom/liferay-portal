@@ -93,6 +93,7 @@ else {
 	repositoryEntries="<%= repositoryEntries %>"
 	repositoryEntriesCount="<%= repositoryEntriesCount %>"
 	showBreadcrumb="<%= true %>"
+	showDragAndDropZone="<%= dlItemSelectorViewDisplayContext.isShowDragAndDropZone(request) %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(request, liferayPortletResponse) %>"
 />

@@ -680,8 +680,6 @@ public class WeDeployAuthTokenPersistenceImpl
 		"weDeployAuthToken.type = ?";
 
 	public WeDeployAuthTokenPersistenceImpl() {
-		setModelClass(WeDeployAuthToken.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -699,6 +697,8 @@ public class WeDeployAuthTokenPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(WeDeployAuthToken.class);
 	}
 
 	/**

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -544,7 +546,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
 				message.getGroupId(), themeDisplay.getUserId(),
 				message.getMessageId(), folder.getFolderId(),
-				tempMBAttachmentFileEntries);
+				tempMBAttachmentFileEntries,
+				fileName -> _uniqueFileNameProvider.provide(
+					fileName,
+					curFileName -> _hasFileEntry(
+						message.getGroupId(), folder.getFolderId(),
+						curFileName)));
 
 		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
 			PortletFileRepositoryUtil.deletePortletFileEntry(
@@ -553,6 +560,19 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 		return formatHandler.replaceImageReferences(
 			body, mbAttachmentFileEntryReferences);
+	}
+
+	private boolean _hasFileEntry(
+		long groupId, long folderId, String fileName) {
+
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, folderId, fileName);
+
+		if (fileEntry == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private List<FileEntry> _populateInputStreamOVPs(
@@ -635,5 +655,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

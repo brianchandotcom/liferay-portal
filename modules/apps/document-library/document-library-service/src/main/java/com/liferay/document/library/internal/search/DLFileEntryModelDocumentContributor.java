@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
@@ -89,7 +90,8 @@ public class DLFileEntryModelDocumentContributor
 			try {
 				DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-				is = dlFileVersion.getContentStream(false);
+				is = _inputStreamSanitizer.sanitize(
+					dlFileVersion.getContentStream(false));
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -291,5 +293,8 @@ public class DLFileEntryModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelDocumentContributor.class);
+
+	@Reference
+	private InputStreamSanitizer _inputStreamSanitizer;
 
 }

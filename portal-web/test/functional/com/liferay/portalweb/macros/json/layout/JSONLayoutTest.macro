@@ -4,7 +4,7 @@ definition {
 	macro runSmoke {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		//layout
+		// Layout
 
 		JSONLayout.addPrivateLayout(
 			groupName = "${groupName}",
@@ -22,7 +22,7 @@ definition {
 			groupName = "${groupName}",
 			layoutName = "public 2");
 
-		//widget
+		// Widget
 
 		JSONLayout.addWidgetToPrivateLayout(
 			groupName = "${groupName}",
@@ -34,7 +34,7 @@ definition {
 			layoutName = "public 1",
 			widgetName = "Asset Publisher");
 
-		//layout template
+		// Layout template
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
 			groupName = "${groupName}",

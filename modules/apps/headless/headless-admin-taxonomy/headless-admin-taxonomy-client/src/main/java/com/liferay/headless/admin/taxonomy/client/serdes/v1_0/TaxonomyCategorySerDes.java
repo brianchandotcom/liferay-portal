@@ -271,13 +271,25 @@ public class TaxonomyCategorySerDes {
 			map.put("creator", String.valueOf(taxonomyCategory.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(taxonomyCategory.getDateCreated()));
+		if (taxonomyCategory.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					taxonomyCategory.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(taxonomyCategory.getDateModified()));
+		if (taxonomyCategory.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					taxonomyCategory.getDateModified()));
+		}
 
 		if (taxonomyCategory.getDescription() == null) {
 			map.put("description", null);

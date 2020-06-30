@@ -6460,8 +6460,6 @@ public class CommercePriceListPersistenceImpl
 		"(commercePriceList.externalReferenceCode IS NULL OR commercePriceList.externalReferenceCode = '')";
 
 	public CommercePriceListPersistenceImpl() {
-		setModelClass(CommercePriceList.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6480,6 +6478,8 @@ public class CommercePriceListPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommercePriceList.class);
 	}
 
 	/**

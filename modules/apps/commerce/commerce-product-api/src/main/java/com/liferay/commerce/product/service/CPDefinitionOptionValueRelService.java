@@ -118,6 +118,10 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public CPDefinitionOptionValueRel resetCPInstanceCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionValueRel>
 			searchCPDefinitionOptionValueRels(

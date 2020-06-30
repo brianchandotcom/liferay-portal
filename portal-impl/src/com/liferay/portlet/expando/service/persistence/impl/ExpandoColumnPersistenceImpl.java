@@ -1705,8 +1705,6 @@ public class ExpandoColumnPersistenceImpl
 		"(expandoColumn.name IS NULL OR expandoColumn.name = '')";
 
 	public ExpandoColumnPersistenceImpl() {
-		setModelClass(ExpandoColumn.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -1724,6 +1722,8 @@ public class ExpandoColumnPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ExpandoColumn.class);
 	}
 
 	/**

@@ -37,11 +37,16 @@
 			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 0,
-				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_minium"
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_minium"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 2,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_catalog"
 			}
 		],
@@ -118,7 +123,8 @@
 				"name": "Checkout",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
@@ -131,7 +137,7 @@
 					}
 				],
 				"privateLayout": true
-			},
+			}
 		]
 	},
 	{

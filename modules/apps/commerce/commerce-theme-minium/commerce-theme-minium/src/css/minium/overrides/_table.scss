@@ -1,7 +1,13 @@
+.dataset-display .dataset-sub-item {
+	font-size: 13px;
+	height: auto;
+	transform: scale(0.98);
+}
+
 .table {
 	background-color: transparent;
 	border-collapse: initial;
-	border-spacing: 0 5px;
+	border-spacing: 0 5px !important;
 	color: #5c5e5e;
 	margin-top: -5px;
 
@@ -84,7 +90,6 @@
 
 	img {
 		margin-right: $sm-gutter;
-		// border-radius: 50%;
 	}
 
 	span {

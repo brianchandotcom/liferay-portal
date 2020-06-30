@@ -21,16 +21,15 @@ import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,30 +39,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteBlogPostingImage() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetBlogPostingImage() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteBlogPostingImagesPage() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostSiteBlogPostingImage() {
-	}
 
 	@Test
 	public void testPostSiteBlogPostingImageRollback() throws Exception {
@@ -105,19 +80,28 @@ public class BlogPostingImageResourceTest
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"title"};
+	}
+
+	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"fileExtension"};
+		return new String[] {"fileExtension", "sizeInBytes"};
 	}
 
 	@Override
 	protected Map<String, File> getMultipartFiles() throws Exception {
-		Map<String, File> files = new HashMap<>();
+		return HashMapBuilder.<String, File>put(
+			"file",
+			() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
+		).build();
+	}
 
-		String randomString = RandomTestUtil.randomString();
+	@Override
+	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
+		throws Exception {
 
-		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
-
-		return files;
+		return testDeleteBlogPostingImage_addBlogPostingImage();
 	}
 
 	private String _read(String url) throws Exception {

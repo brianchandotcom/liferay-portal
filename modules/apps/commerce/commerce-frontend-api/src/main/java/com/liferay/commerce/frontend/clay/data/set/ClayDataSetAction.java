@@ -44,6 +44,10 @@ public class ClayDataSetAction {
 		return _icon;
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -80,6 +84,10 @@ public class ClayDataSetAction {
 		_icon = icon;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -107,6 +115,7 @@ public class ClayDataSetAction {
 	private final String _cssClasses;
 	private String _href;
 	private String _icon;
+	private String _id;
 	private String _label;
 	private String _method;
 	private final String _onClick;

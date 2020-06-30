@@ -194,18 +194,24 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String commerceCurrencyCode = ParamUtil.getString(
 			actionRequest, "commerceCurrencyCode");
+		String priceDisplayType = ParamUtil.getString(
+			actionRequest, "priceDisplayType");
+		boolean discountsTargetNetPrice = ParamUtil.getBoolean(
+			actionRequest, "discountsTargetNetPrice");
 
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		_updateSiteType(commerceChannel, actionRequest);
+		_updateShippingTaxCategory(commerceChannel, actionRequest);
 		_updatePurchcaseOrderNumber(commerceChannel, actionRequest);
 		updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
 
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, commerceChannel.getSiteGroupId(), name,
 			commerceChannel.getType(),
-			commerceChannel.getTypeSettingsProperties(), commerceCurrencyCode);
+			commerceChannel.getTypeSettingsProperties(), commerceCurrencyCode,
+			priceDisplayType, discountsTargetNetPrice);
 	}
 
 	protected void updateWorkflowDefinitionLinks(
@@ -248,6 +254,28 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
 				CommerceConstants.ORDER_SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
+	}
+
+	private void _updateShippingTaxCategory(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws Exception {
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "shippingTaxSettings--");
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.TAX_SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

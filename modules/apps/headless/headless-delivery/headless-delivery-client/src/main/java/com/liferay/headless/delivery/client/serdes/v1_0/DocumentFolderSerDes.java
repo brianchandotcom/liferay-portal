@@ -272,13 +272,25 @@ public class DocumentFolderSerDes {
 				String.valueOf(documentFolder.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(documentFolder.getDateCreated()));
+		if (documentFolder.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					documentFolder.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(documentFolder.getDateModified()));
+		if (documentFolder.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					documentFolder.getDateModified()));
+		}
 
 		if (documentFolder.getDescription() == null) {
 			map.put("description", null);

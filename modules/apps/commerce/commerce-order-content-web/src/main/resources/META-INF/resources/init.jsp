@@ -48,6 +48,7 @@ page import="com.liferay.commerce.order.content.web.internal.display.context.Com
 page import="com.liferay.commerce.order.content.web.internal.frontend.CommerceOrderDataSetConstants" %><%@
 page import="com.liferay.commerce.order.content.web.internal.portlet.CommerceOrderContentPortlet" %><%@
 page import="com.liferay.commerce.price.CommerceOrderPrice" %><%@
+page import="com.liferay.commerce.pricing.constants.CommercePricingConstants" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

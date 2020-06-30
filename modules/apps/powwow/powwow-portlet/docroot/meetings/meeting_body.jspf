@@ -19,13 +19,13 @@
 		<c:if test="<%= PowwowServiceProviderUtil.isSupportsOptionAutoStartVideo(powwowMeeting.getProviderType()) %>">
 			<c:choose>
 				<c:when test="<%= PowwowServiceProviderUtil.getOptionAutoStartVideo(powwowMeetingId) %>">
-					<span class="icon-stack" id="<portlet:namespace />autoStartVideo" title="<liferay-ui:message key="start-meeting-with-video" />">
+					<span class="icon-stack" id="<portlet:namespace />autoStartVideo" title='<liferay-ui:message key="start-meeting-with-video" />'>
 						<i class="icon-facetime-video"></i>
 						<i class="icon-circle-blank icon-stack-base"></i>
 					</span>
 				</c:when>
 				<c:otherwise>
-					<span class="icon-stack" id="<portlet:namespace />autoStartVideo" title="<liferay-ui:message key="start-meeting-with-audio-only" />">
+					<span class="icon-stack" id="<portlet:namespace />autoStartVideo" title='<liferay-ui:message key="start-meeting-with-audio-only" />'>
 						<i class="icon-facetime-video"></i>
 						<i class="icon-ban-circle icon-stack-base"></i>
 					</span>

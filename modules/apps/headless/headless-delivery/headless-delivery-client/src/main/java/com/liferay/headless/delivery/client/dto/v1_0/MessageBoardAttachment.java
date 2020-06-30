@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class MessageBoardAttachment implements Cloneable {
 
+	public static MessageBoardAttachment toDTO(String json) {
+		return MessageBoardAttachmentSerDes.toDTO(json);
+	}
+
 	public String getContentUrl() {
 		return contentUrl;
 	}

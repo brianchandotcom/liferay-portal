@@ -17,8 +17,8 @@ package com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountRule;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountRule",
 	service = {DiscountRuleDTOConverter.class, DTOConverter.class}
 )
-public class DiscountRuleDTOConverter implements DTOConverter {
+public class DiscountRuleDTOConverter
+	implements DTOConverter<CommerceDiscountRule, DiscountRule> {
 
 	@Override
 	public String getContentType() {
@@ -42,7 +43,7 @@ public class DiscountRuleDTOConverter implements DTOConverter {
 
 		CommerceDiscountRule commerceDiscountRule =
 			_commerceDiscountRuleService.getCommerceDiscountRule(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		return new DiscountRule() {
 			{

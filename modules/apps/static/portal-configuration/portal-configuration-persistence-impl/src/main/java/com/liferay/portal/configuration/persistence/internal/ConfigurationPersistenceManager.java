@@ -733,7 +733,14 @@ public class ConfigurationPersistenceManager
 				String fileName = (String)dictionary.get(
 					_FELIX_FILE_INSTALL_FILENAME);
 
-				File file = new File(URI.create(fileName));
+				File file = null;
+
+				try {
+					file = new File(URI.create(fileName));
+				}
+				catch (Exception exception) {
+					file = new File(fileName);
+				}
 
 				dictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
 			});

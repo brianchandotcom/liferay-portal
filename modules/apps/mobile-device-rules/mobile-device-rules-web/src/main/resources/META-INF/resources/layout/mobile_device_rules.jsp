@@ -51,13 +51,13 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 
 <aui:input label='<%= LanguageUtil.format(resourceBundle, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="toggle-switch" value="<%= mdrRuleGroupInstancesCount == 0 %>" />
 
-<div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
+<div class='<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<p class="text-muted">
 		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-are-inhertited-from-x" translateArguments="<%= false %>" />
 	</p>
 </div>
 
-<div class="<%= (mdrRuleGroupInstancesCount > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />uniqueRuleGroupInstancesContainer">
+<div class='<%= (mdrRuleGroupInstancesCount > 0) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />uniqueRuleGroupInstancesContainer">
 	<p class="text-muted">
 		<liferay-ui:message key="device-family" />
 	</p>

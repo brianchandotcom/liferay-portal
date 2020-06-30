@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Analytics Message Sender API
 Bundle-SymbolicName: com.liferay.analytics.message.sender.api
-Bundle-Version: 2.2.1
+Bundle-Version: 2.3.1
 Export-Package:\
 	com.liferay.analytics.message.sender.client,\
 	com.liferay.analytics.message.sender.constants,\
 	com.liferay.analytics.message.sender.model,\
+	com.liferay.analytics.message.sender.model.listener,\
 	com.liferay.analytics.message.sender.util

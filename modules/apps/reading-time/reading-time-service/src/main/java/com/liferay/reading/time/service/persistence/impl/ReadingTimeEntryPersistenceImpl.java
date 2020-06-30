@@ -1723,8 +1723,6 @@ public class ReadingTimeEntryPersistenceImpl
 		"readingTimeEntry.classPK = ?";
 
 	public ReadingTimeEntryPersistenceImpl() {
-		setModelClass(ReadingTimeEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1742,6 +1740,8 @@ public class ReadingTimeEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ReadingTimeEntry.class);
 	}
 
 	/**

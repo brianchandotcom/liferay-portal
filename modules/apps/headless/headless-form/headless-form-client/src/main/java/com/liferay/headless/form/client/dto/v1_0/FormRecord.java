@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormRecord implements Cloneable {
 
+	public static FormRecord toDTO(String json) {
+		return FormRecordSerDes.toDTO(json);
+	}
+
 	public Creator getCreator() {
 		return creator;
 	}

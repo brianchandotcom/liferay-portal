@@ -1722,13 +1722,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					for (int i = 0; i < repetitions; i++) {
 						DDMFormFieldValue ddmFormFieldValue =
-							createDDMFormFieldValue(fieldName);
+							createDDMFormFieldValue(
+								ddmFormField, ddmFieldsCounter, fieldName,
+								rootElement);
 
-						setDDMFormFieldValueProperties(
-							ddmFormFieldValue, ddmFormField, rootElement,
-							ddmFieldsCounter);
-
-						ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+						if (ddmFormFieldValue != null) {
+							ddmFormValues.addDDMFormFieldValue(
+								ddmFormFieldValue);
+						}
 					}
 				}
 
@@ -1789,12 +1790,89 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return repetitions;
 		}
 
-		protected DDMFormFieldValue createDDMFormFieldValue(String name) {
-			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		protected DDMFormFieldValue createDDMFormFieldValue(
+				DDMFormField ddmFormField, DDMFieldsCounter ddmFieldsCounter,
+				String fieldName, Element rootElement)
+			throws PortalException {
 
-			ddmFormFieldValue.setName(name);
+			Value value = extractDDMFormFieldValue(
+				ddmFormField, ddmFieldsCounter, fieldName, rootElement);
+
+			if ((value == null) && !ddmFormField.isTransient()) {
+				return null;
+			}
+
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
+				{
+					setName(fieldName);
+					setValue(value);
+				}
+			};
+
+			setDDMFormFieldValueInstanceId(
+				ddmFormFieldValue, rootElement, ddmFieldsCounter);
+
+			setNestedDDMFormFieldValues(
+				ddmFormFieldValue, ddmFormField, rootElement, ddmFieldsCounter);
+
+			ddmFieldsCounter.incrementKey(fieldName);
 
 			return ddmFormFieldValue;
+		}
+
+		protected Value extractDDMFormFieldLocalizedValue(
+			Element element, int index) {
+
+			Value value = new LocalizedValue(getDefaultLocale(element));
+
+			Map<String, Integer> dynamicContentValues = new HashMap<>();
+
+			for (Element dynamicContentElement :
+					element.elements("dynamic-content")) {
+
+				String languageId = dynamicContentElement.attributeValue(
+					"language-id");
+
+				int localizedContentIndex = dynamicContentValues.getOrDefault(
+					languageId, 0);
+
+				if (localizedContentIndex == index) {
+					value.addString(
+						LocaleUtil.fromLanguageId(languageId),
+						dynamicContentElement.getText());
+				}
+
+				dynamicContentValues.put(languageId, localizedContentIndex + 1);
+			}
+
+			return value;
+		}
+
+		protected Value extractDDMFormFieldValue(
+			DDMFormField ddmFormField, DDMFieldsCounter ddmFieldsCounter,
+			String fieldName, Element rootElement) {
+
+			Value value = null;
+
+			Element element = getDynamicElementElementByName(
+				rootElement, fieldName);
+
+			if (Validator.isNotNull(ddmFormField.getDataType()) &&
+				(element != null)) {
+
+				if (ddmFormField.isLocalizable()) {
+					value = extractDDMFormFieldLocalizedValue(
+						element, ddmFieldsCounter.get(fieldName));
+				}
+				else {
+					value = new UnlocalizedValue(
+						getDDMFormFieldValueValueString(
+							element, getDefaultLocale(element),
+							ddmFieldsCounter.get(fieldName)));
+				}
+			}
+
+			return value;
 		}
 
 		protected Set<Locale> getAvailableLocales(
@@ -2049,97 +2127,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ddmFormFieldValue.setInstanceId(instanceId);
 		}
 
-		protected void setDDMFormFieldValueLocalizedValue(
-			DDMFormFieldValue ddmFormFieldValue, Element dynamicElementElement,
-			int index) {
-
-			Value value = new LocalizedValue(
-				getDefaultLocale(dynamicElementElement));
-
-			Map<String, Integer> dynamicContentValuesMap = new HashMap<>();
-
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
-
-				String languageId = dynamicContentElement.attributeValue(
-					"language-id");
-
-				int localizedContentIndex = 0;
-
-				if (dynamicContentValuesMap.containsKey(languageId)) {
-					localizedContentIndex = dynamicContentValuesMap.get(
-						languageId);
-				}
-
-				if (localizedContentIndex == index) {
-					Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-					String content = dynamicContentElement.getText();
-
-					value.addString(locale, content);
-				}
-
-				dynamicContentValuesMap.put(
-					languageId, localizedContentIndex + 1);
-			}
-
-			ddmFormFieldValue.setValue(value);
-		}
-
-		protected void setDDMFormFieldValueProperties(
-				DDMFormFieldValue ddmFormFieldValue, DDMFormField ddmFormField,
-				Element rootElement, DDMFieldsCounter ddmFieldsCounter)
-			throws PortalException {
-
-			setDDMFormFieldValueInstanceId(
-				ddmFormFieldValue, rootElement, ddmFieldsCounter);
-
-			setNestedDDMFormFieldValues(
-				ddmFormFieldValue, ddmFormField, rootElement, ddmFieldsCounter);
-
-			setDDMFormFieldValueValues(
-				ddmFormFieldValue, ddmFormField, rootElement, ddmFieldsCounter);
-		}
-
-		protected void setDDMFormFieldValueUnlocalizedValue(
-			DDMFormFieldValue ddmFormFieldValue, Element dynamicElement,
-			int index) {
-
-			String valueString = getDDMFormFieldValueValueString(
-				dynamicElement, getDefaultLocale(dynamicElement), index);
-
-			Value value = new UnlocalizedValue(valueString);
-
-			ddmFormFieldValue.setValue(value);
-		}
-
-		protected void setDDMFormFieldValueValues(
-			DDMFormFieldValue ddmFormFieldValue, DDMFormField ddmFormField,
-			Element rootElement, DDMFieldsCounter ddmFieldsCounter) {
-
-			String fieldName = ddmFormFieldValue.getName();
-
-			Element dynamicElement = getDynamicElementElementByName(
-				rootElement, fieldName);
-
-			if (Validator.isNotNull(ddmFormField.getDataType()) &&
-				(dynamicElement != null)) {
-
-				if (ddmFormField.isLocalizable()) {
-					setDDMFormFieldValueLocalizedValue(
-						ddmFormFieldValue, dynamicElement,
-						ddmFieldsCounter.get(fieldName));
-				}
-				else {
-					setDDMFormFieldValueUnlocalizedValue(
-						ddmFormFieldValue, dynamicElement,
-						ddmFieldsCounter.get(fieldName));
-				}
-			}
-
-			ddmFieldsCounter.incrementKey(fieldName);
-		}
-
 		protected void setDDMFormValuesAvailableLocales(
 			DDMFormValues ddmFormValues, Element rootElement) {
 
@@ -2188,14 +2175,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				for (int i = 0; i < repetitions; i++) {
 					DDMFormFieldValue nestedDDMFormFieldValue =
-						createDDMFormFieldValue(nestedDDMFormFieldName);
+						createDDMFormFieldValue(
+							nestedDDMFormField, ddmFieldsCounter,
+							nestedDDMFormFieldName, rootElement);
 
-					setDDMFormFieldValueProperties(
-						nestedDDMFormFieldValue, nestedDDMFormField,
-						rootElement, ddmFieldsCounter);
-
-					ddmFormFieldValue.addNestedDDMFormFieldValue(
-						nestedDDMFormFieldValue);
+					if (nestedDDMFormFieldValue != null) {
+						ddmFormFieldValue.addNestedDDMFormFieldValue(
+							nestedDDMFormFieldValue);
+					}
 				}
 			}
 		}

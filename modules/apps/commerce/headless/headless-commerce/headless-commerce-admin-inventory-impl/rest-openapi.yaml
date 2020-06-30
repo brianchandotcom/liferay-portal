@@ -143,7 +143,8 @@ info:
         email: team-commerce@liferay.com
         name: "Commerce Team"
     description:
-        "Liferay Commerce Admin Inventory API"
+        "Liferay Commerce Admin Inventory API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '1.0.4'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -156,16 +157,16 @@ paths:
             operationId: deleteWarehouseItemByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 "204":
                     description:
@@ -192,16 +193,16 @@ paths:
             operationId: getWarehouseItemByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 "200":
                     content:
@@ -258,16 +259,16 @@ paths:
             operationId: patchWarehouseItemByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -329,16 +330,16 @@ paths:
             operationId: postWarehouseItemByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -411,15 +412,15 @@ paths:
             operationId: deleteWarehouseItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 "204":
                     description:
@@ -446,15 +447,15 @@ paths:
             operationId: getWarehouseItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 "200":
                     content:
@@ -511,15 +512,15 @@ paths:
             operationId: patchWarehouseItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -582,14 +583,14 @@ paths:
             operationId: deleteWarehousByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 "204":
                     description:
@@ -616,14 +617,14 @@ paths:
             operationId: getWarehousByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 "200":
                     content:
@@ -680,14 +681,14 @@ paths:
             operationId: patchWarehousByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -750,24 +751,24 @@ paths:
             operationId: getWarehousByExternalReferenceCodeWarehouseItemsPage
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 "200":
                     content:
@@ -828,14 +829,14 @@ paths:
             operationId: postWarehousByExternalReferenceCodeWarehouseItem
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              "The resource external reference code"
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -908,15 +909,15 @@ paths:
             operationId: deleteWarehousId
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 "204":
                     description:
@@ -943,15 +944,15 @@ paths:
             operationId: getWarehousId
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 "200":
                     content:
@@ -1008,15 +1009,15 @@ paths:
             operationId: patchWarehousId
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1079,25 +1080,25 @@ paths:
             operationId: getWarehousIdWarehouseItemsPage
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 "200":
                     content:
@@ -1158,15 +1159,15 @@ paths:
             operationId: postWarehousIdWarehouseItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              "The resource Id"
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1239,39 +1240,39 @@ paths:
             operationId: getWarehouseItemsUpdatedPage
             parameters:
                 - in: query
-                      explode: true
-                      name: end
-                      required: false
-                      schema:
-                          description:
-                              "Ending date/time of the timespan for which to retrieve the\ndata."
-                          format: date
-                          type: string
-                      style: form
+                  explode: true
+                  name: end
+                  required: false
+                  schema:
+                      description:
+                          "Ending date/time of the timespan for which to retrieve the\ndata."
+                      format: date
+                      type: string
+                  style: form
                 - in: query
-                      explode: true
-                      name: start
-                      required: false
-                      schema:
-                          description:
-                              "Starting date/time of the timespan for which to retrieve the\ndata"
-                          format: date
-                          type: string
-                      style: form
+                  explode: true
+                  name: start
+                  required: false
+                  schema:
+                      description:
+                          "Starting date/time of the timespan for which to retrieve the\ndata"
+                      format: date
+                      type: string
+                  style: form
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 "200":
                     content:
@@ -1333,25 +1334,25 @@ paths:
             operationId: getWarehousesPage
             parameters:
                 - in: query
-                      name: filter
-                      required: false
-                      schema:
-                          type: string
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: sort
-                      required: false
-                      schema:
-                          type: string
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 "200":
                     content:

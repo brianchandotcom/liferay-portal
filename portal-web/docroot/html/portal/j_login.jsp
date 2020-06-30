@@ -45,7 +45,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(jUserName) && Validator.isNotNull(jPassword) %>">
-		<html dir="<liferay-ui:message key="lang.dir" />">
+		<html dir='<liferay-ui:message key="lang.dir" />'>
 			<head>
 				<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 				<meta content="no-cache" http-equiv="Cache-Control" />
@@ -108,7 +108,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 		}
 		%>
 
-		<html dir="<liferay-ui:message key="lang.dir" />">
+		<html dir='<liferay-ui:message key="lang.dir" />'>
 			<head>
 				<title></title>
 

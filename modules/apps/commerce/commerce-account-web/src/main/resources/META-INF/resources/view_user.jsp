@@ -25,7 +25,7 @@ PortletURL portletURL = commerceAccountDisplayContext.getPortletURL();
 
 Map<String, String> contextParams = new HashMap<>();
 
-contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+contextParams.put("commerceAccountId", String.valueOf(commerceAccountDisplayContext.getCurrentCommerceAccountId()));
 contextParams.put("userId", String.valueOf(selectedUser.getUserId()));
 
 portletURL.setParameter("mvcRenderCommandName", "viewCommerceAccountUser");
@@ -58,7 +58,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 
 				<div class="align-items-center col-auto d-flex">
 					<div class="account-management__action">
-						<c:if test="<%= (selectedUser.getUserId() == user.getUserId()) || commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount.getCommerceAccountId(), CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
+						<c:if test="<%= (selectedUser.getUserId() == user.getUserId()) || ((commerceAccount != null) && commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount.getCommerceAccountId(), CommerceAccountActionKeys.MANAGE_MEMBERS)) %>">
 							<aui:button cssClass="btn btn-lg btn-secondary" href="<%= editCommerceAccountURL %>" value='<%= LanguageUtil.get(request, "edit-user") %>' />
 						</c:if>
 					</div>

@@ -66,7 +66,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 				name="themes"
 			>
 				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
+					<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />' class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
 
 					<strong><%= curTheme.getName() %></strong>
 				</aui:a>

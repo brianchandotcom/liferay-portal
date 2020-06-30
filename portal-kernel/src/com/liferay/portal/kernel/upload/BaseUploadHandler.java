@@ -217,7 +217,10 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 		int suffix = 1;
 
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+		for (int i = 0;
+			 i < UploadServletRequestConfigurationHelperUtil.getMaxTries();
+			 i++) {
+
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
@@ -305,7 +308,5 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 	protected static final String TEMP_FOLDER_NAME =
 		BaseUploadHandler.class.getName();
-
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 }

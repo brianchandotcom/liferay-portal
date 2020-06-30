@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean propertiesEnabled = false;
+boolean propertiesEnabled = true;
 %>
 
 <c:choose>

@@ -5651,8 +5651,6 @@ public class DLFileVersionPersistenceImpl
 		"(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 
 	public DLFileVersionPersistenceImpl() {
-		setModelClass(DLFileVersion.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5671,6 +5669,8 @@ public class DLFileVersionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLFileVersion.class);
 	}
 
 	/**

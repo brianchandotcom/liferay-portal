@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.context;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
@@ -41,6 +42,7 @@ public class CommerceContextImpl implements CommerceContext {
 	public CommerceContextImpl(
 		long companyId, long channelGroupId, long orderId,
 		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
+		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceAccountService commerceAccountService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
@@ -52,6 +54,7 @@ public class CommerceContextImpl implements CommerceContext {
 		_orderId = orderId;
 		_commerceAccountId = commerceAccountId;
 		_commerceAccountHelper = commerceAccountHelper;
+		_commerceAccountLocalService = commerceAccountLocalService;
 		_commerceAccountService = commerceAccountService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
@@ -76,6 +79,11 @@ public class CommerceContextImpl implements CommerceContext {
 	public CommerceAccount getCommerceAccount() throws PortalException {
 		if (_commerceAccount != null) {
 			return _commerceAccount;
+		}
+
+		if (_commerceAccountId == CommerceAccountConstants.ACCOUNT_ID_GUEST) {
+			return _commerceAccountLocalService.getGuestCommerceAccount(
+				_companyId);
 		}
 
 		_commerceAccount = _commerceAccountService.getCommerceAccount(
@@ -167,6 +175,7 @@ public class CommerceContextImpl implements CommerceContext {
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceAccountHelper _commerceAccountHelper;
 	private final long _commerceAccountId;
+	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final CommerceAccountService _commerceAccountService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceCurrency _commerceCurrency;

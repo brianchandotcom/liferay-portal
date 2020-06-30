@@ -18,24 +18,23 @@ import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEngineTaskItemDelegateConstants;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.CategoryHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductSpecificationHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.Serializable;
 
@@ -91,11 +90,10 @@ public class CommerceMLProductBatchEngineTaskItemDelegate
 	}
 
 	private Product _toProduct(long productId, Locale locale) throws Exception {
-		DTOConverter productDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(CPDefinition.class.getName());
-
-		Product product = (Product)productDTOConverter.toDTO(
-			new DefaultDTOConverterContext(locale, productId));
+		Product product = _productDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				false, null, _dtoConverterRegistry, productId, locale, null,
+				contextUser));
 
 		com.liferay.portal.vulcan.pagination.Pagination fullPagination =
 			com.liferay.portal.vulcan.pagination.Pagination.of(
@@ -145,6 +143,9 @@ public class CommerceMLProductBatchEngineTaskItemDelegate
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ProductDTOConverter _productDTOConverter;
 
 	@Reference
 	private ProductHelper _productHelper;

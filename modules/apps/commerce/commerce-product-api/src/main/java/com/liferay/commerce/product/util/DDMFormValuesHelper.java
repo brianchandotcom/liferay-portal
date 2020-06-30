@@ -39,6 +39,15 @@ public interface DDMFormValuesHelper {
 			DDMForm ddmForm, String json, Locale locale)
 		throws PortalException;
 
+	/**
+	 * @param json1
+	 * @param json2
+	 * @return
+	 *
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link JsonHelper#equals(String, String)}
+	 */
+	@Deprecated
 	public boolean equals(String json1, String json2) throws PortalException;
 
 	public String serialize(DDMFormValues ddmFormValues);

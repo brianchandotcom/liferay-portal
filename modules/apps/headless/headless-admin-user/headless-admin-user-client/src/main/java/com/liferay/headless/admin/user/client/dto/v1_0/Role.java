@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Role implements Cloneable {
 
+	public static Role toDTO(String json) {
+		return RoleSerDes.toDTO(json);
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}

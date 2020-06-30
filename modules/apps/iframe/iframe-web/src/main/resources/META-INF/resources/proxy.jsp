@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<html dir="<liferay-ui:message key="lang.dir" />">
+<html dir='<liferay-ui:message key="lang.dir" />'>
 	<head>
 		<meta content="no-cache" http-equiv="Cache-Control" />
 		<meta content="no-cache" http-equiv="Pragma" />

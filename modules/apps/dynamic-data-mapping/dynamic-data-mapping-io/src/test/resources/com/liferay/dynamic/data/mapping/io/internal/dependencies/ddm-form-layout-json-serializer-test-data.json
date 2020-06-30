@@ -4,52 +4,52 @@
 		{
 			"rows": [
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text1"
 							],
-							size: 6
+							"size": 6
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text2"
 							],
-							size: 6
+							"size": 6
 						}
 					]
 				},
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text3"
 							],
-							size: 4
+							"size": 4
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text4"
 							],
-							size: 4
+							"size": 4
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text5"
 							],
-							size: 4
+							"size": 4
 						}
 					]
 				},
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text6",
 								"text7",
 								"text8"
 							],
-							size: 12
+							"size": 12
 						}
 					]
 				}

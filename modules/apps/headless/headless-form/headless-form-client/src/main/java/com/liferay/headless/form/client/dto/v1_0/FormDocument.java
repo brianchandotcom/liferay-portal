@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormDocument implements Cloneable {
 
+	public static FormDocument toDTO(String json) {
+		return FormDocumentSerDes.toDTO(json);
+	}
+
 	public String getContentUrl() {
 		return contentUrl;
 	}

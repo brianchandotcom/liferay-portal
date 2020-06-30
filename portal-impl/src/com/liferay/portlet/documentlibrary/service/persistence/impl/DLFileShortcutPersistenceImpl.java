@@ -6046,8 +6046,6 @@ public class DLFileShortcutPersistenceImpl
 		"dlFileShortcut.status = ?";
 
 	public DLFileShortcutPersistenceImpl() {
-		setModelClass(DLFileShortcut.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6066,6 +6064,8 @@ public class DLFileShortcutPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLFileShortcut.class);
 	}
 
 	/**

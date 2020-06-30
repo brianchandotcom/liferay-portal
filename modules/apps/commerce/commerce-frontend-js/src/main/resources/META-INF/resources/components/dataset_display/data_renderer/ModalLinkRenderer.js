@@ -16,29 +16,25 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import DatasetDisplayContext from '../DatasetDisplayContext.es';
+import DatasetDisplayContext from '../DatasetDisplayContext';
 import DefaultContent from './DefaultRenderer';
 
 function ModalLinkRenderer(props) {
 	const {openModal} = useContext(DatasetDisplayContext);
 
-	function handleClickOnLink(e, payload) {
-		e.preventDefault();
-
-		return openModal(payload);
-	}
-
 	return (
 		<div className="table-list-title">
 			<ClayLink
+				data-senna-off
 				href="#"
-				onClick={e =>
-					handleClickOnLink(e, {
+				onClick={e => {
+					e.preventDefault();
+					openModal({
 						size: props.value.size,
 						title: props.value.title,
 						url: props.value.href
-					})
-				}
+					});
+				}}
 			>
 				<DefaultContent value={props.value} />
 			</ClayLink>

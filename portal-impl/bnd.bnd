@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 3.50.22
+Bundle-Version: 3.52.3
 Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
@@ -24,6 +24,7 @@ Export-Package:\
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
+	com.liferay.portal.servlet.filters,\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.spring.aop,\
 	com.liferay.portal.spring.bean,\
@@ -49,6 +50,7 @@ Export-Package:\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.antivirus,\
+	com.liferay.portlet.documentlibrary.asset,\
 	com.liferay.portlet.documentlibrary.lar,\
 	com.liferay.portlet.documentlibrary.service.permission,\
 	com.liferay.portlet.documentlibrary.store,\

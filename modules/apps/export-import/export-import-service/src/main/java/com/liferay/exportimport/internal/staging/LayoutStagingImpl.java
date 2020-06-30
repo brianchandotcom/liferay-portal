@@ -114,7 +114,9 @@ public class LayoutStagingImpl implements LayoutStaging {
 	public boolean isBranchingLayout(Layout layout) {
 		String layoutType = layout.getType();
 
-		if (LayoutConstants.TYPE_CONTROL_PANEL.equals(layoutType)) {
+		if (LayoutConstants.TYPE_CONTROL_PANEL.equals(layoutType) ||
+			layoutType.equals("content")) {
+
 			return false;
 		}
 

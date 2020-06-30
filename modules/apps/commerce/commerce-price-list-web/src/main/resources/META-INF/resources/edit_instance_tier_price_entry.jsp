@@ -34,7 +34,7 @@ CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 BigDecimal price = BigDecimal.ZERO;
 BigDecimal promoPrice = BigDecimal.ZERO;
 
-if (commercePriceEntry != null) {
+if ((commercePriceEntry != null) && (commerceTierPriceEntry != null)) {
 	if (commerceTierPriceEntry.getPrice() != null) {
 		price = commerceCurrency.round(commerceTierPriceEntry.getPrice());
 	}

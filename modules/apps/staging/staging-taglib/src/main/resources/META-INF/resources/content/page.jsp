@@ -85,7 +85,7 @@
 													/>
 												</div>
 
-												<div class="flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>">
+												<div class='flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>'>
 													<clay:icon
 														symbol="reload"
 													/>

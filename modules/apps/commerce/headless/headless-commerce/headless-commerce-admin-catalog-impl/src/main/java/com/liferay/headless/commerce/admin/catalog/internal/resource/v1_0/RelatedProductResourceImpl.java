@@ -21,14 +21,13 @@ import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.RelatedProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.RelatedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -102,14 +101,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 
 	@Override
 	public RelatedProduct getRelatedProduct(Long id) throws Exception {
-		DTOConverter relatedProductDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionLink.class.getName());
-
-		return (RelatedProduct)relatedProductDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toRelatedProduct(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -176,22 +168,24 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 			_toRelatedProducts(cpDefinitionLinks), pagination, totalItems);
 	}
 
+	private RelatedProduct _toRelatedProduct(Long cpDefinitionLinkId)
+		throws Exception {
+
+		return _relatedProductDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpDefinitionLinkId,
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private List<RelatedProduct> _toRelatedProducts(
 			List<CPDefinitionLink> cpDefinitionLinks)
 		throws Exception {
 
 		List<RelatedProduct> relatedProducts = new ArrayList<>();
 
-		DTOConverter relatedProductDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionLink.class.getName());
-
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 			relatedProducts.add(
-				(RelatedProduct)relatedProductDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						cpDefinitionLink.getCPDefinitionLinkId())));
+				_toRelatedProduct(cpDefinitionLink.getCPDefinitionLinkId()));
 		}
 
 		return relatedProducts;
@@ -208,14 +202,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 				_serviceContextHelper.getServiceContext(
 					cpDefinition.getGroupId()));
 
-		DTOConverter relatedProductDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionLink.class.getName());
-
-		return (RelatedProduct)relatedProductDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinitionLink.getCPDefinitionLinkId()));
+		return _toRelatedProduct(cpDefinitionLink.getCPDefinitionLinkId());
 	}
 
 	@Reference
@@ -225,7 +212,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private RelatedProductDTOConverter _relatedProductDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

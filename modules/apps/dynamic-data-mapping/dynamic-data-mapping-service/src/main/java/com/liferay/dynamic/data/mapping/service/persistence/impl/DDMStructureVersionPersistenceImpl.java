@@ -1400,8 +1400,6 @@ public class DDMStructureVersionPersistenceImpl
 		"ddmStructureVersion.status = ?";
 
 	public DDMStructureVersionPersistenceImpl() {
-		setModelClass(DDMStructureVersion.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -1419,6 +1417,8 @@ public class DDMStructureVersionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDMStructureVersion.class);
 	}
 
 	/**

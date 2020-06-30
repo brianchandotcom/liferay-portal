@@ -44,6 +44,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionC
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
@@ -58,14 +59,10 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductUti
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.RelatedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -73,8 +70,11 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -86,7 +86,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -163,13 +162,7 @@ public class ProductResourceImpl
 				"Unable to find Product with ID: " + id);
 		}
 
-		DTOConverter productDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(CPDefinition.class.getName());
-
-		return (Product)productDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinition.getCPDefinitionId()));
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
@@ -188,13 +181,7 @@ public class ProductResourceImpl
 					externalReferenceCode);
 		}
 
-		DTOConverter productDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(CPDefinition.class.getName());
-
-		return (Product)productDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinition.getCPDefinitionId()));
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
@@ -205,8 +192,7 @@ public class ProductResourceImpl
 		return _productHelper.getProductsPage(
 			contextCompany.getCompanyId(), search, filter, pagination, sorts,
 			document -> _toProduct(
-				_cpDefinitionService.getCPDefinition(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -253,13 +239,34 @@ public class ProductResourceImpl
 	public Product postProduct(Product product) throws Exception {
 		CPDefinition cpDefinition = _upsertProduct(product);
 
-		DTOConverter productDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(CPDefinition.class.getName());
+		return _toProduct(cpDefinition.getCPDefinitionId());
+	}
 
-		return (Product)productDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinition.getCPDefinitionId()));
+	private Map<String, Map<String, String>> _getActions(
+		CommerceCatalog commerceCatalog) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"UPDATE", commerceCatalog.getCommerceCatalogId(),
+				"deleteProduct", commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", commerceCatalog.getCommerceCatalogId(), "getProduct",
+				commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).put(
+			"update",
+			addAction(
+				"UPDATE", commerceCatalog.getCommerceCatalogId(),
+				"patchProduct", commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).build();
 	}
 
 	private ProductShippingConfiguration _getProductShippingConfiguration(
@@ -301,14 +308,18 @@ public class ProductResourceImpl
 		return new ProductTaxConfiguration();
 	}
 
-	private Product _toProduct(CPDefinition cpDefinition) throws Exception {
-		DTOConverter productDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(CPDefinition.class.getName());
+	private Product _toProduct(Long cpDefinitionId) throws Exception {
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
 
-		return (Product)productDTOConverter.toDTO(
+		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
+
+		return _productDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinition.getCPDefinitionId()));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(commerceCatalog), _dtoConverterRegistry,
+				cpDefinitionId, contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser));
 	}
 
 	private CPDefinition _updateNestedResources(
@@ -564,7 +575,7 @@ public class ProductResourceImpl
 			Map<String, Serializable> workflowContext = new HashMap<>();
 
 			_cpDefinitionService.updateStatus(
-				_user.getUserId(), cpDefinition.getCPDefinitionId(),
+				contextUser.getUserId(), cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_INACTIVE, serviceContext,
 				workflowContext);
 		}
@@ -646,7 +657,7 @@ public class ProductResourceImpl
 		}
 
 		cpDefinition = _cpDefinitionService.upsertCPDefinition(
-			commerceCatalog.getGroupId(), _user.getUserId(),
+			commerceCatalog.getGroupId(), contextUser.getUserId(),
 			LanguageUtils.getLocalizedMap(product.getName()),
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
 			LanguageUtils.getLocalizedMap(descriptionMap), null,
@@ -687,7 +698,7 @@ public class ProductResourceImpl
 			Map<String, Serializable> workflowContext = new HashMap<>();
 
 			_cpDefinitionService.updateStatus(
-				_user.getUserId(), cpDefinition.getCPDefinitionId(),
+				contextUser.getUserId(), cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_INACTIVE, serviceContext,
 				workflowContext);
 		}
@@ -756,6 +767,9 @@ public class ProductResourceImpl
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
+	private ProductDTOConverter _productDTOConverter;
+
+	@Reference
 	private ProductHelper _productHelper;
 
 	@Reference
@@ -763,8 +777,5 @@ public class ProductResourceImpl
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;
-
-	@Context
-	private User _user;
 
 }

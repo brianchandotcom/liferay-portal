@@ -149,10 +149,10 @@ public class CommerceRecipientDefinitionTermContributor
 			return String.valueOf(commerceOrder.getUserId());
 		}
 
-		if (term.startsWith("%USER_GROUP_")) {
+		if (term.startsWith("[%USER_GROUP_")) {
 			String[] s = term.split("_");
 
-			String userGroupName = StringUtil.removeChar(s[2], '%');
+			String userGroupName = StringUtil.removeChars(s[2], '%', ']');
 
 			UserGroup userGroup = _userGroupLocalService.getUserGroup(
 				commerceOrder.getCompanyId(), userGroupName);
@@ -204,8 +204,8 @@ public class CommerceRecipientDefinitionTermContributor
 	}
 
 	private String _getUserIds(UserGroup userGroup) throws PortalException {
-		List<User> groupUsers = _userLocalService.getGroupUsers(
-			userGroup.getGroupId());
+		List<User> groupUsers = _userLocalService.getUserGroupUsers(
+			userGroup.getUserGroupId());
 
 		StringBundler resultsSB = new StringBundler();
 

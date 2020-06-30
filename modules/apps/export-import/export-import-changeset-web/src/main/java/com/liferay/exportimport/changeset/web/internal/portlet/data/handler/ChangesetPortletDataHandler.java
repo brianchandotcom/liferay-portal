@@ -169,27 +169,44 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			Optional<Changeset> changesetOptional =
 				_changesetManager.popChangeset(changesetUuid);
 
-			if (!changesetOptional.isPresent()) {
-				return getExportDataRootElementString(rootElement);
+			if (changesetOptional.isPresent()) {
+				Changeset changeset = changesetOptional.get();
+
+				Stream<StagedModel> stream = changeset.stream();
+
+				stream.filter(
+					Objects::nonNull
+				).forEach(
+					stagedModel -> {
+						try {
+							StagedModelDataHandlerUtil.exportStagedModel(
+								portletDataContext, stagedModel);
+						}
+						catch (PortletDataException pde) {
+							throw new ExportImportRuntimeException(pde);
+						}
+					}
+				);
 			}
+			else {
+				long classNameId = MapUtil.getLong(parameterMap, "classNameId");
+				long classPK = MapUtil.getLong(parameterMap, "classPK");
 
-			Changeset changeset = changesetOptional.get();
+				StagedModel stagedModel = _fetchStagedModel(
+					classNameId, classPK);
 
-			Stream<StagedModel> stream = changeset.stream();
-
-			stream.filter(
-				Objects::nonNull
-			).forEach(
-				stagedModel -> {
-					try {
-						StagedModelDataHandlerUtil.exportStagedModel(
-							portletDataContext, stagedModel);
-					}
-					catch (PortletDataException pde) {
-						throw new ExportImportRuntimeException(pde);
-					}
+				if (stagedModel == null) {
+					return getExportDataRootElementString(rootElement);
 				}
-			);
+
+				try {
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, stagedModel);
+				}
+				catch (PortletDataException pde) {
+					throw new ExportImportRuntimeException(pde);
+				}
+			}
 		}
 
 		_exportAssetLinks(portletDataContext);
@@ -313,6 +330,47 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext, stagedModel);
 
 		return true;
+	}
+
+	private StagedModel _fetchStagedModel(long classNameId, long classPK) {
+		try {
+			if (classNameId == 0) {
+				return null;
+			}
+
+			if (classPK == 0) {
+				return null;
+			}
+
+			ClassName className = _classNameLocalService.getClassName(
+				classNameId);
+
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					className.getValue());
+
+			if (stagedModelRepository == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Staged model repository not found for " +
+							className.getValue());
+				}
+
+				return null;
+			}
+
+			return stagedModelRepository.getStagedModel(classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Could not fetch staged model for classNameId " +
+						classNameId,
+					pe);
+			}
+
+			return null;
+		}
 	}
 
 	private boolean _isExportModel(

@@ -71,6 +71,21 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
 			assignKaleoTaskInstanceToken(
+				long kaleoTaskInstanceTokenId,
+				java.util.Collection
+					<com.liferay.portal.workflow.kaleo.model.
+						KaleoTaskAssignment> kaleoTaskAssignments,
+				java.util.Map<String, java.io.Serializable> workflowContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().assignKaleoTaskInstanceToken(
+			kaleoTaskInstanceTokenId, kaleoTaskAssignments, workflowContext,
+			serviceContext);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
+			assignKaleoTaskInstanceToken(
 				long kaleoTaskInstanceTokenId, String assigneeClassName,
 				long assigneeClassPK,
 				java.util.Map<String, java.io.Serializable> workflowContext,

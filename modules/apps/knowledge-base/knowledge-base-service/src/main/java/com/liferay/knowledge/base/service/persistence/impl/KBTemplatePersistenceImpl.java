@@ -2337,8 +2337,6 @@ public class KBTemplatePersistenceImpl
 		"kbTemplate.groupId = ?";
 
 	public KBTemplatePersistenceImpl() {
-		setModelClass(KBTemplate.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2356,6 +2354,8 @@ public class KBTemplatePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(KBTemplate.class);
 	}
 
 	/**

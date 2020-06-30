@@ -89,6 +89,12 @@ button {
 	.portlet-barebone {
 		margin-top: 0 !important;
 	}
+
+	&:not(&--wide) {
+		.portlet-login {
+			transform: translateY(-70px);
+		}
+	}
 }
 
 body:not(.is-accessible) {

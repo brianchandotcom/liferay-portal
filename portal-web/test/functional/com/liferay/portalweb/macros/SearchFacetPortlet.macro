@@ -204,6 +204,30 @@ definition {
 		return "${facetTypeValue}";
 	}
 
+	macro moveAssetTypesToAvailable {
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		for (var assetType : list "${assetType}") {
+			AssertClick(
+				locator1 = "Search#TYPE_FACET_CURRENT_ASSET_TYPE",
+				value1 = "${assetType}");
+
+			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Search#TYPE_FACET_AVAILABLE_ASSET_TYPE",
+				value1 = "${assetType}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro uncheckFacet {
 		Uncheck(
 			checkboxName = "${facetValueName}",
@@ -227,6 +251,40 @@ definition {
 		AssertLocation(value1 = "${searchURL}");
 
 		return "${searchURL}";
+	}
+
+	macro updateFacetConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(parameterName)) {
+			FormFields.editText(
+				fieldName = "parameterName",
+				fieldValue = "${parameterName}");
+		}
+
+		if (isSet(maxTerms)) {
+			FormFields.editText(
+				fieldName = "maxTerms",
+				fieldValue = "${maxTerms}");
+		}
+
+		if (isSet(frequencyThreshold)) {
+			FormFields.editText(
+				fieldName = "frequencyThreshold",
+				fieldValue = "${frequencyThreshold}");
+		}
+
+		if ("${displayFrequencies}" == "disable") {
+			FormFields.disableCheckbox(fieldName = "frequenciesVisible");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
 	}
 
 }

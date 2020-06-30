@@ -21,13 +21,12 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.OptionValueDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -117,22 +116,21 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 			_cpOptionService.getCPOption(id), optionValue);
 	}
 
+	private OptionValue _toOptionValue(Long cpOptionValueId) throws Exception {
+		return _optionValueDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpOptionValueId, contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private List<OptionValue> _toOptionValues(
 			List<CPOptionValue> cpOptionValues)
 		throws Exception {
 
 		List<OptionValue> productOptionValues = new ArrayList<>();
 
-		DTOConverter optionValueDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPOptionValue.class.getName());
-
 		for (CPOptionValue cpOptionValue : cpOptionValues) {
 			productOptionValues.add(
-				(OptionValue)optionValueDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						cpOptionValue.getCPOptionValueId())));
+				_toOptionValue(cpOptionValue.getCPOptionValueId()));
 		}
 
 		return productOptionValues;
@@ -149,14 +147,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 			optionValue.getExternalReferenceCode(),
 			_serviceContextHelper.getServiceContext());
 
-		DTOConverter optionValueDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPOptionValue.class.getName());
-
-		return (OptionValue)optionValueDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpOptionValue.getCPOptionValueId()));
+		return _toOptionValue(cpOptionValue.getCPOptionValueId());
 	}
 
 	@Reference
@@ -166,7 +157,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 	private CPOptionValueService _cpOptionValueService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private OptionValueDTOConverter _optionValueDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

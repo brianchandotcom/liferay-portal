@@ -21,12 +21,11 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.BillingAddressDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 
 import javax.ws.rs.core.Response;
@@ -63,13 +62,10 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 			_commerceAddressService.getCommerceAddress(
 				commerceOrder.getBillingAddressId());
 
-		DTOConverter billingAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("BillingAddress");
-
-		return (BillingAddress)billingAddressDTOConverter.toDTO(
+		return _billingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = Order.class, value = "billingAddress")
@@ -86,13 +82,10 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 			return new BillingAddress();
 		}
 
-		DTOConverter billingAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("BillingAddress");
-
-		return (BillingAddress)billingAddressDTOConverter.toDTO(
+		return _billingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -135,13 +128,13 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 	}
 
 	@Reference
+	private BillingAddressDTOConverter _billingAddressDTOConverter;
+
+	@Reference
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

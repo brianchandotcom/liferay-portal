@@ -22,6 +22,7 @@ CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDef
 CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRel();
 long cpDefinitionOptionRelId = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRelId();
 List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
+String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefaultLanguageId();
 %>
 
 <portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelActionURL" />
@@ -36,6 +37,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 		<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 		<aui:input name="cpOptionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPOptionId() %>" />
 
+		<liferay-ui:error exception="<%= CPDefinitionOptionRelPriceTypeException.class %>" message="price-type-cannot-be-changed-for-the-current-option-value-setup" />
 		<liferay-ui:error exception="<%= CPDefinitionOptionSKUContributorException.class %>" message="sku-contributor-cannot-be-set-as-true-for-the-selected-field-type" />
 
 		<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
@@ -45,15 +47,15 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 		>
 			<div class="row">
 				<div class="col-12">
-					<aui:input name="name" />
+					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="name" />
 				</div>
 
 				<div class="col-6">
-					<aui:input name="description" />
+					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="description" />
 				</div>
 
 				<div class="col-6">
-					<aui:input name="priority" />
+					<aui:input label="position" name="priority" />
 				</div>
 
 				<div class="col-4">
@@ -90,7 +92,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 					String priceType = BeanParamUtil.getString(cpDefinitionOptionRel, request, "priceType", CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC);
 					%>
 
-					<aui:select name="priceType" showEmptyOption="<%= false %>">
+					<aui:select name="priceType" showEmptyOption="<%= true %>">
 						<aui:option label="static" selected="<%= priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC %>" />
 						<aui:option label="dynamic" selected="<%= priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC %>" />
 					</aui:select>

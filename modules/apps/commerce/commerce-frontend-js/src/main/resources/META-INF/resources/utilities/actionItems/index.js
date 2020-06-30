@@ -12,8 +12,8 @@
  * details.
  */
 
-import {liferayNavigate} from '../../utilities/index.es';
-import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../eventsDefinitions.es';
+import {liferayNavigate} from '../../utilities/index';
+import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../eventsDefinitions';
 import {resolveModalSize} from '../modals/index';
 import {ACTION_ITEM_TARGETS} from './constants';
 

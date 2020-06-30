@@ -2192,8 +2192,6 @@ public class MBMailingListPersistenceImpl
 		"mbMailingList.categoryId = ?";
 
 	public MBMailingListPersistenceImpl() {
-		setModelClass(MBMailingList.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2212,6 +2210,8 @@ public class MBMailingListPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MBMailingList.class);
 	}
 
 	/**

@@ -21,12 +21,11 @@ import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGro
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceListAccountGroup;
+import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.PriceListAccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.PriceListAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListAccountGroupResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -144,15 +143,9 @@ public class PriceListAccountGroupResourceImpl
 						_serviceContextHelper.getServiceContext(
 							commercePriceList.getGroupId()));
 
-		DTOConverter priceListAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommercePriceListCommerceAccountGroupRel.class.getName());
-
-		return (PriceListAccountGroup)priceListAccountGroupDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commercePriceListCommerceAccountGroupRel.
-					getCommercePriceListCommerceAccountGroupRelId()));
+		return _toPriceListAccountGroup(
+			commercePriceListCommerceAccountGroupRel.
+				getCommercePriceListCommerceAccountGroupRelId());
 	}
 
 	@Override
@@ -173,15 +166,19 @@ public class PriceListAccountGroupResourceImpl
 						_serviceContextHelper.getServiceContext(
 							commercePriceList.getGroupId()));
 
-		DTOConverter priceListAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommercePriceListCommerceAccountGroupRel.class.getName());
+		return _toPriceListAccountGroup(
+			commercePriceListCommerceAccountGroupRel.
+				getCommercePriceListCommerceAccountGroupRelId());
+	}
 
-		return (PriceListAccountGroup)priceListAccountGroupDTOConverter.toDTO(
+	private PriceListAccountGroup _toPriceListAccountGroup(
+			Long commercePriceListCommerceAccountGroupRelId)
+		throws Exception {
+
+		return _priceListAccountGroupDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commercePriceListCommerceAccountGroupRel.
-					getCommercePriceListCommerceAccountGroupRelId()));
+				commercePriceListCommerceAccountGroupRelId,
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<PriceListAccountGroup> _toPriceListAccountGroups(
@@ -191,20 +188,14 @@ public class PriceListAccountGroupResourceImpl
 
 		List<PriceListAccountGroup> priceListAccountGroups = new ArrayList<>();
 
-		DTOConverter priceListAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommercePriceListCommerceAccountGroupRel.class.getName());
-
 		for (CommercePriceListCommerceAccountGroupRel
 				commercePriceListCommerceAccountGroupRel :
 					commercePriceListCommerceAccountGroupRels) {
 
 			priceListAccountGroups.add(
-				(PriceListAccountGroup)priceListAccountGroupDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commercePriceListCommerceAccountGroupRel.
-							getCommercePriceListCommerceAccountGroupRelId())));
+				_toPriceListAccountGroup(
+					commercePriceListCommerceAccountGroupRel.
+						getCommercePriceListCommerceAccountGroupRelId()));
 		}
 
 		return priceListAccountGroups;
@@ -221,7 +212,8 @@ public class PriceListAccountGroupResourceImpl
 	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private PriceListAccountGroupDTOConverter
+		_priceListAccountGroupDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

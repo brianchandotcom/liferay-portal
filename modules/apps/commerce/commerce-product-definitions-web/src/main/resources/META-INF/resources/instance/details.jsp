@@ -262,7 +262,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 				var arrValue = [];
 
-				if (value instanceof Array) {
+				if (Array.isArray(value)) {
 					arrValue = value;
 				} else {
 					arrValue.push(value);

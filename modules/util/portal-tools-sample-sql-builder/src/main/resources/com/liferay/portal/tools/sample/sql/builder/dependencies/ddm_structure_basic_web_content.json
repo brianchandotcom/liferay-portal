@@ -18,7 +18,8 @@
 			"required": false,
 			"showLabel": true,
 			"type": "ddm-text-html",
-			"validation": {},
+			"validation": {
+			},
 			"visibilityExpression": ""
 		}
 	]

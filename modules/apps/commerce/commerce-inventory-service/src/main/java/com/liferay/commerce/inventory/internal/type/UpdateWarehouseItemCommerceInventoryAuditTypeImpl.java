@@ -16,9 +16,6 @@ package com.liferay.commerce.inventory.internal.type;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
-import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeConstants;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,21 +43,10 @@ public class UpdateWarehouseItemCommerceInventoryAuditTypeImpl
 	public String formatLog(long userId, String context, Locale locale)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(context);
-
 		User user = _userLocalService.getUserById(userId);
 
-		StringBundler contextSB = new StringBundler(6);
-
-		contextSB.append(
-			jsonObject.get(CommerceInventoryAuditTypeConstants.WAREHOUSE));
-		contextSB.append(CharPool.COMMA);
-		contextSB.append(CharPool.SPACE);
-		contextSB.append(LanguageUtil.get(locale, "user"));
-		contextSB.append(CharPool.SPACE);
-		contextSB.append(user.getFullName());
-
-		return contextSB.toString();
+		return LanguageUtil.format(
+			locale, "x-updated-the-quantity-on-hand", user.getFullName());
 	}
 
 	@Override

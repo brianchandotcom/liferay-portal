@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class EmailAddress implements Cloneable {
 
+	public static EmailAddress toDTO(String json) {
+		return EmailAddressSerDes.toDTO(json);
+	}
+
 	public String getEmailAddress() {
 		return emailAddress;
 	}

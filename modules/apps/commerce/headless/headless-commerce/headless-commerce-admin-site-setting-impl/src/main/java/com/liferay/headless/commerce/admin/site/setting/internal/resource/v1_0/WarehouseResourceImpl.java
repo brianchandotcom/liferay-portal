@@ -17,11 +17,9 @@ package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.WarehouseHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
-import com.liferay.portal.kernel.model.User;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,9 +48,6 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 	public Warehouse getWarehouse(@NotNull Long id) throws Exception {
 		return _warehouseHelper.getWarehouse(id);
 	}
-
-	@Context
-	private User _user;
 
 	@Reference
 	private WarehouseHelper _warehouseHelper;

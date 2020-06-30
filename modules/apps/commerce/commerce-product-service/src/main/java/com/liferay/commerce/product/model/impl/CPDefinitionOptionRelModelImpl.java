@@ -162,11 +162,13 @@ public class CPDefinitionOptionRelModelImpl
 
 	public static final long KEY_COLUMN_BITMASK = 16L;
 
-	public static final long SKUCONTRIBUTOR_COLUMN_BITMASK = 32L;
+	public static final long REQUIRED_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long SKUCONTRIBUTOR_COLUMN_BITMASK = 64L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long PRIORITY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1326,7 +1328,19 @@ public class CPDefinitionOptionRelModelImpl
 
 	@Override
 	public void setRequired(boolean required) {
+		_columnBitmask |= REQUIRED_COLUMN_BITMASK;
+
+		if (!_setOriginalRequired) {
+			_setOriginalRequired = true;
+
+			_originalRequired = _required;
+		}
+
 		_required = required;
+	}
+
+	public boolean getOriginalRequired() {
+		return _originalRequired;
 	}
 
 	@JSON
@@ -1647,6 +1661,11 @@ public class CPDefinitionOptionRelModelImpl
 
 		cpDefinitionOptionRelModelImpl._setOriginalCPOptionId = false;
 
+		cpDefinitionOptionRelModelImpl._originalRequired =
+			cpDefinitionOptionRelModelImpl._required;
+
+		cpDefinitionOptionRelModelImpl._setOriginalRequired = false;
+
 		cpDefinitionOptionRelModelImpl._originalSkuContributor =
 			cpDefinitionOptionRelModelImpl._skuContributor;
 
@@ -1866,6 +1885,8 @@ public class CPDefinitionOptionRelModelImpl
 	private double _priority;
 	private boolean _facetable;
 	private boolean _required;
+	private boolean _originalRequired;
+	private boolean _setOriginalRequired;
 	private boolean _skuContributor;
 	private boolean _originalSkuContributor;
 	private boolean _setOriginalSkuContributor;

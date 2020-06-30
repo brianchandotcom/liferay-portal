@@ -3391,8 +3391,6 @@ public class CPMeasurementUnitPersistenceImpl
 		"cpMeasurementUnit.type = ?";
 
 	public CPMeasurementUnitPersistenceImpl() {
-		setModelClass(CPMeasurementUnit.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3413,6 +3411,8 @@ public class CPMeasurementUnitPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPMeasurementUnit.class);
 	}
 
 	/**

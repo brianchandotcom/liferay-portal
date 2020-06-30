@@ -463,9 +463,14 @@ public class ProductSerDes {
 			map.put("categories", String.valueOf(product.getCategories()));
 		}
 
-		map.put(
-			"createDate",
-			liferayToJSONDateFormat.format(product.getCreateDate()));
+		if (product.getCreateDate() == null) {
+			map.put("createDate", null);
+		}
+		else {
+			map.put(
+				"createDate",
+				liferayToJSONDateFormat.format(product.getCreateDate()));
+		}
 
 		if (product.getDescription() == null) {
 			map.put("description", null);
@@ -518,9 +523,14 @@ public class ProductSerDes {
 			map.put("metaTitle", String.valueOf(product.getMetaTitle()));
 		}
 
-		map.put(
-			"modifiedDate",
-			liferayToJSONDateFormat.format(product.getModifiedDate()));
+		if (product.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(product.getModifiedDate()));
+		}
 
 		if (product.getMultipleOrderQuantity() == null) {
 			map.put("multipleOrderQuantity", null);
@@ -866,10 +876,13 @@ public class ProductSerDes {
 
 				sb.append("]");
 			}
-			else {
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
 			}
 
 			if (iterator.hasNext()) {

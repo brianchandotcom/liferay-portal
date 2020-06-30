@@ -5646,8 +5646,6 @@ public class SocialRelationPersistenceImpl
 		"socialRelation.type = ?";
 
 	public SocialRelationPersistenceImpl() {
-		setModelClass(SocialRelation.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5666,6 +5664,8 @@ public class SocialRelationPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SocialRelation.class);
 	}
 
 	/**

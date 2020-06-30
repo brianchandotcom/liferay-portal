@@ -23,16 +23,12 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Marco Leo
@@ -62,9 +58,9 @@ public interface CPInstanceHelper {
 			int start, int end)
 		throws Exception;
 
-	public DDMForm getCPAttachmentFileEntryDDMForm(
-			long cpDefinitionId, Locale locale)
-		throws PortalException;
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		getCPDefinitionOptionRelsMap(
+			long cpDefinitionId, boolean skuContributor, boolean publicStore);
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			getCPDefinitionOptionRelsMap(long cpDefinitionId, String json)
@@ -82,11 +78,6 @@ public interface CPInstanceHelper {
 	public List<CPInstanceOptionValueRel>
 		getCPInstanceCPInstanceOptionValueRels(long cpInstanceId);
 
-	public DDMForm getCPInstanceDDMForm(
-			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
-			boolean skuContributor)
-		throws PortalException;
-
 	public String getCPInstanceThumbnailSrc(long cpInstanceId) throws Exception;
 
 	public CPInstance getDefaultCPInstance(long cpDefinitionId)
@@ -97,29 +88,6 @@ public interface CPInstanceHelper {
 
 	public List<KeyValuePair> getKeyValuePairs(
 			long cpDefinitionId, String json, Locale locale)
-		throws PortalException;
-
-	public DDMForm getPublicStoreDDMForm(
-			long groupId, long commerceAccountId, long cpDefinitionId,
-			Locale locale, boolean ignoreSKUCombinations,
-			boolean skuContributor)
-		throws PortalException;
-
-	public String renderCPAttachmentFileEntryOptions(
-			long cpDefinitionId, String json, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws PortalException;
-
-	public String renderCPInstanceOptions(
-			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
-			boolean skuContributor, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws PortalException;
-
-	public String renderPublicStoreOptions(
-			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
-			boolean skuContributor, RenderRequest renderRequest,
-			RenderResponse renderResponse)
 		throws PortalException;
 
 }

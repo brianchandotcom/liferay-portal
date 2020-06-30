@@ -1530,8 +1530,6 @@ public class TicketPersistenceImpl
 		"ticket.type = ?";
 
 	public TicketPersistenceImpl() {
-		setModelClass(Ticket.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("key", "key_");
@@ -1550,6 +1548,8 @@ public class TicketPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Ticket.class);
 	}
 
 	/**

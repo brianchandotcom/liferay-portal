@@ -1974,8 +1974,6 @@ public class MDRActionPersistenceImpl
 			"mdrAction.ruleGroupInstanceId = ?";
 
 	public MDRActionPersistenceImpl() {
-		setModelClass(MDRAction.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1994,6 +1992,8 @@ public class MDRActionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MDRAction.class);
 	}
 
 	/**

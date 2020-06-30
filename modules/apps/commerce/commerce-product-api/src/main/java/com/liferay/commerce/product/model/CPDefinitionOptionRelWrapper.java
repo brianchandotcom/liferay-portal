@@ -261,6 +261,11 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	@Override
+	public int getCPDefinitionOptionValueRelsCount() {
+		return _cpDefinitionOptionRel.getCPDefinitionOptionValueRelsCount();
+	}
+
+	@Override
 	public CPOption getCPOption()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -622,6 +627,21 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public boolean isNew() {
 		return _cpDefinitionOptionRel.isNew();
+	}
+
+	@Override
+	public boolean isPriceContributor() {
+		return _cpDefinitionOptionRel.isPriceContributor();
+	}
+
+	@Override
+	public boolean isPriceTypeDynamic() {
+		return _cpDefinitionOptionRel.isPriceTypeDynamic();
+	}
+
+	@Override
+	public boolean isPriceTypeStatic() {
+		return _cpDefinitionOptionRel.isPriceTypeStatic();
 	}
 
 	/**

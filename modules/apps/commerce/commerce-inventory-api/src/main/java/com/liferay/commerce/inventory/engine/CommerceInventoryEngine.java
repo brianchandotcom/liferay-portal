@@ -48,6 +48,8 @@ public interface CommerceInventoryEngine {
 	public int getStockQuantity(long companyId, String sku)
 		throws PortalException;
 
+	public boolean hasStockQuantity(long companyId, String sku, int quantity);
+
 	public void increaseStockQuantity(
 			long userId, long commerceInventoryWarehouseId, String sku,
 			int quantity)

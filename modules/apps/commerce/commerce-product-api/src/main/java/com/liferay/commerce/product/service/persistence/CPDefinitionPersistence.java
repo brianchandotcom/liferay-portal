@@ -1137,6 +1137,56 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	public int countByG_S(long groupId, int status);
 
 	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the matching cp definition
+	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	 */
+	public CPDefinition findByC_V(long CProductId, int version)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 */
+	public CPDefinition fetchByC_V(long CProductId, int version);
+
+	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 */
+	public CPDefinition fetchByC_V(
+		long CProductId, int version, boolean useFinderCache);
+
+	/**
+	 * Removes the cp definition where CProductId = &#63; and version = &#63; from the database.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the cp definition that was removed
+	 */
+	public CPDefinition removeByC_V(long CProductId, int version)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	 * Returns the number of cp definitions where CProductId = &#63; and version = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the number of matching cp definitions
+	 */
+	public int countByC_V(long CProductId, int version);
+
+	/**
 	 * Returns all the cp definitions where CProductId = &#63; and status = &#63;.
 	 *
 	 * @param CProductId the c product ID

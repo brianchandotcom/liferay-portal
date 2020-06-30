@@ -82,6 +82,14 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
 			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
+				<aui:field-wrapper>
+					<c:if test="<%= (ddmStructure != null) && (ddmStructure.getGroupId() != scopeGroupId) %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message key="this-document-type-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-document-type" />
+						</div>
+					</c:if>
+				</aui:field-wrapper>
+
 				<aui:input name="name" />
 
 				<aui:input name="description" />
@@ -120,7 +128,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 						/>
 
 						<liferay-ui:search-container-column-text>
-							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
+							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title='<%= LanguageUtil.get(request, "remove") %>'><%= removeStructureIcon %></a>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 

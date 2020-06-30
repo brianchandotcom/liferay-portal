@@ -3656,8 +3656,6 @@ public class CommerceCurrencyPersistenceImpl
 		"commerceCurrency.active = ?";
 
 	public CommerceCurrencyPersistenceImpl() {
-		setModelClass(CommerceCurrency.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3678,6 +3676,8 @@ public class CommerceCurrencyPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceCurrency.class);
 	}
 
 	/**

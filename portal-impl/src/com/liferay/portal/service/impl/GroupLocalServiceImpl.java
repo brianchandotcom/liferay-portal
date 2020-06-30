@@ -1702,6 +1702,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return group.getDescriptiveName(locale);
 	}
 
+	@Override
+	public List<Long> getGroupIds(long companyId, boolean active) {
+		return groupFinder.findByC_A(companyId, active);
+	}
+
 	/**
 	 * Returns all the groups that are direct children of the parent group.
 	 *

@@ -134,11 +134,16 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 				BooleanClauseOccur.MUST_NOT);
 		}
 
-		long[] commerceAccountGroupIds = GetterUtil.getLongValues(
-			searchContext.getAttribute("commerceAccountGroupIds"), null);
+		boolean skipCommerceAccountGroupValidation = GetterUtil.getBoolean(
+			searchContext.getAttribute("skipCommerceAccountGroupValidation"));
 
-		if ((commerceAccountGroupIds != null) &&
-			(commerceAccountGroupIds.length > 0)) {
+		if (!skipCommerceAccountGroupValidation) {
+			long[] commerceAccountGroupIds = GetterUtil.getLongValues(
+				searchContext.getAttribute("commerceAccountGroupIds"), null);
+
+			if (commerceAccountGroupIds == null) {
+				commerceAccountGroupIds = new long[0];
+			}
 
 			TermsSetFilterBuilder termsSetFilterBuilder =
 				_filterBuilders.termsSetFilterBuilder();

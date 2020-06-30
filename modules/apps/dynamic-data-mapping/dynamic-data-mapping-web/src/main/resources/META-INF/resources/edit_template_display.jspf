@@ -42,7 +42,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
-						<input class="col-md-12 field form-control search-query" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text" />
+						<input class="col-md-12 field form-control search-query" id="<portlet:namespace />paletteSearch" placeholder='<liferay-ui:message key="search" />' type="text" />
 					</div>
 
 					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
@@ -51,7 +51,14 @@ if (Validator.isNotNull(scriptContent)) {
 							<%
 							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
 
-							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
+							Map<String, TemplateVariableGroup> templateVariableGroups = null;
+
+							if (structure == null) {
+								templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, redirectID, language, locale);
+							}
+							else {
+								templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, structure.getStructureId(), language, locale);
+							}
 
 							TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(templateHandlerClassNameId);
 

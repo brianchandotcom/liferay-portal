@@ -1,0 +1,50 @@
+@component-name = "portal-smoke"
+definition {
+
+	property testray.main.component.name = "Smoke";
+	property test.assert.warning.exceptions = "true";
+	property deploy.lcs.token.file = "true";
+	property environment.acceptance = "true";
+	property portal.fixpack.release = "true";
+	property portal.smoke = "false";
+	property portal.upstream = "false";
+	property test.assert.javascript.errors = "false";
+	property test.run.environment = "EE";
+	property test.skip.tear.down= "false";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		SignIn.signInTestSetup();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		LCSServer.unregisterOfflineInstance();
+	}
+
+	@description = "Ensure that LCS token is successfully deployed and LCS Client successfully connects to LCS server"
+	@priority = "5"
+	test LCSClientSmoke {
+		Pause(locator1 = "60000");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Liferay Connected Services");
+
+		SiteAdmin.viewPortletTitle(portletTitle = "Liferay Connected Services");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementPresent(locator1 = "LCSClient#PROJECT_HOME_LINK");
+		AssertElementPresent(locator1 = "LCSClient#ENVIRONMENT_LINK");
+		AssertElementPresent(locator1 = "LCSClient#SERVER_DASHBOARD_LINK");
+	}
+
+}

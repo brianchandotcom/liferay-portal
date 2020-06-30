@@ -79,7 +79,9 @@ public class CommerceChannelModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"siteGroupId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"type_", Types.VARCHAR}, {"typeSettings", Types.VARCHAR},
-		{"commerceCurrencyCode", Types.VARCHAR}
+		{"commerceCurrencyCode", Types.VARCHAR},
+		{"priceDisplayType", Types.VARCHAR},
+		{"discountsTargetNetPrice", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,10 +100,12 @@ public class CommerceChannelModelImpl
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("priceDisplayType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("discountsTargetNetPrice", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null)";
+		"create table CommerceChannel (externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -165,6 +169,8 @@ public class CommerceChannelModelImpl
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setCommerceCurrencyCode(soapModel.getCommerceCurrencyCode());
+		model.setPriceDisplayType(soapModel.getPriceDisplayType());
+		model.setDiscountsTargetNetPrice(soapModel.isDiscountsTargetNetPrice());
 
 		return model;
 	}
@@ -596,6 +602,54 @@ public class CommerceChannelModelImpl
 				}
 
 			});
+		attributeGetterFunctions.put(
+			"priceDisplayType",
+			new Function<CommerceChannel, Object>() {
+
+				@Override
+				public Object apply(CommerceChannel commerceChannel) {
+					return commerceChannel.getPriceDisplayType();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"priceDisplayType",
+			new BiConsumer<CommerceChannel, Object>() {
+
+				@Override
+				public void accept(
+					CommerceChannel commerceChannel,
+					Object priceDisplayTypeObject) {
+
+					commerceChannel.setPriceDisplayType(
+						(String)priceDisplayTypeObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"discountsTargetNetPrice",
+			new Function<CommerceChannel, Object>() {
+
+				@Override
+				public Object apply(CommerceChannel commerceChannel) {
+					return commerceChannel.getDiscountsTargetNetPrice();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"discountsTargetNetPrice",
+			new BiConsumer<CommerceChannel, Object>() {
+
+				@Override
+				public void accept(
+					CommerceChannel commerceChannel,
+					Object discountsTargetNetPriceObject) {
+
+					commerceChannel.setDiscountsTargetNetPrice(
+						(Boolean)discountsTargetNetPriceObject);
+				}
+
+			});
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -823,6 +877,39 @@ public class CommerceChannelModelImpl
 		_commerceCurrencyCode = commerceCurrencyCode;
 	}
 
+	@JSON
+	@Override
+	public String getPriceDisplayType() {
+		if (_priceDisplayType == null) {
+			return "";
+		}
+		else {
+			return _priceDisplayType;
+		}
+	}
+
+	@Override
+	public void setPriceDisplayType(String priceDisplayType) {
+		_priceDisplayType = priceDisplayType;
+	}
+
+	@JSON
+	@Override
+	public boolean getDiscountsTargetNetPrice() {
+		return _discountsTargetNetPrice;
+	}
+
+	@JSON
+	@Override
+	public boolean isDiscountsTargetNetPrice() {
+		return _discountsTargetNetPrice;
+	}
+
+	@Override
+	public void setDiscountsTargetNetPrice(boolean discountsTargetNetPrice) {
+		_discountsTargetNetPrice = discountsTargetNetPrice;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -872,6 +959,9 @@ public class CommerceChannelModelImpl
 		commerceChannelImpl.setType(getType());
 		commerceChannelImpl.setTypeSettings(getTypeSettings());
 		commerceChannelImpl.setCommerceCurrencyCode(getCommerceCurrencyCode());
+		commerceChannelImpl.setPriceDisplayType(getPriceDisplayType());
+		commerceChannelImpl.setDiscountsTargetNetPrice(
+			isDiscountsTargetNetPrice());
 
 		commerceChannelImpl.resetOriginalValues();
 
@@ -1040,6 +1130,17 @@ public class CommerceChannelModelImpl
 			commerceChannelCacheModel.commerceCurrencyCode = null;
 		}
 
+		commerceChannelCacheModel.priceDisplayType = getPriceDisplayType();
+
+		String priceDisplayType = commerceChannelCacheModel.priceDisplayType;
+
+		if ((priceDisplayType != null) && (priceDisplayType.length() == 0)) {
+			commerceChannelCacheModel.priceDisplayType = null;
+		}
+
+		commerceChannelCacheModel.discountsTargetNetPrice =
+			isDiscountsTargetNetPrice();
+
 		return commerceChannelCacheModel;
 	}
 
@@ -1131,6 +1232,8 @@ public class CommerceChannelModelImpl
 	private String _type;
 	private String _typeSettings;
 	private String _commerceCurrencyCode;
+	private String _priceDisplayType;
+	private boolean _discountsTargetNetPrice;
 	private long _columnBitmask;
 	private CommerceChannel _escapedModel;
 

@@ -33,8 +33,8 @@
 			"instanceId": "lamn",
 			"name": "HTML",
 			"value": {
-				"en_US": "<p>This is a test.<\/p>",
-				"pt_BR": "<p>Isto e um teste.<\/p>"
+				"en_US": "<p>This is a test.</p>",
+				"pt_BR": "<p>Isto e um teste.</p>"
 			}
 		},
 		{

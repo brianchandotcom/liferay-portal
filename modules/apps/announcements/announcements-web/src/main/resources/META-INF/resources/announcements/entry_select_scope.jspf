@@ -33,7 +33,7 @@ boolean hasDistributionScope = false;
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="sites" />">
+		<optgroup label='<liferay-ui:message key="sites" />'>
 
 			<%
 			hasDistributionScope = true;
@@ -55,7 +55,7 @@ boolean hasDistributionScope = false;
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="organizations" />">
+		<optgroup label='<liferay-ui:message key="organizations" />'>
 
 			<%
 			hasDistributionScope = true;
@@ -77,7 +77,7 @@ boolean hasDistributionScope = false;
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="roles" />">
+		<optgroup label='<liferay-ui:message key="roles" />'>
 
 			<%
 			hasDistributionScope = true;
@@ -99,7 +99,7 @@ boolean hasDistributionScope = false;
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="user-groups" />">
+		<optgroup label='<liferay-ui:message key="user-groups" />'>
 
 			<%
 			hasDistributionScope = true;

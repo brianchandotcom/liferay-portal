@@ -29,13 +29,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_NAME_N</td>
+	<td>xpath=(//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ENTRY_NAME</td>
 	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH</td>
-	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@class,'main-input-search')]</td>
 	<td></td>
 </tr>
 <tr>

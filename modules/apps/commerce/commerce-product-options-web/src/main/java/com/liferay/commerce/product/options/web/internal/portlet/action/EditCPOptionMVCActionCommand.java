@@ -109,8 +109,6 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
 			String key = "your-request-failed-to-complete";
 
 			if (e instanceof CPOptionKeyException) {
@@ -120,6 +118,9 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 				key =
 					"sku-contributor-cannot-be-set-as-true-for-the-selected-" +
 						"field-type";
+			}
+			else {
+				_log.error(e, e);
 			}
 
 			jsonObject.put(

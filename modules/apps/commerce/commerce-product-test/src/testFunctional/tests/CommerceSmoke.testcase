@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property osgi.app.includes = "commerce";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
@@ -29,22 +30,72 @@ definition {
 		else {
 			Navigator.openURL();
 
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
 			ProductMenu.gotoPortlet(
 				category = "Commerce",
 				panel = "Control Panel",
 				portlet = "Products");
 
-			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceProducts.deleteProductsEntry();
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				PortletEntry.deleteViaMenuItem(rowEntry = "");
+			}
+
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				PortletEntry.deleteViaMenuItem(rowEntry = "");
 			}
 
 			User.logoutPG();
 		}
 	}
 
+	test CreateNewSpecificationOptions {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceEntry.createNewSpecificationLabels(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		CommerceEntry.viewSpecificationLabels(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+		CommerceEntry.createNewSpecificationGroups(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+
+		CommerceEntry.viewSpecificationGroups(
+			specificationDescription = "Specification-1 Description",
+			specificationTitle = "specification-1");
+	}
+
 	test PublishSimpleProduct {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",

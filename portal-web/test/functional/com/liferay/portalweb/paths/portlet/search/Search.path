@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACET_DISPLAY_FREQUENCIES</td>
+	<td>//small[contains(@class,'term-count')]/preceding-sibling::span[contains(.,'${facetValueName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODIFIED_FACET_CONFIG_EMPTY_FIELD</td>
 	<td>//div[contains(@class,'form-row')][2]//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
 	<td></td>
@@ -76,6 +81,16 @@
 <tr>
 	<td>SEARCH_TYPE_FACET_TERM_COUNT</td>
 	<td>//li[@class='facet-value']//small[@class='term-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_FACET_AVAILABLE_ASSET_TYPE</td>
+	<td>//select[contains(@id, "availableAssetTypes")]/option[contains(., "${assetType}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_FACET_CURRENT_ASSET_TYPE</td>
+	<td>//select[contains(@id, "currentAssetTypes")]/option[contains(., "${assetType}")]</td>
 	<td></td>
 </tr>
 </tbody>

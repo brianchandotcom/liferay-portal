@@ -134,6 +134,38 @@ public class JSONUtil {
 		return getValue(value, Arrays.copyOfRange(paths, 1, paths.length));
 	}
 
+	public static boolean getValueAsBoolean(Object object, String... paths) {
+		return GetterUtil.getBoolean(getValue(object, paths));
+	}
+
+	public static double getValueAsDouble(Object object, String... paths) {
+		return GetterUtil.getDouble(getValue(object, paths));
+	}
+
+	public static int getValueAsInt(Object object, String... paths) {
+		return GetterUtil.getInteger(getValue(object, paths));
+	}
+
+	public static JSONArray getValueAsJSONArray(
+		Object object, String... paths) {
+
+		return (JSONArray)getValue(object, paths);
+	}
+
+	public static JSONObject getValueAsJSONObject(
+		Object object, String... paths) {
+
+		return (JSONObject)getValue(object, paths);
+	}
+
+	public static long getValueAsLong(Object object, String... paths) {
+		return GetterUtil.getLong(getValue(object, paths));
+	}
+
+	public static String getValueAsString(Object object, String... paths) {
+		return String.valueOf(getValue(object, paths));
+	}
+
 	public static boolean hasValue(JSONArray jsonArray, Object value) {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			if (Objects.equals(value, jsonArray.get(i))) {

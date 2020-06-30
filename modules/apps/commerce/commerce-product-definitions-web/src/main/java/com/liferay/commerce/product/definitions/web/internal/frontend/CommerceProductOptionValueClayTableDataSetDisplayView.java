@@ -45,9 +45,13 @@ public class CommerceProductOptionValueClayTableDataSetDisplayView
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("order", "order");
+		clayTableSchemaBuilder.addField("key", "key");
 
-		clayTableSchemaBuilder.addField("sku", "sku");
+		clayTableSchemaBuilder.addField("position", "position");
+
+		clayTableSchemaBuilder.addField("deltaPrice", "delta-price");
+
+		clayTableSchemaBuilder.addField("sku", "linked-product");
 
 		return clayTableSchemaBuilder.build();
 	}

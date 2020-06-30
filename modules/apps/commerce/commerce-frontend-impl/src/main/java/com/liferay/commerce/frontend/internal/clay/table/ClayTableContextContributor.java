@@ -88,6 +88,7 @@ public class ClayTableContextContributor
 
 			String name = clayTableSchemaField.getFieldName();
 
+			jsonObject.put("actionId", clayTableSchemaField.getActionId());
 			jsonObject.put(
 				"contentRenderer", clayTableSchemaField.getContentRenderer());
 			jsonObject.put(

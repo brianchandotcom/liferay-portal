@@ -454,6 +454,8 @@ definition {
 
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
+		property test.name.skip.portal.instance = "FormRules#ConfigureUserBelongsToRule";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

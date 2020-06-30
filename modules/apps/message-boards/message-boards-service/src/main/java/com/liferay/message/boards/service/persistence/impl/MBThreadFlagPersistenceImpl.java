@@ -2684,8 +2684,6 @@ public class MBThreadFlagPersistenceImpl
 		"mbThreadFlag.threadId = ?";
 
 	public MBThreadFlagPersistenceImpl() {
-		setModelClass(MBThreadFlag.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2703,6 +2701,8 @@ public class MBThreadFlagPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MBThreadFlag.class);
 	}
 
 	/**

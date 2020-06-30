@@ -32,6 +32,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.commerce.constants.CPDefinitionInventoryConstants" %><%@
+page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.inventory.CPDefinitionInventoryEngine" %><%@
 page import="com.liferay.commerce.model.CPDAvailabilityEstimate" %><%@
 page import="com.liferay.commerce.model.CPDefinitionInventory" %><%@
@@ -60,8 +61,11 @@ page import="com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionE
 page import="com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionMetaTitleException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionNameDefaultLanguageException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelCPInstanceException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutEntryException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException" %><%@
@@ -112,7 +116,6 @@ page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServic
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -120,6 +123,8 @@ page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+
+<%@ page import="java.math.BigDecimal" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@

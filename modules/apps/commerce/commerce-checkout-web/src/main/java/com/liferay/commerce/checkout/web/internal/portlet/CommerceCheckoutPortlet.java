@@ -20,6 +20,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.string.StringPool;
@@ -27,10 +28,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -104,10 +109,21 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 			CommerceOrder commerceOrder = getCommerceOrder(renderRequest);
 
 			if (commerceOrder != null) {
-				if (!isOrderApproved(commerceOrder)) {
-					HttpServletResponse httpServletResponse =
-						_portal.getHttpServletResponse(renderResponse);
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(renderResponse);
 
+				if (commerceOrder.isGuestOrder()) {
+					boolean continueAsGuest = GetterUtil.getBoolean(
+						CookieKeys.getCookie(
+							_portal.getHttpServletRequest(renderRequest),
+							"continueAsGuest"));
+
+					if (!continueAsGuest) {
+						httpServletResponse.sendRedirect(
+							getCheckoutURL(renderRequest));
+					}
+				}
+				else if (!isOrderApproved(commerceOrder)) {
 					httpServletResponse.sendRedirect(
 						getOrderDetailsURL(renderRequest));
 				}
@@ -132,14 +148,34 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		}
 	}
 
+	protected String getCheckoutURL(PortletRequest portletRequest)
+		throws PortalException {
+
+		PortletURL portletURL =
+			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
+				_portal.getHttpServletRequest(portletRequest));
+
+		if (portletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return portletURL.toString();
+	}
+
 	protected CommerceOrder getCommerceOrder(PortletRequest portletRequest)
 		throws PortalException {
 
-		long commerceOrderId = ParamUtil.getLong(
-			portletRequest, "commerceOrderId");
+		String commerceOrderUuid = ParamUtil.getString(
+			portletRequest, "commerceOrderUuid");
 
-		if (commerceOrderId > 0) {
-			return _commerceOrderService.getCommerceOrder(commerceOrderId);
+		if (Validator.isNotNull(commerceOrderUuid)) {
+			long groupId =
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(
+						_portal.getScopeGroupId(portletRequest));
+
+			return _commerceOrderService.getCommerceOrderByUuidAndGroupId(
+				commerceOrderUuid, groupId);
 		}
 
 		return _commerceOrderHttpHelper.getCurrentCommerceOrder(
@@ -192,6 +228,9 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
 	private CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
 
@@ -200,6 +239,9 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Portal _portal;

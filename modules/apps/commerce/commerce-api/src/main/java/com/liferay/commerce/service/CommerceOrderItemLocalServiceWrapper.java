@@ -299,6 +299,14 @@ public class CommerceOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+		getChildCommerceOrderItems(long parentCommerceOrderItemId) {
+
+		return _commerceOrderItemLocalService.getChildCommerceOrderItems(
+			parentCommerceOrderItemId);
+	}
+
+	@Override
 	public int getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -481,6 +489,19 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceOrderItem> search(
+				long commerceOrderId, long parentCommerceOrderItemId,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemLocalService.search(
+			commerceOrderId, parentCommerceOrderItemId, keywords, start, end,
+			sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.model.CommerceOrderItem> search(
 				long commerceOrderId, String keywords, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -614,6 +635,39 @@ public class CommerceOrderItemLocalServiceWrapper
 			discountPercentageLevel3, discountPercentageLevel4);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemPrices(
+				long commerceOrderItemId, java.math.BigDecimal unitPrice,
+				java.math.BigDecimal promoPrice,
+				java.math.BigDecimal discountAmount,
+				java.math.BigDecimal finalPrice,
+				java.math.BigDecimal discountPercentageLevel1,
+				java.math.BigDecimal discountPercentageLevel2,
+				java.math.BigDecimal discountPercentageLevel3,
+				java.math.BigDecimal discountPercentageLevel4,
+				java.math.BigDecimal unitPriceWithTaxAmount,
+				java.math.BigDecimal promoPriceWithTaxAmount,
+				java.math.BigDecimal discountAmountWithTaxAmount,
+				java.math.BigDecimal finalPriceWithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel1WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel2WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel3WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel4WithTaxAmount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemLocalService.updateCommerceOrderItemPrices(
+			commerceOrderItemId, unitPrice, promoPrice, discountAmount,
+			finalPrice, discountPercentageLevel1, discountPercentageLevel2,
+			discountPercentageLevel3, discountPercentageLevel4,
+			unitPriceWithTaxAmount, promoPriceWithTaxAmount,
+			discountAmountWithTaxAmount, finalPriceWithTaxAmount,
+			discountPercentageLevel1WithTaxAmount,
+			discountPercentageLevel2WithTaxAmount,
+			discountPercentageLevel3WithTaxAmount,
+			discountPercentageLevel4WithTaxAmount);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
@@ -631,12 +685,12 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemUnitPrice(
-				long commerceOrderItemId, java.math.BigDecimal unitPrice,
-				int quantity)
+				long userId, long commerceOrderItemId,
+				java.math.BigDecimal unitPrice, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
-			commerceOrderItemId, unitPrice, quantity);
+			userId, commerceOrderItemId, unitPrice, quantity);
 	}
 
 	@Override

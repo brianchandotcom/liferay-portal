@@ -254,6 +254,20 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
+			filterByCPInstanceOptionValueRels(
+				java.util.List
+					<com.liferay.commerce.product.model.
+						CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
+				java.util.List
+					<com.liferay.commerce.product.model.
+						CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
+
+		return getService().filterByCPInstanceOptionValueRels(
+			cpDefinitionOptionValueRels, cpInstanceOptionValueRels);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -453,6 +467,13 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId) {
+
+		return getService().hasCPDefinitionOptionValueRels(
+			cpDefinitionOptionRelId);
+	}
+
 	public static void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -460,6 +481,21 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 
 		getService().importCPDefinitionOptionRels(
 			cpDefinitionOptionRelId, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			resetCPInstanceCPDefinitionOptionValueRel(
+				long cpDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().resetCPInstanceCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId);
+	}
+
+	public static void resetCPInstanceCPDefinitionOptionValueRels(
+		String cpInstanceUuid) {
+
+		getService().resetCPInstanceCPDefinitionOptionValueRels(cpInstanceUuid);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(

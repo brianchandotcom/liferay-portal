@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.web.internal.util;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -28,16 +29,22 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.content.render.CPContentRendererRegistry;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
+import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.type.CPType;
@@ -65,6 +72,7 @@ import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -420,6 +428,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public boolean hasChildCPDefinitions(long cpDefinitionId) {
+		return _cpDefinitionLocalService.hasChildCPDefinitions(cpDefinitionId);
+	}
+
+	@Override
 	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException {
 
@@ -474,10 +487,55 @@ public class CPContentHelperImpl implements CPContentHelper {
 			return StringPool.BLANK;
 		}
 
-		return _cpInstanceHelper.renderPublicStoreOptions(
+		return _ddmHelper.renderPublicStoreOptions(
 			cpCatalogEntry.getCPDefinitionId(), null,
-			cpCatalogEntry.isIgnoreSKUCombinations(), false, renderRequest,
-			renderResponse);
+			cpCatalogEntry.isIgnoreSKUCombinations(), renderRequest,
+			renderResponse,
+			_filterByInventoryAvailability(
+				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+					cpCatalogEntry.getCPDefinitionId(), false, true)));
+	}
+
+	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		_filterByInventoryAvailability(
+			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionRelstMap) {
+
+		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionRelEntry :
+					cpDefinitionOptionRelstMap.entrySet()) {
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				cpDefinitionOptionRelEntry.getKey();
+
+			if (cpDefinitionOptionRel.isPriceContributor()) {
+				cpDefinitionOptionRelEntry.setValue(
+					_commerceInventoryChecker.filterByAvailability(
+						cpDefinitionOptionRelEntry.getValue()));
+
+				continue;
+			}
+
+			if (!cpDefinitionOptionRel.isSkuContributor()) {
+				cpDefinitionOptionRelEntry.setValue(
+					cpDefinitionOptionRelEntry.getValue());
+
+				continue;
+			}
+
+			cpDefinitionOptionRelEntry.setValue(
+				_cpDefinitionOptionValueRelLocalService.
+					filterByCPInstanceOptionValueRels(
+						cpDefinitionOptionRelEntry.getValue(),
+						_cpInstanceOptionValueRelCommerceInventoryChecker.
+							filterByAvailability(
+								_cpInstanceOptionValueRelLocalService.
+									getCPDefinitionOptionRelCPInstanceOptionValueRels(
+										cpDefinitionOptionRel.
+											getCPDefinitionOptionRelId()))));
+		}
+
+		return cpDefinitionOptionRelstMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -485,6 +543,12 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CommerceCatalogDefaultImage _catalogCommerceMediaDefaultImage;
+
+	@Reference(
+		target = "(commerce.inventory.checker.target=CPDefinitionOptionValueRel)"
+	)
+	private CommerceInventoryChecker<CPDefinitionOptionValueRel>
+		_commerceInventoryChecker;
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
@@ -510,7 +574,21 @@ public class CPContentHelperImpl implements CPContentHelper {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference(
+		target = "(commerce.inventory.checker.target=CPInstanceOptionValueRel)"
+	)
+	private CommerceInventoryChecker<CPInstanceOptionValueRel>
+		_cpInstanceOptionValueRelCommerceInventoryChecker;
+
+	@Reference
+	private CPInstanceOptionValueRelLocalService
+		_cpInstanceOptionValueRelLocalService;
 
 	@Reference
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
@@ -520,6 +598,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
+
+	@Reference
+	private DDMHelper _ddmHelper;
 
 	@Reference
 	private Portal _portal;

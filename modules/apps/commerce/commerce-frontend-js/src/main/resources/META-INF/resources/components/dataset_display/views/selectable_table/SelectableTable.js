@@ -17,7 +17,7 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect, useContext} from 'react';
 
-import DatasetDisplayContext from '../../DatasetDisplayContext.es';
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 
 function SelectableTable(props) {
 	const {namespace} = useContext(DatasetDisplayContext);

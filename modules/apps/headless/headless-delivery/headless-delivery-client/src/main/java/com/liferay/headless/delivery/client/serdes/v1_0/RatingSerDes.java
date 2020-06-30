@@ -189,13 +189,23 @@ public class RatingSerDes {
 			map.put("creator", String.valueOf(rating.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(rating.getDateCreated()));
+		if (rating.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(rating.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(rating.getDateModified()));
+		if (rating.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(rating.getDateModified()));
+		}
 
 		if (rating.getId() == null) {
 			map.put("id", null);

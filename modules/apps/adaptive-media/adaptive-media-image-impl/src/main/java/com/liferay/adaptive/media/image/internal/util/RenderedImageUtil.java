@@ -15,8 +15,14 @@
 package com.liferay.adaptive.media.image.internal.util;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.ImageResolutionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.RenderedImage;
 
@@ -35,8 +41,7 @@ import javax.imageio.stream.ImageInputStream;
 public class RenderedImageUtil {
 
 	public static byte[] getRenderedImageContentStream(
-			RenderedImage renderedImage, String mimeType)
-		throws IOException {
+		RenderedImage renderedImage, String mimeType) {
 
 		try (UnsyncByteArrayOutputStream baos =
 				new UnsyncByteArrayOutputStream()) {
@@ -51,7 +56,7 @@ public class RenderedImageUtil {
 	}
 
 	public static RenderedImage readImage(InputStream inputStream)
-		throws IOException {
+		throws IOException, PortalException {
 
 		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
 			inputStream);
@@ -67,9 +72,33 @@ public class RenderedImageUtil {
 
 				imageReader.setInput(imageInputStream);
 
+				int height = imageReader.getHeight(0);
+				int width = imageReader.getWidth(0);
+
+				if (((PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT > 0) &&
+					 (height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT)) ||
+					((PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH > 0) &&
+					 (width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH))) {
+
+					throw new ImageResolutionException(
+						StringBundler.concat(
+							"Image's dimensions of ", height, " px high and ",
+							width, " px wide exceed max dimensions of ",
+							PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT,
+							" px high and ",
+							PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH,
+							" px wide"));
+				}
+
 				return imageReader.read(0);
 			}
-			catch (Exception e) {
+			catch (ImageResolutionException imageResolutionException) {
+				throw imageResolutionException;
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
 			}
 			finally {
 				if (imageReader != null) {
@@ -80,5 +109,8 @@ public class RenderedImageUtil {
 
 		throw new IOException("Unsupported image type");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RenderedImageUtil.class);
 
 }

@@ -17,13 +17,10 @@ package com.liferay.commerce.inventory.internal.type;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeConstants;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Locale;
 import java.util.Map;
@@ -49,21 +46,13 @@ public class BookedQuantityCommerceInventoryAuditTypeImpl
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(context);
 
-		User user = _userLocalService.getUserById(userId);
-
-		StringBundler contextSB = new StringBundler(8);
-
-		contextSB.append(LanguageUtil.get(locale, "order"));
-		contextSB.append(CharPool.SPACE);
-		contextSB.append(
-			jsonObject.get(CommerceInventoryAuditTypeConstants.ORDER_ID));
-		contextSB.append(CharPool.COMMA);
-		contextSB.append(CharPool.SPACE);
-		contextSB.append(LanguageUtil.get(locale, "user"));
-		contextSB.append(CharPool.SPACE);
-		contextSB.append(user.getFullName());
-
-		return contextSB.toString();
+		return LanguageUtil.format(
+			locale, "x-placed-order-x-booking-quantity",
+			new Object[] {
+				jsonObject.get(
+					CommerceInventoryAuditTypeConstants.ACCOUNT_NAME),
+				jsonObject.get(CommerceInventoryAuditTypeConstants.ORDER_ID)
+			});
 	}
 
 	@Override

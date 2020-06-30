@@ -24,13 +24,16 @@ import com.liferay.commerce.notification.util.CommerceNotificationHelper;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.order.CommerceDefinitionTermContributorRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
 import java.util.HashSet;
 import java.util.List;
@@ -174,24 +177,60 @@ public class CommerceNotificationHelperImpl
 			commerceNotificationType, _TOFIELD,
 			commerceNotificationTemplate.getTo(), object, userLocale);
 
-		String[] toUserIds = StringUtil.split(to);
+		EmailAddressValidator emailAddressValidator =
+			EmailAddressValidatorFactory.getInstance();
 
-		for (String toUserId : toUserIds) {
-			User toUser = _userLocalService.getUser(
-				GetterUtil.getLong(toUserId));
+		String[] toUsers = StringUtil.split(to);
 
-			_commerceNotificationQueueEntryLocalService.
-				addCommerceNotificationQueueEntry(
-					toUser.getUserId(), groupId,
-					commerceNotificationType.getClassName(object),
-					commerceNotificationType.getClassPK(object),
-					commerceNotificationTemplate.
-						getCommerceNotificationTemplateId(),
-					commerceNotificationTemplate.getFrom(), fromName,
-					toUser.getEmailAddress(), toUser.getFullName(),
-					commerceNotificationTemplate.getCc(),
-					commerceNotificationTemplate.getBcc(), subject, body, 0);
+		for (String toUserId : toUsers) {
+			try {
+				User toUser = _userLocalService.getUser(
+					GetterUtil.getLong(toUserId));
+
+				_addNotificationQueueEntry(
+					groupId, commerceNotificationType,
+					commerceNotificationTemplate, fromName, toUser, subject,
+					body, object);
+			}
+			catch (Exception e) {
+				if ((e instanceof NoSuchUserException) &&
+					emailAddressValidator.validate(
+						user.getCompanyId(), toUserId)) {
+
+					User userByEmailAddress =
+						_userLocalService.getUserByEmailAddress(
+							user.getCompanyId(), toUserId);
+
+					_addNotificationQueueEntry(
+						groupId, commerceNotificationType,
+						commerceNotificationTemplate, fromName,
+						userByEmailAddress, subject, body, object);
+				}
+				else {
+					throw e;
+				}
+			}
 		}
+	}
+
+	private void _addNotificationQueueEntry(
+			long groupId, CommerceNotificationType commerceNotificationType,
+			CommerceNotificationTemplate commerceNotificationTemplate,
+			String fromName, User toUser, String subject, String body,
+			Object object)
+		throws PortalException {
+
+		_commerceNotificationQueueEntryLocalService.
+			addCommerceNotificationQueueEntry(
+				toUser.getUserId(), groupId,
+				commerceNotificationType.getClassName(object),
+				commerceNotificationType.getClassPK(object),
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId(),
+				commerceNotificationTemplate.getFrom(), fromName,
+				toUser.getEmailAddress(), toUser.getFullName(),
+				commerceNotificationTemplate.getCc(),
+				commerceNotificationTemplate.getBcc(), subject, body, 0);
 	}
 
 	private static final int _BODYFIELD = 2;

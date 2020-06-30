@@ -20,23 +20,32 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
 import java.math.BigDecimal;
 
 import java.net.URL;
+
+import java.security.Key;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,18 +90,51 @@ public class CommercePaymentServlet extends HttpServlet {
 				PortalSessionThreadLocal.setHttpSession(httpSession);
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 			String uuid = ParamUtil.getString(httpServletRequest, "uuid");
 
-			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrderByUuidAndGroupId(
-					uuid, groupId);
+			CommerceOrder commerceOrder = null;
+
+			String guestToken = ParamUtil.getString(
+				httpServletRequest, "guestToken");
+
+			if (Validator.isNotNull(guestToken)) {
+				guestToken = guestToken.replaceAll(
+					StringPool.SPACE, StringPool.PLUS);
+
+				commerceOrder =
+					_commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
+						uuid, groupId);
+
+				Company company = _portal.getCompany(httpServletRequest);
+
+				User defaultUser = company.getDefaultUser();
+
+				String orderGuestToken = _getGuestToken(
+					company, commerceOrder.getCommerceOrderId());
+
+				if (!guestToken.equals(orderGuestToken)) {
+					throw new PrincipalException.MustHavePermission(
+						defaultUser.getUserId(), CommerceOrder.class.getName(),
+						commerceOrder.getCommerceOrderId(), ActionKeys.VIEW);
+				}
+
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(defaultUser);
+
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			}
+			else {
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(
+						_portal.getUser(httpServletRequest));
+
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+				commerceOrder =
+					_commerceOrderService.getCommerceOrderByUuidAndGroupId(
+						uuid, groupId);
+			}
 
 			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
 
@@ -182,6 +224,14 @@ public class CommercePaymentServlet extends HttpServlet {
 		}
 	}
 
+	private String _getGuestToken(Company company, long commerceOrderId)
+		throws Exception {
+
+		Key key = company.getKeyObj();
+
+		return Encryptor.encrypt(key, String.valueOf(commerceOrderId));
+	}
+
 	private Map<String, String> _getQueryMap(String query) {
 		String[] params = query.split(StringPool.AMPERSAND);
 
@@ -217,6 +267,9 @@ public class CommercePaymentServlet extends HttpServlet {
 		CommercePaymentServlet.class);
 
 	private long _commerceOrderId;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

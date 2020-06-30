@@ -23,16 +23,15 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
+import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountMemberDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -111,14 +110,10 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 				new CommerceAccountUserRelPK(
 					commerceAccount.getCommerceAccountId(), userId));
 
-		DTOConverter accountMemberDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountUserRel.class.getName());
-
-		return (AccountMember)accountMemberDTOConverter.toDTO(
+		return _accountMemberDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountUserRel.getPrimaryKey()));
+				commerceAccountUserRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -154,14 +149,10 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 	public AccountMember getAccountIdAccountMember(Long id, Long userId)
 		throws Exception {
 
-		DTOConverter accountMemberDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountUserRel.class.getName());
-
-		return (AccountMember)accountMemberDTOConverter.toDTO(
+		return _accountMemberDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				new CommerceAccountUserRelPK(id, userId)));
+				new CommerceAccountUserRelPK(id, userId),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = Account.class, value = "users")
@@ -249,14 +240,10 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 					contextCompany.getCompanyId()),
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter accountMemberDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountUserRel.class.getName());
-
-		return (AccountMember)accountMemberDTOConverter.toDTO(
+		return _accountMemberDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountUserRel.getPrimaryKey()));
+				commerceAccountUserRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -273,14 +260,10 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 					contextCompany.getCompanyId()),
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter accountMemberDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountUserRel.class.getName());
-
-		return (AccountMember)accountMemberDTOConverter.toDTO(
+		return _accountMemberDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountUserRel.getPrimaryKey()));
+				commerceAccountUserRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<AccountMember> _toAccountMembers(
@@ -289,18 +272,14 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 
 		List<AccountMember> accountMembers = new ArrayList<>();
 
-		DTOConverter accountMemberDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountUserRel.class.getName());
-
 		for (CommerceAccountUserRel commerceAccountUserRel :
 				commerceAccountUserRels) {
 
 			accountMembers.add(
-				(AccountMember)accountMemberDTOConverter.toDTO(
+				_accountMemberDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceAccountUserRel.getPrimaryKey())));
+						commerceAccountUserRel.getPrimaryKey(),
+						contextAcceptLanguage.getPreferredLocale())));
 		}
 
 		return accountMembers;
@@ -333,13 +312,13 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 	}
 
 	@Reference
+	private AccountMemberDTOConverter _accountMemberDTOConverter;
+
+	@Reference
 	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CommerceAccountUserRelService _commerceAccountUserRelService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

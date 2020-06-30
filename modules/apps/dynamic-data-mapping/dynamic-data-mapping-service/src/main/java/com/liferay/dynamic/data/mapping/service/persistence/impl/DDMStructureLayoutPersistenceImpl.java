@@ -1690,8 +1690,6 @@ public class DDMStructureLayoutPersistenceImpl
 			"ddmStructureLayout.structureVersionId = ?";
 
 	public DDMStructureLayoutPersistenceImpl() {
-		setModelClass(DDMStructureLayout.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1709,6 +1707,8 @@ public class DDMStructureLayoutPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDMStructureLayout.class);
 	}
 
 	/**

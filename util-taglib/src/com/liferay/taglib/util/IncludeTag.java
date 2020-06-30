@@ -170,6 +170,10 @@ public class IncludeTag extends AttributesTagSupport {
 			request = _trackedRequest;
 		}
 
+		Class<? extends IncludeTag> clazz = getClass();
+
+		request.setAttribute(clazz.getName(), this);
+
 		setNamespacedAttribute(request, "bodyContent", getBodyContentWrapper());
 		setNamespacedAttribute(
 			request, "dynamicAttributes", getDynamicAttributes());

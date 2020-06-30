@@ -15,11 +15,13 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -28,9 +30,11 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressTypeConfiguration;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
+import com.liferay.commerce.tax.engine.fixed.web.internal.frontend.CommerceTaxRateSettingDataSetConstants;
 import com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui.CommerceTaxMethodAddressRateRelsScreenNavigationEntry;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -40,7 +44,10 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -64,7 +71,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		CommerceTaxFixedRateAddressRelService
 			commerceTaxFixedRateAddressRelService,
 		CPTaxCategoryService cpTaxCategoryService,
-		RenderRequest renderRequest) {
+		PercentageFormatter percentageFormatter, RenderRequest renderRequest) {
 
 		super(
 			commerceChannelLocalService, commerceChannelModelResourcePermission,
@@ -75,6 +82,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		_commerceRegionService = commerceRegionService;
 		_commerceTaxFixedRateAddressRelService =
 			commerceTaxFixedRateAddressRelService;
+		_percentageFormatter = percentageFormatter;
 	}
 
 	public String getAddTaxRateSettingURL() throws Exception {
@@ -159,6 +167,40 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 				commerceTaxFixedRateAddressRelId);
 	}
 
+	public String getDatasetView() throws PortalException {
+		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
+
+		if (commerceTaxMethod.isPercentage()) {
+			return CommerceTaxRateSettingDataSetConstants.
+				COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING;
+		}
+
+		return CommerceTaxRateSettingDataSetConstants.
+			COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING;
+	}
+
+	public String getLocalizedPercentage(double percentage, Locale locale)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId());
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyLocalService.getCommerceCurrency(
+				commerceChannel.getCompanyId(),
+				commerceChannel.getCommerceCurrencyCode());
+
+		String localizedPercentage =
+			_percentageFormatter.getLocalizedPercentage(
+				locale, commerceCurrency.getMaxFractionDigits(),
+				commerceCurrency.getMinFractionDigits(),
+				new BigDecimal(percentage));
+
+		return localizedPercentage.replace(
+			StringPool.PERCENT, StringPool.BLANK);
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		return CommerceTaxMethodAddressRateRelsScreenNavigationEntry.
@@ -184,5 +226,6 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 	private final CommerceRegionService _commerceRegionService;
 	private final CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
+	private final PercentageFormatter _percentageFormatter;
 
 }

@@ -5548,8 +5548,6 @@ public class SiteNavigationMenuPersistenceImpl
 		"siteNavigationMenu.auto_ = ?";
 
 	public SiteNavigationMenuPersistenceImpl() {
-		setModelClass(SiteNavigationMenu.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5569,6 +5567,8 @@ public class SiteNavigationMenuPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SiteNavigationMenu.class);
 	}
 
 	/**

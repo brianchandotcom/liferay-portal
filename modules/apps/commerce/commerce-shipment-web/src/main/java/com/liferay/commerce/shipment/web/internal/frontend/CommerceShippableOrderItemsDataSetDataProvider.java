@@ -25,7 +25,9 @@ import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -97,17 +99,24 @@ public class CommerceShippableOrderItemsDataSetDataProvider
 				icon = new Icon(iconName);
 			}
 
-			orderItems.add(
-				new OrderItem(
-					_commerceInventoryEngine.getStockQuantity(
-						commerceOrderItem.getCompanyId(),
-						commerceOrderItem.getGroupId(),
-						commerceOrderItem.getSku()),
-					icon, commerceOrderItem.getCommerceOrderId(),
-					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getQuantity() -
-						commerceOrderItem.getShippedQuantity(),
-					commerceOrderItem.getSku()));
+			CommerceShipmentItem commerceShipmentItem =
+				_commerceShipmentItemService.fetchCommerceShipmentItem(
+					commerceShipmentId,
+					commerceOrderItem.getCommerceOrderItemId(), 0);
+
+			if (commerceShipmentItem == null) {
+				orderItems.add(
+					new OrderItem(
+						_commerceInventoryEngine.getStockQuantity(
+							commerceOrderItem.getCompanyId(),
+							commerceOrderItem.getGroupId(),
+							commerceOrderItem.getSku()),
+						icon, commerceOrderItem.getCommerceOrderId(),
+						commerceOrderItem.getCommerceOrderItemId(),
+						commerceOrderItem.getQuantity() -
+							commerceOrderItem.getShippedQuantity(),
+						commerceOrderItem.getSku()));
+			}
 		}
 
 		return orderItems;
@@ -135,6 +144,9 @@ public class CommerceShippableOrderItemsDataSetDataProvider
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceShipmentItemService _commerceShipmentItemService;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;

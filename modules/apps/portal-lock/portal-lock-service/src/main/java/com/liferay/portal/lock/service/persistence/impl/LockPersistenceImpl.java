@@ -2011,8 +2011,6 @@ public class LockPersistenceImpl
 		"(lock.key IS NULL OR lock.key = '')";
 
 	public LockPersistenceImpl() {
-		setModelClass(Lock.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2031,6 +2029,8 @@ public class LockPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Lock.class);
 	}
 
 	/**

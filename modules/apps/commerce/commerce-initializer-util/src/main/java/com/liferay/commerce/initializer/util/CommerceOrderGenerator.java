@@ -89,6 +89,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 @Component(service = CommerceOrderGenerator.class)
 public class CommerceOrderGenerator {
@@ -120,11 +121,15 @@ public class CommerceOrderGenerator {
 				commerceAccount.getCommerceAccountId(), 0, 1);
 
 		if (commerceAccountUserRels.isEmpty()) {
-			_log.error(
+			String message =
 				"There are no users related to the account " +
-					commerceAccount.getCommerceAccountId());
+					commerceAccount.getCommerceAccountId();
 
-			return;
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
+
+			throw new PortalException(message);
 		}
 
 		CommerceAccountUserRel commerceAccountUserRel =
@@ -170,11 +175,15 @@ public class CommerceOrderGenerator {
 				commerceAccount.getCommerceAccountId(), 0, 1, null);
 
 		if (commerceAddresses.isEmpty()) {
-			_log.error(
+			String message =
 				"There are no addresses related to the account " +
-					commerceAccount.getCommerceAccountId());
+					commerceAccount.getCommerceAccountId();
 
-			return;
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
+
+			throw new PortalException(message);
 		}
 
 		CommerceAddress commerceAddress = commerceAddresses.get(0);
@@ -254,13 +263,19 @@ public class CommerceOrderGenerator {
 				_cpDefinitionInventoryEngineRegistry.
 					getCPDefinitionInventoryEngine(cpDefinitionInventory);
 
+			int maxOrderQuantity = _getMaxOrderQuantity(
+				cpInstance, cpDefinitionInventoryEngine);
+
+			if (maxOrderQuantity < 1) {
+				continue;
+			}
+
 			// Add commerce order item
 
 			try {
 				int quantity = _randomInt(
 					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance),
-					_getMaxOrderQuantity(
-						cpInstance, cpDefinitionInventoryEngine));
+					maxOrderQuantity);
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
@@ -318,6 +333,8 @@ public class CommerceOrderGenerator {
 
 		// Commerce orders
 
+		int retryNumber = 0;
+
 		for (int i = 0; i < ordersCount; i++) {
 			int min = _randomInt(0, cpDataSourceResult.getLength() - 1);
 
@@ -335,13 +352,32 @@ public class CommerceOrderGenerator {
 			cpDataSourceResult = _cpDefinitionHelper.search(
 				groupId, searchContext, new CPQuery(), min, max);
 
-			_generateCommerceOrder(
-				groupId,
-				commerceAccounts.get(
-					_randomInt(0, commerceAccounts.size() - 1)),
-				cpDataSourceResult.getCPCatalogEntries(),
-				commerceShippingMethodId,
-				_getCommerceShippingEngine(commerceShippingMethodId));
+			try {
+				_generateCommerceOrder(
+					groupId,
+					commerceAccounts.get(
+						_randomInt(0, commerceAccounts.size() - 1)),
+					cpDataSourceResult.getCPCatalogEntries(),
+					commerceShippingMethodId,
+					_getCommerceShippingEngine(commerceShippingMethodId));
+
+				retryNumber = 0;
+			}
+			catch (PortalException pe) {
+				if (_log.isInfoEnabled()) {
+					_log.info(pe, pe);
+				}
+
+				// Order not generated, retry
+
+				if (retryNumber < 5) {
+					i--;
+					retryNumber++;
+				}
+				else {
+					_log.error(pe.getMessage(), pe);
+				}
+			}
 		}
 	}
 

@@ -1692,8 +1692,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		"cpDefinitionInventory.CPDefinitionId = ?";
 
 	public CPDefinitionInventoryPersistenceImpl() {
-		setModelClass(CPDefinitionInventory.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1711,6 +1709,8 @@ public class CPDefinitionInventoryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinitionInventory.class);
 	}
 
 	/**

@@ -48,6 +48,12 @@ public interface CommerceOrderStatus {
 		return true;
 	}
 
+	public default boolean isValidForOrder(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return true;
+	}
+
 	public default boolean isWorkflowEnabled(CommerceOrder commerceOrder)
 		throws PortalException {
 

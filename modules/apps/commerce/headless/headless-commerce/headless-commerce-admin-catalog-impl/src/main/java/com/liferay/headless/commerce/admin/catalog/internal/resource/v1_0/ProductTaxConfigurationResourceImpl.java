@@ -19,11 +19,10 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductTaxConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductTaxConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductTaxConfigurationResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 
@@ -55,14 +54,7 @@ public class ProductTaxConfigurationResourceImpl
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
-		DTOConverter productTaxConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ProductTaxConfiguration");
-
-		return (ProductTaxConfiguration)
-			productTaxConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	@NestedField(parentClass = Product.class, value = "taxConfiguration")
@@ -79,14 +71,7 @@ public class ProductTaxConfigurationResourceImpl
 				"Unable to find Product with ID: " + id);
 		}
 
-		DTOConverter productTaxConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ProductTaxConfiguration");
-
-		return (ProductTaxConfiguration)
-			productTaxConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
@@ -133,6 +118,15 @@ public class ProductTaxConfigurationResourceImpl
 		return responseBuilder.build();
 	}
 
+	private ProductTaxConfiguration _toProductTaxConfiguration(
+			Long cpDefinitionId)
+		throws Exception {
+
+		return _productTaxConfigurationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpDefinitionId, contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private ProductTaxConfiguration _updateProductTaxConfiguration(
 			CPDefinition cpDefinition,
 			ProductTaxConfiguration productTaxConfiguration)
@@ -142,20 +136,14 @@ public class ProductTaxConfigurationResourceImpl
 			ProductTaxConfigurationUtil.updateCPDefinitionTaxCategoryInfo(
 				_cpDefinitionService, productTaxConfiguration, cpDefinition);
 
-		DTOConverter productTaxConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ProductTaxConfiguration");
-
-		return (ProductTaxConfiguration)
-			productTaxConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ProductTaxConfigurationDTOConverter
+		_productTaxConfigurationDTOConverter;
 
 }

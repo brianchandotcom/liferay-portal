@@ -2,16 +2,25 @@ definition {
 
 	macro addProductImages {
 		for (var optionValues : list "${optionValuesList}") {
-			Click(locator1 = "Button#PLUS");
+
+			Refresh();
+
+			Click(locator1 = "CommerceEntry#IMAGES_PLUS_BUTTON");
+
+			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.uploadCatalogEntrySingleImage(uploadFileName = "Commerce_${optionValues}.jpg");
 
+			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 			CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValues}");
 
-			CommerceEntry.publishEntry();
+			CommerceEntry.publishProductImage();
 
-			AssertNotVisible(locator1 = "Message#SUCCESS");
+			Click(locator1 = "Icon#CLOSE");
 		}
+
+		Refresh();
 	}
 
 }

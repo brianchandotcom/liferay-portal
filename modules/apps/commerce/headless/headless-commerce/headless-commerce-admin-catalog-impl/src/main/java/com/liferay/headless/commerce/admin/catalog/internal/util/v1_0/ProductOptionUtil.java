@@ -38,8 +38,6 @@ public class ProductOptionUtil {
 		CPOption cpOption = cpOptionService.getCPOption(
 			productOption.getOptionId());
 
-		ProductOption.FieldType fieldType = productOption.getFieldType();
-
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
 				cpDefinitionId, cpOption.getCPOptionId());
@@ -51,11 +49,17 @@ public class ProductOptionUtil {
 					LanguageUtils.getLocalizedMap(productOption.getName()),
 					LanguageUtils.getLocalizedMap(
 						productOption.getDescription()),
-					fieldType.getValue(),
+					GetterUtil.get(
+						productOption.getFieldType(),
+						cpOption.getDDMFormFieldTypeName()),
 					GetterUtil.get(productOption.getPriority(), 0D),
-					GetterUtil.get(productOption.getFacetable(), false),
-					GetterUtil.get(productOption.getRequired(), false),
-					GetterUtil.get(productOption.getSkuContributor(), false),
+					GetterUtil.get(
+						productOption.getFacetable(), cpOption.isFacetable()),
+					GetterUtil.get(
+						productOption.getRequired(), cpOption.isRequired()),
+					GetterUtil.get(
+						productOption.getSkuContributor(),
+						cpOption.isSkuContributor()),
 					true, serviceContext);
 		}
 		else {
@@ -66,7 +70,9 @@ public class ProductOptionUtil {
 					LanguageUtils.getLocalizedMap(productOption.getName()),
 					LanguageUtils.getLocalizedMap(
 						productOption.getDescription()),
-					fieldType.getValue(),
+					GetterUtil.get(
+						productOption.getFieldType(),
+						cpDefinitionOptionRel.getDDMFormFieldTypeName()),
 					GetterUtil.get(
 						productOption.getPriority(),
 						cpDefinitionOptionRel.getPriority()),

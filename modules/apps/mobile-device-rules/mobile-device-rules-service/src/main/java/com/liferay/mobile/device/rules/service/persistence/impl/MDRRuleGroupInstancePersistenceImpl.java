@@ -4712,8 +4712,6 @@ public class MDRRuleGroupInstancePersistenceImpl
 		"mdrRuleGroupInstance.ruleGroupId = ?";
 
 	public MDRRuleGroupInstancePersistenceImpl() {
-		setModelClass(MDRRuleGroupInstance.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4731,6 +4729,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MDRRuleGroupInstance.class);
 	}
 
 	/**

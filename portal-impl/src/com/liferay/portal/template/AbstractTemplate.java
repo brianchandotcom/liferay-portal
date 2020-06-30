@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
@@ -139,6 +140,12 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	@Override
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+	}
+
+	@Override
 	public Object put(String key, Object value) {
 		if ((key == null) || (value == null)) {
 			return null;
@@ -151,6 +158,10 @@ public abstract class AbstractTemplate implements Template {
 			if (restrictedVariables.contains(key)) {
 				return null;
 			}
+		}
+
+		if (value instanceof Class) {
+			return putClass(key, (Class<?>)value);
 		}
 
 		return context.put(key, value);
@@ -196,6 +207,10 @@ public abstract class AbstractTemplate implements Template {
 
 	protected abstract void handleException(Exception exception, Writer writer)
 		throws TemplateException;
+
+	protected Object putClass(String key, Class<?> clazz) {
+		return context.put(key, clazz);
+	}
 
 	protected void write(Writer writer) throws TemplateException {
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);

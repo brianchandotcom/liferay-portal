@@ -3330,8 +3330,6 @@ public class CPDisplayLayoutPersistenceImpl
 		"cpDisplayLayout.classPK = ?";
 
 	public CPDisplayLayoutPersistenceImpl() {
-		setModelClass(CPDisplayLayout.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3349,6 +3347,8 @@ public class CPDisplayLayoutPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDisplayLayout.class);
 	}
 
 	/**

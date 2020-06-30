@@ -20,8 +20,8 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountCategory;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountRel-Category",
 	service = {DiscountCategoryDTOConverter.class, DTOConverter.class}
 )
-public class DiscountCategoryDTOConverter implements DTOConverter {
+public class DiscountCategoryDTOConverter
+	implements DTOConverter<CommerceDiscountRel, DiscountCategory> {
 
 	@Override
 	public String getContentType() {
@@ -45,7 +46,7 @@ public class DiscountCategoryDTOConverter implements DTOConverter {
 
 		CommerceDiscountRel commerceDiscountRel =
 			_commerceDiscountRelService.getCommerceDiscountRel(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
 			commerceDiscountRel.getClassPK());

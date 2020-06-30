@@ -231,7 +231,6 @@ public class CommerceOrderHttpHelperImplTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
 
 	@Inject

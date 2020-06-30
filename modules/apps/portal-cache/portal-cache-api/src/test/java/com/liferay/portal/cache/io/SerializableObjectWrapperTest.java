@@ -105,6 +105,10 @@ public class SerializableObjectWrapperTest {
 		Assert.assertEquals(
 			_TEST_SERIALIZABLE,
 			SerializableObjectWrapper.unwrap(_TEST_SERIALIZABLE));
+
+		Assert.assertNull(
+			SerializableObjectWrapper.unwrap(
+				new SerializableObjectWrapper(null)));
 	}
 
 	@Test

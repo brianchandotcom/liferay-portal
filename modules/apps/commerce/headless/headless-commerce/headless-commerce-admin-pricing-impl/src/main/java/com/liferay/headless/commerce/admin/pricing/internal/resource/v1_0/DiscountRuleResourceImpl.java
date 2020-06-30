@@ -20,13 +20,12 @@ import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountRule;
+import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountRuleDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountRuleUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountRuleResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -107,14 +106,7 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 
 	@Override
 	public DiscountRule getDiscountRule(Long id) throws Exception {
-		DTOConverter discountRuleDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountRule.class.getName());
-
-		return (DiscountRule)discountRuleDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toDiscountRule(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -156,14 +148,8 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 				_commerceDiscountRuleService, discountRule, commerceDiscount,
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountRuleDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountRule.class.getName());
-
-		return (DiscountRule)discountRuleDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountRule.getCommerceDiscountRuleId()));
+		return _toDiscountRule(
+			commerceDiscountRule.getCommerceDiscountRuleId());
 	}
 
 	@Override
@@ -177,14 +163,14 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 				_commerceDiscountService.getCommerceDiscount(id),
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountRuleDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountRule.class.getName());
+		return _toDiscountRule(
+			commerceDiscountRule.getCommerceDiscountRuleId());
+	}
 
-		return (DiscountRule)discountRuleDTOConverter.toDTO(
+	private DiscountRule _toDiscountRule(Long discountId) throws Exception {
+		return _discountRuleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountRule.getCommerceDiscountRuleId()));
+				discountId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<DiscountRule> _toDiscountRules(
@@ -193,18 +179,12 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 
 		List<DiscountRule> discountRules = new ArrayList<>();
 
-		DTOConverter discountRuleDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountRule.class.getName());
-
 		for (CommerceDiscountRule commerceDiscountRule :
 				commerceDiscountRules) {
 
 			discountRules.add(
-				(DiscountRule)discountRuleDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceDiscountRule.getCommerceDiscountRuleId())));
+				_toDiscountRule(
+					commerceDiscountRule.getCommerceDiscountRuleId()));
 		}
 
 		return discountRules;
@@ -217,7 +197,7 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 	private CommerceDiscountService _commerceDiscountService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private DiscountRuleDTOConverter _discountRuleDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

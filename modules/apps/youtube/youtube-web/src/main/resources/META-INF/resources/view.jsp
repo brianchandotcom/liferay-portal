@@ -21,7 +21,7 @@
 		<c:choose>
 			<c:when test="<%= youTubeDisplayContext.isShowThumbnail() %>">
 				<aui:a href="<%= youTubeDisplayContext.getWatchURL() %>" rel="external" title='<%= HtmlUtil.escapeAttribute(LanguageUtil.get(request, "watch-this-video-at-youtube")) %>'>
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="youtube-video" />" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getImageURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" />
+					<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="youtube-video" />' height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getImageURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" />
 				</aui:a>
 			</c:when>
 			<c:otherwise>

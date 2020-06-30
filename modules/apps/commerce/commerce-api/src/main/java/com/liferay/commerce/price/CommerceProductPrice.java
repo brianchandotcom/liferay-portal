@@ -27,9 +27,15 @@ import java.math.BigDecimal;
 @ProviderType
 public interface CommerceProductPrice {
 
+	public long getCommercePriceListId();
+
 	public CommerceDiscountValue getDiscountValue();
 
+	public CommerceDiscountValue getDiscountValueWithTaxAmount();
+
 	public CommerceMoney getFinalPrice();
+
+	public CommerceMoney getFinalPriceWithTaxAmount();
 
 	public int getQuantity();
 
@@ -37,6 +43,10 @@ public interface CommerceProductPrice {
 
 	public CommerceMoney getUnitPrice();
 
+	public CommerceMoney getUnitPriceWithTaxAmount();
+
 	public CommerceMoney getUnitPromoPrice();
+
+	public CommerceMoney getUnitPromoPriceWithTaxAmount();
 
 }

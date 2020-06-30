@@ -146,6 +146,34 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
+			long kaleoTaskInstanceTokenId,
+			Collection<KaleoTaskAssignment> kaleoTaskAssignments,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
+				kaleoTaskInstanceTokenId);
+
+		kaleoTaskInstanceToken.setModifiedDate(new Date());
+		kaleoTaskInstanceToken.setWorkflowContext(
+			WorkflowContextUtil.convert(workflowContext));
+
+		kaleoTaskInstanceToken = kaleoTaskInstanceTokenPersistence.update(
+			kaleoTaskInstanceToken);
+
+		kaleoTaskAssignmentInstanceLocalService.
+			assignKaleoTaskAssignmentInstances(
+				kaleoTaskInstanceToken, kaleoTaskAssignments, workflowContext,
+				serviceContext);
+
+		return kaleoTaskInstanceToken;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
 			long kaleoTaskInstanceTokenId, String assigneeClassName,
 			long assigneeClassPK, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

@@ -108,11 +108,10 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
+		String commerceOrderUuid = ParamUtil.getString(
+			actionRequest, "commerceOrderUuid");
 
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+		portletURL.setParameter("commerceOrderUuid", commerceOrderUuid);
 
 		portletURL.setParameter("checkoutStepName", checkoutStepName);
 

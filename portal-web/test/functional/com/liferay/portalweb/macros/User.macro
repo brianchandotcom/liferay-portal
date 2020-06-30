@@ -985,44 +985,6 @@ definition {
 			key_firstName = "${userFirstName}",
 			key_lastName = "${userLastName}",
 			locator1 = "DataErasure#HEADER");
-
-		Button.clickNoError(button = "Deactivate User");
-
-		AssertConfirm(value1 = "Are you sure you want to deactivate the user?");
-
-		Alert.viewSuccessMessage();
-
-		if (IsElementNotPresent(locator1 = "Button#ANY_DISABLED", key_text = "Delete Personal Site")) {
-			Button.clickNoError(button = "Delete Personal Site");
-
-			AssertConfirm(value1 = "Are you sure you want to delete the user's personal site?");
-
-			Alert.viewSuccessMessage();
-		}
-
-		Button.clickNoError(button = "Review");
-
-		AssertTextEquals.assertPartialText(
-			key_itemsCount = "${itemsCount}",
-			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
-			value1 = "Remaining Items: ${itemsCount}");
-
-		AssertTextEquals.assertPartialText(
-			key_rowEntry = "${applications}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_2",
-			value1 = "${itemsCount}");
-
-		LexiconEntry.gotoEntry(rowEntry = "${applications}");
-
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = "${rowEntry}");
-
-		AssertConfirm(value1 = "Are you sure you want to delete this entity?");
-
-		Alert.viewSuccessMessage();
-
-		LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
 	}
 
 	macro editDetailsViaMyAccount {
@@ -1390,6 +1352,19 @@ definition {
 			value1 = "${userSuffix}");
 
 		PortletEntry.save();
+	}
+
+	macro exportPersonalDataCP {
+		Search.searchCP(searchTerm = "${userFirstName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Export Personal Data",
+			rowEntry = "${userFirstName}");
+
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "ExportPersonalData#HEADER");
 	}
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first"

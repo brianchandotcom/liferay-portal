@@ -32433,8 +32433,6 @@ public class JournalArticlePersistenceImpl
 		"journalArticle.status = ?";
 
 	public JournalArticlePersistenceImpl() {
-		setModelClass(JournalArticle.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -32453,6 +32451,8 @@ public class JournalArticlePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(JournalArticle.class);
 	}
 
 	/**

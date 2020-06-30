@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -194,6 +195,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getEditableValue(JSONObject jsonObject, Locale locale) {
 		String value = jsonObject.getString(LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		value = jsonObject.getString(
+			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");

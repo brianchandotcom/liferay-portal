@@ -39,6 +39,7 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class PriceTag extends ComponentRendererTag {
 
@@ -52,6 +53,9 @@ public class PriceTag extends ComponentRendererTag {
 		try {
 			Map<String, Object> context = getContext();
 
+			long cpDefinitionId = (Long)context.getOrDefault(
+				"CPDefinitionId", 0);
+
 			long cpInstanceId = (Long)context.getOrDefault("CPInstanceId", 0);
 
 			int quantity = (Integer)context.getOrDefault("quantity", 1);
@@ -63,9 +67,17 @@ public class PriceTag extends ComponentRendererTag {
 				quantity = productSettingsModel.getMinQuantity();
 			}
 
-			PriceModel priceModel = _productHelper.getPrice(
-				cpInstanceId, quantity, commerceContext,
-				themeDisplay.getLocale());
+			PriceModel priceModel = null;
+
+			if (cpInstanceId > 0) {
+				priceModel = _productHelper.getPrice(
+					cpInstanceId, quantity, commerceContext,
+					themeDisplay.getLocale());
+			}
+			else {
+				priceModel = _productHelper.getMinPrice(
+					cpDefinitionId, commerceContext, themeDisplay.getLocale());
+			}
 
 			CommercePriceConfiguration commercePriceConfiguration =
 				_configurationProvider.getConfiguration(
@@ -116,6 +128,10 @@ public class PriceTag extends ComponentRendererTag {
 		String additionalPromoPriceClasses) {
 
 		putValue("additionalPromoPriceClasses", additionalPromoPriceClasses);
+	}
+
+	public void setCPDefinitionId(long cpDefinitionId) {
+		putValue("CPDefinitionId", cpDefinitionId);
 	}
 
 	public void setCPInstanceId(long cpInstanceId) {

@@ -18,6 +18,7 @@ import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
+import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
@@ -67,7 +68,7 @@ public class CPAttachmentFileEntriesDisplayContext
 		AttachmentsConfiguration attachmentsConfiguration,
 		CPAttachmentFileEntryService cpAttachmentFileEntryService,
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
-		CPInstanceHelper cpInstanceHelper,
+		CPInstanceHelper cpInstanceHelper, DDMHelper ddmHelper,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
@@ -77,6 +78,7 @@ public class CPAttachmentFileEntriesDisplayContext
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_ddmHelper = ddmHelper;
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 	}
@@ -277,8 +279,10 @@ public class CPAttachmentFileEntriesDisplayContext
 			json = cpAttachmentFileEntry.getJson();
 		}
 
-		return _cpInstanceHelper.renderCPAttachmentFileEntryOptions(
-			getCPDefinitionId(), json, renderRequest, renderResponse);
+		return _ddmHelper.renderCPAttachmentFileEntryOptions(
+			getCPDefinitionId(), json, renderRequest, renderResponse,
+			_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+				getCPDefinitionId(), true, false));
 	}
 
 	private String _getTypeLabel(int type) {
@@ -297,6 +301,7 @@ public class CPAttachmentFileEntriesDisplayContext
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final CPInstanceHelper _cpInstanceHelper;
+	private final DDMHelper _ddmHelper;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 

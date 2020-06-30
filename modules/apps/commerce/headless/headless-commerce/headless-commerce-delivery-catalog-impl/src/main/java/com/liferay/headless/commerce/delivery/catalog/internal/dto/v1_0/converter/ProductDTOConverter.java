@@ -19,12 +19,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=CPDefinition",
 	service = {DTOConverter.class, ProductDTOConverter.class}
 )
-public class ProductDTOConverter implements DTOConverter {
+public class ProductDTOConverter
+	implements DTOConverter<CPDefinition, Product> {
 
 	@Override
 	public String getContentType() {
@@ -53,7 +54,7 @@ public class ProductDTOConverter implements DTOConverter {
 			(ProductDTOConverterContext)dtoConverterContext;
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpCatalogEntryDTOConverterConvertContext.getResourcePrimKey());
+			(Long)cpCatalogEntryDTOConverterConvertContext.getId());
 
 		String languageId = LanguageUtil.getLanguageId(
 			cpCatalogEntryDTOConverterConvertContext.getLocale());

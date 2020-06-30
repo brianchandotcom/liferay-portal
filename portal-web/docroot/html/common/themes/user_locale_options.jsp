@@ -26,9 +26,9 @@ String currentURL = PortalUtil.getCurrentURL(request);
 	Locale userLocale = user.getLocale();
 	%>
 
-	<div dir="<%= LanguageUtil.get(userLocale, "lang.dir") %>">
+	<div dir='<%= LanguageUtil.get(userLocale, "lang.dir") %>'>
 		<div class="d-block">
-			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="ignoreUserLocaleOptions" type="button">&times;</button>
+			<button aria-label='<%= LanguageUtil.get(request, "close") %>' class="close" id="ignoreUserLocaleOptions" type="button">&times;</button>
 
 			<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale)) %>
 		</div>
@@ -40,7 +40,7 @@ String currentURL = PortalUtil.getCurrentURL(request);
 		</c:if>
 	</div>
 
-	<div dir="<%= LanguageUtil.get(request, "lang.dir") %>">
+	<div dir='<%= LanguageUtil.get(request, "lang.dir") %>'>
 		<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + URLCodec.encodeURL(currentURL) + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false" %>'>
 			<%= LanguageUtil.format(locale, "set-x-as-your-preferred-language", locale.getDisplayName(locale)) %>
 		</aui:a>

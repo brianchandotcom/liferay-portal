@@ -21,44 +21,22 @@ String notificationNavigationItem = ParamUtil.getString(request, "notificationNa
 
 CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesDisplayContext = (CommerceNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long commerceChannelId = commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId();
 PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 
 Map<String, String> contextParams = new HashMap<>();
 
-contextParams.put("commerceChannelId", String.valueOf(commerceChannelId));
+contextParams.put("commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId()));
 %>
 
-<%@ include file="/navbar.jspf" %>
-
-<c:choose>
-	<c:when test='<%= notificationNavigationItem.equals("view-all-notification-queue-entries") %>'>
-		<commerce-ui:dataset-display
-			contextParams="<%= contextParams %>"
-			dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
-			id="<%= CommerceNotificationEntryClayTable.NAME %>"
-			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
-			showManagementBar="<%= false %>"
-		/>
-	</c:when>
-	<c:when test='<%= notificationNavigationItem.equals("view-all-notification-templates") %>'>
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commerceNotificationQueueEntriesDisplayContext.getNotificationTemplateClayCreationMenu() %>"
-			contextParams="<%= contextParams %>"
-			dataProviderKey="<%= CommerceNotificationTemplateClayTable.NAME %>"
-			id="<%= CommerceNotificationTemplateClayTable.NAME %>"
-			itemsPerPage="<%= 10 %>"
-			namespace="<%= renderResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
-			showSearch="<%= false %>"
-		/>
-	</c:when>
-	<c:otherwise>
-	</c:otherwise>
-</c:choose>
+<commerce-ui:dataset-display
+	contextParams="<%= contextParams %>"
+	dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
+	id="<%= CommerceNotificationEntryClayTable.NAME %>"
+	itemsPerPage="<%= 10 %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	pageNumber="<%= 1 %>"
+	portletURL="<%= portletURL %>"
+	showManagementBar="<%= false %>"
+/>

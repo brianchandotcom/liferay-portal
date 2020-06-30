@@ -1405,8 +1405,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		"syncDLFileVersionDiff.targetFileVersionId = ?";
 
 	public SyncDLFileVersionDiffPersistenceImpl() {
-		setModelClass(SyncDLFileVersionDiff.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("size", "size_");
@@ -1424,6 +1422,8 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SyncDLFileVersionDiff.class);
 	}
 
 	/**

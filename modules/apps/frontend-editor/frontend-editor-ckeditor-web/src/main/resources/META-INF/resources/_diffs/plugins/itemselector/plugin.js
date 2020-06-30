@@ -322,10 +322,18 @@
 
 				var itemSelectorDialog = instance._itemSelectorDialog;
 
+				var editEntityBaseZIndex = CKEDITOR.getNextZIndex();
+
+				var iframeModalEl = window.parent.document.getElementsByClassName('dialog-iframe-modal');
+
+				if (iframeModalEl.length > 0) {
+					editEntityBaseZIndex = window.getComputedStyle(iframeModalEl[0]).getPropertyValue('z-index');
+				}
+				
 				if (itemSelectorDialog) {
 					itemSelectorDialog.set('eventName', eventName);
 					itemSelectorDialog.set('url', url);
-
+					itemSelectorDialog.set('zIndex', editEntityBaseZIndex + 100);
 					callback(itemSelectorDialog);
 				}
 				else {
@@ -335,7 +343,8 @@
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									eventName: eventName,
-									url: url
+									url: url,
+									zIndex: editEntityBaseZIndex + 100
 								}
 							);
 

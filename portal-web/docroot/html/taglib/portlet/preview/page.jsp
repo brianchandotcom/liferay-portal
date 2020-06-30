@@ -31,7 +31,7 @@ if (Validator.isNull(width)) {
 }
 %>
 
-<div class="taglib-portlet-preview <%= showBorders ? "show-borders" : StringPool.BLANK %>">
+<div class='taglib-portlet-preview <%= showBorders ? "show-borders" : StringPool.BLANK %>'>
 	<c:if test="<%= showBorders %>">
 		<div class="title">
 			<liferay-ui:message key="preview" />
@@ -39,7 +39,7 @@ if (Validator.isNull(width)) {
 	</c:if>
 
 	<div class="preview" id="<%= randomNamespace %>">
-		<div style="margin: 3px; width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %>;">
+		<div style='margin: 3px; width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %>;'>
 			<liferay-portlet:runtime
 				persistSettings="<%= false %>"
 				portletName="<%= portletResource %>"

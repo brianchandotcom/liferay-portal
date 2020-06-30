@@ -16,12 +16,10 @@ package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccount",
 	service = {AccountDTOConverter.class, DTOConverter.class}
 )
-public class AccountDTOConverter implements DTOConverter {
+public class AccountDTOConverter
+	implements DTOConverter<CommerceAccount, Account> {
 
 	@Override
 	public String getContentType() {
@@ -45,7 +44,7 @@ public class AccountDTOConverter implements DTOConverter {
 
 		CommerceAccount commerceAccount =
 			_commerceAccountService.getCommerceAccount(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		ExpandoBridge expandoBridge = commerceAccount.getExpandoBridge();
 
@@ -67,11 +66,5 @@ public class AccountDTOConverter implements DTOConverter {
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
-
-	@Reference
-	private CommerceAddressService _commerceAddressService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

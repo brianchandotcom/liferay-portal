@@ -33,7 +33,6 @@ page import="com.liferay.commerce.wish.list.exception.NoSuchWishListItemExceptio
 page import="com.liferay.commerce.wish.list.model.CommerceWishList" %><%@
 page import="com.liferay.commerce.wish.list.model.CommerceWishListItem" %><%@
 page import="com.liferay.commerce.wish.list.web.internal.display.context.CommerceWishListDisplayContext" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

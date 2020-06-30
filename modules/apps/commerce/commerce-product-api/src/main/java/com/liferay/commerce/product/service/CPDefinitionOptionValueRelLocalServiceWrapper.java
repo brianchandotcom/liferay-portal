@@ -274,6 +274,22 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
+			filterByCPInstanceOptionValueRels(
+				java.util.List
+					<com.liferay.commerce.product.model.
+						CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
+				java.util.List
+					<com.liferay.commerce.product.model.
+						CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			filterByCPInstanceOptionValueRels(
+				cpDefinitionOptionValueRels, cpInstanceOptionValueRels);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -501,6 +517,14 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			hasCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
+	}
+
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -508,6 +532,25 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 
 		_cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
 			cpDefinitionOptionRelId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			resetCPInstanceCPDefinitionOptionValueRel(
+				long cpDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			resetCPInstanceCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId);
+	}
+
+	@Override
+	public void resetCPInstanceCPDefinitionOptionValueRels(
+		String cpInstanceUuid) {
+
+		_cpDefinitionOptionValueRelLocalService.
+			resetCPInstanceCPDefinitionOptionValueRels(cpInstanceUuid);
 	}
 
 	@Override

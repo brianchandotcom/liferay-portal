@@ -95,6 +95,10 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 	public com.liferay.commerce.currency.model.CommerceMoney getTotalMoney()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.commerce.currency.model.CommerceMoney
+			getTotalWithTaxAmountMoney()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean isB2B()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

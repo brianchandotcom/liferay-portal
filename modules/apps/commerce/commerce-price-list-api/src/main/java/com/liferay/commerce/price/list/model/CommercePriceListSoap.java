@@ -44,6 +44,7 @@ public class CommercePriceListSoap implements Serializable {
 		soapModel.setParentCommercePriceListId(
 			model.getParentCommercePriceListId());
 		soapModel.setCatalogBasePriceList(model.isCatalogBasePriceList());
+		soapModel.setNetPrice(model.isNetPrice());
 		soapModel.setType(model.getType());
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
@@ -215,6 +216,18 @@ public class CommercePriceListSoap implements Serializable {
 		_catalogBasePriceList = catalogBasePriceList;
 	}
 
+	public boolean getNetPrice() {
+		return _netPrice;
+	}
+
+	public boolean isNetPrice() {
+		return _netPrice;
+	}
+
+	public void setNetPrice(boolean netPrice) {
+		_netPrice = netPrice;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -307,6 +320,7 @@ public class CommercePriceListSoap implements Serializable {
 	private long _commerceCurrencyId;
 	private long _parentCommercePriceListId;
 	private boolean _catalogBasePriceList;
+	private boolean _netPrice;
 	private String _type;
 	private String _name;
 	private double _priority;

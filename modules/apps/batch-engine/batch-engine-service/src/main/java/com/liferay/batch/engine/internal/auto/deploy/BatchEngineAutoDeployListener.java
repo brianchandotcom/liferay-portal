@@ -62,8 +62,8 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		try (ZipFile zipFile = new ZipFile(autoDeploymentContext.getFile())) {
 			_deploy(zipFile);
 		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
+		catch (Exception exception) {
+			throw new AutoDeployException(exception);
 		}
 
 		return AutoDeployer.CODE_DEFAULT;
@@ -111,8 +111,8 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
+		catch (Exception exception) {
+			throw new AutoDeployException(exception);
 		}
 
 		return true;

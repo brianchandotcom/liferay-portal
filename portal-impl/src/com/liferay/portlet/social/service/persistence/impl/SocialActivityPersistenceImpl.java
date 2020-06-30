@@ -6131,8 +6131,6 @@ public class SocialActivityPersistenceImpl
 		"socialActivity.receiverUserId = ?";
 
 	public SocialActivityPersistenceImpl() {
-		setModelClass(SocialActivity.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -6150,6 +6148,8 @@ public class SocialActivityPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SocialActivity.class);
 	}
 
 	/**

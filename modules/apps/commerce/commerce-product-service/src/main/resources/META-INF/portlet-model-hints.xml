@@ -33,6 +33,8 @@
 		<field name="commerceCurrencyCode" type="String">
 			<validator name="required" />
 		</field>
+		<field name="priceDisplayType" type="String" />
+		<field name="discountsTargetNetPrice" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceChannelRel">
 		<field name="commerceChannelRelId" type="long" />
@@ -216,6 +218,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionOptionRelId" type="long" />
+		<field name="CPInstanceUuid" type="String" />
+		<field name="CProductId" type="long" />
 		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -225,8 +229,6 @@
 		<field name="key" type="String">
 			<validator name="required" />
 		</field>
-		<field name="CPInstanceUuid" type="String" />
-		<field name="CProductId" type="long" />
 		<field name="quantity" type="int" />
 		<field name="price" type="BigDecimal" />
 	</model>

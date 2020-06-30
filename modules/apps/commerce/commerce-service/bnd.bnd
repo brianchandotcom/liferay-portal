@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Service
 Bundle-SymbolicName: com.liferay.commerce.service
-Bundle-Version: 6.0.2
+Bundle-Version: 7.0.6
 Export-Package:\
 	com.liferay.commerce.configuration,\
 	com.liferay.commerce.configuration.definition,\
@@ -30,6 +30,6 @@ Import-Package:\
 	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
 	\
 	*
-Liferay-Require-SchemaVersion: 4.7.0
+Liferay-Require-SchemaVersion: 4.9.0
 Liferay-Service: true
 -dsannotations-options: inherit

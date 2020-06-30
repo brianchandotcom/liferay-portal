@@ -3175,8 +3175,6 @@ public class GadgetPersistenceImpl
 		"(gadget.url IS NULL OR gadget.url = '')";
 
 	public GadgetPersistenceImpl() {
-		setModelClass(Gadget.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3194,6 +3192,8 @@ public class GadgetPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Gadget.class);
 	}
 
 	/**

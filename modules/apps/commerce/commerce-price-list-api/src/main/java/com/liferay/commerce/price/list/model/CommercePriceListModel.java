@@ -274,6 +274,27 @@ public interface CommercePriceListModel
 	public void setCatalogBasePriceList(boolean catalogBasePriceList);
 
 	/**
+	 * Returns the net price of this commerce price list.
+	 *
+	 * @return the net price of this commerce price list
+	 */
+	public boolean getNetPrice();
+
+	/**
+	 * Returns <code>true</code> if this commerce price list is net price.
+	 *
+	 * @return <code>true</code> if this commerce price list is net price; <code>false</code> otherwise
+	 */
+	public boolean isNetPrice();
+
+	/**
+	 * Sets whether this commerce price list is net price.
+	 *
+	 * @param netPrice the net price of this commerce price list
+	 */
+	public void setNetPrice(boolean netPrice);
+
+	/**
 	 * Returns the type of this commerce price list.
 	 *
 	 * @return the type of this commerce price list

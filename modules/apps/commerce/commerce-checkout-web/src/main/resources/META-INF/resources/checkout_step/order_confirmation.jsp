@@ -56,7 +56,7 @@ if (commerceOrderPayment != null) {
 				</c:if>
 
 				<aui:button-row>
-					<aui:button cssClass="alert-link btn-link" href="<%= orderConfirmationCheckoutStepDisplayContext.getRetryPaymentURL(commerceOrderPayment.getCommerceOrderId()) %>" type="submit" value="<%= taglibValue %>" />
+					<aui:button cssClass="alert-link btn-link" href="<%= orderConfirmationCheckoutStepDisplayContext.getRetryPaymentURL() %>" type="submit" value="<%= taglibValue %>" />
 				</aui:button-row>
 			</div>
 		</c:when>

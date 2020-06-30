@@ -299,11 +299,6 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProductTaxConfiguration productTaxConfiguration,
-		ProductTaxConfiguration existingProductTaxConfiguration) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

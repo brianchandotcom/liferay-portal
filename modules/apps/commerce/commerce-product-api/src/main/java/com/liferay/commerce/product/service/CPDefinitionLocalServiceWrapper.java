@@ -685,6 +685,11 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasChildCPDefinitions(long cpDefinitionId) {
+		return _cpDefinitionLocalService.hasChildCPDefinitions(cpDefinitionId);
+	}
+
+	@Override
 	public boolean isPublishedCPDefinition(
 		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
 

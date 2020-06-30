@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.test.util;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalServiceUtil;
@@ -231,7 +232,7 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
 			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
-			type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
+			true, type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
 			priority, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
@@ -241,9 +242,10 @@ public class CommercePriceListTestUtil {
 	}
 
 	public static CommercePriceList addCommercePriceList(
-			long groupId, String currency, long parentCommercePriceListId,
-			String name, Double priority, Boolean neverExpire, Date displayDate,
-			Date expirationDate, String externalReferenceCode)
+			long groupId, String currency, boolean netPrice,
+			long parentCommercePriceListId, String name, Double priority,
+			Boolean neverExpire, Date displayDate, Date expirationDate,
+			String externalReferenceCode)
 		throws PortalException {
 
 		if (priority == null) {
@@ -282,7 +284,8 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
 			commerceCatalog.getGroupId(), user.getUserId(), commerceCurrencyId,
-			parentCommercePriceListId, name, priority,
+			netPrice, CommercePriceListConstants.TYPE_PRICE_LIST,
+			parentCommercePriceListId, false, name, priority,
 			displayDateElements.getMonth(), displayDateElements.getDay(),
 			displayDateElements.getYear(), displayDateElements.getHour(),
 			displayDateElements.getMinute(), expirationDateElements.getMonth(),
@@ -293,14 +296,36 @@ public class CommercePriceListTestUtil {
 	}
 
 	public static CommercePriceList addCommercePriceList(
+			long groupId, String currency, boolean netPrice, String name,
+			Double priority, Boolean neverExpire, Date displayDate,
+			Date expirationDate, String externalReferenceCode)
+		throws PortalException {
+
+		return addCommercePriceList(
+			groupId, currency, netPrice, 0, name, priority, neverExpire,
+			displayDate, expirationDate, externalReferenceCode);
+	}
+
+	public static CommercePriceList addCommercePriceList(
+			long groupId, String currency, long parentCommercePriceListId,
+			String name, Double priority, Boolean neverExpire, Date displayDate,
+			Date expirationDate, String externalReferenceCode)
+		throws PortalException {
+
+		return addCommercePriceList(
+			groupId, currency, true, parentCommercePriceListId, name, priority,
+			neverExpire, displayDate, expirationDate, externalReferenceCode);
+	}
+
+	public static CommercePriceList addCommercePriceList(
 			long groupId, String currency, String name, Double priority,
 			Boolean neverExpire, Date displayDate, Date expirationDate,
 			String externalReferenceCode)
 		throws PortalException {
 
 		return addCommercePriceList(
-			groupId, currency, 0, name, priority, neverExpire, displayDate,
-			expirationDate, externalReferenceCode);
+			groupId, currency, true, 0, name, priority, neverExpire,
+			displayDate, expirationDate, externalReferenceCode);
 	}
 
 	public static CommercePriceList updateCommercePriceList(

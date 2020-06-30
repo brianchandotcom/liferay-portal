@@ -15,6 +15,8 @@
 package com.liferay.headless.form.client.resource.v1_0;
 
 import com.liferay.headless.form.client.dto.v1_0.Form;
+import com.liferay.headless.form.client.dto.v1_0.FormContext;
+import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.http.HttpInvoker;
 import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.pagination.Pagination;
@@ -47,21 +49,16 @@ public interface FormResource {
 	public HttpInvoker.HttpResponse getFormHttpResponse(Long formId)
 		throws Exception;
 
-	public com.liferay.headless.form.client.dto.v1_0.FormContext
-			postFormEvaluateContext(
-				Long formId,
-				com.liferay.headless.form.client.dto.v1_0.FormContext
-					formContext)
+	public FormContext postFormEvaluateContext(
+			Long formId, FormContext formContext)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postFormEvaluateContextHttpResponse(
-			Long formId,
-			com.liferay.headless.form.client.dto.v1_0.FormContext formContext)
+			Long formId, FormContext formContext)
 		throws Exception;
 
-	public com.liferay.headless.form.client.dto.v1_0.FormDocument
-			postFormFormDocument(
-				Long formId, Form form, Map<String, File> multipartFiles)
+	public FormDocument postFormFormDocument(
+			Long formId, Form form, Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postFormFormDocumentHttpResponse(
@@ -188,11 +185,8 @@ public interface FormResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.form.client.dto.v1_0.FormContext
-				postFormEvaluateContext(
-					Long formId,
-					com.liferay.headless.form.client.dto.v1_0.FormContext
-						formContext)
+		public FormContext postFormEvaluateContext(
+				Long formId, FormContext formContext)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -220,9 +214,7 @@ public interface FormResource {
 		}
 
 		public HttpInvoker.HttpResponse postFormEvaluateContextHttpResponse(
-				Long formId,
-				com.liferay.headless.form.client.dto.v1_0.FormContext
-					formContext)
+				Long formId, FormContext formContext)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -260,9 +252,8 @@ public interface FormResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.form.client.dto.v1_0.FormDocument
-				postFormFormDocument(
-					Long formId, Form form, Map<String, File> multipartFiles)
+		public FormDocument postFormFormDocument(
+				Long formId, Form form, Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =

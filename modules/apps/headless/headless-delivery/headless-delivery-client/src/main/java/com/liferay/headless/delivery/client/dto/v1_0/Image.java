@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Image implements Cloneable {
 
+	public static Image toDTO(String json) {
+		return ImageSerDes.toDTO(json);
+	}
+
 	public String getCaption() {
 		return caption;
 	}

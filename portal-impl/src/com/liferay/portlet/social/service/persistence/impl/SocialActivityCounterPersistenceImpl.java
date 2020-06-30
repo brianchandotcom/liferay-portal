@@ -2487,8 +2487,6 @@ public class SocialActivityCounterPersistenceImpl
 		"socialActivityCounter.endPeriod = ?";
 
 	public SocialActivityCounterPersistenceImpl() {
-		setModelClass(SocialActivityCounter.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -2506,6 +2504,8 @@ public class SocialActivityCounterPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SocialActivityCounter.class);
 	}
 
 	/**

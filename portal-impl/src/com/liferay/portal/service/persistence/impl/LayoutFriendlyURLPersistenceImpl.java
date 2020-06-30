@@ -5218,8 +5218,6 @@ public class LayoutFriendlyURLPersistenceImpl
 		"(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 
 	public LayoutFriendlyURLPersistenceImpl() {
-		setModelClass(LayoutFriendlyURL.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5237,6 +5235,8 @@ public class LayoutFriendlyURLPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(LayoutFriendlyURL.class);
 	}
 
 	/**

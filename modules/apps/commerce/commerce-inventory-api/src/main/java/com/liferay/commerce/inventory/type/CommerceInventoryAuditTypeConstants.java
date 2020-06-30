@@ -19,6 +19,8 @@ package com.liferay.commerce.inventory.type;
  */
 public class CommerceInventoryAuditTypeConstants {
 
+	public static final String ACCOUNT_NAME = "accountName";
+
 	public static final String FROM = "from";
 
 	public static final String ORDER_ID = "orderId";

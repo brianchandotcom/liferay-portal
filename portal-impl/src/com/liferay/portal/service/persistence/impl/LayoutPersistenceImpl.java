@@ -13371,8 +13371,6 @@ public class LayoutPersistenceImpl
 		"layout.priority <= ?";
 
 	public LayoutPersistenceImpl() {
-		setModelClass(Layout.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -13392,6 +13390,8 @@ public class LayoutPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Layout.class);
 	}
 
 	/**

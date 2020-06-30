@@ -22,8 +22,10 @@
 								{
 									"dataSourceType": "data-provider",
 									"dataType": "string",
-									"ddmDataProviderInstanceId": [],
-									"ddmDataProviderInstanceOutput": [],
+									"ddmDataProviderInstanceId": [
+									],
+									"ddmDataProviderInstanceOutput": [
+									],
 									"fieldName": "Select",
 									"fieldNamespace": "",
 									"indexType": "keyword",
@@ -45,14 +47,16 @@
 									"required": false,
 									"settingsContext": {
 										"containerId": "settings",
-										"dataProviderSettings": {},
+										"dataProviderSettings": {
+										},
 										"evaluatorURL": "/o/dynamic-data-mapping-form-context-provider/",
 										"groupId": "0",
 										"pages": [
 											{
 												"description": null,
 												"enabled": true,
-												"localizedDescription": {},
+												"localizedDescription": {
+												},
 												"localizedTitle": {
 													"en_US": "Basic"
 												},
@@ -74,7 +78,8 @@
 																			"en_US": "Select"
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$label$ft55l7iz$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "Enter a field label.",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -110,7 +115,8 @@
 																			"en_US": ""
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$tip$ku8VbS3u$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "Enter help text.",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -136,7 +142,8 @@
 																		"label": "Required Field",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$required$h56kIWRZ$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -200,7 +207,8 @@
 																		"label": "Options",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$options$n1wYR7uw$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": true,
@@ -234,7 +242,8 @@
 																		"localizable": false,
 																		"multiple": "",
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$ddmDataProviderInstanceId$gu3oe2da$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": true,
@@ -251,7 +260,8 @@
 																			"errorMessage": "",
 																			"expression": ""
 																		},
-																		"value": [],
+																		"value": [
+																		],
 																		"visibilityExpression": "equals(dataSourceType, \"data-provider\")",
 																		"visible": false
 																	},
@@ -267,7 +277,8 @@
 																		"localizable": false,
 																		"multiple": "",
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$ddmDataProviderInstanceOutput$69pb2sP7$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": true,
@@ -284,7 +295,8 @@
 																			"errorMessage": "",
 																			"expression": ""
 																		},
-																		"value": [],
+																		"value": [
+																		],
 																		"visibilityExpression": "equals(dataSourceType, \"data-provider\")",
 																		"visible": false
 																	}
@@ -300,7 +312,8 @@
 											{
 												"description": null,
 												"enabled": true,
-												"localizedDescription": {},
+												"localizedDescription": {
+												},
 												"localizedTitle": {
 													"en_US": "Properties"
 												},
@@ -323,7 +336,8 @@
 																			"en_US": ""
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$predefinedValue$XY2kts5U$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "Enter a default value.",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -351,7 +365,8 @@
 																		"label": "Field Visibility Expression",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$visibilityExpression$0q1ODdXd$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "equals(Country, \"US\")",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -379,7 +394,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$validation$nofuas6j$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -407,7 +423,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$fieldNamespace$x5gpa6dq$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -472,7 +489,8 @@
 																		"label": "Localizable",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$localizable$0vGl4WJ6$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -497,7 +515,8 @@
 																		"label": "Read Only",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$readOnly$qE8kusPW$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -525,7 +544,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$dataType$mKa9jnFT$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -554,7 +574,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$type$HafWmBuq$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -583,7 +604,8 @@
 																		"label": "Name",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$name$0g88HS8W$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -609,7 +631,8 @@
 																		"label": "Show Label",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$showLabel$UYCnxKN0$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -634,7 +657,8 @@
 																		"label": "Repeatable",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$repeatable$N8TDXpYg$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -659,7 +683,8 @@
 																		"label": "Allow Multiple Selections",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$multiple$ydFgXwDq$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -687,7 +712,8 @@
 										],
 										"portletNamespace": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_",
 										"readOnly": false,
-										"rules": [],
+										"rules": [
+										],
 										"showRequiredFieldsWarning": true,
 										"showSubmitButton": false,
 										"strings": {
@@ -716,5 +742,6 @@
 			}
 		}
 	],
-	"rules": []
+	"rules": [
+	]
 }

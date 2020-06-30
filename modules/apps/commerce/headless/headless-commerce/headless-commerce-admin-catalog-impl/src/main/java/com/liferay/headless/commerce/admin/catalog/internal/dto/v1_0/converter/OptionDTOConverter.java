@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CPOption",
 	service = {DTOConverter.class, OptionDTOConverter.class}
 )
-public class OptionDTOConverter implements DTOConverter {
+public class OptionDTOConverter implements DTOConverter<CPOption, Option> {
 
 	@Override
 	public String getContentType() {
@@ -42,7 +42,7 @@ public class OptionDTOConverter implements DTOConverter {
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.getCPOption(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new Option() {
 			{

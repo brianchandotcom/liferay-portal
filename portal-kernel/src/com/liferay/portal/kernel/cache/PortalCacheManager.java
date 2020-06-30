@@ -41,6 +41,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public void destroy();
 
+	public PortalCache<K, V> fetchPortalCache(String portalCacheName);
+
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException;
 

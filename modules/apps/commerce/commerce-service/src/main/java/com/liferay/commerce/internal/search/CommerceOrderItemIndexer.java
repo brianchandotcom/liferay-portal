@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = Indexer.class)
 public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
@@ -53,6 +54,9 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 	public static final String FIELD_CP_DEFINITION_ID = "CPDefinitionId";
 
 	public static final String FIELD_FINAL_PRICE = "finalPrice";
+
+	public static final String FIELD_PARENT_COMMERCE_ORDER_ITEM_ID =
+		"parentCommerceOrderItemId";
 
 	public static final String FIELD_QUANTITY = "quantity";
 
@@ -75,6 +79,14 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 
 		contextBooleanFilter.addRequiredTerm(
 			FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+
+		Long parentCommerceOrderItemId = (Long)searchContext.getAttribute(
+			FIELD_PARENT_COMMERCE_ORDER_ITEM_ID);
+
+		if (parentCommerceOrderItemId != null) {
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_PARENT_COMMERCE_ORDER_ITEM_ID, parentCommerceOrderItemId);
+		}
 	}
 
 	@Override
@@ -115,6 +127,9 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			FIELD_CP_DEFINITION_ID, commerceOrderItem.getCPDefinitionId());
 		document.addNumber(
 			FIELD_FINAL_PRICE, commerceOrderItem.getFinalPrice());
+		document.addNumber(
+			FIELD_PARENT_COMMERCE_ORDER_ITEM_ID,
+			commerceOrderItem.getParentCommerceOrderItemId());
 		document.addNumber(FIELD_QUANTITY, commerceOrderItem.getQuantity());
 		document.addNumber(FIELD_UNIT_PRICE, commerceOrderItem.getUnitPrice());
 

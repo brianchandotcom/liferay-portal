@@ -2825,8 +2825,6 @@ public class DDMFormInstancePersistenceImpl
 		"ddmFormInstance.groupId IN (";
 
 	public DDMFormInstancePersistenceImpl() {
-		setModelClass(DDMFormInstance.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2845,6 +2843,8 @@ public class DDMFormInstancePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDMFormInstance.class);
 	}
 
 	/**

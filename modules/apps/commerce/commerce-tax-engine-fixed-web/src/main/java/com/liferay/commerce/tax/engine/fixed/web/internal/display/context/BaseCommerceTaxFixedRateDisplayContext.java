@@ -15,7 +15,6 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
-import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -25,7 +24,6 @@ import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateCompa
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.util.CommerceTaxFixedRateRequestHelper;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -92,19 +90,11 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 	public String getCommerceCurrencyCode() throws PortalException {
 		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
 
-		if (commerceTaxMethod.isPercentage()) {
-			return StringPool.PERCENT;
-		}
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceTaxMethod.getGroupId());
 
-		CommerceCurrency commerceCurrency =
-			commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				commerceTaxFixedRateRequestHelper.getCompanyId());
-
-		if (commerceCurrency != null) {
-			return commerceCurrency.getCode();
-		}
-
-		return StringPool.BLANK;
+		return commerceChannel.getCommerceCurrencyCode();
 	}
 
 	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {

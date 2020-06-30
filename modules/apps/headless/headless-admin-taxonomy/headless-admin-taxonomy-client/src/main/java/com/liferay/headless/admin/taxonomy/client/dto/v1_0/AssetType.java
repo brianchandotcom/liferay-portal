@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class AssetType implements Cloneable {
 
+	public static AssetType toDTO(String json) {
+		return AssetTypeSerDes.toDTO(json);
+	}
+
 	public Boolean getRequired() {
 		return required;
 	}

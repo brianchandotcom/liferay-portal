@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.util;
 
+import static com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil.getGraphQLMutationName;
+
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -21,14 +23,19 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
+import java.net.URI;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
@@ -158,56 +165,105 @@ public class ActionUtil {
 			}
 		}
 
-		List<String> matchedURIs = uriInfo.getMatchedURIs();
+		Method method = _getMethod(clazz, methodName);
 
-		String version = "";
+		String httpMethodName = _getHttpMethodName(clazz, method);
 
-		if (!matchedURIs.isEmpty()) {
-			version = matchedURIs.get(matchedURIs.size() - 1);
+		URI baseURI = uriInfo.getBaseUri();
+
+		String baseURIString = baseURI.toString();
+
+		if (baseURIString.contains("/graphql")) {
+			String operation = null;
+			String type = null;
+
+			if (httpMethodName.equals("GET")) {
+				Class<?> returnType = method.getReturnType();
+
+				Stream<Method> stream = Arrays.stream(clazz.getMethods());
+
+				operation = GraphQLNamingUtil.getGraphQLPropertyName(
+					methodName, returnType.getName(),
+					stream.map(
+						Method::getName
+					).collect(
+						Collectors.toList()
+					));
+
+				type = "query";
+			}
+			else {
+				operation = getGraphQLMutationName(methodName);
+				type = "mutation";
+			}
+
+			return HashMapBuilder.put(
+				"operation", operation
+			).put(
+				"type", type
+			).build();
 		}
 
 		return HashMapBuilder.put(
 			"href",
 			uriInfo.getBaseUriBuilder(
 			).path(
-				version
+				_getVersion(uriInfo)
 			).path(
 				clazz.getSuperclass(), methodName
 			).toTemplate()
 		).put(
-			"method", _getHttpMethodName(clazz, methodName)
+			"method", httpMethodName
 		).build();
 	}
 
-	private static String _getHttpMethodName(Class clazz, String methodName)
+	private static String _getHttpMethodName(Class clazz, Method method)
 		throws NoSuchMethodException {
 
+		Class<?> superClass = clazz.getSuperclass();
+
+		Method superMethod = superClass.getMethod(
+			method.getName(), method.getParameterTypes());
+
+		for (Annotation annotation : superMethod.getAnnotations()) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
+
+			Annotation[] annotations = annotationType.getAnnotationsByType(
+				HttpMethod.class);
+
+			if (annotations.length > 0) {
+				HttpMethod httpMethod = (HttpMethod)annotations[0];
+
+				return httpMethod.value();
+			}
+		}
+
+		return null;
+	}
+
+	private static Method _getMethod(Class clazz, String methodName) {
 		for (Method method : clazz.getMethods()) {
 			if (!methodName.equals(method.getName())) {
 				continue;
 			}
 
-			Class<?> superClass = clazz.getSuperclass();
-
-			Method superMethod = superClass.getMethod(
-				method.getName(), method.getParameterTypes());
-
-			for (Annotation annotation : superMethod.getAnnotations()) {
-				Class<? extends Annotation> annotationType =
-					annotation.annotationType();
-
-				Annotation[] annotations = annotationType.getAnnotationsByType(
-					HttpMethod.class);
-
-				if (annotations.length > 0) {
-					HttpMethod httpMethod = (HttpMethod)annotations[0];
-
-					return httpMethod.value();
-				}
-			}
+			return method;
 		}
 
 		return null;
+	}
+
+	private static String _getVersion(UriInfo uriInfo) {
+		String version = "";
+
+		List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+		if (!matchedURIs.isEmpty()) {
+			version = matchedURIs.get(matchedURIs.size() - 1);
+		}
+
+		return version;
 	}
 
 	private static boolean _hasPermission(

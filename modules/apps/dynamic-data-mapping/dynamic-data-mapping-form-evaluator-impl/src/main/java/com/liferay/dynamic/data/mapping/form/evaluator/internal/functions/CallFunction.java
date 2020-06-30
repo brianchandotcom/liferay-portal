@@ -24,9 +24,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -320,13 +322,13 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 	private String _getStringValue(
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult) {
 
-		JSONArray valueJSONArray = ddmFormFieldEvaluationResult.getValue();
+		Object value = ddmFormFieldEvaluationResult.getValue();
 
-		if ((valueJSONArray != null) && (valueJSONArray.length() > 0)) {
-			return valueJSONArray.getString(0);
+		if (value instanceof JSONArray) {
+			return GetterUtil.getString(JSONUtil.getValue(value, "Object/0"));
 		}
 
-		return StringPool.BLANK;
+		return GetterUtil.getString(value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CallFunction.class);

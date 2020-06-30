@@ -19,20 +19,21 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.OptionDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.OptionEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -96,13 +97,7 @@ public class OptionResourceImpl
 
 	@Override
 	public Option getOption(Long id) throws Exception {
-		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPOption.class.getName());
-
-		return (Option)optionDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toOption(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -112,13 +107,7 @@ public class OptionResourceImpl
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
 			contextCompany.getCompanyId(), externalReferenceCode);
 
-		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPOption.class.getName());
-
-		return (Option)optionDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpOption.getCPOptionId()));
+		return _toOption(cpOption.getCPOptionId());
 	}
 
 	@Override
@@ -131,11 +120,17 @@ public class OptionResourceImpl
 			CPOption.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			new UnsafeConsumer() {
+
+				public void accept(Object o) throws Exception {
+					SearchContext searchContext = (SearchContext)o;
+
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+				}
+
+			},
 			document -> _toOption(
-				_cpOptionService.getCPOption(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
 			sorts);
 	}
 
@@ -174,14 +169,10 @@ public class OptionResourceImpl
 		return _upsertOption(option);
 	}
 
-	private Option _toOption(CPOption cpOption) throws Exception {
-		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPOption.class.getName());
-
-		return (Option)optionDTOConverter.toDTO(
+	private Option _toOption(Long cpOptionId) throws Exception {
+		return _optionDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpOption.getCPOptionId()));
+				cpOptionId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private Option _updateOption(CPOption cpOption, Option option)
@@ -200,13 +191,7 @@ public class OptionResourceImpl
 				option.getSkuContributor(), cpOption.isSkuContributor()),
 			option.getKey(), _serviceContextHelper.getServiceContext());
 
-		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPOption.class.getName());
-
-		return (Option)optionDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpOption.getCPOptionId()));
+		return _toOption(cpOption.getCPOptionId());
 	}
 
 	private Option _upsertOption(Option option) throws Exception {
@@ -223,13 +208,7 @@ public class OptionResourceImpl
 
 		_upsertOptionValues(cpOption, option.getOptionValues());
 
-		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPOption.class.getName());
-
-		return (Option)optionDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpOption.getCPOptionId()));
+		return _toOption(cpOption.getCPOptionId());
 	}
 
 	private void _upsertOptionValues(
@@ -254,7 +233,7 @@ public class OptionResourceImpl
 	private CPOptionService _cpOptionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private OptionDTOConverter _optionDTOConverter;
 
 	@Reference
 	private OptionValueResource _optionValueResource;

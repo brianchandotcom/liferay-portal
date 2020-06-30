@@ -108,6 +108,24 @@ public class CommerceOrderModelImpl
 		{"totalDiscountPercentageLevel2", Types.DECIMAL},
 		{"totalDiscountPercentageLevel3", Types.DECIMAL},
 		{"totalDiscountPercentageLevel4", Types.DECIMAL},
+		{"subtotalWithTaxAmount", Types.DECIMAL},
+		{"subtotalDiscountWithTaxAmount", Types.DECIMAL},
+		{"subtotalDiscountPctLev1WithTax", Types.DECIMAL},
+		{"subtotalDiscountPctLev2WithTax", Types.DECIMAL},
+		{"subtotalDiscountPctLev3WithTax", Types.DECIMAL},
+		{"subtotalDiscountPctLev4WithTax", Types.DECIMAL},
+		{"shippingWithTaxAmount", Types.DECIMAL},
+		{"shippingDiscountWithTaxAmount", Types.DECIMAL},
+		{"shippingDiscountPctLev1WithTax", Types.DECIMAL},
+		{"shippingDiscountPctLev2WithTax", Types.DECIMAL},
+		{"shippingDiscountPctLev3WithTax", Types.DECIMAL},
+		{"shippingDiscountPctLev4WithTax", Types.DECIMAL},
+		{"totalWithTaxAmount", Types.DECIMAL},
+		{"totalDiscountWithTaxAmount", Types.DECIMAL},
+		{"totalDiscountPctLev1WithTax", Types.DECIMAL},
+		{"totalDiscountPctLev2WithTax", Types.DECIMAL},
+		{"totalDiscountPctLev3WithTax", Types.DECIMAL},
+		{"totalDiscountPctLev4WithTax", Types.DECIMAL},
 		{"advanceStatus", Types.VARCHAR}, {"paymentStatus", Types.INTEGER},
 		{"orderDate", Types.TIMESTAMP}, {"orderStatus", Types.INTEGER},
 		{"printedNote", Types.VARCHAR},
@@ -160,6 +178,24 @@ public class CommerceOrderModelImpl
 		TABLE_COLUMNS_MAP.put("totalDiscountPercentageLevel2", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("totalDiscountPercentageLevel3", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("totalDiscountPercentageLevel4", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalDiscountWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalDiscountPctLev1WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalDiscountPctLev2WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalDiscountPctLev3WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("subtotalDiscountPctLev4WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingDiscountWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingDiscountPctLev1WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingDiscountPctLev2WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingDiscountPctLev3WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingDiscountPctLev4WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalDiscountWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalDiscountPctLev1WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalDiscountPctLev2WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalDiscountPctLev3WithTax", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("totalDiscountPctLev4WithTax", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("advanceStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("orderDate", Types.TIMESTAMP);
@@ -174,7 +210,7 @@ public class CommerceOrderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrder (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceOrder (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodKey VARCHAR(75) null,transactionId TEXT null,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,couponCode VARCHAR(75) null,lastPriceUpdateDate DATE null,subtotal DECIMAL(30, 16) null,subtotalDiscountAmount DECIMAL(30, 16) null,subtotalDiscountPercentLevel1 DECIMAL(30, 16) null,subtotalDiscountPercentLevel2 DECIMAL(30, 16) null,subtotalDiscountPercentLevel3 DECIMAL(30, 16) null,subtotalDiscountPercentLevel4 DECIMAL(30, 16) null,shippingAmount DECIMAL(30, 16) null,shippingDiscountAmount DECIMAL(30, 16) null,shippingDiscountPercentLevel1 DECIMAL(30, 16) null,shippingDiscountPercentLevel2 DECIMAL(30, 16) null,shippingDiscountPercentLevel3 DECIMAL(30, 16) null,shippingDiscountPercentLevel4 DECIMAL(30, 16) null,taxAmount DECIMAL(30, 16) null,total DECIMAL(30, 16) null,totalDiscountAmount DECIMAL(30, 16) null,totalDiscountPercentageLevel1 DECIMAL(30, 16) null,totalDiscountPercentageLevel2 DECIMAL(30, 16) null,totalDiscountPercentageLevel3 DECIMAL(30, 16) null,totalDiscountPercentageLevel4 DECIMAL(30, 16) null,subtotalWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountWithTaxAmount DECIMAL(30, 16) null,subtotalDiscountPctLev1WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev2WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev3WithTax DECIMAL(30, 16) null,subtotalDiscountPctLev4WithTax DECIMAL(30, 16) null,shippingWithTaxAmount DECIMAL(30, 16) null,shippingDiscountWithTaxAmount DECIMAL(30, 16) null,shippingDiscountPctLev1WithTax DECIMAL(30, 16) null,shippingDiscountPctLev2WithTax DECIMAL(30, 16) null,shippingDiscountPctLev3WithTax DECIMAL(30, 16) null,shippingDiscountPctLev4WithTax DECIMAL(30, 16) null,totalWithTaxAmount DECIMAL(30, 16) null,totalDiscountWithTaxAmount DECIMAL(30, 16) null,totalDiscountPctLev1WithTax DECIMAL(30, 16) null,totalDiscountPctLev2WithTax DECIMAL(30, 16) null,totalDiscountPctLev3WithTax DECIMAL(30, 16) null,totalDiscountPctLev4WithTax DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderDate DATE null,orderStatus INTEGER,printedNote STRING null,requestedDeliveryDate DATE null,manuallyAdjusted BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 
@@ -293,6 +329,39 @@ public class CommerceOrderModelImpl
 			soapModel.getTotalDiscountPercentageLevel3());
 		model.setTotalDiscountPercentageLevel4(
 			soapModel.getTotalDiscountPercentageLevel4());
+		model.setSubtotalWithTaxAmount(soapModel.getSubtotalWithTaxAmount());
+		model.setSubtotalDiscountWithTaxAmount(
+			soapModel.getSubtotalDiscountWithTaxAmount());
+		model.setSubtotalDiscountPercentageLevel1WithTaxAmount(
+			soapModel.getSubtotalDiscountPercentageLevel1WithTaxAmount());
+		model.setSubtotalDiscountPercentageLevel2WithTaxAmount(
+			soapModel.getSubtotalDiscountPercentageLevel2WithTaxAmount());
+		model.setSubtotalDiscountPercentageLevel3WithTaxAmount(
+			soapModel.getSubtotalDiscountPercentageLevel3WithTaxAmount());
+		model.setSubtotalDiscountPercentageLevel4WithTaxAmount(
+			soapModel.getSubtotalDiscountPercentageLevel4WithTaxAmount());
+		model.setShippingWithTaxAmount(soapModel.getShippingWithTaxAmount());
+		model.setShippingDiscountWithTaxAmount(
+			soapModel.getShippingDiscountWithTaxAmount());
+		model.setShippingDiscountPercentageLevel1WithTaxAmount(
+			soapModel.getShippingDiscountPercentageLevel1WithTaxAmount());
+		model.setShippingDiscountPercentageLevel2WithTaxAmount(
+			soapModel.getShippingDiscountPercentageLevel2WithTaxAmount());
+		model.setShippingDiscountPercentageLevel3WithTaxAmount(
+			soapModel.getShippingDiscountPercentageLevel3WithTaxAmount());
+		model.setShippingDiscountPercentageLevel4WithTaxAmount(
+			soapModel.getShippingDiscountPercentageLevel4WithTaxAmount());
+		model.setTotalWithTaxAmount(soapModel.getTotalWithTaxAmount());
+		model.setTotalDiscountWithTaxAmount(
+			soapModel.getTotalDiscountWithTaxAmount());
+		model.setTotalDiscountPercentageLevel1WithTaxAmount(
+			soapModel.getTotalDiscountPercentageLevel1WithTaxAmount());
+		model.setTotalDiscountPercentageLevel2WithTaxAmount(
+			soapModel.getTotalDiscountPercentageLevel2WithTaxAmount());
+		model.setTotalDiscountPercentageLevel3WithTaxAmount(
+			soapModel.getTotalDiscountPercentageLevel3WithTaxAmount());
+		model.setTotalDiscountPercentageLevel4WithTaxAmount(
+			soapModel.getTotalDiscountPercentageLevel4WithTaxAmount());
 		model.setAdvanceStatus(soapModel.getAdvanceStatus());
 		model.setPaymentStatus(soapModel.getPaymentStatus());
 		model.setOrderDate(soapModel.getOrderDate());
@@ -1371,6 +1440,478 @@ public class CommerceOrderModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"subtotalWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getSubtotalWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object subtotalWithTaxAmountObject) {
+
+					commerceOrder.setSubtotalWithTaxAmount(
+						(BigDecimal)subtotalWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"subtotalDiscountWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getSubtotalDiscountWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalDiscountWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object subtotalDiscountWithTaxAmountObject) {
+
+					commerceOrder.setSubtotalDiscountWithTaxAmount(
+						(BigDecimal)subtotalDiscountWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"subtotalDiscountPercentageLevel1WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getSubtotalDiscountPercentageLevel1WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalDiscountPercentageLevel1WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						subtotalDiscountPercentageLevel1WithTaxAmountObject) {
+
+					commerceOrder.
+						setSubtotalDiscountPercentageLevel1WithTaxAmount(
+							(BigDecimal)
+								subtotalDiscountPercentageLevel1WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"subtotalDiscountPercentageLevel2WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getSubtotalDiscountPercentageLevel2WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalDiscountPercentageLevel2WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						subtotalDiscountPercentageLevel2WithTaxAmountObject) {
+
+					commerceOrder.
+						setSubtotalDiscountPercentageLevel2WithTaxAmount(
+							(BigDecimal)
+								subtotalDiscountPercentageLevel2WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"subtotalDiscountPercentageLevel3WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getSubtotalDiscountPercentageLevel3WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalDiscountPercentageLevel3WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						subtotalDiscountPercentageLevel3WithTaxAmountObject) {
+
+					commerceOrder.
+						setSubtotalDiscountPercentageLevel3WithTaxAmount(
+							(BigDecimal)
+								subtotalDiscountPercentageLevel3WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"subtotalDiscountPercentageLevel4WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getSubtotalDiscountPercentageLevel4WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"subtotalDiscountPercentageLevel4WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						subtotalDiscountPercentageLevel4WithTaxAmountObject) {
+
+					commerceOrder.
+						setSubtotalDiscountPercentageLevel4WithTaxAmount(
+							(BigDecimal)
+								subtotalDiscountPercentageLevel4WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getShippingWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object shippingWithTaxAmountObject) {
+
+					commerceOrder.setShippingWithTaxAmount(
+						(BigDecimal)shippingWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingDiscountWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getShippingDiscountWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingDiscountWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object shippingDiscountWithTaxAmountObject) {
+
+					commerceOrder.setShippingDiscountWithTaxAmount(
+						(BigDecimal)shippingDiscountWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingDiscountPercentageLevel1WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getShippingDiscountPercentageLevel1WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingDiscountPercentageLevel1WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						shippingDiscountPercentageLevel1WithTaxAmountObject) {
+
+					commerceOrder.
+						setShippingDiscountPercentageLevel1WithTaxAmount(
+							(BigDecimal)
+								shippingDiscountPercentageLevel1WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingDiscountPercentageLevel2WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getShippingDiscountPercentageLevel2WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingDiscountPercentageLevel2WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						shippingDiscountPercentageLevel2WithTaxAmountObject) {
+
+					commerceOrder.
+						setShippingDiscountPercentageLevel2WithTaxAmount(
+							(BigDecimal)
+								shippingDiscountPercentageLevel2WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingDiscountPercentageLevel3WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getShippingDiscountPercentageLevel3WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingDiscountPercentageLevel3WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						shippingDiscountPercentageLevel3WithTaxAmountObject) {
+
+					commerceOrder.
+						setShippingDiscountPercentageLevel3WithTaxAmount(
+							(BigDecimal)
+								shippingDiscountPercentageLevel3WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"shippingDiscountPercentageLevel4WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getShippingDiscountPercentageLevel4WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"shippingDiscountPercentageLevel4WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object
+						shippingDiscountPercentageLevel4WithTaxAmountObject) {
+
+					commerceOrder.
+						setShippingDiscountPercentageLevel4WithTaxAmount(
+							(BigDecimal)
+								shippingDiscountPercentageLevel4WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getTotalWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalWithTaxAmountObject) {
+
+					commerceOrder.setTotalWithTaxAmount(
+						(BigDecimal)totalWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalDiscountWithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.getTotalDiscountWithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalDiscountWithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalDiscountWithTaxAmountObject) {
+
+					commerceOrder.setTotalDiscountWithTaxAmount(
+						(BigDecimal)totalDiscountWithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalDiscountPercentageLevel1WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getTotalDiscountPercentageLevel1WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalDiscountPercentageLevel1WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalDiscountPercentageLevel1WithTaxAmountObject) {
+
+					commerceOrder.setTotalDiscountPercentageLevel1WithTaxAmount(
+						(BigDecimal)
+							totalDiscountPercentageLevel1WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalDiscountPercentageLevel2WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getTotalDiscountPercentageLevel2WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalDiscountPercentageLevel2WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalDiscountPercentageLevel2WithTaxAmountObject) {
+
+					commerceOrder.setTotalDiscountPercentageLevel2WithTaxAmount(
+						(BigDecimal)
+							totalDiscountPercentageLevel2WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalDiscountPercentageLevel3WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getTotalDiscountPercentageLevel3WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalDiscountPercentageLevel3WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalDiscountPercentageLevel3WithTaxAmountObject) {
+
+					commerceOrder.setTotalDiscountPercentageLevel3WithTaxAmount(
+						(BigDecimal)
+							totalDiscountPercentageLevel3WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"totalDiscountPercentageLevel4WithTaxAmount",
+			new Function<CommerceOrder, Object>() {
+
+				@Override
+				public Object apply(CommerceOrder commerceOrder) {
+					return commerceOrder.
+						getTotalDiscountPercentageLevel4WithTaxAmount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"totalDiscountPercentageLevel4WithTaxAmount",
+			new BiConsumer<CommerceOrder, Object>() {
+
+				@Override
+				public void accept(
+					CommerceOrder commerceOrder,
+					Object totalDiscountPercentageLevel4WithTaxAmountObject) {
+
+					commerceOrder.setTotalDiscountPercentageLevel4WithTaxAmount(
+						(BigDecimal)
+							totalDiscountPercentageLevel4WithTaxAmountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"advanceStatus",
 			new Function<CommerceOrder, Object>() {
 
@@ -2255,6 +2796,246 @@ public class CommerceOrderModelImpl
 
 	@JSON
 	@Override
+	public BigDecimal getSubtotalWithTaxAmount() {
+		return _subtotalWithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalWithTaxAmount(BigDecimal subtotalWithTaxAmount) {
+		_subtotalWithTaxAmount = subtotalWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getSubtotalDiscountWithTaxAmount() {
+		return _subtotalDiscountWithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalDiscountWithTaxAmount(
+		BigDecimal subtotalDiscountWithTaxAmount) {
+
+		_subtotalDiscountWithTaxAmount = subtotalDiscountWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getSubtotalDiscountPercentageLevel1WithTaxAmount() {
+		return _subtotalDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount) {
+
+		_subtotalDiscountPercentageLevel1WithTaxAmount =
+			subtotalDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getSubtotalDiscountPercentageLevel2WithTaxAmount() {
+		return _subtotalDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount) {
+
+		_subtotalDiscountPercentageLevel2WithTaxAmount =
+			subtotalDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getSubtotalDiscountPercentageLevel3WithTaxAmount() {
+		return _subtotalDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount) {
+
+		_subtotalDiscountPercentageLevel3WithTaxAmount =
+			subtotalDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getSubtotalDiscountPercentageLevel4WithTaxAmount() {
+		return _subtotalDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@Override
+	public void setSubtotalDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount) {
+
+		_subtotalDiscountPercentageLevel4WithTaxAmount =
+			subtotalDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingWithTaxAmount() {
+		return _shippingWithTaxAmount;
+	}
+
+	@Override
+	public void setShippingWithTaxAmount(BigDecimal shippingWithTaxAmount) {
+		_shippingWithTaxAmount = shippingWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingDiscountWithTaxAmount() {
+		return _shippingDiscountWithTaxAmount;
+	}
+
+	@Override
+	public void setShippingDiscountWithTaxAmount(
+		BigDecimal shippingDiscountWithTaxAmount) {
+
+		_shippingDiscountWithTaxAmount = shippingDiscountWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingDiscountPercentageLevel1WithTaxAmount() {
+		return _shippingDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@Override
+	public void setShippingDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount) {
+
+		_shippingDiscountPercentageLevel1WithTaxAmount =
+			shippingDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingDiscountPercentageLevel2WithTaxAmount() {
+		return _shippingDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@Override
+	public void setShippingDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount) {
+
+		_shippingDiscountPercentageLevel2WithTaxAmount =
+			shippingDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingDiscountPercentageLevel3WithTaxAmount() {
+		return _shippingDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@Override
+	public void setShippingDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount) {
+
+		_shippingDiscountPercentageLevel3WithTaxAmount =
+			shippingDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getShippingDiscountPercentageLevel4WithTaxAmount() {
+		return _shippingDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@Override
+	public void setShippingDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount) {
+
+		_shippingDiscountPercentageLevel4WithTaxAmount =
+			shippingDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalWithTaxAmount() {
+		return _totalWithTaxAmount;
+	}
+
+	@Override
+	public void setTotalWithTaxAmount(BigDecimal totalWithTaxAmount) {
+		_totalWithTaxAmount = totalWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalDiscountWithTaxAmount() {
+		return _totalDiscountWithTaxAmount;
+	}
+
+	@Override
+	public void setTotalDiscountWithTaxAmount(
+		BigDecimal totalDiscountWithTaxAmount) {
+
+		_totalDiscountWithTaxAmount = totalDiscountWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalDiscountPercentageLevel1WithTaxAmount() {
+		return _totalDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@Override
+	public void setTotalDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel1WithTaxAmount) {
+
+		_totalDiscountPercentageLevel1WithTaxAmount =
+			totalDiscountPercentageLevel1WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalDiscountPercentageLevel2WithTaxAmount() {
+		return _totalDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@Override
+	public void setTotalDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel2WithTaxAmount) {
+
+		_totalDiscountPercentageLevel2WithTaxAmount =
+			totalDiscountPercentageLevel2WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalDiscountPercentageLevel3WithTaxAmount() {
+		return _totalDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@Override
+	public void setTotalDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel3WithTaxAmount) {
+
+		_totalDiscountPercentageLevel3WithTaxAmount =
+			totalDiscountPercentageLevel3WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getTotalDiscountPercentageLevel4WithTaxAmount() {
+		return _totalDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@Override
+	public void setTotalDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel4WithTaxAmount) {
+
+		_totalDiscountPercentageLevel4WithTaxAmount =
+			totalDiscountPercentageLevel4WithTaxAmount;
+	}
+
+	@JSON
+	@Override
 	public String getAdvanceStatus() {
 		if (_advanceStatus == null) {
 			return "";
@@ -2600,6 +3381,39 @@ public class CommerceOrderModelImpl
 			getTotalDiscountPercentageLevel3());
 		commerceOrderImpl.setTotalDiscountPercentageLevel4(
 			getTotalDiscountPercentageLevel4());
+		commerceOrderImpl.setSubtotalWithTaxAmount(getSubtotalWithTaxAmount());
+		commerceOrderImpl.setSubtotalDiscountWithTaxAmount(
+			getSubtotalDiscountWithTaxAmount());
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel1WithTaxAmount(
+			getSubtotalDiscountPercentageLevel1WithTaxAmount());
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel2WithTaxAmount(
+			getSubtotalDiscountPercentageLevel2WithTaxAmount());
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel3WithTaxAmount(
+			getSubtotalDiscountPercentageLevel3WithTaxAmount());
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel4WithTaxAmount(
+			getSubtotalDiscountPercentageLevel4WithTaxAmount());
+		commerceOrderImpl.setShippingWithTaxAmount(getShippingWithTaxAmount());
+		commerceOrderImpl.setShippingDiscountWithTaxAmount(
+			getShippingDiscountWithTaxAmount());
+		commerceOrderImpl.setShippingDiscountPercentageLevel1WithTaxAmount(
+			getShippingDiscountPercentageLevel1WithTaxAmount());
+		commerceOrderImpl.setShippingDiscountPercentageLevel2WithTaxAmount(
+			getShippingDiscountPercentageLevel2WithTaxAmount());
+		commerceOrderImpl.setShippingDiscountPercentageLevel3WithTaxAmount(
+			getShippingDiscountPercentageLevel3WithTaxAmount());
+		commerceOrderImpl.setShippingDiscountPercentageLevel4WithTaxAmount(
+			getShippingDiscountPercentageLevel4WithTaxAmount());
+		commerceOrderImpl.setTotalWithTaxAmount(getTotalWithTaxAmount());
+		commerceOrderImpl.setTotalDiscountWithTaxAmount(
+			getTotalDiscountWithTaxAmount());
+		commerceOrderImpl.setTotalDiscountPercentageLevel1WithTaxAmount(
+			getTotalDiscountPercentageLevel1WithTaxAmount());
+		commerceOrderImpl.setTotalDiscountPercentageLevel2WithTaxAmount(
+			getTotalDiscountPercentageLevel2WithTaxAmount());
+		commerceOrderImpl.setTotalDiscountPercentageLevel3WithTaxAmount(
+			getTotalDiscountPercentageLevel3WithTaxAmount());
+		commerceOrderImpl.setTotalDiscountPercentageLevel4WithTaxAmount(
+			getTotalDiscountPercentageLevel4WithTaxAmount());
 		commerceOrderImpl.setAdvanceStatus(getAdvanceStatus());
 		commerceOrderImpl.setPaymentStatus(getPaymentStatus());
 		commerceOrderImpl.setOrderDate(getOrderDate());
@@ -2903,6 +3717,59 @@ public class CommerceOrderModelImpl
 		commerceOrderCacheModel.totalDiscountPercentageLevel4 =
 			getTotalDiscountPercentageLevel4();
 
+		commerceOrderCacheModel.subtotalWithTaxAmount =
+			getSubtotalWithTaxAmount();
+
+		commerceOrderCacheModel.subtotalDiscountWithTaxAmount =
+			getSubtotalDiscountWithTaxAmount();
+
+		commerceOrderCacheModel.subtotalDiscountPercentageLevel1WithTaxAmount =
+			getSubtotalDiscountPercentageLevel1WithTaxAmount();
+
+		commerceOrderCacheModel.subtotalDiscountPercentageLevel2WithTaxAmount =
+			getSubtotalDiscountPercentageLevel2WithTaxAmount();
+
+		commerceOrderCacheModel.subtotalDiscountPercentageLevel3WithTaxAmount =
+			getSubtotalDiscountPercentageLevel3WithTaxAmount();
+
+		commerceOrderCacheModel.subtotalDiscountPercentageLevel4WithTaxAmount =
+			getSubtotalDiscountPercentageLevel4WithTaxAmount();
+
+		commerceOrderCacheModel.shippingWithTaxAmount =
+			getShippingWithTaxAmount();
+
+		commerceOrderCacheModel.shippingDiscountWithTaxAmount =
+			getShippingDiscountWithTaxAmount();
+
+		commerceOrderCacheModel.shippingDiscountPercentageLevel1WithTaxAmount =
+			getShippingDiscountPercentageLevel1WithTaxAmount();
+
+		commerceOrderCacheModel.shippingDiscountPercentageLevel2WithTaxAmount =
+			getShippingDiscountPercentageLevel2WithTaxAmount();
+
+		commerceOrderCacheModel.shippingDiscountPercentageLevel3WithTaxAmount =
+			getShippingDiscountPercentageLevel3WithTaxAmount();
+
+		commerceOrderCacheModel.shippingDiscountPercentageLevel4WithTaxAmount =
+			getShippingDiscountPercentageLevel4WithTaxAmount();
+
+		commerceOrderCacheModel.totalWithTaxAmount = getTotalWithTaxAmount();
+
+		commerceOrderCacheModel.totalDiscountWithTaxAmount =
+			getTotalDiscountWithTaxAmount();
+
+		commerceOrderCacheModel.totalDiscountPercentageLevel1WithTaxAmount =
+			getTotalDiscountPercentageLevel1WithTaxAmount();
+
+		commerceOrderCacheModel.totalDiscountPercentageLevel2WithTaxAmount =
+			getTotalDiscountPercentageLevel2WithTaxAmount();
+
+		commerceOrderCacheModel.totalDiscountPercentageLevel3WithTaxAmount =
+			getTotalDiscountPercentageLevel3WithTaxAmount();
+
+		commerceOrderCacheModel.totalDiscountPercentageLevel4WithTaxAmount =
+			getTotalDiscountPercentageLevel4WithTaxAmount();
+
 		commerceOrderCacheModel.advanceStatus = getAdvanceStatus();
 
 		String advanceStatus = commerceOrderCacheModel.advanceStatus;
@@ -3094,6 +3961,24 @@ public class CommerceOrderModelImpl
 	private BigDecimal _totalDiscountPercentageLevel2;
 	private BigDecimal _totalDiscountPercentageLevel3;
 	private BigDecimal _totalDiscountPercentageLevel4;
+	private BigDecimal _subtotalWithTaxAmount;
+	private BigDecimal _subtotalDiscountWithTaxAmount;
+	private BigDecimal _subtotalDiscountPercentageLevel1WithTaxAmount;
+	private BigDecimal _subtotalDiscountPercentageLevel2WithTaxAmount;
+	private BigDecimal _subtotalDiscountPercentageLevel3WithTaxAmount;
+	private BigDecimal _subtotalDiscountPercentageLevel4WithTaxAmount;
+	private BigDecimal _shippingWithTaxAmount;
+	private BigDecimal _shippingDiscountWithTaxAmount;
+	private BigDecimal _shippingDiscountPercentageLevel1WithTaxAmount;
+	private BigDecimal _shippingDiscountPercentageLevel2WithTaxAmount;
+	private BigDecimal _shippingDiscountPercentageLevel3WithTaxAmount;
+	private BigDecimal _shippingDiscountPercentageLevel4WithTaxAmount;
+	private BigDecimal _totalWithTaxAmount;
+	private BigDecimal _totalDiscountWithTaxAmount;
+	private BigDecimal _totalDiscountPercentageLevel1WithTaxAmount;
+	private BigDecimal _totalDiscountPercentageLevel2WithTaxAmount;
+	private BigDecimal _totalDiscountPercentageLevel3WithTaxAmount;
+	private BigDecimal _totalDiscountPercentageLevel4WithTaxAmount;
 	private String _advanceStatus;
 	private int _paymentStatus;
 	private Date _orderDate;

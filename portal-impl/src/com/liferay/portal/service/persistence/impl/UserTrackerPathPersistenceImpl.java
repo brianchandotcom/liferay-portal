@@ -593,8 +593,6 @@ public class UserTrackerPathPersistenceImpl
 		"userTrackerPath.userTrackerId = ?";
 
 	public UserTrackerPathPersistenceImpl() {
-		setModelClass(UserTrackerPath.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("path", "path_");
@@ -612,6 +610,8 @@ public class UserTrackerPathPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(UserTrackerPath.class);
 	}
 
 	/**

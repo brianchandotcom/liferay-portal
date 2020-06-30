@@ -361,6 +361,19 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			commerceInventoryBookedQuantity);
 	}
 
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
+				updateCommerceInventoryBookedQuantity(
+					long userId, long commerceInventoryBookedQuantityId,
+					int quantity, java.util.Map<String, String> context,
+					long mvccVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceInventoryBookedQuantity(
+			userId, commerceInventoryBookedQuantityId, quantity, context,
+			mvccVersion);
+	}
+
 	public static CommerceInventoryBookedQuantityLocalService getService() {
 		return _serviceTracker.getService();
 	}

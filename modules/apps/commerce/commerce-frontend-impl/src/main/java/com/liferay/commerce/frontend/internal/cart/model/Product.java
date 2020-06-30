@@ -26,11 +26,12 @@ import java.util.List;
 public class Product {
 
 	public Product(
-		long id, String name, String sku, int quantity, String thumbnail,
-		PriceModel prices, ProductSettingsModel settings,
+		long id, long parentProductId, String name, String sku, int quantity,
+		String thumbnail, PriceModel prices, ProductSettingsModel settings,
 		String[] errorMessages, long cpInstanceId) {
 
 		_id = id;
+		_parentProductId = parentProductId;
 		_name = name;
 		_sku = sku;
 		_quantity = quantity;
@@ -39,6 +40,10 @@ public class Product {
 		_settings = settings;
 		_errorMessages = errorMessages;
 		_cpInstanceId = cpInstanceId;
+	}
+
+	public List<Product> getChildItems() {
+		return _childItems;
 	}
 
 	public long getCPInstanceId() {
@@ -61,6 +66,10 @@ public class Product {
 		return _options;
 	}
 
+	public long getParentProductId() {
+		return _parentProductId;
+	}
+
 	public PriceModel getPrices() {
 		return _prices;
 	}
@@ -79,6 +88,10 @@ public class Product {
 
 	public String getThumbnail() {
 		return _thumbnail;
+	}
+
+	public void setChildItems(List<Product> childItems) {
+		_childItems = childItems;
 	}
 
 	public void setCPInstanceId(long cpInstanceId) {
@@ -101,6 +114,10 @@ public class Product {
 		_options = options;
 	}
 
+	public void setParentProductId(long parentProductId) {
+		_parentProductId = parentProductId;
+	}
+
 	public void setPrices(PriceModel prices) {
 		_prices = prices;
 	}
@@ -121,11 +138,13 @@ public class Product {
 		_thumbnail = thumbnail;
 	}
 
+	private List<Product> _childItems;
 	private long _cpInstanceId;
 	private String[] _errorMessages;
 	private long _id;
 	private String _name;
 	private List<KeyValuePair> _options;
+	private long _parentProductId;
 	private PriceModel _prices;
 	private int _quantity;
 	private ProductSettingsModel _settings;

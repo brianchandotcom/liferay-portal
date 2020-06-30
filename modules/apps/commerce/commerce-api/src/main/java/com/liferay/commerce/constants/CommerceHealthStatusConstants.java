@@ -40,6 +40,15 @@ public class CommerceHealthStatusConstants {
 	public static final String COMMERCE_CHECKOUT_COMMERCE_HEALTH_STATUS_KEY =
 		"commerce.checkout.commerce.health.status.key";
 
+	public static final String
+		COMMERCE_GUEST_CHECKOUT_AUTHENTICATION_COMMERCE_HEALTH_STATUS_DESCRIPTION =
+			"commerce.guest.checkout.authentication.commerce.health.status." +
+				"description";
+
+	public static final String
+		COMMERCE_GUEST_CHECKOUT_AUTHENTICATION_COMMERCE_HEALTH_STATUS_KEY =
+			"commerce.guest.checkout.authentication.commerce.health.status.key";
+
 	public static final int COMMERCE_HEALTH_STATUS_TYPE_GROUP_INSTANCE = 1;
 
 	public static final int COMMERCE_HEALTH_STATUS_TYPE_VIRTUAL_INSTANCE = 0;

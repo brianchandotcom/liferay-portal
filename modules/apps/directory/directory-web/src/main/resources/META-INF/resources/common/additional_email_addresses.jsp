@@ -36,7 +36,7 @@ if (classPK > 0) {
 		for (EmailAddress emailAddress : emailAddresses) {
 		%>
 
-			<li class="<%= (emailAddress.isPrimary() && !emailAddresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
+			<li class='<%= (emailAddress.isPrimary() && !emailAddresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>'>
 				<a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a>
 
 				<%= LanguageUtil.get(request, emailAddress.getType().getName()) %>

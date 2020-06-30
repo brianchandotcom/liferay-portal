@@ -79,7 +79,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 
 				</aui:select>
 
-				<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
+				<div class='<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />includeRootInTreeContainer">
 					<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
 				</div>
 

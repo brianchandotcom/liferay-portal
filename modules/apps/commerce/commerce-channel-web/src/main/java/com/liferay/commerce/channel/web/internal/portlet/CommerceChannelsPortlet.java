@@ -21,6 +21,7 @@ import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
@@ -96,8 +97,8 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 				_commerceChannelTypeRegistry, _commerceCurrencyService,
 				_commercePaymentMethodRegistry, _configurationProvider,
 				_portal.getHttpServletRequest(renderRequest), _portal,
-				_workflowDefinitionLinkLocalService,
-				_workflowDefinitionManager);
+				_workflowDefinitionLinkLocalService, _workflowDefinitionManager,
+				_cpTaxCategoryLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceChannelDisplayContext);
@@ -129,6 +130,9 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private Portal _portal;

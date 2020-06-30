@@ -370,11 +370,6 @@ public abstract class BaseDiscountProductResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DiscountProduct discountProduct,
-		DiscountProduct existingDiscountProduct) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

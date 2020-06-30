@@ -1474,8 +1474,6 @@ public class CommerceChannelPersistenceImpl
 		"(commerceChannel.externalReferenceCode IS NULL OR commerceChannel.externalReferenceCode = '')";
 
 	public CommerceChannelPersistenceImpl() {
-		setModelClass(CommerceChannel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -1493,6 +1491,8 @@ public class CommerceChannelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceChannel.class);
 	}
 
 	/**

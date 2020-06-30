@@ -1046,8 +1046,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		"(oAuth2ScopeGrant.scope IS NULL OR oAuth2ScopeGrant.scope = '')";
 
 	public OAuth2ScopeGrantPersistenceImpl() {
-		setModelClass(OAuth2ScopeGrant.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1066,6 +1064,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(OAuth2ScopeGrant.class);
 	}
 
 	/**

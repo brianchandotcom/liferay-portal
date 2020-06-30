@@ -30,7 +30,7 @@ if (bean instanceof WorkflowedModel) {
 String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK);
 %>
 
-<div class="bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor ">
+<div class='bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor '>
 	<div class="container<%= Validator.isNotNull(cssClasses) ? StringPool.SPACE + cssClasses : StringPool.BLANK %>">
 		<div class="d-lg-flex py-2">
 			<div class="align-items-center d-flex flex-grow-1">
@@ -101,7 +101,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 												label='<%= LanguageUtil.get(request, "edit") %>'
 											/>
 
-											<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as events">
+											<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
 												document
 													.querySelector('#erc-edit-modal-opener')
 													.addEventListener('click', function(e) {
@@ -339,7 +339,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 	</div>
 </div>
 
-<aui:script require="commerce-frontend-js/utilities/index.es as utilities">
+<aui:script require="commerce-frontend-js/utilities/debounce as debounce">
 	var commerceHeader = document.querySelector('.commerce-header');
 	var pageHeader = document.querySelector('.page-header');
 
@@ -349,7 +349,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 		pageHeader.style.top = distanceFromTop + 'px';
 	}
 
-	var debouncedUpdateMenuDistanceFromTop = utilities.debounce(
+	var debouncedUpdateMenuDistanceFromTop = debounce.default(
 		updateMenuDistanceFromTop,
 		200
 	);

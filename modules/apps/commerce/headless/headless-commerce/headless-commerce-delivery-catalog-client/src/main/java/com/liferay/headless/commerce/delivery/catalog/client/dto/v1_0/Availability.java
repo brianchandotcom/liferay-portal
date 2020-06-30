@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Availability implements Cloneable {
 
+	public static Availability toDTO(String json) {
+		return AvailabilitySerDes.toDTO(json);
+	}
+
 	public String getLabel() {
 		return label;
 	}

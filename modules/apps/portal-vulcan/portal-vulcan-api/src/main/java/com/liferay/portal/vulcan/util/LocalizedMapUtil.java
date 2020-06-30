@@ -14,12 +14,17 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.BadRequestException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,6 +47,63 @@ public class LocalizedMapUtil {
 		}
 
 		return map;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Locale defaultLocale, String defaultValue,
+		Map<String, String> i18nMap) {
+
+		Map<Locale, String> localizedMap = getLocalizedMap(i18nMap);
+
+		if (defaultValue != null) {
+			localizedMap.put(defaultLocale, defaultValue);
+		}
+
+		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Locale defaultLocale, String defaultValue, Map<String, String> i18nMap,
+		Map<Locale, String> fallbackLocalizedMap) {
+
+		Map<Locale, String> localizedMap = null;
+
+		if (i18nMap != null) {
+			localizedMap = getLocalizedMap(i18nMap);
+		}
+		else if (defaultValue != null) {
+			localizedMap = new HashMap<>(fallbackLocalizedMap);
+		}
+		else {
+			localizedMap = new HashMap<>();
+		}
+
+		if (defaultValue != null) {
+			localizedMap.put(defaultLocale, defaultValue);
+		}
+
+		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Map<String, String> i18nMap) {
+
+		Map<Locale, String> localizedMap = new HashMap<>();
+
+		if (i18nMap == null) {
+			return localizedMap;
+		}
+
+		for (Map.Entry<String, String> entry : i18nMap.entrySet()) {
+			Locale locale = _getLocale(entry.getKey());
+			String value = entry.getValue();
+
+			if ((locale != null) && (value != null)) {
+				localizedMap.put(locale, value);
+			}
+		}
+
+		return localizedMap;
 	}
 
 	public static Map<Locale, String> merge(
@@ -84,6 +146,38 @@ public class LocalizedMapUtil {
 		}
 
 		return map;
+	}
+
+	public static void validateI18n(
+		boolean add, Locale defaultLocale, String entityName,
+		Map<Locale, String> localizedMap, Set<Locale> notFoundLocales) {
+
+		if ((add && localizedMap.isEmpty()) ||
+			!localizedMap.containsKey(defaultLocale)) {
+
+			throw new BadRequestException(
+				entityName + " must include the default language " +
+					LocaleUtil.toW3cLanguageId(defaultLocale));
+		}
+
+		notFoundLocales.removeAll(localizedMap.keySet());
+
+		if (!notFoundLocales.isEmpty()) {
+			Stream<Locale> notFoundLocaleStream = notFoundLocales.stream();
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					entityName, " title missing in the languages: ",
+					notFoundLocaleStream.map(
+						LocaleUtil::toW3cLanguageId
+					).collect(
+						Collectors.joining(",")
+					)));
+		}
+	}
+
+	private static Locale _getLocale(String languageId) {
+		return LocaleUtil.fromLanguageId(languageId, true, false);
 	}
 
 }

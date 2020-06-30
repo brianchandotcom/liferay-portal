@@ -2264,8 +2264,6 @@ public class RepositoryPersistenceImpl
 		"(repository.portletId IS NULL OR repository.portletId = '')";
 
 	public RepositoryPersistenceImpl() {
-		setModelClass(Repository.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2283,6 +2281,8 @@ public class RepositoryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Repository.class);
 	}
 
 	/**

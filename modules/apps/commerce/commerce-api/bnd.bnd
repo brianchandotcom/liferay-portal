@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce API
 Bundle-SymbolicName: com.liferay.commerce.api
-Bundle-Version: 18.0.2
+Bundle-Version: 19.1.2
 Export-Package:\
 	com.liferay.commerce.address,\
 	com.liferay.commerce.constants,\
@@ -17,6 +17,7 @@ Export-Package:\
 	com.liferay.commerce.payment.method,\
 	com.liferay.commerce.payment.request,\
 	com.liferay.commerce.payment.result,\
+	com.liferay.commerce.percentage,\
 	com.liferay.commerce.price,\
 	com.liferay.commerce.search.facet,\
 	com.liferay.commerce.service,\

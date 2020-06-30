@@ -118,6 +118,17 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 		return false;
 	}
 
+	@Override
+	public boolean isValidForOrder(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
 

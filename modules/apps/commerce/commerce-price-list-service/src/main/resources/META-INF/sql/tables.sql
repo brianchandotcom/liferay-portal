@@ -55,6 +55,7 @@ create table CommercePriceList (
 	commerceCurrencyId LONG,
 	parentCommercePriceListId LONG,
 	catalogBasePriceList BOOLEAN,
+	netPrice BOOLEAN,
 	type_ VARCHAR(75) null,
 	name VARCHAR(75) null,
 	priority DOUBLE,

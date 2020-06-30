@@ -43,6 +43,7 @@
 		<field name="commerceCurrencyId" type="long" />
 		<field name="parentCommercePriceListId" type="long" />
 		<field name="catalogBasePriceList" type="boolean" />
+		<field name="netPrice" type="boolean" />
 		<field name="type" type="String" />
 		<field name="name" type="String" />
 		<field name="priority" type="double" />

@@ -28,8 +28,6 @@ if (Validator.isNull(virtualHostName) && scopeGroup.isStagingGroup()) {
 
 	virtualHostName = PortalUtil.getVirtualHostname(layoutSet.isPrivateLayout() ? liveGroup.getPrivateLayoutSet() : liveGroup.getPublicLayoutSet());
 }
-
-String robots = ParamUtil.getString(request, "robots", RobotsUtil.getRobots(layoutsAdminDisplayContext.getSelLayoutSet(), request.isSecure()));
 %>
 
 <liferay-ui:error-marker
@@ -39,7 +37,7 @@ String robots = ParamUtil.getString(request, "robots", RobotsUtil.getRobots(layo
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostName) %>">
-		<aui:input label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= robots %>" />
+		<aui:input helpMessage="robots-txt-help" label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

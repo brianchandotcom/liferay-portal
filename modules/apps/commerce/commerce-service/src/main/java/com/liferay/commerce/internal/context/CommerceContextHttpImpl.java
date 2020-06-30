@@ -56,7 +56,7 @@ public class CommerceContextHttpImpl implements CommerceContext {
 		_portal = portal;
 
 		try {
-			CommerceChannel commerceChannel = fetchCommerceChannel();
+			CommerceChannel commerceChannel = _fetchCommerceChannel();
 
 			if (commerceChannel != null) {
 				_commerceAccountGroupServiceConfiguration =
@@ -72,14 +72,9 @@ public class CommerceContextHttpImpl implements CommerceContext {
 		}
 	}
 
-	public CommerceChannel fetchCommerceChannel() throws PortalException {
-		return _commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-			_portal.getScopeGroupId(_httpServletRequest));
-	}
-
 	@Override
 	public CommerceAccount getCommerceAccount() throws PortalException {
-		CommerceChannel commerceChannel = fetchCommerceChannel();
+		CommerceChannel commerceChannel = _fetchCommerceChannel();
 
 		if ((_commerceAccount != null) || (commerceChannel == null)) {
 			return _commerceAccount;
@@ -174,6 +169,11 @@ public class CommerceContextHttpImpl implements CommerceContext {
 		}
 
 		return _commerceAccountGroupServiceConfiguration.commerceSiteType();
+	}
+
+	private CommerceChannel _fetchCommerceChannel() throws PortalException {
+		return _commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+			_portal.getScopeGroupId(_httpServletRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

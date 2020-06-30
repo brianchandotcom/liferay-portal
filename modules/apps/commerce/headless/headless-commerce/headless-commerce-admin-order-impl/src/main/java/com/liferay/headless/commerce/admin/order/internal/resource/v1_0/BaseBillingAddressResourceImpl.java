@@ -294,10 +294,6 @@ public abstract class BaseBillingAddressResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		BillingAddress billingAddress, BillingAddress existingBillingAddress) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

@@ -298,15 +298,25 @@ public class TaxonomyVocabularySerDes {
 			map.put("creator", String.valueOf(taxonomyVocabulary.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				taxonomyVocabulary.getDateCreated()));
+		if (taxonomyVocabulary.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					taxonomyVocabulary.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				taxonomyVocabulary.getDateModified()));
+		if (taxonomyVocabulary.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					taxonomyVocabulary.getDateModified()));
+		}
 
 		if (taxonomyVocabulary.getDescription() == null) {
 			map.put("description", null);

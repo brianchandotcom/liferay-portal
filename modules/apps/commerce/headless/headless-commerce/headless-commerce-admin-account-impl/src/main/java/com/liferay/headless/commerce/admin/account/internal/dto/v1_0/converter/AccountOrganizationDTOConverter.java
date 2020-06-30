@@ -18,9 +18,9 @@ import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountOrganizationRel",
 	service = {AccountOrganizationDTOConverter.class, DTOConverter.class}
 )
-public class AccountOrganizationDTOConverter implements DTOConverter {
+public class AccountOrganizationDTOConverter
+	implements DTOConverter
+		<CommerceAccountOrganizationRel, AccountOrganization> {
 
 	@Override
 	public String getContentType() {
@@ -46,7 +48,7 @@ public class AccountOrganizationDTOConverter implements DTOConverter {
 			_commerceAccountOrganizationRelService.
 				getCommerceAccountOrganizationRel(
 					(CommerceAccountOrganizationRelPK)
-						dtoConverterContext.getCompositeResourcePrimKey());
+						dtoConverterContext.getId());
 
 		Organization organization =
 			commerceAccountOrganizationRel.getOrganization();

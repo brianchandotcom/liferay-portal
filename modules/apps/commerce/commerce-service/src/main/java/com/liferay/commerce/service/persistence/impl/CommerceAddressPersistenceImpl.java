@@ -5018,8 +5018,6 @@ public class CommerceAddressPersistenceImpl
 		"(commerceAddress.externalReferenceCode IS NULL OR commerceAddress.externalReferenceCode = '')";
 
 	public CommerceAddressPersistenceImpl() {
-		setModelClass(CommerceAddress.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -5037,6 +5035,8 @@ public class CommerceAddressPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceAddress.class);
 	}
 
 	/**

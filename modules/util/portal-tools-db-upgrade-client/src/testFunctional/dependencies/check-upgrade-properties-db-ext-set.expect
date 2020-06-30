@@ -3,28 +3,28 @@
 spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat]
 
 expect "Please enter your application server" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your application server directory" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your extra library directories in application server directory" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your global library directory in application server directory" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your portal directory in application server directory" {
-    send "\r"
+	send "\r"
 }
 
 set timeout 900
 
 expect {
-    "Checking to see if all upgrades have completed... done" {send_user "PASS"}
-    timeout {send_user "FAILED";exit 2}
+	"Checking to see if all upgrades have completed... done" {send_user "PASS"}
+	timeout {send_user "FAILED";exit 2}
 }

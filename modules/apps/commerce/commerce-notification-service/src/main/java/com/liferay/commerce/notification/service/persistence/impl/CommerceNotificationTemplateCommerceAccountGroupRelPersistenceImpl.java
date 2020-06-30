@@ -1510,9 +1510,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		"commerceNotificationTemplateCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	public CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl() {
-		setModelClass(
-			CommerceNotificationTemplateCommerceAccountGroupRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1532,6 +1529,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(
+			CommerceNotificationTemplateCommerceAccountGroupRel.class);
 	}
 
 	/**

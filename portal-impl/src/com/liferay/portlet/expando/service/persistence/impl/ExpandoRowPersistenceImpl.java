@@ -1300,8 +1300,6 @@ public class ExpandoRowPersistenceImpl
 		"expandoRow.classPK = ?";
 
 	public ExpandoRowPersistenceImpl() {
-		setModelClass(ExpandoRow.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("rowId", "rowId_");
@@ -1319,6 +1317,8 @@ public class ExpandoRowPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ExpandoRow.class);
 	}
 
 	/**

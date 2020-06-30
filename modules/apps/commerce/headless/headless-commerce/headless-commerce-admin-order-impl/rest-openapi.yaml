@@ -531,7 +531,8 @@ info:
         email: team-commerce@liferay.com
         name: Commerce Team
     description:
-        Liferay Commerce Admin Order API
+        "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.4'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -544,14 +545,14 @@ paths:
             operationId: deleteOrderItemByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 204:
                     description:
@@ -578,14 +579,14 @@ paths:
             operationId: getOrderItemByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 200:
                     content:
@@ -642,14 +643,14 @@ paths:
             operationId: patchOrderItemByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -712,15 +713,15 @@ paths:
             operationId: deleteOrderItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 204:
                     description:
@@ -747,15 +748,15 @@ paths:
             operationId: getOrderItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -812,15 +813,15 @@ paths:
             operationId: patchOrderItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -883,14 +884,14 @@ paths:
             operationId: deleteOrderNoteByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 204:
                     description:
@@ -917,14 +918,14 @@ paths:
             operationId: getOrderNoteByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 200:
                     content:
@@ -981,14 +982,14 @@ paths:
             operationId: patchOrderNoteByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1051,15 +1052,15 @@ paths:
             operationId: deleteOrderNote
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 204:
                     description:
@@ -1086,15 +1087,15 @@ paths:
             operationId: getOrderNote
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -1151,15 +1152,15 @@ paths:
             operationId: patchOrderNote
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1222,25 +1223,25 @@ paths:
             operationId: getOrdersPage
             parameters:
                 - in: query
-                      name: filter
-                      required: false
-                      schema:
-                          type: string
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: sort
-                      required: false
-                      schema:
-                          type: string
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1371,14 +1372,14 @@ paths:
             operationId: deleteOrderByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 204:
                     description:
@@ -1405,14 +1406,14 @@ paths:
             operationId: getOrderByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 200:
                     content:
@@ -1469,14 +1470,14 @@ paths:
             operationId: patchOrderByExternalReferenceCode
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1539,14 +1540,14 @@ paths:
             operationId: getOrderByExternalReferenceCodeBillingAddress
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 200:
                     content:
@@ -1603,14 +1604,14 @@ paths:
             operationId: patchOrderByExternalReferenceCodeBillingAddress
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1673,24 +1674,24 @@ paths:
             operationId: getOrderByExternalReferenceCodeOrderItemsPage
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1751,14 +1752,14 @@ paths:
             operationId: postOrderByExternalReferenceCodeOrderItem
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1831,24 +1832,24 @@ paths:
             operationId: getOrderByExternalReferenceCodeOrderNotesPage
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1909,14 +1910,14 @@ paths:
             operationId: postOrderByExternalReferenceCodeOrderNote
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1989,14 +1990,14 @@ paths:
             operationId: getOrderByExternalReferenceCodeShippingAddress
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             responses:
                 200:
                     content:
@@ -2053,14 +2054,14 @@ paths:
             operationId: patchOrderByExternalReferenceCodeShippingAddress
             parameters:
                 - in: path
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2123,15 +2124,15 @@ paths:
             operationId: deleteOrder
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 204:
                     description:
@@ -2158,15 +2159,15 @@ paths:
             operationId: getOrder
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -2223,15 +2224,15 @@ paths:
             operationId: patchOrder
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2294,15 +2295,15 @@ paths:
             operationId: getOrderIdBillingAddress
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -2359,15 +2360,15 @@ paths:
             operationId: patchOrderIdBillingAddress
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2430,25 +2431,25 @@ paths:
             operationId: getOrderIdOrderItemsPage
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -2509,15 +2510,15 @@ paths:
             operationId: postOrderIdOrderItem
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2590,25 +2591,25 @@ paths:
             operationId: getOrderIdOrderNotesPage
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -2669,15 +2670,15 @@ paths:
             operationId: postOrderIdOrderNote
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2750,15 +2751,15 @@ paths:
             operationId: getOrderIdShippingAddress
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -2815,15 +2816,15 @@ paths:
             operationId: patchOrderIdShippingAddress
             parameters:
                 - in: path
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             requestBody:
                 content:
                     application/json:

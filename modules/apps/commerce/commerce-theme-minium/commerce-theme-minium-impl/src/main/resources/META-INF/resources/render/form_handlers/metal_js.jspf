@@ -19,7 +19,7 @@
 	<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 </liferay-portlet:actionURL>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as eventsDefinitions">
+<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
 
 	const cpDefinitionId = <%= cpDefinitionId %>;
 	const CP_CONTENT_WEB_PORTLET_KEY = 'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';

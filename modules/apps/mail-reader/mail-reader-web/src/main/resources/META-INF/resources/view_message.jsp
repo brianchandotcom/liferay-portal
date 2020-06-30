@@ -65,13 +65,13 @@ MailManager mailManager = MailManager.getInstance(request);
 			</aui:nav>
 
 			<ul class="message-pager pager pull-right">
-				<li class="<%= ((messageNumber > 1) ? StringPool.BLANK : "disabled ") + "previous" %>">
+				<li class='<%= ((messageNumber > 1) ? StringPool.BLANK : "disabled ") + "previous" %>'>
 					<aui:a cssClass="message-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-messageNumber="<%= messageNumber - 1 %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" href="javascript:;">&larr; <liferay-ui:message key="newer" /></aui:a>
 				</li>
 				<li class="message-count">
 					<liferay-ui:message arguments="<%= new Object[] {messageNumber, messageCount} %>" key="x-of-x" translateArguments="<%= false %>" />
 				</li>
-				<li class="<%= ((messageNumber < messageCount) ? StringPool.BLANK : "disabled ") + "next" %>">
+				<li class='<%= ((messageNumber < messageCount) ? StringPool.BLANK : "disabled ") + "next" %>'>
 					<aui:a cssClass="message-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-messageNumber="<%= messageNumber + 1 %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" href="javascript:;"><liferay-ui:message key="older" /> &rarr;</aui:a>
 				</li>
 			</ul>

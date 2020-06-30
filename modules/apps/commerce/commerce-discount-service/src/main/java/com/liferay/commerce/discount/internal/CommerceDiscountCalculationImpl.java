@@ -31,6 +31,7 @@ import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -142,6 +144,9 @@ public class CommerceDiscountCalculationImpl
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 		if (commerceOrder != null) {
+			commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+				commerceOrder.getCommerceOrderId());
+
 			couponCode = commerceOrder.getCouponCode();
 		}
 
@@ -221,7 +226,7 @@ public class CommerceDiscountCalculationImpl
 
 			String discountCouponCode = commerceDiscount.getCouponCode();
 
-			if ((discountCouponCode != null) &&
+			if (!Validator.isBlank(discountCouponCode) &&
 				!Objects.equals(couponCode, discountCouponCode)) {
 
 				continue;
@@ -412,6 +417,9 @@ public class CommerceDiscountCalculationImpl
 
 	@Reference
 	private CommerceMoneyFactory _commerceMoneyFactory;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

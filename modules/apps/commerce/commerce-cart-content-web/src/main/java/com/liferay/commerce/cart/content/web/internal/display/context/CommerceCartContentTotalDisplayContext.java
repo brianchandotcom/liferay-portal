@@ -15,16 +15,16 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
-import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +44,8 @@ public class CommerceCartContentTotalDisplayContext
 
 	public CommerceCartContentTotalDisplayContext(
 			HttpServletRequest httpServletRequest,
+			CommerceChannelLocalService commerceChannelLocalService,
+			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
@@ -58,12 +59,14 @@ public class CommerceCartContentTotalDisplayContext
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceOrderItemService,
-			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
-			commerceProductPriceCalculation, cpDefinitionHelper,
-			cpInstanceHelper, commerceOrderModelResourcePermission,
+			httpServletRequest, commerceChannelLocalService,
+			commerceOrderItemService, commerceOrderPriceCalculation,
+			commerceOrderValidatorRegistry, commerceProductPriceCalculation,
+			cpDefinitionHelper, cpInstanceHelper,
+			commerceOrderModelResourcePermission,
 			commerceProductPortletResourcePermission);
 
+		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =
@@ -78,14 +81,8 @@ public class CommerceCartContentTotalDisplayContext
 	}
 
 	public PortletURL getCheckoutPortletURL() throws PortalException {
-		long plid = _portal.getPlidFromPortletId(
-			commerceCartContentRequestHelper.getScopeGroupId(),
-			CommercePortletKeys.COMMERCE_CHECKOUT);
-
-		return PortletURLFactoryUtil.create(
-			commerceCartContentRequestHelper.getRequest(),
-			CommercePortletKeys.COMMERCE_CHECKOUT, plid,
-			PortletRequest.RENDER_PHASE);
+		return _commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
+			commerceCartContentRequestHelper.getRequest());
 	}
 
 	@Override
@@ -114,6 +111,7 @@ public class CommerceCartContentTotalDisplayContext
 
 	private final CommerceCartContentTotalPortletInstanceConfiguration
 		_commerceCartContentTotalPortletInstanceConfiguration;
+	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private long _displayStyleGroupId;
 	private final Portal _portal;
 

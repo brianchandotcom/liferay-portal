@@ -30,6 +30,17 @@ CommerceMoney taxValue = commerceOrderPrice.getTaxValue();
 CommerceDiscountValue totalDiscountValue = commerceOrderPrice.getTotalDiscountValue();
 CommerceMoney totalOrder = commerceOrderPrice.getTotal();
 
+String priceDisplayType = orderSummaryCheckoutStepDisplayContext.getCommercePriceDisplayType();
+
+if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+	shippingDiscountValue = commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
+	shippingValue = commerceOrderPrice.getShippingValueWithTaxAmount();
+	subtotal = commerceOrderPrice.getSubtotalWithTaxAmount();
+	subtotalDiscountValue = commerceOrderPrice.getSubtotalDiscountValueWithTaxAmount();
+	totalDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
+	totalOrder = commerceOrderPrice.getTotalWithTaxAmount();
+}
+
 String commercePaymentMethodName = StringPool.BLANK;
 
 String commercePaymentMethodKey = commerceOrder.getCommercePaymentMethodKey();
@@ -150,7 +161,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 								CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
 								CommerceMoney unitPromoPriceMoney = commerceProductPrice.getUnitPromoPrice();
 
-								BigDecimal promoPrice = unitPromoPriceMoney.getPrice();
+								if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+									unitPriceMoney = commerceProductPrice.getUnitPriceWithTaxAmount();
+									unitPromoPriceMoney = commerceProductPrice.getUnitPromoPriceWithTaxAmount();
+								}
+
+									BigDecimal promoPrice = unitPromoPriceMoney.getPrice();
 								%>
 
 								<div class="value-section">
@@ -192,6 +208,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 								<%
 								CommerceDiscountValue discountValue = commerceProductPrice.getDiscountValue();
 
+								if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+									discountValue = commerceProductPrice.getDiscountValueWithTaxAmount();
+								}
+
 								CommerceMoney discountAmount = null;
 
 								if (discountValue != null) {
@@ -214,6 +234,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 								<%
 								CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+
+								if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+									finalPriceMoney = commerceProductPrice.getFinalPriceWithTaxAmount();
+								}
 								%>
 
 								<div class="value-section">
@@ -263,7 +287,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<div class="autofit-col autofit-col-expand"></div>
 
 						<div class="commerce-value">
-							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getFormattedPercentage(subtotalDiscountValue.getDiscountPercentage())) %>
+							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(subtotalDiscountValue.getDiscountPercentage(), locale)) %>
 						</div>
 					</li>
 				</c:if>
@@ -297,20 +321,22 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<div class="autofit-col autofit-col-expand"></div>
 
 						<div class="commerce-value">
-							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getFormattedPercentage(shippingDiscountValue.getDiscountPercentage())) %>
+							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(shippingDiscountValue.getDiscountPercentage(), locale)) %>
 						</div>
 					</li>
 				</c:if>
 
-				<li class="autofit-row commerce-tax">
-					<div class="autofit-col autofit-col-expand">
-						<div class="commerce-description"><liferay-ui:message key="tax" /></div>
-					</div>
+				<c:if test="<%= priceDisplayType.equals(CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE) %>">
+					<li class="autofit-row commerce-tax">
+						<div class="autofit-col autofit-col-expand">
+							<div class="commerce-description"><liferay-ui:message key="tax" /></div>
+						</div>
 
-					<div class="autofit-col">
-						<div class="commerce-value"><%= HtmlUtil.escape(taxValue.format(locale)) %></div>
-					</div>
-				</li>
+						<div class="autofit-col">
+							<div class="commerce-value"><%= HtmlUtil.escape(taxValue.format(locale)) %></div>
+						</div>
+					</li>
+				</c:if>
 
 				<c:if test="<%= totalDiscountValue != null %>">
 
@@ -331,7 +357,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<div class="autofit-col autofit-col-expand"></div>
 
 						<div class="autofit-col commerce-value">
-							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getFormattedPercentage(totalDiscountValue.getDiscountPercentage())) %>
+							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(totalDiscountValue.getDiscountPercentage(), locale)) %>
 						</div>
 					</li>
 				</c:if>

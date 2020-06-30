@@ -47,8 +47,36 @@ public class SafePNGInputStreamTest {
 	}
 
 	@Test
+	public void testCompressedITXTChunksAreFilteredOut() throws Exception {
+		InputStream inputStream = _createInputStream(
+			_PNG_SIGNATURE, _COMPRESSED_ITXT_CHUNK);
+
+		byte[] bytes = new byte[_PNG_SIGNATURE.length];
+
+		inputStream.read(bytes);
+
+		Assert.assertArrayEquals(_PNG_SIGNATURE, bytes);
+
+		Assert.assertEquals(-1, inputStream.read());
+	}
+
+	@Test
 	public void testEmptyInputStreamReturnsNoData() throws Exception {
 		InputStream inputStream = _createInputStream(new byte[0]);
+
+		Assert.assertEquals(-1, inputStream.read());
+	}
+
+	@Test
+	public void testICCPChunksAreFilteredOut() throws Exception {
+		InputStream inputStream = _createInputStream(
+			_PNG_SIGNATURE, _ICCP_CHUNK);
+
+		byte[] bytes = new byte[_PNG_SIGNATURE.length];
+
+		inputStream.read(bytes);
+
+		Assert.assertArrayEquals(_PNG_SIGNATURE, bytes);
 
 		Assert.assertEquals(-1, inputStream.read());
 	}
@@ -76,7 +104,8 @@ public class SafePNGInputStreamTest {
 	@Test
 	public void testRemainingChunksOrderIsPreserved() throws Exception {
 		InputStream inputStream = _createInputStream(
-			_PNG_SIGNATURE, _MISC_CHUNK1, _ZTXT_CHUNK, _MISC_CHUNK2);
+			_PNG_SIGNATURE, _MISC_CHUNK1, _ZTXT_CHUNK, _COMPRESSED_ITXT_CHUNK,
+			_MISC_CHUNK2, _ICCP_CHUNK);
 
 		byte[] bytes = new byte
 			[_PNG_SIGNATURE.length + _MISC_CHUNK1.length + _MISC_CHUNK2.length];
@@ -99,6 +128,22 @@ public class SafePNGInputStreamTest {
 		inputStream.read(bytes);
 
 		Assert.assertArrayEquals(_NOT_PNG_CONTENT_BYTES, bytes);
+	}
+
+	@Test
+	public void testUncompressedITXTChunksArePreserved() throws Exception {
+		InputStream inputStream = _createInputStream(
+			_PNG_SIGNATURE, _UNCOMPRESSED_ITXT_CHUNK);
+
+		byte[] bytes =
+			new byte[_PNG_SIGNATURE.length + _UNCOMPRESSED_ITXT_CHUNK.length];
+
+		inputStream.read(bytes);
+
+		Assert.assertArrayEquals(
+			ArrayUtil.append(_PNG_SIGNATURE, _UNCOMPRESSED_ITXT_CHUNK), bytes);
+
+		Assert.assertEquals(-1, inputStream.read());
 	}
 
 	@Test
@@ -139,6 +184,14 @@ public class SafePNGInputStreamTest {
 					"/dependencies/" + fileName));
 	}
 
+	private static final byte[] _COMPRESSED_ITXT_CHUNK = {
+		0, 0, 0, 9, 105, 84, 88, 116, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	};
+
+	private static final byte[] _ICCP_CHUNK = {
+		0, 0, 0, 4, 105, 67, 67, 80, 0, 0, 0, 0, 0, 0, 0, 0
+	};
+
 	private static final byte[] _MISC_CHUNK1 = {
 		0, 0, 0, 4, 42, 84, 88, 116, 0, 0, 0, 0, 0, 0, 0, 0
 	};
@@ -151,6 +204,10 @@ public class SafePNGInputStreamTest {
 
 	private static final byte[] _PNG_SIGNATURE = {
 		-119, 80, 78, 71, 13, 10, 26, 10
+	};
+
+	private static final byte[] _UNCOMPRESSED_ITXT_CHUNK = {
+		0, 0, 0, 9, 105, 84, 88, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
 	private static final byte[] _ZTXT_CHUNK = {

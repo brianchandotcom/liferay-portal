@@ -16,7 +16,7 @@ import Icon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useState, useEffect, useContext} from 'react';
 
-import DatasetDisplayContext from '../../DatasetDisplayContext.es';
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 
 function MainSearch() {
 	const {searchParam, updateSearchParam} = useContext(DatasetDisplayContext);

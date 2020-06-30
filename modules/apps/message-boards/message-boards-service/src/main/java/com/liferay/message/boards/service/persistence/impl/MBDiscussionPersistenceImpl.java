@@ -2394,8 +2394,6 @@ public class MBDiscussionPersistenceImpl
 		"mbDiscussion.classPK = ?";
 
 	public MBDiscussionPersistenceImpl() {
-		setModelClass(MBDiscussion.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2413,6 +2411,8 @@ public class MBDiscussionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MBDiscussion.class);
 	}
 
 	/**

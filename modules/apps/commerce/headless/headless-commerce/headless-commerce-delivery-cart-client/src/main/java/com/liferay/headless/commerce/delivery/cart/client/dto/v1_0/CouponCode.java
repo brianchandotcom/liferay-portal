@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class CouponCode implements Cloneable {
 
+	public static CouponCode toDTO(String json) {
+		return CouponCodeSerDes.toDTO(json);
+	}
+
 	public String getCode() {
 		return code;
 	}

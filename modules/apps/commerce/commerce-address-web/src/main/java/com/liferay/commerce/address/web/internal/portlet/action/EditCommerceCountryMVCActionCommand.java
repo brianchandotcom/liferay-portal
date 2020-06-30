@@ -25,6 +25,8 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -120,26 +122,31 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, commerceCountryChannelsCallable);
 			}
 		}
-		catch (Throwable e) {
-			if (e instanceof NoSuchCountryException ||
-				e instanceof PrincipalException) {
+		catch (Throwable t) {
+			if (t instanceof NoSuchCountryException ||
+				t instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, t.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceCountryAlreadyExistsException ||
-					 e instanceof CommerceCountryNameException ||
-					 e instanceof CommerceCountryThreeLettersISOCodeException ||
-					 e instanceof CommerceCountryTwoLettersISOCodeException) {
+			else if (t instanceof CommerceCountryAlreadyExistsException ||
+					 t instanceof CommerceCountryNameException ||
+					 t instanceof CommerceCountryThreeLettersISOCodeException ||
+					 t instanceof CommerceCountryTwoLettersISOCodeException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, t.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCountry");
+			}
+			else {
+				_log.error(t, t);
+
+				throw new Exception(t);
 			}
 		}
 	}
@@ -253,6 +260,9 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 
 		return commerceCountry;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCommerceCountryMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

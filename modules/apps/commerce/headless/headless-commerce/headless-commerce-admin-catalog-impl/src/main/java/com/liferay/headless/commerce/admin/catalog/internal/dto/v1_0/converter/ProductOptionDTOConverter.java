@@ -18,9 +18,9 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel",
 	service = {DTOConverter.class, ProductOptionDTOConverter.class}
 )
-public class ProductOptionDTOConverter implements DTOConverter {
+public class ProductOptionDTOConverter
+	implements DTOConverter<CPDefinitionOptionRel, ProductOption> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +45,7 @@ public class ProductOptionDTOConverter implements DTOConverter {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CPOption cpOption = cpDefinitionOptionRel.getCPOption();
 
@@ -53,8 +54,7 @@ public class ProductOptionDTOConverter implements DTOConverter {
 				description = LanguageUtils.getLanguageIdMap(
 					cpDefinitionOptionRel.getDescriptionMap());
 				facetable = cpDefinitionOptionRel.isFacetable();
-				fieldType = ProductOption.FieldType.create(
-					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+				fieldType = cpDefinitionOptionRel.getDDMFormFieldTypeName();
 				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 				key = cpOption.getKey();
 				name = LanguageUtils.getLanguageIdMap(

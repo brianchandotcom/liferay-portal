@@ -14,6 +14,17 @@
 	speedwell_topbar_css_class = "speedwell-topbar"
 />
 
+<#if !is_setup_complete && is_signed_in>
+	<#assign translucent_topbar = false />
+</#if>
+
+<#if is_maximized>
+	<#assign
+		translucent_topbar = false
+		wide_layout = false
+	/>
+</#if>
+
 <#if wide_layout>
 	<#assign
 	speedwell_content_css_class = "speedwell-content speedwell-content--wide"

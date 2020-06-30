@@ -28,7 +28,7 @@ function TooltipTable(props) {
 								{detail.label}
 							</td>
 							<td className="table-column-text-end">
-								{detail.value instanceof Array
+								{Array.isArray(detail.value)
 									? detail.value.join(' | ')
 									: detail.value}
 							</td>

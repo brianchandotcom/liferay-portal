@@ -162,6 +162,8 @@ public class CPOptionFacetsPortlet
 				searchContext.setAttribute(
 					"commerceAccountGroupIds", commerceAccountGroupIds);
 			}
+
+			portletSharedSearchSettings.setPaginationStart(1);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

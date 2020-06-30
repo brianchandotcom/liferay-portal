@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -98,6 +100,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_company = CompanyTestUtil.addCompany();
+
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -119,7 +123,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			DDMStructureLocalServiceUtil.getDDMStructure(
 				ddmStructure.getStructureId());
 
-		modelDDMStructure.setCompanyId(12345);
+		modelDDMStructure.setCompanyId(_company.getCompanyId());
 
 		DDMStructureLocalServiceUtil.updateDDMStructure(modelDDMStructure);
 
@@ -496,6 +500,9 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		type = VerifyProcess.class
 	)
 	private static VerifyProcess _verifyProcess;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

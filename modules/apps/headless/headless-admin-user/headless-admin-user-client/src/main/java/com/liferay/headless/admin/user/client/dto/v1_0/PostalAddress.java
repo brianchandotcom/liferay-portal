@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class PostalAddress implements Cloneable {
 
+	public static PostalAddress toDTO(String json) {
+		return PostalAddressSerDes.toDTO(json);
+	}
+
 	public String getAddressCountry() {
 		return addressCountry;
 	}

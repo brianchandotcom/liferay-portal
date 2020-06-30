@@ -45,7 +45,6 @@ import java.io.InputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -148,18 +147,6 @@ public class StructuredContentResourceTest
 					structuredContent.getId(), _ddmTemplate.getTemplateId()));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteStructuredContentByKey() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteStructuredContentByUuid() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};
@@ -234,6 +221,15 @@ public class StructuredContentResourceTest
 		testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId() {
 
 		return _journalFolder.getFolderId();
+	}
+
+	@Override
+	protected StructuredContent
+			testGraphQLStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return testPostSiteStructuredContent_addStructuredContent(
+			randomStructuredContent());
 	}
 
 	private DDMStructure _addDDMStructure(Group group) throws Exception {

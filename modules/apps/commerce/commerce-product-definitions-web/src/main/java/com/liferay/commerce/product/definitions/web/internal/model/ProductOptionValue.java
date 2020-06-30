@@ -20,12 +20,14 @@ package com.liferay.commerce.product.definitions.web.internal.model;
 public class ProductOptionValue {
 
 	public ProductOptionValue(
-		long cpDefinitionOptionValueRelId, String name, double order,
-		String sku) {
+		long cpDefinitionOptionValueRelId, String deltaPrice, String key,
+		String name, double position, String sku) {
 
 		_cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelId;
+		_deltaPrice = deltaPrice;
+		_key = key;
 		_name = name;
-		_order = order;
+		_position = position;
 		_sku = sku;
 	}
 
@@ -33,12 +35,20 @@ public class ProductOptionValue {
 		return _cpDefinitionOptionValueRelId;
 	}
 
+	public String getDeltaPrice() {
+		return _deltaPrice;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
-	public double getOrder() {
-		return _order;
+	public double getPosition() {
+		return _position;
 	}
 
 	public String getSku() {
@@ -46,8 +56,10 @@ public class ProductOptionValue {
 	}
 
 	private final long _cpDefinitionOptionValueRelId;
+	private final String _deltaPrice;
+	private final String _key;
 	private final String _name;
-	private final double _order;
+	private final double _position;
 	private final String _sku;
 
 }

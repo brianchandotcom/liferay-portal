@@ -19,6 +19,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-notification-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-product-item-selector-api")
+	compileOnly project(":apps:commerce:commerce-service")
 	compileOnly project(":apps:commerce:commerce-taglib")
 
 	jsCompile project(":apps:commerce:commerce-frontend-taglib")

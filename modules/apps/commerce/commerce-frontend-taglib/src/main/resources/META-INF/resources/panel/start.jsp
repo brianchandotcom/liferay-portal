@@ -28,7 +28,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 			<%= title %>
 
 			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
-				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as eventsDefinitions">
+				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
 					var link = document.getElementById('<%= linkId %>');
 
 					if (link) {
@@ -122,5 +122,5 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 		</h4>
 	</c:if>
 
-	<div class="collapse<%= collapsed ? StringPool.BLANK : StringPool.SPACE + "show" %>" id="<%= randomNamespace %>collapse">
+	<div class='collapse<%= collapsed ? StringPool.BLANK : StringPool.SPACE + "show" %>' id="<%= randomNamespace %>collapse">
 		<div class="<%= bodyCssClasses %>">

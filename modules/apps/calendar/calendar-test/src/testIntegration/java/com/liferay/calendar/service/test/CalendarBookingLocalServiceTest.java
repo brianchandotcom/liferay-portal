@@ -504,6 +504,53 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testAddRecurringCalendarBookingAfterDeletingRecurringCalendarBookingInstance()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addDailyRecurringCalendarBooking(
+				_user, serviceContext);
+
+		long calendarBookingId = calendarBooking.getCalendarBookingId();
+
+		CalendarBookingLocalServiceUtil.deleteCalendarBookingInstance(
+			_user.getUserId(), calendarBooking, 3, false, true);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBookingId);
+
+		Assert.assertNotNull(calendarBooking);
+
+		Recurrence recurrence = calendarBooking.getRecurrenceObj();
+
+		Recurrence newRecurrence = recurrence.clone();
+
+		int recurrenceCount = 4;
+
+		newRecurrence.setCount(recurrenceCount);
+
+		CalendarBooking newCalendarBooking =
+			CalendarBookingLocalServiceUtil.getCalendarBookingInstance(
+				calendarBookingId, 2);
+
+		newCalendarBooking =
+			CalendarBookingTestUtil.
+				updateRecurringCalendarBookingInstanceAndAllFollowing(
+					_user, newCalendarBooking, 0,
+					newCalendarBooking.getTitleMap(),
+					newCalendarBooking.getDescriptionMap(),
+					newCalendarBooking.getStartTime(),
+					newCalendarBooking.getEndTime(),
+					RecurrenceSerializer.serialize(newRecurrence),
+					serviceContext);
+
+		assertCalendarBookingInstancesCount(
+			newCalendarBooking.getCalendarBookingId(), recurrenceCount);
+	}
+
+	@Test
 	public void testAddRecurringCalendarBookingUntilStartTime()
 		throws Exception {
 

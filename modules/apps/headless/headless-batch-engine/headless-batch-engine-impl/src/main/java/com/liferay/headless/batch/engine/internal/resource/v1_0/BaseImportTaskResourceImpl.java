@@ -359,10 +359,6 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ImportTask importTask, ImportTask existingImportTask) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

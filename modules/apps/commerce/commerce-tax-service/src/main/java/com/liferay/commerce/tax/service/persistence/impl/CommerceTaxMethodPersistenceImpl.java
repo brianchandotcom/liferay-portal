@@ -1390,8 +1390,6 @@ public class CommerceTaxMethodPersistenceImpl
 		"commerceTaxMethod.active = ?";
 
 	public CommerceTaxMethodPersistenceImpl() {
-		setModelClass(CommerceTaxMethod.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -1409,6 +1407,8 @@ public class CommerceTaxMethodPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceTaxMethod.class);
 	}
 
 	/**

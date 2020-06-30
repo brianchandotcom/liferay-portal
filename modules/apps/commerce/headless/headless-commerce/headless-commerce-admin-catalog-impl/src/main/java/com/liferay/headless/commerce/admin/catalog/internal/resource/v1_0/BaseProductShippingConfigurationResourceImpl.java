@@ -299,11 +299,6 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProductShippingConfiguration productShippingConfiguration,
-		ProductShippingConfiguration existingProductShippingConfiguration) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

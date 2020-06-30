@@ -374,11 +374,6 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DiscountAccountGroup discountAccountGroup,
-		DiscountAccountGroup existingDiscountAccountGroup) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

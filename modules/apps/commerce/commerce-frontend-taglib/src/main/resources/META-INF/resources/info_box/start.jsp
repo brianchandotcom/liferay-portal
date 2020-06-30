@@ -29,7 +29,7 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + StringPool.U
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
 			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
-				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as eventsDefinitions">
+				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
 					const link = document.getElementById('<%= linkId %>');
 
 					if (link) {

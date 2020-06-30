@@ -1188,8 +1188,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			"commerceShippingFixedOptionRel.commerceShippingFixedOptionId = ?";
 
 	public CommerceShippingFixedOptionRelPersistenceImpl() {
-		setModelClass(CommerceShippingFixedOptionRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1208,6 +1206,8 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceShippingFixedOptionRel.class);
 	}
 
 	/**

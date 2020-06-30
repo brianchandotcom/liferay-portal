@@ -99,6 +99,11 @@ public interface CommerceOrderItemService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getChildCommerceOrderItems(
+			long parentCommerceOrderItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws PortalException;
@@ -142,6 +147,12 @@ public interface CommerceOrderItemService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceOrderItem> search(
+			long commerceOrderId, long parentCommerceOrderItemId,
+			String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> search(
@@ -191,6 +202,23 @@ public interface CommerceOrderItemService extends BaseService {
 			BigDecimal discountPercentageLevel2,
 			BigDecimal discountPercentageLevel3,
 			BigDecimal discountPercentageLevel4)
+		throws PortalException;
+
+	public CommerceOrderItem updateCommerceOrderItemPrices(
+			long commerceOrderItemId, BigDecimal unitPrice,
+			BigDecimal promoPrice, BigDecimal discountAmount,
+			BigDecimal finalPrice, BigDecimal discountPercentageLevel1,
+			BigDecimal discountPercentageLevel2,
+			BigDecimal discountPercentageLevel3,
+			BigDecimal discountPercentageLevel4,
+			BigDecimal unitPriceWithTaxAmount,
+			BigDecimal promoPriceWithTaxAmount,
+			BigDecimal discountAmountWithTaxAmount,
+			BigDecimal finalPriceWithTaxAmount,
+			BigDecimal discountPercentageLevel1WithTaxAmount,
+			BigDecimal discountPercentageLevel2WithTaxAmount,
+			BigDecimal discountPercentageLevel3WithTaxAmount,
+			BigDecimal discountPercentageLevel4WithTaxAmount)
 		throws PortalException;
 
 	/**

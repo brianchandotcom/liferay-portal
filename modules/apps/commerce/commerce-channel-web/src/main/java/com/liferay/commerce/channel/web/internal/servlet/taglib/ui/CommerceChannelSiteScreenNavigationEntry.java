@@ -21,6 +21,7 @@ import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -114,7 +115,7 @@ public class CommerceChannelSiteScreenNavigationEntry
 					_configurationProvider, _groupLocalService,
 					httpServletRequest, _itemSelector, _portal,
 					_workflowDefinitionLinkLocalService,
-					_workflowDefinitionManager);
+					_workflowDefinitionManager, _cpTaxCategoryLocalService);
 
 		httpServletRequest.setAttribute(
 			"site.jsp-portletDisplayContext",
@@ -148,6 +149,9 @@ public class CommerceChannelSiteScreenNavigationEntry
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

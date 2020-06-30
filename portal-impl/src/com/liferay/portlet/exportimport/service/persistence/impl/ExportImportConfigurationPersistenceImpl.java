@@ -2803,8 +2803,6 @@ public class ExportImportConfigurationPersistenceImpl
 		"exportImportConfiguration.status = ?";
 
 	public ExportImportConfigurationPersistenceImpl() {
-		setModelClass(ExportImportConfiguration.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -2823,6 +2821,8 @@ public class ExportImportConfigurationPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ExportImportConfiguration.class);
 	}
 
 	/**

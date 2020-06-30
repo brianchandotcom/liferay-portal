@@ -22,6 +22,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -45,6 +46,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CartItem")
 public class CartItem {
+
+	public static CartItem toDTO(String json) {
+		return ObjectMapperUtil.readValue(CartItem.class, json);
+	}
+
+	@Schema
+	@Valid
+	public CartItem[] getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(CartItem[] cartItems) {
+		this.cartItems = cartItems;
+	}
+
+	@JsonIgnore
+	public void setCartItems(
+		UnsafeSupplier<CartItem[], Exception> cartItemsUnsafeSupplier) {
+
+		try {
+			cartItems = cartItemsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CartItem[] cartItems;
 
 	@Schema
 	@Valid
@@ -156,6 +190,34 @@ public class CartItem {
 	protected String options;
 
 	@Schema
+	public Long getParentCartItemId() {
+		return parentCartItemId;
+	}
+
+	public void setParentCartItemId(Long parentCartItemId) {
+		this.parentCartItemId = parentCartItemId;
+	}
+
+	@JsonIgnore
+	public void setParentCartItemId(
+		UnsafeSupplier<Long, Exception> parentCartItemIdUnsafeSupplier) {
+
+		try {
+			parentCartItemId = parentCartItemIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long parentCartItemId;
+
+	@Schema
 	@Valid
 	public Price getPrice() {
 		return price;
@@ -239,6 +301,35 @@ public class CartItem {
 	protected Integer quantity;
 
 	@Schema
+	@Valid
+	public Settings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+
+	@JsonIgnore
+	public void setSettings(
+		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
+
+		try {
+			settings = settingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Settings settings;
+
+	@Schema
 	public String getSku() {
 		return sku;
 	}
@@ -318,6 +409,34 @@ public class CartItem {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscription;
 
+	@Schema
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	@JsonIgnore
+	public void setThumbnail(
+		UnsafeSupplier<String, Exception> thumbnailUnsafeSupplier) {
+
+		try {
+			thumbnail = thumbnailUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String thumbnail;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -344,6 +463,26 @@ public class CartItem {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (cartItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cartItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cartItems.length; i++) {
+				sb.append(String.valueOf(cartItems[i]));
+
+				if ((i + 1) < cartItems.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (customFields != null) {
 			if (sb.length() > 1) {
@@ -393,6 +532,16 @@ public class CartItem {
 			sb.append("\"");
 		}
 
+		if (parentCartItemId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentCartItemId\": ");
+
+			sb.append(parentCartItemId);
+		}
+
 		if (price != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -421,6 +570,16 @@ public class CartItem {
 			sb.append("\"quantity\": ");
 
 			sb.append(quantity);
+		}
+
+		if (settings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"settings\": ");
+
+			sb.append(String.valueOf(settings));
 		}
 
 		if (sku != null) {
@@ -457,6 +616,20 @@ public class CartItem {
 			sb.append(subscription);
 		}
 
+		if (thumbnail != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnail\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(thumbnail));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -489,9 +662,44 @@ public class CartItem {
 			sb.append("\"");
 			sb.append(entry.getKey());
 			sb.append("\":");
-			sb.append("\"");
-			sb.append(entry.getValue());
-			sb.append("\"");
+
+			Object value = entry.getValue();
+
+			Class<?> clazz = value.getClass();
+
+			if (clazz.isArray()) {
+				sb.append("[");
+
+				Object[] valueArray = (Object[])value;
+
+				for (int i = 0; i < valueArray.length; i++) {
+					if (valueArray[i] instanceof String) {
+						sb.append("\"");
+						sb.append(valueArray[i]);
+						sb.append("\"");
+					}
+					else {
+						sb.append(valueArray[i]);
+					}
+
+					if ((i + 1) < valueArray.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map<String, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(value);
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
 
 			if (iterator.hasNext()) {
 				sb.append(",");

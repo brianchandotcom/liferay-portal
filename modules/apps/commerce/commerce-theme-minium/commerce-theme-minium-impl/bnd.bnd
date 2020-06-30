@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Theme Minium Implementation
 Bundle-SymbolicName: com.liferay.commerce.theme.minium.impl
-Bundle-Version: 2.0.30
+Bundle-Version: 2.0.35
 Import-Package:\
 	com.liferay.application.list;version="[1.1.0,3.0.0)",\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
@@ -10,7 +10,7 @@ Import-Package:\
 	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
 	com.liferay.portal.kernel.portlet;version="[8.0.0,10.0.0)",\
 	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
-	com.liferay.portal.kernel.template;version="[7.2.0,8.1.0)",\
+	com.liferay.portal.kernel.template;version="[7.2.0,9.0.0)",\
 	com.liferay.portal.kernel.theme;version="[1.6.0,3.0.0)",\
 	com.liferay.portal.kernel.upload;version="[6.4.0,8.0.0)",\
 	com.liferay.portal.kernel.util;version="[8.0.0,10.0.0)",\

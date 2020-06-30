@@ -3939,8 +3939,6 @@ public class CommerceCountryPersistenceImpl
 		"commerceCountry.active = ?";
 
 	public CommerceCountryPersistenceImpl() {
-		setModelClass(CommerceCountry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3959,6 +3957,8 @@ public class CommerceCountryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceCountry.class);
 	}
 
 	/**

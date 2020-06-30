@@ -3666,8 +3666,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 		"(ddmFormInstanceRecord.formInstanceVersion IS NULL OR ddmFormInstanceRecord.formInstanceVersion = '')";
 
 	public DDMFormInstanceRecordPersistenceImpl() {
-		setModelClass(DDMFormInstanceRecord.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3685,6 +3683,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDMFormInstanceRecord.class);
 	}
 
 	/**

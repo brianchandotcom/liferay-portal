@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class ChangeTransition implements Cloneable {
 
+	public static ChangeTransition toDTO(String json) {
+		return ChangeTransitionSerDes.toDTO(json);
+	}
+
 	public String getTransition() {
 		return transition;
 	}

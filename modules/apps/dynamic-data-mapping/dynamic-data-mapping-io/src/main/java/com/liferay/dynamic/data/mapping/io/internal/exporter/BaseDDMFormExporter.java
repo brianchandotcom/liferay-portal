@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,6 +47,7 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -161,6 +163,21 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 			ddmFormField.getName(), ddmFormField.getLabel(), valueString);
 	}
 
+	protected Map<String, String> getDDMFormFieldsLabels(
+		Collection<DDMFormField> ddmFormFields, Locale locale) {
+
+		Map<String, String> ddmFormFieldsLabels = new HashMap<>();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			LocalizedValue label = ddmFormField.getLabel();
+
+			ddmFormFieldsLabels.put(
+				ddmFormField.getName(), label.getString(locale));
+		}
+
+		return _formatLabels(ddmFormFieldsLabels);
+	}
+
 	protected Map<String, DDMFormField> getDistinctFields(long formInstanceId)
 		throws Exception {
 
@@ -269,6 +286,49 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 		private final LocalizedValue _label;
 		private final String _value;
 
+	}
+
+	private Map<String, String> _formatLabels(
+		Map<String, String> ddmFormFieldsLabel) {
+
+		Map<String, String> labelsFieldName = new HashMap<>();
+
+		ddmFormFieldsLabel.forEach(
+			(fieldName, label) -> {
+				if (!labelsFieldName.containsKey(label)) {
+					ddmFormFieldsLabel.put(fieldName, label);
+				}
+				else {
+					String previousFieldName = labelsFieldName.get(label);
+
+					ddmFormFieldsLabel.put(
+						previousFieldName,
+						_formatLabelString(previousFieldName, label));
+
+					ddmFormFieldsLabel.put(
+						fieldName, _formatLabelString(fieldName, label));
+				}
+
+				labelsFieldName.put(label, fieldName);
+			});
+
+		return ddmFormFieldsLabel;
+	}
+
+	private String _formatLabelString(String fieldName, String label) {
+		if (Validator.isNull(label)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(label);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(fieldName);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	private Locale _locale;

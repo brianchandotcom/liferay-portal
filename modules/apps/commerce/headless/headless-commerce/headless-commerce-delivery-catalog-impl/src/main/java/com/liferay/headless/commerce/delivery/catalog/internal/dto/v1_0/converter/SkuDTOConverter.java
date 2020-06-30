@@ -29,9 +29,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.DDMFormValuesUtil;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
@@ -40,6 +38,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
 
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=CPSku",
 	service = {DTOConverter.class, SkuDTOConverter.class}
 )
-public class SkuDTOConverter implements DTOConverter {
+public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Override
 	public String getContentType() {
@@ -72,7 +72,7 @@ public class SkuDTOConverter implements DTOConverter {
 			(SkuDTOConverterContext)dtoConverterContext;
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-			cpSkuDTOConverterConvertContext.getResourcePrimKey());
+			(Long)cpSkuDTOConverterConvertContext.getId());
 
 		CommerceContext commerceContext =
 			cpSkuDTOConverterConvertContext.getCommerceContext();
@@ -164,7 +164,7 @@ public class SkuDTOConverter implements DTOConverter {
 					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 						cpInstance.getCPInstanceId());
 
-		JSONArray keyValuesJSONArray = DDMFormValuesUtil.toJSONArray(
+		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -279,5 +279,8 @@ public class SkuDTOConverter implements DTOConverter {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private JsonHelper _jsonHelper;
 
 }

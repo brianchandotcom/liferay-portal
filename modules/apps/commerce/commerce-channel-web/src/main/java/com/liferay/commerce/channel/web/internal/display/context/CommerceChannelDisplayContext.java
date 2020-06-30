@@ -17,6 +17,7 @@ package com.liferay.commerce.channel.web.internal.display.context;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.channel.web.internal.display.context.util.CommerceChannelRequestHelper;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -33,8 +34,11 @@ import com.liferay.commerce.product.channel.CommerceChannelType;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
@@ -87,7 +91,8 @@ public class CommerceChannelDisplayContext
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest, Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionManager workflowDefinitionManager) {
+		WorkflowDefinitionManager workflowDefinitionManager,
+		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
 
 		super(httpServletRequest);
 
@@ -107,6 +112,21 @@ public class CommerceChannelDisplayContext
 
 		_commerceChannelRequestHelper = new CommerceChannelRequestHelper(
 			httpServletRequest);
+
+		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+	}
+
+	public long getActiveShippingTaxCategory() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceShippingTaxConfiguration commerceShippingTaxConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceShippingTaxConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.TAX_SERVICE_NAME));
+
+		return commerceShippingTaxConfiguration.taxCategoryId();
 	}
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions()
@@ -279,6 +299,12 @@ public class CommerceChannelDisplayContext
 		return portletURL;
 	}
 
+	public List<CPTaxCategory> getTaxCategories() {
+		return _cpTaxCategoryLocalService.getCPTaxCategories(
+			_commerceChannelRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(long typePK)
 		throws PortalException {
 
@@ -342,6 +368,19 @@ public class CommerceChannelDisplayContext
 		return false;
 	}
 
+	public boolean isGuestCheckoutEnabled() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.ORDER_SERVICE_NAME));
+
+		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
+	}
+
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
@@ -390,6 +429,7 @@ public class CommerceChannelDisplayContext
 	private final CommerceCurrencyService _commerceCurrencyService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 	private final ConfigurationProvider _configurationProvider;
+	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 	private final Portal _portal;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

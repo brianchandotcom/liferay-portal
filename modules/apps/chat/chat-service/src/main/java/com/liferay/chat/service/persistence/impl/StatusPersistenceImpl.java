@@ -1815,8 +1815,6 @@ public class StatusPersistenceImpl
 		"status.online = ?";
 
 	public StatusPersistenceImpl() {
-		setModelClass(Status.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("online", "online_");
@@ -1834,6 +1832,8 @@ public class StatusPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Status.class);
 	}
 
 	/**

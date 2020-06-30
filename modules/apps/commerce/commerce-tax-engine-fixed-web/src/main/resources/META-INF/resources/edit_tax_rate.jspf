@@ -15,6 +15,7 @@
 --%>
 
 <%
+CommerceTaxMethod commerceTaxMethod = commerceTaxFixedRatesDisplayContext.getCommerceTaxMethod();
 long commerceTaxMethodId = commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId();
 
 long commerceTaxFixedRateId = 0;
@@ -51,6 +52,8 @@ if (commerceTaxFixedRate != null) {
 	</div>
 
 	<div class="col-md-6">
-		<aui:input name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />
+		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>">
+			<aui:validator name="min">0</aui:validator>
+		</aui:input>
 	</div>
 </div>

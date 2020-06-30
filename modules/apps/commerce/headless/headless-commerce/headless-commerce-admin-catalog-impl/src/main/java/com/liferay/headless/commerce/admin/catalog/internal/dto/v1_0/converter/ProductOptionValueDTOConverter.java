@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionValueRel",
 	service = {DTOConverter.class, ProductOptionValueDTOConverter.class}
 )
-public class ProductOptionValueDTOConverter implements DTOConverter {
+public class ProductOptionValueDTOConverter
+	implements DTOConverter<CPDefinitionOptionValueRel, ProductOptionValue> {
 
 	@Override
 	public String getContentType() {
@@ -43,7 +44,7 @@ public class ProductOptionValueDTOConverter implements DTOConverter {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRel(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		return new ProductOptionValue() {
 			{

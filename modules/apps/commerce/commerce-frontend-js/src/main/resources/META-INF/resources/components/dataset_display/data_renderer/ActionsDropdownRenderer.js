@@ -21,12 +21,12 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {ACTION_ITEM_TARGETS} from '../../../utilities/actionItems/constants';
-import {formatActionUrl} from '../../../utilities/index.es';
+import {formatActionUrl} from '../../../utilities/index';
 import {
 	openPermissionsModal,
 	resolveModalSize
 } from '../../../utilities/modals/index';
-import DatasetDisplayContext from '../DatasetDisplayContext.es';
+import DatasetDisplayContext from '../DatasetDisplayContext';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 

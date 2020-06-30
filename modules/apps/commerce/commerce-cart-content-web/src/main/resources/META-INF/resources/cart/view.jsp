@@ -126,6 +126,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
+					<%
+					String commercePriceDisplayType = commerceCartContentDisplayContext.getCommercePriceDisplayType();
+					%>
+
 					<liferay-ui:search-container-column-text
 						name="unit-price"
 					>
@@ -133,6 +137,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 							<%
 							CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
+
+							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+								unitPriceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+							}
 							%>
 
 							<%= HtmlUtil.escape(unitPriceMoney.format(locale)) %>
@@ -156,6 +164,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 							<%
 							CommerceMoney finalPriceMoney = commerceOrderItem.getFinalPriceMoney();
+
+							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+								finalPriceMoney = commerceOrderItem.getFinalPriceWithTaxAmountMoney();
+							}
 							%>
 
 							<%= HtmlUtil.escape(finalPriceMoney.format(locale)) %>

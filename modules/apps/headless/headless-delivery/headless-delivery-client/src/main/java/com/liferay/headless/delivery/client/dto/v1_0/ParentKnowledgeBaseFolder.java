@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class ParentKnowledgeBaseFolder implements Cloneable {
 
+	public static ParentKnowledgeBaseFolder toDTO(String json) {
+		return ParentKnowledgeBaseFolderSerDes.toDTO(json);
+	}
+
 	public Long getFolderId() {
 		return folderId;
 	}

@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.security.permission.resource;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -63,7 +64,8 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 
 					consumer.accept(
 						new CommerceOrderModelResourcePermissionLogic(
-							_groupLocalService, _portletResourcePermission,
+							_configurationProvider, _groupLocalService,
+							_portletResourcePermission,
 							_workflowDefinitionLinkLocalService));
 				}),
 			properties);
@@ -76,6 +78,9 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Repository CMIS Implementation
 Bundle-SymbolicName: com.liferay.document.library.repository.cmis.impl
-Bundle-Version: 3.0.28
+Bundle-Version: 3.0.29
 Import-Package:\
 	!com.sun.msv.*,\
 	!com.sun.tools.xjc.*,\
@@ -25,5 +25,8 @@ Import-Package:\
 	!org.osgi.service.blueprint.*,\
 	\
 	!org.relaxng.datatype.*,\
+	\
+	!org.springframework.osgi.io.*,\
+	!org.springframework.osgi.util.*,\
 	\
 	*

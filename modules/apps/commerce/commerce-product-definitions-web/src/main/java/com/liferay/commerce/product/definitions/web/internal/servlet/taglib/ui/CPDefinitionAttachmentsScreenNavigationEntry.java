@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
@@ -127,7 +128,7 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 					_actionHelper, _attachmentsConfiguration,
 					_cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService, _cpInstanceHelper,
-					_dlMimeTypeDisplayContext, httpServletRequest,
+					_ddmHelper, _dlMimeTypeDisplayContext, httpServletRequest,
 					_itemSelector);
 
 		httpServletRequest.setAttribute(
@@ -158,6 +159,9 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private DDMHelper _ddmHelper;
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

@@ -417,6 +417,9 @@ public class CommerceShipmentItemLocalServiceImpl
 		context.put(
 			CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
 			String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
+		context.put(
+			CommerceInventoryAuditTypeConstants.SHIPMENT_ID,
+			String.valueOf(commerceShipmentItem.getCommerceShipmentId()));
 
 		_commerceInventoryBookedQuantityLocalService.
 			resetCommerceBookedQuantity(

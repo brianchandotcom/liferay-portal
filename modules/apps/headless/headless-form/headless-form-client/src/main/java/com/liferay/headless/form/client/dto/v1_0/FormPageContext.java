@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormPageContext implements Cloneable {
 
+	public static FormPageContext toDTO(String json) {
+		return FormPageContextSerDes.toDTO(json);
+	}
+
 	public Boolean getEnabled() {
 		return enabled;
 	}

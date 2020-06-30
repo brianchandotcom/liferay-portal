@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Attachment implements Cloneable {
 
+	public static Attachment toDTO(String json) {
+		return AttachmentSerDes.toDTO(json);
+	}
+
 	public String getAttachment() {
 		return attachment;
 	}

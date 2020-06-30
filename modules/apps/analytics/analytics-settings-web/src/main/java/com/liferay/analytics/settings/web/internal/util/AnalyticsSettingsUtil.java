@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.Objects;
 
 import org.apache.http.HttpEntity;
@@ -33,6 +35,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -165,10 +168,12 @@ public class AnalyticsSettingsUtil {
 					(HttpEntityEnclosingRequestBase)httpRequestBase;
 
 				httpEntityEnclosingRequestBase.setEntity(
-					new StringEntity(bodyJSONObject.toString()));
+					new StringEntity(
+						bodyJSONObject.toString(), StandardCharsets.UTF_8));
 			}
 
-			httpRequestBase.setHeader("Content-Type", "application/json");
+			httpRequestBase.setHeader(
+				"Content-type", ContentType.APPLICATION_JSON.toString());
 			httpRequestBase.setHeader(
 				"OSB-Asah-Faro-Backend-Security-Signature",
 				getAsahFaroBackendSecuritySignature(companyId));
@@ -184,7 +189,9 @@ public class AnalyticsSettingsUtil {
 			httpEntity.writeTo(byteArrayOutputStream);
 
 			httpResponse.setEntity(
-				new ByteArrayEntity(byteArrayOutputStream.toByteArray()));
+				new ByteArrayEntity(
+					byteArrayOutputStream.toByteArray(),
+					ContentType.get(httpEntity)));
 
 			return httpResponse;
 		}

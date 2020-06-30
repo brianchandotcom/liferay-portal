@@ -44,6 +44,7 @@ class CommerceCartItem extends Component {
 Soy.register(CommerceCartItem, template);
 
 CommerceCartItem.STATE = {
+	childItems: Config.array(),
 	collapsed: Config.bool().value(false),
 	deleteDisabled: Config.bool().value(false),
 	deleting: Config.bool().value(false),

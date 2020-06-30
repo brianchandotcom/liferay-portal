@@ -47,6 +47,10 @@ public interface CommercePricingConfiguration {
 	)
 	public String commercePromotionDiscovery();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "" + CommercePricingConstants.TAX_INCLUDED_IN_FINAL_PRICE,
 		name = "tax-display",

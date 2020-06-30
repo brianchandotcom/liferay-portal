@@ -75,23 +75,17 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 		</c:if>
 
 		<c:if test="<%= cpOptionValue == null %>">
-			<aui:script require="commerce-frontend-js/utilities/index.es as utilities">
-				function slugify(string) {
-					return string.toLowerCase().replace(/[^a-z1-9]+/g, '-');
-				}
+			<aui:script require="commerce-frontend-js/utilities/debounce as debounce, commerce-frontend-js/utilities/slugify as slugify">
+				var form = document.getElementById('<portlet:namespace />optionValueFm');
 
-				const form = document.getElementById('<portlet:namespace />optionValueFm');
-
-				const keyInput = form.querySelector('#<portlet:namespace />key');
-				const nameInput = form.querySelector('#<portlet:namespace />optionValueName');
-
-				const debounce = utilities.debounce;
+				var keyInput = form.querySelector('#<portlet:namespace />key');
+				var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
 
 				var handleOnNameInput = function() {
-					keyInput.value = slugify(nameInput.value);
+					keyInput.value = slugify.default(nameInput.value);
 				};
 
-				nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+				nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
 			</aui:script>
 		</c:if>
 	</div>

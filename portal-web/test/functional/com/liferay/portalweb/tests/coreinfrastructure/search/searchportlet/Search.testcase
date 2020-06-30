@@ -173,6 +173,68 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Search#AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-portal-ext-properties -Dindex.on.startup=true");
+
+		Portlet.startServer(
+			deleteindexdata = "true",
+			deleteLiferayHome = "true");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+
+		//workaround LPS-114163
+
+		/*AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent Content",
+			assetTitle = "WC WebContent Title");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Blogs Entry Content",
+			assetTitle = "Blogs Entry Title");*/
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "DM Document Title/Document,test test/User",
+			searchTerm = "test");
+	}
+
 	@description = "This is a use case for LPS-89561."
 	@priority = "4"
 	test AssertSearchURLWhenModifyingPagination {
@@ -609,6 +671,16 @@ definition {
 			searchAssetType = "Blogs Entry"
 		);
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayFrequencies = "disable",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			facetValueName = "Category Name",
+			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+
 		SearchPortlets.searchEmbedded(searchTerm = "Category");
 
 		SearchResultPortlet.viewSearchResults(
@@ -857,6 +929,16 @@ definition {
 			searchAssetType = "Blogs Entry"
 		);
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayFrequencies = "disable",
+			portletName = "Tag Facet");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			facetValueName = "Tag Name",
+			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+
 		SearchPortlets.searchEmbedded(searchTerm = "tag");
 
 		SearchResultPortlet.viewSearchResults(
@@ -1104,6 +1186,24 @@ definition {
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
 			searchTerm = "Apple"
 		);
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			maxTerms = "2",
+			portletName = "Site Facet");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_fieldName = "Site Name 1",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementPresent(
+			key_fieldName = "Site Name 2",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementNotPresent(
+			key_fieldName = "Site Name 3",
+			locator1 = "FormFields#CHECKBOX_LABEL");
 
 		SearchPortlets.selectEmbeddedScopeInput(searchScope = "This Site");
 
@@ -1499,6 +1599,20 @@ definition {
 			searchAssetType = "User"
 		);
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			parameterName = "username",
+			portletName = "User Facet");
+
+		Refresh();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "userfn userln");
+
+		var currentURL = selenium.getLocation();
+
+		if (!(contains("${currentURL}", "username"))) {
+			fail("User parameter name failed to change.");
+		}
+
 		SearchPortlets.searchEmbedded(searchTerm = "userfn");
 
 		SearchResultPortlet.viewSearchResults(
@@ -1851,6 +1965,66 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Content1");
 	}
 
+	@priority = "4"
+	test SearchWithFolderFacet {
+		for (var count : list "1,2") {
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM Folder Description ${count}",
+				dmFolderName = "DM Folder Name ${count}",
+				groupName = "Guest");
+		}
+
+		for (var count : list "1,2") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description ${count}",
+				dmDocumentTitle = "DM Document Title ${count}",
+				folderName = "DM Folder Name ${count}",
+				groupName = "Guest");
+		}
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "DM");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "DM Document Title 1/Document,DM Document Title 2/Document",
+			searchTerm = "DM");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "DM Folder Name 1");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title 1",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "DM Document Title 2",
+			searchAssetType = "Document");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "DM Folder Name 2");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title 2",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "DM Document Title 1",
+			searchAssetType = "Document");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			frequencyThreshold = "3",
+			portletName = "Folder Facet");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			frequencyThreshold = "DM Folder Name 1",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
 	test SearchWithModifiedFacet {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -1965,6 +2139,55 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
+	}
+
+	@priority = "4"
+	test SearchWithTypeFacet {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description ${count}",
+			dmDocumentTitle = "Apple",
+			groupName = "Guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Apple");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
+			searchTerm = "Apple");
+
+		SearchFacetPortlet.moveAssetTypesToAvailable(assetType = "Document");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_fieldName = "Web Content Article",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementPresent(
+			key_fieldName = "Blogs Entry",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementNotPresent(
+			key_fieldName = "Document",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple/Web Content Article,Apple/Blogs Entry",
+			searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"

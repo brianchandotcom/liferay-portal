@@ -21,12 +21,11 @@ import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupR
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountAccountGroup;
+import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountAccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountAccountGroupResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -140,15 +139,9 @@ public class DiscountAccountGroupResourceImpl
 						discountAccountGroup, commerceDiscount,
 						_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountCommerceAccountGroupRel.class.getName());
-
-		return (DiscountAccountGroup)discountAccountGroupDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountCommerceAccountGroupRel.
-					getCommerceDiscountCommerceAccountGroupRelId()));
+		return _toDiscountAccountGroup(
+			commerceDiscountCommerceAccountGroupRel.
+				getCommerceDiscountCommerceAccountGroupRelId());
 	}
 
 	@Override
@@ -166,15 +159,19 @@ public class DiscountAccountGroupResourceImpl
 						_commerceDiscountService.getCommerceDiscount(id),
 						_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountCommerceAccountGroupRel.class.getName());
+		return _toDiscountAccountGroup(
+			commerceDiscountCommerceAccountGroupRel.
+				getCommerceDiscountCommerceAccountGroupRelId());
+	}
 
-		return (DiscountAccountGroup)discountAccountGroupDTOConverter.toDTO(
+	private DiscountAccountGroup _toDiscountAccountGroup(
+			Long commerceDiscountCommerceAccountGroupRelId)
+		throws Exception {
+
+		return _discountAccountGroupDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountCommerceAccountGroupRel.
-					getCommerceDiscountCommerceAccountGroupRelId()));
+				commerceDiscountCommerceAccountGroupRelId,
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<DiscountAccountGroup> _toDiscountAccountGroups(
@@ -184,20 +181,14 @@ public class DiscountAccountGroupResourceImpl
 
 		List<DiscountAccountGroup> discountAccountGroups = new ArrayList<>();
 
-		DTOConverter discountAccountGroupDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscountCommerceAccountGroupRel.class.getName());
-
 		for (CommerceDiscountCommerceAccountGroupRel
 				commerceDiscountCommerceAccountGroupRel :
 					commerceDiscountCommerceAccountGroupRels) {
 
 			discountAccountGroups.add(
-				(DiscountAccountGroup)discountAccountGroupDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceDiscountCommerceAccountGroupRel.
-							getCommerceDiscountCommerceAccountGroupRelId())));
+				_toDiscountAccountGroup(
+					commerceDiscountCommerceAccountGroupRel.
+						getCommerceDiscountCommerceAccountGroupRelId()));
 		}
 
 		return discountAccountGroups;
@@ -214,7 +205,7 @@ public class DiscountAccountGroupResourceImpl
 	private CommerceDiscountService _commerceDiscountService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private DiscountAccountGroupDTOConverter _discountAccountGroupDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

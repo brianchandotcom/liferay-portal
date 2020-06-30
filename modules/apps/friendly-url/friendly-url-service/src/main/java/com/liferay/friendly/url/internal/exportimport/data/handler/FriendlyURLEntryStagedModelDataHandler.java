@@ -116,10 +116,12 @@ public class FriendlyURLEntryStagedModelDataHandler
 				friendlyURLEntry.getUuid(),
 				portletDataContext.getScopeGroupId());
 
+		FriendlyURLEntry importedFriendlyURLEntry = null;
+
 		if ((existingFriendlyURLEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			FriendlyURLEntry importedFriendlyURLEntry =
+			importedFriendlyURLEntry =
 				(FriendlyURLEntry)friendlyURLEntry.clone();
 
 			importedFriendlyURLEntry.setGroupId(
@@ -137,11 +139,11 @@ public class FriendlyURLEntryStagedModelDataHandler
 			importedFriendlyURLEntry.setDefaultLanguageId(
 				friendlyURLEntry.getDefaultLanguageId());
 
-			_stagedModelRepository.addStagedModel(
+			importedFriendlyURLEntry = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedFriendlyURLEntry);
 		}
 		else {
-			_stagedModelRepository.updateStagedModel(
+			importedFriendlyURLEntry = _stagedModelRepository.updateStagedModel(
 				portletDataContext, existingFriendlyURLEntry);
 
 			boolean mainEntry = GetterUtil.getBoolean(
@@ -152,6 +154,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 					existingFriendlyURLEntry);
 			}
 		}
+
+		portletDataContext.importClassedModel(
+			friendlyURLEntry, importedFriendlyURLEntry);
 	}
 
 	@Override

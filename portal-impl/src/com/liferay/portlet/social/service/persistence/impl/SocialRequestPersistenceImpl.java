@@ -6264,8 +6264,6 @@ public class SocialRequestPersistenceImpl
 		"socialRequest.status = ?";
 
 	public SocialRequestPersistenceImpl() {
-		setModelClass(SocialRequest.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6284,6 +6282,8 @@ public class SocialRequestPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SocialRequest.class);
 	}
 
 	/**

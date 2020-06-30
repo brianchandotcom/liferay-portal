@@ -1015,7 +1015,7 @@ public class AssetCategoryPersistenceTest {
 			assetCategory.setParentCategoryId(parentCategoryId);
 		}
 
-		_persistence.update(assetCategory);
+		_assetCategories.add(_persistence.update(assetCategory));
 
 		return assetCategory;
 	}

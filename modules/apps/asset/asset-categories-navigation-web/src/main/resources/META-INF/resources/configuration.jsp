@@ -49,7 +49,7 @@
 
 				<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 
-				<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
+				<div class='<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>' id="<portlet:namespace />assetVocabulariesBoxes">
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentAssetVocabularyIds"
 						leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"

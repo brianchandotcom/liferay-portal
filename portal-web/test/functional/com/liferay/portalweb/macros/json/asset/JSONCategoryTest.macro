@@ -4,7 +4,7 @@ definition {
 	macro runSmoke {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		//vocabulary
+		// Vocabulary
 
 		JSONCategory.addVocabulary(
 			groupName = "${groupName}",
@@ -14,7 +14,7 @@ definition {
 			groupName = "${groupName}",
 			titleMap = "en_US:vocabulary 2,es_ES:vocabulary 2es");
 
-		//category
+		// Category
 
 		JSONCategory.addCategory(
 			groupName = "${groupName}",
@@ -26,7 +26,7 @@ definition {
 			titleMap = "en_US:category 2,es_ES:category 2es",
 			vocabularyName = "vocabulary 2");
 
-		//subcategory
+		// Subcategory
 
 		JSONCategory.addSubcategory(
 			groupName = "${groupName}",
@@ -40,7 +40,7 @@ definition {
 			titleMap = "en_US:subcategory 2,es_ES:subcategory 2es",
 			vocabularyName = "vocabulary 2");
 
-		//getter
+		// Getter
 
 		var categoryId = JSONCategory.getCategoryId(
 			groupName = "${groupName}",

@@ -257,11 +257,6 @@ public abstract class BaseContentStructureResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ContentStructure contentStructure,
-		ContentStructure existingContentStructure) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

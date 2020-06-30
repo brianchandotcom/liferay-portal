@@ -15,6 +15,7 @@
 package com.liferay.commerce.inventory.service.impl;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
+import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityLocalServiceBaseImpl;
@@ -169,6 +170,38 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceBookedQuantity);
+	}
+
+	@Override
+	public CommerceInventoryBookedQuantity
+			updateCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				int quantity, Map<String, String> context, long mvccVersion)
+		throws PortalException {
+
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+			commerceInventoryBookedQuantityLocalService.
+				getCommerceInventoryBookedQuantity(
+					commerceInventoryBookedQuantityId);
+
+		if (commerceInventoryBookedQuantity.getMvccVersion() != mvccVersion) {
+			throw new MVCCException();
+		}
+
+		commerceInventoryBookedQuantity.setQuantity(quantity);
+
+		CommerceInventoryAuditType commerceInventoryAuditType =
+			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
+				CommerceInventoryConstants.AUDIT_TYPE_UPDATE_BOOKED_QUANTITY);
+
+		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+			userId, commerceInventoryBookedQuantity.getSku(),
+			commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context), quantity);
+
+		return commerceInventoryBookedQuantityLocalService.
+			updateCommerceInventoryBookedQuantity(
+				commerceInventoryBookedQuantity);
 	}
 
 	@ServiceReference(type = CommerceInventoryAuditTypeRegistry.class)

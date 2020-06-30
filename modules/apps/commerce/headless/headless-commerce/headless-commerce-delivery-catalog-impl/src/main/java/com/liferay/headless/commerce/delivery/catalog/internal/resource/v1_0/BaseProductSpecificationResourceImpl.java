@@ -229,11 +229,6 @@ public abstract class BaseProductSpecificationResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProductSpecification productSpecification,
-		ProductSpecification existingProductSpecification) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

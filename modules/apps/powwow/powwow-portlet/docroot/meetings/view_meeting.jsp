@@ -49,7 +49,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 		<dd>
 			<input id="<portlet:namespace />meetingURL" readonly="readonly" type="text" value="<%= PowwowUtil.getInvitationURL(powwowMeetingId, null, request) %>" />
 
-			<button class="zeroclipboard-button" data-clipboard-text="<%= PowwowUtil.getInvitationURL(powwowMeetingId, null, request) %>" data-copied="<liferay-ui:message key="copied" />" data-hover="<liferay-ui:message key="copy-to-clipboard" />" id="<portlet:namespace />copyButton">
+			<button class="zeroclipboard-button" data-clipboard-text="<%= PowwowUtil.getInvitationURL(powwowMeetingId, null, request) %>" data-copied='<liferay-ui:message key="copied" />' data-hover='<liferay-ui:message key="copy-to-clipboard" />' id="<portlet:namespace />copyButton">
 				<i class="icon-copy"></i>
 			</button>
 		</dd>

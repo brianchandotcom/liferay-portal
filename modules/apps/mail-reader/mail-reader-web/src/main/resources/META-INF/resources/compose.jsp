@@ -75,7 +75,7 @@ else {
 }
 %>
 
-<form action="<liferay-portlet:actionURL name="sendMessage" />" enctype="multipart/form-data" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
+<form action='<liferay-portlet:actionURL name="sendMessage" />' enctype="multipart/form-data" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
 	<aui:input name="accountId" type="hidden" value="<%= accountId %>" />
 	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
 	<aui:input name="attachmentCount" type="hidden" value="0" />

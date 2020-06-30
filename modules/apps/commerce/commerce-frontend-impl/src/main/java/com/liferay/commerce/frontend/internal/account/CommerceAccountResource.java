@@ -23,6 +23,7 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.internal.account.model.Account;
@@ -45,13 +46,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,7 +64,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletURL;
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -168,6 +171,7 @@ public class CommerceAccountResource {
 		@PathParam("accountId") long accountId,
 		@QueryParam("q") String queryString, @QueryParam("page") int page,
 		@QueryParam("pageSize") int pageSize,
+		@Context HttpServletRequest httpServletRequest,
 		@Context ThemeDisplay themeDisplay) {
 
 		themeDisplay.setScopeGroupId(groupId);
@@ -176,7 +180,7 @@ public class CommerceAccountResource {
 
 		try {
 			orderList = getOrderList(
-				groupId, accountId, page, pageSize, themeDisplay.getRequest());
+				groupId, accountId, page, pageSize, httpServletRequest);
 		}
 		catch (Exception e) {
 			orderList = new OrderList(
@@ -354,7 +358,7 @@ public class CommerceAccountResource {
 						modifiedDateTimeDescription),
 					WorkflowConstants.getStatusLabel(commerceOrder.getStatus()),
 					_getOrderLinkURL(
-						commerceOrder.getCommerceOrderId(),
+						groupId, commerceOrder.getCommerceOrderId(),
 						httpServletRequest)));
 		}
 
@@ -397,19 +401,22 @@ public class CommerceAccountResource {
 	}
 
 	private String _getOrderLinkURL(
-			long commerceOrderId, HttpServletRequest httpServletRequest)
+			long groupId, long commerceOrderId,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL editURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceOrder.class.getName(),
-			PortletProvider.Action.EDIT);
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
-		editURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+		LiferayPortletURL editURL = PortletURLFactoryUtil.create(
+			_portal.getOriginalServletRequest(httpServletRequest),
+			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT, plid,
+			PortletRequest.ACTION_PHASE);
+
+		editURL.setParameter(ActionRequest.ACTION_NAME, "editCommerceOrder");
+		editURL.setParameter(Constants.CMD, "setCurrent");
 		editURL.setParameter(
 			"commerceOrderId", String.valueOf(commerceOrderId));
-
-		editURL.setParameter(
-			"backURL", httpServletRequest.getHeader("Referer"));
 
 		return editURL.toString();
 	}

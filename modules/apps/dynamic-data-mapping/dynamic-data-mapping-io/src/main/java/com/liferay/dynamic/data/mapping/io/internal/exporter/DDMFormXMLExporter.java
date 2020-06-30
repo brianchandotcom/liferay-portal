@@ -68,6 +68,10 @@ public class DDMFormXMLExporter extends BaseDDMFormExporter {
 		return "xml";
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
 	protected void addFieldElement(
 		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element,
 		Map.Entry<String, DDMFormField> entry) {
@@ -124,6 +128,11 @@ public class DDMFormXMLExporter extends BaseDDMFormExporter {
 
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 
+		Locale locale = getLocale();
+
+		Map<String, String> ddmFormFieldsLabels = getDDMFormFieldsLabels(
+			ddmFormFields.values(), locale);
+
 		for (DDMFormInstanceRecord formInstanceRecord : formInstanceRecords) {
 			Element fieldsElement = rootElement.addElement("fields");
 
@@ -142,11 +151,16 @@ public class DDMFormXMLExporter extends BaseDDMFormExporter {
 				DDMFormFieldRenderedValue ddmFormFieldRenderedValue =
 					values.get(entry.getKey());
 
-				addFieldElement(
-					ddmFormFieldRenderedValue, fieldsElement, entry);
-			}
+				String value = StringPool.BLANK;
 
-			Locale locale = getLocale();
+				if (ddmFormFieldRenderedValue != null) {
+					value = ddmFormFieldRenderedValue.getValue();
+				}
+
+				addFieldElement(
+					fieldsElement, ddmFormFieldsLabels.get(entry.getKey()),
+					value);
+			}
 
 			addFieldElement(
 				fieldsElement, LanguageUtil.get(locale, "status"),

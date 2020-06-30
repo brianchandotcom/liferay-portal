@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -41,6 +42,14 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Role getRole(Long roleId) throws Exception {
+		com.liferay.portal.kernel.model.Role role = _roleService.fetchRole(
+			roleId);
+
+		if (role == null) {
+			throw new NoSuchRoleException(
+				"No role exists with role ID " + roleId);
+		}
+
 		return _toRole(_roleService.getRole(roleId));
 	}
 

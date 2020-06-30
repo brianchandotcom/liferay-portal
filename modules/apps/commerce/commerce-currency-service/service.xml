@@ -64,6 +64,7 @@
 	</entity>
 	<exceptions>
 		<exception>CommerceCurrencyCode</exception>
+		<exception>CommerceCurrencyFractionDigits</exception>
 		<exception>CommerceCurrencyName</exception>
 	</exceptions>
 </service-builder>

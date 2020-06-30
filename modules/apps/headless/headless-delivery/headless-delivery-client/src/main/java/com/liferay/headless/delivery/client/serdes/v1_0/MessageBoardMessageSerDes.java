@@ -409,15 +409,25 @@ public class MessageBoardMessageSerDes {
 				String.valueOf(messageBoardMessage.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				messageBoardMessage.getDateCreated()));
+		if (messageBoardMessage.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					messageBoardMessage.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				messageBoardMessage.getDateModified()));
+		if (messageBoardMessage.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					messageBoardMessage.getDateModified()));
+		}
 
 		if (messageBoardMessage.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);

@@ -20,6 +20,7 @@ import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -60,7 +61,8 @@ public class SiteCommerceChannelTypeDisplayContext
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionManager workflowDefinitionManager) {
+		WorkflowDefinitionManager workflowDefinitionManager,
+		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
 
 		super(
 			commerceChannelModelResourcePermission,
@@ -68,7 +70,7 @@ public class SiteCommerceChannelTypeDisplayContext
 			commerceChannelTypeRegistry, commerceCurrencyService,
 			commercePaymentMethodRegistry, configurationProvider,
 			httpServletRequest, portal, workflowDefinitionLinkLocalService,
-			workflowDefinitionManager);
+			workflowDefinitionManager, cpTaxCategoryLocalService);
 
 		_groupLocalService = groupLocalService;
 		_itemSelector = itemSelector;

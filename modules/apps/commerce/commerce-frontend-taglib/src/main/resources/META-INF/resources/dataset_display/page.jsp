@@ -20,7 +20,7 @@
 	<span aria-hidden="true" class="loading-animation my-7"></span>
 </div>
 
-<aui:script require="commerce-frontend-js/components/dataset_display/entry.es as datasetDisplay">
+<aui:script require="commerce-frontend-js/components/dataset_display/entry as datasetDisplay">
 	datasetDisplay.default('<%= containerId %>', '<%= containerId %>', {
 		views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
 		apiUrl: '<%= dataSetAPI %>',
@@ -30,6 +30,25 @@
 		formId: '<%= formId %>',
 		dataProviderKey: '<%= dataProviderKey %>',
 		id: '<%= id %>',
+
+		<%
+		if (Validator.isNotNull(nestedItemsKey)) {
+		%>
+
+			nestedItemsKey: '<%= nestedItemsKey %>',
+
+			<%
+			}
+
+			if (Validator.isNotNull(nestedItemsReferenceKey)) {
+			%>
+
+			nestedItemsReferenceKey: '<%= nestedItemsReferenceKey %>',
+
+		<%
+		}
+		%>
+
 		showPagination: <%= showPagination %>,
 		showManagementBar: <%= showManagementBar %>,
 		showSearch: <%= showSearch %>,

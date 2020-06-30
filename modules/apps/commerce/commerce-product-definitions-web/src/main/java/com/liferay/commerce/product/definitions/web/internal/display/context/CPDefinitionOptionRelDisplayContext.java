@@ -84,7 +84,7 @@ public class CPDefinitionOptionRelDisplayContext
 		RenderURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCPDefinitionOptionValueRel");
+			"mvcRenderCommandName", "editProductDefinitionOptionValueRel");
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
 		portletURL.setParameter(

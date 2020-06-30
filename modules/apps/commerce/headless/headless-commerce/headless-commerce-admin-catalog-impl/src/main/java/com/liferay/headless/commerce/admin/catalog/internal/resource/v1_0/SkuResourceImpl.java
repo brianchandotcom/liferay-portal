@@ -22,19 +22,21 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -65,7 +67,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	public Response deleteSku(Long id) throws Exception {
 		_cpInstanceService.deleteCPInstance(id);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}
@@ -86,7 +88,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		_cpInstanceService.deleteCPInstance(cpInstance.getCPInstanceId());
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}
@@ -137,13 +139,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Override
 	public Sku getSku(Long id) throws Exception {
-		DTOConverter skuDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPInstance.class.getName());
-
-		return (Sku)skuDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toSku(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -159,13 +155,18 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					externalReferenceCode);
 		}
 
-		DTOConverter skuDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPInstance.class.getName());
+		return _toSku(cpInstance.getCPInstanceId());
+	}
 
-		return (Sku)skuDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpInstance.getCPInstanceId()));
+	@Override
+	public Page<Sku> getSkusPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _skuHelper.getSkusPage(
+			contextCompany.getCompanyId(), search, filter, pagination, sorts,
+			document -> _toSku(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -230,6 +231,12 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		return _upsertSKU(cpDefinition, sku);
 	}
 
+	private Sku _toSku(Long cpInstanceId) throws Exception {
+		return _skuDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpInstanceId, contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private Sku _updateSKU(CPInstance cpInstance, Sku sku) throws Exception {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpInstance.getGroupId());
@@ -271,13 +278,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				(cpInstance.getExpirationDate() == null) ? true : false),
 			serviceContext);
 
-		DTOConverter skuDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPInstance.class.getName());
-
-		return (Sku)skuDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpInstance.getCPInstanceId()));
+		return _toSku(cpInstance.getCPInstanceId());
 	}
 
 	private Sku _upsertSKU(CPDefinition cpDefinition, Sku sku)
@@ -287,13 +288,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			_cpInstanceService, sku, cpDefinition,
 			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
 
-		DTOConverter skuDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPInstance.class.getName());
-
-		return (Sku)skuDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpInstance.getCPInstanceId()));
+		return _toSku(cpInstance.getCPInstanceId());
 	}
 
 	@Reference
@@ -303,10 +298,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
-	private ServiceContextHelper _serviceContextHelper;
+	private SkuDTOConverter _skuDTOConverter;
 
 	@Reference
 	private SkuHelper _skuHelper;

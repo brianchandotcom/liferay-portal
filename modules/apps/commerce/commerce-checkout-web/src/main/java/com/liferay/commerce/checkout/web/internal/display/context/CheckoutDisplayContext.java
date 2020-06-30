@@ -85,8 +85,8 @@ public class CheckoutDisplayContext {
 			_httpServletRequest, _httpServletResponse);
 	}
 
-	public long getCommerceOrderId() {
-		return _commerceOrder.getCommerceOrderId();
+	public String getCommerceOrderUuid() {
+		return _commerceOrder.getUuid();
 	}
 
 	public String getCurrentCheckoutStepName() {

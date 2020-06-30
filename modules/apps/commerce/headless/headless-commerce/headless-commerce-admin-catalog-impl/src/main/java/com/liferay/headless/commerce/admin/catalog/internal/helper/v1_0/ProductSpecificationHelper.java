@@ -20,9 +20,8 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSpecificationDTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -78,20 +77,16 @@ public class ProductSpecificationHelper {
 
 		List<ProductSpecification> productSpecifications = new ArrayList<>();
 
-		DTOConverter productSpecificationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionSpecificationOptionValue.class.getName());
-
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
 					cpDefinitionSpecificationOptionValues) {
 
 			productSpecifications.add(
-				(ProductSpecification)productSpecificationDTOConverter.toDTO(
+				_productSpecificationDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						locale,
 						cpDefinitionSpecificationOptionValue.
-							getCPDefinitionSpecificationOptionValueId())));
+							getCPDefinitionSpecificationOptionValueId(),
+						locale)));
 		}
 
 		return productSpecifications;
@@ -105,6 +100,6 @@ public class ProductSpecificationHelper {
 		_cpDefinitionSpecificationOptionValueService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ProductSpecificationDTOConverter _productSpecificationDTOConverter;
 
 }

@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Validation implements Cloneable {
 
+	public static Validation toDTO(String json) {
+		return ValidationSerDes.toDTO(json);
+	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}

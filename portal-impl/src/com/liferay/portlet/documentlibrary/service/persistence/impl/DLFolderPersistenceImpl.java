@@ -12331,8 +12331,6 @@ public class DLFolderPersistenceImpl
 		"dlFolder.status = ?";
 
 	public DLFolderPersistenceImpl() {
-		setModelClass(DLFolder.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -12351,6 +12349,8 @@ public class DLFolderPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLFolder.class);
 	}
 
 	/**

@@ -20,16 +20,15 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSpecificationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductSpecificationHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpecificationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -67,6 +66,16 @@ public class ProductSpecificationResourceImpl
 		return _upsertProductSpecification(id, productSpecification);
 	}
 
+	private ProductSpecification _toProductSpecification(
+			Long cpDefinitionSpecificationOptionValueId)
+		throws Exception {
+
+		return _productSpecificationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpDefinitionSpecificationOptionValueId,
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private CPDefinitionSpecificationOptionValue _updateProductSpecification(
 			Long id, ProductSpecification productSpecification)
 		throws PortalException {
@@ -96,16 +105,9 @@ public class ProductSpecificationResourceImpl
 						_updateProductSpecification(
 							productSpecificationId, productSpecification);
 
-				DTOConverter productSpecificationDTOConverter =
-					_dtoConverterRegistry.getDTOConverter(
-						CPDefinitionSpecificationOptionValue.class.getName());
-
-				return (ProductSpecification)
-					productSpecificationDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							contextAcceptLanguage.getPreferredLocale(),
-							cpDefinitionSpecificationOptionValue.
-								getCPDefinitionSpecificationOptionValueId()));
+				return _toProductSpecification(
+					cpDefinitionSpecificationOptionValue.
+						getCPDefinitionSpecificationOptionValueId());
 			}
 			catch (NoSuchCPDefinitionSpecificationOptionValueException
 						nscpdsove) {
@@ -126,15 +128,9 @@ public class ProductSpecificationResourceImpl
 						_cpSpecificationOptionService, id, productSpecification,
 						_serviceContextHelper.getServiceContext());
 
-		DTOConverter productSpecificationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionSpecificationOptionValue.class.getName());
-
-		return (ProductSpecification)productSpecificationDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				cpDefinitionSpecificationOptionValue.
-					getCPDefinitionSpecificationOptionValueId()));
+		return _toProductSpecification(
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -148,7 +144,7 @@ public class ProductSpecificationResourceImpl
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ProductSpecificationDTOConverter _productSpecificationDTOConverter;
 
 	@Reference
 	private ProductSpecificationHelper _productSpecificationHelper;

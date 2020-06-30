@@ -12,11 +12,11 @@
  * details.
  */
 
-import Cards from './cards/Cards.es';
+import Cards from './cards/Cards';
 import EmailsList from './emails_list/EmailsList';
-import List from './list/List.es';
+import List from './list/List';
 import SelectableTable from './selectable_table/SelectableTable';
-import Table from './table/Table.es';
+import Table from './table/Table';
 import Timeline from './timeline/Timeline';
 
 const views = [

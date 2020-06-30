@@ -16,6 +16,8 @@ package com.liferay.commerce.order.web.internal.model;
 
 import com.liferay.commerce.frontend.model.ImageField;
 
+import java.util.List;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -23,7 +25,8 @@ public class OrderItem {
 
 	public OrderItem(
 		String deliveryGroup, String discount, ImageField image, String name,
-		String options, long orderId, long orderItemId, String price,
+		String options, long orderId, long orderItemId,
+		List<OrderItem> orderItems, long parentOrderItemId, String price,
 		int quantity, String requestedDeliveryDate, String sku,
 		String subscriptionDuration, String subscriptionPeriod, String total) {
 
@@ -34,6 +37,8 @@ public class OrderItem {
 		_options = options;
 		_orderId = orderId;
 		_orderItemId = orderItemId;
+		_orderItems = orderItems;
+		_parentOrderItemId = parentOrderItemId;
 		_price = price;
 		_quantity = quantity;
 		_requestedDeliveryDate = requestedDeliveryDate;
@@ -71,6 +76,14 @@ public class OrderItem {
 		return _orderItemId;
 	}
 
+	public List<OrderItem> getOrderItems() {
+		return _orderItems;
+	}
+
+	public long getParentOrderItemId() {
+		return _parentOrderItemId;
+	}
+
 	public String getPrice() {
 		return _price;
 	}
@@ -106,6 +119,8 @@ public class OrderItem {
 	private final String _options;
 	private final long _orderId;
 	private final long _orderItemId;
+	private final List<OrderItem> _orderItems;
+	private final long _parentOrderItemId;
 	private final String _price;
 	private final int _quantity;
 	private final String _requestedDeliveryDate;

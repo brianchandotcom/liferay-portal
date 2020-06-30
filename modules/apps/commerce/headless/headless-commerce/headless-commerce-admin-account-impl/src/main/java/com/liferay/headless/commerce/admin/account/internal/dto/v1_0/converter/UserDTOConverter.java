@@ -15,11 +15,11 @@
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.List;
 
@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.model.User",
 	service = {DTOConverter.class, UserDTOConverter.class}
 )
-public class UserDTOConverter implements DTOConverter {
+public class UserDTOConverter
+	implements DTOConverter<com.liferay.portal.kernel.model.User, User> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +45,7 @@ public class UserDTOConverter implements DTOConverter {
 		throws Exception {
 
 		com.liferay.portal.kernel.model.User user = _userService.getUserById(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new User() {
 			{

@@ -1118,8 +1118,6 @@ public class UserIdMapperPersistenceImpl
 		"(userIdMapper.externalUserId IS NULL OR userIdMapper.externalUserId = '')";
 
 	public UserIdMapperPersistenceImpl() {
-		setModelClass(UserIdMapper.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -1137,6 +1135,8 @@ public class UserIdMapperPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(UserIdMapper.class);
 	}
 
 	/**

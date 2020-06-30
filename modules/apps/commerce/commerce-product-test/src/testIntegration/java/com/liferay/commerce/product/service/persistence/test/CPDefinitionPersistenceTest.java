@@ -420,6 +420,14 @@ public class CPDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_V() throws Exception {
+		_persistence.countByC_V(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_V(0L, 0);
+	}
+
+	@Test
 	public void testCountByC_S() throws Exception {
 		_persistence.countByC_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -712,6 +720,16 @@ public class CPDefinitionPersistenceTest {
 			Long.valueOf(existingCPDefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCPDefinition, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingCPDefinition.getCProductId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCPDefinition, "getOriginalCProductId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingCPDefinition.getVersion()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingCPDefinition, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected CPDefinition addCPDefinition() throws Exception {

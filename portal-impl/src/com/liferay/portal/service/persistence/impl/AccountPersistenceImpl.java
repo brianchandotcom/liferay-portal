@@ -82,8 +82,6 @@ public class AccountPersistenceImpl
 	private FinderPath _finderPathCountAll;
 
 	public AccountPersistenceImpl() {
-		setModelClass(Account.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -102,6 +100,8 @@ public class AccountPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Account.class);
 	}
 
 	/**

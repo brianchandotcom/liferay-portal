@@ -17,7 +17,7 @@
 		"ManufacturerPartNumber": "BB98318",
 		"MinStockQuantity": 5,
 		"Name": "ABS Sensor",
-		"Price": 50.00,
+		"Price": 50.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED93015",
 		"SpecificationOptions": [
@@ -85,8 +85,8 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98319",
-				"Price": 80.00,
-				"PromoPrice": 72.00,
+				"Price": 80.0,
+				"PromoPrice": 72.0,
 				"Sku": "SPEED93016A",
 				"Warehouse1": 100,
 				"Warehouse2": 40,
@@ -100,8 +100,8 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98320",
-				"Price": 80.00,
-				"PromoPrice": 72.00,
+				"Price": 80.0,
+				"PromoPrice": 72.0,
 				"Sku": "SPEED93016B",
 				"Warehouse1": 100,
 				"Warehouse2": 20,
@@ -115,8 +115,8 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98321",
-				"Price": 80.00,
-				"PromoPrice": 72.00,
+				"Price": 80.0,
+				"PromoPrice": 72.0,
 				"Sku": "SPEED93016C",
 				"Warehouse1": 100,
 				"Warehouse2": 100,
@@ -166,8 +166,8 @@
 		"ManufacturerPartNumber": "BB98322",
 		"MinStockQuantity": 5,
 		"Name": "Premium Brake Fluid",
-		"Price": 100.00,
-		"PromoPrice": 90.00,
+		"Price": 100.0,
+		"PromoPrice": 90.0,
 		"Sku": "SPEED93017",
 		"SpecificationOptions": [
 			{
@@ -215,7 +215,7 @@
 		"ManufacturerPartNumber": "BB98334",
 		"MinStockQuantity": 5,
 		"Name": "Wear Sensors",
-		"Price": 60.00,
+		"Price": 60.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED93027",
 		"SpecificationOptions": [
@@ -264,8 +264,8 @@
 		"ManufacturerPartNumber": "BB98323",
 		"MinStockQuantity": 5,
 		"Name": "Brake Pads",
-		"Price": 21.00,
-		"PromoPrice": 18.90,
+		"Price": 21.0,
+		"PromoPrice": 18.9,
 		"RelatedProducts": [
 			"Wear Sensors"
 		],
@@ -323,8 +323,8 @@
 		"ManufacturerPartNumber": "BB98324",
 		"MinStockQuantity": 5,
 		"Name": "Premium Brake Pads",
-		"Price": 29.00,
-		"PromoPrice": 26.10,
+		"Price": 29.0,
+		"PromoPrice": 26.1,
 		"RelatedProducts": [
 			"Wear Sensors"
 		],
@@ -379,7 +379,7 @@
 		"ManufacturerPartNumber": "BB98325",
 		"MinStockQuantity": 5,
 		"Name": "Brake Rotors",
-		"Price": 40.00,
+		"Price": 40.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED93020",
 		"SpecificationOptions": [
@@ -429,7 +429,7 @@
 		"ManufacturerPartNumber": "BB98326",
 		"MinStockQuantity": 5,
 		"Name": "Calipers",
-		"Price": 90.00,
+		"Price": 90.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED93021",
 		"SpecificationOptions": [
@@ -494,7 +494,7 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98327",
-				"Price": 120.00,
+				"Price": 120.0,
 				"PromoPrice": 0,
 				"Sku": "SPEED93022A",
 				"Warehouse1": 40,
@@ -509,7 +509,7 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98328",
-				"Price": 120.00,
+				"Price": 120.0,
 				"PromoPrice": 0,
 				"Sku": "SPEED93022B",
 				"Warehouse1": 40,
@@ -524,7 +524,7 @@
 					}
 				],
 				"ManufacturerPartNumber": "BB98329",
-				"Price": 120.00,
+				"Price": 120.0,
 				"PromoPrice": 0,
 				"Sku": "SPEED93022C",
 				"Warehouse1": 40,
@@ -576,7 +576,7 @@
 		"ManufacturerPartNumber": "BB98330",
 		"MinStockQuantity": 5,
 		"Name": "Timing Belt",
-		"Price": 600.00,
+		"Price": 600.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED93023",
 		"SpecificationOptions": [
@@ -630,7 +630,7 @@
 		"ManufacturerPartNumber": "BB98331",
 		"MinStockQuantity": 5,
 		"Name": "Master Cylinder",
-		"Price": 78.00,
+		"Price": 78.0,
 		"PromoPrice": 0,
 		"RelatedProducts": [
 			"Wear Sensors"
@@ -687,7 +687,7 @@
 		"ManufacturerPartNumber": "BB98332",
 		"MinStockQuantity": 5,
 		"Name": "Master Cylinder",
-		"Price": 34.00,
+		"Price": 34.0,
 		"PromoPrice": 0,
 		"RelatedProducts": [
 			"Wear Sensors"
@@ -744,7 +744,7 @@
 		"ManufacturerPartNumber": "BB98333",
 		"MinStockQuantity": 5,
 		"Name": "Master Cylinder",
-		"Price": 39.00,
+		"Price": 39.0,
 		"PromoPrice": 0,
 		"RelatedProducts": [
 			"Wear Sensors"
@@ -794,7 +794,7 @@
 		"ManufacturerPartNumber": "EX938051",
 		"MinStockQuantity": 5,
 		"Name": "Bearings",
-		"Price": 70.00,
+		"Price": 70.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00673",
 		"SpecificationOptions": [
@@ -841,7 +841,7 @@
 		"ManufacturerPartNumber": "EX938052",
 		"MinStockQuantity": 5,
 		"Name": "Cams",
-		"Price": 695.00,
+		"Price": 695.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00674",
 		"SpecificationOptions": [
@@ -888,7 +888,7 @@
 		"ManufacturerPartNumber": "EX938053",
 		"MinStockQuantity": 5,
 		"Name": "Engine Mount",
-		"Price": 120.00,
+		"Price": 120.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00675",
 		"SpecificationOptions": [
@@ -938,7 +938,7 @@
 		"ManufacturerPartNumber": "EX938054",
 		"MinStockQuantity": 5,
 		"Name": "Oil Filter",
-		"Price": 450.00,
+		"Price": 450.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00676",
 		"SpecificationOptions": [
@@ -984,7 +984,7 @@
 		"ManufacturerPartNumber": "EX938055",
 		"MinStockQuantity": 5,
 		"Name": "Oil Pump",
-		"Price": 79.00,
+		"Price": 79.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00677",
 		"SpecificationOptions": [
@@ -1031,7 +1031,7 @@
 		"ManufacturerPartNumber": "EX938056",
 		"MinStockQuantity": 5,
 		"Name": "Piston",
-		"Price": 14.00,
+		"Price": 14.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00678",
 		"SpecificationOptions": [
@@ -1078,7 +1078,7 @@
 		"ManufacturerPartNumber": "EX938057",
 		"MinStockQuantity": 5,
 		"Name": "Pulley Kit",
-		"Price": 201.00,
+		"Price": 201.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00679",
 		"SpecificationOptions": [
@@ -1125,7 +1125,7 @@
 		"ManufacturerPartNumber": "EX938058",
 		"MinStockQuantity": 5,
 		"Name": "Seal",
-		"Price": 30.00,
+		"Price": 30.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00680",
 		"SpecificationOptions": [
@@ -1175,7 +1175,7 @@
 		"ManufacturerPartNumber": "EX938059",
 		"MinStockQuantity": 5,
 		"Name": "Timing Chain Tensioner",
-		"Price": 30.00,
+		"Price": 30.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00681",
 		"SpecificationOptions": [
@@ -1222,7 +1222,7 @@
 		"ManufacturerPartNumber": "EX938060",
 		"MinStockQuantity": 5,
 		"Name": "Timing Chain",
-		"Price": 23.00,
+		"Price": 23.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00682",
 		"SpecificationOptions": [
@@ -1269,7 +1269,7 @@
 		"ManufacturerPartNumber": "EX938061",
 		"MinStockQuantity": 5,
 		"Name": "Valve Cover Grommets",
-		"Price": 6.00,
+		"Price": 6.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED00683",
 		"SpecificationOptions": [
@@ -1316,7 +1316,7 @@
 		"ManufacturerPartNumber": "ES98205",
 		"MinStockQuantity": 5,
 		"Name": "Catalytic Converters",
-		"Price": 106.00,
+		"Price": 106.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED77822",
 		"SpecificationOptions": [
@@ -1363,7 +1363,7 @@
 		"ManufacturerPartNumber": "ES98206",
 		"MinStockQuantity": 5,
 		"Name": "Exhaust Clamps",
-		"Price": 9.00,
+		"Price": 9.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED77823",
 		"SpecificationOptions": [
@@ -1410,7 +1410,7 @@
 		"ManufacturerPartNumber": "ES98207",
 		"MinStockQuantity": 5,
 		"Name": "Muffler/Resonators",
-		"Price": 32.00,
+		"Price": 32.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED77824",
 		"SpecificationOptions": [
@@ -1457,7 +1457,7 @@
 		"ManufacturerPartNumber": "ES98208",
 		"MinStockQuantity": 5,
 		"Name": "Lift Support",
-		"Price": 20.00,
+		"Price": 20.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED77825",
 		"SpecificationOptions": [
@@ -1512,7 +1512,7 @@
 		"ManufacturerPartNumber": "TC90432",
 		"MinStockQuantity": 5,
 		"Name": "Turbocharger",
-		"Price": 665.00,
+		"Price": 665.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED19999",
 		"SpecificationOptions": [
@@ -1559,7 +1559,7 @@
 		"ManufacturerPartNumber": "HM88893",
 		"MinStockQuantity": 5,
 		"Name": "Ball Joints",
-		"Price": 152.00,
+		"Price": 152.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38794",
 		"SpecificationOptions": [
@@ -1606,7 +1606,7 @@
 		"ManufacturerPartNumber": "HM88894",
 		"MinStockQuantity": 5,
 		"Name": "Bushings",
-		"Price": 18.00,
+		"Price": 18.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38795",
 		"SpecificationOptions": [
@@ -1653,7 +1653,7 @@
 		"ManufacturerPartNumber": "HM88895",
 		"MinStockQuantity": 5,
 		"Name": "CV Axles",
-		"Price": 89.00,
+		"Price": 89.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38796",
 		"SpecificationOptions": [
@@ -1699,7 +1699,7 @@
 		"ManufacturerPartNumber": "HM88896",
 		"MinStockQuantity": 5,
 		"Name": "Universal CV Boot",
-		"Price": 185.00,
+		"Price": 185.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38797",
 		"SpecificationOptions": [
@@ -1742,7 +1742,7 @@
 		"ManufacturerPartNumber": "HM88897",
 		"MinStockQuantity": 5,
 		"Name": "Hub Bearing Assembly - Rear",
-		"Price": 175.00,
+		"Price": 175.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38798",
 		"SpecificationOptions": [
@@ -1789,7 +1789,7 @@
 		"ManufacturerPartNumber": "HM88898",
 		"MinStockQuantity": 5,
 		"Name": "Coil Spring - Rear",
-		"Price": 104.00,
+		"Price": 104.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38799",
 		"SpecificationOptions": [
@@ -1832,7 +1832,7 @@
 		"ManufacturerPartNumber": "HM88899",
 		"MinStockQuantity": 5,
 		"Name": "Power Steering Pump",
-		"Price": 160.00,
+		"Price": 160.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38800",
 		"SpecificationOptions": [
@@ -1879,7 +1879,7 @@
 		"ManufacturerPartNumber": "HM88900",
 		"MinStockQuantity": 5,
 		"Name": "Differential Ring and Pinion - Universal",
-		"Price": 211.00,
+		"Price": 211.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38801",
 		"SpecificationOptions": [
@@ -1922,7 +1922,7 @@
 		"ManufacturerPartNumber": "HM88901",
 		"MinStockQuantity": 5,
 		"Name": "Shock Absorber",
-		"Price": 75.00,
+		"Price": 75.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38802",
 		"SpecificationOptions": [
@@ -1965,7 +1965,7 @@
 		"ManufacturerPartNumber": "HM88902",
 		"MinStockQuantity": 5,
 		"Name": "Shock Strut - Front",
-		"Price": 129.00,
+		"Price": 129.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38803",
 		"SpecificationOptions": [
@@ -2012,7 +2012,7 @@
 		"ManufacturerPartNumber": "HM88903",
 		"MinStockQuantity": 5,
 		"Name": "Tie Rod End Tool",
-		"Price": 35.00,
+		"Price": 35.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38804",
 		"SpecificationOptions": [
@@ -2062,7 +2062,7 @@
 		"ManufacturerPartNumber": "HM88904",
 		"MinStockQuantity": 5,
 		"Name": "Wheel Bearing Grease",
-		"Price": 54.00,
+		"Price": 54.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED38805",
 		"SpecificationOptions": [
@@ -2101,7 +2101,7 @@
 		"ManufacturerPartNumber": "TT00024",
 		"MinStockQuantity": 5,
 		"Name": "CV Axles",
-		"Price": 89.00,
+		"Price": 89.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55853",
 		"SpecificationOptions": [
@@ -2147,7 +2147,7 @@
 		"ManufacturerPartNumber": "TT00025",
 		"MinStockQuantity": 5,
 		"Name": "Universal CV Boot",
-		"Price": 185.00,
+		"Price": 185.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55854",
 		"SpecificationOptions": [
@@ -2190,7 +2190,7 @@
 		"ManufacturerPartNumber": "TT00026",
 		"MinStockQuantity": 5,
 		"Name": "Drive Shafts",
-		"Price": 396.00,
+		"Price": 396.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55855",
 		"SpecificationOptions": [
@@ -2232,7 +2232,7 @@
 		"ManufacturerPartNumber": "TT00027",
 		"MinStockQuantity": 5,
 		"Name": "Transmission Fluid",
-		"Price": 42.00,
+		"Price": 42.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55856",
 		"SpecificationOptions": [
@@ -2271,7 +2271,7 @@
 		"ManufacturerPartNumber": "TT00028",
 		"MinStockQuantity": 5,
 		"Name": "Mount",
-		"Price": 3.00,
+		"Price": 3.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55857",
 		"SpecificationOptions": [
@@ -2318,7 +2318,7 @@
 		"ManufacturerPartNumber": "TT00029",
 		"MinStockQuantity": 5,
 		"Name": "Wheel Seal - Front",
-		"Price": 4.00,
+		"Price": 4.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55858",
 		"SpecificationOptions": [
@@ -2357,7 +2357,7 @@
 		"ManufacturerPartNumber": "TT00030",
 		"MinStockQuantity": 5,
 		"Name": "Torque Converters",
-		"Price": 34.00,
+		"Price": 34.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55859",
 		"SpecificationOptions": [
@@ -2404,7 +2404,7 @@
 		"ManufacturerPartNumber": "TT00031",
 		"MinStockQuantity": 5,
 		"Name": "Transmission Cooler Line Assembly",
-		"Price": 15.00,
+		"Price": 15.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55860",
 		"SpecificationOptions": [
@@ -2454,7 +2454,7 @@
 		"ManufacturerPartNumber": "TT00032",
 		"MinStockQuantity": 5,
 		"Name": "U-Joint",
-		"Price": 24.00,
+		"Price": 24.0,
 		"PromoPrice": 0,
 		"Sku": "SPEED55861",
 		"SpecificationOptions": [

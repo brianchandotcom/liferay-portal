@@ -25,9 +25,14 @@ import java.util.Locale;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface ProductHelper {
+
+	public PriceModel getMinPrice(
+			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
+		throws PortalException;
 
 	public PriceModel getPrice(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,

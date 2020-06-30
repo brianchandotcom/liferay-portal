@@ -606,6 +606,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
 			cpInstance.getCPInstanceId());
 
+		cpDefinitionOptionValueRelLocalService.
+			resetCPInstanceCPDefinitionOptionValueRels(
+				cpInstance.getCPInstanceUuid());
+
 		// Expando
 
 		expandoRowLocalService.deleteRows(cpInstance.getCPInstanceId());
@@ -880,6 +884,18 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
+			long companyId, long cpDefinitionId, String keywords, int status,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, cpDefinitionId, keywords, status, sort);
+
+		return searchCPInstances(searchContext);
+	}
+
+	@Override
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			long companyId, long[] groupIds, String keywords, int status,
 			int start, int end, Sort sort)
@@ -1056,7 +1072,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		// Workflow
 
-		if (cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
+			_isWorkflowActionPublish(serviceContext)) {
+
 			cpInstance = startWorkflowInstance(
 				user.getUserId(), cpInstance, serviceContext);
 		}
@@ -1158,6 +1176,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_EXPIRED) {
 			cpInstance.setExpirationDate(now);
+		}
+
+		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_APPROVED)) {
+
+			cpDefinitionOptionValueRelLocalService.
+				resetCPInstanceCPDefinitionOptionValueRels(
+					cpInstance.getCPInstanceUuid());
 		}
 
 		cpInstance.setStatus(status);
@@ -1375,6 +1401,45 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long cpDefinitionId, String keywords, int status,
+		Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(CPField.CP_DEFINITION_ID, cpDefinitionId);
+		attributes.put(
+			CPField.CP_DEFINITION_STATUS, WorkflowConstants.STATUS_ANY);
+		attributes.put(Field.CONTENT, keywords);
+		attributes.put(Field.STATUS, status);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

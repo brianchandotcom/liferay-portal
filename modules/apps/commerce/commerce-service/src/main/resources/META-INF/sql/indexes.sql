@@ -32,6 +32,7 @@ create index IX_7DD246EA on CommerceOrder (commerceAccountId, groupId, orderStat
 create index IX_81097E4C on CommerceOrder (commerceAccountId, orderStatus);
 create index IX_DFF1932E on CommerceOrder (companyId, commerceAccountId);
 create index IX_48EEEDEE on CommerceOrder (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_9ACAF78A on CommerceOrder (createDate, commerceAccountId, orderStatus);
 create index IX_4F4CAEE4 on CommerceOrder (groupId, commerceAccountId, orderStatus);
 create index IX_9C04F6F8 on CommerceOrder (groupId, commercePaymentMethodKey[$COLUMN_LENGTH:75$]);
 create index IX_67E0AF05 on CommerceOrder (groupId, userId, orderStatus);
@@ -46,6 +47,7 @@ create index IX_2D8339EE on CommerceOrderItem (bookedQuantityId);
 create index IX_415AF3E3 on CommerceOrderItem (commerceOrderId, CPInstanceId);
 create index IX_15B37023 on CommerceOrderItem (commerceOrderId, subscription);
 create index IX_12257E21 on CommerceOrderItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_8E1472FB on CommerceOrderItem (parentCommerceOrderItemId);
 
 create index IX_CEB86C22 on CommerceOrderNote (commerceOrderId, restricted);
 create index IX_EF4EEF80 on CommerceOrderNote (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);

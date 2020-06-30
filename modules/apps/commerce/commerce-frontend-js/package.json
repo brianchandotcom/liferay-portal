@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.2.0",
-		"@clayui/autocomplete": "3.0.7",
+		"@clayui/autocomplete": "^3.1.2",
 		"@clayui/badge": "3.0.0",
 		"@clayui/button": "3.2.0",
 		"@clayui/card": "3.0.7",
@@ -27,8 +27,12 @@
 		"react-dom": "16.8.6"
 	},
 	"devDependencies": {
-		"clay-css": "^2.16.2",
-		"faker": "^4.1.0"
+		"clay-css": "^2.16.2"
+	},
+	"jest": {
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/dev/"
+		]
 	},
 	"name": "commerce-frontend-js",
 	"private": true,
@@ -39,5 +43,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "1.0.24"
+	"version": "1.0.29"
 }

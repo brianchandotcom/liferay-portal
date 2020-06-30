@@ -580,8 +580,6 @@ public class PasswordTrackerPersistenceImpl
 		"passwordTracker.userId = ?";
 
 	public PasswordTrackerPersistenceImpl() {
-		setModelClass(PasswordTracker.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("password", "password_");
@@ -599,6 +597,8 @@ public class PasswordTrackerPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PasswordTracker.class);
 	}
 
 	/**

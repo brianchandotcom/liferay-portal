@@ -8270,8 +8270,6 @@ public class UserNotificationEventPersistenceImpl
 		"userNotificationEvent.archived = ?";
 
 	public UserNotificationEventPersistenceImpl() {
-		setModelClass(UserNotificationEvent.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -8290,6 +8288,8 @@ public class UserNotificationEventPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(UserNotificationEvent.class);
 	}
 
 	/**

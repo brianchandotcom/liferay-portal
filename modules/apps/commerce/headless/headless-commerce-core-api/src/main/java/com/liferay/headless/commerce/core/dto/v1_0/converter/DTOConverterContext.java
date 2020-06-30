@@ -21,7 +21,10 @@ import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ * 					 com.liferay.portal.vulcan.dto.converter.DTOConverterContext}
  */
+@Deprecated
 public interface DTOConverterContext {
 
 	public Object getCompositeResourcePrimKey();

@@ -1261,8 +1261,6 @@ public class CompanyPersistenceImpl
 		"company.system = ?";
 
 	public CompanyPersistenceImpl() {
-		setModelClass(Company.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("key", "key_");
@@ -1281,6 +1279,8 @@ public class CompanyPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Company.class);
 	}
 
 	/**

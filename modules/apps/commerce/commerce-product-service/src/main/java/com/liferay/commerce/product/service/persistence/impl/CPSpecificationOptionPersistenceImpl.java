@@ -4172,8 +4172,6 @@ public class CPSpecificationOptionPersistenceImpl
 		"(cpSpecificationOption.key IS NULL OR cpSpecificationOption.key = '')";
 
 	public CPSpecificationOptionPersistenceImpl() {
-		setModelClass(CPSpecificationOption.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4192,6 +4190,8 @@ public class CPSpecificationOptionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPSpecificationOption.class);
 	}
 
 	/**

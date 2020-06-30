@@ -16,6 +16,8 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import TooltipTextRenderer from './TooltipTextRenderer';
+
 function DefaultRenderer(props) {
 	switch (true) {
 		case typeof props.value === 'number':
@@ -24,6 +26,8 @@ function DefaultRenderer(props) {
 			return <>{props.value || ''}</>;
 		case !!props.value.icon:
 			return <ClayIcon symbol={props.value.icon} />;
+		case !!props.value.iconSymbol && !!props.value.text:
+			return <TooltipTextRenderer value={props.value} />;
 		case !!props.value.label:
 			return <>{props.value.label}</>;
 		default:
@@ -44,6 +48,10 @@ DefaultRenderer.propTypes = {
 		}),
 		PropTypes.shape({
 			icon: PropTypes.string
+		}),
+		PropTypes.shape({
+			iconSymbol: PropTypes.string,
+			text: PropTypes.string
 		})
 	])
 };

@@ -24,13 +24,18 @@ import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
 import io.swagger.v3.oas.integration.api.OpenApiContext;
 import io.swagger.v3.oas.integration.api.OpenApiScanner;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
 
+import java.net.URI;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,6 +47,14 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Override
 	public Response getOpenAPI(Set<Class<?>> resourceClasses, String type)
+		throws Exception {
+
+		return getOpenAPI(resourceClasses, type, null);
+	}
+
+	@Override
+	public Response getOpenAPI(
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
 		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
@@ -80,6 +93,16 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			return Response.status(
 				404
 			).build();
+		}
+
+		if (uriInfo != null) {
+			Server server = new Server();
+
+			URI uri = uriInfo.getBaseUri();
+
+			server.setUrl(uri.toString());
+
+			openAPI.setServers(Collections.singletonList(server));
 		}
 
 		if (StringUtil.equalsIgnoreCase("yaml", type)) {

@@ -65,8 +65,8 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		commerceTaxFixedRate.setCompanyId(user.getCompanyId());
 		commerceTaxFixedRate.setUserId(user.getUserId());
 		commerceTaxFixedRate.setUserName(user.getFullName());
-		commerceTaxFixedRate.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxFixedRate.setCPTaxCategoryId(cpTaxCategoryId);
+		commerceTaxFixedRate.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxFixedRate.setRate(rate);
 
 		return commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);

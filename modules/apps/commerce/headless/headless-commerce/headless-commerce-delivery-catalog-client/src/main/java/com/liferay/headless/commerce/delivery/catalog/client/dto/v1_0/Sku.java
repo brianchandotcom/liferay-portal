@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Sku implements Cloneable {
 
+	public static Sku toDTO(String json) {
+		return SkuSerDes.toDTO(json);
+	}
+
 	public String[] getAllowedOrderQuantities() {
 		return allowedOrderQuantities;
 	}

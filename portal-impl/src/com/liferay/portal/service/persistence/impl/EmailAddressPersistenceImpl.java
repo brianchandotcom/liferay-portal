@@ -3967,8 +3967,6 @@ public class EmailAddressPersistenceImpl
 		"emailAddress.primary = ?";
 
 	public EmailAddressPersistenceImpl() {
-		setModelClass(EmailAddress.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3987,6 +3985,8 @@ public class EmailAddressPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(EmailAddress.class);
 	}
 
 	/**

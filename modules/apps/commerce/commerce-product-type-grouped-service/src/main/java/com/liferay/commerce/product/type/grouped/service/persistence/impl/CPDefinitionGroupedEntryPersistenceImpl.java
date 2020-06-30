@@ -2245,8 +2245,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		"cpDefinitionGroupedEntry.entryCProductId = ?";
 
 	public CPDefinitionGroupedEntryPersistenceImpl() {
-		setModelClass(CPDefinitionGroupedEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2264,6 +2262,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinitionGroupedEntry.class);
 	}
 
 	/**

@@ -23,12 +23,13 @@ public class Sku {
 
 	public Sku(
 		long cpInstanceId, String sku, String options, String price,
-		int availableQuantity, LabelField status) {
+		String productName, int availableQuantity, LabelField status) {
 
 		_cpInstanceId = cpInstanceId;
 		_sku = sku;
 		_options = options;
 		_price = price;
+		_productName = productName;
 		_availableQuantity = availableQuantity;
 		_status = status;
 	}
@@ -49,6 +50,10 @@ public class Sku {
 		return _price;
 	}
 
+	public String getProductName() {
+		return _productName;
+	}
+
 	public String getSku() {
 		return _sku;
 	}
@@ -61,6 +66,7 @@ public class Sku {
 	private final long _cpInstanceId;
 	private final String _options;
 	private final String _price;
+	private final String _productName;
 	private final String _sku;
 	private final LabelField _status;
 

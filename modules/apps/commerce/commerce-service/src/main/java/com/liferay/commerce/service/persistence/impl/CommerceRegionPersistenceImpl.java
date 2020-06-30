@@ -2534,8 +2534,6 @@ public class CommerceRegionPersistenceImpl
 		"commerceRegion.active = ?";
 
 	public CommerceRegionPersistenceImpl() {
-		setModelClass(CommerceRegion.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2555,6 +2553,8 @@ public class CommerceRegionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceRegion.class);
 	}
 
 	/**

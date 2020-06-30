@@ -19,12 +19,11 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountUserRel",
 	service = {AccountMemberDTOConverter.class, DTOConverter.class}
 )
-public class AccountMemberDTOConverter implements DTOConverter {
+public class AccountMemberDTOConverter
+	implements DTOConverter<CommerceAccountUserRel, AccountMember> {
 
 	@Override
 	public String getContentType() {
@@ -52,8 +52,7 @@ public class AccountMemberDTOConverter implements DTOConverter {
 
 		CommerceAccountUserRel commerceAccountUserRel =
 			_commerceAccountUserRelService.getCommerceAccountUserRel(
-				(CommerceAccountUserRelPK)
-					dtoConverterContext.getCompositeResourcePrimKey());
+				(CommerceAccountUserRelPK)dtoConverterContext.getId());
 
 		User user = commerceAccountUserRel.getUser();
 
@@ -75,18 +74,14 @@ public class AccountMemberDTOConverter implements DTOConverter {
 
 		List<AccountRole> accountRoles = new ArrayList<>();
 
-		DTOConverter accountRoleDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				UserGroupRole.class.getName());
-
 		for (UserGroupRole userGroupRole :
 				commerceAccountUserRel.getUserGroupRoles()) {
 
 			accountRoles.add(
-				(AccountRole)accountRoleDTOConverter.toDTO(
+				_accountRoleDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						dtoConverterContext.getLocale(),
-						userGroupRole.getPrimaryKey())));
+						userGroupRole.getPrimaryKey(),
+						dtoConverterContext.getLocale())));
 		}
 
 		Stream<AccountRole> stream = accountRoles.stream();
@@ -95,9 +90,9 @@ public class AccountMemberDTOConverter implements DTOConverter {
 	}
 
 	@Reference
-	private CommerceAccountUserRelService _commerceAccountUserRelService;
+	private AccountRoleDTOConverter _accountRoleDTOConverter;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private CommerceAccountUserRelService _commerceAccountUserRelService;
 
 }

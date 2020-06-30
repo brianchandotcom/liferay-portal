@@ -3004,8 +3004,6 @@ public class PollsVotePersistenceImpl
 		"pollsVote.userId = ?";
 
 	public PollsVotePersistenceImpl() {
-		setModelClass(PollsVote.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3023,6 +3021,8 @@ public class PollsVotePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PollsVote.class);
 	}
 
 	/**

@@ -684,6 +684,8 @@ public class JournalContentDisplayContext {
 			portletURL.setParameter(
 				"showCacheableInput", Boolean.TRUE.toString());
 			portletURL.setParameter(
+				"structureId", String.valueOf(ddmTemplate.getClassPK()));
+			portletURL.setParameter(
 				"groupId", String.valueOf(ddmTemplate.getGroupId()));
 			portletURL.setParameter(
 				"refererPortletName",

@@ -16,6 +16,6 @@
 
 <aui:model-context bean="<%= cpAttachmentFileEntry %>" model="<%= CPAttachmentFileEntry.class %>" />
 
-<aui:input name="title" />
+<aui:input defaultLanguageId="<%= cpAttachmentFileEntriesDisplayContext.getCatalogDefaultLanguageId() %>" name="title" />
 
 <aui:input name="priority" />

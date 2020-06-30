@@ -2825,8 +2825,6 @@ public class FragmentCollectionPersistenceImpl
 		"(fragmentCollection.name IS NULL OR fragmentCollection.name LIKE '')";
 
 	public FragmentCollectionPersistenceImpl() {
-		setModelClass(FragmentCollection.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2844,6 +2842,8 @@ public class FragmentCollectionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(FragmentCollection.class);
 	}
 
 	/**

@@ -16,8 +16,6 @@ AUI().ready(() => {
 	const Speedwell = window.Speedwell;
 
 	if (!!Speedwell && !!Speedwell.features) {
-		Speedwell.features.init.initializeFeatures();
-
 		Speedwell.features.sliders = [];
 
 		if (

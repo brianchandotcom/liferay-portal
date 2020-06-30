@@ -131,7 +131,9 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("classPK", _classPK);
 		soyContext.put(
 			"defaultEditorConfigurations", _getDefaultConfigurations());
-		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
+		soyContext.put(
+			"defaultLanguageId",
+			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale()));
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));

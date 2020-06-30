@@ -2442,8 +2442,6 @@ public class AppPersistenceImpl
 		"(app.category IS NULL OR app.category = '')";
 
 	public AppPersistenceImpl() {
-		setModelClass(App.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2461,6 +2459,8 @@ public class AppPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(App.class);
 	}
 
 	/**

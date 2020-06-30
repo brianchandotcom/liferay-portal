@@ -897,8 +897,6 @@ public class PluginSettingPersistenceImpl
 		"(pluginSetting.pluginType IS NULL OR pluginSetting.pluginType = '')";
 
 	public PluginSettingPersistenceImpl() {
-		setModelClass(PluginSetting.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -916,6 +914,8 @@ public class PluginSettingPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PluginSetting.class);
 	}
 
 	/**

@@ -5181,8 +5181,6 @@ public class FragmentEntryPersistenceImpl
 		"fragmentEntry.status = ?";
 
 	public FragmentEntryPersistenceImpl() {
-		setModelClass(FragmentEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5200,6 +5198,8 @@ public class FragmentEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(FragmentEntry.class);
 	}
 
 	/**

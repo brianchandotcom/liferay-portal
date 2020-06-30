@@ -669,7 +669,6 @@ public class CommerceDiscountTest {
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
 
 	@Inject

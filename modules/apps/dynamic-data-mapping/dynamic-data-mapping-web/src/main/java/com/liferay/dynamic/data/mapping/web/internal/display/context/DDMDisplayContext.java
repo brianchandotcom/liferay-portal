@@ -506,6 +506,8 @@ public class DDMDisplayContext {
 					addTemplateURL.setParameter(
 						"resourceClassNameId",
 						String.valueOf(getResourceClassNameId()));
+					addTemplateURL.setParameter(
+						"structureId", String.valueOf(getStructureId()));
 
 					String message = "add";
 
@@ -932,6 +934,10 @@ public class DDMDisplayContext {
 		return PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 	}
 
+	protected long getStructureId() {
+		return ParamUtil.getLong(_renderRequest, "structureId");
+	}
+
 	protected long[] getTemplateClassNameIds() {
 		DDMDisplay ddmDisplay = getDDMDisplay();
 
@@ -1136,8 +1142,10 @@ public class DDMDisplayContext {
 	}
 
 	private long[] _getDDMTemplateClassPKs() {
-		if (getClassPK() > 0) {
-			return new long[] {getClassPK()};
+		long classPK = getClassPK();
+
+		if (classPK > 0) {
+			return new long[] {classPK};
 		}
 
 		return null;

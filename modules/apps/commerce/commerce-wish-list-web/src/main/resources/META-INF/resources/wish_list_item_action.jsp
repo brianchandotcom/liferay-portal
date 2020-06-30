@@ -29,26 +29,6 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
->
-	<c:if test="<%= commerceWishListDisplayContext.hasManageCommerceWishListsPermission() %>">
-		<portlet:actionURL name="editCommerceWishListItem" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceWishListItemId" value="<%= String.valueOf(commerceWishListItem.getCommerceWishListItemId()) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
-	</c:if>
-</liferay-ui:icon-menu>
-
 <c:choose>
 	<c:when test="<%= cpInstance != null %>">
 		<commerce-ui:add-to-cart

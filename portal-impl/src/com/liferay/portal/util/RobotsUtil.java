@@ -16,6 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -38,22 +40,9 @@ public class RobotsUtil {
 		String virtualHost, boolean secure, int port) {
 
 		if (Validator.isNotNull(virtualHost)) {
-			String content = ContentUtil.get(
+			return ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
-
-			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
-			content = StringUtil.replace(
-				content, "[$PORT$]", String.valueOf(port));
-
-			if (secure) {
-				content = StringUtil.replace(content, "[$PROTOCOL$]", "https");
-			}
-			else {
-				content = StringUtil.replace(content, "[$PROTOCOL$]", "http");
-			}
-
-			return content;
 		}
 
 		return ContentUtil.get(
@@ -64,18 +53,50 @@ public class RobotsUtil {
 	public static String getRobots(LayoutSet layoutSet, boolean secure)
 		throws PortalException {
 
-		int portalServerPort = PortalUtil.getPortalServerPort(secure);
-
 		if (layoutSet == null) {
-			return getDefaultRobots(null, secure, portalServerPort);
+			return ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
-		return GetterUtil.get(
+		int portalServerPort = PortalUtil.getPortalServerPort(secure);
+
+		String virtualHostname = PortalUtil.getVirtualHostname(layoutSet);
+
+		String robotsTxt = GetterUtil.getString(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			getDefaultRobots(
-				PortalUtil.getVirtualHostname(layoutSet), secure,
-				portalServerPort));
+			ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP));
+
+		return _replaceWildcards(
+			robotsTxt, virtualHostname, secure, portalServerPort);
 	}
+
+	private static String _replaceWildcards(
+		String robotsTxt, String virtualHostname, boolean secure, int port) {
+
+		if (Validator.isNotNull(virtualHostname)) {
+			robotsTxt = StringUtil.replace(
+				robotsTxt, "[$HOST$]", virtualHostname);
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Placeholder [$HOST$] could not be replaced with the actual " +
+					"host");
+		}
+
+		robotsTxt = StringUtil.replace(
+			robotsTxt, "[$PORT$]", String.valueOf(port));
+
+		if (secure) {
+			return StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "https");
+		}
+
+		return StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "http");
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(RobotsUtil.class);
 
 }

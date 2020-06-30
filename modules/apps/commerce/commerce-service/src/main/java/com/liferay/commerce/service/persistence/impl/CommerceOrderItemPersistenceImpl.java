@@ -34,12 +34,14 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1623,6 +1625,539 @@ public class CommerceOrderItemPersistenceImpl
 
 	private static final String _FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2 =
 		"commerceOrderItem.CPInstanceId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByParentCommerceOrderItemId;
+	private FinderPath
+		_finderPathWithoutPaginationFindByParentCommerceOrderItemId;
+	private FinderPath _finderPathCountByParentCommerceOrderItemId;
+
+	/**
+	 * Returns all the commerce order items where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @return the matching commerce order items
+	 */
+	@Override
+	public List<CommerceOrderItem> findByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId) {
+
+		return findByParentCommerceOrderItemId(
+			parentCommerceOrderItemId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order items where parentCommerceOrderItemId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param start the lower bound of the range of commerce order items
+	 * @param end the upper bound of the range of commerce order items (not inclusive)
+	 * @return the range of matching commerce order items
+	 */
+	@Override
+	public List<CommerceOrderItem> findByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId, int start, int end) {
+
+		return findByParentCommerceOrderItemId(
+			parentCommerceOrderItemId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order items where parentCommerceOrderItemId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param start the lower bound of the range of commerce order items
+	 * @param end the upper bound of the range of commerce order items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order items
+	 */
+	@Override
+	public List<CommerceOrderItem> findByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId, int start, int end,
+		OrderByComparator<CommerceOrderItem> orderByComparator) {
+
+		return findByParentCommerceOrderItemId(
+			parentCommerceOrderItemId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order items where parentCommerceOrderItemId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param start the lower bound of the range of commerce order items
+	 * @param end the upper bound of the range of commerce order items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order items
+	 */
+	@Override
+	public List<CommerceOrderItem> findByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId, int start, int end,
+		OrderByComparator<CommerceOrderItem> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByParentCommerceOrderItemId;
+				finderArgs = new Object[] {parentCommerceOrderItemId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath =
+				_finderPathWithPaginationFindByParentCommerceOrderItemId;
+			finderArgs = new Object[] {
+				parentCommerceOrderItemId, start, end, orderByComparator
+			};
+		}
+
+		List<CommerceOrderItem> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderItem>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderItem commerceOrderItem : list) {
+					if (parentCommerceOrderItemId !=
+							commerceOrderItem.getParentCommerceOrderItemId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERITEM_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_PARENTCOMMERCEORDERITEMID_PARENTCOMMERCEORDERITEMID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderItemModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(parentCommerceOrderItemId);
+
+				list = (List<CommerceOrderItem>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order item
+	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
+	 */
+	@Override
+	public CommerceOrderItem findByParentCommerceOrderItemId_First(
+			long parentCommerceOrderItemId,
+			OrderByComparator<CommerceOrderItem> orderByComparator)
+		throws NoSuchOrderItemException {
+
+		CommerceOrderItem commerceOrderItem =
+			fetchByParentCommerceOrderItemId_First(
+				parentCommerceOrderItemId, orderByComparator);
+
+		if (commerceOrderItem != null) {
+			return commerceOrderItem;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCommerceOrderItemId=");
+		sb.append(parentCommerceOrderItemId);
+
+		sb.append("}");
+
+		throw new NoSuchOrderItemException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
+	 */
+	@Override
+	public CommerceOrderItem fetchByParentCommerceOrderItemId_First(
+		long parentCommerceOrderItemId,
+		OrderByComparator<CommerceOrderItem> orderByComparator) {
+
+		List<CommerceOrderItem> list = findByParentCommerceOrderItemId(
+			parentCommerceOrderItemId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order item
+	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
+	 */
+	@Override
+	public CommerceOrderItem findByParentCommerceOrderItemId_Last(
+			long parentCommerceOrderItemId,
+			OrderByComparator<CommerceOrderItem> orderByComparator)
+		throws NoSuchOrderItemException {
+
+		CommerceOrderItem commerceOrderItem =
+			fetchByParentCommerceOrderItemId_Last(
+				parentCommerceOrderItemId, orderByComparator);
+
+		if (commerceOrderItem != null) {
+			return commerceOrderItem;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("parentCommerceOrderItemId=");
+		sb.append(parentCommerceOrderItemId);
+
+		sb.append("}");
+
+		throw new NoSuchOrderItemException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
+	 */
+	@Override
+	public CommerceOrderItem fetchByParentCommerceOrderItemId_Last(
+		long parentCommerceOrderItemId,
+		OrderByComparator<CommerceOrderItem> orderByComparator) {
+
+		int count = countByParentCommerceOrderItemId(parentCommerceOrderItemId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceOrderItem> list = findByParentCommerceOrderItemId(
+			parentCommerceOrderItemId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce order items before and after the current commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param commerceOrderItemId the primary key of the current commerce order item
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order item
+	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderItem[] findByParentCommerceOrderItemId_PrevAndNext(
+			long commerceOrderItemId, long parentCommerceOrderItemId,
+			OrderByComparator<CommerceOrderItem> orderByComparator)
+		throws NoSuchOrderItemException {
+
+		CommerceOrderItem commerceOrderItem = findByPrimaryKey(
+			commerceOrderItemId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderItem[] array = new CommerceOrderItemImpl[3];
+
+			array[0] = getByParentCommerceOrderItemId_PrevAndNext(
+				session, commerceOrderItem, parentCommerceOrderItemId,
+				orderByComparator, true);
+
+			array[1] = commerceOrderItem;
+
+			array[2] = getByParentCommerceOrderItemId_PrevAndNext(
+				session, commerceOrderItem, parentCommerceOrderItemId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderItem getByParentCommerceOrderItemId_PrevAndNext(
+		Session session, CommerceOrderItem commerceOrderItem,
+		long parentCommerceOrderItemId,
+		OrderByComparator<CommerceOrderItem> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEORDERITEM_WHERE);
+
+		sb.append(
+			_FINDER_COLUMN_PARENTCOMMERCEORDERITEMID_PARENTCOMMERCEORDERITEMID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceOrderItemModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(parentCommerceOrderItemId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderItem)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderItem> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce order items where parentCommerceOrderItemId = &#63; from the database.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 */
+	@Override
+	public void removeByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId) {
+
+		for (CommerceOrderItem commerceOrderItem :
+				findByParentCommerceOrderItemId(
+					parentCommerceOrderItemId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commerceOrderItem);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order items where parentCommerceOrderItemId = &#63;.
+	 *
+	 * @param parentCommerceOrderItemId the parent commerce order item ID
+	 * @return the number of matching commerce order items
+	 */
+	@Override
+	public int countByParentCommerceOrderItemId(
+		long parentCommerceOrderItemId) {
+
+		FinderPath finderPath = _finderPathCountByParentCommerceOrderItemId;
+
+		Object[] finderArgs = new Object[] {parentCommerceOrderItemId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERITEM_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_PARENTCOMMERCEORDERITEMID_PARENTCOMMERCEORDERITEMID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(parentCommerceOrderItemId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_PARENTCOMMERCEORDERITEMID_PARENTCOMMERCEORDERITEMID_2 =
+			"commerceOrderItem.parentCommerceOrderItemId = ?";
 
 	private FinderPath _finderPathFetchByBookedQuantityId;
 	private FinderPath _finderPathCountByBookedQuantityId;
@@ -3234,6 +3769,35 @@ public class CommerceOrderItemPersistenceImpl
 		"(commerceOrderItem.externalReferenceCode IS NULL OR commerceOrderItem.externalReferenceCode = '')";
 
 	public CommerceOrderItemPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put(
+			"discountPercentageLevel1WithTaxAmount",
+			"discountPctLevel1WithTaxAmount");
+		dbColumnNames.put(
+			"discountPercentageLevel2WithTaxAmount",
+			"discountPctLevel2WithTaxAmount");
+		dbColumnNames.put(
+			"discountPercentageLevel3WithTaxAmount",
+			"discountPctLevel3WithTaxAmount");
+		dbColumnNames.put(
+			"discountPercentageLevel4WithTaxAmount",
+			"discountPctLevel4WithTaxAmount");
+
+		try {
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+				"_dbColumnNames");
+
+			field.setAccessible(true);
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
 		setModelClass(CommerceOrderItem.class);
 	}
 
@@ -3625,6 +4189,16 @@ public class CommerceOrderItemPersistenceImpl
 				_finderPathWithoutPaginationFindByCPInstanceId, args);
 
 			args = new Object[] {
+				commerceOrderItemModelImpl.getParentCommerceOrderItemId()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByParentCommerceOrderItemId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByParentCommerceOrderItemId,
+				args);
+
+			args = new Object[] {
 				commerceOrderItemModelImpl.getCommerceOrderId(),
 				commerceOrderItemModelImpl.getCPInstanceId()
 			};
@@ -3710,6 +4284,32 @@ public class CommerceOrderItemPersistenceImpl
 				finderCache.removeResult(_finderPathCountByCPInstanceId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByCPInstanceId, args);
+			}
+
+			if ((commerceOrderItemModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByParentCommerceOrderItemId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					commerceOrderItemModelImpl.
+						getOriginalParentCommerceOrderItemId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByParentCommerceOrderItemId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByParentCommerceOrderItemId,
+					args);
+
+				args = new Object[] {
+					commerceOrderItemModelImpl.getParentCommerceOrderItemId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByParentCommerceOrderItemId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByParentCommerceOrderItemId,
+					args);
 			}
 
 			if ((commerceOrderItemModelImpl.getColumnBitmask() &
@@ -4164,6 +4764,11 @@ public class CommerceOrderItemPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceOrderItemModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4264,6 +4869,37 @@ public class CommerceOrderItemPersistenceImpl
 			CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByParentCommerceOrderItemId =
+			new FinderPath(
+				CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+				CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED,
+				CommerceOrderItemImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByParentCommerceOrderItemId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByParentCommerceOrderItemId =
+			new FinderPath(
+				CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+				CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED,
+				CommerceOrderItemImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByParentCommerceOrderItemId",
+				new String[] {Long.class.getName()},
+				CommerceOrderItemModelImpl.
+					PARENTCOMMERCEORDERITEMID_COLUMN_BITMASK |
+				CommerceOrderItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+
+		_finderPathCountByParentCommerceOrderItemId = new FinderPath(
+			CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByParentCommerceOrderItemId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByBookedQuantityId = new FinderPath(
@@ -4387,5 +5023,13 @@ public class CommerceOrderItemPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderItemPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {
+			"discountPercentageLevel1WithTaxAmount",
+			"discountPercentageLevel2WithTaxAmount",
+			"discountPercentageLevel3WithTaxAmount",
+			"discountPercentageLevel4WithTaxAmount"
+		});
 
 }

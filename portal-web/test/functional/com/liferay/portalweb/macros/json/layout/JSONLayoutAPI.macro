@@ -117,23 +117,18 @@ definition {
 	macro _updateTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
 
-		var javaScript =
-		'''Liferay.Service(
-			'/layout/update-layout',
-			{
-				groupId: ${groupId},
-				privateLayout: ${privateLayout},
-				layoutId: ${layoutId},
-				typeSettings: '${typeSettings}'
-			},
-			function(obj) {
-				console.log(obj);
-			}
-		);''';
+		var portalURL = JSONCompany.getPortalURL();
 
-		var JSON = selenium.getEval("${javaScript}");
+		var curl = '''
+			${portalURL}/api/jsonws/layout/update-layout \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout} \
+				-d layoutId=${layoutId} \
+				-d typeSettings=${typeSettings}
+		''';
 
-		return "${JSON}";
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 }

@@ -2218,8 +2218,6 @@ public class PollsChoicePersistenceImpl
 		"(pollsChoice.name IS NULL OR pollsChoice.name = '')";
 
 	public PollsChoicePersistenceImpl() {
-		setModelClass(PollsChoice.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2237,6 +2235,8 @@ public class PollsChoicePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PollsChoice.class);
 	}
 
 	/**

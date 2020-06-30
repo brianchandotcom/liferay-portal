@@ -251,13 +251,6 @@ components:
                 description:
                     type: string
                 fieldType:
-                    enum:
-                        - checkbox
-                        - checkbox_multiple
-                        - date
-                        - numeric
-                        - radio
-                        - select
                     example: select
                     type: string
                 id:
@@ -440,7 +433,8 @@ components:
             type: object
 info:
     description:
-        Headless Commerce Delivery Catalog API
+        "Headless Commerce Delivery Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.delivery.catalog.client', and version '1.0.7'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -455,46 +449,46 @@ paths:
             operationId: getChannelProductsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: accountId
-                      required: false
-                      schema:
-                          description:
-                              Account Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: filter
-                      required: false
-                      schema:
-                          type: string
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: sort
-                      required: false
-                      schema:
-                          type: string
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -511,6 +505,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -519,6 +515,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -542,39 +540,39 @@ paths:
             operationId: getChannelProduct
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: accountId
-                      required: false
-                      schema:
-                          description:
-                              Account Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
             responses:
                 200:
                     content:
@@ -587,6 +585,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -595,6 +595,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -616,39 +618,39 @@ paths:
             operationId: getChannelProductAttachmentsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -667,6 +669,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -675,6 +679,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -699,39 +705,39 @@ paths:
             operationId: getChannelProductCategoriesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -750,6 +756,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -758,6 +766,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -779,39 +789,39 @@ paths:
             operationId: getChannelProductImagesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -830,6 +840,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -838,6 +850,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -860,39 +874,39 @@ paths:
             operationId: getChannelProductOptionsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -911,6 +925,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -919,6 +935,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -941,39 +959,39 @@ paths:
             operationId: getChannelProductProductSpecificationsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -992,6 +1010,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1000,6 +1020,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1024,46 +1046,46 @@ paths:
             operationId: getChannelProductRelatedProductsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: type
-                      required: false
-                      schema:
-                          type: string
-                      style: form
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      type: string
+                  style: form
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1082,6 +1104,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1090,6 +1114,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1113,49 +1139,49 @@ paths:
             operationId: getChannelProductSkusPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: path
-                      explode: false
-                      name: productId
-                      required: true
-                      schema:
-                          description:
-                              Product Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      name: accountId
-                      required: false
-                      schema:
-                          description:
-                              Account Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1172,6 +1198,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1180,6 +1208,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"

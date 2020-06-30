@@ -391,6 +391,20 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
+			updateCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				int quantity, java.util.Map<String, String> context,
+				long mvccVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			updateCommerceInventoryBookedQuantity(
+				userId, commerceInventoryBookedQuantityId, quantity, context,
+				mvccVersion);
+	}
+
+	@Override
 	public CommerceInventoryBookedQuantityLocalService getWrappedService() {
 		return _commerceInventoryBookedQuantityLocalService;
 	}

@@ -28,11 +28,13 @@ import javax.portlet.RenderResponse;
 public class CPDefinitionItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	public CPDefinitionItemSelectorChecker(
-		RenderResponse renderResponse, long[] checkedCPDefinitionIds) {
+		RenderResponse renderResponse, long[] checkedCPDefinitionIds,
+		long disabledCPDefinitionId) {
 
 		super(renderResponse);
 
 		_checkedCPDefinitionIds = SetUtil.fromArray(checkedCPDefinitionIds);
+		_disabledCPDefinitionId = disabledCPDefinitionId;
 	}
 
 	@Override
@@ -45,9 +47,22 @@ public class CPDefinitionItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
+		CPDefinition cpDefinition = (CPDefinition)obj;
+
+		boolean isCPDefinitionDisabled = false;
+
+		if (_disabledCPDefinitionId == cpDefinition.getCPDefinitionId()) {
+			isCPDefinitionDisabled = true;
+		}
+
+		if (isChecked(obj) || isCPDefinitionDisabled) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Set<Long> _checkedCPDefinitionIds;
+	private final Long _disabledCPDefinitionId;
 
 }

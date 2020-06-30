@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Subscription implements Cloneable {
 
+	public static Subscription toDTO(String json) {
+		return SubscriptionSerDes.toDTO(json);
+	}
+
 	public Object getContentId() {
 		return contentId;
 	}

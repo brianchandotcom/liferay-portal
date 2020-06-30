@@ -24,9 +24,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,18 +55,23 @@ public class AutoDeployDir {
 			List<AutoDeployListener> autoDeployListeners)
 		throws AutoDeployException {
 
-		AutoDeployListener autoDeployListener = _serviceTracker.getService();
+		if (_serviceTrackerList != null) {
+			Iterator<AutoDeployListener> iterator =
+				_serviceTrackerList.iterator();
 
-		if ((autoDeployListener != null) &&
-			autoDeployListener.isDeployable(autoDeploymentContext)) {
+			while (iterator.hasNext()) {
+				AutoDeployListener autoDeployListener = iterator.next();
 
-			autoDeployListener.deploy(autoDeploymentContext);
+				if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+					autoDeployListener.deploy(autoDeploymentContext);
 
-			File file = autoDeploymentContext.getFile();
+					File file = autoDeploymentContext.getFile();
 
-			file.delete();
+					file.delete();
 
-			return;
+					return;
+				}
+			}
 		}
 
 		String[] dirNames = PropsUtil.getArray(
@@ -219,7 +223,7 @@ public class AutoDeployDir {
 			_autoDeployScanner.pause();
 		}
 
-		_serviceTracker.close();
+		_serviceTrackerList.close();
 	}
 
 	public void unregisterListener(AutoDeployListener autoDeployListener) {
@@ -370,18 +374,11 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
-	private static final ServiceTracker<AutoDeployListener, AutoDeployListener>
-		_serviceTracker;
+	private static final ServiceTrackerList<AutoDeployListener>
+		_serviceTrackerList = ServiceTrackerCollections.openList(
+			AutoDeployListener.class);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(AutoDeployListener.class);
-
-		_serviceTracker.open();
-	}
 
 	private final List<AutoDeployListener> _autoDeployListeners;
 	private final Map<String, Long> _blacklistFileTimestamps;

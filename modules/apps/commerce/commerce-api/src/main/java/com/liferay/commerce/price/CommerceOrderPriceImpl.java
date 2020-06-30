@@ -28,8 +28,18 @@ public class CommerceOrderPriceImpl implements CommerceOrderPrice {
 	}
 
 	@Override
+	public CommerceDiscountValue getShippingDiscountValueWithTaxAmount() {
+		return _shippingDiscountValueWithTaxAmount;
+	}
+
+	@Override
 	public CommerceMoney getShippingValue() {
 		return _shippingValue;
+	}
+
+	@Override
+	public CommerceMoney getShippingValueWithTaxAmount() {
+		return _shippingValueWithTaxAmount;
 	}
 
 	@Override
@@ -40,6 +50,16 @@ public class CommerceOrderPriceImpl implements CommerceOrderPrice {
 	@Override
 	public CommerceDiscountValue getSubtotalDiscountValue() {
 		return _subtotalDiscountValue;
+	}
+
+	@Override
+	public CommerceDiscountValue getSubtotalDiscountValueWithTaxAmount() {
+		return _subtotalDiscountValueWithTaxAmount;
+	}
+
+	@Override
+	public CommerceMoney getSubtotalWithTaxAmount() {
+		return _subtotalWithTaxAmount;
 	}
 
 	@Override
@@ -57,14 +77,37 @@ public class CommerceOrderPriceImpl implements CommerceOrderPrice {
 		return _totalDiscountValue;
 	}
 
+	@Override
+	public CommerceDiscountValue getTotalDiscountValueWithTaxAmount() {
+		return _totalDiscountValueWithTaxAmount;
+	}
+
+	@Override
+	public CommerceMoney getTotalWithTaxAmount() {
+		return _totalWithTaxAmount;
+	}
+
 	public void setShippingDiscountValue(
 		CommerceDiscountValue shippingDiscountValue) {
 
 		_shippingDiscountValue = shippingDiscountValue;
 	}
 
+	public void setShippingDiscountValueWithTaxAmount(
+		CommerceDiscountValue shippingDiscountValueWithTaxAmount) {
+
+		_shippingDiscountValueWithTaxAmount =
+			shippingDiscountValueWithTaxAmount;
+	}
+
 	public void setShippingValue(CommerceMoney shippingValue) {
 		_shippingValue = shippingValue;
+	}
+
+	public void setShippingValueWithTaxAmount(
+		CommerceMoney shippingValueWithTaxAmount) {
+
+		_shippingValueWithTaxAmount = shippingValueWithTaxAmount;
 	}
 
 	public void setSubtotal(CommerceMoney subtotal) {
@@ -75,6 +118,17 @@ public class CommerceOrderPriceImpl implements CommerceOrderPrice {
 		CommerceDiscountValue subtotalDiscountValue) {
 
 		_subtotalDiscountValue = subtotalDiscountValue;
+	}
+
+	public void setSubtotalDiscountValueWithTaxAmount(
+		CommerceDiscountValue subtotalDiscountValueWithTaxAmount) {
+
+		_subtotalDiscountValueWithTaxAmount =
+			subtotalDiscountValueWithTaxAmount;
+	}
+
+	public void setSubtotalWithTaxAmount(CommerceMoney subtotalWithTaxAmount) {
+		_subtotalWithTaxAmount = subtotalWithTaxAmount;
 	}
 
 	public void setTaxValue(CommerceMoney taxValue) {
@@ -91,12 +145,28 @@ public class CommerceOrderPriceImpl implements CommerceOrderPrice {
 		_totalDiscountValue = totalDiscountValue;
 	}
 
+	public void setTotalDiscountValueWithTaxAmount(
+		CommerceDiscountValue totalDiscountValueWithTaxAmount) {
+
+		_totalDiscountValueWithTaxAmount = totalDiscountValueWithTaxAmount;
+	}
+
+	public void setTotalWithTaxAmount(CommerceMoney totalWithTaxAmount) {
+		_totalWithTaxAmount = totalWithTaxAmount;
+	}
+
 	private CommerceDiscountValue _shippingDiscountValue;
+	private CommerceDiscountValue _shippingDiscountValueWithTaxAmount;
 	private CommerceMoney _shippingValue;
+	private CommerceMoney _shippingValueWithTaxAmount;
 	private CommerceMoney _subtotal;
 	private CommerceDiscountValue _subtotalDiscountValue;
+	private CommerceDiscountValue _subtotalDiscountValueWithTaxAmount;
+	private CommerceMoney _subtotalWithTaxAmount;
 	private CommerceMoney _taxValue;
 	private CommerceMoney _total;
 	private CommerceDiscountValue _totalDiscountValue;
+	private CommerceDiscountValue _totalDiscountValueWithTaxAmount;
+	private CommerceMoney _totalWithTaxAmount;
 
 }

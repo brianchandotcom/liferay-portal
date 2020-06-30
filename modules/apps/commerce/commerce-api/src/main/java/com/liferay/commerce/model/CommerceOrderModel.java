@@ -665,6 +665,273 @@ public interface CommerceOrderModel
 		BigDecimal totalDiscountPercentageLevel4);
 
 	/**
+	 * Returns the subtotal with tax amount of this commerce order.
+	 *
+	 * @return the subtotal with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalWithTaxAmount();
+
+	/**
+	 * Sets the subtotal with tax amount of this commerce order.
+	 *
+	 * @param subtotalWithTaxAmount the subtotal with tax amount of this commerce order
+	 */
+	public void setSubtotalWithTaxAmount(BigDecimal subtotalWithTaxAmount);
+
+	/**
+	 * Returns the subtotal discount with tax amount of this commerce order.
+	 *
+	 * @return the subtotal discount with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalDiscountWithTaxAmount();
+
+	/**
+	 * Sets the subtotal discount with tax amount of this commerce order.
+	 *
+	 * @param subtotalDiscountWithTaxAmount the subtotal discount with tax amount of this commerce order
+	 */
+	public void setSubtotalDiscountWithTaxAmount(
+		BigDecimal subtotalDiscountWithTaxAmount);
+
+	/**
+	 * Returns the subtotal discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @return the subtotal discount percentage level1 with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalDiscountPercentageLevel1WithTaxAmount();
+
+	/**
+	 * Sets the subtotal discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @param subtotalDiscountPercentageLevel1WithTaxAmount the subtotal discount percentage level1 with tax amount of this commerce order
+	 */
+	public void setSubtotalDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount);
+
+	/**
+	 * Returns the subtotal discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @return the subtotal discount percentage level2 with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalDiscountPercentageLevel2WithTaxAmount();
+
+	/**
+	 * Sets the subtotal discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @param subtotalDiscountPercentageLevel2WithTaxAmount the subtotal discount percentage level2 with tax amount of this commerce order
+	 */
+	public void setSubtotalDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount);
+
+	/**
+	 * Returns the subtotal discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @return the subtotal discount percentage level3 with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalDiscountPercentageLevel3WithTaxAmount();
+
+	/**
+	 * Sets the subtotal discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @param subtotalDiscountPercentageLevel3WithTaxAmount the subtotal discount percentage level3 with tax amount of this commerce order
+	 */
+	public void setSubtotalDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount);
+
+	/**
+	 * Returns the subtotal discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @return the subtotal discount percentage level4 with tax amount of this commerce order
+	 */
+	public BigDecimal getSubtotalDiscountPercentageLevel4WithTaxAmount();
+
+	/**
+	 * Sets the subtotal discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @param subtotalDiscountPercentageLevel4WithTaxAmount the subtotal discount percentage level4 with tax amount of this commerce order
+	 */
+	public void setSubtotalDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount);
+
+	/**
+	 * Returns the shipping with tax amount of this commerce order.
+	 *
+	 * @return the shipping with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingWithTaxAmount();
+
+	/**
+	 * Sets the shipping with tax amount of this commerce order.
+	 *
+	 * @param shippingWithTaxAmount the shipping with tax amount of this commerce order
+	 */
+	public void setShippingWithTaxAmount(BigDecimal shippingWithTaxAmount);
+
+	/**
+	 * Returns the shipping discount with tax amount of this commerce order.
+	 *
+	 * @return the shipping discount with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingDiscountWithTaxAmount();
+
+	/**
+	 * Sets the shipping discount with tax amount of this commerce order.
+	 *
+	 * @param shippingDiscountWithTaxAmount the shipping discount with tax amount of this commerce order
+	 */
+	public void setShippingDiscountWithTaxAmount(
+		BigDecimal shippingDiscountWithTaxAmount);
+
+	/**
+	 * Returns the shipping discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @return the shipping discount percentage level1 with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingDiscountPercentageLevel1WithTaxAmount();
+
+	/**
+	 * Sets the shipping discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @param shippingDiscountPercentageLevel1WithTaxAmount the shipping discount percentage level1 with tax amount of this commerce order
+	 */
+	public void setShippingDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount);
+
+	/**
+	 * Returns the shipping discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @return the shipping discount percentage level2 with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingDiscountPercentageLevel2WithTaxAmount();
+
+	/**
+	 * Sets the shipping discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @param shippingDiscountPercentageLevel2WithTaxAmount the shipping discount percentage level2 with tax amount of this commerce order
+	 */
+	public void setShippingDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount);
+
+	/**
+	 * Returns the shipping discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @return the shipping discount percentage level3 with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingDiscountPercentageLevel3WithTaxAmount();
+
+	/**
+	 * Sets the shipping discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @param shippingDiscountPercentageLevel3WithTaxAmount the shipping discount percentage level3 with tax amount of this commerce order
+	 */
+	public void setShippingDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount);
+
+	/**
+	 * Returns the shipping discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @return the shipping discount percentage level4 with tax amount of this commerce order
+	 */
+	public BigDecimal getShippingDiscountPercentageLevel4WithTaxAmount();
+
+	/**
+	 * Sets the shipping discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @param shippingDiscountPercentageLevel4WithTaxAmount the shipping discount percentage level4 with tax amount of this commerce order
+	 */
+	public void setShippingDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount);
+
+	/**
+	 * Returns the total with tax amount of this commerce order.
+	 *
+	 * @return the total with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalWithTaxAmount();
+
+	/**
+	 * Sets the total with tax amount of this commerce order.
+	 *
+	 * @param totalWithTaxAmount the total with tax amount of this commerce order
+	 */
+	public void setTotalWithTaxAmount(BigDecimal totalWithTaxAmount);
+
+	/**
+	 * Returns the total discount with tax amount of this commerce order.
+	 *
+	 * @return the total discount with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalDiscountWithTaxAmount();
+
+	/**
+	 * Sets the total discount with tax amount of this commerce order.
+	 *
+	 * @param totalDiscountWithTaxAmount the total discount with tax amount of this commerce order
+	 */
+	public void setTotalDiscountWithTaxAmount(
+		BigDecimal totalDiscountWithTaxAmount);
+
+	/**
+	 * Returns the total discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @return the total discount percentage level1 with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalDiscountPercentageLevel1WithTaxAmount();
+
+	/**
+	 * Sets the total discount percentage level1 with tax amount of this commerce order.
+	 *
+	 * @param totalDiscountPercentageLevel1WithTaxAmount the total discount percentage level1 with tax amount of this commerce order
+	 */
+	public void setTotalDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel1WithTaxAmount);
+
+	/**
+	 * Returns the total discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @return the total discount percentage level2 with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalDiscountPercentageLevel2WithTaxAmount();
+
+	/**
+	 * Sets the total discount percentage level2 with tax amount of this commerce order.
+	 *
+	 * @param totalDiscountPercentageLevel2WithTaxAmount the total discount percentage level2 with tax amount of this commerce order
+	 */
+	public void setTotalDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel2WithTaxAmount);
+
+	/**
+	 * Returns the total discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @return the total discount percentage level3 with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalDiscountPercentageLevel3WithTaxAmount();
+
+	/**
+	 * Sets the total discount percentage level3 with tax amount of this commerce order.
+	 *
+	 * @param totalDiscountPercentageLevel3WithTaxAmount the total discount percentage level3 with tax amount of this commerce order
+	 */
+	public void setTotalDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel3WithTaxAmount);
+
+	/**
+	 * Returns the total discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @return the total discount percentage level4 with tax amount of this commerce order
+	 */
+	public BigDecimal getTotalDiscountPercentageLevel4WithTaxAmount();
+
+	/**
+	 * Sets the total discount percentage level4 with tax amount of this commerce order.
+	 *
+	 * @param totalDiscountPercentageLevel4WithTaxAmount the total discount percentage level4 with tax amount of this commerce order
+	 */
+	public void setTotalDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal totalDiscountPercentageLevel4WithTaxAmount);
+
+	/**
 	 * Returns the advance status of this commerce order.
 	 *
 	 * @return the advance status of this commerce order

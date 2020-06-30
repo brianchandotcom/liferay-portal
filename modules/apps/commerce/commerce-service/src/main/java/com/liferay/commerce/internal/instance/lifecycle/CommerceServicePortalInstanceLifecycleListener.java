@@ -18,6 +18,7 @@ import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.petra.string.StringBundler;
@@ -137,11 +138,11 @@ public class CommerceServicePortalInstanceLifecycleListener
 			StringBundler.concat(
 				CommerceAccountService.class.getName(), "#getCommerceAccount\n",
 				CommerceCountryService.class.getName(),
-				"#getBillingCommerceCountries\n",
+				"#getBillingCommerceCountriesByChannelId\n",
 				CommerceCountryService.class.getName(),
 				"#getCommerceCountries\n",
 				CommerceCountryService.class.getName(),
-				"#getShippingCommerceCountries\n",
+				"#getShippingCommerceCountriesByChannelId\n",
 				CommerceOrderItemService.class.getName(),
 				"#getCommerceOrderItemsQuantity\n",
 				CommerceOrderItemService.class.getName(),
@@ -149,6 +150,7 @@ public class CommerceServicePortalInstanceLifecycleListener
 				CommerceOrderService.class.getName(), "#addCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#fetchCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#getCommerceOrder\n",
+				CommerceRegionService.class.getName(), "#getCommerceRegions\n",
 				_COMMERCE_SEARCH_RESOURCE_CLASS_NAME)
 		}
 	};

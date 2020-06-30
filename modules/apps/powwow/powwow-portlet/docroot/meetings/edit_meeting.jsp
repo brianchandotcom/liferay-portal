@@ -236,7 +236,7 @@ if (powwowMeeting != null) {
 	<div id="<portlet:namespace />optionPassword">
 		<aui:input id="requirePassword" label="require-password" name="requirePassword" onClick='<%= renderResponse.getNamespace() + "toggleRequirePassword(this.checked);" %>' type="checkbox" value="<%= requirePassword %>" />
 
-		<div class="password-container <%= requirePassword ? "" : "hide" %>" id="<portlet:namespace />passwordContainer">
+		<div class='password-container <%= requirePassword ? "" : "hide" %>' id="<portlet:namespace />passwordContainer">
 			<aui:input class="form-control" cssClass="meeting-password" id="password" label="" name="password" type="password" value='<%= (password == null) ? "" : password %>' />
 		</div>
 	</div>

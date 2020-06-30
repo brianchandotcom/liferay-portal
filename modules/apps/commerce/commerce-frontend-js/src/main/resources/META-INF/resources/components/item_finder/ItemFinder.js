@@ -16,8 +16,11 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {DATASET_ACTION_PERFORMED} from '../../utilities/eventsDefinitions.es';
-import {showErrorNotification} from '../../utilities/index.es';
+import {DATASET_ACTION_PERFORMED} from '../../utilities/eventsDefinitions';
+import {
+	showErrorNotification,
+	showNotification
+} from '../../utilities/notifications';
 import AddOrCreate from './AddOrCreate';
 
 function ItemFinder(props) {
@@ -85,7 +88,13 @@ function ItemFinder(props) {
 		);
 		props
 			.onItemSelected(selectedItem)
-			.then(() => updateSelectedItems(i => [...i, itemId]))
+			.then(() => {
+				if (props.multiSelectableEntries) {
+					showNotification(props.itemSelectedMessage);
+				} else {
+					updateSelectedItems(i => [...i, itemId]);
+				}
+			})
 			.catch(showErrorNotification);
 	}
 
@@ -94,9 +103,12 @@ function ItemFinder(props) {
 			.onItemCreated(textFilter)
 			.then(id => {
 				updateTextFilter('');
-				updateSelectedItems(i => [...i, id]);
+
+				if (id) {
+					updateSelectedItems(i => [...i, id]);
+				}
 			})
-			.catch(error => showErrorNotification(error));
+			.catch(showErrorNotification);
 	}
 
 	return (
@@ -131,8 +143,10 @@ ItemFinder.propTypes = {
 	createNewItemLabel: PropTypes.string,
 	getSelectedItems: PropTypes.func.isRequired,
 	inputPlaceholder: PropTypes.string,
+	itemSelectedMessage: PropTypes.string,
 	itemsKey: PropTypes.string.isRequired,
 	linkedDatasetsId: PropTypes.arrayOf(PropTypes.string),
+	multiSelectableEntries: PropTypes.bool,
 	onItemCreated: PropTypes.func.isRequired,
 	onItemSelected: PropTypes.func.isRequired,
 	pageSize: PropTypes.number,
@@ -143,6 +157,8 @@ ItemFinder.propTypes = {
 
 ItemFinder.defaultProps = {
 	currentPage: 1,
+	itemSelectedMessage: Liferay.Language.get('item-selected'),
+	multiSelectableEntries: false,
 	pageSize: 5,
 	selectedItems: []
 };

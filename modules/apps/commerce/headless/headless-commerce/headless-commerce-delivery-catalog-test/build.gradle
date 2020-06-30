@@ -16,6 +16,8 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
 
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-delivery-catalog-client")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-delivery-catalog-api")
 }

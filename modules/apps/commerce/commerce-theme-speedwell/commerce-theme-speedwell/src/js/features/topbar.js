@@ -12,38 +12,38 @@
  * details.
  */
 
-var Speedwell = Speedwell || {features: {}};
-
-Speedwell.features.topbar = (function(w) {
+(function(w) {
 	'use strict';
 
-	const TOPBAR_CLASS = 'speedwell-topbar',
+	var TOPBAR_CLASS = 'speedwell-topbar',
 		TRANSLUCENT_CLASS = TOPBAR_CLASS + '--translucent',
 		TOGGLE_PREFIX = '.js-toggle-',
 		SPEEDWELL_PREFIX = '.speedwell-',
 		IS_OPEN = 'is-open',
 		IS_BEHIND = 'is-behind';
 
-	const TOGGLES = {
+	var TOGGLES = {
 		ACCOUNT: {name: 'account'},
 		MAIN_MENU: {name: 'main-menu'},
 		SEARCH: {name: 'search'}
 	};
 
-	const CONTAINER = Speedwell.features.context.getContainer();
+	var CONTAINER = window.document.getElementById('speedwell');
 
-	let TOPBAR,
+	var TOPBAR,
 		translucencyIsEnabled = false;
 
 	function hideFiltersButtonOnMenuOpen() {
-		const catalogFiltersButton = Speedwell.features.mobile.getFiltersButton();
+		Liferay.componentReady('SpeedwellMobileHelpers').then(mobileHelpers => {
+			const catalogFiltersButton = mobileHelpers.getFiltersButton();
 
-		if (catalogFiltersButton) {
-			catalogFiltersButton.classList.toggle(
-				IS_BEHIND,
-				!isOpen(catalogFiltersButton)
-			);
-		}
+			if (catalogFiltersButton) {
+				catalogFiltersButton.classList.toggle(
+					IS_BEHIND,
+					!isOpen(catalogFiltersButton)
+				);
+			}
+		});
 	}
 
 	function attachListener(currentToggle) {
@@ -51,15 +51,22 @@ Speedwell.features.topbar = (function(w) {
 
 		TOGGLES[currentToggle].buttons.forEach(button => {
 			button.addEventListener('click', _e => {
-				const categoryNav = Speedwell.features.categoryMenu.getElement();
+				Liferay.componentReady('SpeedwellCategoryMenu').then(
+					categoryMenu => {
+						const categoryEl = categoryMenu.getElement();
 
-				button.focus();
-				toggleWrapper.classList.toggle(IS_OPEN, !isOpen(toggleWrapper));
-				categoryNav.classList.remove(IS_OPEN);
+						button.focus();
+						toggleWrapper.classList.toggle(
+							IS_OPEN,
+							!isOpen(toggleWrapper)
+						);
+						categoryEl.classList.remove(IS_OPEN);
 
-				if (Speedwell.features.context.isMobile()) {
-					hideFiltersButtonOnMenuOpen();
-				}
+						if (Liferay.Browser.isMobile) {
+							hideFiltersButtonOnMenuOpen();
+						}
+					}
+				);
 			});
 		});
 	}
@@ -109,24 +116,14 @@ Speedwell.features.topbar = (function(w) {
 		TOPBAR = CONTAINER.querySelector('.' + TOPBAR_CLASS);
 	}
 
-	return {
-		getToggleElements() {
-			return TOGGLES;
-		},
+	selectElements();
+	prepareToggles();
+	enableToggles();
+	isTranslucent();
 
-		initialize() {
-			selectElements();
-			prepareToggles();
-			enableToggles();
-			isTranslucent();
-
-			if (translucencyIsEnabled) {
-				Speedwell.features.scroll.registerCallback(
-					toggleTranslucencyOnScroll
-				);
-			}
-		},
-
-		isOpen
-	};
+	if (translucencyIsEnabled) {
+		Liferay.componentReady('SpeedwellScrollHandler').then(scrollHandler => {
+			scrollHandler.registerCallback(toggleTranslucencyOnScroll);
+		});
+	}
 })(window);

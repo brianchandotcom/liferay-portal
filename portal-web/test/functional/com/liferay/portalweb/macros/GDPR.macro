@@ -1,0 +1,159 @@
+definition {
+
+	macro addExportProcessCP {
+		var key_application = "${application}";
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "ExportPersonalData#ADD_PROCESS_HEADER");
+
+		if (isSet(applications)) {
+			for (var application : list "${applications}") {
+				Check(
+					key_application = "${application}",
+					locator1 = "ExportPersonalData#APPLICATION_CHECKBOX");
+			}
+		}
+		else {
+			PortletEntry.selectAll();
+		}
+
+		AssertClick(
+			locator1 = "Button#EXPORT",
+			value1 = "Export");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "ExportPersonalData#HEADER");
+
+		while (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) {
+			Pause(locator1 = "3000");
+		}
+
+		AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
+
+		if (isSet(applications)) {
+			for (var application : list "${applications}") {
+				AssertElementPresent(
+					key_application = "${application}",
+					locator1 = "ExportPersonalData#EXPORT_PROCESS_SPECIFIC_APPLICATION_SUCCESSFUL");
+			}
+		}
+	}
+
+	macro anonymizeDataViaReviewData {
+		Click(
+			key_application = "${application}",
+			locator1 = "DataErasure#REVIEW_DATA_APPLICATION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Anonymize");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro deactivateUser {
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "DataErasure#HEADER");
+
+		Button.clickNoError(button = "Deactivate User");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate the user?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro deletePersonalApplicationsData {
+		AssertTextEquals(
+			locator1 = "DataErasure#SHEET_TITLE",
+			value1 = "Application Data Review");
+
+		LexiconEntry.gotoEntry(rowEntry = "${applications}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "${rowEntry}");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this entity?");
+
+		Alert.viewSuccessMessage();
+
+		LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
+	}
+
+	macro deletePersonalSite {
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "DataErasure#HEADER");
+
+		if (IsElementNotPresent(locator1 = "Button#ANY_DISABLED", key_text = "Delete Personal Site")) {
+			Button.clickNoError(button = "Delete Personal Site");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the user's personal site?");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro downloadExportedPersonalData {
+		for (var application : list "${applications}") {
+			var key_rowEntry = "${application}";
+
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "MenuItem#DOWNLOAD",
+				value1 = "Download");
+		}
+	}
+
+	macro editPersonalApplicationsData {
+		AssertTextEquals(
+			locator1 = "DataErasure#SHEET_TITLE",
+			value1 = "Application Data Review");
+
+		LexiconEntry.gotoEntry(rowEntry = "${applications}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Edit",
+			rowEntry = "${rowEntry}");
+	}
+
+	macro reviewPersonalData {
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "DataErasure#HEADER");
+
+		Button.clickNoError(button = "Review");
+
+		AssertTextEquals.assertPartialText(
+			key_itemsCount = "${itemsCount}",
+			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
+			value1 = "Remaining Items: ${itemsCount}");
+
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${applications}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_2",
+			value1 = "${itemsCount}");
+	}
+
+	macro viewEntryRowInApplicationCP {
+		for (var tableEntryPartialText : list "${tableEntryPartialTextList}") {
+			AssertTextEquals.assertPartialText(
+				key_tableEntry = "${tableEntry}",
+				key_tableEntryPartialText = "${tableEntryPartialText}",
+				locator1 = "LexiconTable#TABLE_ENTRY_PARTIAL_TEXT",
+				value1 = "${tableEntryPartialText}");
+		}
+	}
+
+}

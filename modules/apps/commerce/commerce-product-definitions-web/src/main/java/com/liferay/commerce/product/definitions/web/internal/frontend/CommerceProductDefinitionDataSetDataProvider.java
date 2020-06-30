@@ -104,6 +104,24 @@ public class CommerceProductDefinitionDataSetDataProvider
 						System.currentTimeMillis() - modifiedDate.getTime(),
 						true);
 
+				String statusDisplayStyle = StringPool.BLANK;
+
+				if (cpDefinition.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
+
+					statusDisplayStyle = "success";
+				}
+				else if (cpDefinition.getStatus() ==
+							WorkflowConstants.STATUS_DRAFT) {
+
+					statusDisplayStyle = "secondary";
+				}
+				else if (cpDefinition.getStatus() ==
+							WorkflowConstants.STATUS_EXPIRED) {
+
+					statusDisplayStyle = "warning";
+				}
+
 				products.add(
 					new Product(
 						commerceCatalog.getName(),
@@ -117,6 +135,7 @@ public class CommerceProductDefinitionDataSetDataProvider
 							modifiedDateDescription, false),
 						HtmlUtil.escape(name), _getSku(cpDefinition, locale),
 						new LabelField(
+							statusDisplayStyle,
 							LanguageUtil.get(
 								httpServletRequest,
 								WorkflowConstants.getStatusLabel(

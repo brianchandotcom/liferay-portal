@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
 /**
@@ -170,6 +172,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		int smtpPort = PrefsPropsUtil.getInteger(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
 			PropsValues.MAIL_SESSION_MAIL_SMTP_PORT);
+		boolean smtpStartTLSEnable = PrefsPropsUtil.getBoolean(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE);
 		String smtpUser = PrefsPropsUtil.getString(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
 			PropsValues.MAIL_SESSION_MAIL_SMTP_USER);
@@ -221,6 +226,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		properties.setProperty(transportPrefix + "password", smtpPassword);
 		properties.setProperty(
 			transportPrefix + "port", String.valueOf(smtpPort));
+		properties.setProperty(
+			transportPrefix + "starttls.enable",
+			String.valueOf(smtpStartTLSEnable));
 		properties.setProperty(transportPrefix + "user", smtpUser);
 
 		// Advanced
@@ -246,7 +254,23 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			}
 		}
 
-		_session = Session.getInstance(properties);
+		if (smtpAuth) {
+			_session = Session.getInstance(
+				properties,
+				new Authenticator() {
+
+					protected PasswordAuthentication
+						getPasswordAuthentication() {
+
+						return new PasswordAuthentication(
+							smtpUser, smtpPassword);
+					}
+
+				});
+		}
+		else {
+			_session = Session.getInstance(properties);
+		}
 
 		return _session;
 	}

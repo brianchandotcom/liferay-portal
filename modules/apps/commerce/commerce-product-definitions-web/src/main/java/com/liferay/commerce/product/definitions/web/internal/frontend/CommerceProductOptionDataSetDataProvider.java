@@ -113,13 +113,18 @@ public class CommerceProductOptionDataSetDataProvider
 			productOptions.add(
 				new ProductOption(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					HtmlUtil.escape(
-						cpDefinitionOptionRel.getName(
-							LanguageUtil.getLanguageId(locale))),
 					_getDDMFormFieldTypeLabel(
 						cpDefinitionOptionRel.getDDMFormFieldTypeName(),
 						locale),
-					cpDefinitionOptionRel.getPriority()));
+					HtmlUtil.escape(
+						cpDefinitionOptionRel.getName(
+							LanguageUtil.getLanguageId(locale))),
+					cpDefinitionOptionRel.getPriority(),
+					LanguageUtil.get(
+						locale,
+						cpDefinitionOptionRel.isRequired() ? "yes" : "no"),
+					cpDefinitionOptionRel.
+						getCPDefinitionOptionValueRelsCount()));
 		}
 
 		return productOptions;

@@ -206,6 +206,26 @@ public class CommerceOrderItemServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderItemSoap[]
+			getChildCommerceOrderItems(long parentCommerceOrderItemId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+				returnValue =
+					CommerceOrderItemServiceUtil.getChildCommerceOrderItems(
+						parentCommerceOrderItemId);
+
+			return com.liferay.commerce.model.CommerceOrderItemSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws RemoteException {
@@ -479,6 +499,50 @@ public class CommerceOrderItemServiceSoap {
 					finalPrice, discountPercentageLevel1,
 					discountPercentageLevel2, discountPercentageLevel3,
 					discountPercentageLevel4);
+
+			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItemSoap
+			updateCommerceOrderItemPrices(
+				long commerceOrderItemId, java.math.BigDecimal unitPrice,
+				java.math.BigDecimal promoPrice,
+				java.math.BigDecimal discountAmount,
+				java.math.BigDecimal finalPrice,
+				java.math.BigDecimal discountPercentageLevel1,
+				java.math.BigDecimal discountPercentageLevel2,
+				java.math.BigDecimal discountPercentageLevel3,
+				java.math.BigDecimal discountPercentageLevel4,
+				java.math.BigDecimal unitPriceWithTaxAmount,
+				java.math.BigDecimal promoPriceWithTaxAmount,
+				java.math.BigDecimal discountAmountWithTaxAmount,
+				java.math.BigDecimal finalPriceWithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel1WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel2WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel3WithTaxAmount,
+				java.math.BigDecimal discountPercentageLevel4WithTaxAmount)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrderItem returnValue =
+				CommerceOrderItemServiceUtil.updateCommerceOrderItemPrices(
+					commerceOrderItemId, unitPrice, promoPrice, discountAmount,
+					finalPrice, discountPercentageLevel1,
+					discountPercentageLevel2, discountPercentageLevel3,
+					discountPercentageLevel4, unitPriceWithTaxAmount,
+					promoPriceWithTaxAmount, discountAmountWithTaxAmount,
+					finalPriceWithTaxAmount,
+					discountPercentageLevel1WithTaxAmount,
+					discountPercentageLevel2WithTaxAmount,
+					discountPercentageLevel3WithTaxAmount,
+					discountPercentageLevel4WithTaxAmount);
 
 			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(
 				returnValue);

@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Organization implements Cloneable {
 
+	public static Organization toDTO(String json) {
+		return OrganizationSerDes.toDTO(json);
+	}
+
 	public String getComment() {
 		return comment;
 	}

@@ -327,8 +327,6 @@ public class ReleasePersistenceImpl
 			"(release.servletContextName IS NULL OR release.servletContextName = '')";
 
 	public ReleasePersistenceImpl() {
-		setModelClass(Release.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("state", "state_");
@@ -346,6 +344,8 @@ public class ReleasePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Release.class);
 	}
 
 	/**

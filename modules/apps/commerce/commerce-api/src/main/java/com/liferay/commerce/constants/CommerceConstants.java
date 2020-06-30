@@ -32,4 +32,6 @@ public class CommerceConstants {
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 
+	public static final String TAX_SERVICE_NAME = "com.liferay.commerce.tax";
+
 }

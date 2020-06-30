@@ -18,8 +18,8 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem",
 	service = {DTOConverter.class, WarehouseItemDTOConverter.class}
 )
-public class WarehouseItemDTOConverter implements DTOConverter {
+public class WarehouseItemDTOConverter
+	implements DTOConverter<CommerceInventoryWarehouseItem, WarehouseItem> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +45,7 @@ public class WarehouseItemDTOConverter implements DTOConverter {
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				getCommerceInventoryWarehouseItem(
-					dtoConverterContext.getResourcePrimKey());
+					(Long)dtoConverterContext.getId());
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();

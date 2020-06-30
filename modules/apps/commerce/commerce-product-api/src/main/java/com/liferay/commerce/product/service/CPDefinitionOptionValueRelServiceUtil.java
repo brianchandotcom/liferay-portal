@@ -132,6 +132,15 @@ public class CPDefinitionOptionValueRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			resetCPInstanceCPDefinitionOptionValueRel(
+				long cpDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().resetCPInstanceCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
 				searchCPDefinitionOptionValueRels(

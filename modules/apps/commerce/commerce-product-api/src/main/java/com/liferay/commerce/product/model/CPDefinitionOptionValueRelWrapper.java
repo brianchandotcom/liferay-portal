@@ -71,11 +71,11 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
+		attributes.put("CPInstanceUuid", getCPInstanceUuid());
+		attributes.put("CProductId", getCProductId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
-		attributes.put("CPInstanceUuid", getCPInstanceUuid());
-		attributes.put("CProductId", getCProductId());
 		attributes.put("quantity", getQuantity());
 		attributes.put("price", getPrice());
 
@@ -140,6 +140,18 @@ public class CPDefinitionOptionValueRelWrapper
 			setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 		}
 
+		String CPInstanceUuid = (String)attributes.get("CPInstanceUuid");
+
+		if (CPInstanceUuid != null) {
+			setCPInstanceUuid(CPInstanceUuid);
+		}
+
+		Long CProductId = (Long)attributes.get("CProductId");
+
+		if (CProductId != null) {
+			setCProductId(CProductId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -156,18 +168,6 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (key != null) {
 			setKey(key);
-		}
-
-		String CPInstanceUuid = (String)attributes.get("CPInstanceUuid");
-
-		if (CPInstanceUuid != null) {
-			setCPInstanceUuid(CPInstanceUuid);
-		}
-
-		Long CProductId = (Long)attributes.get("CProductId");
-
-		if (CProductId != null) {
-			setCProductId(CProductId);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");

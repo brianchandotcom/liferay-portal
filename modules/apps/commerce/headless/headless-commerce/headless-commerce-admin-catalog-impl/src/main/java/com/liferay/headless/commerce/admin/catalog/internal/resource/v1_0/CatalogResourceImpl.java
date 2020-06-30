@@ -16,25 +16,29 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.CatalogDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.CatalogEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -92,14 +96,7 @@ public class CatalogResourceImpl
 				"Unable to find Catalog with ID: " + id);
 		}
 
-		DTOConverter catalogDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceCatalog.class.getName());
-
-		return (Catalog)catalogDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceCatalog.getCommerceCatalogId()));
+		return _toCatalog(commerceCatalog);
 	}
 
 	@Override
@@ -117,14 +114,7 @@ public class CatalogResourceImpl
 					externalReferenceCode);
 		}
 
-		DTOConverter catalogDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceCatalog.class.getName());
-
-		return (Catalog)catalogDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceCatalog.getCommerceCatalogId()));
+		return _toCatalog(commerceCatalog);
 	}
 
 	@Override
@@ -137,8 +127,15 @@ public class CatalogResourceImpl
 			CommerceCatalog.class, StringPool.BLANK, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			new UnsafeConsumer() {
+
+				public void accept(Object o) throws Exception {
+					SearchContext searchContext = (SearchContext)o;
+
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+				}
+
+			},
 			document -> _toCatalog(
 				_commerceCatalogService.getCommerceCatalog(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
@@ -216,33 +213,52 @@ public class CatalogResourceImpl
 					commerceCatalog.getCatalogDefaultLanguageId()));
 		}
 
-		DTOConverter catalogDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceCatalog.class.getName());
+		return _toCatalog(commerceCatalog);
+	}
 
-		return (Catalog)catalogDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceCatalog.getCommerceCatalogId()));
+	private Map<String, Map<String, String>> _getActions(
+		CommerceCatalog commerceCatalog) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", commerceCatalog.getCommerceCatalogId(),
+				"deleteCatalog", commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", commerceCatalog.getCommerceCatalogId(), "getCatalog",
+				commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).put(
+			"update",
+			addAction(
+				"UPDATE", commerceCatalog.getCommerceCatalogId(),
+				"patchCatalog", commerceCatalog.getUserId(),
+				"com.liferay.commerce.product.model.CommerceCatalog",
+				commerceCatalog.getGroupId())
+		).build();
 	}
 
 	private Catalog _toCatalog(CommerceCatalog commerceCatalog)
 		throws Exception {
 
-		DTOConverter catalogDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceCatalog.class.getName());
-
-		return (Catalog)catalogDTOConverter.toDTO(
+		return _catalogDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceCatalog.getCommerceCatalogId()));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(commerceCatalog), _dtoConverterRegistry,
+				commerceCatalog.getCommerceCatalogId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private static final EntityModel _entityModel = new CatalogEntityModel();
 
 	@Reference
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CatalogDTOConverter _catalogDTOConverter;
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;

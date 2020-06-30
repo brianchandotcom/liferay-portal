@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Creator implements Cloneable {
 
+	public static Creator toDTO(String json) {
+		return CreatorSerDes.toDTO(json);
+	}
+
 	public String getAdditionalName() {
 		return additionalName;
 	}

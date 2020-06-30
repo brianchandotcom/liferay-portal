@@ -170,13 +170,23 @@ public class KeywordSerDes {
 			map.put("creator", String.valueOf(keyword.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(keyword.getDateCreated()));
+		if (keyword.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(keyword.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(keyword.getDateModified()));
+		if (keyword.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(keyword.getDateModified()));
+		}
 
 		if (keyword.getId() == null) {
 			map.put("id", null);

@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Segment implements Cloneable {
 
+	public static Segment toDTO(String json) {
+		return SegmentSerDes.toDTO(json);
+	}
+
 	public Boolean getActive() {
 		return active;
 	}

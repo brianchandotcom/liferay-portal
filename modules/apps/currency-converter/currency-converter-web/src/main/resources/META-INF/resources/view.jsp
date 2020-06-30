@@ -158,7 +158,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 				</c:when>
 				<c:otherwise>
 					<div class="alert alert-info">
-						<a href="<portlet:renderURL portletMode="<%= PortletMode.EDIT.toString() %>" />"><liferay-ui:message key="please-select-a-currency" /></a>
+						<a href='<portlet:renderURL portletMode="<%= PortletMode.EDIT.toString() %>" />'><liferay-ui:message key="please-select-a-currency" /></a>
 					</div>
 				</c:otherwise>
 			</c:choose>

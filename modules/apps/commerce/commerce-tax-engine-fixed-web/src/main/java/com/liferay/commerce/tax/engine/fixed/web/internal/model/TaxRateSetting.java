@@ -20,7 +20,7 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.model;
 public class TaxRateSetting {
 
 	public TaxRateSetting(
-		String country, double rate, String region, String taxRate,
+		String country, String rate, String region, String taxRate,
 		long taxRateSettingId, String zip) {
 
 		_country = country;
@@ -35,7 +35,7 @@ public class TaxRateSetting {
 		return _country;
 	}
 
-	public double getRate() {
+	public String getRate() {
 		return _rate;
 	}
 
@@ -56,7 +56,7 @@ public class TaxRateSetting {
 	}
 
 	private final String _country;
-	private final double _rate;
+	private final String _rate;
 	private final String _region;
 	private final String _taxRate;
 	private final long _taxRateSettingId;

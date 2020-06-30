@@ -113,7 +113,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		if (!isSingleSelection()) {
 			RowChecker rowChecker = new CPDefinitionItemSelectorChecker(
 				cpRequestHelper.getRenderResponse(),
-				getCheckedCPDefinitionIds());
+				getCheckedCPDefinitionIds(), getCPDefinitionId());
 
 			searchContainer.setRowChecker(rowChecker);
 		}

@@ -105,6 +105,11 @@ public class ModelSearchRegistrarHelperImpl
 		}
 
 		@Override
+		public void setSearchEngineId(String searchEngineId) {
+			_modelSearchSettingsImpl.setSearchEngineId(searchEngineId);
+		}
+
+		@Override
 		public void setSelectAllLocales(boolean selectAllLocales) {
 			_modelSearchSettingsImpl.setSelectAllLocales(selectAllLocales);
 		}

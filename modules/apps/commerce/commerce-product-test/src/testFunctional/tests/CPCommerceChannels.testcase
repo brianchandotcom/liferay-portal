@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property osgi.app.includes = "commerce";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
@@ -43,7 +44,7 @@ definition {
 	@ignore = "true"
 	test CreateNewChannel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAdmin#CreateNewChannel";
+		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",

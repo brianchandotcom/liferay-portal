@@ -260,6 +260,7 @@ AddToCartButton.STATE = {
 		minQuantity: Config.number(),
 		multipleQuantity: Config.number()
 	}).value({}),
+	textContent: Config.string(),
 	updatingTransition: Config.oneOf(['adding', 'incrementing'])
 };
 

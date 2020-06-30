@@ -34,13 +34,15 @@
 									"required": false,
 									"settingsContext": {
 										"containerId": "settings",
-										"dataProviderSettings": {},
+										"dataProviderSettings": {
+										},
 										"groupId": "0",
 										"pages": [
 											{
 												"description": null,
 												"enabled": true,
-												"localizedDescription": {},
+												"localizedDescription": {
+												},
 												"localizedTitle": {
 													"en_US": "Basic"
 												},
@@ -62,7 +64,8 @@
 																			"en_US": "Paragraph"
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$label$RlzOxz7o$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "Enter a title.",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -94,7 +97,8 @@
 																		"label": "Body Text",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$text$gKuCoWVa$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "Enter body text.",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -124,7 +128,8 @@
 																			"en_US": ""
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$tip$pWNWwPe1$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -150,7 +155,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$required$jdkIXL1S$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -178,7 +184,8 @@
 											{
 												"description": null,
 												"enabled": true,
-												"localizedDescription": {},
+												"localizedDescription": {
+												},
 												"localizedTitle": {
 													"en_US": "Properties"
 												},
@@ -196,7 +203,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$validation$FfiLTra3$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -223,7 +231,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$showLabel$P1YSmagP$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -248,7 +257,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$repeatable$8gxDuhJH$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -278,7 +288,8 @@
 																			"en_US": ""
 																		},
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$predefinedValue$rKPVEt8n$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -306,7 +317,8 @@
 																		"label": "Field Visibility Expression",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$visibilityExpression$tG1F40IN$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "equals(Country, \"US\")",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -334,7 +346,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$fieldNamespace$EhKRcs75$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -399,7 +412,8 @@
 																		"label": "Localizable",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$localizable$YzfVjbwL$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -424,7 +438,8 @@
 																		"label": "Read Only",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$readOnly$lao736bs$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"readOnly": false,
 																		"repeatable": false,
 																		"required": false,
@@ -452,7 +467,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$dataType$s39FERYS$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -481,7 +497,8 @@
 																		"label": "",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$type$iM4vM4Aw$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -510,7 +527,8 @@
 																		"label": "Name",
 																		"localizable": false,
 																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$name$D6E8gmJa$0$$en_US",
-																		"options": [],
+																		"options": [
+																		],
 																		"placeholder": "",
 																		"readOnly": false,
 																		"repeatable": false,
@@ -539,7 +557,8 @@
 										],
 										"portletNamespace": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_",
 										"readOnly": false,
-										"rules": [],
+										"rules": [
+										],
 										"showRequiredFieldsWarning": true,
 										"showSubmitButton": false,
 										"strings": {
@@ -572,5 +591,6 @@
 			}
 		}
 	],
-	"rules": []
+	"rules": [
+	]
 }

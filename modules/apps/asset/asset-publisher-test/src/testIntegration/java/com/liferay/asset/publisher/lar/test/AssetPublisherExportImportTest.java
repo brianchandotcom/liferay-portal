@@ -756,8 +756,9 @@ public class AssetPublisherExportImportTest
 		preferenceMap.put(
 			"classTypeIdsDLFileEntryAssetRendererFactory",
 			new String[] {
-				String.valueOf(dlFileEntryType1.getFileEntryTypeId()),
-				String.valueOf(dlFileEntryType2.getFileEntryTypeId())
+				StringBundler.concat(
+					dlFileEntryType1.getFileEntryTypeId(), StringPool.COMMA,
+					dlFileEntryType2.getFileEntryTypeId())
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
@@ -812,8 +813,9 @@ public class AssetPublisherExportImportTest
 		preferenceMap.put(
 			"classTypeIdsJournalArticleAssetRendererFactory",
 			new String[] {
-				String.valueOf(ddmStructure1.getStructureId()),
-				String.valueOf(ddmStructure2.getStructureId())
+				StringBundler.concat(
+					ddmStructure1.getStructureId(), StringPool.COMMA,
+					ddmStructure2.getStructureId())
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(

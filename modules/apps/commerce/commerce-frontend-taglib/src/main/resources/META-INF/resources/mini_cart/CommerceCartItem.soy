@@ -17,6 +17,7 @@
 	{@param? options: list<[
 		value: string|number
 	]> }
+	{@param? childItems: ?}
 	{@param prices: ? }
 
 	{@param? deleting: bool }
@@ -48,23 +49,56 @@
 		{/if}
 	{/let}
 
+	{let $cartItemContentClasses kind="text"}
+		commerce-cart-item__content
+		{if isNonnull($options)}
+			{sp}has-options
+		{/if}
+	{/let}
+
 	<div class="{$cartItemClasses}">
 		<div
 			style="background-image: url({$thumbnail})"
 			class="commerce-cart-item__image"
 		></div>
 		<div class="commerce-cart-item__content">
-			<span class="commerce-cart-item__sku">{$sku}</span>
-			<span class="commerce-cart-item__name"><big>{$name}</big></span>
+			<div class="content-base">
+				<span class="commerce-cart-item__sku">{$sku}</span>
+				<span class="commerce-cart-item__name"><big>{$name}</big></span>
+			</div>
+			{if isNonnull($childItems)}
+				<div class="child-items">
+					{foreach $childItem in $childItems}
+						<div class="child-item">
+							<div class="child-item-quantity">{$childItem.quantity} x</div>
+							<div class="child-item-content">
+								<span>{$childItem.name}</span>
+								<span>
+									{if isNonnull($childItem.options)}
+										<div class="commerce-cart-item__options">
+											{foreach $childItemOption in $childItem.options}
+												{$childItemOption.value}
+												{if isLast($childItemOption) == false}
+													,{sp}
+												{/if}
+											{/foreach}
+										</div>
+									{/if}
+								</span>
+							</div>
+						</div>
+					{/foreach}
+				</div>
+			{/if}
 			{if isNonnull($options)}
-				<span class="commerce-cart-item__options">
+				<div class="commerce-cart-item__options">
 					{foreach $option in $options}
 						{$option.value}
 						{if isLast($option) == false}
 							,{sp}
 						{/if}
 					{/foreach}
-				</span>
+				</div>
 			{/if}
 		</div>
 

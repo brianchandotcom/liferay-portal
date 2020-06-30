@@ -6946,6 +6946,627 @@ public class CommerceOrderPersistenceImpl
 	private static final String _FINDER_COLUMN_U_LTC_O_ORDERSTATUS_2 =
 		"commerceOrder.orderStatus = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_LtC_O;
+	private FinderPath _finderPathWithPaginationCountByC_LtC_O;
+
+	/**
+	 * Returns all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @return the matching commerce orders
+	 */
+	@Override
+	public List<CommerceOrder> findByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus) {
+
+		return findByC_LtC_O(
+			createDate, commerceAccountId, orderStatus, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @return the range of matching commerce orders
+	 */
+	@Override
+	public List<CommerceOrder> findByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus, int start,
+		int end) {
+
+		return findByC_LtC_O(
+			createDate, commerceAccountId, orderStatus, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce orders
+	 */
+	@Override
+	public List<CommerceOrder> findByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator) {
+
+		return findByC_LtC_O(
+			createDate, commerceAccountId, orderStatus, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce orders
+	 */
+	@Override
+	public List<CommerceOrder> findByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByC_LtC_O;
+		finderArgs = new Object[] {
+			_getTime(createDate), commerceAccountId, orderStatus, start, end,
+			orderByComparator
+		};
+
+		List<CommerceOrder> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrder>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrder commerceOrder : list) {
+					if ((createDate.getTime() <=
+							commerceOrder.getCreateDate().getTime()) ||
+						(commerceAccountId !=
+							commerceOrder.getCommerceAccountId()) ||
+						(orderStatus != commerceOrder.getOrderStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDER_WHERE);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_LTC_O_COMMERCEACCOUNTID_2);
+
+			sb.append(_FINDER_COLUMN_C_LTC_O_ORDERSTATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindCreateDate) {
+					queryPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				queryPos.add(commerceAccountId);
+
+				queryPos.add(orderStatus);
+
+				list = (List<CommerceOrder>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order
+	 * @throws NoSuchOrderException if a matching commerce order could not be found
+	 */
+	@Override
+	public CommerceOrder findByC_LtC_O_First(
+			Date createDate, long commerceAccountId, int orderStatus,
+			OrderByComparator<CommerceOrder> orderByComparator)
+		throws NoSuchOrderException {
+
+		CommerceOrder commerceOrder = fetchByC_LtC_O_First(
+			createDate, commerceAccountId, orderStatus, orderByComparator);
+
+		if (commerceOrder != null) {
+			return commerceOrder;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("createDate<");
+		sb.append(createDate);
+
+		sb.append(", commerceAccountId=");
+		sb.append(commerceAccountId);
+
+		sb.append(", orderStatus=");
+		sb.append(orderStatus);
+
+		sb.append("}");
+
+		throw new NoSuchOrderException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	 */
+	@Override
+	public CommerceOrder fetchByC_LtC_O_First(
+		Date createDate, long commerceAccountId, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+
+		List<CommerceOrder> list = findByC_LtC_O(
+			createDate, commerceAccountId, orderStatus, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order
+	 * @throws NoSuchOrderException if a matching commerce order could not be found
+	 */
+	@Override
+	public CommerceOrder findByC_LtC_O_Last(
+			Date createDate, long commerceAccountId, int orderStatus,
+			OrderByComparator<CommerceOrder> orderByComparator)
+		throws NoSuchOrderException {
+
+		CommerceOrder commerceOrder = fetchByC_LtC_O_Last(
+			createDate, commerceAccountId, orderStatus, orderByComparator);
+
+		if (commerceOrder != null) {
+			return commerceOrder;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("createDate<");
+		sb.append(createDate);
+
+		sb.append(", commerceAccountId=");
+		sb.append(commerceAccountId);
+
+		sb.append(", orderStatus=");
+		sb.append(orderStatus);
+
+		sb.append("}");
+
+		throw new NoSuchOrderException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	 */
+	@Override
+	public CommerceOrder fetchByC_LtC_O_Last(
+		Date createDate, long commerceAccountId, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+
+		int count = countByC_LtC_O(createDate, commerceAccountId, orderStatus);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceOrder> list = findByC_LtC_O(
+			createDate, commerceAccountId, orderStatus, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce orders before and after the current commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param commerceOrderId the primary key of the current commerce order
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order
+	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrder[] findByC_LtC_O_PrevAndNext(
+			long commerceOrderId, Date createDate, long commerceAccountId,
+			int orderStatus, OrderByComparator<CommerceOrder> orderByComparator)
+		throws NoSuchOrderException {
+
+		CommerceOrder commerceOrder = findByPrimaryKey(commerceOrderId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrder[] array = new CommerceOrderImpl[3];
+
+			array[0] = getByC_LtC_O_PrevAndNext(
+				session, commerceOrder, createDate, commerceAccountId,
+				orderStatus, orderByComparator, true);
+
+			array[1] = commerceOrder;
+
+			array[2] = getByC_LtC_O_PrevAndNext(
+				session, commerceOrder, createDate, commerceAccountId,
+				orderStatus, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrder getByC_LtC_O_PrevAndNext(
+		Session session, CommerceOrder commerceOrder, Date createDate,
+		long commerceAccountId, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEORDER_WHERE);
+
+		boolean bindCreateDate = false;
+
+		if (createDate == null) {
+			sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_1);
+		}
+		else {
+			bindCreateDate = true;
+
+			sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_LTC_O_COMMERCEACCOUNTID_2);
+
+		sb.append(_FINDER_COLUMN_C_LTC_O_ORDERSTATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceOrderModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindCreateDate) {
+			queryPos.add(new Timestamp(createDate.getTime()));
+		}
+
+		queryPos.add(commerceAccountId);
+
+		queryPos.add(orderStatus);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrder)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrder> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63; from the database.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 */
+	@Override
+	public void removeByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus) {
+
+		for (CommerceOrder commerceOrder :
+				findByC_LtC_O(
+					createDate, commerceAccountId, orderStatus,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(commerceOrder);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
+	 *
+	 * @param createDate the create date
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderStatus the order status
+	 * @return the number of matching commerce orders
+	 */
+	@Override
+	public int countByC_LtC_O(
+		Date createDate, long commerceAccountId, int orderStatus) {
+
+		FinderPath finderPath = _finderPathWithPaginationCountByC_LtC_O;
+
+		Object[] finderArgs = new Object[] {
+			_getTime(createDate), commerceAccountId, orderStatus
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_COMMERCEORDER_WHERE);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				sb.append(_FINDER_COLUMN_C_LTC_O_CREATEDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_LTC_O_COMMERCEACCOUNTID_2);
+
+			sb.append(_FINDER_COLUMN_C_LTC_O_ORDERSTATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindCreateDate) {
+					queryPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				queryPos.add(commerceAccountId);
+
+				queryPos.add(orderStatus);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_LTC_O_CREATEDATE_1 =
+		"commerceOrder.createDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_C_LTC_O_CREATEDATE_2 =
+		"commerceOrder.createDate < ? AND ";
+
+	private static final String _FINDER_COLUMN_C_LTC_O_COMMERCEACCOUNTID_2 =
+		"commerceOrder.commerceAccountId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_LTC_O_ORDERSTATUS_2 =
+		"commerceOrder.orderStatus = ?";
+
 	private FinderPath _finderPathFetchByC_ERC;
 	private FinderPath _finderPathCountByC_ERC;
 
@@ -7227,8 +7848,6 @@ public class CommerceOrderPersistenceImpl
 		"(commerceOrder.externalReferenceCode IS NULL OR commerceOrder.externalReferenceCode = '')";
 
 	public CommerceOrderPersistenceImpl() {
-		setModelClass(CommerceOrder.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -7256,6 +7875,42 @@ public class CommerceOrderPersistenceImpl
 		dbColumnNames.put(
 			"shippingDiscountPercentageLevel4",
 			"shippingDiscountPercentLevel4");
+		dbColumnNames.put(
+			"subtotalDiscountPercentageLevel1WithTaxAmount",
+			"subtotalDiscountPctLev1WithTax");
+		dbColumnNames.put(
+			"subtotalDiscountPercentageLevel2WithTaxAmount",
+			"subtotalDiscountPctLev2WithTax");
+		dbColumnNames.put(
+			"subtotalDiscountPercentageLevel3WithTaxAmount",
+			"subtotalDiscountPctLev3WithTax");
+		dbColumnNames.put(
+			"subtotalDiscountPercentageLevel4WithTaxAmount",
+			"subtotalDiscountPctLev4WithTax");
+		dbColumnNames.put(
+			"shippingDiscountPercentageLevel1WithTaxAmount",
+			"shippingDiscountPctLev1WithTax");
+		dbColumnNames.put(
+			"shippingDiscountPercentageLevel2WithTaxAmount",
+			"shippingDiscountPctLev2WithTax");
+		dbColumnNames.put(
+			"shippingDiscountPercentageLevel3WithTaxAmount",
+			"shippingDiscountPctLev3WithTax");
+		dbColumnNames.put(
+			"shippingDiscountPercentageLevel4WithTaxAmount",
+			"shippingDiscountPctLev4WithTax");
+		dbColumnNames.put(
+			"totalDiscountPercentageLevel1WithTaxAmount",
+			"totalDiscountPctLev1WithTax");
+		dbColumnNames.put(
+			"totalDiscountPercentageLevel2WithTaxAmount",
+			"totalDiscountPctLev2WithTax");
+		dbColumnNames.put(
+			"totalDiscountPercentageLevel3WithTaxAmount",
+			"totalDiscountPctLev3WithTax");
+		dbColumnNames.put(
+			"totalDiscountPercentageLevel4WithTaxAmount",
+			"totalDiscountPctLev4WithTax");
 
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
@@ -7270,6 +7925,8 @@ public class CommerceOrderPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceOrder.class);
 	}
 
 	/**
@@ -8737,6 +9394,26 @@ public class CommerceOrderPersistenceImpl
 				Integer.class.getName()
 			});
 
+		_finderPathWithPaginationFindByC_LtC_O = new FinderPath(
+			CommerceOrderModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceOrderModelImpl.FINDER_CACHE_ENABLED,
+			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_LtC_O",
+			new String[] {
+				Date.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByC_LtC_O = new FinderPath(
+			CommerceOrderModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceOrderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtC_O",
+			new String[] {
+				Date.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceOrderModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderModelImpl.FINDER_CACHE_ENABLED,
@@ -8808,7 +9485,19 @@ public class CommerceOrderPersistenceImpl
 			"shippingDiscountPercentageLevel1",
 			"shippingDiscountPercentageLevel2",
 			"shippingDiscountPercentageLevel3",
-			"shippingDiscountPercentageLevel4"
+			"shippingDiscountPercentageLevel4",
+			"subtotalDiscountPercentageLevel1WithTaxAmount",
+			"subtotalDiscountPercentageLevel2WithTaxAmount",
+			"subtotalDiscountPercentageLevel3WithTaxAmount",
+			"subtotalDiscountPercentageLevel4WithTaxAmount",
+			"shippingDiscountPercentageLevel1WithTaxAmount",
+			"shippingDiscountPercentageLevel2WithTaxAmount",
+			"shippingDiscountPercentageLevel3WithTaxAmount",
+			"shippingDiscountPercentageLevel4WithTaxAmount",
+			"totalDiscountPercentageLevel1WithTaxAmount",
+			"totalDiscountPercentageLevel2WithTaxAmount",
+			"totalDiscountPercentageLevel3WithTaxAmount",
+			"totalDiscountPercentageLevel4WithTaxAmount"
 		});
 
 }

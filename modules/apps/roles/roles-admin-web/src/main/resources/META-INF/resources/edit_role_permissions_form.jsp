@@ -181,7 +181,7 @@ if (Validator.isNotNull(portletResource)) {
 							groupIdsArray = new long[groups.size()];
 
 							for (int i = 0; i < groups.size(); i++) {
-								Group group = (Group)groups.get(i);
+								Group group = groups.get(i);
 
 								groupIdsArray[i] = group.getGroupId();
 

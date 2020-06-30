@@ -1698,8 +1698,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		"oAuth2ApplicationScopeAliases.scopeAliasesHash = ?";
 
 	public OAuth2ApplicationScopeAliasesPersistenceImpl() {
-		setModelClass(OAuth2ApplicationScopeAliases.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1718,6 +1716,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(OAuth2ApplicationScopeAliases.class);
 	}
 
 	/**

@@ -1248,8 +1248,6 @@ public class OAuth2ApplicationPersistenceImpl
 		"(oAuth2Application.clientId IS NULL OR oAuth2Application.clientId = '')";
 
 	public OAuth2ApplicationPersistenceImpl() {
-		setModelClass(OAuth2Application.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1268,6 +1266,8 @@ public class OAuth2ApplicationPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(OAuth2Application.class);
 	}
 
 	/**

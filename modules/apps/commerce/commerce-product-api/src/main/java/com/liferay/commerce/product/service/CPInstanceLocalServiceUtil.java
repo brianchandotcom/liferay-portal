@@ -803,6 +803,17 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPInstance>
+				searchCPDefinitionInstances(
+					long companyId, long cpDefinitionId, String keywords,
+					int status, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDefinitionInstances(
+			companyId, cpDefinitionId, keywords, status, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
 				long companyId, long[] groupIds, String keywords, int status,
 				int start, int end, com.liferay.portal.kernel.search.Sort sort)

@@ -2485,8 +2485,6 @@ public class DLFileEntryMetadataPersistenceImpl
 		"dlFileEntryMetadata.fileVersionId = ?";
 
 	public DLFileEntryMetadataPersistenceImpl() {
-		setModelClass(DLFileEntryMetadata.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2504,6 +2502,8 @@ public class DLFileEntryMetadataPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLFileEntryMetadata.class);
 	}
 
 	/**

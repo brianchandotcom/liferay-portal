@@ -53,8 +53,12 @@ public class JournalArticleTag extends IncludeTag {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletRequestModel portletRequestModel = new PortletRequestModel(
-			portletRequest, portletResponse);
+		PortletRequestModel portletRequestModel = null;
+
+		if ((portletRequest != null) && (portletResponse != null)) {
+			portletRequestModel = new PortletRequestModel(
+				portletRequest, portletResponse);
+		}
 
 		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
 			_groupId, _articleId, WorkflowConstants.STATUS_APPROVED);

@@ -67,9 +67,7 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueR
 					</commerce-ui:panel>
 				</c:if>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" value="save" />
-				</aui:button-row>
+				<aui:button cssClass="btn-lg ml-3" type="submit" value="save" />
 			</aui:form>
 		</commerce-ui:side-panel-content>
 	</c:otherwise>

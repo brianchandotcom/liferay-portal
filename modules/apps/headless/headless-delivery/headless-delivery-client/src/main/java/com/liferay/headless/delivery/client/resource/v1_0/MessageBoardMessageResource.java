@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.resource.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -94,34 +95,27 @@ public interface MessageBoardMessageResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getMessageBoardMessageMyRating(Long messageBoardMessageId)
+	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getMessageBoardMessageMyRatingHttpResponse(
 			Long messageBoardMessageId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postMessageBoardMessageMyRating(
-				Long messageBoardMessageId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating postMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postMessageBoardMessageMyRatingHttpResponse(
-			Long messageBoardMessageId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putMessageBoardMessageMyRating(
-				Long messageBoardMessageId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating putMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putMessageBoardMessageMyRatingHttpResponse(
-			Long messageBoardMessageId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
 	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
@@ -709,8 +703,7 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				getMessageBoardMessageMyRating(Long messageBoardMessageId)
+		public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -776,10 +769,8 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				postMessageBoardMessageMyRating(
-					Long messageBoardMessageId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating postMessageBoardMessageMyRating(
+				Long messageBoardMessageId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -809,8 +800,7 @@ public interface MessageBoardMessageResource {
 
 		public HttpInvoker.HttpResponse
 				postMessageBoardMessageMyRatingHttpResponse(
-					Long messageBoardMessageId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long messageBoardMessageId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -848,10 +838,8 @@ public interface MessageBoardMessageResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				putMessageBoardMessageMyRating(
-					Long messageBoardMessageId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating putMessageBoardMessageMyRating(
+				Long messageBoardMessageId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -881,8 +869,7 @@ public interface MessageBoardMessageResource {
 
 		public HttpInvoker.HttpResponse
 				putMessageBoardMessageMyRatingHttpResponse(
-					Long messageBoardMessageId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long messageBoardMessageId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

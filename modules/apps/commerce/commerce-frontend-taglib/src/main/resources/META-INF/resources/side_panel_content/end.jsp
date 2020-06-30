@@ -32,7 +32,7 @@
 	</c:if>
 </div>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as events">
+<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
 	document.querySelector('body').classList.remove('open');
 
 	document

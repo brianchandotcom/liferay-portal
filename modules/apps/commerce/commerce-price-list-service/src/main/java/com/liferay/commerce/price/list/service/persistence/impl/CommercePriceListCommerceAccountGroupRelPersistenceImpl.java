@@ -2107,8 +2107,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		"commercePriceListCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	public CommercePriceListCommerceAccountGroupRelPersistenceImpl() {
-		setModelClass(CommercePriceListCommerceAccountGroupRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2130,6 +2128,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommercePriceListCommerceAccountGroupRel.class);
 	}
 
 	/**

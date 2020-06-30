@@ -34,7 +34,7 @@
 					for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 					%>
 
-						<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
+						<span class='<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
 							<%= HtmlUtil.escape(suggestedKeyword) %>
 						</span>
 
@@ -72,7 +72,7 @@
 							for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 							%>
 
-								<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
+								<span class='<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
 									<%= HtmlUtil.escape(suggestedKeyword) %>
 								</span>
 

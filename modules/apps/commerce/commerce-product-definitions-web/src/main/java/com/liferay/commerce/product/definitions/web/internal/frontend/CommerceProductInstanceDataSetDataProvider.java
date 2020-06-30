@@ -22,14 +22,14 @@ import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.product.definitions.web.internal.model.Sku;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.DDMFormValuesUtil;
+import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -58,7 +58,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES,
+	property = {
+		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_PRODUCT_INSTANCES,
+		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES
+	},
 	service = CommerceDataSetDataProvider.class
 )
 public class CommerceProductInstanceDataSetDataProvider
@@ -79,7 +82,7 @@ public class CommerceProductInstanceDataSetDataProvider
 			BaseModelSearchResult<CPInstance> baseModelSearchResult =
 				_getBaseModelSearchResult(
 					_portal.getCompanyId(httpServletRequest), cpDefinitionId,
-					keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					keywords, null);
 
 			return baseModelSearchResult.getLength();
 		}
@@ -103,6 +106,8 @@ public class CommerceProductInstanceDataSetDataProvider
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
+		String languageId = LanguageUtil.getLanguageId(locale);
+
 		List<CPInstance> cpInstances = _getCPInstances(
 			_portal.getCompanyId(httpServletRequest), cpDefinitionId,
 			defaultFilterImpl.getKeywords(), pagination.getStartPosition(),
@@ -115,11 +120,21 @@ public class CommerceProductInstanceDataSetDataProvider
 						getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 							cpInstance.getCPInstanceId());
 
-			JSONArray keyValuesJSONArray = DDMFormValuesUtil.toJSONArray(
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			String cpDefinitionName = cpDefinition.getName(languageId);
+
+			JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 			int stockQuantity = _commerceInventoryEngine.getStockQuantity(
 				cpInstance.getCompanyId(), cpInstance.getSku());
+
+			String statusDisplayStyle = StringPool.BLANK;
+
+			if (cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				statusDisplayStyle = "success";
+			}
 
 			skus.add(
 				new Sku(
@@ -129,8 +144,9 @@ public class CommerceProductInstanceDataSetDataProvider
 							cpInstance.getCPDefinitionId(),
 							keyValuesJSONArray.toString(), locale)),
 					HtmlUtil.escape(_formatPrice(cpInstance, locale)),
-					stockQuantity,
+					cpDefinitionName, stockQuantity,
 					new LabelField(
+						statusDisplayStyle,
 						LanguageUtil.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
@@ -159,6 +175,15 @@ public class CommerceProductInstanceDataSetDataProvider
 		return _cpInstanceService.searchCPDefinitionInstances(
 			companyId, cpDefinitionId, keywords, WorkflowConstants.STATUS_ANY,
 			start, end, sort);
+	}
+
+	private BaseModelSearchResult<CPInstance> _getBaseModelSearchResult(
+			long companyId, long cpDefinitionId, String keywords, Sort sort)
+		throws PortalException {
+
+		return _cpInstanceService.searchCPDefinitionInstances(
+			companyId, cpDefinitionId, keywords, WorkflowConstants.STATUS_ANY,
+			sort);
 	}
 
 	private List<CPInstance> _getCPInstances(
@@ -209,6 +234,9 @@ public class CommerceProductInstanceDataSetDataProvider
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private JsonHelper _jsonHelper;
 
 	@Reference
 	private Portal _portal;

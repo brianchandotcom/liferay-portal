@@ -42,11 +42,6 @@ class Cart extends Component {
 		this._refreshCartUsingData = this._refreshCartUsingData.bind(this);
 		this.reset = this.reset.bind(this);
 		this._setAndRefreshOrder = this._setAndRefreshOrder.bind(this);
-
-		this.flushCartUrl = `${this.cartAPI}/${
-			this.orderId
-		}?commerceAccountId=${this.commerceAccountId}&
-			groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}`;
 	}
 
 	_handleClickOutside(e) {
@@ -57,7 +52,7 @@ class Cart extends Component {
 	}
 
 	_handleToggleCart() {
-		if (this.disabled || !this.orderId) {
+		if (this.disabled) {
 			return null;
 		}
 		return this._open ? this.close() : this.open();
@@ -100,6 +95,7 @@ class Cart extends Component {
 			this.detailsUrl = evt.detailsUrl || null;
 			this._loading = false;
 			this.pendingOperations = [];
+
 			return true;
 		} catch (error) {
 			return false;
@@ -108,6 +104,7 @@ class Cart extends Component {
 
 	_setAndRefreshOrder(orderId) {
 		this.orderId = orderId;
+
 		return this.refresh();
 	}
 
@@ -348,13 +345,16 @@ class Cart extends Component {
 
 	_handleProductUpdate(productId, products) {
 		const updatedPrice = products.reduce((acc, el) => {
-			return el.id === productId ? el.price : acc;
+			return el.id === productId ? el.prices.price : acc;
 		}, null);
+
 		this._removePendingOperation(productId);
 		return this._setProductProperties(productId, {
 			deleteDisabled: false,
 			errorMessages: null,
-			price: updatedPrice,
+			prices: {
+				price: updatedPrice
+			},
 			updating: false
 		});
 	}
@@ -475,7 +475,6 @@ Cart.STATE = {
 	detailsUrl: Config.string(),
 	disabled: Config.bool().value(false),
 	displayDiscountLevels: Config.bool().value(false),
-	flushCartUrl: Config.string(),
 	orderId: Config.oneOfType([Config.number(), Config.string()]),
 	pendingOperations: Config.array().value([]),
 	products: {

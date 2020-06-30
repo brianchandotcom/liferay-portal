@@ -31,10 +31,10 @@
 				<liferay-ui:input-editor
 					contents="<%= mainLanguageValue %>"
 					contentsLanguageId="<%= languageId %>"
-					cssClass='<%= \"language-value \" + cssClass %>'
+					cssClass='<%= "language-value " + cssClass %>'
 					editorName="<%= editorName %>"
-					name='<%= inputEditorName %>'
-					onChangeMethod='<%= randomNamespace + \"onChangeEditor\" %>'
+					name="<%= inputEditorName %>"
+					onChangeMethod='<%= randomNamespace + "onChangeEditor" %>'
 					placeholder="<%= placeholder %>"
 					toolbarSet="<%= toolbarSet %>"
 				/>
@@ -131,7 +131,17 @@
 			String normalizedSelectedLanguageId = StringUtil.replace(selectedLanguageId, '_', '-');
 			%>
 
-			<liferay-ui:icon-menu direction="left-side" id="<%= namespace + id + \"Menu\" %>" icon="<%= StringUtil.toLowerCase(normalizedSelectedLanguageId) %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="input-localized-trigger" triggerLabel="<%= normalizedSelectedLanguageId %>" triggerType="button">
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringUtil.toLowerCase(normalizedSelectedLanguageId) %>"
+				id='<%= namespace + id + "Menu" %>'
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
+				triggerCssClass="input-localized-trigger"
+				triggerLabel="<%= normalizedSelectedLanguageId %>"
+				triggerType="button"
+			>
 				<div id="<portlet:namespace /><%= id %>PaletteBoundingBox">
 					<div class="input-localized-palette-container palette-container" id="<portlet:namespace /><%= id %>PaletteContentBox">
 

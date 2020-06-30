@@ -1,7 +1,7 @@
 definition {
 
 	macro unregisterOfflineInstance {
-		Navigator.openSpecificURL(url = "https://lcs.liferay.com/group/guest/environment?p_p_id=com_liferay_osb_lcs_navigation_portlet_NavigationPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_layoutLCSClusterEntryId=9994178&p_r_p_layoutLCSClusterNodeId=0&p_r_p_layoutLCSProjectId=522003");
+		Navigator.openSpecificURL(url = "https://lcs.liferay.com/group/guest/environment?p_p_id=com_liferay_osb_lcs_navigation_portlet_NavigationPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_layoutLCSClusterEntryId=20424388&p_r_p_layoutLCSClusterNodeId=0&p_r_p_layoutLCSProjectId=522003");
 
 		var lcsEmailAddress = PropsUtil.get("lcs.email.address.1");
 		var lcsEmailPassword = PropsUtil.get("lcs.email.password.1");

@@ -2590,8 +2590,6 @@ public class JournalFeedPersistenceImpl
 		"(journalFeed.feedId IS NULL OR journalFeed.feedId = '')";
 
 	public JournalFeedPersistenceImpl() {
-		setModelClass(JournalFeed.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2610,6 +2608,8 @@ public class JournalFeedPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(JournalFeed.class);
 	}
 
 	/**

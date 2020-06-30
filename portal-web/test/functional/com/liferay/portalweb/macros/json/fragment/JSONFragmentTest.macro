@@ -4,13 +4,13 @@ definition {
 	macro runSmoke {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		//collection
+		// Collection
 
 		JSONFragment.addFragmentCollection(
 			groupName = "${groupName}",
 			name = "Collection 1");
 
-		//fragment
+		// Fragment
 
 		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
 		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
@@ -28,7 +28,7 @@ definition {
 			html = "${htmlSnippet}",
 			name = "Fragment 2");
 
-		//assertion
+		// Assertion
 
 		JSONFragment.assertFragmentCollectionInGroup(
 			collectionName = "Collection 1",

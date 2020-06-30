@@ -483,7 +483,8 @@ info:
         email: team-commerce@liferay.com
         name: Commerce Team
     description:
-        Liferay Commerce Admin Pricing API
+        "Liferay Commerce Admin Pricing API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '1.0.4'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -496,30 +497,30 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountRulesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -580,16 +581,16 @@ paths:
             operationId: postDiscountByExternalReferenceCodeDiscountRule
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -662,17 +663,17 @@ paths:
             operationId: deleteDiscountAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -700,17 +701,17 @@ paths:
             operationId: deleteDiscountCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -738,17 +739,17 @@ paths:
             operationId: deleteDiscountProduct
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -776,17 +777,17 @@ paths:
             operationId: deleteDiscountRule
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -813,17 +814,17 @@ paths:
             operationId: getDiscountRule
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -880,17 +881,17 @@ paths:
             operationId: patchDiscountRule
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -953,19 +954,19 @@ paths:
             operationId: getDiscountsPage
             parameters:
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -1093,16 +1094,16 @@ paths:
             operationId: deleteDiscountByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 204:
                     description:
@@ -1129,16 +1130,16 @@ paths:
             operationId: getDiscountByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 200:
                     content:
@@ -1195,16 +1196,16 @@ paths:
             operationId: patchDiscountByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1267,30 +1268,30 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountAccountGroupsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -1348,16 +1349,16 @@ paths:
             operationId: postDiscountByExternalReferenceCodeDiscountAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1430,30 +1431,30 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountCategoriesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -1511,16 +1512,16 @@ paths:
             operationId: postDiscountByExternalReferenceCodeDiscountCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1593,30 +1594,30 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountProductsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -1674,16 +1675,16 @@ paths:
             operationId: postDiscountByExternalReferenceCodeDiscountProduct
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1756,17 +1757,17 @@ paths:
             operationId: deleteDiscount
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -1793,17 +1794,17 @@ paths:
             operationId: getDiscount
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1860,17 +1861,17 @@ paths:
             operationId: patchDiscount
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1933,31 +1934,31 @@ paths:
             operationId: getDiscountIdDiscountAccountGroupsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -2015,17 +2016,17 @@ paths:
             operationId: postDiscountIdDiscountAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2098,31 +2099,31 @@ paths:
             operationId: getDiscountIdDiscountCategoriesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -2180,17 +2181,17 @@ paths:
             operationId: postDiscountIdDiscountCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2263,31 +2264,31 @@ paths:
             operationId: getDiscountIdDiscountProductsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -2345,17 +2346,17 @@ paths:
             operationId: postDiscountIdDiscountProduct
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2428,31 +2429,31 @@ paths:
             operationId: getDiscountIdDiscountRulesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -2513,17 +2514,17 @@ paths:
             operationId: postDiscountIdDiscountRule
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2596,16 +2597,16 @@ paths:
             operationId: deletePriceEntryByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 204:
                     description:
@@ -2632,16 +2633,16 @@ paths:
             operationId: getPriceEntryByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 200:
                     content:
@@ -2698,16 +2699,16 @@ paths:
             operationId: patchPriceEntryByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2770,30 +2771,30 @@ paths:
             operationId: getPriceEntryByExternalReferenceCodeTierPricesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -2854,16 +2855,16 @@ paths:
             operationId: postPriceEntryByExternalReferenceCodeTierPrice
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -2936,17 +2937,17 @@ paths:
             operationId: deletePriceEntry
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -2973,17 +2974,17 @@ paths:
             operationId: getPriceEntry
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -3040,17 +3041,17 @@ paths:
             operationId: patchPriceEntry
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -3113,31 +3114,31 @@ paths:
             operationId: getPriceEntryIdTierPricesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -3198,17 +3199,17 @@ paths:
             operationId: postPriceEntryIdTierPrice
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -3281,17 +3282,17 @@ paths:
             operationId: deletePriceListAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -3319,25 +3320,25 @@ paths:
             operationId: getPriceListsPage
             parameters:
                 - in: query
-                      name: filter
-                      required: false
-                      schema:
-                          type: string
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: sort
-                      required: false
-                      schema:
-                          type: string
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -3465,16 +3466,16 @@ paths:
             operationId: deletePriceListByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 204:
                     description:
@@ -3501,16 +3502,16 @@ paths:
             operationId: getPriceListByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 200:
                     content:
@@ -3567,16 +3568,16 @@ paths:
             operationId: patchPriceListByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -3639,30 +3640,30 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceEntriesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -3720,16 +3721,16 @@ paths:
             operationId: postPriceListByExternalReferenceCodePriceEntry
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -3802,30 +3803,30 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceListAccountGroupPage
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -3883,16 +3884,16 @@ paths:
             operationId: postPriceListByExternalReferenceCodePriceListAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -3965,17 +3966,17 @@ paths:
             operationId: deletePriceList
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -4002,17 +4003,17 @@ paths:
             operationId: getPriceList
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -4069,17 +4070,17 @@ paths:
             operationId: patchPriceList
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -4142,31 +4143,31 @@ paths:
             operationId: getPriceListIdPriceEntriesPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -4224,17 +4225,17 @@ paths:
             operationId: postPriceListIdPriceEntry
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -4307,31 +4308,31 @@ paths:
             operationId: getPriceListIdPriceListAccountGroupsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -4389,17 +4390,17 @@ paths:
             operationId: postPriceListIdPriceListAccountGroup
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -4472,16 +4473,16 @@ paths:
             operationId: deleteTierPriceByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 204:
                     description:
@@ -4508,16 +4509,16 @@ paths:
             operationId: getTierPriceByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             responses:
                 200:
                     content:
@@ -4574,16 +4575,16 @@ paths:
             operationId: patchTierPriceByExternalReferenceCode
             parameters:
                 - in: path
-                      explode: false
-                      name: externalReferenceCode
-                      required: true
-                      schema:
-                          description:
-                              The resource external reference code
-                          example: AB-34098-789-N
-                          minLength: 1
-                          type: string
-                      style: simple
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -4646,17 +4647,17 @@ paths:
             operationId: deleteTierPrice
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -4683,17 +4684,17 @@ paths:
             operationId: getTierPrice
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -4750,17 +4751,17 @@ paths:
             operationId: patchTierPrice
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:

@@ -134,6 +134,12 @@ public class GroupFinderUtil {
 		return getFinder().findByC_GK(companyId, groupKey);
 	}
 
+	public static java.util.List<Long> findByC_A(
+		long companyId, boolean active) {
+
+		return getFinder().findByC_A(companyId, active);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Group>
 		findByL_TS_S_RSGC(
 			long liveGroupId, String typeSettings, boolean site,

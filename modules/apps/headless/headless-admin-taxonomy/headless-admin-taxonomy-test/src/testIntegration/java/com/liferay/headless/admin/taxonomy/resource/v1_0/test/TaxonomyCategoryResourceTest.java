@@ -57,6 +57,12 @@ public class TaxonomyCategoryResourceTest
 	public void testGraphQLGetTaxonomyCategory() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetTaxonomyCategoryNotFound() {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
@@ -95,6 +101,14 @@ public class TaxonomyCategoryResourceTest
 		testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId() {
 
 		return _assetVocabulary.getVocabularyId();
+	}
+
+	@Override
+	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+			randomTaxonomyCategory());
 	}
 
 	@Override

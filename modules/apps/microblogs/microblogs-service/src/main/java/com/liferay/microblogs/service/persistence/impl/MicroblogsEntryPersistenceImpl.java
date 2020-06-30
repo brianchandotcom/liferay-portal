@@ -7679,8 +7679,6 @@ public class MicroblogsEntryPersistenceImpl
 		"microblogsEntry.socialRelationType = ?";
 
 	public MicroblogsEntryPersistenceImpl() {
-		setModelClass(MicroblogsEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -7698,6 +7696,8 @@ public class MicroblogsEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MicroblogsEntry.class);
 	}
 
 	/**

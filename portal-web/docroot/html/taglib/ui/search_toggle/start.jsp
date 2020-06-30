@@ -40,7 +40,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 </div>
 
 <div class="taglib-search-toggle-advanced-wrapper">
-	<div class="taglib-search-toggle-advanced <%= advancedSearch ? "toggler-content-expanded" : "toggler-content-collapsed" %>" id="<%= id %>advanced">
+	<div class='taglib-search-toggle-advanced <%= advancedSearch ? "toggler-content-expanded" : "toggler-content-collapsed" %>' id="<%= id %>advanced">
 		<input id="<%= id + DisplayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= DisplayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= advancedSearch %>" />
 
 		<aui:button cssClass="close" name="closeAdvancedSearch" value="&times;" />

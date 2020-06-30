@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -74,7 +75,14 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 			if (commerceTaxCalculateRequest.isPercentage()) {
 				taxValue = amount.multiply(rate);
 
-				taxValue = taxValue.divide(_ONE_HUNDRED);
+				BigDecimal denominator = _ONE_HUNDRED;
+
+				if (commerceTaxCalculateRequest.isIncludeTax()) {
+					denominator = _ONE_HUNDRED.add(rate);
+				}
+
+				taxValue = taxValue.divide(
+					denominator, _SCALE, RoundingMode.HALF_EVEN);
 			}
 
 			commerceTaxValue = new CommerceTaxValue(KEY, KEY, taxValue);
@@ -108,6 +116,8 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
+
+	private static final int _SCALE = 10;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FixedCommerceTaxEngine.class);

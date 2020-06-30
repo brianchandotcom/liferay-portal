@@ -148,7 +148,7 @@ const eventsDefinitions = {
 
 				return {
 					key: field.get('fieldName'),
-					value: value instanceof Array ? value : [value]
+					value: Array.isArray(value) ? value : [value]
 				};
 			}
 		);

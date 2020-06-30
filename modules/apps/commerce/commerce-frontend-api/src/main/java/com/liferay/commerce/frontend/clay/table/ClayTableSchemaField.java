@@ -19,6 +19,10 @@ package com.liferay.commerce.frontend.clay.table;
  */
 public class ClayTableSchemaField {
 
+	public String getActionId() {
+		return _actionId;
+	}
+
 	public String getContentRenderer() {
 		return _contentRenderer;
 	}
@@ -45,6 +49,10 @@ public class ClayTableSchemaField {
 
 	public boolean isSortable() {
 		return _sortable;
+	}
+
+	public void setActionId(String actionId) {
+		_actionId = actionId;
 	}
 
 	public void setContentRenderer(String contentRenderer) {
@@ -81,6 +89,7 @@ public class ClayTableSchemaField {
 
 	}
 
+	private String _actionId;
 	private String _contentRenderer;
 	private String _contentRendererModuleUrl;
 	private boolean _expand;

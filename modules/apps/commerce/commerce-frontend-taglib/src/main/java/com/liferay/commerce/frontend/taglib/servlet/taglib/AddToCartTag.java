@@ -129,6 +129,10 @@ public class AddToCartTag extends ComponentRendererTag {
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
+	public void setTextContent(String textContent) {
+		putValue("textContent", textContent);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(AddToCartTag.class);
 
 	private ProductHelper _productHelper;

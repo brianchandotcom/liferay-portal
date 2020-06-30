@@ -26,9 +26,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -72,6 +76,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			ddmFormEvaluationResult, ddmFormLayout);
 
 		invisibleFields.addAll(fieldsFromDisabledPages);
+
+		removeValue(ddmFormValues, invisibleFields);
 
 		removeDDMValidationExpression(
 			ddmForm.getDDMFormFields(), invisibleFields);
@@ -126,13 +132,13 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Stream<Integer> disablePagesIndexesStream =
 			disabledPagesIndexes.stream();
 
-		Stream<String> fieldsStream = disablePagesIndexesStream.map(
+		return disablePagesIndexesStream.map(
 			index -> getFieldNamesFromPage(index, ddmFormLayout)
 		).flatMap(
 			field -> field.stream()
+		).collect(
+			Collectors.toSet()
 		);
-
-		return fieldsStream.collect(Collectors.toSet());
 	}
 
 	protected Set<String> getFieldNamesFromPage(
@@ -181,9 +187,11 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
-		stream = stream.filter(ddmFormField -> ddmFormField.isRequired());
-
-		return stream.collect(Collectors.toList());
+		return stream.filter(
+			ddmFormField -> ddmFormField.isRequired()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	protected void removeDDMValidationExpression(DDMFormField ddmFormField) {
@@ -195,10 +203,11 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
-		stream = stream.filter(
-			ddmFormField -> invisibleFields.contains(ddmFormField.getName()));
-
-		stream.forEach(this::removeDDMValidationExpression);
+		stream.filter(
+			ddmFormField -> invisibleFields.contains(ddmFormField.getName())
+		).forEach(
+			this::removeDDMValidationExpression
+		);
 	}
 
 	protected void removeRequiredProperty(DDMFormField ddmFormField) {
@@ -210,10 +219,46 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 		Stream<DDMFormField> stream = requiredFields.stream();
 
-		stream = stream.filter(
-			field -> invisibleFields.contains(field.getName()));
+		stream.filter(
+			field -> invisibleFields.contains(field.getName())
+		).forEach(
+			this::removeRequiredProperty
+		);
+	}
 
-		stream.forEach(this::removeRequiredProperty);
+	protected void removeValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		if (ddmFormField.isLocalizable()) {
+			ddmFormFieldValue.setValue(
+				new LocalizedValue(locale) {
+					{
+						addString(locale, StringPool.BLANK);
+					}
+				});
+		}
+		else {
+			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
+		}
+	}
+
+	protected void removeValue(
+		DDMFormValues ddmFormValues, Set<String> invisibleFields) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+		stream.filter(
+			ddmFormFieldValue -> invisibleFields.contains(
+				ddmFormFieldValue.getName())
+		).forEach(
+			ddmFormFieldValue -> removeValue(
+				ddmFormFieldValue, ddmFormValues.getDefaultLocale())
+		);
 	}
 
 	@Reference

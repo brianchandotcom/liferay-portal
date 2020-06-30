@@ -1800,8 +1800,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		"(commerceInventoryBookedQuantity.sku IS NULL OR commerceInventoryBookedQuantity.sku = '')";
 
 	public CommerceInventoryBookedQuantityPersistenceImpl() {
-		setModelClass(CommerceInventoryBookedQuantity.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1820,6 +1818,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceInventoryBookedQuantity.class);
 	}
 
 	/**

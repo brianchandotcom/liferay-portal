@@ -2200,8 +2200,6 @@ public class DLContentPersistenceImpl
 		"(dlContent.version IS NULL OR dlContent.version = '')";
 
 	public DLContentPersistenceImpl() {
-		setModelClass(DLContent.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("path", "path_");
@@ -2221,6 +2219,8 @@ public class DLContentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLContent.class);
 	}
 
 	/**

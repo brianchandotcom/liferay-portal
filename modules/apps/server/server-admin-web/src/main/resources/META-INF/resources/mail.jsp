@@ -42,6 +42,8 @@
 
 		<aui:input label="use-a-secure-network-connection" name="smtpSecure" type="checkbox" value='<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL).equals("smtps") %>' />
 
+		<aui:input label="enable-starttls" name="smtpStartTLSEnable" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE) %>" />
+
 		<aui:input cssClass="lfr-input-text-container" label="user-name" name="smtpUser" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER) %>" />
 
 		<%

@@ -69,6 +69,7 @@ public class CommercePriceListWrapper
 		attributes.put(
 			"parentCommercePriceListId", getParentCommercePriceListId());
 		attributes.put("catalogBasePriceList", isCatalogBasePriceList());
+		attributes.put("netPrice", isNetPrice());
 		attributes.put("type", getType());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
@@ -158,6 +159,12 @@ public class CommercePriceListWrapper
 
 		if (catalogBasePriceList != null) {
 			setCatalogBasePriceList(catalogBasePriceList);
+		}
+
+		Boolean netPrice = (Boolean)attributes.get("netPrice");
+
+		if (netPrice != null) {
+			setNetPrice(netPrice);
 		}
 
 		String type = (String)attributes.get("type");
@@ -363,6 +370,16 @@ public class CommercePriceListWrapper
 	@Override
 	public String getName() {
 		return _commercePriceList.getName();
+	}
+
+	/**
+	 * Returns the net price of this commerce price list.
+	 *
+	 * @return the net price of this commerce price list
+	 */
+	@Override
+	public boolean getNetPrice() {
+		return _commercePriceList.getNetPrice();
 	}
 
 	/**
@@ -585,6 +602,16 @@ public class CommercePriceListWrapper
 		return _commercePriceList.isIncomplete();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce price list is net price.
+	 *
+	 * @return <code>true</code> if this commerce price list is net price; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isNetPrice() {
+		return _commercePriceList.isNetPrice();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _commercePriceList.isNew();
@@ -755,6 +782,16 @@ public class CommercePriceListWrapper
 	@Override
 	public void setName(String name) {
 		_commercePriceList.setName(name);
+	}
+
+	/**
+	 * Sets whether this commerce price list is net price.
+	 *
+	 * @param netPrice the net price of this commerce price list
+	 */
+	@Override
+	public void setNetPrice(boolean netPrice) {
+		_commercePriceList.setNetPrice(netPrice);
 	}
 
 	@Override

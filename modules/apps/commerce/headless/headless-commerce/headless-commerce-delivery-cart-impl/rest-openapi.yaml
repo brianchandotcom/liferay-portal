@@ -157,6 +157,9 @@ components:
                     items:
                         $ref: "#/components/schemas/CartComment"
                     type: array
+                orderUUID:
+                    readOnly: true
+                    type: string
                 paymentMethod:
                     type: string
                 paymentMethodLabel:
@@ -211,6 +214,10 @@ components:
             type: object
         CartItem:
             properties:
+                cartItems:
+                    items:
+                        $ref: "#/components/schemas/CartItem"
+                    type: array
                 customFields:
                     additionalProperties: true
                     type: object
@@ -223,6 +230,10 @@ components:
                     type: string
                 options:
                     type: string
+                parentCartItemId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 price:
                     $ref: "#/components/schemas/Price"
                 productId:
@@ -231,6 +242,8 @@ components:
                 quantity:
                     format: int32
                     type: integer
+                settings:
+                    $ref: "#/components/schemas/Settings"
                 sku:
                     readOnly: true
                     type: string
@@ -241,6 +254,9 @@ components:
                     example: true
                     readOnly: true
                     type: boolean
+                thumbnail:
+                    readOnly: true
+                    type: string
             type: object
         CouponCode:
             properties:
@@ -316,6 +332,23 @@ components:
                 promoPriceFormatted:
                     type: string
             type: object
+        Settings:
+            properties:
+                allowedQuantities:
+                    items:
+                        format: int32
+                        type: integer
+                    type: array
+                maxQuantity:
+                    format: int32
+                    type: integer
+                minQuantity:
+                    format: int32
+                    type: integer
+                multipleQuantity:
+                    format: int32
+                    type: integer
+            type: object
         Summary:
             properties:
                 currency:
@@ -372,7 +405,8 @@ components:
             type: object
 info:
     description:
-        Headless Delivery Commerce Cart API
+        "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '1.0.9'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -385,15 +419,15 @@ paths:
             operationId: deleteCartComment
             parameters:
                 - in: path
-                      explode: false
-                      name: cartCommentId
-                      required: true
-                      schema:
-                          description:
-                              Comment Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartCommentId
+                  required: true
+                  schema:
+                      description:
+                          Comment Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 "204":
                     description:
@@ -401,6 +435,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -412,15 +448,15 @@ paths:
             operationId: getCartComment
             parameters:
                 - in: path
-                      explode: false
-                      name: cartCommentId
-                      required: true
-                      schema:
-                          description:
-                              Comment Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartCommentId
+                  required: true
+                  schema:
+                      description:
+                          Comment Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -438,6 +474,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -446,6 +484,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -467,15 +507,15 @@ paths:
             operationId: patchCartComment
             parameters:
                 - in: path
-                      explode: false
-                      name: cartCommentId
-                      required: true
-                      schema:
-                          description:
-                              Comment Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartCommentId
+                  required: true
+                  schema:
+                      description:
+                          Comment Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -502,6 +542,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -510,6 +552,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -531,15 +575,15 @@ paths:
             operationId: putCartComment
             parameters:
                 - in: path
-                      explode: false
-                      name: cartCommentId
-                      required: true
-                      schema:
-                          description:
-                              Comment Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartCommentId
+                  required: true
+                  schema:
+                      description:
+                          Comment Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -566,6 +610,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -574,6 +620,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -598,15 +646,15 @@ paths:
             operationId: deleteCartItem
             parameters:
                 - in: path
-                      explode: false
-                      name: cartItemId
-                      required: true
-                      schema:
-                          description:
-                              Cart Item Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartItemId
+                  required: true
+                  schema:
+                      description:
+                          Cart Item Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 "204":
                     description:
@@ -614,6 +662,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -626,15 +676,15 @@ paths:
             operationId: getCartItem
             parameters:
                 - in: path
-                      explode: false
-                      name: cartItemId
-                      required: true
-                      schema:
-                          description:
-                              Cart Item Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartItemId
+                  required: true
+                  schema:
+                      description:
+                          Cart Item Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -647,6 +697,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -655,6 +707,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -677,15 +731,15 @@ paths:
             operationId: patchCartItem
             parameters:
                 - in: path
-                      explode: false
-                      name: cartItemId
-                      required: true
-                      schema:
-                          description:
-                              Cart Item Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartItemId
+                  required: true
+                  schema:
+                      description:
+                          Cart Item Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -707,6 +761,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -715,6 +771,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -737,15 +795,15 @@ paths:
             operationId: putCartItem
             parameters:
                 - in: path
-                      explode: false
-                      name: cartItemId
-                      required: true
-                      schema:
-                          description:
-                              Cart Item Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartItemId
+                  required: true
+                  schema:
+                      description:
+                          Cart Item Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -767,6 +825,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -775,6 +835,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -796,15 +858,15 @@ paths:
             operationId: deleteCart
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 "204":
                     description:
@@ -812,6 +874,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -825,15 +889,15 @@ paths:
             operationId: getCart
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -846,6 +910,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -854,6 +920,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -874,15 +942,15 @@ paths:
             operationId: patchCart
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -909,6 +977,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -917,6 +987,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -938,15 +1010,15 @@ paths:
             operationId: putCart
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -973,6 +1045,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -981,6 +1055,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1005,15 +1081,15 @@ paths:
             operationId: getCartBillingAddres
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1026,6 +1102,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1034,6 +1112,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1055,25 +1135,25 @@ paths:
             operationId: getCartCommentsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1095,6 +1175,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1103,6 +1185,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1124,15 +1208,15 @@ paths:
             operationId: postCartComment
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1159,6 +1243,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1167,6 +1253,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1191,15 +1279,15 @@ paths:
             operationId: postCartCouponCode
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1223,6 +1311,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1231,6 +1321,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1254,25 +1346,25 @@ paths:
             operationId: getCartItemsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1291,6 +1383,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1299,6 +1393,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1321,15 +1417,15 @@ paths:
             operationId: postCartItem
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1353,6 +1449,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1361,6 +1459,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1384,15 +1484,15 @@ paths:
             operationId: getCartShippingAddres
             parameters:
                 - in: path
-                      explode: false
-                      name: cartId
-                      required: true
-                      schema:
-                          description:
-                              Cart Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1405,6 +1505,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1413,6 +1515,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1436,25 +1540,25 @@ paths:
             operationId: getChannelCartsPage
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      format: int64
+                      type: integer
+                  style: simple
                 - in: query
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
                 - in: query
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -1473,6 +1577,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1481,6 +1587,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1501,15 +1609,15 @@ paths:
             operationId: postChannelCart
             parameters:
                 - in: path
-                      explode: false
-                      name: channelId
-                      required: true
-                      schema:
-                          description:
-                              Channel Id
-                          format: int64
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      format: int64
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1536,6 +1644,8 @@ paths:
                 401:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"
@@ -1544,6 +1654,8 @@ paths:
                 404:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Error"

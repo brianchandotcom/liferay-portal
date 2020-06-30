@@ -5,7 +5,15 @@
 		overflow: hidden;
 	}
 
+	.dataset-sub-item {
+		font-size: 13px;
+		height: auto;
+		transform: scale(0.98);
+	}
+
 	.table {
+		border-spacing: 0 5px !important;
+
 		td:first-child,
 		th:first-child,
 		.table-cell-start {

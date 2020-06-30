@@ -27,6 +27,7 @@ import com.liferay.commerce.currency.service.base.CommerceCurrencyLocalServiceBa
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -233,9 +235,14 @@ public class CommerceCurrencyLocalServiceImpl
 				Map<Locale, String> formatPatternMap = new HashMap<>();
 
 				nameMap.put(serviceContext.getLocale(), name);
-				formatPatternMap.put(
-					serviceContext.getLocale(),
-					symbol + CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN);
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(symbol);
+				sb.append(StringPool.SPACE);
+				sb.append(CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN);
+
+				formatPatternMap.put(serviceContext.getLocale(), sb.toString());
 
 				RoundingMode roundingMode =
 					roundingTypeConfiguration.roundingMode();

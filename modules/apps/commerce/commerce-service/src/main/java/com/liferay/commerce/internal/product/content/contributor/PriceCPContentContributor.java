@@ -17,24 +17,30 @@ package com.liferay.commerce.internal.product.content.contributor;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.internal.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.option.CommerceOptionValue;
+import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +82,13 @@ public class PriceCPContentContributor implements CPContentContributor {
 			return jsonObject;
 		}
 
+		String ddmFormValues = ParamUtil.getString(
+			httpServletRequest, "ddmFormValues");
+
+		List<CommerceOptionValue> commerceOptionValues =
+			_commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
+				cpInstance.getCPDefinitionId(), ddmFormValues);
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
@@ -91,39 +104,67 @@ public class PriceCPContentContributor implements CPContentContributor {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(),
-				cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance),
-				commerceContext);
+				_getCommerceProductPriceRequest(
+					cpInstance, cpDefinitionInventoryEngine, commerceContext,
+					commerceOptionValues));
 
-		CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+		CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
 
-		if (unitPriceMoney != null) {
-			Locale locale = _portal.getLocale(httpServletRequest);
+		if (unitPrice == null) {
+			return jsonObject;
+		}
+
+		Locale locale = _portal.getLocale(httpServletRequest);
+
+		jsonObject.put(
+			CPContentContributorConstants.PRICE, unitPrice.format(locale));
+
+		CommerceMoney unitPromoPrice = commerceProductPrice.getUnitPromoPrice();
+
+		if (unitPromoPrice == null) {
+			return jsonObject;
+		}
+
+		if (CommerceBigDecimalUtil.gt(
+				unitPromoPrice.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.lte(
+				unitPromoPrice.getPrice(), unitPrice.getPrice())) {
 
 			jsonObject.put(
-				CPContentContributorConstants.PRICE,
-				unitPriceMoney.format(locale));
-
-			CommerceMoney promoPriceMoney =
-				commerceProductPrice.getUnitPromoPrice();
-
-			BigDecimal promoPrice = promoPriceMoney.getPrice();
-
-			if ((promoPriceMoney != null) &&
-				(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				(promoPrice.compareTo(unitPriceMoney.getPrice()) <= 0)) {
-
-				jsonObject.put(
-					CPContentContributorConstants.PROMO_PRICE,
-					promoPriceMoney.format(locale));
-			}
+				CPContentContributorConstants.PROMO_PRICE,
+				unitPromoPrice.format(locale));
 		}
 
 		return jsonObject;
 	}
 
+	private CommerceProductPriceRequest _getCommerceProductPriceRequest(
+			CPInstance cpInstance,
+			CPDefinitionInventoryEngine cpDefinitionInventoryEngine,
+			CommerceContext commerceContext,
+			List<CommerceOptionValue> commerceOptionValues)
+		throws PortalException {
+
+		CommerceProductPriceRequest commerceProductPriceRequest =
+			new CommerceProductPriceRequest();
+
+		commerceProductPriceRequest.setCpInstanceId(
+			cpInstance.getCPInstanceId());
+		commerceProductPriceRequest.setQuantity(
+			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
+		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
+		commerceProductPriceRequest.setCommerceOptionValues(
+			commerceOptionValues);
+
+		return commerceProductPriceRequest;
+	}
+
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOptionValueHelper _commerceOptionValueHelper;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

@@ -19,6 +19,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -105,7 +106,8 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 						_commercePaymentMethodGroupRelService,
 						_commerceShipmentItemService,
 						_portal.getHttpServletRequest(renderRequest),
-						_modelResourcePermission, _portletResourcePermission);
+						_modelResourcePermission, _percentageFormatter,
+						_portletResourcePermission);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -147,6 +149,9 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
 	)
 	private ModelResourcePermission<CommerceOrder> _modelResourcePermission;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference
 	private Portal _portal;

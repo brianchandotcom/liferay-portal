@@ -4,7 +4,7 @@ definition {
 	macro runSmoke {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		//manual
+		// Manual
 
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "${groupName}",
@@ -14,7 +14,7 @@ definition {
 			groupName = "${groupName}",
 			title = "Asset List Manual 2");
 
-		//dynamic
+		// Dynamic
 
 		JSONAssetlist.addDynamicAssetListEntry(
 			groupName = "${groupName}",

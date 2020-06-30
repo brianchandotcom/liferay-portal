@@ -15,6 +15,7 @@
 --%>
 
 <%
+CommerceTaxMethod commerceTaxMethod = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethod();
 long commerceTaxMethodId = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId();
 
 long commerceTaxFixedRateAddressRelId = 0;
@@ -29,8 +30,6 @@ if (commerceTaxFixedRateAddressRel != null) {
 <aui:input name="commerceTaxFixedRateAddressRelId" type="hidden" value="<%= commerceTaxFixedRateAddressRelId %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
-<aui:model-context bean="<%= commerceTaxFixedRateAddressRel %>" model="<%= CommerceTaxFixedRateAddressRel.class %>" />
-
 <div class="row">
 	<div class="col-md-6">
 		<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="CPTaxCategoryId">
@@ -41,7 +40,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 			for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCPTaxCategoryId() == cpTaxCategory.getCPTaxCategoryId()) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
 
 			<%
 			}
@@ -51,7 +50,9 @@ if (commerceTaxFixedRateAddressRel != null) {
 	</div>
 
 	<div class="col-md-6">
-		<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
+		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" value="<%= commerceTaxFixedRateAddressRelsDisplayContext.getLocalizedPercentage((commerceTaxFixedRateAddressRel == null) ? 0 : commerceTaxFixedRateAddressRel.getRate(), locale) %>">
+			<aui:validator name="min">0</aui:validator>
+		</aui:input>
 	</div>
 </div>
 
@@ -93,6 +94,6 @@ if (commerceTaxFixedRateAddressRel != null) {
 	</div>
 
 	<div class="col-md-4">
-		<aui:input name="zip" />
+		<aui:input name="zip" value="<%= (commerceTaxFixedRateAddressRel == null) ? StringPool.BLANK : commerceTaxFixedRateAddressRel.getZip() %>" />
 	</div>
 </div>

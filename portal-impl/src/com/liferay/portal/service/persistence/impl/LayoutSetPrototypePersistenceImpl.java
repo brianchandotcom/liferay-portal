@@ -3953,8 +3953,6 @@ public class LayoutSetPrototypePersistenceImpl
 		"layoutSetPrototype.active_ = ?";
 
 	public LayoutSetPrototypePersistenceImpl() {
-		setModelClass(LayoutSetPrototype.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3974,6 +3972,8 @@ public class LayoutSetPrototypePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(LayoutSetPrototype.class);
 	}
 
 	/**

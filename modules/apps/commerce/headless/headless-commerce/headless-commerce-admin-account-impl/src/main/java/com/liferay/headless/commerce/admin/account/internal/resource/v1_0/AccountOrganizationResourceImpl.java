@@ -22,13 +22,12 @@ import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
+import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountOrganizationDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountOrganizationUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -112,14 +111,10 @@ public class AccountOrganizationResourceImpl
 						commerceAccount.getCommerceAccountId(),
 						organizationId));
 
-		DTOConverter accountOrganizationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountOrganizationRel.class.getName());
-
-		return (AccountOrganization)accountOrganizationDTOConverter.toDTO(
+		return _accountOrganizationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountOrganizationRel.getPrimaryKey()));
+				commerceAccountOrganizationRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -159,14 +154,10 @@ public class AccountOrganizationResourceImpl
 			Long id, Long organizationId)
 		throws Exception {
 
-		DTOConverter accountOrganizationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountOrganizationRel.class.getName());
-
-		return (AccountOrganization)accountOrganizationDTOConverter.toDTO(
+		return _accountOrganizationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				new CommerceAccountOrganizationRelPK(id, organizationId)));
+				new CommerceAccountOrganizationRelPK(id, organizationId),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = Account.class, value = "organizations")
@@ -216,14 +207,10 @@ public class AccountOrganizationResourceImpl
 						contextCompany.getCompanyId()),
 					_serviceContextHelper.getServiceContext());
 
-		DTOConverter accountOrganizationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountOrganizationRel.class.getName());
-
-		return (AccountOrganization)accountOrganizationDTOConverter.toDTO(
+		return _accountOrganizationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountOrganizationRel.getPrimaryKey()));
+				commerceAccountOrganizationRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -240,14 +227,10 @@ public class AccountOrganizationResourceImpl
 						contextCompany.getCompanyId()),
 					_serviceContextHelper.getServiceContext());
 
-		DTOConverter accountOrganizationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountOrganizationRel.class.getName());
-
-		return (AccountOrganization)accountOrganizationDTOConverter.toDTO(
+		return _accountOrganizationDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAccountOrganizationRel.getPrimaryKey()));
+				commerceAccountOrganizationRel.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<AccountOrganization> _toAccountOrganizations(
@@ -257,22 +240,21 @@ public class AccountOrganizationResourceImpl
 
 		List<AccountOrganization> accountOrganizations = new ArrayList<>();
 
-		DTOConverter accountOrganizationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAccountOrganizationRel.class.getName());
-
 		for (CommerceAccountOrganizationRel commerceAccountOrganizationRel :
 				commerceAccountOrganizationRels) {
 
 			accountOrganizations.add(
-				(AccountOrganization)accountOrganizationDTOConverter.toDTO(
+				_accountOrganizationDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceAccountOrganizationRel.getPrimaryKey())));
+						commerceAccountOrganizationRel.getPrimaryKey(),
+						contextAcceptLanguage.getPreferredLocale())));
 		}
 
 		return accountOrganizations;
 	}
+
+	@Reference
+	private AccountOrganizationDTOConverter _accountOrganizationDTOConverter;
 
 	@Reference
 	private CommerceAccountOrganizationRelService
@@ -280,9 +262,6 @@ public class AccountOrganizationResourceImpl
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

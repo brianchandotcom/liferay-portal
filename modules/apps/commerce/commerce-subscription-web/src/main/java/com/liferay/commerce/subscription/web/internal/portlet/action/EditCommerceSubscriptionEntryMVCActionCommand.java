@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.subscription.web.internal.portlet.action;
 
+import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.exception.CommerceSubscriptionEntryNextIterationDateException;
 import com.liferay.commerce.exception.CommerceSubscriptionEntrySubscriptionStatusException;
 import com.liferay.commerce.exception.CommerceSubscriptionTypeException;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -99,18 +101,6 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateCommerceSubscriptionEntry(
 					commerceSubscriptionEntryId, actionRequest);
-			}
-			else if (cmd.equals("activate")) {
-				_commerceSubscriptionEngine.activateRecurringPayment(
-					commerceSubscriptionEntryId);
-			}
-			else if (cmd.equals("cancel")) {
-				_commerceSubscriptionEngine.cancelRecurringPayment(
-					commerceSubscriptionEntryId);
-			}
-			else if (cmd.equals("suspend")) {
-				_commerceSubscriptionEngine.suspendRecurringPayment(
-					commerceSubscriptionEntryId);
 			}
 		}
 		catch (Exception e) {
@@ -202,6 +192,16 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 			deliveryNextIterationDateHour += 12;
 		}
 
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			_commerceSubscriptionEntryService.fetchCommerceSubscriptionEntry(
+				commerceSubscriptionEntryId);
+
+		_transitionPaymentSubscription(
+			commerceSubscriptionEntry, subscriptionStatus);
+
+		_transitionDeliverySubscription(
+			commerceSubscriptionEntry, deliverySubscriptionStatus);
+
 		return _commerceSubscriptionEntryService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
@@ -216,6 +216,118 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
 				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
 				deliveryNextIterationDateMinute);
+	}
+
+	private void _transitionDeliverySubscription(
+			CommerceSubscriptionEntry commerceSubscriptionEntry,
+			int deliverySubscriptionStatus)
+		throws Exception {
+
+		try {
+			if ((commerceSubscriptionEntry != null) &&
+				(commerceSubscriptionEntry.getDeliverySubscriptionStatus() !=
+					deliverySubscriptionStatus)) {
+
+				if (deliverySubscriptionStatus ==
+						CommerceSubscriptionEntryConstants.
+							SUBSCRIPTION_STATUS_ACTIVE) {
+
+					_commerceSubscriptionEngine.activateRecurringDelivery(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+				else if (deliverySubscriptionStatus ==
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_CANCELLED) {
+
+					_commerceSubscriptionEngine.cancelRecurringDelivery(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+				else if (deliverySubscriptionStatus ==
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_SUSPENDED) {
+
+					_commerceSubscriptionEngine.suspendRecurringDelivery(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new CommerceSubscriptionEntrySubscriptionStatusException(e);
+		}
+	}
+
+	private void _transitionPaymentSubscription(
+			CommerceSubscriptionEntry commerceSubscriptionEntry,
+			int paymentSubscriptionStatus)
+		throws Exception {
+
+		try {
+			if ((commerceSubscriptionEntry != null) &&
+				!Objects.equals(
+					commerceSubscriptionEntry.getSubscriptionStatus(),
+					paymentSubscriptionStatus)) {
+
+				if ((Objects.equals(
+						commerceSubscriptionEntry.getSubscriptionStatus(),
+						CommerceSubscriptionEntryConstants.
+							SUBSCRIPTION_STATUS_ACTIVE) ||
+					 Objects.equals(
+						 commerceSubscriptionEntry.getSubscriptionStatus(),
+						 CommerceSubscriptionEntryConstants.
+							 SUBSCRIPTION_STATUS_CANCELLED) ||
+					 Objects.equals(
+						 commerceSubscriptionEntry.getSubscriptionStatus(),
+						 CommerceSubscriptionEntryConstants.
+							 SUBSCRIPTION_STATUS_SUSPENDED)) &&
+					Objects.equals(
+						paymentSubscriptionStatus,
+						CommerceSubscriptionEntryConstants.
+							SUBSCRIPTION_STATUS_INACTIVE)) {
+
+					throw new CommerceSubscriptionEntrySubscriptionStatusException();
+				}
+				else if (Objects.equals(
+							commerceSubscriptionEntry.getSubscriptionStatus(),
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_CANCELLED)) {
+
+					throw new CommerceSubscriptionEntrySubscriptionStatusException();
+				}
+				else if (Objects.equals(
+							paymentSubscriptionStatus,
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_ACTIVE)) {
+
+					_commerceSubscriptionEngine.activateRecurringPayment(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+				else if (Objects.equals(
+							paymentSubscriptionStatus,
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_CANCELLED)) {
+
+					_commerceSubscriptionEngine.cancelRecurringPayment(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+				else if (Objects.equals(
+							paymentSubscriptionStatus,
+							CommerceSubscriptionEntryConstants.
+								SUBSCRIPTION_STATUS_SUSPENDED)) {
+
+					_commerceSubscriptionEngine.suspendRecurringPayment(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new CommerceSubscriptionEntrySubscriptionStatusException(e);
+		}
 	}
 
 	@Reference

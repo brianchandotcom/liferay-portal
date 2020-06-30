@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -158,8 +159,12 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CommerceAccount.class.getName(), PortletProvider.Action.EDIT);
 
+		String redirect = ParamUtil.getString(
+			httpServletRequest, "currentUrl",
+			_portal.getCurrentURL(httpServletRequest));
+
 		portletURL.setParameter("mvcRenderCommandName", "editCommerceAccount");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
 			"commerceAccountId", String.valueOf(commerceAccountId));
 
@@ -179,8 +184,12 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CommerceOrder.class.getName(), PortletProvider.Action.MANAGE);
 
+		String redirect = ParamUtil.getString(
+			httpServletRequest, "currentUrl",
+			_portal.getCurrentURL(httpServletRequest));
+
 		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
 			"commerceOrderId", String.valueOf(commerceOrderId));
 

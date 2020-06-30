@@ -44,6 +44,8 @@ String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCa
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
+String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -117,6 +119,11 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />
 			<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 			<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
+
+			<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+			</liferay-ui:error>
+
 			<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
 			<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
 			<liferay-ui:error exception="<%= EntryUrlTitleException.class %>" message="please-enter-a-valid-url-title" />
@@ -141,7 +148,6 @@ if (portletTitleBasedNavigation) {
 
 			<%
 			BlogsItemSelectorHelper blogsItemSelectorHelper = (BlogsItemSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
-			String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
 			%>
 
@@ -170,7 +176,7 @@ if (portletTitleBasedNavigation) {
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="col-md-8 col-md-offset-2">
-						<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
+						<div class='cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>'>
 							<small>
 								<liferay-ui:input-editor
 									contents="<%= coverImageCaption %>"
@@ -284,10 +290,6 @@ if (portletTitleBasedNavigation) {
 					<div class="clearfix form-group">
 						<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
 
-						<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
-							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
-						</liferay-ui:error>
-
 						<liferay-ui:error exception="<%= EntrySmallImageScaleException.class %>">
 							<liferay-ui:message key="an-error-occurred-while-scaling-the-abstract-image" />
 						</liferay-ui:error>
@@ -299,7 +301,7 @@ if (portletTitleBasedNavigation) {
 						</div>
 
 						<div class="entry-description form-group">
-							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" type="text" value="<%= description %>">
+							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" onChange='<%= renderResponse.getNamespace() + "setCustomDescription(this.value);" %>' type="text" value="<%= description %>">
 								<aui:validator name="required" />
 							</aui:input>
 						</div>
@@ -460,6 +462,14 @@ if (portletTitleBasedNavigation) {
 
 		if (blogs) {
 			blogs.updateFriendlyURL(title);
+		}
+	}
+
+	function <portlet:namespace />setCustomDescription(text) {
+		var blogs = Liferay.component('<portlet:namespace />Blogs');
+
+		if (blogs) {
+			blogs.setCustomDescription(text);
 		}
 	}
 

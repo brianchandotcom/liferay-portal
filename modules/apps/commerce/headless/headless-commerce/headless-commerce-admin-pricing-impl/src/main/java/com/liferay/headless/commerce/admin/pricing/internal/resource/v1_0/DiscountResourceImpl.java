@@ -35,25 +35,23 @@ import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountAccountGroup
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountCategory;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountProduct;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountRule;
+import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountCategoryUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountProductUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountRuleUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -64,7 +62,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -115,14 +112,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 	@Override
 	public Discount getDiscount(Long id) throws Exception {
-		DTOConverter discountDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscount.class.getName());
-
-		return (Discount)discountDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toDiscount(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -140,14 +130,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 					externalReferenceCode);
 		}
 
-		DTOConverter discountDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscount.class.getName());
-
-		return (Discount)discountDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscount.getCommerceDiscountId()));
+		return _toDiscount(commerceDiscount.getCommerceDiscountId());
 	}
 
 	@Override
@@ -203,14 +186,14 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 	public Discount postDiscount(Discount discount) throws Exception {
 		CommerceDiscount commerceDiscount = _upsertCommerceDiscount(discount);
 
-		DTOConverter discountDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscount.class.getName());
+		return _toDiscount(commerceDiscount.getCommerceDiscountId());
+	}
 
-		return (Discount)discountDTOConverter.toDTO(
+	private Discount _toDiscount(Long commerceDiscountId) throws Exception {
+		return _discountDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscount.getCommerceDiscountId()));
+				commerceDiscountId,
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<Discount> _toDiscounts(
@@ -219,16 +202,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		List<Discount> discounts = new ArrayList<>();
 
-		DTOConverter discountDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceDiscount.class.getName());
-
 		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
 			discounts.add(
-				(Discount)discountDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceDiscount.getCommerceDiscountId())));
+				_toDiscount(commerceDiscount.getCommerceDiscountId()));
 		}
 
 		return discounts;
@@ -439,7 +415,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.upsertCommerceDiscount(
-				_user.getUserId(), GetterUtil.getLong(discount.getId()),
+				contextUser.getUserId(), GetterUtil.getLong(discount.getId()),
 				discount.getTitle(), discount.getTarget(),
 				GetterUtil.getBoolean(discount.getUseCouponCode()),
 				discount.getCouponCode(),
@@ -499,12 +475,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 	private CProductLocalService _cProductLocalService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private DiscountDTOConverter _discountDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
-
-	@Context
-	private User _user;
 
 }

@@ -65,7 +65,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 					KBArticle kbArticle = (KBArticle)results.get(i);
 				%>
 
-					<div class="<%= (i == 0) ? "kb-article-title kb-article-title-first" : "kb-article-title" %>">
+					<div class='<%= (i == 0) ? "kb-article-title kb-article-title-first" : "kb-article-title" %>'>
 
 						<%
 						PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);

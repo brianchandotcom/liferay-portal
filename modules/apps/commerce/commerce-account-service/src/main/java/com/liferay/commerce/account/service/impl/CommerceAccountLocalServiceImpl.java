@@ -216,17 +216,31 @@ public class CommerceAccountLocalServiceImpl
 			CommerceAccount commerceAccount)
 		throws PortalException {
 
+		long commerceAccountId = commerceAccount.getCommerceAccountId();
+
 		// Commerce account organization rels
 
 		commerceAccountOrganizationRelLocalService.
 			deleteCommerceAccountOrganizationRelsByCommerceAccountId(
-				commerceAccount.getCommerceAccountId());
+				commerceAccountId);
 
 		// Commerce account user rels
 
 		commerceAccountUserRelLocalService.
-			deleteCommerceAccountUserRelsByCommerceAccountId(
-				commerceAccount.getCommerceAccountId());
+			deleteCommerceAccountUserRelsByCommerceAccountId(commerceAccountId);
+
+		Group commerceAccountGroup =
+			commerceAccountLocalService.getCommerceAccountGroup(
+				commerceAccountId);
+
+		// Commerce account user roles
+
+		userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
+			commerceAccountGroup.getGroupId());
+
+		// Commerce account group
+
+		groupLocalService.deleteGroup(commerceAccountGroup);
 
 		// Commerce account
 
@@ -244,8 +258,7 @@ public class CommerceAccountLocalServiceImpl
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(
-			commerceAccount.getCommerceAccountId());
+		expandoRowLocalService.deleteRows(commerceAccountId);
 
 		return commerceAccount;
 	}

@@ -35,7 +35,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			</c:if>
 
 			<c:if test="<%= (displayStyles != null) && !displayStyles.isEmpty() %>">
-				<optgroup label="<liferay-ui:message key="default" />">
+				<optgroup label='<liferay-ui:message key="default" />'>
 
 					<%
 					for (String curDisplayStyle : displayStyles) {

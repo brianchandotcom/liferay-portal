@@ -88,16 +88,16 @@ public class CPDefinitionOptionValueRelCacheModel
 		sb.append(modifiedDate);
 		sb.append(", CPDefinitionOptionRelId=");
 		sb.append(CPDefinitionOptionRelId);
+		sb.append(", CPInstanceUuid=");
+		sb.append(CPInstanceUuid);
+		sb.append(", CProductId=");
+		sb.append(CProductId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", key=");
 		sb.append(key);
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-		sb.append(", CProductId=");
-		sb.append(CProductId);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append(", price=");
@@ -150,6 +150,15 @@ public class CPDefinitionOptionValueRelCacheModel
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(
 			CPDefinitionOptionRelId);
 
+		if (CPInstanceUuid == null) {
+			cpDefinitionOptionValueRelImpl.setCPInstanceUuid("");
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setCPInstanceUuid(CPInstanceUuid);
+		}
+
+		cpDefinitionOptionValueRelImpl.setCProductId(CProductId);
+
 		if (name == null) {
 			cpDefinitionOptionValueRelImpl.setName("");
 		}
@@ -166,14 +175,6 @@ public class CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelImpl.setKey(key);
 		}
 
-		if (CPInstanceUuid == null) {
-			cpDefinitionOptionValueRelImpl.setCPInstanceUuid("");
-		}
-		else {
-			cpDefinitionOptionValueRelImpl.setCPInstanceUuid(CPInstanceUuid);
-		}
-
-		cpDefinitionOptionValueRelImpl.setCProductId(CProductId);
 		cpDefinitionOptionValueRelImpl.setQuantity(quantity);
 		cpDefinitionOptionValueRelImpl.setPrice(price);
 
@@ -200,13 +201,13 @@ public class CPDefinitionOptionValueRelCacheModel
 		modifiedDate = objectInput.readLong();
 
 		CPDefinitionOptionRelId = objectInput.readLong();
+		CPInstanceUuid = objectInput.readUTF();
+
+		CProductId = objectInput.readLong();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 		key = objectInput.readUTF();
-		CPInstanceUuid = objectInput.readUTF();
-
-		CProductId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
 		price = (BigDecimal)objectInput.readObject();
@@ -241,6 +242,15 @@ public class CPDefinitionOptionValueRelCacheModel
 
 		objectOutput.writeLong(CPDefinitionOptionRelId);
 
+		if (CPInstanceUuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(CPInstanceUuid);
+		}
+
+		objectOutput.writeLong(CProductId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -257,15 +267,6 @@ public class CPDefinitionOptionValueRelCacheModel
 			objectOutput.writeUTF(key);
 		}
 
-		if (CPInstanceUuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(CPInstanceUuid);
-		}
-
-		objectOutput.writeLong(CProductId);
-
 		objectOutput.writeInt(quantity);
 		objectOutput.writeObject(price);
 	}
@@ -279,11 +280,11 @@ public class CPDefinitionOptionValueRelCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long CPDefinitionOptionRelId;
+	public String CPInstanceUuid;
+	public long CProductId;
 	public String name;
 	public double priority;
 	public String key;
-	public String CPInstanceUuid;
-	public long CProductId;
 	public int quantity;
 	public BigDecimal price;
 

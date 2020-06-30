@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -71,8 +72,11 @@ public class CompletedCommerceOrderStatusImpl implements CommerceOrderStatus {
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (commerceOrder.getOrderStatus() ==
-				CommerceOrderConstants.ORDER_STATUS_SHIPPED) {
+		if ((commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_SHIPPED) ||
+			((commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_PROCESSING) &&
+			 !_commerceShippingHelper.isShippable(commerceOrder))) {
 
 			return true;
 		}
@@ -85,5 +89,8 @@ public class CompletedCommerceOrderStatusImpl implements CommerceOrderStatus {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
 
 }

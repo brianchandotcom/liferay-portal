@@ -2167,8 +2167,6 @@ public class OAuth2AuthorizationPersistenceImpl
 			"oAuth2Authorization.refreshTokenContentHash = ?";
 
 	public OAuth2AuthorizationPersistenceImpl() {
-		setModelClass(OAuth2Authorization.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -2187,6 +2185,8 @@ public class OAuth2AuthorizationPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(OAuth2Authorization.class);
 	}
 
 	/**

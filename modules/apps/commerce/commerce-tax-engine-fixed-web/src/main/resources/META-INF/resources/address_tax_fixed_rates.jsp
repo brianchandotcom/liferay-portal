@@ -46,8 +46,8 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 	<commerce-ui:dataset-display
 		clayCreationMenu="<%= commerceTaxFixedRateAddressRelsDisplayContext.getClayCreationMenu() %>"
 		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommerceTaxRateSettingClayTable.NAME %>"
-		id="<%= CommerceTaxRateSettingClayTable.NAME %>"
+		dataProviderKey="<%= CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING %>"
+		id="<%= commerceTaxFixedRateAddressRelsDisplayContext.getDatasetView() %>"
 		itemsPerPage="<%= 10 %>"
 		namespace="<%= renderResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"

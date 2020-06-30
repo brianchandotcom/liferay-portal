@@ -19,12 +19,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSubscriptionConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSubscriptionConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscriptionConfigurationResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 
@@ -56,15 +55,8 @@ public class ProductSubscriptionConfigurationResourceImpl
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
-		DTOConverter productSubscriptionConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductSubscriptionConfiguration");
-
-		return (ProductSubscriptionConfiguration)
-			productSubscriptionConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductSubscriptionConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@NestedField(
@@ -84,15 +76,8 @@ public class ProductSubscriptionConfigurationResourceImpl
 				"Unable to find Product with ID: " + id);
 		}
 
-		DTOConverter productSubscriptionConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductSubscriptionConfiguration");
-
-		return (ProductSubscriptionConfiguration)
-			productSubscriptionConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductSubscriptionConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
@@ -145,6 +130,15 @@ public class ProductSubscriptionConfigurationResourceImpl
 	}
 
 	private ProductSubscriptionConfiguration
+			_toProductSubscriptionConfiguration(Long cpDefinitionId)
+		throws Exception {
+
+		return _productSubscriptionConfigurationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpDefinitionId, contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	private ProductSubscriptionConfiguration
 			_updateProductSubscriptionConfiguration(
 				CPDefinition cpDefinition,
 				ProductSubscriptionConfiguration
@@ -159,22 +153,16 @@ public class ProductSubscriptionConfigurationResourceImpl
 					_serviceContextHelper.getServiceContext(
 						cpDefinition.getGroupId()));
 
-		DTOConverter productSubscriptionConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductSubscriptionConfiguration");
-
-		return (ProductSubscriptionConfiguration)
-			productSubscriptionConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductSubscriptionConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ProductSubscriptionConfigurationDTOConverter
+		_productSubscriptionConfigurationDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

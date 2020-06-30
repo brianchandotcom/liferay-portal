@@ -902,8 +902,6 @@ public class ServiceComponentPersistenceImpl
 		"serviceComponent.buildNumber = ?";
 
 	public ServiceComponentPersistenceImpl() {
-		setModelClass(ServiceComponent.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("data", "data_");
@@ -921,6 +919,8 @@ public class ServiceComponentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ServiceComponent.class);
 	}
 
 	/**

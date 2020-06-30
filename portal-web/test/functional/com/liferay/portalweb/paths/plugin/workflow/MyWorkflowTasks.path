@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIALOG_BOX_ASSIGN_TO_VALUE</td>
+	<td>//option[contains(text(),'${key_user}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

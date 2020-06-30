@@ -2524,8 +2524,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		"commerceDiscountAccountRel.commerceDiscountId = ?";
 
 	public CommerceDiscountAccountRelPersistenceImpl() {
-		setModelClass(CommerceDiscountAccountRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2544,6 +2542,8 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceDiscountAccountRel.class);
 	}
 
 	/**

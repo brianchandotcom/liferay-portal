@@ -91,11 +91,10 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			</c:choose>
 
 			<h2 class="commerce-price mt-3" data-text-cp-instance-price>
-				<c:if test="<%= cpSku != null %>">
-					<commerce-ui:price
-						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
-					/>
-				</c:if>
+				<commerce-ui:price
+					CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
+					CPInstanceId="<%= (cpSku == null) ? 0 : cpSku.getCPInstanceId() %>"
+				/>
 			</h2>
 
 			<c:if test="<%= cpSku != null %>">

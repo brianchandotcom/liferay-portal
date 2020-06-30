@@ -672,8 +672,6 @@ public class PowwowServerPersistenceImpl
 		"powwowServer.active = ?";
 
 	public PowwowServerPersistenceImpl() {
-		setModelClass(PowwowServer.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -691,6 +689,8 @@ public class PowwowServerPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PowwowServer.class);
 	}
 
 	/**

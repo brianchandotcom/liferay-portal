@@ -125,9 +125,9 @@ public class MultipartBodyMessageBodyReader
 			return MultipartBody.of(
 				binaryFiles, contextResolver::getContext, values);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new BadRequestException(
-				"Request body is not a valid multipart form", e);
+				"Request body is not a valid multipart form", exception);
 		}
 	}
 

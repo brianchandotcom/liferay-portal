@@ -26,7 +26,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 	<div class="pt-4" id="<portlet:namespace />productOptionRelsContainer">
 		<div id="item-finder-root"></div>
 
-		<aui:script require="commerce-frontend-js/components/item_finder/entry.es as itemFinder, commerce-frontend-js/utilities/index.es as utilities, commerce-frontend-js/utilities/eventsDefinitions.es as events">
+		<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events">
 			var headers = new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -62,18 +62,24 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 						id:
 							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
 					});
-					return option.id;
+					return null;
 				});
 			}
 
 			function addNewItem(name) {
+				var nameDefinition = {
+					[themeDisplay.getLanguageId()]: name
+				};
+
+				if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
+					nameDefinition[themeDisplay.getDefaultLanguageId()] = name;
+				}
+
 				return fetch('/o/headless-commerce-admin-catalog/v1.0/options', {
 					body: JSON.stringify({
 						fieldType: 'select',
-						key: utilities.slugify(encodeURIComponent(name)),
-						name: {
-							[themeDisplay.getLanguageId()]: name
-						}
+						key: slugify.default(encodeURIComponent(name)),
+						name: nameDefinition
 					}),
 					credentials: 'include',
 					headers: headers,
@@ -92,23 +98,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			}
 
 			function getSelectedItems() {
-				return fetch(
-					'/o/headless-commerce-admin-catalog/v1.0/products/' +
-						productId +
-						'/productOptions/',
-					{
-						credentials: 'include',
-						headers: headers
-					}
-				)
-					.then(function(response) {
-						return response.json();
-					})
-					.then(function(jsonResponse) {
-						return jsonResponse.items.map(function(option) {
-							return option.optionId;
-						});
-					});
+				return Promise.resolve([]);
 			}
 
 			itemFinder.default('itemFinder', 'item-finder-root', {
@@ -117,20 +107,22 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				getSelectedItems: getSelectedItems,
 				inputPlaceholder:
 					'<%= LanguageUtil.get(request, "find-or-create-an-option") %>',
+				itemSelectedMessage: '<%= LanguageUtil.get(request, "option-selected") %>',
 				itemsKey: 'id',
 				linkedDatasetsId: [
 					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
 				],
+				multiSelectableEntries: true,
 				onItemCreated: addNewItem,
 				onItemSelected: selectItem,
 				pageSize: 10,
 				panelHeaderLabel: '<%= LanguageUtil.get(request, "add-options") %>',
 				portletId: '<%= portletDisplay.getRootPortletId() %>',
 				schema: {
-					itemTitle: ['name', themeDisplay.getLanguageId()]
+					itemTitle: ['name', 'LANG']
 				},
 				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-				titleLabel: '<%= LanguageUtil.get(request, "add-an-existing-option") %>'
+				titleLabel: '<%= LanguageUtil.get(request, "add-existing-option") %>'
 			});
 		</aui:script>
 

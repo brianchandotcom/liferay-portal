@@ -39,7 +39,7 @@ public class Operation {
 		return _requestBody;
 	}
 
-	public Map<Integer, Response> getResponses() {
+	public Map<ResponseCode, Response> getResponses() {
 		return _responses;
 	}
 
@@ -63,7 +63,7 @@ public class Operation {
 		_requestBody = requestBody;
 	}
 
-	public void setResponses(Map<Integer, Response> responses) {
+	public void setResponses(Map<ResponseCode, Response> responses) {
 		_responses = responses;
 	}
 
@@ -75,7 +75,7 @@ public class Operation {
 	private String _operationId;
 	private List<Parameter> _parameters = new ArrayList<>();
 	private RequestBody _requestBody;
-	private Map<Integer, Response> _responses;
+	private Map<ResponseCode, Response> _responses;
 	private List<String> _tags = new ArrayList<>();
 
 }

@@ -61,8 +61,8 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
 			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
-			CommercePriceListConstants.TYPE_PRICE_LIST, 0, catalogBasePriceList,
-			RandomTestUtil.randomString(), priority,
+			true, CommercePriceListConstants.TYPE_PRICE_LIST, 0,
+			catalogBasePriceList, RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 			calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
@@ -92,7 +92,7 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
 			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
-			type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
+			true, type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
 			priority, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),

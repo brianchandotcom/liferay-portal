@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -154,13 +153,16 @@ public class DDMFormXLSExporter extends BaseDDMFormExporter {
 
 		Locale locale = getLocale();
 
+		Map<String, String> ddmFormFieldsLabels = getDDMFormFieldsLabels(
+			ddmFormFields, locale);
+
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			LocalizedValue label = ddmFormField.getLabel();
+			String label = ddmFormFieldsLabels.get(ddmFormField.getName());
 
 			cell = row.createCell(cellIndex++, CellType.STRING);
 
 			cell.setCellStyle(cellStyle);
-			cell.setCellValue(label.getString(locale));
+			cell.setCellValue(label);
 		}
 
 		cell = row.createCell(cellIndex++, CellType.STRING);

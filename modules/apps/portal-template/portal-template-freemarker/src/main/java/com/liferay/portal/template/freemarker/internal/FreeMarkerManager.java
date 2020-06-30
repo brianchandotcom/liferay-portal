@@ -106,6 +106,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 )
 public class FreeMarkerManager extends BaseSingleTemplateManager {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static BeansWrapper getBeansWrapper() {
 		Thread currentThread = Thread.currentThread();
 
@@ -125,6 +129,10 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		return beansWrapper;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
@@ -149,68 +157,65 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
 		ServletContext servletContext) {
 
 		contextObjects.put(
-			applicationName, getServletContextHashModel(servletContext));
+			applicationName,
+			getServletContextHashModel(
+				servletContext, _configuration.getObjectWrapper()));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibFactory(
 		Map<String, Object> contextObjects, String taglibFactoryName,
 		ServletContext servletContext) {
 
 		contextObjects.put(
-			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
+			taglibFactoryName,
+			new TaglibFactoryWrapper(servletContext, getBeansWrapper()));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		contextObjects.put(
 			applicationName,
 			new HttpRequestHashModel(
-				request, response, _configuration.getObjectWrapper()));
+				httpServletRequest, httpServletResponse,
+				_configuration.getObjectWrapper()));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibSupport(
-		Map<String, Object> contextObjects, HttpServletRequest request,
-		HttpServletResponse response) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ServletContext servletContext = request.getServletContext();
-
-		addTaglibApplication(contextObjects, "Application", servletContext);
-
-		addTaglibRequest(contextObjects, "Request", request, response);
-
-		// Legacy
-
-		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
-			servletContext);
-
-		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
-		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
-		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
-
-		// Contributed
-
-		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
-			try {
-				contextObjects.put(
-					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
-			}
-			catch (TemplateModelException tme) {
-				_log.error(
-					"Unable to add taglib " + entry.getKey() + " to context",
-					tme);
-			}
-		}
+		addTaglibSupport(
+			contextObjects, httpServletRequest, httpServletResponse,
+			getBeansWrapper());
 	}
 
 	@Override
@@ -290,8 +295,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			throw new TemplateException("Unable to init FreeMarker manager", e);
 		}
 
-		_defaultObjectWrapper = new LiferayObjectWrapper();
-		_restrictedObjectWrapper = new RestrictedLiferayObjectWrapper(
+		_defaultBeanWrapper = new LiferayObjectWrapper();
+		_restrictedBeanWrapper = new RestrictedLiferayObjectWrapper(
 			_freeMarkerEngineConfiguration.allowedClasses(),
 			_freeMarkerEngineConfiguration.restrictedClasses(),
 			_freeMarkerEngineConfiguration.restrictedMethods());
@@ -299,6 +304,14 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		if (isEnableDebuggerService()) {
 			DebuggerService.getBreakpoints("*");
 		}
+
+		FreeMarkerTemplateContextHelper freeMarkerTemplateContextHelper =
+			(FreeMarkerTemplateContextHelper)templateContextHelper;
+
+		freeMarkerTemplateContextHelper.setDefaultBeansWrapper(
+			_defaultBeanWrapper);
+		freeMarkerTemplateContextHelper.setRestrictedBeansWrapper(
+			_restrictedBeanWrapper);
 	}
 
 	@Reference(unbind = "-")
@@ -345,6 +358,46 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		WriterFactoryUtil.setWriterFactory(new UnsyncStringWriterFactory());
 	}
 
+	protected void addTaglibSupport(
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, ObjectWrapper objectWrapper) {
+
+		ServletContext servletContext = httpServletRequest.getServletContext();
+
+		contextObjects.put(
+			"Application",
+			getServletContextHashModel(servletContext, objectWrapper));
+
+		contextObjects.put(
+			"Request",
+			new HttpRequestHashModel(
+				httpServletRequest, httpServletResponse, objectWrapper));
+
+		// Legacy
+
+		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
+			servletContext, objectWrapper);
+
+		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
+
+		// Contributed
+
+		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
+			try {
+				contextObjects.put(
+					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
+			}
+			catch (TemplateModelException templateModelException) {
+				_log.error(
+					"Unable to add taglib " + entry.getKey() + " to context",
+					templateModelException);
+			}
+		}
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
@@ -356,17 +409,17 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
-		ObjectWrapper objectWrapper = _defaultObjectWrapper;
+		BeansWrapper beansWrapper = _defaultBeanWrapper;
 
 		if (restricted) {
-			objectWrapper = _restrictedObjectWrapper;
+			beansWrapper = _restrictedBeanWrapper;
 		}
 
 		return new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
 			_configuration, templateContextHelper,
 			_freeMarkerEngineConfiguration.resourceModificationCheck(),
-			restricted, objectWrapper);
+			restricted, beansWrapper, this);
 	}
 
 	protected FreeMarkerBundleClassloader getFreeMarkerBundleClassloader() {
@@ -403,12 +456,11 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	}
 
 	protected ServletContextHashModel getServletContextHashModel(
-		ServletContext servletContext) {
+		ServletContext servletContext, ObjectWrapper objectWrapper) {
 
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
-		return new ServletContextHashModel(
-			genericServlet, _configuration.getObjectWrapper());
+		return new ServletContextHashModel(genericServlet, objectWrapper);
 	}
 
 	protected ServletContext getServletContextWrapper(
@@ -452,11 +504,11 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	private volatile int _bundleTrackingCount = -2;
 	private Configuration _configuration;
-	private ObjectWrapper _defaultObjectWrapper;
+	private BeansWrapper _defaultBeanWrapper;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
 		_freeMarkerEngineConfiguration;
-	private ObjectWrapper _restrictedObjectWrapper;
+	private BeansWrapper _restrictedBeanWrapper;
 	private SingleVMPool _singleVMPool;
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
@@ -654,14 +706,16 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	private class TaglibFactoryWrapper implements TemplateHashModel {
 
-		public TaglibFactoryWrapper(ServletContext servletContext) {
+		public TaglibFactoryWrapper(
+			ServletContext servletContext, ObjectWrapper objectWrapper) {
+
 			_freeMarkerBundleClassloader = getFreeMarkerBundleClassloader();
 
 			_taglibFactory = new TaglibFactory(
 				getServletContextWrapper(
 					servletContext, _freeMarkerBundleClassloader));
 
-			_taglibFactory.setObjectWrapper(getBeansWrapper());
+			_taglibFactory.setObjectWrapper(objectWrapper);
 		}
 
 		@Override

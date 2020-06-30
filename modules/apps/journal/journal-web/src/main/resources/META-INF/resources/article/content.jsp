@@ -199,7 +199,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		function(event) {
 			var selectedLanguageId = event.item.getAttribute('data-value')
 
-			var languageIdInput = document.getElementById(this.ns('languageId'));
+			var languageIdInput = document.getElementById('<portlet:namespace />languageId');
 
 			languageIdInput.value = selectedLanguageId;
 		}

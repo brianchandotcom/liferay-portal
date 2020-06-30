@@ -3,7 +3,7 @@ definition {
 	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
 
-		//organization
+		// Organization
 
 		JSONOrganization.addOrganization(
 			organizationName = "organization 1",
@@ -11,17 +11,17 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "organization 2");
 
-		//user
+		// User
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "organization 1",
 			userEmailAddress = "test@liferay.com");
 
-		//delete
+		// Delete
 
 		JSONOrganization.deleteOrganizationByName(organizationName = "organization 2");
 
-		//getter
+		// Getter
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "organization 1");
 

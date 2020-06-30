@@ -37,7 +37,7 @@ if (classPK > 0) {
 			website = website.toEscapedModel();
 		%>
 
-			<li class="<%= (website.isPrimary() && !websites.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
+			<li class='<%= (website.isPrimary() && !websites.isEmpty()) ? "icon-star" : StringPool.BLANK %>'>
 				<a href="<%= website.getUrl() %>"><%= website.getUrl() %></a>
 
 				<%= LanguageUtil.get(request, website.getType().getName()) %>

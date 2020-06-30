@@ -95,6 +95,8 @@ AUI.add(
 					_changeLogo: function(url, fileEntryId) {
 						var instance = this;
 
+						url = Liferay.Util.addParams('t=' + Date.now(), url);
+
 						instance.set('logoURL', url);
 
 						if (fileEntryId) {

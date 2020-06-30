@@ -4375,8 +4375,6 @@ public class AMImageEntryPersistenceImpl
 		"amImageEntry.fileVersionId = ?";
 
 	public AMImageEntryPersistenceImpl() {
-		setModelClass(AMImageEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4395,6 +4393,8 @@ public class AMImageEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(AMImageEntry.class);
 	}
 
 	/**

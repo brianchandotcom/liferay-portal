@@ -122,7 +122,7 @@ if (recurrence != null) {
 			</tr>
 		</tbody>
 
-		<tbody class="calendar-portlet-interval-view <%= (frequency == Frequency.WEEKLY) ? "" : "hide" %>" id="<portlet:namespace />view<%= Frequency.WEEKLY %>">
+		<tbody class='calendar-portlet-interval-view <%= (frequency == Frequency.WEEKLY) ? "" : "hide" %>' id="<portlet:namespace />view<%= Frequency.WEEKLY %>">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
 					<liferay-ui:message key="repeat-on" />:
@@ -153,7 +153,7 @@ if (recurrence != null) {
 			</tr>
 		</tbody>
 
-		<tbody class="calendar-portlet-interval-view <%= ((frequency == Frequency.MONTHLY) || (frequency == Frequency.YEARLY)) ? "" : "hide" %>" id="<portlet:namespace />viewPositionInMonth">
+		<tbody class='calendar-portlet-interval-view <%= ((frequency == Frequency.MONTHLY) || (frequency == Frequency.YEARLY)) ? "" : "hide" %>' id="<portlet:namespace />viewPositionInMonth">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
 					<liferay-ui:message key="repeat-on" />:
@@ -163,7 +163,7 @@ if (recurrence != null) {
 
 					<aui:input checked="<%= ListUtil.isNotEmpty(weekdays) %>" inlineField="<%= true %>" label="day-of-the-week" name="repeatOnWeekday" type="radio" value="true" />
 
-					<div class="<%= ListUtil.isEmpty(weekdays) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />viewPositionalWeekday">
+					<div class='<%= ListUtil.isEmpty(weekdays) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />viewPositionalWeekday">
 
 						<%
 						Weekday weekday = positionalWeekday.getWeekday();

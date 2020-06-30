@@ -2347,8 +2347,6 @@ public class PollsQuestionPersistenceImpl
 		"pollsQuestion.groupId = ?";
 
 	public PollsQuestionPersistenceImpl() {
-		setModelClass(PollsQuestion.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2366,6 +2364,8 @@ public class PollsQuestionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PollsQuestion.class);
 	}
 
 	/**

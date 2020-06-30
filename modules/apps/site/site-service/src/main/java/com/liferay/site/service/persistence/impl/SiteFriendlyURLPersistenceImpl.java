@@ -2864,8 +2864,6 @@ public class SiteFriendlyURLPersistenceImpl
 		"(siteFriendlyURL.languageId IS NULL OR siteFriendlyURL.languageId = '')";
 
 	public SiteFriendlyURLPersistenceImpl() {
-		setModelClass(SiteFriendlyURL.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2883,6 +2881,8 @@ public class SiteFriendlyURLPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SiteFriendlyURL.class);
 	}
 
 	/**

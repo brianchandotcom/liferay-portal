@@ -6,7 +6,7 @@ definition {
 			fail("Error, 'JSON' and 'key' must all be set");
 		}
 
-		//check if object already exists
+		// Check if object already exists
 
 		var bool = JSONUtil2._isJSONArrayPresent(
 			JSON = "${JSON}",
@@ -50,7 +50,7 @@ definition {
 
 			if ("${temp}" == "[]") {
 
-				//if empty no need to add comma
+				// If empty no need to add comma
 
 				var JSON = StringUtil.regexReplaceFirst("${JSON}","(\"${key}\"\s*:\s*)\[\]", "$1["${value}"]");
 			}

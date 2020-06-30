@@ -5,3 +5,6 @@ application:
     className: "HeadlessCommerceAdminInventoryApplication"
     name: "Liferay.Headless.Commerce.Admin.Inventory"
 author: "Alessio Antonio Rendina"
+clientDir: "../headless-commerce-admin-inventory-client/src/main/java"
+forcePredictableSchemaPropertyName: false
+testDir: "../headless-commerce-admin-inventory-test/src/testIntegration/java"

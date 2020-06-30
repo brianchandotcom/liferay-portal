@@ -1,4 +1,5 @@
 import escape from 'lodash.escape';
+import formatXML from './util/format_xml.es';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import portlet from './portlet/portlet.es';
@@ -9,6 +10,7 @@ import toCharCode from './util/to_char_code.es';
 import unescape from 'lodash.unescape';
 
 Liferay.Util.escape = escape;
+Liferay.Util.formatXML = formatXML;
 Liferay.Util.groupBy = groupBy;
 Liferay.Util.isEqual = isEqual;
 Liferay.Util.navigate = navigate;

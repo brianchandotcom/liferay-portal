@@ -3470,8 +3470,6 @@ public class PasswordPolicyPersistenceImpl
 		"(passwordPolicy.name IS NULL OR passwordPolicy.name = '')";
 
 	public PasswordPolicyPersistenceImpl() {
-		setModelClass(PasswordPolicy.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3489,6 +3487,8 @@ public class PasswordPolicyPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(PasswordPolicy.class);
 	}
 
 	/**

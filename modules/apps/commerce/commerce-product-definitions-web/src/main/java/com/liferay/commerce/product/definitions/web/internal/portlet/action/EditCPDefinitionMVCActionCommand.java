@@ -39,6 +39,8 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -218,6 +220,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				_log.error(t, t);
+
+				throw new Exception(t);
 			}
 		}
 	}
@@ -583,6 +590,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		_cpDefinitionService.updateCPDefinitionChannelFilter(
 			cpDefinitionId, channelFilterEnabled);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCPDefinitionMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

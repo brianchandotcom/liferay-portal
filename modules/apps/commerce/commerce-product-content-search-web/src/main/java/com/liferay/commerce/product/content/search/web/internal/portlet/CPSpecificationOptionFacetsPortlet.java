@@ -128,6 +128,8 @@ public class CPSpecificationOptionFacetsPortlet
 
 				portletSharedSearchSettings.addFacet(
 					serializableMultiValueFacet);
+
+				portletSharedSearchSettings.setPaginationStart(1);
 			}
 		}
 		catch (Exception e) {

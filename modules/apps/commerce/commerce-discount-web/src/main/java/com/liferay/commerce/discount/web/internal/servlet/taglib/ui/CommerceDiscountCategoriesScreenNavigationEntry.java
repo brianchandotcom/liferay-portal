@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountRelDisplayContext;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -119,7 +120,8 @@ public class CommerceDiscountCategoriesScreenNavigationEntry
 				_commerceDiscountRelService, _commerceDiscountService,
 				_commerceDiscountTargetRegistry,
 				_commerceDiscountCommerceAccountGroupRelService,
-				_cpDefinitionService, null, httpServletRequest, _itemSelector);
+				_cpDefinitionService, null, _percentageFormatter,
+				httpServletRequest, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceDiscountRelDisplayContext);
@@ -165,6 +167,9 @@ public class CommerceDiscountCategoriesScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.discount.web)"

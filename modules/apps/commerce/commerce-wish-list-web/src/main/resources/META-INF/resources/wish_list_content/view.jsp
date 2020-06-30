@@ -104,7 +104,7 @@ SearchContainer<CommerceWishListItem> commerceWishListItemsSearchContainer = com
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-							colspan="<%= 2 %>"
+							cssClass="lfr-description-column"
 							path="/wish_list_item_action.jsp"
 						/>
 					</liferay-ui:search-container-row>

@@ -374,6 +374,37 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro createNewSpecificationGroups {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationDescription}");
+
+		ClickNoError(locator1 = "CommerceEntry#SAVE_BUTTON");
+	}
+
+	macro createNewSpecificationLabels {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		Type(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${specificationDescription}");
+
+		Button.clickSave();
+	}
+
 	macro deleteCommerceEntry {
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
@@ -437,6 +468,20 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
+	macro publishProductImage {
+		SelectFrameTop(value1 = "relative=top");
+
+		//SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Pause(locator1 = "3000");
+	}
+
 	macro saveEntry {
 		Button.clickSave();
 
@@ -462,12 +507,6 @@ definition {
 	}
 
 	macro selectAssociatedOptionsValue {
-		if (IsElementNotPresent(locator1 = "CommerceEntry#ACCORDION")) {
-			Click(
-				key_accordionTitle = "Options",
-				locator1 = "CommerceEntry#ACCORDION_TITLE");
-		}
-
 		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_SELECT")) {
 			Click(locator1 = "CommerceEntry#OPTION_SELECT");
 
@@ -525,9 +564,26 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${channelCurrency}");
 
-		AssertElementPresent(
+		if (isSet(commerceSiteType)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${commerceSiteType}");
+		}
+
+		Click(
 			key_menuTab = "Type",
 			locator1 = "CommerceEntry#MENU_TAB");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#CHANNEL_TYPE_VALUE",
+			value1 = "${channelType}");
+
+		if (isSet(channelSiteName)) {
+			AssertElementPresent(
+				key_rowEntry = "${channelSiteName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
 	}
 
 	macro viewDiscountsEntry {
@@ -557,9 +613,17 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${optionName}");
 
+		if (isSet(optionDescription)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+				value1 = "${optionDescription}");
+		}
+	}
+
+	macro viewPaginationResults {
 		AssertTextEquals(
-			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${optionDescription}");
+			locator1 = "CommerceEntry#PAGINATION_RESULTS",
+			value1 = "${results}");
 	}
 
 	macro viewPriceListEntry {
@@ -572,6 +636,39 @@ definition {
 			value1 = "${currencyCode}");
 	}
 
+	macro viewProductOptions {
+		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${optionName}");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Use in Faceted Navigation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Required",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "SKU Contributor",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		for (var optionList : list "${optionList}") {
+
+			IsElementPresent(
+				key_entryName = "${optionList}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+	}
+
 	macro viewProductsEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
@@ -580,6 +677,89 @@ definition {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = "${productShortDescription}");
+	}
+
+	macro viewProductSkus {
+		for (var skusList : list "${skusList}") {
+			var sku = StringUtil.extractFirst("${skusList}", ":");
+			var price = StringUtil.extractLast("${skusList}", ":");
+
+			Refresh();
+
+			Click(
+				key_entryName = "${sku}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_FIELD",
+				value1 = "${sku}");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#INPUT_PRICE",
+				value1 = "${price}");
+
+			Click(locator1 = "Icon#CLOSE");
+
+		}
+	}
+
+	macro viewSpecificationGroups {
+		Click(
+			key_entry = "${specificationTitle}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationDescription}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+	}
+
+	macro viewSpecificationGroupsEntries {
+		for (var specificationGroupsEntry : list "${specificationGroupsEntries}") {
+			AssertElementPresent(
+				key_rowEntry = "${specificationGroupsEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
+	}
+
+	macro viewSpecificationLabels {
+		Click(
+			key_entry = "${specificationTitle}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${specificationDescription}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${specificationTitle}");
+	}
+
+	macro viewSpecificationLabelsEntries {
+		for (var specificationLabelsEntry : list "${specificationLabelsEntries}") {
+			AssertElementPresent(
+				key_rowEntry = "${specificationLabelsEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
 	}
 
 }

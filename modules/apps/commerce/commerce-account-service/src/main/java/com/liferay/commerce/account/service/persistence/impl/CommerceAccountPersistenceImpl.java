@@ -2200,8 +2200,6 @@ public class CommerceAccountPersistenceImpl
 		"(commerceAccount.externalReferenceCode IS NULL OR commerceAccount.externalReferenceCode = '')";
 
 	public CommerceAccountPersistenceImpl() {
-		setModelClass(CommerceAccount.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -2220,6 +2218,8 @@ public class CommerceAccountPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceAccount.class);
 	}
 
 	/**

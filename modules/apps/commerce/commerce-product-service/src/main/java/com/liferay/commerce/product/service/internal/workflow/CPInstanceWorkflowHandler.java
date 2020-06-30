@@ -52,6 +52,11 @@ public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
 	}
 
 	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
 	public CPInstance updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

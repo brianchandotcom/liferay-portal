@@ -29,7 +29,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 	title='<%= LanguageUtil.get(request, "shipping-address") %>'
 >
 	<aui:form action="<%= editCommerceOrderShippingAddressActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="shippingAddress" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="selectShippingAddress" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 

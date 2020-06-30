@@ -16,6 +16,7 @@ package com.liferay.commerce.frontend.internal.cart;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.frontend.internal.cart.model.Cart;
 import com.liferay.commerce.frontend.internal.cart.model.Product;
@@ -25,11 +26,14 @@ import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -39,8 +43,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,7 +66,7 @@ public class CommerceCartResourceUtil {
 			commerceOrderId);
 
 		List<Product> product = getProducts(
-			commerceOrder, locale, commerceContext);
+			commerceOrder, commerceContext, locale);
 
 		if (valid && product.isEmpty()) {
 			valid = false;
@@ -92,8 +98,8 @@ public class CommerceCartResourceUtil {
 	}
 
 	protected List<Product> getProducts(
-			CommerceOrder commerceOrder, Locale locale,
-			CommerceContext commerceContext)
+			CommerceOrder commerceOrder, CommerceContext commerceContext,
+			Locale locale)
 		throws Exception {
 
 		List<Product> products = new ArrayList<>();
@@ -103,7 +109,7 @@ public class CommerceCartResourceUtil {
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			PriceModel prices = _getCommerceOrderItemPriceModel(
-				commerceOrderItem, locale);
+				commerceOrderItem, commerceContext, locale);
 
 			ProductSettingsModel settings =
 				_productHelper.getProductSettingsModel(
@@ -111,6 +117,7 @@ public class CommerceCartResourceUtil {
 
 			Product product = new Product(
 				commerceOrderItem.getCommerceOrderItemId(),
+				commerceOrderItem.getParentCommerceOrderItemId(),
 				commerceOrderItem.getName(locale), commerceOrderItem.getSku(),
 				commerceOrderItem.getQuantity(),
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
@@ -118,15 +125,24 @@ public class CommerceCartResourceUtil {
 				prices, settings, getErrorMessages(locale, commerceOrderItem),
 				commerceOrderItem.getCPInstanceId());
 
+			long commerceOptionValueCPDefinitionId =
+				commerceOrderItem.getCPDefinitionId();
+
+			if (commerceOrderItem.hasParentCommerceOrderItem()) {
+				commerceOptionValueCPDefinitionId =
+					commerceOrderItem.
+						getParentCommerceOrderItemCPDefinitionId();
+			}
+
 			product.setOptions(
 				_cpInstanceHelper.getKeyValuePairs(
-					commerceOrderItem.getCPDefinitionId(),
+					commerceOptionValueCPDefinitionId,
 					commerceOrderItem.getJson(), locale));
 
 			products.add(product);
 		}
 
-		return products;
+		return _groupProductByOrderItemId(products);
 	}
 
 	protected Summary getSummary(
@@ -149,11 +165,26 @@ public class CommerceCartResourceUtil {
 			_commerceOrderItemService.getCommerceOrderItemsQuantity(
 				commerceOrder.getCommerceOrderId());
 
-		Summary summary = new Summary(
-			subtotal.format(locale), total.format(locale), itemsQuantity);
-
 		CommerceDiscountValue totalDiscountValue =
 			commerceOrderPrice.getTotalDiscountValue();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		String priceDisplayType = commerceChannel.getPriceDisplayType();
+
+		if (priceDisplayType.equals(
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			subtotal = commerceOrderPrice.getSubtotalWithTaxAmount();
+			total = commerceOrderPrice.getTotalWithTaxAmount();
+			totalDiscountValue =
+				commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
+		}
+
+		Summary summary = new Summary(
+			subtotal.format(locale), total.format(locale), itemsQuantity);
 
 		if (totalDiscountValue != null) {
 			CommerceMoney discountAmount =
@@ -166,46 +197,126 @@ public class CommerceCartResourceUtil {
 	}
 
 	private PriceModel _getCommerceOrderItemPriceModel(
-			CommerceOrderItem commerceOrderItem, Locale locale)
+			CommerceOrderItem commerceOrderItem,
+			CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
-		CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
-		CommerceMoney promoPriceMoney = commerceOrderItem.getPromoPriceMoney();
+		CommerceOrderItemPrice commerceOrderItemPrice =
+			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
+				commerceContext.getCommerceCurrency(), commerceOrderItem);
 
-		CommerceMoney discountAmountMoney =
-			commerceOrderItem.getDiscountAmountMoney();
+		return _getPriceModel(
+			commerceOrderItemPrice.getUnitPrice(),
+			commerceOrderItemPrice.getPromoPrice(),
+			commerceOrderItemPrice.getDiscountAmount(),
+			commerceOrderItemPrice.getDiscountPercentage(),
+			commerceOrderItemPrice.getDiscountPercentageLevel1(),
+			commerceOrderItemPrice.getDiscountPercentageLevel2(),
+			commerceOrderItemPrice.getDiscountPercentageLevel3(),
+			commerceOrderItemPrice.getDiscountPercentageLevel4(),
+			commerceOrderItemPrice.getFinalPrice(), locale);
+	}
 
-		BigDecimal level1 = commerceOrderItem.getDiscountPercentageLevel1();
-		BigDecimal level2 = commerceOrderItem.getDiscountPercentageLevel2();
-		BigDecimal level3 = commerceOrderItem.getDiscountPercentageLevel3();
-		BigDecimal level4 = commerceOrderItem.getDiscountPercentageLevel4();
+	private PriceModel _getPriceModel(
+			CommerceMoney unitPriceMoney, CommerceMoney promoPriceMoney,
+			CommerceMoney discountAmountMoney, BigDecimal discountPercentage,
+			BigDecimal discountPercentageLevel1,
+			BigDecimal discountPercentageLevel2,
+			BigDecimal discountPercentageLevel3,
+			BigDecimal discountPercentageLevel4, CommerceMoney finalPriceMoney,
+			Locale locale)
+		throws PortalException {
+
+		PriceModel priceModel = new PriceModel(unitPriceMoney.format(locale));
+
+		if (promoPriceMoney != null) {
+			priceModel.setPromoPrice(promoPriceMoney.format(locale));
+		}
+
+		if (discountAmountMoney == null) {
+			return priceModel;
+		}
+
+		BigDecimal discountAmount = discountAmountMoney.getPrice();
+
+		if ((discountAmount == null) ||
+			(discountAmount.compareTo(BigDecimal.ZERO) == 0)) {
+
+			return priceModel;
+		}
+
+		priceModel.setDiscount(discountAmountMoney.format(locale));
+
+		priceModel.setDiscountPercentage(
+			_commercePriceFormatter.format(discountPercentage, locale));
+
+		BigDecimal level1 = BigDecimal.ZERO;
+		BigDecimal level2 = BigDecimal.ZERO;
+		BigDecimal level3 = BigDecimal.ZERO;
+		BigDecimal level4 = BigDecimal.ZERO;
+
+		if (discountPercentageLevel1 != null) {
+			level1 = discountPercentageLevel1;
+		}
+
+		if (discountPercentageLevel2 != null) {
+			level2 = discountPercentageLevel2;
+		}
+
+		if (discountPercentageLevel3 != null) {
+			level3 = discountPercentageLevel3;
+		}
+
+		if (discountPercentageLevel4 != null) {
+			level4 = discountPercentageLevel4;
+		}
 
 		String[] discountPercentages = {
 			level1.toString(), level2.toString(), level3.toString(),
 			level4.toString()
 		};
 
-		PriceModel prices = new PriceModel(unitPriceMoney.format(locale));
+		priceModel.setDiscountPercentages(discountPercentages);
 
-		BigDecimal promoPrice = promoPriceMoney.getPrice();
+		priceModel.setFinalPrice(finalPriceMoney.format(locale));
 
-		if ((promoPriceMoney != null) &&
-			(promoPrice.compareTo(BigDecimal.ZERO) > 0)) {
+		return priceModel;
+	}
 
-			prices.setPromoPrice(promoPriceMoney.format(locale));
+	private List<Product> _groupProductByOrderItemId(List<Product> products) {
+		Map<Long, Product> productMap = new HashMap<>();
+
+		for (Product product : products) {
+			productMap.put(product.getId(), product);
 		}
 
-		if (discountAmountMoney != null) {
-			prices.setDiscount(discountAmountMoney.format(locale));
+		for (Product product : products) {
+			long parentProductId = product.getParentProductId();
+
+			if (parentProductId == 0) {
+				continue;
+			}
+
+			Product parent = productMap.get(parentProductId);
+
+			if (parent != null) {
+				if (parent.getChildItems() == null) {
+					parent.setChildItems(new ArrayList<>());
+				}
+
+				List<Product> childItems = parent.getChildItems();
+
+				childItems.add(product);
+
+				productMap.remove(product.getId());
+			}
 		}
 
-		prices.setDiscountPercentages(discountPercentages);
-
-		return prices;
+		return new ArrayList(productMap.values());
 	}
 
 	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
@@ -218,6 +329,9 @@ public class CommerceCartResourceUtil {
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

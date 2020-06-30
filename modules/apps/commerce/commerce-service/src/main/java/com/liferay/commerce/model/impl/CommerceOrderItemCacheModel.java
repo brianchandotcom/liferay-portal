@@ -66,7 +66,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -86,10 +86,14 @@ public class CommerceOrderItemCacheModel
 		sb.append(modifiedDate);
 		sb.append(", commerceOrderId=");
 		sb.append(commerceOrderId);
+		sb.append(", commercePriceListId=");
+		sb.append(commercePriceListId);
 		sb.append(", CProductId=");
 		sb.append(CProductId);
 		sb.append(", CPInstanceId=");
 		sb.append(CPInstanceId);
+		sb.append(", parentCommerceOrderItemId=");
+		sb.append(parentCommerceOrderItemId);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append(", shippedQuantity=");
@@ -116,6 +120,22 @@ public class CommerceOrderItemCacheModel
 		sb.append(discountPercentageLevel3);
 		sb.append(", discountPercentageLevel4=");
 		sb.append(discountPercentageLevel4);
+		sb.append(", unitPriceWithTaxAmount=");
+		sb.append(unitPriceWithTaxAmount);
+		sb.append(", promoPriceWithTaxAmount=");
+		sb.append(promoPriceWithTaxAmount);
+		sb.append(", discountWithTaxAmount=");
+		sb.append(discountWithTaxAmount);
+		sb.append(", finalPriceWithTaxAmount=");
+		sb.append(finalPriceWithTaxAmount);
+		sb.append(", discountPercentageLevel1WithTaxAmount=");
+		sb.append(discountPercentageLevel1WithTaxAmount);
+		sb.append(", discountPercentageLevel2WithTaxAmount=");
+		sb.append(discountPercentageLevel2WithTaxAmount);
+		sb.append(", discountPercentageLevel3WithTaxAmount=");
+		sb.append(discountPercentageLevel3WithTaxAmount);
+		sb.append(", discountPercentageLevel4WithTaxAmount=");
+		sb.append(discountPercentageLevel4WithTaxAmount);
 		sb.append(", subscription=");
 		sb.append(subscription);
 		sb.append(", deliveryGroup=");
@@ -175,8 +195,11 @@ public class CommerceOrderItemCacheModel
 		}
 
 		commerceOrderItemImpl.setCommerceOrderId(commerceOrderId);
+		commerceOrderItemImpl.setCommercePriceListId(commercePriceListId);
 		commerceOrderItemImpl.setCProductId(CProductId);
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
+		commerceOrderItemImpl.setParentCommerceOrderItemId(
+			parentCommerceOrderItemId);
 		commerceOrderItemImpl.setQuantity(quantity);
 		commerceOrderItemImpl.setShippedQuantity(shippedQuantity);
 
@@ -213,6 +236,20 @@ public class CommerceOrderItemCacheModel
 			discountPercentageLevel3);
 		commerceOrderItemImpl.setDiscountPercentageLevel4(
 			discountPercentageLevel4);
+		commerceOrderItemImpl.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);
+		commerceOrderItemImpl.setPromoPriceWithTaxAmount(
+			promoPriceWithTaxAmount);
+		commerceOrderItemImpl.setDiscountWithTaxAmount(discountWithTaxAmount);
+		commerceOrderItemImpl.setFinalPriceWithTaxAmount(
+			finalPriceWithTaxAmount);
+		commerceOrderItemImpl.setDiscountPercentageLevel1WithTaxAmount(
+			discountPercentageLevel1WithTaxAmount);
+		commerceOrderItemImpl.setDiscountPercentageLevel2WithTaxAmount(
+			discountPercentageLevel2WithTaxAmount);
+		commerceOrderItemImpl.setDiscountPercentageLevel3WithTaxAmount(
+			discountPercentageLevel3WithTaxAmount);
+		commerceOrderItemImpl.setDiscountPercentageLevel4WithTaxAmount(
+			discountPercentageLevel4WithTaxAmount);
 		commerceOrderItemImpl.setSubscription(subscription);
 
 		if (deliveryGroup == null) {
@@ -266,9 +303,13 @@ public class CommerceOrderItemCacheModel
 
 		commerceOrderId = objectInput.readLong();
 
+		commercePriceListId = objectInput.readLong();
+
 		CProductId = objectInput.readLong();
 
 		CPInstanceId = objectInput.readLong();
+
+		parentCommerceOrderItemId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
 
@@ -284,6 +325,18 @@ public class CommerceOrderItemCacheModel
 		discountPercentageLevel2 = (BigDecimal)objectInput.readObject();
 		discountPercentageLevel3 = (BigDecimal)objectInput.readObject();
 		discountPercentageLevel4 = (BigDecimal)objectInput.readObject();
+		unitPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
+		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
+		discountWithTaxAmount = (BigDecimal)objectInput.readObject();
+		finalPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
+		discountPercentageLevel1WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		discountPercentageLevel2WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		discountPercentageLevel3WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		discountPercentageLevel4WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
 
 		subscription = objectInput.readBoolean();
 		deliveryGroup = objectInput.readUTF();
@@ -326,9 +379,13 @@ public class CommerceOrderItemCacheModel
 
 		objectOutput.writeLong(commerceOrderId);
 
+		objectOutput.writeLong(commercePriceListId);
+
 		objectOutput.writeLong(CProductId);
 
 		objectOutput.writeLong(CPInstanceId);
+
+		objectOutput.writeLong(parentCommerceOrderItemId);
 
 		objectOutput.writeInt(quantity);
 
@@ -363,6 +420,14 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeObject(discountPercentageLevel2);
 		objectOutput.writeObject(discountPercentageLevel3);
 		objectOutput.writeObject(discountPercentageLevel4);
+		objectOutput.writeObject(unitPriceWithTaxAmount);
+		objectOutput.writeObject(promoPriceWithTaxAmount);
+		objectOutput.writeObject(discountWithTaxAmount);
+		objectOutput.writeObject(finalPriceWithTaxAmount);
+		objectOutput.writeObject(discountPercentageLevel1WithTaxAmount);
+		objectOutput.writeObject(discountPercentageLevel2WithTaxAmount);
+		objectOutput.writeObject(discountPercentageLevel3WithTaxAmount);
+		objectOutput.writeObject(discountPercentageLevel4WithTaxAmount);
 
 		objectOutput.writeBoolean(subscription);
 
@@ -398,8 +463,10 @@ public class CommerceOrderItemCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long commerceOrderId;
+	public long commercePriceListId;
 	public long CProductId;
 	public long CPInstanceId;
+	public long parentCommerceOrderItemId;
 	public int quantity;
 	public int shippedQuantity;
 	public String json;
@@ -413,6 +480,14 @@ public class CommerceOrderItemCacheModel
 	public BigDecimal discountPercentageLevel2;
 	public BigDecimal discountPercentageLevel3;
 	public BigDecimal discountPercentageLevel4;
+	public BigDecimal unitPriceWithTaxAmount;
+	public BigDecimal promoPriceWithTaxAmount;
+	public BigDecimal discountWithTaxAmount;
+	public BigDecimal finalPriceWithTaxAmount;
+	public BigDecimal discountPercentageLevel1WithTaxAmount;
+	public BigDecimal discountPercentageLevel2WithTaxAmount;
+	public BigDecimal discountPercentageLevel3WithTaxAmount;
+	public BigDecimal discountPercentageLevel4WithTaxAmount;
 	public boolean subscription;
 	public String deliveryGroup;
 	public long shippingAddressId;

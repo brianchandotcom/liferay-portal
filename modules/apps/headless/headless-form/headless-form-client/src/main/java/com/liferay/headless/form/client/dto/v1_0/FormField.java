@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormField implements Cloneable {
 
+	public static FormField toDTO(String json) {
+		return FormFieldSerDes.toDTO(json);
+	}
+
 	public Boolean getAutocomplete() {
 		return autocomplete;
 	}

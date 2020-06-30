@@ -29,12 +29,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface CommerceProductPriceCalculation {
 
 	public CommerceProductPrice getCommerceProductPrice(
+			CommerceProductPriceRequest commerceProductPriceRequest)
+		throws PortalException;
+
+	public CommerceProductPrice getCommerceProductPrice(
 			long cpInstanceId, int quantity, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceProductPrice getCommerceProductPrice(
 			long cpInstanceId, int quantity, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceMoney getCPDefinitionMinimumPrice(
+			long cpDefinitionId, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceMoney getCPDefinitionOptionValueRelativePrice(
+			CommerceProductOptionValueRelativePriceRequest
+				commerceProductOptionValueRelativePriceRequest)
 		throws PortalException;
 
 	public CommerceMoney getFinalPrice(

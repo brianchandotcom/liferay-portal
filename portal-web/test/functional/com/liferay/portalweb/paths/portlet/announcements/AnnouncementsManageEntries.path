@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>DISTRIBUTION_SCOPE_SELECT</td>
-	<td>//select[contains(@id,'AnnouncementsPortlet_distributionScope')]</td>
+	<td>//select[contains(@id,'AnnouncementsPortlet') and contains(@id,'distributionScope')]</td>
 	<td></td>
 </tr>
 <tr>

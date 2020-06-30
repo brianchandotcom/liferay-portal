@@ -21,6 +21,8 @@ import com.liferay.commerce.product.exception.CommerceCatalogSystemException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -113,6 +115,11 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
+			else {
+				_log.error(e, e);
+
+				throw e;
+			}
 		}
 	}
 
@@ -163,6 +170,9 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 		return commerceCatalog;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCommerceCatalogMVCActionCommand.class);
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;

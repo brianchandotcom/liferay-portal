@@ -50,7 +50,7 @@ for (int i = 0; i < organizations.size(); i++) {
 			for (Phone phone : organizationPhones) {
 			%>
 
-				<li class="<%= (phone.isPrimary() && !organizationPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
+				<li class='<%= (phone.isPrimary() && !organizationPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>'>
 					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
 				</li>
 
@@ -70,7 +70,7 @@ for (int i = 0; i < organizations.size(); i++) {
 			for (Phone phone : personalPhones) {
 			%>
 
-				<li class="<%= (phone.isPrimary() && !personalPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
+				<li class='<%= (phone.isPrimary() && !personalPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>'>
 					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
 				</li>
 

@@ -382,7 +382,7 @@
 	long jsLoaderModulesLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES);
 	%>
 
-	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>" type="text/javascript"></script>
+	<script src='<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>' type="text/javascript"></script>
 </c:if>
 
 <liferay-util:dynamic-include key="/html/common/themes/top_js.jspf#resources" />
@@ -393,7 +393,7 @@
 	long jsBundleConfigLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG);
 	%>
 
-	<script data-senna-track="temporary" src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) + "/js_bundle_config?t=" + jsBundleConfigLastModified) %>" type="text/javascript"></script>
+	<script data-senna-track="temporary" src='<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) + "/js_bundle_config?t=" + jsBundleConfigLastModified) %>' type="text/javascript"></script>
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">
@@ -436,10 +436,24 @@
 String liferayAnalyticsChannelId = null;
 
 if (group != null) {
-	liferayAnalyticsChannelId = group.getTypeSettingsProperty("analyticsChannelId");
+	if (Objects.equals(group.getGroupKey(), "Forms")) {
+		Group tempGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+
+		liferayAnalyticsChannelId = tempGroup.getTypeSettingsProperty("analyticsChannelId");
+	}
+	else {
+		liferayAnalyticsChannelId = group.getTypeSettingsProperty("analyticsChannelId");
+	}
 }
 else {
-	liferayAnalyticsChannelId = liveGroup.getTypeSettingsProperty("analyticsChannelId");
+	if (Objects.equals(liveGroup.getGroupKey(), "Forms")) {
+		Group tempGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+
+		liferayAnalyticsChannelId = tempGroup.getTypeSettingsProperty("analyticsChannelId");
+	}
+	else {
+		liferayAnalyticsChannelId = liveGroup.getTypeSettingsProperty("analyticsChannelId");
+	}
 }
 
 String liferayAnalyticsDataSourceId = PrefsPropsUtil.getString(company.getCompanyId(), "liferayAnalyticsDataSourceId");
@@ -449,6 +463,11 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 %>
 
 <c:if test="<%= _isAnalyticsTrackingEnabled(liferayAnalyticsDataSourceId, liferayAnalyticsEndpointURL, liferayAnalyticsEnableAllGroupIds, liferayAnalyticsGroupIds, group, layout.isTypeControlPanel(), request) %>">
+	<script data-senna-track="temporary" type="text/javascript">
+		var liferayAnalyticsChannelId = '<%= HtmlUtil.escapeJS(liferayAnalyticsChannelId) %>';
+		var liferayAnalyticsGroupIds = <%= String.valueOf(JSONFactoryUtil.createJSONArray(liferayAnalyticsGroupIds)) %>;
+	</script>
+
 	<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 		(function(u, c, a, m, o, l) {
 			o = 'script';
@@ -461,7 +480,7 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 			m.parentNode.insertBefore(a, m);
 		})('https://analytics-js-cdn.liferay.com', function() {
 			var config = {
-				channelId: '<%= HtmlUtil.escapeJS(liferayAnalyticsChannelId) %>',
+				channelId: liferayAnalyticsChannelId,
 				dataSourceId: '<%= HtmlUtil.escapeJS(liferayAnalyticsDataSourceId) %>',
 				endpointUrl: '<%= HtmlUtil.escapeJS(liferayAnalyticsEndpointURL) %>'
 			};
@@ -471,6 +490,8 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 			Analytics.registerMiddleware(
 				function(request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+					request.context.channelId = liferayAnalyticsChannelId;
+					request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 					return request;
 				}
@@ -493,8 +514,18 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 					function(event) {
 						Analytics.dispose();
 
-						if (!themeDisplay.isControlPanel()) {
+						var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+
+						if (!themeDisplay.isControlPanel() && (liferayAnalyticsGroupIds.indexOf(groupId) >= 0)) {
 							Analytics.create(config);
+
+							Analytics.registerMiddleware(function (request) {
+								request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+								request.context.channelId = liferayAnalyticsChannelId;
+								request.context.groupId = groupId;
+
+								return request;
+							});
 
 							if (themeDisplay.isSignedIn()) {
 								Analytics.setIdentity(

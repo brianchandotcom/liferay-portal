@@ -2277,8 +2277,6 @@ public class SyncDevicePersistenceImpl
 		"(syncDevice.userName IS NULL OR syncDevice.userName LIKE '')";
 
 	public SyncDevicePersistenceImpl() {
-		setModelClass(SyncDevice.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2297,6 +2295,8 @@ public class SyncDevicePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SyncDevice.class);
 	}
 
 	/**

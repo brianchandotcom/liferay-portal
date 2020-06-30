@@ -2781,8 +2781,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 		"assetDisplayPageEntry.classPK = ?";
 
 	public AssetDisplayPageEntryPersistenceImpl() {
-		setModelClass(AssetDisplayPageEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2801,6 +2799,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(AssetDisplayPageEntry.class);
 	}
 
 	/**

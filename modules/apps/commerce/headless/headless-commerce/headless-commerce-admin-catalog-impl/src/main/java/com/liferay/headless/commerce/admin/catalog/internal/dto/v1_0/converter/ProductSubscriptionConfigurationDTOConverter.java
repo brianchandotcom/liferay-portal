@@ -17,8 +17,8 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class ProductSubscriptionConfigurationDTOConverter
-	implements DTOConverter {
+	implements DTOConverter<CPDefinition, ProductSubscriptionConfiguration> {
 
 	@Override
 	public String getContentType() {
@@ -45,7 +45,7 @@ public class ProductSubscriptionConfigurationDTOConverter
 		throws Exception {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new ProductSubscriptionConfiguration() {
 			{

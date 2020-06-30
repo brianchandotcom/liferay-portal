@@ -1755,8 +1755,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		"commerceAvailabilityEstimate.companyId = ?";
 
 	public CommerceAvailabilityEstimatePersistenceImpl() {
-		setModelClass(CommerceAvailabilityEstimate.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1774,6 +1772,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceAvailabilityEstimate.class);
 	}
 
 	/**

@@ -24,6 +24,8 @@ public interface UploadServletRequestConfigurationHelper {
 
 	public long getMaxSize();
 
+	public long getMaxTries();
+
 	public String getTempDir();
 
 }

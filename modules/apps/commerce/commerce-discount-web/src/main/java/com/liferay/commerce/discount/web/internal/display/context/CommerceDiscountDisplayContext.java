@@ -26,6 +26,7 @@ import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountCommerceAccountGroupRelCreateDateComparator;
 import com.liferay.commerce.discount.web.internal.display.context.util.CommerceDiscountRequestHelper;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
@@ -60,6 +61,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -82,6 +84,7 @@ public class CommerceDiscountDisplayContext {
 		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountCommerceAccountGroupRelService
 			commerceDiscountCommerceAccountGroupRelService,
+		PercentageFormatter percentageFormatter,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		_commerceChannelRelService = commerceChannelRelService;
@@ -93,6 +96,7 @@ public class CommerceDiscountDisplayContext {
 		_commerceDiscountTargetRegistry = commerceDiscountTargetRegistry;
 		_commerceDiscountCommerceAccountGroupRelService =
 			commerceDiscountCommerceAccountGroupRelService;
+		_percentageFormatter = percentageFormatter;
 
 		this.itemSelector = itemSelector;
 
@@ -211,6 +215,22 @@ public class CommerceDiscountDisplayContext {
 			"checkedCommerceAccountGroupIds", checkedCommerceAccountGroupIds);
 
 		return itemSelectorURL.toString();
+	}
+
+	public String getLocalizedPercentage(BigDecimal percentage, Locale locale)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				commerceDiscountRequestHelper.getCompanyId());
+
+		String localizedPercentage =
+			_percentageFormatter.getLocalizedPercentage(
+				locale, commerceCurrency.getMaxFractionDigits(),
+				commerceCurrency.getMinFractionDigits(), percentage);
+
+		return localizedPercentage.replace(
+			StringPool.PERCENT, StringPool.BLANK);
 	}
 
 	public PortletURL getPortletURL() {
@@ -453,6 +473,7 @@ public class CommerceDiscountDisplayContext {
 	private final CommerceDiscountTargetRegistry
 		_commerceDiscountTargetRegistry;
 	private String _keywords;
+	private final PercentageFormatter _percentageFormatter;
 	private SearchContainer<CommerceDiscount> _searchContainer;
 
 }

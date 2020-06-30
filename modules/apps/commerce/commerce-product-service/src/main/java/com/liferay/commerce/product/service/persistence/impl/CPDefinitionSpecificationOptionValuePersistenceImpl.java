@@ -5178,8 +5178,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		"cpDefinitionSpecificationOptionValue.CPOptionCategoryId = ?";
 
 	public CPDefinitionSpecificationOptionValuePersistenceImpl() {
-		setModelClass(CPDefinitionSpecificationOptionValue.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5200,6 +5198,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinitionSpecificationOptionValue.class);
 	}
 
 	/**

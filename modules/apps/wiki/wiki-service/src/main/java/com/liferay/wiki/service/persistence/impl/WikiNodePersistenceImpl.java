@@ -4546,8 +4546,6 @@ public class WikiNodePersistenceImpl
 		"wikiNode.status = ?";
 
 	public WikiNodePersistenceImpl() {
-		setModelClass(WikiNode.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4565,6 +4563,8 @@ public class WikiNodePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(WikiNode.class);
 	}
 
 	/**

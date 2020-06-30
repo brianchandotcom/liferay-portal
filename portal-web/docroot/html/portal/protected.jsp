@@ -33,7 +33,7 @@ response.setHeader(HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 %>
 
-<html dir="<liferay-ui:message key="lang.dir" />">
+<html dir='<liferay-ui:message key="lang.dir" />'>
 	<head>
 		<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 		<meta content="no-cache" http-equiv="Cache-Control" />

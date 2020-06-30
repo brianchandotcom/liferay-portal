@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
@@ -86,15 +85,11 @@ public class FreeMarkerPortlet extends MVCPortlet {
 					TemplateResourceLoaderUtil.getTemplateResource(
 						TemplateConstants.LANG_TYPE_FTL, resourcePath);
 
-				TemplateManager templateManager =
-					TemplateManagerUtil.getTemplateManager(
-						TemplateConstants.LANG_TYPE_FTL);
-
 				Template template = TemplateManagerUtil.getTemplate(
 					TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
-				templateManager.addTaglibSupport(
-					template, PortalUtil.getHttpServletRequest(portletRequest),
+				template.prepareTaglib(
+					PortalUtil.getHttpServletRequest(portletRequest),
 					PortalUtil.getHttpServletResponse(portletResponse));
 
 				template.put("portletContext", getPortletContext());

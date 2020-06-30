@@ -64,7 +64,7 @@ public class CommercePendingOrderDataSetActionProvider
 				ActionKeys.VIEW)) {
 
 			String editURL = CommerceOrderClayTableUtil.getEditOrderURL(
-				order.getOrderId(), themeDisplay);
+				order.getOrderId(), httpServletRequest);
 
 			ClayDataSetAction clayDataSetAction = new ClayDataSetAction(
 				StringPool.BLANK, editURL, StringPool.BLANK,

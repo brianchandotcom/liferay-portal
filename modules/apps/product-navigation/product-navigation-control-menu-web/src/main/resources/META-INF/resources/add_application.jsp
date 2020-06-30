@@ -31,7 +31,7 @@ refererURL.setParameter("updateLayout", "true");
 	<div id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="input-group search-bar">
-				<input aria-label="<%= LanguageUtil.get(request, "search") %>" class="form-control" id="<portlet:namespace />searchApplication" name="<portlet:namespace />searchApplication" placeholder="<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>" type="text" />
+				<input aria-label='<%= LanguageUtil.get(request, "search") %>' class="form-control" id="<portlet:namespace />searchApplication" name="<portlet:namespace />searchApplication" placeholder='<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>' type="text" />
 
 				<span class="input-group-btn">
 					<liferay-ui:icon

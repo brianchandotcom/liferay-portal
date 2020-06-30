@@ -610,6 +610,9 @@ public interface GroupLocalService
 	public String getGroupDescriptiveName(long groupId, Locale locale)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getGroupIds(long companyId, boolean active);
+
 	/**
 	 * Returns a range of all the groups.
 	 *

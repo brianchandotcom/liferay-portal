@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Site implements Cloneable {
 
+	public static Site toDTO(String json) {
+		return SiteSerDes.toDTO(json);
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}

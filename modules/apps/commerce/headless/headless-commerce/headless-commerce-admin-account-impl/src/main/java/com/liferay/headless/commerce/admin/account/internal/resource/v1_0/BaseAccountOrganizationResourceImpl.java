@@ -420,11 +420,6 @@ public abstract class BaseAccountOrganizationResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		AccountOrganization accountOrganization,
-		AccountOrganization existingAccountOrganization) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

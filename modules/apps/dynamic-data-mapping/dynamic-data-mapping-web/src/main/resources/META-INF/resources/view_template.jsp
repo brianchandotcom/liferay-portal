@@ -96,12 +96,13 @@ if (layout != null) {
 					rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 					rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 					rowURL.setParameter("classNameId", String.valueOf(classNameId));
+					rowURL.setParameter("classPK", String.valueOf(classPK));
 
 					if (structure != null) {
-						rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
+						rowURL.setParameter("structureId", String.valueOf(structure.getStructureId()));
 					}
 					else {
-						rowURL.setParameter("classPK", "0");
+						rowURL.setParameter("structureId", String.valueOf(template.getClassPK()));
 					}
 
 					rowURL.setParameter("type", template.getType());

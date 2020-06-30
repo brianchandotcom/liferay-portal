@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.web.internal.portlet.action;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.model.Layout;
@@ -113,6 +114,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String structureAvailableFields = ParamUtil.getString(
 			actionRequest, "structureAvailableFields");
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
@@ -128,9 +130,41 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter(
 			"classNameId", String.valueOf(classNameId), false);
 		portletURL.setParameter("classPK", String.valueOf(classPK), false);
-		portletURL.setParameter("type", template.getType(), false);
 		portletURL.setParameter(
 			"structureAvailableFields", structureAvailableFields, false);
+		portletURL.setParameter(
+			"structureId", String.valueOf(structureId), false);
+		portletURL.setParameter("type", template.getType(), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
+	protected String getSaveTemplateWithNewStructureRedirect(
+			ActionRequest actionRequest, DDMTemplate template, String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		long resourceClassNameId = ParamUtil.getLong(
+			actionRequest, "resourceClassNameId");
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view_template.jsp");
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(resourceClassNameId), false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(template.getGroupId()), false);
+		portletURL.setParameter(
+			"classNameId", String.valueOf(classNameId), false);
+		portletURL.setParameter("classPK", String.valueOf(classPK), false);
+		portletURL.setParameter("type", template.getType(), false);
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
@@ -196,6 +230,16 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String redirect = getRedirect(actionRequest);
+
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
+		if ((classPK == 0) && (structureId > 0) &&
+			!redirect.contains(JournalContentPortletKeys.JOURNAL_CONTENT)) {
+
+			redirect = getSaveTemplateWithNewStructureRedirect(
+				actionRequest, template, redirect);
+		}
 
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			actionRequest, "saveAndContinue");

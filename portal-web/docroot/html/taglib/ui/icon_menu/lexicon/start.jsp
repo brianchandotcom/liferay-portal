@@ -45,7 +45,7 @@ if (Validator.isNull(icon)) {
 
 <div class="dropdown lfr-icon-menu <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<c:choose>
-		<c:when test="<%= triggerType.equals(\"button\") %>">
+		<c:when test='<%= triggerType.equals("button") %>'>
 			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" title="<%= message %>" type="button">
 				<aui:icon cssClass="inline-item" image="<%= icon %>" markupView="lexicon" />
 

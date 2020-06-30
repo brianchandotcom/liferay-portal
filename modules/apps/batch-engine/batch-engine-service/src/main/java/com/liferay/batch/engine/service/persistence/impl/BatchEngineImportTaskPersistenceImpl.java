@@ -1786,8 +1786,6 @@ public class BatchEngineImportTaskPersistenceImpl
 		"(batchEngineImportTask.executeStatus IS NULL OR batchEngineImportTask.executeStatus = '')";
 
 	public BatchEngineImportTaskPersistenceImpl() {
-		setModelClass(BatchEngineImportTask.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1805,6 +1803,8 @@ public class BatchEngineImportTaskPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(BatchEngineImportTask.class);
 	}
 
 	/**

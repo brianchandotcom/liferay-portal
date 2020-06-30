@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Security Service Access Policy Service
 Bundle-SymbolicName: com.liferay.portal.security.service.access.policy.service
-Bundle-Version: 3.0.33
+Bundle-Version: 3.0.34
 Liferay-Require-SchemaVersion: 2.0.13
 Liferay-Service: true

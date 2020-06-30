@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Comment implements Cloneable {
 
+	public static Comment toDTO(String json) {
+		return CommentSerDes.toDTO(json);
+	}
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

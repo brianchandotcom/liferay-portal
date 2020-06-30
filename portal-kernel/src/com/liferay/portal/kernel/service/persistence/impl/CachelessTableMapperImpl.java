@@ -125,6 +125,14 @@ public class CachelessTableMapperImpl
 			return portalCacheName;
 		}
 
+		public boolean isBlocking() {
+			return false;
+		}
+
+		public boolean isMVCC() {
+			return false;
+		}
+
 		@Override
 		public void put(Long key, long[] value) {
 		}

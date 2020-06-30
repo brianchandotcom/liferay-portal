@@ -22,9 +22,9 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CPDefinition",
 	service = {DTOConverter.class, ProductDTOConverter.class}
 )
-public class ProductDTOConverter implements DTOConverter {
+public class ProductDTOConverter
+	implements DTOConverter<CPDefinition, Product> {
 
 	@Override
 	public String getContentType() {
@@ -50,7 +51,7 @@ public class ProductDTOConverter implements DTOConverter {
 		throws Exception {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		CProduct cProduct = cpDefinition.getCProduct();
 
@@ -58,6 +59,7 @@ public class ProductDTOConverter implements DTOConverter {
 
 		return new Product() {
 			{
+				actions = dtoConverterContext.getActions();
 				active = !cpDefinition.isInactive();
 				catalogId = _getCommerceCatalogId(cpDefinition);
 				createDate = cpDefinition.getCreateDate();

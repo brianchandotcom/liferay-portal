@@ -3224,8 +3224,6 @@ public class LayoutSetBranchPersistenceImpl
 		"layoutSetBranch.master = ?";
 
 	public LayoutSetBranchPersistenceImpl() {
-		setModelClass(LayoutSetBranch.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("settings", "settings_");
@@ -3243,6 +3241,8 @@ public class LayoutSetBranchPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(LayoutSetBranch.class);
 	}
 
 	/**

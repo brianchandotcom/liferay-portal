@@ -19,19 +19,11 @@
 <%
 Map<String, Object> contextUseForAllTitle = new HashMap<>();
 
-contextUseForAllTitle.put("checked", portletConfigurationCSSPortletDisplayContext.isUseCustomTitle());
 contextUseForAllTitle.put("disableOnChecked", false);
-contextUseForAllTitle.put("label", LanguageUtil.get(request, "use-custom-title"));
-contextUseForAllTitle.put("name", renderResponse.getNamespace() + "useCustomTitle");
 contextUseForAllTitle.put("inputSelector", ".custom-title input");
 %>
 
-<soy:component-renderer
-	context="<%= contextUseForAllTitle %>"
-	module="js/ToggleDisableInputs.es"
-	servletContext="<%= application %>"
-	templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
-/>
+<aui:input checked="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" data="<%= contextUseForAllTitle %>" label="use-custom-title" name="useCustomTitle" type="toggle-switch" />
 
 <aui:field-wrapper cssClass="custom-title lfr-input-text-container">
 	<liferay-ui:input-localized

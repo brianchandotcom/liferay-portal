@@ -15,11 +15,6 @@
 		font-size: 20px;
 		font-weight: 500;
 
-		&:not(&-discount):first-letter {
-			margin-left: 4px;
-			margin-right: 4px;
-		}
-
 		&:last-child {
 			margin-right: 0;
 		}

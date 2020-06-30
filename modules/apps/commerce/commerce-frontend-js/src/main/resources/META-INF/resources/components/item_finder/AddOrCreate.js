@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import {getSchemaString} from '../../utilities/index.es';
+import {getValueFromItem} from '../../utilities/index';
 import Expose from './Expose';
 
 function Item(props) {
@@ -28,6 +28,11 @@ function Item(props) {
 		<ClayList.Item className={classNames('py-3', props.className)} flex>
 			<ClayList.ItemField expand>
 				<ClayList.ItemTitle>{props.title}</ClayList.ItemTitle>
+			</ClayList.ItemField>
+			<ClayList.ItemField expand>
+				<div className="autofit-col">
+					<p className="list-group-subtext">{props.subTitle}</p>
+				</div>
 			</ClayList.ItemField>
 			<ClayList.ItemField>
 				<ClayButton
@@ -59,22 +64,6 @@ class AddOrCreateBase extends Component {
 		if (this.props.onFocusIn) {
 			this.props.onFocusIn();
 		}
-	}
-
-	blur() {
-		this.setState({focus: false});
-	}
-
-	select(selected) {
-		this.setState({selected});
-	}
-
-	handleFocusOut(_e) {
-		this._timeoutID = setTimeout(() => {
-			if (this.props.onFocusOut) {
-				this.props.onFocusOut();
-			}
-		}, 0);
 	}
 
 	handleFocusIn(_e) {
@@ -197,7 +186,8 @@ class AddOrCreateBase extends Component {
 												selected={this.props.selectedItems.includes(
 													item[this.props.itemsKey]
 												)}
-												title={getSchemaString(
+												subTitle={item.key}
+												title={getValueFromItem(
 													item,
 													this.props.schema.itemTitle
 												)}

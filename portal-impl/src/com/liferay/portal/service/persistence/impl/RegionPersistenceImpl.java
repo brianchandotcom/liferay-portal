@@ -1866,8 +1866,6 @@ public class RegionPersistenceImpl
 		"region.active = ?";
 
 	public RegionPersistenceImpl() {
-		setModelClass(Region.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -1885,6 +1883,8 @@ public class RegionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Region.class);
 	}
 
 	/**

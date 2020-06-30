@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Notification Service
 Bundle-SymbolicName: com.liferay.commerce.notification.service
-Bundle-Version: 1.0.31
+Bundle-Version: 1.0.35
 Import-Package:\
 	com.liferay.asset.kernel.model;version="[1.0.0,3.0.0)",\
 	com.liferay.asset.kernel.service.persistence;version="[1.0.0,3.0.0)",\

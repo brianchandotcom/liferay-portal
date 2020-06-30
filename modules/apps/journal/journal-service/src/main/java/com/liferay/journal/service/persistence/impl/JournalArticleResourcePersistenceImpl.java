@@ -2251,8 +2251,6 @@ public class JournalArticleResourcePersistenceImpl
 		"(journalArticleResource.articleId IS NULL OR journalArticleResource.articleId = '')";
 
 	public JournalArticleResourcePersistenceImpl() {
-		setModelClass(JournalArticleResource.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2270,6 +2268,8 @@ public class JournalArticleResourcePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(JournalArticleResource.class);
 	}
 
 	/**

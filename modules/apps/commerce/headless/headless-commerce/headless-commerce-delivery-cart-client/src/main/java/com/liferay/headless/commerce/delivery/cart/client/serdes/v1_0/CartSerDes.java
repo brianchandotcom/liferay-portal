@@ -261,6 +261,20 @@ public class CartSerDes {
 			sb.append("]");
 		}
 
+		if (cart.getOrderUUID() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderUUID\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getOrderUUID()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getPaymentMethod() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -501,8 +515,14 @@ public class CartSerDes {
 			map.put("couponCode", String.valueOf(cart.getCouponCode()));
 		}
 
-		map.put(
-			"createDate", liferayToJSONDateFormat.format(cart.getCreateDate()));
+		if (cart.getCreateDate() == null) {
+			map.put("createDate", null);
+		}
+		else {
+			map.put(
+				"createDate",
+				liferayToJSONDateFormat.format(cart.getCreateDate()));
+		}
 
 		if (cart.getCurrencyCode() == null) {
 			map.put("currencyCode", null);
@@ -525,19 +545,36 @@ public class CartSerDes {
 			map.put("id", String.valueOf(cart.getId()));
 		}
 
-		map.put(
-			"lastPriceUpdateDate",
-			liferayToJSONDateFormat.format(cart.getLastPriceUpdateDate()));
+		if (cart.getLastPriceUpdateDate() == null) {
+			map.put("lastPriceUpdateDate", null);
+		}
+		else {
+			map.put(
+				"lastPriceUpdateDate",
+				liferayToJSONDateFormat.format(cart.getLastPriceUpdateDate()));
+		}
 
-		map.put(
-			"modifiedDate",
-			liferayToJSONDateFormat.format(cart.getModifiedDate()));
+		if (cart.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(cart.getModifiedDate()));
+		}
 
 		if (cart.getNotes() == null) {
 			map.put("notes", null);
 		}
 		else {
 			map.put("notes", String.valueOf(cart.getNotes()));
+		}
+
+		if (cart.getOrderUUID() == null) {
+			map.put("orderUUID", null);
+		}
+		else {
+			map.put("orderUUID", String.valueOf(cart.getOrderUUID()));
 		}
 
 		if (cart.getPaymentMethod() == null) {
@@ -757,6 +794,11 @@ public class CartSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "orderUUID")) {
+				if (jsonParserFieldValue != null) {
+					cart.setOrderUUID((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "paymentMethod")) {
 				if (jsonParserFieldValue != null) {
 					cart.setPaymentMethod((String)jsonParserFieldValue);
@@ -890,10 +932,13 @@ public class CartSerDes {
 
 				sb.append("]");
 			}
-			else {
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
 			}
 
 			if (iterator.hasNext()) {

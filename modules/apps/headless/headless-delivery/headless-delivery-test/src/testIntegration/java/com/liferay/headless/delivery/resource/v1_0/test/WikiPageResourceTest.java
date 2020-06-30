@@ -24,8 +24,6 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -56,16 +54,9 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 		_wikiPage = _addWikiPage(parentWikiNode.getNodeId());
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testGraphQLDeleteWikiPage() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWikiPage() {
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"headline"};
 	}
 
 	@Override
@@ -106,6 +97,11 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 		throws Exception {
 
 		return _wikiPage.getId();
+	}
+
+	@Override
+	protected WikiPage testGraphQLWikiPage_addWikiPage() throws Exception {
+		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 
 	@Override

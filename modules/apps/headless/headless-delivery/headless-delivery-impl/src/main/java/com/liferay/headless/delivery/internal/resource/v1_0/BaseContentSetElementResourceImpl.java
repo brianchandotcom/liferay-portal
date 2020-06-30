@@ -292,11 +292,6 @@ public abstract class BaseContentSetElementResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ContentSetElement contentSetElement,
-		ContentSetElement existingContentSetElement) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

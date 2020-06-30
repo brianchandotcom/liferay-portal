@@ -2002,8 +2002,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		"commercePriceListChannelRel.commercePriceListId = ?";
 
 	public CommercePriceListChannelRelPersistenceImpl() {
-		setModelClass(CommercePriceListChannelRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2022,6 +2020,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommercePriceListChannelRel.class);
 	}
 
 	/**

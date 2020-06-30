@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class CustomField implements Cloneable {
 
+	public static CustomField toDTO(String json) {
+		return CustomFieldSerDes.toDTO(json);
+	}
+
 	public CustomValue getCustomValue() {
 		return customValue;
 	}

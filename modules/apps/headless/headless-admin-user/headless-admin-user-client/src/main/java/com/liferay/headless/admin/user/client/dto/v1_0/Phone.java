@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Phone implements Cloneable {
 
+	public static Phone toDTO(String json) {
+		return PhoneSerDes.toDTO(json);
+	}
+
 	public String getExtension() {
 		return extension;
 	}

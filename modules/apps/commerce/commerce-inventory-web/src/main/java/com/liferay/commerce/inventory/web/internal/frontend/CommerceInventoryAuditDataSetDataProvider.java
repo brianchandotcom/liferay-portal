@@ -22,9 +22,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditService;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -92,12 +90,7 @@ public class CommerceInventoryAuditDataSetDataProvider
 		for (CommerceInventoryAudit commerceInventoryAudit :
 				commerceInventoryAudits) {
 
-			StringBundler titleSB = new StringBundler(3);
-
-			titleSB.append(
-				LanguageUtil.get(
-					httpServletRequest, commerceInventoryAudit.getLogType()));
-			titleSB.append(CharPool.SPACE);
+			StringBundler titleSB = new StringBundler(1);
 
 			try {
 				CommerceInventoryAuditType commerceInventoryAuditType =

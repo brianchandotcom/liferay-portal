@@ -327,13 +327,23 @@ public class SkuSerDes {
 			map.put("depth", String.valueOf(sku.getDepth()));
 		}
 
-		map.put(
-			"displayDate",
-			liferayToJSONDateFormat.format(sku.getDisplayDate()));
+		if (sku.getDisplayDate() == null) {
+			map.put("displayDate", null);
+		}
+		else {
+			map.put(
+				"displayDate",
+				liferayToJSONDateFormat.format(sku.getDisplayDate()));
+		}
 
-		map.put(
-			"expirationDate",
-			liferayToJSONDateFormat.format(sku.getExpirationDate()));
+		if (sku.getExpirationDate() == null) {
+			map.put("expirationDate", null);
+		}
+		else {
+			map.put(
+				"expirationDate",
+				liferayToJSONDateFormat.format(sku.getExpirationDate()));
+		}
 
 		if (sku.getGtin() == null) {
 			map.put("gtin", null);
@@ -617,10 +627,13 @@ public class SkuSerDes {
 
 				sb.append("]");
 			}
-			else {
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
 			}
 
 			if (iterator.hasNext()) {

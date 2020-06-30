@@ -47,7 +47,11 @@ public class CommerceProductOptionClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addField("fieldType", "field-type");
 
-		clayTableSchemaBuilder.addField("order", "order");
+		clayTableSchemaBuilder.addField("required", "is-required");
+
+		clayTableSchemaBuilder.addField("position", "position");
+
+		clayTableSchemaBuilder.addField("values", "values");
 
 		return clayTableSchemaBuilder.build();
 	}

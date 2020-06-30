@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class RenderedContent implements Cloneable {
 
+	public static RenderedContent toDTO(String json) {
+		return RenderedContentSerDes.toDTO(json);
+	}
+
 	public String getRenderedContentURL() {
 		return renderedContentURL;
 	}

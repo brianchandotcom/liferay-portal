@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AttachmentsConfiguration {
 
 	@Meta.AD(
-		deflt = ".gif,.jpeg,.jpg,.png,.mpg,.ogg", name = "image-extensions",
+		deflt = ".gif,.jpeg,.jpg,.png", name = "image-extensions",
 		required = false
 	)
 	public String[] imageExtensions();

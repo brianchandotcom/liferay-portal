@@ -810,6 +810,7 @@ public class CommerceDiscountLocalServiceImpl
 		attributes.put(Field.STATUS, status);
 		attributes.put(Field.TITLE, keywords);
 		attributes.put("params", params);
+		attributes.put("skipCommerceAccountGroupValidation", true);
 
 		searchContext.setAttributes(attributes);
 

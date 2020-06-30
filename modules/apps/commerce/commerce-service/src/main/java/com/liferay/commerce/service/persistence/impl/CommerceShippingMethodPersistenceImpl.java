@@ -1402,8 +1402,6 @@ public class CommerceShippingMethodPersistenceImpl
 		"commerceShippingMethod.active = ?";
 
 	public CommerceShippingMethodPersistenceImpl() {
-		setModelClass(CommerceShippingMethod.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -1421,6 +1419,8 @@ public class CommerceShippingMethodPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceShippingMethod.class);
 	}
 
 	/**

@@ -1,0 +1,142 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Staging";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@description = "This is a use case for LPS-98651."
+	@priority = "4"
+	test PublishArticleCreatedByDeletedUserAfterUpgrade704 {
+		property data.archive.type = "data-archive-staging-with-deleted-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
+	}
+
+	@description = "This is a use case for LPS-98651."
+	@priority = "4"
+	test PublishArticleCreatedByDeletedUserAfterUpgrade70106 {
+		property data.archive.type = "data-archive-staging-with-deleted-user";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
+	}
+
+	@description = "This is a use case for LPS-98651."
+	@priority = "4"
+	test PublishArticleCreatedByDeletedUserAfterUpgrade621021 {
+		property data.archive.type = "data-archive-staging-with-deleted-user";
+		property database.types = "db2,mysql,oracle,postgresql";
+		property portal.version = "6.2.10.21";
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
+	}
+
+	@description = "This is a use case for LPS-87237."
+	@priority = "5"
+	test ViewStagingDefaultSettingAfterUpgrade704 {
+		property data.archive.type = "data-archive-staging-with-default-setting";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Application Display Template,Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Polls");
+	}
+
+	@description = "This is a use case for LPS-87237."
+	@priority = "5"
+	test ViewStagingDefaultSettingAfterUpgrade70106 {
+		property data.archive.type = "data-archive-staging-with-default-setting";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Application Display Template,Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Polls");
+	}
+
+	@description = "This is a use case for LPS-87237."
+	@priority = "5"
+	test ViewStagingDefaultSettingAfterUpgrade621021 {
+		property data.archive.type = "data-archive-staging-with-default-setting";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Application Display Templates,Blogs,Dynamic Data Lists,Message Boards,Polls,Wiki");
+	}
+
+}

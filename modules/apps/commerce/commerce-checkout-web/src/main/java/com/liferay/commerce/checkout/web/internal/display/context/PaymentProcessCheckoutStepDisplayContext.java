@@ -20,12 +20,16 @@ import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
+import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
+
+import java.security.Key;
 
 import javax.portlet.PortletURL;
 
@@ -49,8 +53,8 @@ public class PaymentProcessCheckoutStepDisplayContext {
 		_portal = portal;
 	}
 
-	public String getPaymentServletUrl() {
-		StringBundler sb = new StringBundler(13);
+	public String getPaymentServletUrl() throws Exception {
+		StringBundler sb = new StringBundler(16);
 
 		sb.append(_getPortalUrl());
 		sb.append(_getPathModule());
@@ -63,10 +67,25 @@ public class PaymentProcessCheckoutStepDisplayContext {
 		sb.append("uuid=");
 		sb.append(_commerceOrder.getUuid());
 		sb.append(StringPool.AMPERSAND);
+
+		if (_commerceOrder.isGuestOrder()) {
+			sb.append("guestToken=");
+			sb.append(_getGuestToken(_commerceOrder.getCommerceOrderId()));
+			sb.append(StringPool.AMPERSAND);
+		}
+
 		sb.append("nextStep=");
 		sb.append(URLCodec.encodeURL(_getOrderConfirmationCheckoutStepUrl()));
 
 		return sb.toString();
+	}
+
+	private String _getGuestToken(long commerceOrderId) throws Exception {
+		Company company = _commerceCheckoutRequestHelper.getCompany();
+
+		Key key = company.getKeyObj();
+
+		return Encryptor.encrypt(key, String.valueOf(commerceOrderId));
 	}
 
 	private String _getOrderConfirmationCheckoutStepUrl() {
@@ -76,8 +95,7 @@ public class PaymentProcessCheckoutStepDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"commerceOrderId",
-			String.valueOf(_commerceOrder.getCommerceOrderId()));
+			"commerceOrderUuid", String.valueOf(_commerceOrder.getUuid()));
 
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(

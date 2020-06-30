@@ -718,6 +718,12 @@ public class StagedLayoutSetStagedModelDataHandler
 			settingsProperties.setProperty(
 				Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 
+			long lastMergeVersion = MapUtil.getLong(
+				portletDataContext.getParameterMap(), "lastMergeVersion");
+
+			settingsProperties.setProperty(
+				Sites.LAST_MERGE_VERSION, String.valueOf(lastMergeVersion));
+
 			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 	}

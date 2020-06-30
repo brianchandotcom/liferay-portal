@@ -6295,8 +6295,6 @@ public class SyncDLObjectPersistenceImpl
 		"(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 
 	public SyncDLObjectPersistenceImpl() {
-		setModelClass(SyncDLObject.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("size", "size_");
@@ -6315,6 +6313,8 @@ public class SyncDLObjectPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SyncDLObject.class);
 	}
 
 	/**

@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Geo implements Cloneable {
 
+	public static Geo toDTO(String json) {
+		return GeoSerDes.toDTO(json);
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}

@@ -199,10 +199,6 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ExportTask exportTask, ExportTask existingExportTask) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

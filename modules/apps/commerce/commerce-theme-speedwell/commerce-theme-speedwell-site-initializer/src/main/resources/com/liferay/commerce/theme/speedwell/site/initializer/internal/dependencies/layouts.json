@@ -83,11 +83,16 @@
 			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 0,
-				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell"
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 2,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_speedwell"
 			}
 		],
@@ -109,7 +114,7 @@
 					{
 						"layoutColumnId": "column-3",
 						"layoutColumnPos": 0,
-						"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell",
+						"portletName": "com_liferay_portal__search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell",
 						"portletPreferences": {
 							"preferenceDisplayStyle": "list"
 						}
@@ -150,7 +155,8 @@
 		"name": "My Account",
 		"permissions": [
 			{
-				"actionIds": [],
+				"actionIds": [
+				],
 				"roleName": "Guest",
 				"scope": 4
 			},
@@ -182,7 +188,8 @@
 				"name": "My Orders",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -218,7 +225,8 @@
 				"name": "Login & Security",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -254,7 +262,8 @@
 				"name": "My Addresses",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -290,7 +299,8 @@
 				"name": "My Subscriptions",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -326,7 +336,8 @@
 				"name": "My Downloads",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -362,7 +373,8 @@
 				"name": "My Lists",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -404,7 +416,8 @@
 				"name": "My Payment Methods",
 				"permissions": [
 					{
-						"actionIds": [],
+						"actionIds": [
+						],
 						"roleName": "Guest",
 						"scope": 4
 					},
@@ -486,20 +499,6 @@
 		"hidden": true,
 		"layoutTemplateId": "1_column",
 		"name": "Checkout",
-		"permissions": [
-			{
-				"actionIds": [],
-				"roleName": "Guest",
-				"scope": 4
-			},
-			{
-				"actionIds": [
-					"VIEW"
-				],
-				"roleName": "User",
-				"scope": 4
-			}
-		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",

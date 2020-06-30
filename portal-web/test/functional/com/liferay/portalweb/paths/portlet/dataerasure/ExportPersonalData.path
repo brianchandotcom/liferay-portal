@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>ExportPersonalData</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ExportPersonalData</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>HEADER</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - Export Personal Data')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PROCESS_HEADER</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - New Data Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CHECKBOX</td>
+	<td>//table//tr[contains(.,'${key_application}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_PROCESS_APPLICATION_IN_PROGRESS</td>
+	<td>//div[contains(@id,'exportStatus')]//span[contains(.,'IN PROGRESS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_PROCESS_IN_PROGRESS</td>
+	<td>//table//td[contains(.,'In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_PROCESS_SPECIFIC_APPLICATION_SUCCESSFUL</td>
+	<td>//div[contains(.,'${key_application}')]//span[contains(.,'SUCCESSFUL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_PROCESS_SUCCESSFUL</td>
+	<td>//table//td[contains(.,'Successful')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

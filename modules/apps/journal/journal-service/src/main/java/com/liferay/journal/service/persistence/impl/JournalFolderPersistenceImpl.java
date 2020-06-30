@@ -7342,8 +7342,6 @@ public class JournalFolderPersistenceImpl
 		"journalFolder.status != ?";
 
 	public JournalFolderPersistenceImpl() {
-		setModelClass(JournalFolder.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -7361,6 +7359,8 @@ public class JournalFolderPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(JournalFolder.class);
 	}
 
 	/**

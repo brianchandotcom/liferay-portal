@@ -1,5 +1,6 @@
 <div class="commerce-topbar ${speedwell_topbar_css_class}">
 	<div class="speedwell-topbar__menu speedwell-main-menu">
+	<#if is_setup_complete || !is_signed_in>
 		<button class="speedwell-topbar__button speedwell-main-menu__open js-toggle-main-menu">
 			<svg class="lexicon-icon lexicon-icon-bars">
 				<use href="${themeDisplay.getPathThemeImages()}/icons.svg#bars" />
@@ -20,6 +21,7 @@
 				<#include "${full_templates_path}/category_navigation.ftl" />
 			</div>
 		</div>
+	</#if>
 	</div>
 
 	<div class="speedwell-topbar__logo">
@@ -33,6 +35,7 @@
 	</div>
 
 	<div class="speedwell-topbar__actions">
+	<#if is_setup_complete || !is_signed_in>
 		<div class="speedwell-topbar__search speedwell-search">
 			<div class="speedwell-topbar__button js-toggle-search">
 				<svg class="lexicon-icon lexicon-icon-search">
@@ -79,5 +82,6 @@
 		<div class="speedwell-topbar__cart-wrapper speedwell-cart">
 			<@liferay_commerce_ui["mini-cart"] />
 		</div>
+	</#if>
 	</div>
 </div>

@@ -18,13 +18,13 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.NoteDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -61,10 +61,7 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 
 	@Override
 	public CartComment getCartComment(Long commentId) throws Exception {
-		return _noteDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(commentId)));
+		return _toOrderNote(GetterUtil.getLong(commentId));
 	}
 
 	@NestedField(parentClass = Cart.class, value = "notes")
@@ -106,6 +103,15 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 		return _upsertOrderNote(commerceOrder, cartComment);
 	}
 
+	private CartComment _toOrderNote(Long commerceOrderNoteId)
+		throws Exception {
+
+		return _noteDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceOrderNoteId,
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private List<CartComment> _toOrderNotes(
 			List<CommerceOrderNote> commerceOrderNotes)
 		throws Exception {
@@ -114,10 +120,7 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 
 		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
 			orders.add(
-				_noteDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceOrderNote.getCommerceOrderNoteId())));
+				_toOrderNote(commerceOrderNote.getCommerceOrderNoteId()));
 		}
 
 		return orders;
@@ -135,10 +138,7 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId()));
 
-		return _noteDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrderNote.getCommerceOrderNoteId()));
+		return _toOrderNote(commerceOrderNote.getCommerceOrderNoteId());
 	}
 
 	@Reference

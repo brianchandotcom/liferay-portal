@@ -231,6 +231,35 @@ public interface CPDefinitionOptionValueRelModel
 	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId);
 
 	/**
+	 * Returns the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @return the cp instance uuid of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getCPInstanceUuid();
+
+	/**
+	 * Sets the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @param CPInstanceUuid the cp instance uuid of this cp definition option value rel
+	 */
+	public void setCPInstanceUuid(String CPInstanceUuid);
+
+	/**
+	 * Returns the c product ID of this cp definition option value rel.
+	 *
+	 * @return the c product ID of this cp definition option value rel
+	 */
+	public long getCProductId();
+
+	/**
+	 * Sets the c product ID of this cp definition option value rel.
+	 *
+	 * @param CProductId the c product ID of this cp definition option value rel
+	 */
+	public void setCProductId(long CProductId);
+
+	/**
 	 * Returns the name of this cp definition option value rel.
 	 *
 	 * @return the name of this cp definition option value rel
@@ -357,35 +386,6 @@ public interface CPDefinitionOptionValueRelModel
 	 * @param key the key of this cp definition option value rel
 	 */
 	public void setKey(String key);
-
-	/**
-	 * Returns the cp instance uuid of this cp definition option value rel.
-	 *
-	 * @return the cp instance uuid of this cp definition option value rel
-	 */
-	@AutoEscape
-	public String getCPInstanceUuid();
-
-	/**
-	 * Sets the cp instance uuid of this cp definition option value rel.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid of this cp definition option value rel
-	 */
-	public void setCPInstanceUuid(String CPInstanceUuid);
-
-	/**
-	 * Returns the c product ID of this cp definition option value rel.
-	 *
-	 * @return the c product ID of this cp definition option value rel
-	 */
-	public long getCProductId();
-
-	/**
-	 * Sets the c product ID of this cp definition option value rel.
-	 *
-	 * @param CProductId the c product ID of this cp definition option value rel
-	 */
-	public void setCProductId(long CProductId);
 
 	/**
 	 * Returns the quantity of this cp definition option value rel.

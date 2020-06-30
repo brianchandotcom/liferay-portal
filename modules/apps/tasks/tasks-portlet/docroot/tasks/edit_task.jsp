@@ -70,7 +70,7 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 							<c:when test="<%= group.isUser() %>">
 								<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= assigneeUserId == 0 %>" value="<%= user.getUserId() %>" />
 
-								<optgroup label="<liferay-ui:message key="contacts" />">
+								<optgroup label='<liferay-ui:message key="contacts" />'>
 							</c:when>
 							<c:otherwise>
 								<aui:option label="unassigned" selected="<%= assigneeUserId == 0 %>" value="0" />
@@ -81,7 +81,7 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 									<aui:option label="<%= PortalUtil.getUserName(assigneeUserId, tasksEntry.getAssigneeFullName()) %>" selected="<%= true %>" />
 								</c:if>
 
-								<optgroup label="<liferay-ui:message key="members" />">
+								<optgroup label='<liferay-ui:message key="members" />'>
 							</c:otherwise>
 						</c:choose>
 

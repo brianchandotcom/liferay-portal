@@ -173,7 +173,7 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 			}
 		}
 	}
@@ -196,7 +196,8 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (ArrayIndexOutOfBoundsException aioobe) {
+			catch (ArrayIndexOutOfBoundsException
+						arrayIndexOutOfBoundsException) {
 			}
 		}
 	}

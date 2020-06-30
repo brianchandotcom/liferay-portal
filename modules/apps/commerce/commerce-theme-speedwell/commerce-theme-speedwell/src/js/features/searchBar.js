@@ -12,41 +12,32 @@
  * details.
  */
 
-var Speedwell = Speedwell || {features: {}};
-
-Speedwell.features.searchBar = (function(w) {
-	const searchToggles = w.document.querySelectorAll('.js-toggle-search'),
+(function(w) {
+	var searchToggles = w.document.querySelectorAll('.js-toggle-search'),
 		HAS_SEARCH_CLASS = 'has-search',
 		IS_OPEN_CLASS = 'is-open',
 		IS_ACTIVE_CLASS = 'is-active',
 		SEARCHBAR_SELECTOR = '.speedwell-search';
 
-	let searchBarElement;
+	var searchBarElement;
 
-	return {
-		initialize() {
-			const searchBar = w.Liferay.component('search-bar');
+	var searchBar = w.Liferay.component('search-bar');
 
-			if (searchBar) {
-				searchBarElement = w.document.querySelector(SEARCHBAR_SELECTOR);
+	if (searchBar) {
+		searchBarElement = w.document.querySelector(SEARCHBAR_SELECTOR);
 
-				searchBar.on('toggled', status => {
-					searchToggles.forEach(el => {
-						el.classList.toggle(IS_ACTIVE_CLASS, status);
-					});
+		searchBar.on('toggled', status => {
+			searchToggles.forEach(el => {
+				el.classList.toggle(IS_ACTIVE_CLASS, status);
+			});
 
-					Speedwell.features.context
-						.getContainer()
-						.classList.toggle(HAS_SEARCH_CLASS, status);
+			w.document
+				.getElementById('speedwell')
+				.classList.toggle(HAS_SEARCH_CLASS, status);
 
-					if (searchBarElement) {
-						searchBarElement.classList.toggle(
-							IS_OPEN_CLASS,
-							status
-						);
-					}
-				});
+			if (searchBarElement) {
+				searchBarElement.classList.toggle(IS_OPEN_CLASS, status);
 			}
-		}
-	};
+		});
+	}
 })(window);

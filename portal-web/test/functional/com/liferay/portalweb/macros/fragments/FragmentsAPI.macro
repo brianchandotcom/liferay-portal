@@ -4,8 +4,19 @@ definition {
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 		var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/fragment/${fileName}");
+		var os = OSDetector.isWindows();
 
-		return "${fileContent}";
+		if ("${os}" == "true") {
+			var newline = '''
+''';
+
+			var fileContent = StringUtil.replace("${fileContent}", "${newline}", "%0A");
+
+			return "${fileContent}";
+		}
+		else {
+			return "${fileContent}";
+		}
 	}
 
 }

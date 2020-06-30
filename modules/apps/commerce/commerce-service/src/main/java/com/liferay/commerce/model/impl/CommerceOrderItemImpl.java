@@ -17,11 +17,13 @@ package com.liferay.commerce.model.impl;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CProductLocalServiceUtil;
+import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -100,11 +102,49 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 	}
 
 	@Override
+	public CommerceMoney getDiscountWithTaxAmountMoney()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceOrder.getCommerceCurrencyId(), getDiscountWithTaxAmount());
+	}
+
+	@Override
 	public CommerceMoney getFinalPriceMoney() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
 			commerceOrder.getCommerceCurrencyId(), getFinalPrice());
+	}
+
+	@Override
+	public CommerceMoney getFinalPriceWithTaxAmountMoney()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceOrder.getCommerceCurrencyId(),
+			getFinalPriceWithTaxAmount());
+	}
+
+	@Override
+	public long getParentCommerceOrderItemCPDefinitionId() {
+		if (getParentCommerceOrderItemId() == 0) {
+			return 0;
+		}
+
+		CommerceOrderItem commerceOrderItem =
+			CommerceOrderItemLocalServiceUtil.fetchCommerceOrderItem(
+				getParentCommerceOrderItemId());
+
+		if (commerceOrderItem == null) {
+			return 0;
+		}
+
+		return commerceOrderItem.getCPDefinitionId();
 	}
 
 	@Override
@@ -116,11 +156,41 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 	}
 
 	@Override
+	public CommerceMoney getPromoPriceWithTaxAmountMoney()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceOrder.getCommerceCurrencyId(),
+			getPromoPriceWithTaxAmount());
+	}
+
+	@Override
 	public CommerceMoney getUnitPriceMoney() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
 			commerceOrder.getCommerceCurrencyId(), getUnitPrice());
+	}
+
+	@Override
+	public CommerceMoney getUnitPriceWithTaxAmountMoney()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceOrder.getCommerceCurrencyId(), getUnitPriceWithTaxAmount());
+	}
+
+	@Override
+	public boolean hasParentCommerceOrderItem() {
+		if (getParentCommerceOrderItemId() == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

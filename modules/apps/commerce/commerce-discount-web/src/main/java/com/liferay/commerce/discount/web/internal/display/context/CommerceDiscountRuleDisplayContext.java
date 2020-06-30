@@ -26,6 +26,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -77,6 +78,7 @@ public class CommerceDiscountRuleDisplayContext
 		CommerceDiscountCommerceAccountGroupRelService
 			commerceDiscountCommerceAccountGroupRelService,
 		CPDefinitionService cpDefinitionService,
+		PercentageFormatter percentageFormatter,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(
@@ -84,8 +86,8 @@ public class CommerceDiscountRuleDisplayContext
 			commerceCurrencyLocalService,
 			commerceDiscountModelResourcePermission, commerceDiscountService,
 			commerceDiscountTargetRegistry,
-			commerceDiscountCommerceAccountGroupRelService, httpServletRequest,
-			itemSelector);
+			commerceDiscountCommerceAccountGroupRelService, percentageFormatter,
+			httpServletRequest, itemSelector);
 
 		_commerceDiscountRuleService = commerceDiscountRuleService;
 		_commerceDiscountRuleTypeJSPContributorRegistry =

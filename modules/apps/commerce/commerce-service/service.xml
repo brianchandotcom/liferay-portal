@@ -278,6 +278,24 @@
 		<column name="totalDiscountPercentageLevel2" type="BigDecimal" />
 		<column name="totalDiscountPercentageLevel3" type="BigDecimal" />
 		<column name="totalDiscountPercentageLevel4" type="BigDecimal" />
+		<column name="subtotalWithTaxAmount" type="BigDecimal" />
+		<column name="subtotalDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev1WithTax" name="subtotalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev2WithTax" name="subtotalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev3WithTax" name="subtotalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev4WithTax" name="subtotalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="shippingWithTaxAmount" type="BigDecimal" />
+		<column name="shippingDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev1WithTax" name="shippingDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev2WithTax" name="shippingDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev3WithTax" name="shippingDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev4WithTax" name="shippingDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="totalWithTaxAmount" type="BigDecimal" />
+		<column name="totalDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev1WithTax" name="totalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev2WithTax" name="totalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev3WithTax" name="totalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<column name="advanceStatus" type="String" />
 		<column name="paymentStatus" type="int" />
 		<column name="orderDate" type="Date" />
@@ -336,6 +354,11 @@
 			<finder-column comparator="&lt;" name="createDate" />
 			<finder-column name="orderStatus" />
 		</finder>
+		<finder name="C_LtC_O" return-type="Collection">
+			<finder-column comparator="&lt;" name="createDate" />
+			<finder-column name="commerceAccountId" />
+			<finder-column name="orderStatus" />
+		</finder>
 
 		<!-- References -->
 
@@ -365,8 +388,10 @@
 		<!-- Other fields -->
 
 		<column name="commerceOrderId" type="long" />
+		<column name="commercePriceListId" type="long" />
 		<column name="CProductId" type="long" />
 		<column name="CPInstanceId" type="long" />
+		<column name="parentCommerceOrderItemId" type="long" />
 		<column name="quantity" type="int" />
 		<column name="shippedQuantity" type="int" />
 		<column name="json" type="String" />
@@ -380,6 +405,14 @@
 		<column name="discountPercentageLevel2" type="BigDecimal" />
 		<column name="discountPercentageLevel3" type="BigDecimal" />
 		<column name="discountPercentageLevel4" type="BigDecimal" />
+		<column name="unitPriceWithTaxAmount" type="BigDecimal" />
+		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
+		<column name="discountWithTaxAmount" type="BigDecimal" />
+		<column name="finalPriceWithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel1WithTaxAmount" name="discountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel2WithTaxAmount" name="discountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel3WithTaxAmount" name="discountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel4WithTaxAmount" name="discountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<column name="subscription" type="boolean" />
 		<column name="deliveryGroup" type="String" />
 		<column name="shippingAddressId" type="long" />
@@ -404,6 +437,9 @@
 		</finder>
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="ParentCommerceOrderItemId" return-type="Collection">
+			<finder-column name="parentCommerceOrderItemId" />
 		</finder>
 		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
 			<finder-column name="bookedQuantityId" />
@@ -880,5 +916,6 @@
 		<exception>DuplicateCommerceOrderNote</exception>
 		<exception>GuestCartItemMaxAllowed</exception>
 		<exception>GuestCartMaxAllowed</exception>
+		<exception>ProductBundle</exception>
 	</exceptions>
 </service-builder>

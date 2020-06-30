@@ -19,10 +19,8 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
+import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.UserDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.UserResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -34,6 +32,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -147,13 +146,10 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			commerceAccount.getCommerceAccountId(), invitedUser.getUserId(),
 			roleIds, serviceContext);
 
-		DTOConverter userDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			invitedUser.getModelClassName());
-
-		return (User)userDTOConverter.toDTO(
+		return _userDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				invitedUser.getUserId()));
+				invitedUser.getUserId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
@@ -163,13 +159,13 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	private CommerceAccountUserRelService _commerceAccountUserRelService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference
+	private UserDTOConverter _userDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

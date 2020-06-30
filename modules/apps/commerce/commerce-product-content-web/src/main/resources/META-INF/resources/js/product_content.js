@@ -389,7 +389,7 @@ AUI.add(
 
 						var arrValue = [];
 
-						if (value instanceof Array) {
+						if (Array.isArray(value)) {
 							arrValue = value;
 						} else {
 							arrValue.push(value);

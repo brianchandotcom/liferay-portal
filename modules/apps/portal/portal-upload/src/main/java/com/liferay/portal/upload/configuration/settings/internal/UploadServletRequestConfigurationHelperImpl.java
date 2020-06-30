@@ -42,14 +42,19 @@ public class UploadServletRequestConfigurationHelperImpl
 	}
 
 	@Override
+	public long getMaxTries() {
+		return _uploadServletRequestConfiguration.maxTries();
+	}
+
+	@Override
 	public String getTempDir() {
 		String tempDir = _uploadServletRequestConfiguration.tempDir();
 
-		if (Validator.isNull(tempDir)) {
-			tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
+		if (Validator.isNotNull(tempDir)) {
+			return tempDir;
 		}
 
-		return tempDir;
+		return SystemProperties.get(SystemProperties.TMP_DIR);
 	}
 
 	@Activate

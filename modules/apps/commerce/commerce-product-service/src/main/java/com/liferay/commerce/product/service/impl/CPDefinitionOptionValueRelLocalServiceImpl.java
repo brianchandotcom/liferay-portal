@@ -14,7 +14,11 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelCPInstanceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -67,6 +71,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -138,8 +143,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setNameMap(nameMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
-		cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
+
+		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+		_validatePriceableCPDefinitionOptionValue(
+			cpDefinitionOptionValueRel, cpDefinitionOptionRel.getPriceType());
 
 		cpDefinitionOptionValueRel =
 			cpDefinitionOptionValueRelPersistence.update(
@@ -238,6 +246,36 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelPersistence.fetchByC_K(
 			cpDefinitionOptionRelId, key);
+	}
+
+	@Override
+	public List<CPDefinitionOptionValueRel> filterByCPInstanceOptionValueRels(
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
+		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
+
+		List<CPDefinitionOptionValueRel> filteredCPDefinitionOptionValueRels =
+			new ArrayList<>();
+
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+					cpInstanceOptionValueRels) {
+
+				if (cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId() ==
+							cpInstanceOptionValueRel.
+								getCPDefinitionOptionValueRelId()) {
+
+					filteredCPDefinitionOptionValueRels.add(
+						cpDefinitionOptionValueRel);
+
+					break;
+				}
+			}
+		}
+
+		return filteredCPDefinitionOptionValueRels;
 	}
 
 	@Override
@@ -340,6 +378,21 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId) {
+
+		int count =
+			cpDefinitionOptionValueRelPersistence.
+				countByCPDefinitionOptionRelId(cpDefinitionOptionRelId);
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId, ServiceContext serviceContext)
 		throws PortalException {
@@ -368,6 +421,44 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 		finally {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel resetCPInstanceCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
+		throws PortalException {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+
+		cpDefinitionOptionValueRel.setCPInstanceUuid(null);
+		cpDefinitionOptionValueRel.setCProductId(0);
+		cpDefinitionOptionValueRel.setQuantity(0);
+
+		return cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+	}
+
+	@Override
+	public void resetCPInstanceCPDefinitionOptionValueRels(
+		String cpInstanceUuid) {
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionValueRelPersistence.findByCPInstanceUuid(
+				cpInstanceUuid);
+
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			cpDefinitionOptionValueRel.setCPInstanceUuid(null);
+			cpDefinitionOptionValueRel.setCProductId(0);
+			cpDefinitionOptionValueRel.setQuantity(0);
+			cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
+
+			cpDefinitionOptionValueRelPersistence.update(
+				cpDefinitionOptionValueRel);
 		}
 	}
 
@@ -413,9 +504,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionValueRelId);
 
-		CPInstance cpInstance = cpInstanceLocalService.fetchCPInstance(
-			cpInstanceId);
-
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
 		validate(
@@ -448,17 +536,18 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
-		if (cpInstance != null) {
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+		_updateCPDefinitionOptionValueRelCPInstance(
+			cpDefinitionOptionValueRel, cpInstanceId);
 
-			cpDefinitionOptionValueRel.setCPInstanceUuid(
-				cpInstance.getCPInstanceUuid());
-			cpDefinitionOptionValueRel.setCProductId(
-				cpDefinition.getCProductId());
+		if (cpDefinitionOptionRel.isPriceTypeStatic()) {
+			cpDefinitionOptionValueRel.setPrice(price);
 		}
 
 		cpDefinitionOptionValueRel.setQuantity(quantity);
-		cpDefinitionOptionValueRel.setPrice(price);
+
+		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+		_validatePriceableCPDefinitionOptionValue(
+			cpDefinitionOptionValueRel, cpDefinitionOptionRel.getPriceType());
 
 		cpDefinitionOptionValueRel =
 			cpDefinitionOptionValueRelPersistence.update(
@@ -647,6 +736,134 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
+		}
+	}
+
+	private void _updateCPDefinitionOptionValueRelCPInstance(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+			long cpInstanceId)
+		throws PortalException {
+
+		if (cpInstanceId <= 0) {
+			cpDefinitionOptionValueRel.setCPInstanceUuid(null);
+			cpDefinitionOptionValueRel.setCProductId(0);
+
+			return;
+		}
+
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		cpDefinitionOptionValueRel.setCPInstanceUuid(
+			cpInstance.getCPInstanceUuid());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		cpDefinitionOptionValueRel.setCProductId(cpDefinition.getCProductId());
+	}
+
+	private void _validateLinkedCPDefinitionOptionValueRel(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+		throws PortalException {
+
+		if (Validator.isNull(cpDefinitionOptionValueRel.getCPInstanceUuid()) ||
+			(cpDefinitionOptionValueRel.getCProductId() == 0)) {
+
+			return;
+		}
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionValueRelPersistence.findByCPDefinitionOptionRelId(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+
+		for (CPDefinitionOptionValueRel curCPDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			if (cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() ==
+					curCPDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId()) {
+
+				continue;
+			}
+
+			if (Objects.equals(
+					cpDefinitionOptionValueRel.getCPInstanceUuid(),
+					curCPDefinitionOptionValueRel.getCPInstanceUuid()) &&
+				(cpDefinitionOptionValueRel.getCProductId() ==
+					curCPDefinitionOptionValueRel.getCProductId()) &&
+				(cpDefinitionOptionValueRel.getQuantity() ==
+					curCPDefinitionOptionValueRel.getQuantity())) {
+
+				throw new CPDefinitionOptionValueRelQuantityException();
+			}
+		}
+	}
+
+	private void _validatePriceableCPDefinitionOptionValue(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+			String priceType)
+		throws PortalException {
+
+		if (cpDefinitionOptionValueRel.isNew()) {
+			return;
+		}
+
+		if (Validator.isNull(priceType)) {
+			if (Validator.isNotNull(
+					cpDefinitionOptionValueRel.getCPInstanceUuid()) ||
+				(cpDefinitionOptionValueRel.getPrice() != null) ||
+				(cpDefinitionOptionValueRel.getCProductId() != 0) ||
+				(cpDefinitionOptionValueRel.getQuantity() != 0)) {
+
+				throw new CPDefinitionOptionValueRelCPInstanceException();
+			}
+
+			return;
+		}
+
+		if (Objects.equals(
+				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC) &&
+			(cpDefinitionOptionValueRel.getPrice() == null)) {
+
+			throw new CPDefinitionOptionValueRelPriceException();
+		}
+
+		CPInstance cpInstance = cpInstanceLocalService.fetchCProductInstance(
+			cpDefinitionOptionValueRel.getCProductId(),
+			cpDefinitionOptionValueRel.getCPInstanceUuid());
+
+		if (((cpInstance == null) ||
+			 (cpDefinitionOptionValueRel.getPrice() != null)) &&
+			Objects.equals(
+				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
+
+			throw new CPDefinitionOptionValueRelCPInstanceException();
+		}
+
+		if (cpInstance == null) {
+			return;
+		}
+
+		if (cpDefinitionOptionRelLocalService.
+				hasCPDefinitionRequiredCPDefinitionOptionRels(
+					cpInstance.getCPDefinitionId()) ||
+			(cpInstance.getCPSubscriptionInfo() != null)) {
+
+			throw new CPDefinitionOptionValueRelCPInstanceException();
+		}
+
+		if (cpDefinitionOptionValueRel.getQuantity() <= 0) {
+			throw new CPDefinitionOptionValueRelQuantityException();
+		}
+
+		if (!cpInstance.isApproved()) {
+			throw new CPDefinitionOptionValueRelCPInstanceException();
+		}
+
+		if (cpDefinitionLocalService.hasChildCPDefinitions(
+				cpInstance.getCPDefinitionId())) {
+
+			throw new CPDefinitionOptionValueRelCPInstanceException();
 		}
 	}
 

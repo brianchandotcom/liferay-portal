@@ -18,7 +18,7 @@
 
 <div class="step-tracker-root" id="<%= stepTrackerId %>"></div>
 
-<aui:script require="commerce-frontend-js/components/step_tracker/entry.es as stepTracker">
+<aui:script require="commerce-frontend-js/components/step_tracker/entry as stepTracker">
 	stepTracker.default('<%= stepTrackerId %>', '<%= stepTrackerId %>', {
 		portletId: '<%= portletDisplay.getRootPortletId() %>',
 		spritemap: '<%= spritemap %>',

@@ -3451,8 +3451,6 @@ public class CPOptionPersistenceImpl
 		"(cpOption.externalReferenceCode IS NULL OR cpOption.externalReferenceCode = '')";
 
 	public CPOptionPersistenceImpl() {
-		setModelClass(CPOption.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3471,6 +3469,8 @@ public class CPOptionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPOption.class);
 	}
 
 	/**

@@ -26,26 +26,53 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(service = ProductHelper.class)
 public class ProductHelperImpl implements ProductHelper {
 
+	@Override
+	public PriceModel getMinPrice(
+			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
+		throws PortalException {
+
+		CommerceMoney cpDefinitionMinimumPrice =
+			_commerceProductPriceCalculation.getCPDefinitionMinimumPrice(
+				cpDefinitionId, commerceContext);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new PriceModel(
+			LanguageUtil.format(
+				resourceBundle, "from-x",
+				cpDefinitionMinimumPrice.format(locale), false));
+	}
+
+	@Override
 	public PriceModel getPrice(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,
 			Locale locale)
@@ -59,45 +86,12 @@ public class ProductHelperImpl implements ProductHelper {
 			return null;
 		}
 
-		CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
-
-		PriceModel priceModel = new PriceModel(unitPriceMoney.format(locale));
-
-		CommerceMoney unitPromoPriceMoney =
-			commerceProductPrice.getUnitPromoPrice();
-
-		BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
-
-		if ((unitPromoPrice != null) &&
-			(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(unitPromoPrice.compareTo(unitPriceMoney.getPrice()) < 0)) {
-
-			priceModel.setPromoPrice(unitPromoPriceMoney.format(locale));
-		}
-
-		CommerceDiscountValue discountValue =
-			commerceProductPrice.getDiscountValue();
-
-		if (discountValue != null) {
-			CommerceMoney discountAmount = discountValue.getDiscountAmount();
-			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
-
-			priceModel.setDiscount(discountAmount.format(locale));
-
-			priceModel.setDiscountPercentage(
-				_commercePriceFormatter.format(
-					discountValue.getDiscountPercentage(), locale));
-
-			priceModel.setDiscountPercentages(
-				_getFormattedDiscountPercentages(
-					discountValue.getPercentages(), locale));
-
-			priceModel.setFinalPrice(finalPrice.format(locale));
-		}
-
-		return priceModel;
+		return _getPriceModel(
+			commerceContext.getCommerceChannelId(), commerceProductPrice,
+			locale);
 	}
 
+	@Override
 	public ProductSettingsModel getProductSettingsModel(long cpInstanceId)
 		throws PortalException {
 
@@ -157,12 +151,120 @@ public class ProductHelperImpl implements ProductHelper {
 		List<String> formattedDiscountPercentages = new ArrayList<>();
 
 		for (BigDecimal percentage : discountPercentages) {
+			if (percentage == null) {
+				percentage = BigDecimal.ZERO;
+			}
+
 			formattedDiscountPercentages.add(
 				_commercePriceFormatter.format(percentage, locale));
 		}
 
 		return formattedDiscountPercentages.toArray(new String[0]);
 	}
+
+	private PriceModel _getPriceModel(
+			long commerceChannelId, CommerceProductPrice commerceProductPrice,
+			Locale locale)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
+
+		String priceDisplayType = commerceChannel.getPriceDisplayType();
+
+		if (priceDisplayType.equals(
+				CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE)) {
+
+			CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+
+			PriceModel priceModel = new PriceModel(
+				unitPriceMoney.format(locale));
+
+			CommerceMoney unitPromoPriceMoney =
+				commerceProductPrice.getUnitPromoPrice();
+
+			BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
+
+			if ((unitPromoPrice != null) &&
+				(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
+				(unitPromoPrice.compareTo(unitPriceMoney.getPrice()) < 0)) {
+
+				priceModel.setPromoPrice(unitPromoPriceMoney.format(locale));
+			}
+
+			CommerceDiscountValue discountValue =
+				commerceProductPrice.getDiscountValue();
+
+			if (discountValue != null) {
+				CommerceMoney discountAmount =
+					discountValue.getDiscountAmount();
+
+				priceModel.setDiscount(discountAmount.format(locale));
+
+				priceModel.setDiscountPercentage(
+					_commercePriceFormatter.format(
+						discountValue.getDiscountPercentage(), locale));
+
+				priceModel.setDiscountPercentages(
+					_getFormattedDiscountPercentages(
+						discountValue.getPercentages(), locale));
+
+				CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+
+				priceModel.setFinalPrice(finalPrice.format(locale));
+			}
+
+			return priceModel;
+		}
+
+		CommerceMoney unitPriceWithTaxAmountMoney =
+			commerceProductPrice.getUnitPriceWithTaxAmount();
+
+		PriceModel priceModel = new PriceModel(
+			unitPriceWithTaxAmountMoney.format(locale));
+
+		CommerceMoney unitPromoPriceWithTaxAmountMoney =
+			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
+
+		BigDecimal unitPromoPriceWithTaxAmount =
+			unitPromoPriceWithTaxAmountMoney.getPrice();
+
+		if ((unitPromoPriceWithTaxAmount != null) &&
+			(unitPromoPriceWithTaxAmount.compareTo(BigDecimal.ZERO) > 0) &&
+			(unitPromoPriceWithTaxAmount.compareTo(
+				unitPriceWithTaxAmountMoney.getPrice()) < 0)) {
+
+			priceModel.setPromoPrice(
+				unitPromoPriceWithTaxAmountMoney.format(locale));
+		}
+
+		CommerceDiscountValue discountValue =
+			commerceProductPrice.getDiscountValueWithTaxAmount();
+
+		if (discountValue != null) {
+			CommerceMoney discountAmount = discountValue.getDiscountAmount();
+
+			priceModel.setDiscount(discountAmount.format(locale));
+
+			priceModel.setDiscountPercentage(
+				_commercePriceFormatter.format(
+					discountValue.getDiscountPercentage(), locale));
+
+			priceModel.setDiscountPercentages(
+				_getFormattedDiscountPercentages(
+					discountValue.getPercentages(), locale));
+
+			CommerceMoney finalPriceWithTaxAmount =
+				commerceProductPrice.getFinalPriceWithTaxAmount();
+
+			priceModel.setFinalPrice(finalPriceWithTaxAmount.format(locale));
+		}
+
+		return priceModel;
+	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
@@ -177,6 +279,9 @@ public class ProductHelperImpl implements ProductHelper {
 	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

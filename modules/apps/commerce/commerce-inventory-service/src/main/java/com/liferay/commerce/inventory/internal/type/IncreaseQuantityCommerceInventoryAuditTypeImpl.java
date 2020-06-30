@@ -16,13 +16,15 @@ package com.liferay.commerce.inventory.internal.type;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -37,9 +39,12 @@ public class IncreaseQuantityCommerceInventoryAuditTypeImpl
 
 	@Override
 	public String formatLog(long userId, String context, Locale locale)
-		throws JSONException {
+		throws Exception {
 
-		return StringPool.BLANK;
+		User user = _userLocalService.getUserById(userId);
+
+		return LanguageUtil.format(
+			locale, "x-increased-the-quantity-on-hand", user.getFullName());
 	}
 
 	@Override
@@ -51,5 +56,8 @@ public class IncreaseQuantityCommerceInventoryAuditTypeImpl
 	public String getType() {
 		return CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY;
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

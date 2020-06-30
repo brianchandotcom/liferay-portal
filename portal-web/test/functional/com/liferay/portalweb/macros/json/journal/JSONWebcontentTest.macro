@@ -4,7 +4,7 @@ definition {
 	macro runSmoke {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		//folder
+		// Folder
 
 		JSONWebcontent.addFolder(
 			folderName = "folder name",
@@ -15,7 +15,7 @@ definition {
 			groupName = "${groupName}",
 			parentFolderName = "folder name");
 
-		//webcontent
+		// Webcontent
 
 		JSONWebcontent.addWebContent(
 			content = "test content",
@@ -28,7 +28,7 @@ definition {
 			groupName = "${groupName}",
 			title = "test title2");
 
-		//localized webcontent
+		// Localized webcontent
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:content en,es_ES:content es",
@@ -41,7 +41,7 @@ definition {
 			groupName = "${groupName}",
 			titleMap = "en_US:title en2,es_ES:title es2");
 
-		//getter
+		// Getter
 
 		var folderId = JSONWebcontent.getFolderIdByFolderName(
 			folderName = "folder name",

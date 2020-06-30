@@ -3067,8 +3067,6 @@ public class DDLRecordSetPersistenceImpl
 		"(ddlRecordSet.recordSetKey IS NULL OR ddlRecordSet.recordSetKey = '')";
 
 	public DDLRecordSetPersistenceImpl() {
-		setModelClass(DDLRecordSet.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3087,6 +3085,8 @@ public class DDLRecordSetPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDLRecordSet.class);
 	}
 
 	/**

@@ -95,7 +95,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 
 						<aui:form action="<%= saveStepURL %>" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 							<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
-							<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
+							<aui:input name="commerceOrderUuid" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderUuid() %>" />
 							<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 							<%
@@ -106,7 +106,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 								<aui:button-row>
 									<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviousCheckoutStepName()) %>">
 										<portlet:renderURL var="previousStepURL">
-											<portlet:param name="commerceOrderId" value="<%= String.valueOf(checkoutDisplayContext.getCommerceOrderId()) %>" />
+											<portlet:param name="commerceOrderUuid" value="<%= String.valueOf(checkoutDisplayContext.getCommerceOrderUuid()) %>" />
 											<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
 										</portlet:renderURL>
 

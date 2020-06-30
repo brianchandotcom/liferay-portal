@@ -164,7 +164,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 			}
 		}
 	}
@@ -196,7 +196,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (NoSuchFieldException nsfe) {
+			catch (NoSuchFieldException noSuchFieldException) {
 			}
 		}
 	}

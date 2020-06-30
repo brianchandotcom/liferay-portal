@@ -25,6 +25,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -105,6 +106,14 @@ public class CommerceProductImageDataSetDataProvider
 				httpServletRequest,
 				System.currentTimeMillis() - modifiedDate.getTime(), true);
 
+			String statusDisplayStyle = StringPool.BLANK;
+
+			if (cpAttachmentFileEntry.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				statusDisplayStyle = "success";
+			}
+
 			productMedia.add(
 				new ProductMedia(
 					cpAttachmentFileEntryId,
@@ -119,6 +128,7 @@ public class CommerceProductImageDataSetDataProvider
 						httpServletRequest, "x-ago", modifiedDateDescription,
 						false),
 					new LabelField(
+						statusDisplayStyle,
 						LanguageUtil.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(

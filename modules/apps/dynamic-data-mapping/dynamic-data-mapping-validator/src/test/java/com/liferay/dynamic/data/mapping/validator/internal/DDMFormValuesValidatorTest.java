@@ -461,7 +461,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
-	@Test(expected = RequiredValue.class)
+	@Test
 	public void testValidationWithRequiredFieldAndEmptyTranslatedValue()
 		throws Exception {
 
@@ -497,7 +497,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
-	@Test(expected = MustSetValidAvailableLocales.class)
+	@Test(expected = RequiredValue.class)
 	public void testValidationWithRequiredFieldAndNullValue() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),

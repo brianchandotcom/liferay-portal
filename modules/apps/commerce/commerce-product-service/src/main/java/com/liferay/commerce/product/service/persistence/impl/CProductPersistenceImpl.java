@@ -2227,8 +2227,6 @@ public class CProductPersistenceImpl
 		"(cProduct.externalReferenceCode IS NULL OR cProduct.externalReferenceCode = '')";
 
 	public CProductPersistenceImpl() {
-		setModelClass(CProduct.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2246,6 +2244,8 @@ public class CProductPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CProduct.class);
 	}
 
 	/**

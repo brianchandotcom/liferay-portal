@@ -142,24 +142,25 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JournalDisplayContext {
 
-	public JournalDisplayContext(
+	public static JournalDisplayContext create(
 		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletPreferences portletPreferences, TrashHelper trashHelper) {
 
-		_request = request;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
-		_portletPreferences = portletPreferences;
-		_trashHelper = trashHelper;
+		JournalDisplayContext journalDisplayContext =
+			(JournalDisplayContext)liferayPortletRequest.getAttribute(
+				_JOURNAL_DISPLAY_CONTEXT);
 
-		_journalWebConfiguration =
-			(JournalWebConfiguration)_request.getAttribute(
-				JournalWebConfiguration.class.getName());
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		if (journalDisplayContext == null) {
+			journalDisplayContext = new JournalDisplayContext(
+				request, liferayPortletRequest, liferayPortletResponse,
+				portletPreferences, trashHelper);
+
+			liferayPortletRequest.setAttribute(
+				_JOURNAL_DISPLAY_CONTEXT, journalDisplayContext);
+		}
+
+		return journalDisplayContext;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -1132,6 +1133,10 @@ public class JournalDisplayContext {
 	public SearchContainer getSearchContainer(boolean showVersions)
 		throws PortalException {
 
+		if (_articleSearchContainer != null) {
+			return _articleSearchContainer;
+		}
+
 		SearchContainer articleSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
@@ -1403,7 +1408,9 @@ public class JournalDisplayContext {
 			articleSearchContainer.setResults(results);
 		}
 
-		return articleSearchContainer;
+		_articleSearchContainer = articleSearchContainer;
+
+		return _articleSearchContainer;
 	}
 
 	public String getSortingURL() {
@@ -1810,6 +1817,26 @@ public class JournalDisplayContext {
 		return searchContext;
 	}
 
+	private JournalDisplayContext(
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences, TrashHelper trashHelper) {
+
+		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_portletPreferences = portletPreferences;
+		_trashHelper = trashHelper;
+
+		_journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_request);
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
 	private String _getFeedsURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -2078,12 +2105,16 @@ public class JournalDisplayContext {
 		}
 	}
 
+	private static final String _JOURNAL_DISPLAY_CONTEXT =
+		"JOURNAL_DISPLAY_CONTEXT";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalDisplayContext.class);
 
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
+	private SearchContainer _articleSearchContainer;
 	private SearchContainer _articleTranslationsSearchContainer;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;

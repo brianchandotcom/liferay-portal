@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -295,6 +296,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultSummaryDisplayBuilder.setDocument(document);
 		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
 			fastDateFormatFactory);
+		searchResultSummaryDisplayBuilder.setGroupLocalService(
+			groupLocalService);
 		searchResultSummaryDisplayBuilder.setHighlightEnabled(
 			searchResultsPortletPreferences.isHighlightEnabled());
 		searchResultSummaryDisplayBuilder.setImageRequested(true);
@@ -406,6 +409,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected FastDateFormatFactory fastDateFormatFactory;
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected Http http;

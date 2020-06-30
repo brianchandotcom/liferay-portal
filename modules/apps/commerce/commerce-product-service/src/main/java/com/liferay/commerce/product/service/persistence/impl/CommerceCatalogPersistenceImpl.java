@@ -2204,8 +2204,6 @@ public class CommerceCatalogPersistenceImpl
 		"(commerceCatalog.externalReferenceCode IS NULL OR commerceCatalog.externalReferenceCode = '')";
 
 	public CommerceCatalogPersistenceImpl() {
-		setModelClass(CommerceCatalog.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("system", "system_");
@@ -2223,6 +2221,8 @@ public class CommerceCatalogPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceCatalog.class);
 	}
 
 	/**

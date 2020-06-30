@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Address implements Cloneable {
 
+	public static Address toDTO(String json) {
+		return AddressSerDes.toDTO(json);
+	}
+
 	public String getCity() {
 		return city;
 	}

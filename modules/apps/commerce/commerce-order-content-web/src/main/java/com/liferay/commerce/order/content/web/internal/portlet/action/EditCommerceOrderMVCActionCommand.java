@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -210,7 +211,33 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				reorderCommerceOrder(actionRequest);
 			}
 			else if (cmd.equals("setCurrent")) {
-				setCurrentCommerceOrder(actionRequest);
+				long commerceOrderId = ParamUtil.getLong(
+					actionRequest, "commerceOrderId");
+
+				setCurrentCommerceOrder(actionRequest, commerceOrderId);
+
+				PortletURL openOrdersPortletURL =
+					PortletProviderUtil.getPortletURL(
+						actionRequest, CommerceOrder.class.getName(),
+						PortletProvider.Action.EDIT);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				openOrdersPortletURL.setParameter(
+					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+					redirect);
+
+				openOrdersPortletURL.setParameter(
+					"mvcRenderCommandName", "editCommerceOrder");
+				openOrdersPortletURL.setParameter(
+					"commerceOrderId", String.valueOf(commerceOrderId));
+
+				hideDefaultSuccessMessage(actionRequest);
+
+				sendRedirect(
+					actionRequest, actionResponse,
+					openOrdersPortletURL.toString());
 			}
 			else if (cmd.equals("transition")) {
 				executeTransition(actionRequest);
@@ -313,11 +340,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		checkoutOrSubmitCommerceOrder(actionRequest, commerceOrder);
 	}
 
-	protected void setCurrentCommerceOrder(ActionRequest actionRequest)
+	protected void setCurrentCommerceOrder(
+			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
 
 		_commerceOrderHttpHelper.setCurrentCommerceOrder(
 			_portal.getHttpServletRequest(actionRequest),

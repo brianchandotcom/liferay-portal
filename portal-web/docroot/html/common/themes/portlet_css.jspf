@@ -17,7 +17,7 @@
 <%
 JSONObject jsonObject = PortletSetupUtil.cssToJSONObject(portletSetup, portletSetupCss);
 
-List finalCSS = new ArrayList();
+List<String> finalCSS = new ArrayList<>();
 
 // Background data
 

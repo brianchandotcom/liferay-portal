@@ -30,8 +30,20 @@ public class CommercePricingConstants {
 	public static final String SERVICE_NAME =
 		"com.liferay.commerce.pricing.service.name";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final int TAX_EXCLUDED_FROM_FINAL_PRICE = 1;
 
+	public static final String TAX_EXCLUDED_FROM_PRICE = "tax-excluded";
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final int TAX_INCLUDED_IN_FINAL_PRICE = 0;
+
+	public static final String TAX_INCLUDED_IN_PRICE = "tax-included";
 
 }

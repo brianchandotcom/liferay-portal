@@ -19,9 +19,8 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderItemDTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -67,15 +66,11 @@ public class OrderItemHelper {
 
 		List<OrderItem> orderItems = new ArrayList<>();
 
-		DTOConverter orderItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceOrderItem.class.getName());
-
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			orderItems.add(
-				(OrderItem)orderItemDTOConverter.toDTO(
+				_orderItemDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						locale, commerceOrderItem.getCommerceOrderItemId())));
+						commerceOrderItem.getCommerceOrderItemId(), locale)));
 		}
 
 		return orderItems;
@@ -88,6 +83,6 @@ public class OrderItemHelper {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private OrderItemDTOConverter _orderItemDTOConverter;
 
 }

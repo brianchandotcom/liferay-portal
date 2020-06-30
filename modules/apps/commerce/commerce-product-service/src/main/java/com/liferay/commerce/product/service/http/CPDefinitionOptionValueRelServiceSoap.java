@@ -283,6 +283,29 @@ public class CPDefinitionOptionValueRelServiceSoap {
 
 	public static
 		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
+				resetCPInstanceCPDefinitionOptionValueRel(
+					long cpDefinitionOptionValueRelId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+				returnValue =
+					CPDefinitionOptionValueRelServiceUtil.
+						resetCPInstanceCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
+
+			return com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
 				updateCPDefinitionOptionValueRel(
 					long cpDefinitionOptionValueRelId,
 					String[] nameMapLanguageIds, String[] nameMapValues,

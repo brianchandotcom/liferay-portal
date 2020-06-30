@@ -296,13 +296,23 @@ public class OrganizationSerDes {
 				"customFields", String.valueOf(organization.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(organization.getDateCreated()));
+		if (organization.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(organization.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(organization.getDateModified()));
+		if (organization.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(organization.getDateModified()));
+		}
 
 		if (organization.getId() == null) {
 			map.put("id", null);

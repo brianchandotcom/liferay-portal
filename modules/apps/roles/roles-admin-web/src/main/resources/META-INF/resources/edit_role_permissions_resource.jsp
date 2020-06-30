@@ -125,7 +125,7 @@ for (int i = 0; i < results.size(); i++) {
 		groupIdsArray = new long[groups.size()];
 
 		for (int j = 0; j < groups.size(); j++) {
-			Group group = (Group)groups.get(j);
+			Group group = groups.get(j);
 
 			groupIdsArray[j] = group.getGroupId();
 

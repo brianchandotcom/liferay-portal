@@ -276,6 +276,21 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
+			long companyId, long cpDefinitionId, String keywords, int status,
+			Sort sort)
+		throws PortalException {
+
+		if (cpDefinitionId > 0) {
+			_checkCommerceCatalogPermissionByCPDefinitionId(
+				cpDefinitionId, ActionKeys.VIEW);
+		}
+
+		return cpInstanceLocalService.searchCPDefinitionInstances(
+			companyId, cpDefinitionId, keywords, status, sort);
+	}
+
+	@Override
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			long companyId, long groupId, String keywords, int status,
 			int start, int end, Sort sort)

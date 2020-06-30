@@ -66,6 +66,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 	<aui:button-row cssClass="price-entry-button-row">
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= editPriceListURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

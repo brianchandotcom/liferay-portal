@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.delivery.cart.client.resource.v1_0;
 
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
+import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.client.http.HttpInvoker;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Pagination;
@@ -75,16 +76,11 @@ public interface CartResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Cart postCartCouponCode(
-			Long cartId,
-			com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.
-				CouponCode couponCode)
+	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postCartCouponCodeHttpResponse(
-			Long cartId,
-			com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.
-				CouponCode couponCode)
+			Long cartId, CouponCode couponCode)
 		throws Exception;
 
 	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
@@ -503,10 +499,7 @@ public interface CartResource {
 			return httpInvoker.invoke();
 		}
 
-		public Cart postCartCouponCode(
-				Long cartId,
-				com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.
-					CouponCode couponCode)
+		public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -533,9 +526,7 @@ public interface CartResource {
 		}
 
 		public HttpInvoker.HttpResponse postCartCouponCodeHttpResponse(
-				Long cartId,
-				com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.
-					CouponCode couponCode)
+				Long cartId, CouponCode couponCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

@@ -79,7 +79,23 @@ List<CommercePriceListCommerceAccountGroupRel> commercePriceListAccountGroupEntr
 
 	</aui:select>
 
-	<aui:input name="priority" />
+	<aui:input name="priority">
+		<aui:validator name="number" />
+	</aui:input>
+
+	<aui:select label="price-type" name="netPrice">
+
+		<%
+		boolean isNetPrice = true;
+
+		if (commercePriceList != null) {
+			isNetPrice = commercePriceList.isNetPrice();
+		}
+		%>
+
+		<aui:option label="net-price" selected="<%= isNetPrice %>" value="true" />
+		<aui:option label="gross-price" selected="<%= !isNetPrice %>" value="false" />
+	</aui:select>
 </aui:fieldset>
 
 <h5 class="text-default"><liferay-ui:message key="parent-price-list" /></h5>

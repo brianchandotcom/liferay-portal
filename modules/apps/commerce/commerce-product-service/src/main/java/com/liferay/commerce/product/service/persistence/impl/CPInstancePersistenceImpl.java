@@ -6576,8 +6576,6 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.externalReferenceCode IS NULL OR cpInstance.externalReferenceCode = '')";
 
 	public CPInstancePersistenceImpl() {
-		setModelClass(CPInstance.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6597,6 +6595,8 @@ public class CPInstancePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPInstance.class);
 	}
 
 	/**

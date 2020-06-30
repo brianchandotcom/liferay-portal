@@ -92,6 +92,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPSearchResultsPortlet";
 
+	public static final String CP_SORT =
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
+			"CPSortPortlet";
+
 	public static final String CP_SPECIFICATION_OPTION_FACETS =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPSpecificationOptionFacetsPortlet";

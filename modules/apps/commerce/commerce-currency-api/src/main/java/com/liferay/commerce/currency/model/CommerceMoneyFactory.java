@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.util.PriceFormat;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -28,6 +29,10 @@ public interface CommerceMoneyFactory {
 
 	public CommerceMoney create(
 		CommerceCurrency commerceCurrency, BigDecimal price);
+
+	public CommerceMoney create(
+		CommerceCurrency commerceCurrency, BigDecimal price,
+		PriceFormat priceFormat);
 
 	public CommerceMoney create(long commerceCurrencyId, BigDecimal price)
 		throws PortalException;

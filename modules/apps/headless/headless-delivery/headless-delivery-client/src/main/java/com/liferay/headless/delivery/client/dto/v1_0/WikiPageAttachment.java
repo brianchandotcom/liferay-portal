@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class WikiPageAttachment implements Cloneable {
 
+	public static WikiPageAttachment toDTO(String json) {
+		return WikiPageAttachmentSerDes.toDTO(json);
+	}
+
 	public String getContentUrl() {
 		return contentUrl;
 	}

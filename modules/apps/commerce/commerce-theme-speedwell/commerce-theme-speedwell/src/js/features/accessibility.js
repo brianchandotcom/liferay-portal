@@ -12,17 +12,14 @@
  * details.
  */
 
-var Speedwell = Speedwell || {features: {}};
-
-Speedwell.features.accessibility = (function(w) {
+(function(w) {
 	'use strict';
 
-	const KEYDOWN_EVENT = 'keydown',
-		TAB_KEYCODE = 9,
-		ACCESSIBILITY_CLASS = 'is-accessible',
-		TIMEOUT = 5000;
+	var KEYDOWN_EVENT = 'keydown';
+	var TAB_KEYCODE = 9;
+	var ACCESSIBILITY_CLASS = 'is-accessible';
+	var TIMEOUT = 5000;
 
-	let isAccessible = false;
 	const removeAfter = setTimeout(() => {
 		w.removeEventListener(KEYDOWN_EVENT, needsAccessibility);
 		clearTimeout(removeAfter);
@@ -32,20 +29,10 @@ Speedwell.features.accessibility = (function(w) {
 		const isTabbing = e.which === TAB_KEYCODE;
 
 		if (isTabbing) {
-			isAccessible = true;
-
 			w.document.body.classList.add(ACCESSIBILITY_CLASS);
 			w.removeEventListener(KEYDOWN_EVENT, needsAccessibility);
 		}
 	}
 
-	return {
-		initialize() {
-			w.addEventListener(KEYDOWN_EVENT, needsAccessibility);
-		},
-
-		isAccessible() {
-			return isAccessible;
-		}
-	};
+	w.addEventListener(KEYDOWN_EVENT, needsAccessibility);
 })(window);

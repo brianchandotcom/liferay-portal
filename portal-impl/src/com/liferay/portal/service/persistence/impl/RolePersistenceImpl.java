@@ -9058,8 +9058,6 @@ public class RolePersistenceImpl
 		"role.classPK IN (";
 
 	public RolePersistenceImpl() {
-		setModelClass(Role.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -9078,6 +9076,8 @@ public class RolePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Role.class);
 	}
 
 	/**

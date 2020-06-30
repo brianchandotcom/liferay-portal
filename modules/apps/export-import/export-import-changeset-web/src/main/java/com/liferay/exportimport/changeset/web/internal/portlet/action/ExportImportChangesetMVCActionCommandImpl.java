@@ -31,9 +31,12 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -61,6 +65,9 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -157,6 +164,41 @@ public class ExportImportChangesetMVCActionCommandImpl
 		sendRedirect(actionRequest, actionResponse);
 	}
 
+	private StagedModel _extractStagedModelFromChangeset(String changesetUuid) {
+		Optional<Changeset> changesetOptional = _changesetManager.peekChangeset(
+			changesetUuid);
+
+		if (!changesetOptional.isPresent()) {
+			return null;
+		}
+
+		Changeset changeset = changesetOptional.get();
+
+		Stream<StagedModel> stream = changeset.stream();
+
+		Optional<StagedModel> stagedModelOptional = stream.filter(
+			Objects::nonNull
+		).findFirst();
+
+		if (!stagedModelOptional.isPresent()) {
+			return null;
+		}
+
+		return stagedModelOptional.get();
+	}
+
+	private boolean _fallbackIdsRequired() {
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
+			return false;
+		}
+
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _processExportAndPublishAction(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String cmd, String changesetUuid)
@@ -181,6 +223,25 @@ public class ExportImportChangesetMVCActionCommandImpl
 			PortletDataHandlerKeys.DELETIONS,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put("changesetUuid", new String[] {changesetUuid});
+
+		if (_fallbackIdsRequired()) {
+			StagedModel stagedModel = _extractStagedModelFromChangeset(
+				changesetUuid);
+
+			if (stagedModel != null) {
+				long classNameId = _classNameLocalService.getClassNameId(
+					stagedModel.getModelClassName());
+
+				parameterMap.put(
+					"classNameId", new String[] {String.valueOf(classNameId)});
+
+				parameterMap.put(
+					"classPK",
+					new String[] {
+						String.valueOf(stagedModel.getPrimaryKeyObj())
+					});
+			}
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -323,6 +384,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 	@Reference
 	private ChangesetManager _changesetManager;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ExportImportConfigurationLocalService

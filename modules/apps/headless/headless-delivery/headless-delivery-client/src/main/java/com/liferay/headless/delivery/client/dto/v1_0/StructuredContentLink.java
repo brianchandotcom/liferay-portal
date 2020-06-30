@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class StructuredContentLink implements Cloneable {
 
+	public static StructuredContentLink toDTO(String json) {
+		return StructuredContentLinkSerDes.toDTO(json);
+	}
+
 	public String getContentType() {
 		return contentType;
 	}

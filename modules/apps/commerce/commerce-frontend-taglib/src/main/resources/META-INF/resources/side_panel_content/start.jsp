@@ -16,7 +16,7 @@
 
 <%@ include file="/side_panel_content/init.jsp" %>
 
-<aui:script require="commerce-frontend-js/utilities/iframes.es as iframesUtils">
+<aui:script require="commerce-frontend-js/utilities/iframes as iframesUtils">
 	iframesUtils.initializeIframeListeners();
 </aui:script>
 

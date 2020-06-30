@@ -23,6 +23,8 @@ if (Validator.isNull(authType)) {
 	authType = company.getAuthType();
 }
 
+String login = (String)portletSession.getAttribute(WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
+
 Integer reminderAttempts = (Integer)portletSession.getAttribute(WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
 
 if (reminderAttempts == null) {
@@ -79,23 +81,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 				<c:when test="<%= user2 == null %>">
 
 					<%
-					String loginParameter = null;
 					String loginLabel = null;
 
 					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-						loginParameter = "emailAddress";
 						loginLabel = "email-address";
 					}
 					else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-						loginParameter = "screenName";
 						loginLabel = "screen-name";
 					}
 					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-						loginParameter = "userId";
 						loginLabel = "id";
 					}
-
-					String loginValue = ParamUtil.getString(request, loginParameter);
 					%>
 
 					<aui:input name="step" type="hidden" value="1" />
@@ -108,7 +104,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 					</c:if>
 
-					<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>">
+					<aui:input label="<%= loginLabel %>" name="login" size="30" type="text" value="<%= login %>">
 						<aui:validator name="required" />
 					</aui:input>
 
@@ -124,7 +120,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
 					</aui:button-row>
 				</c:when>
-				<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
+				<c:when test="<%= user2 != null %>">
 					<aui:input name="step" type="hidden" value="2" />
 
 					<portlet:renderURL var="redirectURL">
@@ -134,21 +130,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 					<c:if test="<%= Validator.isNotNull(user2.getReminderQueryQuestion()) && Validator.isNotNull(user2.getReminderQueryAnswer()) %>">
-
-						<%
-						String login = null;
-
-						if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-							login = user2.getEmailAddress();
-						}
-						else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-							login = user2.getScreenName();
-						}
-						else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-							login = String.valueOf(user2.getUserId());
-						}
-						%>
-
 						<div class="alert alert-info">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(login) %>" key="an-email-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question" translateArguments="<%= false %>" />
 						</div>

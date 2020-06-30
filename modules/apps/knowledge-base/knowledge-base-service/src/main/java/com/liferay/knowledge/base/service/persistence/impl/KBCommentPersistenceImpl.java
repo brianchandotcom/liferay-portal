@@ -5052,8 +5052,6 @@ public class KBCommentPersistenceImpl
 		"kbComment.status IN (";
 
 	public KBCommentPersistenceImpl() {
-		setModelClass(KBComment.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5071,6 +5069,8 @@ public class KBCommentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(KBComment.class);
 	}
 
 	/**

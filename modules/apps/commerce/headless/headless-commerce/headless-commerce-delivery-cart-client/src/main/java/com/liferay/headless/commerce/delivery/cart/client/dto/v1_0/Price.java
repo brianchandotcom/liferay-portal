@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Price implements Cloneable {
 
+	public static Price toDTO(String json) {
+		return PriceSerDes.toDTO(json);
+	}
+
 	public String getCurrency() {
 		return currency;
 	}

@@ -61,6 +61,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -212,6 +213,179 @@ public abstract class BaseAccountAddressResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				AccountAddress.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountAddresses/{id}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/accountAddresses/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountAddress")})
+	public AccountAddress getAccountAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+		throws Exception {
+
+		return new AccountAddress();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountAddresses/{id}' -d $'{"city": ___, "countryISOCode": ___, "defaultBilling": ___, "defaultShipping": ___, "description": ___, "externalReferenceCode": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "type": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PATCH
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/accountAddresses/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountAddress")})
+	public AccountAddress patchAccountAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			AccountAddress accountAddress)
+		throws Exception {
+
+		AccountAddress existingAccountAddress = getAccountAddress(id);
+
+		if (accountAddress.getCity() != null) {
+			existingAccountAddress.setCity(accountAddress.getCity());
+		}
+
+		if (accountAddress.getCountryISOCode() != null) {
+			existingAccountAddress.setCountryISOCode(
+				accountAddress.getCountryISOCode());
+		}
+
+		if (accountAddress.getDefaultBilling() != null) {
+			existingAccountAddress.setDefaultBilling(
+				accountAddress.getDefaultBilling());
+		}
+
+		if (accountAddress.getDefaultShipping() != null) {
+			existingAccountAddress.setDefaultShipping(
+				accountAddress.getDefaultShipping());
+		}
+
+		if (accountAddress.getDescription() != null) {
+			existingAccountAddress.setDescription(
+				accountAddress.getDescription());
+		}
+
+		if (accountAddress.getExternalReferenceCode() != null) {
+			existingAccountAddress.setExternalReferenceCode(
+				accountAddress.getExternalReferenceCode());
+		}
+
+		if (accountAddress.getLatitude() != null) {
+			existingAccountAddress.setLatitude(accountAddress.getLatitude());
+		}
+
+		if (accountAddress.getLongitude() != null) {
+			existingAccountAddress.setLongitude(accountAddress.getLongitude());
+		}
+
+		if (accountAddress.getName() != null) {
+			existingAccountAddress.setName(accountAddress.getName());
+		}
+
+		if (accountAddress.getPhoneNumber() != null) {
+			existingAccountAddress.setPhoneNumber(
+				accountAddress.getPhoneNumber());
+		}
+
+		if (accountAddress.getRegionISOCode() != null) {
+			existingAccountAddress.setRegionISOCode(
+				accountAddress.getRegionISOCode());
+		}
+
+		if (accountAddress.getStreet1() != null) {
+			existingAccountAddress.setStreet1(accountAddress.getStreet1());
+		}
+
+		if (accountAddress.getStreet2() != null) {
+			existingAccountAddress.setStreet2(accountAddress.getStreet2());
+		}
+
+		if (accountAddress.getStreet3() != null) {
+			existingAccountAddress.setStreet3(accountAddress.getStreet3());
+		}
+
+		if (accountAddress.getType() != null) {
+			existingAccountAddress.setType(accountAddress.getType());
+		}
+
+		if (accountAddress.getZip() != null) {
+			existingAccountAddress.setZip(accountAddress.getZip());
+		}
+
+		preparePatch(accountAddress, existingAccountAddress);
+
+		return putAccountAddress(id, existingAccountAddress);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountAddresses/{id}' -d $'{"city": ___, "countryISOCode": ___, "defaultBilling": ___, "defaultShipping": ___, "description": ___, "externalReferenceCode": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "type": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/accountAddresses/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountAddress")})
+	public AccountAddress putAccountAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			AccountAddress accountAddress)
+		throws Exception {
+
+		return new AccountAddress();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountAddresses/{id}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/accountAddresses/{id}/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "AccountAddress")})
+	public Response putAccountAddressBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
 				AccountAddress.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -388,6 +562,13 @@ public abstract class BaseAccountAddressResourceImpl
 			java.util.Collection<AccountAddress> accountAddresses,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (AccountAddress accountAddress : accountAddresses) {
+			putAccountAddress(
+				accountAddress.getId() != null ? accountAddress.getId() :
+				(Long)parameters.get("accountAddressId"),
+				accountAddress);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

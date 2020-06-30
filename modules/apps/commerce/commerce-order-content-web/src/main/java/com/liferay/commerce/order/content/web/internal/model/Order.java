@@ -21,7 +21,7 @@ public class Order {
 
 	public Order(
 		long orderId, String accountName, String date, String author,
-		String orderStatus, String status, String amount, String href) {
+		String orderStatus, String status, String amount) {
 
 		_orderId = orderId;
 		_accountName = accountName;
@@ -30,7 +30,6 @@ public class Order {
 		_orderStatus = orderStatus;
 		_status = status;
 		_amount = amount;
-		_href = href;
 		_title = String.valueOf(orderId);
 	}
 
@@ -48,10 +47,6 @@ public class Order {
 
 	public String getDate() {
 		return _date;
-	}
-
-	public String getHref() {
-		return _href;
 	}
 
 	public long getOrderId() {
@@ -74,7 +69,6 @@ public class Order {
 	private final String _amount;
 	private final String _author;
 	private final String _date;
-	private final String _href;
 	private final long _orderId;
 	private final String _orderStatus;
 	private final String _status;

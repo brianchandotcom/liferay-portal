@@ -21142,8 +21142,6 @@ public class BlogsEntryPersistenceImpl
 		"blogsEntry.status != ?";
 
 	public BlogsEntryPersistenceImpl() {
-		setModelClass(BlogsEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -21161,6 +21159,8 @@ public class BlogsEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(BlogsEntry.class);
 	}
 
 	/**

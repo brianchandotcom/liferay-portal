@@ -21,6 +21,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
@@ -39,10 +40,12 @@ public class CommerceOrderModelResourcePermissionLogic
 	implements ModelResourcePermissionLogic<CommerceOrder> {
 
 	public CommerceOrderModelResourcePermissionLogic(
+		ConfigurationProvider configurationProvider,
 		GroupLocalService groupLocalService,
 		PortletResourcePermission portletResourcePermission,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
+		_configurationProvider = configurationProvider;
 		_groupLocalService = groupLocalService;
 		_portletResourcePermission = portletResourcePermission;
 		_workflowDefinitionLinkLocalService =
@@ -118,7 +121,7 @@ public class CommerceOrderModelResourcePermissionLogic
 		User user = permissionChecker.getUser();
 
 		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
-			return false;
+			return true;
 		}
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
@@ -235,9 +238,7 @@ public class CommerceOrderModelResourcePermissionLogic
 			return true;
 		}
 
-		User user = permissionChecker.getUser();
-
-		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+		if (commerceOrder.isGuestOrder()) {
 			return true;
 		}
 
@@ -309,6 +310,7 @@ public class CommerceOrderModelResourcePermissionLogic
 		return false;
 	}
 
+	private final ConfigurationProvider _configurationProvider;
 	private final GroupLocalService _groupLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
 	private final WorkflowDefinitionLinkLocalService

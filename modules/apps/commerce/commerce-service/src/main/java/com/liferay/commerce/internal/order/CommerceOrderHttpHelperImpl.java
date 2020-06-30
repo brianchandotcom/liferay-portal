@@ -16,14 +16,18 @@ package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -34,17 +38,27 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -97,6 +111,16 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				commerceAccount.getCommerceAccountId(), commerceCurrencyId);
 		}
 
+		if (commerceAccount == null) {
+			throw new CommerceOrderValidatorException(
+				Collections.singletonList(
+					new CommerceOrderValidatorResult(
+						false,
+						_getLocalizedMessage(
+							_portal.getLocale(httpServletRequest),
+							"please-select-a-valid-account"))));
+		}
+
 		setCurrentCommerceOrder(httpServletRequest, commerceOrder);
 
 		return commerceOrder;
@@ -142,8 +166,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "viewCommerceOrderDetails");
 				portletURL.setParameter(
-					"commerceOrderId",
-					String.valueOf(commerceOrder.getCommerceOrderId()));
+					"commerceOrderUuid",
+					String.valueOf(commerceOrder.getUuid()));
 			}
 
 			return portletURL;
@@ -170,8 +194,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "editCommerceOrder");
 				portletURL.setParameter(
-					"commerceOrderId",
-					String.valueOf(commerceOrder.getCommerceOrderId()));
+					"commerceOrderUuid",
+					String.valueOf(commerceOrder.getUuid()));
 			}
 
 			return portletURL;
@@ -185,8 +209,57 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _getPortletURL(
+		PortletURL portletURL = _getPortletURL(
 			httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT);
+
+		CommerceOrder commerceOrder = getCurrentCommerceOrder(
+			httpServletRequest);
+
+		if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+			Layout currentLayout = (Layout)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT);
+
+			String friendlyURL = StringPool.FORWARD_SLASH + "authentication";
+
+			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				_portal.getScopeGroupId(httpServletRequest), false,
+				friendlyURL);
+
+			if (!friendlyURL.equals(currentLayout.getFriendlyURL()) &&
+				(layout != null)) {
+
+				portletURL = _portletURLFactory.create(
+					httpServletRequest,
+					"com_liferay_login_web_portlet_LoginPortlet", layout,
+					PortletRequest.RENDER_PHASE);
+			}
+			else {
+				portletURL.setParameter(
+					"continueAsGuest", Boolean.TRUE.toString());
+
+				Cookie cookie = new Cookie(
+					"continueAsGuest", Boolean.TRUE.toString());
+
+				String domain = CookieKeys.getDomain(httpServletRequest);
+
+				if (Validator.isNotNull(domain)) {
+					cookie.setDomain(domain);
+				}
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				cookie.setMaxAge(CookieKeys.MAX_AGE);
+				cookie.setPath(StringPool.SLASH);
+
+				CookieKeys.addCookie(
+					themeDisplay.getRequest(), themeDisplay.getResponse(),
+					cookie);
+			}
+		}
+
+		return portletURL;
 	}
 
 	@Override
@@ -242,6 +315,25 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 
 		return commerceOrder;
+	}
+
+	@Override
+	public boolean isGuestCheckoutEnabled(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		groupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				groupId);
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, CommerceConstants.ORDER_SERVICE_NAME));
+
+		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}
 
 	@Override
@@ -428,6 +520,17 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		return commerceOrder;
 	}
 
+	private String _getLocalizedMessage(Locale locale, String key) {
+		if (locale == null) {
+			return key;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, key);
+	}
+
 	private PortletURL _getPortletURL(
 			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
@@ -534,7 +637,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

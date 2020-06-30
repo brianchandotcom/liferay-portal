@@ -27,15 +27,14 @@ definition {
 	}
 
 	macro assignSingleRelationToProductsEntry {
-		Click(locator1 = "CommerceEntry#ADD_BUTTON");
+		Type(
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "${entryName}");
 
-		WaitForSPARefresh();
-
-		CommerceItemSelector.selectEntry(entryName = "${entryName}");
-
-		Click(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
+		ClickNoError(
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
 	}
 
 }

@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormPage implements Cloneable {
 
+	public static FormPage toDTO(String json) {
+		return FormPageSerDes.toDTO(json);
+	}
+
 	public FormField[] getFormFields() {
 		return formFields;
 	}

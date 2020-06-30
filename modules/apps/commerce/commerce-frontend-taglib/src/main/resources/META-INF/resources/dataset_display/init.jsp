@@ -24,7 +24,8 @@ page import="com.liferay.commerce.frontend.taglib.internal.model.ClayPaginationE
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.List" %>
 
@@ -44,6 +45,8 @@ String formId = (String)request.getAttribute("liferay-commerce:dataset-display:f
 String id = (String)request.getAttribute("liferay-commerce:dataset-display:id");
 int itemsPerPage = (int)request.getAttribute("liferay-commerce:dataset-display:itemsPerPage");
 String namespace = (String)request.getAttribute("liferay-commerce:dataset-display:namespace");
+String nestedItemsKey = (String)request.getAttribute("liferay-commerce:dataset-display:nestedItemsKey");
+String nestedItemsReferenceKey = (String)request.getAttribute("liferay-commerce:dataset-display:nestedItemsReferenceKey");
 int pageNumber = (int)request.getAttribute("liferay-commerce:dataset-display:pageNumber");
 List<ClayPaginationEntry> paginationEntries = (List<ClayPaginationEntry>)request.getAttribute("liferay-commerce:dataset-display:paginationEntries");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-commerce:dataset-display:portletURL");

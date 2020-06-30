@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.resource.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -98,35 +99,28 @@ public interface KnowledgeBaseArticleResource {
 				Long knowledgeBaseArticleId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getKnowledgeBaseArticleMyRatingHttpResponse(
 			Long knowledgeBaseArticleId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postKnowledgeBaseArticleMyRating(
-				Long knowledgeBaseArticleId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating postKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postKnowledgeBaseArticleMyRatingHttpResponse(
-				Long knowledgeBaseArticleId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+				Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putKnowledgeBaseArticleMyRating(
-				Long knowledgeBaseArticleId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating putKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putKnowledgeBaseArticleMyRatingHttpResponse(
-			Long knowledgeBaseArticleId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception;
 
 	public void putKnowledgeBaseArticleSubscribe(Long knowledgeBaseArticleId)
@@ -750,8 +744,8 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		public Rating getKnowledgeBaseArticleMyRating(
+				Long knowledgeBaseArticleId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -817,10 +811,8 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				postKnowledgeBaseArticleMyRating(
-					Long knowledgeBaseArticleId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating postKnowledgeBaseArticleMyRating(
+				Long knowledgeBaseArticleId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -850,8 +842,7 @@ public interface KnowledgeBaseArticleResource {
 
 		public HttpInvoker.HttpResponse
 				postKnowledgeBaseArticleMyRatingHttpResponse(
-					Long knowledgeBaseArticleId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long knowledgeBaseArticleId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -889,10 +880,8 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				putKnowledgeBaseArticleMyRating(
-					Long knowledgeBaseArticleId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating putKnowledgeBaseArticleMyRating(
+				Long knowledgeBaseArticleId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -922,8 +911,7 @@ public interface KnowledgeBaseArticleResource {
 
 		public HttpInvoker.HttpResponse
 				putKnowledgeBaseArticleMyRatingHttpResponse(
-					Long knowledgeBaseArticleId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long knowledgeBaseArticleId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

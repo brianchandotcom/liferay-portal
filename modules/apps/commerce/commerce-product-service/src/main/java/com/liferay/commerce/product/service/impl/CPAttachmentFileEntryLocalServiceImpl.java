@@ -19,10 +19,10 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
-import com.liferay.commerce.product.internal.util.JsonHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
+import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -410,8 +410,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (JsonHelper.isArray(serializedDDMFormValues)) {
-			_jsonFactory.createJSONArray(serializedDDMFormValues);
+		if (_jsonHelper.isArray(serializedDDMFormValues)) {
+			jsonArray = _jsonFactory.createJSONArray(serializedDDMFormValues);
 		}
 
 		Indexer<CPAttachmentFileEntry> indexer =
@@ -432,7 +432,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONArray valuesJSONArray = JsonHelper.getValueAsJSONArray(
+			JSONArray valuesJSONArray = _jsonHelper.getValueAsJSONArray(
 				"value", jsonObject);
 
 			String[] values = new String[valuesJSONArray.length()];
@@ -882,6 +882,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
+
+	@ServiceReference(type = JsonHelper.class)
+	private JsonHelper _jsonHelper;
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

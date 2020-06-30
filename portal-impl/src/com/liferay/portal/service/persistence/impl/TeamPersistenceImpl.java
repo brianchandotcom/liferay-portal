@@ -2582,8 +2582,6 @@ public class TeamPersistenceImpl
 		"(team.name IS NULL OR team.name = '')";
 
 	public TeamPersistenceImpl() {
-		setModelClass(Team.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2601,6 +2599,8 @@ public class TeamPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Team.class);
 	}
 
 	/**

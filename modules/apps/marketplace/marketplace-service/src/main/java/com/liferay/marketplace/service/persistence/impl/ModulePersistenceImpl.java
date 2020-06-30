@@ -3395,8 +3395,6 @@ public class ModulePersistenceImpl
 		"(module.bundleVersion IS NULL OR module.bundleVersion = '')";
 
 	public ModulePersistenceImpl() {
-		setModelClass(Module.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3414,6 +3412,8 @@ public class ModulePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Module.class);
 	}
 
 	/**

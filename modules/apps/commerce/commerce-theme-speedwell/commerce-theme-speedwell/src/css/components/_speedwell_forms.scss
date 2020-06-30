@@ -13,6 +13,10 @@
 		color: $stroke-variant;
 		font-size: 14px;
 		height: 50px;
+
+		&.price-range-input {
+			height: auto;
+		}
 	}
 
 	.reference-mark {

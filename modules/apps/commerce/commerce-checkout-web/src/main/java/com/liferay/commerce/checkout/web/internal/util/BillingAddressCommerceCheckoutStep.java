@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -111,6 +112,7 @@ public class BillingAddressCommerceCheckoutStep
 		try {
 			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
 				new AddressCommerceCheckoutStepUtil(
+					commerceAccountLocalService,
 					CommerceAddressConstants.ADDRESS_TYPE_BILLING,
 					commerceOrderService, commerceAddressService,
 					commerceOrderModelResourcePermission);
@@ -186,6 +188,9 @@ public class BillingAddressCommerceCheckoutStep
 
 		return super.showControls(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	protected CommerceAccountLocalService commerceAccountLocalService;
 
 	@Reference
 	protected CommerceAddressService commerceAddressService;

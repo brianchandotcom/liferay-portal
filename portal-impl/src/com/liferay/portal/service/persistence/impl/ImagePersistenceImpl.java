@@ -558,8 +558,6 @@ public class ImagePersistenceImpl
 	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2 = "image.size < ?";
 
 	public ImagePersistenceImpl() {
-		setModelClass(Image.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -578,6 +576,8 @@ public class ImagePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Image.class);
 	}
 
 	/**

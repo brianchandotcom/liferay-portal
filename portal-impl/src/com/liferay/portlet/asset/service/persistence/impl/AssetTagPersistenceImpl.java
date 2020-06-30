@@ -5440,8 +5440,6 @@ public class AssetTagPersistenceImpl
 		"(assetTag.name IS NULL OR assetTag.name LIKE '')";
 
 	public AssetTagPersistenceImpl() {
-		setModelClass(AssetTag.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5459,6 +5457,8 @@ public class AssetTagPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(AssetTag.class);
 	}
 
 	/**

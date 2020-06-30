@@ -66,7 +66,7 @@ List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 				name="layout-template"
 			>
 				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
+					<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />' class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
 
 					<strong><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></strong>
 				</aui:a>

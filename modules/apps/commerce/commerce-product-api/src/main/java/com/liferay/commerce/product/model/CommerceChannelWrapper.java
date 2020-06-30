@@ -67,6 +67,8 @@ public class CommerceChannelWrapper
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("commerceCurrencyCode", getCommerceCurrencyCode());
+		attributes.put("priceDisplayType", getPriceDisplayType());
+		attributes.put("discountsTargetNetPrice", isDiscountsTargetNetPrice());
 
 		return attributes;
 	}
@@ -146,6 +148,19 @@ public class CommerceChannelWrapper
 		if (commerceCurrencyCode != null) {
 			setCommerceCurrencyCode(commerceCurrencyCode);
 		}
+
+		String priceDisplayType = (String)attributes.get("priceDisplayType");
+
+		if (priceDisplayType != null) {
+			setPriceDisplayType(priceDisplayType);
+		}
+
+		Boolean discountsTargetNetPrice = (Boolean)attributes.get(
+			"discountsTargetNetPrice");
+
+		if (discountsTargetNetPrice != null) {
+			setDiscountsTargetNetPrice(discountsTargetNetPrice);
+		}
 	}
 
 	@Override
@@ -199,6 +214,16 @@ public class CommerceChannelWrapper
 		return _commerceChannel.getCreateDate();
 	}
 
+	/**
+	 * Returns the discounts target net price of this commerce channel.
+	 *
+	 * @return the discounts target net price of this commerce channel
+	 */
+	@Override
+	public boolean getDiscountsTargetNetPrice() {
+		return _commerceChannel.getDiscountsTargetNetPrice();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceChannel.getExpandoBridge();
@@ -242,6 +267,16 @@ public class CommerceChannelWrapper
 	@Override
 	public String getName() {
 		return _commerceChannel.getName();
+	}
+
+	/**
+	 * Returns the price display type of this commerce channel.
+	 *
+	 * @return the price display type of this commerce channel
+	 */
+	@Override
+	public String getPriceDisplayType() {
+		return _commerceChannel.getPriceDisplayType();
 	}
 
 	/**
@@ -336,6 +371,16 @@ public class CommerceChannelWrapper
 		return _commerceChannel.isCachedModel();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce channel is discounts target net price.
+	 *
+	 * @return <code>true</code> if this commerce channel is discounts target net price; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDiscountsTargetNetPrice() {
+		return _commerceChannel.isDiscountsTargetNetPrice();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _commerceChannel.isEscapedModel();
@@ -396,6 +441,16 @@ public class CommerceChannelWrapper
 		_commerceChannel.setCreateDate(createDate);
 	}
 
+	/**
+	 * Sets whether this commerce channel is discounts target net price.
+	 *
+	 * @param discountsTargetNetPrice the discounts target net price of this commerce channel
+	 */
+	@Override
+	public void setDiscountsTargetNetPrice(boolean discountsTargetNetPrice) {
+		_commerceChannel.setDiscountsTargetNetPrice(discountsTargetNetPrice);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -446,6 +501,16 @@ public class CommerceChannelWrapper
 	@Override
 	public void setNew(boolean n) {
 		_commerceChannel.setNew(n);
+	}
+
+	/**
+	 * Sets the price display type of this commerce channel.
+	 *
+	 * @param priceDisplayType the price display type of this commerce channel
+	 */
+	@Override
+	public void setPriceDisplayType(String priceDisplayType) {
+		_commerceChannel.setPriceDisplayType(priceDisplayType);
 	}
 
 	/**

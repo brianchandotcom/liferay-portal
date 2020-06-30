@@ -85,7 +85,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				}
 				%>
 
-				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
+				<div class='<%= primary ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />rateOptions">
 					<aui:input label="<%= taglibLabel %>" name="rate" />
 				</div>
 
@@ -102,23 +102,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 </aui:form>
 
 <c:if test="<%= cpMeasurementUnit == null %>">
-	<aui:script require="commerce-frontend-js/utilities/index.es as utilities">
-		function slugify(string) {
-			return string.toLowerCase().replace(/[^a-z1-9]+/g, '-');
-		}
+	<aui:script require="commerce-frontend-js/utilities/debounce as debounce, commerce-frontend-js/utilities/slugify as slugify">
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		const form = document.getElementById('<portlet:namespace />fm');
-
-		const keyInput = form.querySelector('#<portlet:namespace />key');
-		const nameInput = form.querySelector('#<portlet:namespace />name');
-
-		const debounce = utilities.debounce;
+		var keyInput = form.querySelector('#<portlet:namespace />key');
+		var nameInput = form.querySelector('#<portlet:namespace />name');
 
 		var handleOnNameInput = function() {
-			keyInput.value = slugify(nameInput.value);
+			keyInput.value = slugify.default(nameInput.value);
 		};
 
-		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+		nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
 	</aui:script>
 </c:if>
 

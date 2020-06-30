@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContentDocument implements Cloneable {
 
+	public static ContentDocument toDTO(String json) {
+		return ContentDocumentSerDes.toDTO(json);
+	}
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

@@ -29,6 +29,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormFieldOption implements Cloneable {
 
+	public static FormFieldOption toDTO(String json) {
+		return FormFieldOptionSerDes.toDTO(json);
+	}
+
 	public Long getId() {
 		return id;
 	}

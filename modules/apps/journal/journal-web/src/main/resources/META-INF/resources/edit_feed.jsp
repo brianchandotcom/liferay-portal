@@ -232,7 +232,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				<aui:select label="feed-item-content" name="contentFieldSelector">
 					<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
 
-					<optgroup label="<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />">
+					<optgroup label='<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />'>
 						<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
 
 						<c:if test="<%= (ddmStructure != null) && (ddmTemplates.size() > 1) %>">
@@ -251,7 +251,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 					</optgroup>
 
 					<c:if test="<%= ddmStructure != null %>">
-						<optgroup label="<liferay-ui:message key="structure-fields" />">
+						<optgroup label='<liferay-ui:message key="structure-fields" />'>
 
 							<%
 							DDMForm ddmForm = ddmStructure.getDDMForm();

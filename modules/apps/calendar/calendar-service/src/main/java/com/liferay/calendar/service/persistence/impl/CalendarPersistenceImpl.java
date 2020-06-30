@@ -3419,8 +3419,6 @@ public class CalendarPersistenceImpl
 		"calendar.defaultCalendar = ?";
 
 	public CalendarPersistenceImpl() {
-		setModelClass(Calendar.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3438,6 +3436,8 @@ public class CalendarPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Calendar.class);
 	}
 
 	/**

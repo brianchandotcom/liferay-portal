@@ -47,11 +47,11 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionOptionRelId(
 			model.getCPDefinitionOptionRelId());
+		soapModel.setCPInstanceUuid(model.getCPInstanceUuid());
+		soapModel.setCProductId(model.getCProductId());
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setKey(model.getKey());
-		soapModel.setCPInstanceUuid(model.getCPInstanceUuid());
-		soapModel.setCProductId(model.getCProductId());
 		soapModel.setQuantity(model.getQuantity());
 		soapModel.setPrice(model.getPrice());
 
@@ -191,6 +191,22 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_CPDefinitionOptionRelId = CPDefinitionOptionRelId;
 	}
 
+	public String getCPInstanceUuid() {
+		return _CPInstanceUuid;
+	}
+
+	public void setCPInstanceUuid(String CPInstanceUuid) {
+		_CPInstanceUuid = CPInstanceUuid;
+	}
+
+	public long getCProductId() {
+		return _CProductId;
+	}
+
+	public void setCProductId(long CProductId) {
+		_CProductId = CProductId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -213,22 +229,6 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 
 	public void setKey(String key) {
 		_key = key;
-	}
-
-	public String getCPInstanceUuid() {
-		return _CPInstanceUuid;
-	}
-
-	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_CPInstanceUuid = CPInstanceUuid;
-	}
-
-	public long getCProductId() {
-		return _CProductId;
-	}
-
-	public void setCProductId(long CProductId) {
-		_CProductId = CProductId;
 	}
 
 	public int getQuantity() {
@@ -256,11 +256,11 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _CPDefinitionOptionRelId;
+	private String _CPInstanceUuid;
+	private long _CProductId;
 	private String _name;
 	private double _priority;
 	private String _key;
-	private String _CPInstanceUuid;
-	private long _CProductId;
 	private int _quantity;
 	private BigDecimal _price;
 

@@ -170,12 +170,12 @@
 						JOIN
 							CommerceShipmentItem ON
 								CommerceShipmentItem.commerceOrderItemId = CommerceOrderItem.commerceOrderItemId
+						JOIN
+							CommerceShipment ON
+								CommerceShipment.commerceShipmentId = CommerceShipmentItem.commerceShipmentId
 						WHERE
-							CommerceShipmentItem.commerceShipmentId = ?
-						GROUP BY
-							CommerceOrderItem.commerceorderId
-						HAVING
-							SUM(CommerceOrderItem.shippedQuantity) = SUM(CommerceOrderItem.quantity)
+							(CommerceShipment.commerceShipmentId = ?) AND
+							(CommerceShipment.status > 1)
 					)
 		]]>
 	</sql>

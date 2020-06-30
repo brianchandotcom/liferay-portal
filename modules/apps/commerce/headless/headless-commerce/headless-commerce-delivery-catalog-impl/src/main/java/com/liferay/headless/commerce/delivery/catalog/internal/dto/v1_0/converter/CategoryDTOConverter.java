@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=AssetCategory",
 	service = {CategoryDTOConverter.class, DTOConverter.class}
 )
-public class CategoryDTOConverter implements DTOConverter {
+public class CategoryDTOConverter
+	implements DTOConverter<AssetCategory, Category> {
 
 	@Override
 	public String getContentType() {
@@ -43,7 +44,7 @@ public class CategoryDTOConverter implements DTOConverter {
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryLocalService.getCategory(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.getAssetVocabulary(

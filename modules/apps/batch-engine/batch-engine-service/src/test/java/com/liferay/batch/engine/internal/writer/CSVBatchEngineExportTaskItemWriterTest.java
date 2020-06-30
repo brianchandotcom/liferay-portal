@@ -68,7 +68,7 @@ public class CSVBatchEngineExportTaskItemWriterTest
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 

@@ -1216,8 +1216,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		"(commerceInventoryAudit.sku IS NULL OR commerceInventoryAudit.sku = '')";
 
 	public CommerceInventoryAuditPersistenceImpl() {
-		setModelClass(CommerceInventoryAudit.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("commerceInventoryAuditId", "CIAuditId");
@@ -1235,6 +1233,8 @@ public class CommerceInventoryAuditPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceInventoryAudit.class);
 	}
 
 	/**

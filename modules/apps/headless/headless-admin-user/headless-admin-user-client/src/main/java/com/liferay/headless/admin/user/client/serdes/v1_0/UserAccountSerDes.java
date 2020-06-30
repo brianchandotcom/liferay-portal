@@ -446,9 +446,14 @@ public class UserAccountSerDes {
 				String.valueOf(userAccount.getAlternateName()));
 		}
 
-		map.put(
-			"birthDate",
-			liferayToJSONDateFormat.format(userAccount.getBirthDate()));
+		if (userAccount.getBirthDate() == null) {
+			map.put("birthDate", null);
+		}
+		else {
+			map.put(
+				"birthDate",
+				liferayToJSONDateFormat.format(userAccount.getBirthDate()));
+		}
 
 		if (userAccount.getContactInformation() == null) {
 			map.put("contactInformation", null);
@@ -475,13 +480,23 @@ public class UserAccountSerDes {
 				"dashboardURL", String.valueOf(userAccount.getDashboardURL()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(userAccount.getDateCreated()));
+		if (userAccount.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(userAccount.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(userAccount.getDateModified()));
+		if (userAccount.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(userAccount.getDateModified()));
+		}
 
 		if (userAccount.getEmailAddress() == null) {
 			map.put("emailAddress", null);

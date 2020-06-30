@@ -1501,13 +1501,24 @@ public class CalendarBookingLocalServiceImpl
 			Recurrence recurrenceObj = RecurrenceSerializer.deserialize(
 				recurrence, calendar.getTimeZone());
 
-			if ((recurrenceObj != null) && oldRecurrence.equals(recurrence) &&
-				(recurrenceObj.getCount() > 0)) {
+			if (recurrenceObj != null) {
+				if (oldRecurrence.equals(recurrence)) {
+					if (recurrenceObj.getCount() > 0) {
+						recurrenceObj.setCount(
+							recurrenceObj.getCount() - instanceIndex);
 
-				recurrenceObj.setCount(
-					recurrenceObj.getCount() - instanceIndex);
+						recurrence = RecurrenceSerializer.serialize(
+							recurrenceObj);
+					}
+				}
+				else {
+					List<java.util.Calendar> exceptionJCalendars =
+						recurrenceObj.getExceptionJCalendars();
 
-				recurrence = RecurrenceSerializer.serialize(recurrenceObj);
+					exceptionJCalendars.clear();
+
+					recurrence = RecurrenceSerializer.serialize(recurrenceObj);
+				}
 			}
 
 			updateCalendarBookingsByChanges(

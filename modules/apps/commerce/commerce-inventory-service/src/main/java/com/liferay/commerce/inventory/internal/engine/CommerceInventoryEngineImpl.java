@@ -137,6 +137,15 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 	}
 
 	@Override
+	public boolean hasStockQuantity(long companyId, String sku, int quantity) {
+		if (quantity <= getStockQuantity(companyId, sku)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	@Transactional(
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)

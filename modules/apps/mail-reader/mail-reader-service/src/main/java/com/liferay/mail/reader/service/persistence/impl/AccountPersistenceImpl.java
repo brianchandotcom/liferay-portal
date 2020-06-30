@@ -847,8 +847,6 @@ public class AccountPersistenceImpl
 		"(account.address IS NULL OR account.address = '')";
 
 	public AccountPersistenceImpl() {
-		setModelClass(Account.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("password", "password_");
@@ -866,6 +864,8 @@ public class AccountPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Account.class);
 	}
 
 	/**

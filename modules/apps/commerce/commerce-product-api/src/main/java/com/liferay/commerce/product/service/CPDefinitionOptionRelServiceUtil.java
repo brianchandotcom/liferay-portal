@@ -109,6 +109,16 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
+	public static java.util.Map<Long, java.util.List<Long>>
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				long cpDefinitionId, String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				cpDefinitionId, json);
+	}
+
 	public static java.util.Map<String, java.util.List<String>>
 			getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 				long cpInstanceId)

@@ -24,6 +24,8 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -109,6 +111,11 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductDisplayLayout");
 			}
+			else {
+				_log.error(e, e);
+
+				throw e;
+			}
 		}
 	}
 
@@ -138,6 +145,9 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 				layoutUuid);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCPDisplayLayoutMVCActionCommand.class);
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

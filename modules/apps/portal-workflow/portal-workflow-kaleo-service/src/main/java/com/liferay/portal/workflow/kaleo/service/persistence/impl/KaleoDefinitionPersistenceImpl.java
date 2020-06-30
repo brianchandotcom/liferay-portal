@@ -1999,8 +1999,6 @@ public class KaleoDefinitionPersistenceImpl
 		"kaleoDefinition.active = ?";
 
 	public KaleoDefinitionPersistenceImpl() {
-		setModelClass(KaleoDefinition.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
@@ -2018,6 +2016,8 @@ public class KaleoDefinitionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(KaleoDefinition.class);
 	}
 
 	/**

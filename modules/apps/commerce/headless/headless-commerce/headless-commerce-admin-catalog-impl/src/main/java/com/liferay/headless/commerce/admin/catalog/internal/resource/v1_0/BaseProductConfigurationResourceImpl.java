@@ -294,11 +294,6 @@ public abstract class BaseProductConfigurationResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProductConfiguration productConfiguration,
-		ProductConfiguration existingProductConfiguration) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

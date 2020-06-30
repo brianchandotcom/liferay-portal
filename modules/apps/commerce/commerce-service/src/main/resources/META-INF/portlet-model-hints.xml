@@ -142,6 +142,24 @@
 		<field name="totalDiscountPercentageLevel2" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel3" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel4" type="BigDecimal" />
+		<field name="subtotalWithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<field name="shippingWithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<field name="totalWithTaxAmount" type="BigDecimal" />
+		<field name="totalDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="totalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="totalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="totalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<field name="advanceStatus" type="String" />
 		<field name="paymentStatus" type="int" />
 		<field name="orderDate" type="Date" />
@@ -166,8 +184,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceOrderId" type="long" />
+		<field name="commercePriceListId" type="long" />
 		<field name="CProductId" type="long" />
 		<field name="CPInstanceId" type="long" />
+		<field name="parentCommerceOrderItemId" type="long" />
 		<field name="quantity" type="int" />
 		<field name="shippedQuantity" type="int" />
 		<field name="json" type="String">
@@ -183,6 +203,14 @@
 		<field name="discountPercentageLevel2" type="BigDecimal" />
 		<field name="discountPercentageLevel3" type="BigDecimal" />
 		<field name="discountPercentageLevel4" type="BigDecimal" />
+		<field name="unitPriceWithTaxAmount" type="BigDecimal" />
+		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
+		<field name="discountWithTaxAmount" type="BigDecimal" />
+		<field name="finalPriceWithTaxAmount" type="BigDecimal" />
+		<field name="discountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="discountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="discountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="discountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<field name="subscription" type="boolean" />
 		<field name="deliveryGroup" type="String" />
 		<field name="shippingAddressId" type="long" />

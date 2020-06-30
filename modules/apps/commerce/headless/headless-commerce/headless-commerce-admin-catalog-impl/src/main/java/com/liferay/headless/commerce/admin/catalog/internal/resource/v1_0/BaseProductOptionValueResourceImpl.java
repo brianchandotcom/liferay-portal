@@ -246,11 +246,6 @@ public abstract class BaseProductOptionValueResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProductOptionValue productOptionValue,
-		ProductOptionValue existingProductOptionValue) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

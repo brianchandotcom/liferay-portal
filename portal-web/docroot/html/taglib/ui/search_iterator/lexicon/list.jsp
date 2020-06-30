@@ -60,7 +60,7 @@ if (fixedHeader) {
 				List entries = Collections.emptyList();
 
 				if (!firstResultRows.isEmpty()) {
-					com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)firstResultRows.get(0);
+					com.liferay.portal.kernel.dao.search.ResultRow row = firstResultRows.get(0);
 
 					entries = row.getEntries();
 				}
@@ -204,7 +204,7 @@ if (fixedHeader) {
 				boolean allRowsIsChecked = true;
 
 				for (int i = 0; i < curResultRows.size(); i++) {
-					com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)curResultRows.get(i);
+					com.liferay.portal.kernel.dao.search.ResultRow row = curResultRows.get(i);
 
 					primaryKeysJSONArray.put(row.getPrimaryKey());
 

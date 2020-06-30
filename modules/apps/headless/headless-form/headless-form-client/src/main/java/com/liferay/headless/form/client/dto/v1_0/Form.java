@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Form implements Cloneable {
 
+	public static Form toDTO(String json) {
+		return FormSerDes.toDTO(json);
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}

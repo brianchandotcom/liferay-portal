@@ -1720,8 +1720,6 @@ public class WikiPageResourcePersistenceImpl
 		"(wikiPageResource.title IS NULL OR wikiPageResource.title = '')";
 
 	public WikiPageResourcePersistenceImpl() {
-		setModelClass(WikiPageResource.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1739,6 +1737,8 @@ public class WikiPageResourcePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(WikiPageResource.class);
 	}
 
 	/**

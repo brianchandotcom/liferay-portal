@@ -582,8 +582,6 @@ public class AttachmentPersistenceImpl
 		"attachment.messageId = ?";
 
 	public AttachmentPersistenceImpl() {
-		setModelClass(Attachment.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("size", "size_");
@@ -601,6 +599,8 @@ public class AttachmentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Attachment.class);
 	}
 
 	/**

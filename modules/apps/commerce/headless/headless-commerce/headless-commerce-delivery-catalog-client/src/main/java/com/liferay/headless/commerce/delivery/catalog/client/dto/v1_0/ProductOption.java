@@ -28,36 +28,8 @@ import javax.annotation.Generated;
 @Generated("")
 public class ProductOption implements Cloneable {
 
-	public static enum FieldType {
-
-		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
-		DATE("date"), NUMERIC("numeric"), RADIO("radio"), SELECT("select");
-
-		public static FieldType create(String value) {
-			for (FieldType fieldType : values()) {
-				if (Objects.equals(fieldType.getValue(), value)) {
-					return fieldType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private FieldType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
+	public static ProductOption toDTO(String json) {
+		return ProductOptionSerDes.toDTO(json);
 	}
 
 	public Long getCatalogId() {
@@ -102,24 +74,16 @@ public class ProductOption implements Cloneable {
 
 	protected String description;
 
-	public FieldType getFieldType() {
+	public String getFieldType() {
 		return fieldType;
 	}
 
-	public String getFieldTypeAsString() {
-		if (fieldType == null) {
-			return null;
-		}
-
-		return fieldType.toString();
-	}
-
-	public void setFieldType(FieldType fieldType) {
+	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 	}
 
 	public void setFieldType(
-		UnsafeSupplier<FieldType, Exception> fieldTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> fieldTypeUnsafeSupplier) {
 
 		try {
 			fieldType = fieldTypeUnsafeSupplier.get();
@@ -129,7 +93,7 @@ public class ProductOption implements Cloneable {
 		}
 	}
 
-	protected FieldType fieldType;
+	protected String fieldType;
 
 	public Long getId() {
 		return id;

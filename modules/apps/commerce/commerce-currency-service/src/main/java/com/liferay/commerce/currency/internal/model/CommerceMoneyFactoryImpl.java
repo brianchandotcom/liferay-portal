@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.currency.util.PriceFormat;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -39,13 +40,27 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 	public CommerceMoney create(
 		CommerceCurrency commerceCurrency, BigDecimal price) {
 
-		CommerceMoneyImpl commerceMoneyImpl = new CommerceMoneyImpl(
-			_commercePriceFormatter);
+		return _createCommerceMoney(
+			new CommerceMoneyImpl(_commercePriceFormatter), commerceCurrency,
+			price);
+	}
 
-		commerceMoneyImpl.setCommerceCurrency(commerceCurrency);
-		commerceMoneyImpl.setPrice(price);
+	@Override
+	public CommerceMoney create(
+		CommerceCurrency commerceCurrency, BigDecimal price,
+		PriceFormat priceFormat) {
 
-		return commerceMoneyImpl;
+		if (priceFormat == PriceFormat.DEFAULT) {
+			return create(commerceCurrency, price);
+		}
+		else if (priceFormat == PriceFormat.RELATIVE) {
+			return _createCommerceMoney(
+				new RelativeCommerceMoneyImpl(_commercePriceFormatter),
+				commerceCurrency, price);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid price format: " + priceFormat);
 	}
 
 	@Override
@@ -61,6 +76,16 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		CommerceMoneyFactoryUtil.setCommerceMoneyFactory(this);
+	}
+
+	private CommerceMoney _createCommerceMoney(
+		CommerceMoneyImpl commerceMoneyImpl, CommerceCurrency commerceCurrency,
+		BigDecimal price) {
+
+		commerceMoneyImpl.setCommerceCurrency(commerceCurrency);
+		commerceMoneyImpl.setPrice(price);
+
+		return commerceMoneyImpl;
 	}
 
 	@Reference

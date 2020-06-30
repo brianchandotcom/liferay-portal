@@ -82,9 +82,10 @@ public class CommercePriceListModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"commerceCurrencyId", Types.BIGINT},
 		{"parentCommercePriceListId", Types.BIGINT},
-		{"catalogBasePriceList", Types.BOOLEAN}, {"type_", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"catalogBasePriceList", Types.BOOLEAN}, {"netPrice", Types.BOOLEAN},
+		{"type_", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"priority", Types.DOUBLE}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -106,6 +107,7 @@ public class CommercePriceListModelImpl
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentCommercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("catalogBasePriceList", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("netPrice", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -119,7 +121,7 @@ public class CommercePriceListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceList (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommercePriceList (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 
@@ -198,6 +200,7 @@ public class CommercePriceListModelImpl
 		model.setParentCommercePriceListId(
 			soapModel.getParentCommercePriceListId());
 		model.setCatalogBasePriceList(soapModel.isCatalogBasePriceList());
+		model.setNetPrice(soapModel.isNetPrice());
 		model.setType(soapModel.getType());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
@@ -644,6 +647,29 @@ public class CommercePriceListModelImpl
 
 					commercePriceList.setCatalogBasePriceList(
 						(Boolean)catalogBasePriceListObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"netPrice",
+			new Function<CommercePriceList, Object>() {
+
+				@Override
+				public Object apply(CommercePriceList commercePriceList) {
+					return commercePriceList.getNetPrice();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"netPrice",
+			new BiConsumer<CommercePriceList, Object>() {
+
+				@Override
+				public void accept(
+					CommercePriceList commercePriceList,
+					Object netPriceObject) {
+
+					commercePriceList.setNetPrice((Boolean)netPriceObject);
 				}
 
 			});
@@ -1144,6 +1170,23 @@ public class CommercePriceListModelImpl
 
 	@JSON
 	@Override
+	public boolean getNetPrice() {
+		return _netPrice;
+	}
+
+	@JSON
+	@Override
+	public boolean isNetPrice() {
+		return _netPrice;
+	}
+
+	@Override
+	public void setNetPrice(boolean netPrice) {
+		_netPrice = netPrice;
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -1444,6 +1487,7 @@ public class CommercePriceListModelImpl
 		commercePriceListImpl.setParentCommercePriceListId(
 			getParentCommercePriceListId());
 		commercePriceListImpl.setCatalogBasePriceList(isCatalogBasePriceList());
+		commercePriceListImpl.setNetPrice(isNetPrice());
 		commercePriceListImpl.setType(getType());
 		commercePriceListImpl.setName(getName());
 		commercePriceListImpl.setPriority(getPriority());
@@ -1656,6 +1700,8 @@ public class CommercePriceListModelImpl
 		commercePriceListCacheModel.catalogBasePriceList =
 			isCatalogBasePriceList();
 
+		commercePriceListCacheModel.netPrice = isNetPrice();
+
 		commercePriceListCacheModel.type = getType();
 
 		String type = commercePriceListCacheModel.type;
@@ -1822,6 +1868,7 @@ public class CommercePriceListModelImpl
 	private boolean _catalogBasePriceList;
 	private boolean _originalCatalogBasePriceList;
 	private boolean _setOriginalCatalogBasePriceList;
+	private boolean _netPrice;
 	private String _type;
 	private String _name;
 	private double _priority;

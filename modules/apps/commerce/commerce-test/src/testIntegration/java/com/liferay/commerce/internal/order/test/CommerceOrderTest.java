@@ -208,8 +208,8 @@ public class CommerceOrderTest {
 		Assert.assertEquals(
 			commerceOrders.toString(), 2, commerceOrders.size());
 
-		Assert.assertEquals(commerceOrder, commerceOrders.get(0));
-		Assert.assertEquals(secondCommerceOrder, commerceOrders.get(1));
+		Assert.assertEquals(true, commerceOrders.contains(commerceOrder));
+		Assert.assertEquals(true, commerceOrders.contains(secondCommerceOrder));
 
 		_commerceOrderLocalService.deleteCommerceOrders(
 			_commerceChannel.getGroupId());
@@ -279,8 +279,8 @@ public class CommerceOrderTest {
 		Assert.assertEquals(
 			commerceOrders.toString(), 2, commerceOrders.size());
 
-		Assert.assertEquals(commerceOrder, commerceOrders.get(0));
-		Assert.assertEquals(secondCommerceOrder, commerceOrders.get(1));
+		Assert.assertEquals(true, commerceOrders.contains(commerceOrder));
+		Assert.assertEquals(true, commerceOrders.contains(secondCommerceOrder));
 
 		// Remove the user from the second account and get user's orders again
 
@@ -568,11 +568,11 @@ public class CommerceOrderTest {
 		Assert.assertEquals(
 			"The first Order the Sales manager can see should match the " +
 				"first created",
-			commerceOrder, commerceOrders.get(0));
+			true, commerceOrders.contains(commerceOrder));
 		Assert.assertEquals(
 			"The second Order the Sales manager can see should match the " +
 				"second created",
-			secondCommerceOrder, commerceOrders.get(1));
+			true, commerceOrders.contains(secondCommerceOrder));
 
 		// Checkout the first order
 
@@ -633,11 +633,11 @@ public class CommerceOrderTest {
 		Assert.assertEquals(
 			"The first Order the Sales manager can see should match the " +
 				"first created",
-			commerceOrder, commerceOrders.get(0));
+			true, commerceOrders.contains(commerceOrder));
 		Assert.assertEquals(
 			"The second Order the Sales manager can see should match the " +
 				"second created",
-			secondCommerceOrder, commerceOrders.get(1));
+			true, commerceOrders.contains(secondCommerceOrder));
 
 		// There shouldn't be any open orders
 

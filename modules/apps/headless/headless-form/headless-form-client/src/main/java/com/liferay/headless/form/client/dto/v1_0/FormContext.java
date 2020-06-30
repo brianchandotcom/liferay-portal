@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormContext implements Cloneable {
 
+	public static FormContext toDTO(String json) {
+		return FormContextSerDes.toDTO(json);
+	}
+
 	public FormFieldValue[] getFormFieldValues() {
 		return formFieldValues;
 	}

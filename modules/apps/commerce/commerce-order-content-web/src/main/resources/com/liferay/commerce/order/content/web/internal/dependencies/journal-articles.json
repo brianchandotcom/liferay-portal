@@ -1,0 +1,17 @@
+[
+	{
+		"articleId": "GUEST_CHECKOUT_AUTHENTICATION",
+		"ddmStructureKey": "guest-checkout-authentication-structure",
+		"ddmTemplateKey": "GUEST_CHECKOUT_AUTHENTICATION",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "GUEST_CHECKOUT_AUTHENTICATION"
+	}
+]

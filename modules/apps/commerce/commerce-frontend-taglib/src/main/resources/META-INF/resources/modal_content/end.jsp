@@ -33,11 +33,9 @@
 	</c:if>
 </div>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as events, commerce-frontend-js/utilities/index.es as utilities">
+<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/debounce as debounce">
 	function closeModal(isSuccessful) {
-		var eventDetail = {
-			willIframeRefresh: false
-		};
+		var eventDetail = {};
 
 		if (isSuccessful) {
 			eventDetail.successNotification = {
@@ -47,7 +45,7 @@
 			};
 		}
 
-		window.parent.Liferay.fire(events.CLOSE_MODAL, eventDetail);
+		window.top.Liferay.fire(events.CLOSE_MODAL, eventDetail);
 	}
 
 	window.addEventListener('keyup', function(event) {
@@ -62,12 +60,12 @@
 		closeModal(true);
 	</c:if>
 
-	window.parent.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: false});
+	window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: false});
 
 	document.querySelectorAll('.modal-closer').forEach(function(trigger) {
 		trigger.addEventListener('click', function(e) {
 			e.preventDefault();
-			window.parent.Liferay.fire(events.CLOSE_MODAL);
+			window.top.Liferay.fire(events.CLOSE_MODAL);
 		});
 	});
 
@@ -76,28 +74,34 @@
 		iframeForm = iframeContent.querySelector('form');
 
 	function handleSubmit() {
-		window.parent.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
+		window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
 
 		var form = Liferay.Form.get(iframeForm.id);
+
+		if (!form || !form.formValidator || !form.formValidator.validate) {
+			return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+				isLoading: false
+			});
+		}
 
 		form.formValidator.validate();
 
 		if (form.formValidator.hasErrors()) {
-			window.parent.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: false});
-		} else {
-			submitForm(form.form);
+			return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+				isLoading: false
+			});
 		}
+
+		return submitForm(form.form);
 	}
 
 	if (iframeForm) {
 		iframeForm.appendChild(iframeFooter);
 
-		var debouncedHandleSubmit = utilities.debounce(handleSubmit, 1000);
-
 		iframeForm.addEventListener('submit', function(event) {
 			event.preventDefault();
 
-			return debouncedHandleSubmit();
+			return handleSubmit();
 		});
 	}
 
@@ -106,7 +110,7 @@
 			iframeContent.style.marginBottom = iframeFooter.offsetHeight + 'px';
 		}
 
-		var debouncedAdjustBottomSpace = utilities.debounce(adjustBottomSpace, 300);
+		var debouncedAdjustBottomSpace = debounce.default(adjustBottomSpace, 300);
 
 		adjustBottomSpace();
 

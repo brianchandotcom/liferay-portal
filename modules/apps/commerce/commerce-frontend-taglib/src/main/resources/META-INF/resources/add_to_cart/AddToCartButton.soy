@@ -9,6 +9,7 @@
 	{@param? quantity: int }
 	{@param settings: ? }
 	{@param spritemap: ? }
+	{@param? textContent: string}
 
 	{@param? _handleSubmitClick: any }
 	{@param? _handleUpdateQuantity: any }
@@ -76,7 +77,11 @@
 				{sp}disabled
 			{/if}
 		>
-			{msg desc="Add to Cart"}add-to-cart{/msg}
+			{if $textContent}
+				{$textContent}
+			{else}
+				{msg desc="Add to Cart"}add-to-cart{/msg}
+			{/if}
 			<span class="{$iconContainerClasses}">
 				<span class="add-to-cart-icon">
 					{call ClayIcon.render}

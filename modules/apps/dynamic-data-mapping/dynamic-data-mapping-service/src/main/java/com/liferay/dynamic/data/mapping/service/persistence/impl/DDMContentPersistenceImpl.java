@@ -2458,8 +2458,6 @@ public class DDMContentPersistenceImpl
 		"ddmContent.companyId = ?";
 
 	public DDMContentPersistenceImpl() {
-		setModelClass(DDMContent.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2478,6 +2476,8 @@ public class DDMContentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DDMContent.class);
 	}
 
 	/**

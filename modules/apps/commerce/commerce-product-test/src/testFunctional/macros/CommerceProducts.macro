@@ -17,11 +17,11 @@ definition {
 	}
 
 	macro deleteEntries {
-		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+		ClickNoError.clickNoMouseOver(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
 		ClickNoError(locator1 = "Button#DELETE");
 
-		AssertConfirm.waitForConfirmation(value1 = "${deleteMessage}");
+		Confirm(value1 = "${deleteMessage}");
 	}
 
 	macro deleteProductsEntry {

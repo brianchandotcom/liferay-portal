@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,6 +60,18 @@ public abstract class BaseCPDefinitionsDisplayContext {
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
+	}
+
+	public String getCatalogDefaultLanguageId() throws PortalException {
+		CommerceCatalog commerceCatalog = getCommerceCatalog();
+
+		if (commerceCatalog == null) {
+			ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+
+			return LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
+		}
+
+		return commerceCatalog.getCatalogDefaultLanguageId();
 	}
 
 	public CommerceCatalog getCommerceCatalog() throws PortalException {

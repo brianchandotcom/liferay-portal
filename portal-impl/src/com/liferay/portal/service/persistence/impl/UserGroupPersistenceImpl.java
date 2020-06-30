@@ -6048,8 +6048,6 @@ public class UserGroupPersistenceImpl
 		"(userGroup.externalReferenceCode IS NULL OR userGroup.externalReferenceCode = '')";
 
 	public UserGroupPersistenceImpl() {
-		setModelClass(UserGroup.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6067,6 +6065,8 @@ public class UserGroupPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(UserGroup.class);
 	}
 
 	/**

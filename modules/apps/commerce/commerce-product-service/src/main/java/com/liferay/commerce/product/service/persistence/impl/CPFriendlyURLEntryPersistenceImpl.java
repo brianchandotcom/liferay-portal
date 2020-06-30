@@ -4952,8 +4952,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 		"cpFriendlyURLEntry.main = ?";
 
 	public CPFriendlyURLEntryPersistenceImpl() {
-		setModelClass(CPFriendlyURLEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4971,6 +4969,8 @@ public class CPFriendlyURLEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPFriendlyURLEntry.class);
 	}
 
 	/**

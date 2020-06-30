@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.internal.context;
 
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
@@ -52,13 +53,17 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 
 		return new CommerceContextImpl(
 			companyId, channelGroupId, orderId, commerceAccountId,
-			_commerceAccountHelper, _commerceAccountService,
-			_commerceChannelLocalService, _commerceCurrencyLocalService,
-			_commerceOrderService, _configurationProvider);
+			_commerceAccountHelper, _commerceAccountLocalService,
+			_commerceAccountService, _commerceChannelLocalService,
+			_commerceCurrencyLocalService, _commerceOrderService,
+			_configurationProvider);
 	}
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;

@@ -42,24 +42,6 @@ function getColumnLastItem(layoutColumns, columnIndex) {
 }
 
 /**
- * Returns the Home item of an array of columns
- * @param {object[]} layoutColumns
- * @private
- * @return {object|null}
- * @review
- */
-
-function getHomeItem(layoutColumns) {
-	let item = null;
-
-	layoutColumns.forEach(layoutColumn => {
-		item = item || layoutColumn.find(_item => _item.homePage);
-	});
-
-	return item;
-}
-
-/**
  * Returns an item from its plid
  * @param {object[]} layoutColumns
  * @param {string} itemPlid
@@ -140,7 +122,6 @@ export {
 	columnIsItemChild,
 	getColumnActiveItem,
 	getColumnLastItem,
-	getHomeItem,
 	getItem,
 	getItemColumn,
 	getItemColumnIndex,

@@ -18,8 +18,8 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.account.model.CommerceAccountGroup",
 	service = {AccountGroupDTOConverter.class, DTOConverter.class}
 )
-public class AccountGroupDTOConverter implements DTOConverter {
+public class AccountGroupDTOConverter
+	implements DTOConverter<CommerceAccountGroup, AccountGroup> {
 
 	@Override
 	public String getContentType() {
@@ -43,7 +44,7 @@ public class AccountGroupDTOConverter implements DTOConverter {
 
 		CommerceAccountGroup commerceAccountGroup =
 			_commerceAccountGroupService.getCommerceAccountGroup(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		ExpandoBridge expandoBridge = commerceAccountGroup.getExpandoBridge();
 

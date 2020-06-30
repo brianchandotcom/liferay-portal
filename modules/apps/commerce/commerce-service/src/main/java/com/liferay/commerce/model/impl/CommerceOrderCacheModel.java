@@ -64,7 +64,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(101);
+		StringBundler sb = new StringBundler(137);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -144,6 +144,42 @@ public class CommerceOrderCacheModel
 		sb.append(totalDiscountPercentageLevel3);
 		sb.append(", totalDiscountPercentageLevel4=");
 		sb.append(totalDiscountPercentageLevel4);
+		sb.append(", subtotalWithTaxAmount=");
+		sb.append(subtotalWithTaxAmount);
+		sb.append(", subtotalDiscountWithTaxAmount=");
+		sb.append(subtotalDiscountWithTaxAmount);
+		sb.append(", subtotalDiscountPercentageLevel1WithTaxAmount=");
+		sb.append(subtotalDiscountPercentageLevel1WithTaxAmount);
+		sb.append(", subtotalDiscountPercentageLevel2WithTaxAmount=");
+		sb.append(subtotalDiscountPercentageLevel2WithTaxAmount);
+		sb.append(", subtotalDiscountPercentageLevel3WithTaxAmount=");
+		sb.append(subtotalDiscountPercentageLevel3WithTaxAmount);
+		sb.append(", subtotalDiscountPercentageLevel4WithTaxAmount=");
+		sb.append(subtotalDiscountPercentageLevel4WithTaxAmount);
+		sb.append(", shippingWithTaxAmount=");
+		sb.append(shippingWithTaxAmount);
+		sb.append(", shippingDiscountWithTaxAmount=");
+		sb.append(shippingDiscountWithTaxAmount);
+		sb.append(", shippingDiscountPercentageLevel1WithTaxAmount=");
+		sb.append(shippingDiscountPercentageLevel1WithTaxAmount);
+		sb.append(", shippingDiscountPercentageLevel2WithTaxAmount=");
+		sb.append(shippingDiscountPercentageLevel2WithTaxAmount);
+		sb.append(", shippingDiscountPercentageLevel3WithTaxAmount=");
+		sb.append(shippingDiscountPercentageLevel3WithTaxAmount);
+		sb.append(", shippingDiscountPercentageLevel4WithTaxAmount=");
+		sb.append(shippingDiscountPercentageLevel4WithTaxAmount);
+		sb.append(", totalWithTaxAmount=");
+		sb.append(totalWithTaxAmount);
+		sb.append(", totalDiscountWithTaxAmount=");
+		sb.append(totalDiscountWithTaxAmount);
+		sb.append(", totalDiscountPercentageLevel1WithTaxAmount=");
+		sb.append(totalDiscountPercentageLevel1WithTaxAmount);
+		sb.append(", totalDiscountPercentageLevel2WithTaxAmount=");
+		sb.append(totalDiscountPercentageLevel2WithTaxAmount);
+		sb.append(", totalDiscountPercentageLevel3WithTaxAmount=");
+		sb.append(totalDiscountPercentageLevel3WithTaxAmount);
+		sb.append(", totalDiscountPercentageLevel4WithTaxAmount=");
+		sb.append(totalDiscountPercentageLevel4WithTaxAmount);
 		sb.append(", advanceStatus=");
 		sb.append(advanceStatus);
 		sb.append(", paymentStatus=");
@@ -297,6 +333,39 @@ public class CommerceOrderCacheModel
 			totalDiscountPercentageLevel3);
 		commerceOrderImpl.setTotalDiscountPercentageLevel4(
 			totalDiscountPercentageLevel4);
+		commerceOrderImpl.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
+		commerceOrderImpl.setSubtotalDiscountWithTaxAmount(
+			subtotalDiscountWithTaxAmount);
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel1WithTaxAmount(
+			subtotalDiscountPercentageLevel1WithTaxAmount);
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel2WithTaxAmount(
+			subtotalDiscountPercentageLevel2WithTaxAmount);
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel3WithTaxAmount(
+			subtotalDiscountPercentageLevel3WithTaxAmount);
+		commerceOrderImpl.setSubtotalDiscountPercentageLevel4WithTaxAmount(
+			subtotalDiscountPercentageLevel4WithTaxAmount);
+		commerceOrderImpl.setShippingWithTaxAmount(shippingWithTaxAmount);
+		commerceOrderImpl.setShippingDiscountWithTaxAmount(
+			shippingDiscountWithTaxAmount);
+		commerceOrderImpl.setShippingDiscountPercentageLevel1WithTaxAmount(
+			shippingDiscountPercentageLevel1WithTaxAmount);
+		commerceOrderImpl.setShippingDiscountPercentageLevel2WithTaxAmount(
+			shippingDiscountPercentageLevel2WithTaxAmount);
+		commerceOrderImpl.setShippingDiscountPercentageLevel3WithTaxAmount(
+			shippingDiscountPercentageLevel3WithTaxAmount);
+		commerceOrderImpl.setShippingDiscountPercentageLevel4WithTaxAmount(
+			shippingDiscountPercentageLevel4WithTaxAmount);
+		commerceOrderImpl.setTotalWithTaxAmount(totalWithTaxAmount);
+		commerceOrderImpl.setTotalDiscountWithTaxAmount(
+			totalDiscountWithTaxAmount);
+		commerceOrderImpl.setTotalDiscountPercentageLevel1WithTaxAmount(
+			totalDiscountPercentageLevel1WithTaxAmount);
+		commerceOrderImpl.setTotalDiscountPercentageLevel2WithTaxAmount(
+			totalDiscountPercentageLevel2WithTaxAmount);
+		commerceOrderImpl.setTotalDiscountPercentageLevel3WithTaxAmount(
+			totalDiscountPercentageLevel3WithTaxAmount);
+		commerceOrderImpl.setTotalDiscountPercentageLevel4WithTaxAmount(
+			totalDiscountPercentageLevel4WithTaxAmount);
 
 		if (advanceStatus == null) {
 			commerceOrderImpl.setAdvanceStatus("");
@@ -406,6 +475,36 @@ public class CommerceOrderCacheModel
 		totalDiscountPercentageLevel2 = (BigDecimal)objectInput.readObject();
 		totalDiscountPercentageLevel3 = (BigDecimal)objectInput.readObject();
 		totalDiscountPercentageLevel4 = (BigDecimal)objectInput.readObject();
+		subtotalWithTaxAmount = (BigDecimal)objectInput.readObject();
+		subtotalDiscountWithTaxAmount = (BigDecimal)objectInput.readObject();
+		subtotalDiscountPercentageLevel1WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		subtotalDiscountPercentageLevel2WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		subtotalDiscountPercentageLevel3WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		subtotalDiscountPercentageLevel4WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		shippingWithTaxAmount = (BigDecimal)objectInput.readObject();
+		shippingDiscountWithTaxAmount = (BigDecimal)objectInput.readObject();
+		shippingDiscountPercentageLevel1WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		shippingDiscountPercentageLevel2WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		shippingDiscountPercentageLevel3WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		shippingDiscountPercentageLevel4WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		totalWithTaxAmount = (BigDecimal)objectInput.readObject();
+		totalDiscountWithTaxAmount = (BigDecimal)objectInput.readObject();
+		totalDiscountPercentageLevel1WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		totalDiscountPercentageLevel2WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		totalDiscountPercentageLevel3WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
+		totalDiscountPercentageLevel4WithTaxAmount =
+			(BigDecimal)objectInput.readObject();
 		advanceStatus = objectInput.readUTF();
 
 		paymentStatus = objectInput.readInt();
@@ -523,6 +622,24 @@ public class CommerceOrderCacheModel
 		objectOutput.writeObject(totalDiscountPercentageLevel2);
 		objectOutput.writeObject(totalDiscountPercentageLevel3);
 		objectOutput.writeObject(totalDiscountPercentageLevel4);
+		objectOutput.writeObject(subtotalWithTaxAmount);
+		objectOutput.writeObject(subtotalDiscountWithTaxAmount);
+		objectOutput.writeObject(subtotalDiscountPercentageLevel1WithTaxAmount);
+		objectOutput.writeObject(subtotalDiscountPercentageLevel2WithTaxAmount);
+		objectOutput.writeObject(subtotalDiscountPercentageLevel3WithTaxAmount);
+		objectOutput.writeObject(subtotalDiscountPercentageLevel4WithTaxAmount);
+		objectOutput.writeObject(shippingWithTaxAmount);
+		objectOutput.writeObject(shippingDiscountWithTaxAmount);
+		objectOutput.writeObject(shippingDiscountPercentageLevel1WithTaxAmount);
+		objectOutput.writeObject(shippingDiscountPercentageLevel2WithTaxAmount);
+		objectOutput.writeObject(shippingDiscountPercentageLevel3WithTaxAmount);
+		objectOutput.writeObject(shippingDiscountPercentageLevel4WithTaxAmount);
+		objectOutput.writeObject(totalWithTaxAmount);
+		objectOutput.writeObject(totalDiscountWithTaxAmount);
+		objectOutput.writeObject(totalDiscountPercentageLevel1WithTaxAmount);
+		objectOutput.writeObject(totalDiscountPercentageLevel2WithTaxAmount);
+		objectOutput.writeObject(totalDiscountPercentageLevel3WithTaxAmount);
+		objectOutput.writeObject(totalDiscountPercentageLevel4WithTaxAmount);
 
 		if (advanceStatus == null) {
 			objectOutput.writeUTF("");
@@ -600,6 +717,24 @@ public class CommerceOrderCacheModel
 	public BigDecimal totalDiscountPercentageLevel2;
 	public BigDecimal totalDiscountPercentageLevel3;
 	public BigDecimal totalDiscountPercentageLevel4;
+	public BigDecimal subtotalWithTaxAmount;
+	public BigDecimal subtotalDiscountWithTaxAmount;
+	public BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount;
+	public BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount;
+	public BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount;
+	public BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount;
+	public BigDecimal shippingWithTaxAmount;
+	public BigDecimal shippingDiscountWithTaxAmount;
+	public BigDecimal shippingDiscountPercentageLevel1WithTaxAmount;
+	public BigDecimal shippingDiscountPercentageLevel2WithTaxAmount;
+	public BigDecimal shippingDiscountPercentageLevel3WithTaxAmount;
+	public BigDecimal shippingDiscountPercentageLevel4WithTaxAmount;
+	public BigDecimal totalWithTaxAmount;
+	public BigDecimal totalDiscountWithTaxAmount;
+	public BigDecimal totalDiscountPercentageLevel1WithTaxAmount;
+	public BigDecimal totalDiscountPercentageLevel2WithTaxAmount;
+	public BigDecimal totalDiscountPercentageLevel3WithTaxAmount;
+	public BigDecimal totalDiscountPercentageLevel4WithTaxAmount;
 	public String advanceStatus;
 	public int paymentStatus;
 	public long orderDate;

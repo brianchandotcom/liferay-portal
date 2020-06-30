@@ -16,7 +16,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -293,19 +293,22 @@ public class WikiPageSerDes {
 			sb.append(wikiPage.getSubscribed());
 		}
 
-		if (wikiPage.getTaxonomyCategories() != null) {
+		if (wikiPage.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < wikiPage.getTaxonomyCategories().length; i++) {
-				sb.append(String.valueOf(wikiPage.getTaxonomyCategories()[i]));
+			for (int i = 0; i < wikiPage.getTaxonomyCategoryBriefs().length;
+				 i++) {
 
-				if ((i + 1) < wikiPage.getTaxonomyCategories().length) {
+				sb.append(
+					String.valueOf(wikiPage.getTaxonomyCategoryBriefs()[i]));
+
+				if ((i + 1) < wikiPage.getTaxonomyCategoryBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -405,13 +408,23 @@ public class WikiPageSerDes {
 			map.put("customFields", String.valueOf(wikiPage.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(wikiPage.getDateCreated()));
+		if (wikiPage.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(wikiPage.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+		if (wikiPage.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+		}
 
 		if (wikiPage.getDescription() == null) {
 			map.put("description", null);
@@ -490,13 +503,13 @@ public class WikiPageSerDes {
 			map.put("subscribed", String.valueOf(wikiPage.getSubscribed()));
 		}
 
-		if (wikiPage.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
+		if (wikiPage.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
-				"taxonomyCategories",
-				String.valueOf(wikiPage.getTaxonomyCategories()));
+				"taxonomyCategoryBriefs",
+				String.valueOf(wikiPage.getTaxonomyCategoryBriefs()));
 		}
 
 		if (wikiPage.getTaxonomyCategoryIds() == null) {
@@ -648,17 +661,17 @@ public class WikiPageSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					wikiPage.setTaxonomyCategories(
+					wikiPage.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new TaxonomyCategory[size]
+							size -> new TaxonomyCategoryBrief[size]
 						));
 				}
 			}

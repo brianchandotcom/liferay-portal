@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.model.CPDefinitionInventory",
 	service = {DTOConverter.class, ProductConfigurationDTOConverter.class}
 )
-public class ProductConfigurationDTOConverter implements DTOConverter {
+public class ProductConfigurationDTOConverter
+	implements DTOConverter<CPDefinitionInventory, ProductConfiguration> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +45,7 @@ public class ProductConfigurationDTOConverter implements DTOConverter {
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					dtoConverterContext.getResourcePrimKey());
+					(Long)dtoConverterContext.getId());
 
 		if (cpDefinitionInventory == null) {
 			return new ProductConfiguration();

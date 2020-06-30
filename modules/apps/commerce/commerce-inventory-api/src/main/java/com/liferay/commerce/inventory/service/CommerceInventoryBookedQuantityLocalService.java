@@ -280,4 +280,10 @@ public interface CommerceInventoryBookedQuantityLocalService
 		updateCommerceInventoryBookedQuantity(
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity);
 
+	public CommerceInventoryBookedQuantity
+			updateCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				int quantity, Map<String, String> context, long mvccVersion)
+		throws PortalException;
+
 }

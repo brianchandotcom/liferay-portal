@@ -23,7 +23,6 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
@@ -41,7 +40,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,7 +86,7 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
-			_user.getUserId(), siteId);
+			contextUser.getUserId(), siteId);
 
 		return SearchUtil.search(
 			booleanQuery -> {
@@ -112,7 +110,7 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
-			_user.getUserId(), siteId);
+			contextUser.getUserId(), siteId);
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -148,7 +146,7 @@ public class BlogPostingImageResourceImpl
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
-			_user.getUserId(), fileEntry.getGroupId());
+			contextUser.getUserId(), fileEntry.getGroupId());
 
 		if (fileEntry.getFolderId() != folder.getFolderId()) {
 			throw new BadRequestException(
@@ -186,8 +184,5 @@ public class BlogPostingImageResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Context
-	private User _user;
 
 }

@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContentStructure implements Cloneable {
 
+	public static ContentStructure toDTO(String json) {
+		return ContentStructureSerDes.toDTO(json);
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}

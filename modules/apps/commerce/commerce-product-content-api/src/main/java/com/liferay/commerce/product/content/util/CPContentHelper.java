@@ -116,6 +116,8 @@ public interface CPContentHelper {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException;
 
+	public boolean hasChildCPDefinitions(long cpDefinitionId);
+
 	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException;
 

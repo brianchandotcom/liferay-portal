@@ -92,6 +92,12 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					setCustomDescription: function(text) {
+						var instance = this;
+
+						instance._customDescription = text;
+					},
+
 					setDescription: function(text) {
 						var instance = this;
 

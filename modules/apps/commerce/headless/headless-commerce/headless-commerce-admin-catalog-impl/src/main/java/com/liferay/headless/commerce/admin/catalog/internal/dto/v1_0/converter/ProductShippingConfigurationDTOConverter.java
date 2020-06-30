@@ -17,8 +17,8 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
 
@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 		DTOConverter.class, ProductShippingConfigurationDTOConverter.class
 	}
 )
-public class ProductShippingConfigurationDTOConverter implements DTOConverter {
+public class ProductShippingConfigurationDTOConverter
+	implements DTOConverter<CPDefinition, ProductShippingConfiguration> {
 
 	@Override
 	public String getContentType() {
@@ -46,7 +47,7 @@ public class ProductShippingConfigurationDTOConverter implements DTOConverter {
 		throws Exception {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new ProductShippingConfiguration() {
 			{

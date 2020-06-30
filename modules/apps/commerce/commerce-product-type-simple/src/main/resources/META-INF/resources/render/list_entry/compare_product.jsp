@@ -89,7 +89,7 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 	%>
 
 	<div class="product-footer">
-		<c:if test="<%= cpSku != null %>">
+		<c:if test="<%= (cpSku != null) && !cpContentHelper.hasChildCPDefinitions(cpCatalogEntry.getCPDefinitionId()) %>">
 			<div class="autofit-row product-actions">
 				<div class="autofit-col autofit-col-expand">
 					<liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" name="<%= quantityInputId %>" useSelect="<%= false %>" />

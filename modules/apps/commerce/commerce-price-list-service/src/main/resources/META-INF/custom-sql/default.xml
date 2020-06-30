@@ -134,7 +134,8 @@
 				(CPLCommerceGroupAccountRel.cPLCommerceAccountGroupRelId IS NULL) AND
 				(CommercePriceListChannelRel.commercePriceListChannelRelId IS NULL)
 			ORDER BY
-				CommercePriceList.priority DESC
+				CommercePriceList.priority DESC,
+				CommercePriceList.catalogBasePriceList ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByLowestPrice">

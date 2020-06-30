@@ -192,8 +192,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
-		commercePriceEntry.setCProductId(cProductId);
 		commercePriceEntry.setCPInstanceUuid(cpInstanceUuid);
+		commercePriceEntry.setCProductId(cProductId);
 		commercePriceEntry.setDisplayDate(displayDate);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {

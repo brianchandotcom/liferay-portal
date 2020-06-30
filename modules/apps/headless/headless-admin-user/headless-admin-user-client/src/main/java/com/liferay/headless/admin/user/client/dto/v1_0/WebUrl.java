@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class WebUrl implements Cloneable {
 
+	public static WebUrl toDTO(String json) {
+		return WebUrlSerDes.toDTO(json);
+	}
+
 	public Long getId() {
 		return id;
 	}

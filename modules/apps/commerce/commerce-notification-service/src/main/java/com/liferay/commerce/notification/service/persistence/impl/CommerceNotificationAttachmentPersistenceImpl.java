@@ -2070,8 +2070,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			"commerceNotificationAttachment.commerceNotificationQueueEntryId = ?";
 
 	public CommerceNotificationAttachmentPersistenceImpl() {
-		setModelClass(CommerceNotificationAttachment.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2093,6 +2091,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceNotificationAttachment.class);
 	}
 
 	/**

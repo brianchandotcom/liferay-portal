@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Grid implements Cloneable {
 
+	public static Grid toDTO(String json) {
+		return GridSerDes.toDTO(json);
+	}
+
 	public FormFieldOption[] getColumns() {
 		return columns;
 	}

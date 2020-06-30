@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.Filter;
 import com.liferay.commerce.frontend.Pagination;
@@ -21,8 +24,10 @@ import com.liferay.commerce.product.definitions.web.internal.model.ProductOption
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,6 +36,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,23 +99,29 @@ public class CommerceProductOptionValueDataSetDataProvider
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionValueRels) {
 
-			CPInstance cpInstance =
-				cpDefinitionOptionValueRel.fetchCPInstance();
+			CommerceCatalog commerceCatalog =
+				_commerceCatalogService.fetchCommerceCatalogByGroupId(
+					cpDefinitionOptionValueRel.getGroupId());
 
-			String sku = StringPool.BLANK;
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyService.getCommerceCurrency(
+					commerceCatalog.getCompanyId(),
+					commerceCatalog.getCommerceCurrencyCode());
 
-			if (cpInstance != null) {
-				sku = cpInstance.getSku();
-			}
+			BigDecimal price = _getPrice(cpDefinitionOptionValueRel);
 
 			productOptionValues.add(
 				new ProductOptionValue(
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId(),
+					_commercePriceFormatter.format(
+						commerceCurrency, price, locale),
+					cpDefinitionOptionValueRel.getKey(),
 					HtmlUtil.escape(
 						cpDefinitionOptionValueRel.getName(
 							LanguageUtil.getLanguageId(locale))),
-					cpDefinitionOptionValueRel.getPriority(), sku));
+					cpDefinitionOptionValueRel.getPriority(),
+					_getSku(cpDefinitionOptionValueRel)));
 		}
 
 		return productOptionValues;
@@ -129,6 +143,54 @@ public class CommerceProductOptionValueDataSetDataProvider
 				cpDefinitionOptionRel.getGroupId(), cpDefinitionOptionRelId,
 				keywords, start, end, sort);
 	}
+
+	private BigDecimal _getPrice(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
+
+		if (!cpDefinitionOptionRel.isPriceTypeStatic() ||
+			(cpDefinitionOptionValueRel.getPrice() == null)) {
+
+			return BigDecimal.ZERO;
+		}
+
+		if (cpDefinitionOptionValueRel.getQuantity() == 0) {
+			return cpDefinitionOptionValueRel.getPrice();
+		}
+
+		BigDecimal quantity = new BigDecimal(
+			cpDefinitionOptionValueRel.getQuantity());
+
+		return quantity.multiply(cpDefinitionOptionValueRel.getPrice());
+	}
+
+	private String _getSku(
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+
+		if (Validator.isNull(cpDefinitionOptionValueRel.getCPInstanceUuid())) {
+			return StringPool.BLANK;
+		}
+
+		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpInstance.getSku();
+	}
+
+	@Reference
+	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

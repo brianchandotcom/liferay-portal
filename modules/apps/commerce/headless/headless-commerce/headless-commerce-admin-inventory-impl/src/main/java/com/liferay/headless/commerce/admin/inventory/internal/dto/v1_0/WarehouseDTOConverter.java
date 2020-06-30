@@ -17,9 +17,8 @@ package com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
 	service = {DTOConverter.class, WarehouseDTOConverter.class}
 )
-public class WarehouseDTOConverter implements DTOConverter {
+public class WarehouseDTOConverter
+	implements DTOConverter<CommerceInventoryWarehouse, Warehouse> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +44,7 @@ public class WarehouseDTOConverter implements DTOConverter {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		return new Warehouse() {
 			{
@@ -76,8 +76,5 @@ public class WarehouseDTOConverter implements DTOConverter {
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

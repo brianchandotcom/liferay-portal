@@ -4,73 +4,73 @@
 		{
 			"rows": [
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text1"
 							],
-							size: 6
+							"size": 6
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text2"
 							],
-							size: 6
+							"size": 6
 						}
 					]
 				},
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text3"
 							],
-							size: 3
+							"size": 3
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text4"
 							],
-							size: 3
+							"size": 3
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text5"
 							],
-							size: 3
+							"size": 3
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text6"
 							],
-							size: 3
+							"size": 3
 						}
 					]
 				},
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text7"
 							],
-							size: 12
+							"size": 12
 						}
 					]
 				},
 				{
-					columns: [
+					"columns": [
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text8"
 							],
-							size: 6
+							"size": 6
 						},
 						{
-							fieldNames: [
+							"fieldNames": [
 								"text9",
 								"text10"
 							],
-							size: 6
+							"size": 6
 						}
 					]
 				}

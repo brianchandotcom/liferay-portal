@@ -21,6 +21,8 @@ import com.liferay.document.library.item.selector.web.internal.DLItemSelectorVie
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
@@ -143,6 +145,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (!isShowDragAndDropZone(request)) {
+			return null;
+		}
+
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				getStagingAwareGroupId(themeDisplay.getScopeGroupId()));
@@ -177,6 +183,42 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _search;
 	}
 
+	public boolean isShowDragAndDropZone(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (_showDragAndDropZone != null) {
+			return _showDragAndDropZone;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long defaultFileEntryTypeId =
+			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+				getFolderId(httpServletRequest));
+
+		try {
+			if (DLUtil.hasWorkflowDefinitionLink(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					getFolderId(httpServletRequest), defaultFileEntryTypeId)) {
+
+				_showDragAndDropZone = false;
+			}
+			else {
+				_showDragAndDropZone = true;
+			}
+		}
+		catch (PortalException | RuntimeException exception) {
+			throw exception;
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
+
+		return _showDragAndDropZone;
+	}
+
 	private final AssetVocabularyService _assetVocabularyService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DLItemSelectorView<T> _dlItemSelectorView;
@@ -186,6 +228,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private Boolean _showDragAndDropZone;
 	private final StagingGroupHelper _stagingGroupHelper;
 
 }

@@ -3,6 +3,7 @@ apply plugin: "com.liferay.lang.merger"
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.asset.taglib", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.10.0"
 	compileOnly group: "com.liferay", name: "com.liferay.expando.taglib", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "3.3.0"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0"
@@ -24,6 +25,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-inventory-api")
 	compileOnly project(":apps:commerce:commerce-media-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
+	compileOnly project(":apps:commerce:commerce-product-ddm-api")
 	compileOnly project(":apps:commerce:commerce-product-item-selector-api")
 	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:commerce:commerce-taglib")

@@ -4349,8 +4349,6 @@ public class FragmentEntryLinkPersistenceImpl
 		"fragmentEntryLink.classPK = ?";
 
 	public FragmentEntryLinkPersistenceImpl() {
-		setModelClass(FragmentEntryLink.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4368,6 +4366,8 @@ public class FragmentEntryLinkPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(FragmentEntryLink.class);
 	}
 
 	/**

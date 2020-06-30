@@ -35,7 +35,9 @@ public interface CProductVersionConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "5", name = "versions-to-retain", required = false)
+	@Meta.AD(
+		deflt = "5", min = "0", name = "versions-to-retain", required = false
+	)
 	public int versionThreshold();
 
 }

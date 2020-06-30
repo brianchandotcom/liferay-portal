@@ -42,6 +42,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/osgi-annotation-versioning.jar</file-name>
+				<version>1.1.0.201802012106</version>
+				<project-name>OSGi</project-name>
+				<project-url>https://www.osgi.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/xmltask.jar</file-name>
 				<version>1.16</version>
 				<project-name>XMLTask</project-name>

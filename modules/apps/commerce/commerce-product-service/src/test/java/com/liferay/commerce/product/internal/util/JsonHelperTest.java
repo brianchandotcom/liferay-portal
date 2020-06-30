@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -47,11 +48,12 @@ public class JsonHelperTest {
 	public void testGetFirstElementStringValue() {
 		Assert.assertEquals(
 			"First element string value", "commerce",
-			JsonHelper.getFirstElementStringValue("[\"commerce\"]"));
+			_jsonHelper.getFirstElementStringValue("[\"commerce\"]"));
 
 		Assert.assertEquals(
 			"First element string value", "commerce",
-			JsonHelper.getFirstElementStringValue("[\"commerce\",\"value2\"]"));
+			_jsonHelper.getFirstElementStringValue(
+				"[\"commerce\",\"value2\"]"));
 
 		_assertException(
 			"[\"commerce\",\"value2\"", IllegalArgumentException.class);
@@ -64,7 +66,7 @@ public class JsonHelperTest {
 	public void testGetValueAsJSONArray() throws Exception {
 		JSONObject jsonObject = _jsonFactory.createJSONObject("{\"array\":[]}");
 
-		JSONArray jsonArray = JsonHelper.getValueAsJSONArray(
+		JSONArray jsonArray = _jsonHelper.getValueAsJSONArray(
 			"array", jsonObject);
 
 		Assert.assertNotNull("JSONArray is not null", jsonArray);
@@ -74,7 +76,7 @@ public class JsonHelperTest {
 		jsonObject = _jsonFactory.createJSONObject(
 			"{\"array\":[\"commerce\"]}");
 
-		jsonArray = JsonHelper.getValueAsJSONArray("array", jsonObject);
+		jsonArray = _jsonHelper.getValueAsJSONArray("array", jsonObject);
 
 		Assert.assertEquals("JSONArray length", 1, jsonArray.length());
 
@@ -84,7 +86,7 @@ public class JsonHelperTest {
 
 		jsonObject = _jsonFactory.createJSONObject("{\"array\":[1,2,300,4]}");
 
-		jsonArray = JsonHelper.getValueAsJSONArray("array", jsonObject);
+		jsonArray = _jsonHelper.getValueAsJSONArray("array", jsonObject);
 
 		Assert.assertEquals("JSONArray length", 4, jsonArray.length());
 
@@ -96,53 +98,53 @@ public class JsonHelperTest {
 	@Test
 	public void testIsArray() {
 		Assert.assertFalse(
-			"null is not a JSON array", JsonHelper.isArray(null));
+			"null is not a JSON array", _jsonHelper.isArray(null));
 
-		Assert.assertFalse("\"\" is not a JSON array", JsonHelper.isArray(""));
+		Assert.assertFalse("\"\" is not a JSON array", _jsonHelper.isArray(""));
 
-		Assert.assertFalse("{} is not a JSON array", JsonHelper.isArray("{}"));
+		Assert.assertFalse("{} is not a JSON array", _jsonHelper.isArray("{}"));
 
 		Assert.assertTrue(
-			"[] is an empty JSON array", JsonHelper.isArray("[]"));
+			"[] is an empty JSON array", _jsonHelper.isArray("[]"));
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not a JSON array",
-			JsonHelper.isEmpty("{\"key\":\"value\"}"));
+			_jsonHelper.isEmpty("{\"key\":\"value\"}"));
 
 		Assert.assertFalse(
 			"[{\"key\":\"value\"}] is a JSON array",
-			JsonHelper.isEmpty("[{\"key\":\"value\"}]"));
+			_jsonHelper.isEmpty("[{\"key\":\"value\"}]"));
 
 		Assert.assertFalse(
 			"[\"value1\",\"value2\"] is a JSON array",
-			JsonHelper.isEmpty("[\"value1\",\"value2\"]"));
+			_jsonHelper.isEmpty("[\"value1\",\"value2\"]"));
 	}
 
 	@Test
 	public void testIsEmpty() {
 		Assert.assertTrue(
-			"null is an empty JSON string", JsonHelper.isEmpty(null));
+			"null is an empty JSON string", _jsonHelper.isEmpty(null));
 
 		Assert.assertTrue(
-			"\"\" is an empty JSON string", JsonHelper.isEmpty(""));
+			"\"\" is an empty JSON string", _jsonHelper.isEmpty(""));
 
 		Assert.assertTrue(
-			"[] is an empty JSON string", JsonHelper.isEmpty("[]"));
+			"[] is an empty JSON string", _jsonHelper.isEmpty("[]"));
 
 		Assert.assertTrue(
-			"{} is an empty JSON string", JsonHelper.isEmpty("{}"));
+			"{} is an empty JSON string", _jsonHelper.isEmpty("{}"));
 
 		Assert.assertFalse(
 			"{\"key\":\"value\"} is not an empty JSON string",
-			JsonHelper.isEmpty("{\"key\":\"value\"}"));
+			_jsonHelper.isEmpty("{\"key\":\"value\"}"));
 
 		Assert.assertFalse(
 			"[{\"key\":\"value\"}] is not an empty JSON string",
-			JsonHelper.isEmpty("[{\"key\":\"value\"}]"));
+			_jsonHelper.isEmpty("[{\"key\":\"value\"}]"));
 
 		Assert.assertFalse(
 			"[\"value1\",\"value2\"] is not an empty JSON string",
-			JsonHelper.isEmpty("[\"value1\",\"value2\"]"));
+			_jsonHelper.isEmpty("[\"value1\",\"value2\"]"));
 	}
 
 	private void _assertException(
@@ -151,7 +153,7 @@ public class JsonHelperTest {
 		Exception actualException = null;
 
 		try {
-			JsonHelper.getFirstElementStringValue(failingExpression);
+			_jsonHelper.getFirstElementStringValue(failingExpression);
 		}
 		catch (Exception e) {
 			actualException = e;
@@ -164,5 +166,6 @@ public class JsonHelperTest {
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private final JsonHelper _jsonHelper = new JsonHelperImpl();
 
 }

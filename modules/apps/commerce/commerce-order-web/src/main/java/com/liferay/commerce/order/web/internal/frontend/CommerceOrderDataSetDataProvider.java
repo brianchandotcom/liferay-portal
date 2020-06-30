@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -126,10 +127,20 @@ public class CommerceOrderDataSetDataProvider
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 					commerceOrder.getGroupId());
 
+			String commerceAccountId = String.valueOf(
+				commerceOrder.getCommerceAccountId());
+
+			String commerceAccountName = commerceOrder.getCommerceAccountName();
+
+			if (Validator.isNull(commerceAccountName)) {
+				commerceAccountId = null;
+				commerceAccountName = LanguageUtil.get(
+					_portal.getLocale(httpServletRequest), "guest");
+			}
+
 			orders.add(
 				new Order(
-					commerceOrder.getCommerceAccountName(),
-					String.valueOf(commerceOrder.getCommerceAccountId()),
+					commerceAccountName, commerceAccountId,
 					totalMoney.format(themeDisplay.getLocale()),
 					commerceChannel.getName(),
 					getCommerceOrderDateTime(commerceOrder, dateTimeFormat),

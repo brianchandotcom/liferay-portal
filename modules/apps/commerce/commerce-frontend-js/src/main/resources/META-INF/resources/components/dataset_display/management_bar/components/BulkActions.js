@@ -18,9 +18,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 
-import {OPEN_SIDE_PANEL} from '../../../../utilities/eventsDefinitions.es';
-import {getOpenedSidePanel} from '../../../../utilities/sidePanels.es';
-import DatasetDisplayContext from '../../DatasetDisplayContext.es';
+import {OPEN_SIDE_PANEL} from '../../../../utilities/eventsDefinitions';
+import {getOpenedSidePanel} from '../../../../utilities/sidePanels';
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 
 function submit(action, method = 'get', formId, form) {
 	let queriedForm;

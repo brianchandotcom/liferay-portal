@@ -2996,8 +2996,6 @@ public class KBFolderPersistenceImpl
 		"(kbFolder.urlTitle IS NULL OR kbFolder.urlTitle = '')";
 
 	public KBFolderPersistenceImpl() {
-		setModelClass(KBFolder.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3015,6 +3013,8 @@ public class KBFolderPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(KBFolder.class);
 	}
 
 	/**

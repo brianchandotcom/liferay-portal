@@ -114,7 +114,9 @@ public class UpdateLanguageAction extends Action {
 		if (themeDisplay.isI18n()) {
 			String i18nPath = themeDisplay.getI18nPath();
 
-			layoutURL = redirect.substring(i18nPath.length());
+			if (redirect.startsWith(i18nPath)) {
+				layoutURL = redirect.substring(i18nPath.length());
+			}
 		}
 
 		Layout layout = themeDisplay.getLayout();

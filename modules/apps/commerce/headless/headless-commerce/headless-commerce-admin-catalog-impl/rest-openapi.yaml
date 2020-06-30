@@ -116,8 +116,6 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
-            required:
-                - sku
             type: object
         AttachmentBase64:
             properties:
@@ -173,8 +171,6 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
-            required:
-                - sku
             type: object
         AttachmentUrl:
             properties:
@@ -226,11 +222,16 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
-            required:
-                - sku
             type: object
         Catalog:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 currencyCode:
                     example: USD
                     type: string
@@ -375,7 +376,6 @@ components:
                 - fieldType
                 - key
                 - name
-                - optionId
             type: object
         OptionCategory:
             properties:
@@ -444,6 +444,13 @@ components:
             type: object
         Product:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 active:
                     example: true
                     type: boolean
@@ -660,14 +667,7 @@ components:
                     example: true
                     type: boolean
                 fieldType:
-                    enum:
-                        - checkbox
-                        - checkbox_multiple
-                        - date
-                        - numeric
-                        - radio
-                        - select
-                    example: select
+                    example: checkbox, checkbox_multiple, date, numeric, radio, select
                     type: string
                 id:
                     example: 30130
@@ -866,7 +866,6 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
-                    readOnly: true
                     type: integer
                 priority:
                     example: 1.2
@@ -1038,7 +1037,8 @@ info:
         email: team-commerce@liferay.com
         name: Commerce Team
     description:
-        Liferay Commerce Admin Catalog API
+        "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '1.0.5'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1081,8 +1081,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Catalog by external reference code.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
         get:
             operationId: getCatalogByExternalReferenceCode
             parameters:
@@ -1147,8 +1146,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Catalog by external reference code.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
         patch:
             operationId: patchCatalogByExternalReferenceCode
             parameters:
@@ -1218,8 +1216,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Catalog by external reference code.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
     /catalog/{id}:
         delete:
             operationId: deleteCatalog
@@ -1256,8 +1253,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Catalog by ID.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
         get:
             operationId: getCatalog
             parameters:
@@ -1323,8 +1319,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Catalog by ID.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
         patch:
             operationId: patchCatalog
             parameters:
@@ -1395,8 +1390,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Catalog by ID.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
     /catalogs:
         get:
             operationId: getCatalogsPage
@@ -1472,8 +1466,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Catalogs.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
         post:
             operationId: postCatalog
             requestBody:
@@ -1541,8 +1534,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Catalog.
-            tags:
-                - Catalog
+            tags: ["Catalog"]
     /optionCategories:
         get:
             operationId: getOptionCategoriesPage
@@ -1618,8 +1610,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Option Categories.
-            tags:
-                - OptionCategory
+            tags: ["OptionCategory"]
         post:
             operationId: postOptionCategory
             requestBody:
@@ -1687,8 +1678,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Option Category.
-            tags:
-                - OptionCategory
+            tags: ["OptionCategory"]
     /optionCategories/{id}:
         delete:
             operationId: deleteOptionCategory
@@ -1725,8 +1715,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Option Category by ID.
-            tags:
-                - OptionCategory
+            tags: ["OptionCategory"]
         get:
             operationId: getOptionCategory
             parameters:
@@ -1792,8 +1781,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Option Category by ID.
-            tags:
-                - OptionCategory
+            tags: ["OptionCategory"]
         patch:
             operationId: patchOptionCategory
             parameters:
@@ -1864,8 +1852,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Option Category by ID.
-            tags:
-                - OptionCategory
+            tags: ["OptionCategory"]
     /options:
         get:
             operationId: getOptionsPage
@@ -1945,8 +1932,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Option.
-            tags:
-                - Option
+            tags: ["Option"]
         post:
             operationId: postOption
             requestBody:
@@ -2014,8 +2000,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates an Option.
-            tags:
-                - Option
+            tags: ["Option"]
     /options/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteOptionByExternalReferenceCode
@@ -2051,8 +2036,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Option by external reference code.
-            tags:
-                - Option
+            tags: ["Option"]
         get:
             operationId: getOptionByExternalReferenceCode
             parameters:
@@ -2117,8 +2101,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets an Option by external reference code.
-            tags:
-                - Option
+            tags: ["Option"]
         patch:
             operationId: patchOptionByExternalReferenceCode
             parameters:
@@ -2188,8 +2171,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates an Option by external reference code.
-            tags:
-                - Option
+            tags: ["Option"]
     /options/by-externalReferenceCode/{externalReferenceCode}/optionValues:
         get:
             operationId: getOptionByExternalReferenceCodeOptionValuesPage
@@ -2270,8 +2252,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Values related to an Option.
-            tags:
-                - OptionValue
+            tags: ["OptionValue"]
         post:
             operationId: postOptionByExternalReferenceCodeOptionValue
             parameters:
@@ -2351,8 +2332,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Value related to an Option.
-            tags:
-                - OptionValue
+            tags: ["OptionValue"]
     /options/{id}:
         delete:
             operationId: deleteOption
@@ -2389,8 +2369,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Option by ID.
-            tags:
-                - Option
+            tags: ["Option"]
         get:
             operationId: getOption
             parameters:
@@ -2456,8 +2435,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets an Option by ID.
-            tags:
-                - Option
+            tags: ["Option"]
         patch:
             operationId: patchOption
             parameters:
@@ -2528,8 +2506,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates an Option by ID.
-            tags:
-                - Option
+            tags: ["Option"]
     /options/{id}/optionValues:
         get:
             operationId: getOptionIdOptionValuesPage
@@ -2611,8 +2588,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Values related to an Option.
-            tags:
-                - OptionValue
+            tags: ["OptionValue"]
         post:
             operationId: postOptionIdOptionValue
             parameters:
@@ -2693,8 +2669,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Value related to an Option.
-            tags:
-                - OptionValue
+            tags: ["OptionValue"]
     /productOptions/{id}:
         delete:
             operationId: deleteProductOption
@@ -2731,8 +2706,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Product Option by ID.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
         get:
             operationId: getProductOption
             parameters:
@@ -2798,8 +2772,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Option by ID.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
         patch:
             operationId: patchProductOption
             parameters:
@@ -2870,8 +2843,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product Option by ID.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
     /productOptions/{id}/productOptionValues:
         get:
             operationId: getProductOptionIdProductOptionValuesPage
@@ -2953,8 +2925,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Values related to a Product Option.
-            tags:
-                - ProductOptionValue
+            tags: ["ProductOptionValue"]
         post:
             operationId: postProductOptionIdProductOptionValue
             parameters:
@@ -3035,8 +3006,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Value related to a Product Option.
-            tags:
-                - ProductOptionValue
+            tags: ["ProductOptionValue"]
     /products:
         get:
             operationId: getProductsPage
@@ -3117,8 +3087,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Products.
-            tags:
-                - Product
+            tags: ["Product"]
         post:
             operationId: postProduct
             requestBody:
@@ -3186,8 +3155,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Product.
-            tags:
-                - Product
+            tags: ["Product"]
     /products/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteProductByExternalReferenceCode
@@ -3223,8 +3191,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Product by external reference code.
-            tags:
-                - Product
+            tags: ["Product"]
         get:
             operationId: getProductByExternalReferenceCode
             parameters:
@@ -3289,8 +3256,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by external reference code.
-            tags:
-                - Product
+            tags: ["Product"]
         patch:
             operationId: patchProductByExternalReferenceCode
             parameters:
@@ -3360,8 +3326,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by external reference code.
-            tags:
-                - Product
+            tags: ["Product"]
     /products/by-externalReferenceCode/{externalReferenceCode}/attachments:
         get:
             operationId: getProductByExternalReferenceCodeAttachmentsPage
@@ -3442,8 +3407,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Attachments related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
         post:
             operationId: postProductByExternalReferenceCodeAttachment
             parameters:
@@ -3523,8 +3487,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Attachment related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64:
         post:
             operationId: postProductByExternalReferenceCodeAttachmentByBase64
@@ -3605,8 +3568,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-url:
         post:
             operationId: postProductByExternalReferenceCodeAttachmentByUrl
@@ -3687,8 +3649,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/categories:
         get:
             operationId: getProductByExternalReferenceCodeCategoriesPage
@@ -3769,8 +3730,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Category related to a Product.
-            tags:
-                - Category
+            tags: ["Category"]
         patch:
             operationId: patchProductByExternalReferenceCodeCategory
             parameters:
@@ -3844,8 +3804,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Category related to a Product.
-            tags:
-                - Category
+            tags: ["Category"]
     /products/by-externalReferenceCode/{externalReferenceCode}/configuration:
         get:
             operationId: getProductByExternalReferenceCodeConfiguration
@@ -3911,8 +3870,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Configuration of a Product.
-            tags:
-                - ProductConfiguration
+            tags: ["ProductConfiguration"]
         patch:
             operationId: patchProductByExternalReferenceCodeConfiguration
             parameters:
@@ -3982,8 +3940,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product Configuration of a Product.
-            tags:
-                - ProductConfiguration
+            tags: ["ProductConfiguration"]
     /products/by-externalReferenceCode/{externalReferenceCode}/images:
         get:
             operationId: getProductByExternalReferenceCodeImagesPage
@@ -4064,8 +4021,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Images related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
         post:
             operationId: postProductByExternalReferenceCodeImage
             parameters:
@@ -4145,8 +4101,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/images/by-base64:
         post:
             operationId: postProductByExternalReferenceCodeImageByBase64
@@ -4227,8 +4182,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/images/by-url:
         post:
             operationId: postProductByExternalReferenceCodeImageByUrl
@@ -4309,8 +4263,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/by-externalReferenceCode/{externalReferenceCode}/productOptions:
         get:
             operationId: getProductByExternalReferenceCodeProductOptionsPage
@@ -4394,8 +4347,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Options of a Product.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
         post:
             operationId: postProductByExternalReferenceCodeProductOptionsPage
             parameters:
@@ -4483,8 +4435,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a list of Product Options of a Product.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
     /products/by-externalReferenceCode/{externalReferenceCode}/relatedProducts:
         get:
             operationId: getProductByExternalReferenceCodeRelatedProductsPage
@@ -4572,8 +4523,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Related Products of a Product.
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
         post:
             operationId: postProductByExternalReferenceCodeRelatedProduct
             parameters:
@@ -4653,8 +4603,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Related Product of a Product
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
     /products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration:
         get:
             operationId: getProductByExternalReferenceCodeShippingConfiguration
@@ -4720,8 +4669,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Shipping Configuration of a Product.
-            tags:
-                - ProductShippingConfiguration
+            tags: ["ProductShippingConfiguration"]
         patch:
             operationId: patchProductByExternalReferenceCodeShippingConfiguration
             parameters:
@@ -4791,8 +4739,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product Shipping Configuration of a Product.
-            tags:
-                - ProductShippingConfiguration
+            tags: ["ProductShippingConfiguration"]
     /products/by-externalReferenceCode/{externalReferenceCode}/skus:
         get:
             operationId: getProductByExternalReferenceCodeSkusPage
@@ -4873,8 +4820,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Skus related to a Product.
-            tags:
-                - Sku
+            tags: ["Sku"]
         post:
             operationId: postProductByExternalReferenceCodeSku
             parameters:
@@ -4954,8 +4900,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Sku related to a Product.
-            tags:
-                - Sku
+            tags: ["Sku"]
     /products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration:
         get:
             operationId: getProductByExternalReferenceCodeSubscriptionConfiguration
@@ -5021,8 +4966,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Subscription Configuration of a Product.
-            tags:
-                - ProductSubscriptionConfiguration
+            tags: ["ProductSubscriptionConfiguration"]
         patch:
             operationId: patchProductByExternalReferenceCodeSubscriptionConfiguration
             parameters:
@@ -5092,8 +5036,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product Subscription Configuration of a Product.
-            tags:
-                - ProductSubscriptionConfiguration
+            tags: ["ProductSubscriptionConfiguration"]
     /products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration:
         get:
             operationId: getProductByExternalReferenceCodeTaxConfiguration
@@ -5159,8 +5102,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product Tax Configuration of a Product.
-            tags:
-                - ProductTaxConfiguration
+            tags: ["ProductTaxConfiguration"]
         patch:
             operationId: patchProductByExternalReferenceCodeTaxConfiguration
             parameters:
@@ -5230,8 +5172,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product Tax Configuration of a Product.
-            tags:
-                - ProductTaxConfiguration
+            tags: ["ProductTaxConfiguration"]
     /products/{id}:
         delete:
             operationId: deleteProduct
@@ -5268,8 +5209,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Product by ID.
-            tags:
-                - Product
+            tags: ["Product"]
         get:
             operationId: getProduct
             parameters:
@@ -5335,8 +5275,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - Product
+            tags: ["Product"]
         patch:
             operationId: patchProduct
             parameters:
@@ -5407,8 +5346,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by ID.
-            tags:
-                - Product
+            tags: ["Product"]
     /products/{id}/attachments:
         get:
             operationId: getProductIdAttachmentsPage
@@ -5490,8 +5428,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Attachments related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
         post:
             operationId: postProductIdAttachment
             parameters:
@@ -5572,8 +5509,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Attachment related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/attachments/by-base64:
         post:
             operationId: postProductIdAttachmentByBase64
@@ -5655,8 +5591,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/attachments/by-url:
         post:
             operationId: postProductIdAttachmentByUrl
@@ -5738,8 +5673,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/categories:
         get:
             operationId: getProductIdCategoriesPage
@@ -5821,8 +5755,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Category related to a Product.
-            tags:
-                - Category
+            tags: ["Category"]
         patch:
             operationId: patchProductIdCategory
             parameters:
@@ -5897,8 +5830,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Category related to a Product.
-            tags:
-                - Category
+            tags: ["Category"]
     /products/{id}/configuration:
         get:
             operationId: getProductIdConfiguration
@@ -5965,8 +5897,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - ProductConfiguration
+            tags: ["ProductConfiguration"]
         patch:
             operationId: patchProductIdConfiguration
             parameters:
@@ -6037,8 +5968,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by ID.
-            tags:
-                - ProductConfiguration
+            tags: ["ProductConfiguration"]
     /products/{id}/images:
         get:
             operationId: getProductIdImagesPage
@@ -6120,8 +6050,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Images related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
         post:
             operationId: postProductIdImage
             parameters:
@@ -6202,8 +6131,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/images/by-base64:
         post:
             operationId: postProductIdImageByBase64
@@ -6285,8 +6213,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/images/by-url:
         post:
             operationId: postProductIdImageByUrl
@@ -6368,8 +6295,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Image related to a Product.
-            tags:
-                - Attachment
+            tags: ["Attachment"]
     /products/{id}/productOptions:
         get:
             operationId: getProductIdProductOptionsPage
@@ -6454,8 +6380,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
         post:
             operationId: postProductIdProductOptionsPage
             parameters:
@@ -6544,8 +6469,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a list of Product Options related to a Product.
-            tags:
-                - ProductOption
+            tags: ["ProductOption"]
     /products/{id}/productSpecifications:
         get:
             operationId: getProductIdProductSpecificationsPage
@@ -6627,8 +6551,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Values related to a Specification.
-            tags:
-                - ProductSpecification
+            tags: ["ProductSpecification"]
         post:
             operationId: postProductIdProductSpecification
             parameters:
@@ -6709,8 +6632,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Value related to a Specification
-            tags:
-                - ProductSpecification
+            tags: ["ProductSpecification"]
     /products/{id}/relatedProducts:
         get:
             operationId: getProductIdRelatedProductsPage
@@ -6799,8 +6721,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Related Products of a Product.
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
         post:
             operationId: postProductIdRelatedProduct
             parameters:
@@ -6881,8 +6802,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Related Product of a Product
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
     /products/{id}/shippingConfiguration:
         get:
             operationId: getProductIdShippingConfiguration
@@ -6949,8 +6869,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - ProductShippingConfiguration
+            tags: ["ProductShippingConfiguration"]
         patch:
             operationId: patchProductIdShippingConfiguration
             parameters:
@@ -7021,8 +6940,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by ID.
-            tags:
-                - ProductShippingConfiguration
+            tags: ["ProductShippingConfiguration"]
     /products/{id}/skus:
         get:
             operationId: getProductIdSkusPage
@@ -7104,8 +7022,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Skus related to a Product.
-            tags:
-                - Sku
+            tags: ["Sku"]
         post:
             operationId: postProductIdSku
             parameters:
@@ -7186,8 +7103,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Sku related to a Product.
-            tags:
-                - Sku
+            tags: ["Sku"]
     /products/{id}/subscriptionConfiguration:
         get:
             operationId: getProductIdSubscriptionConfiguration
@@ -7254,8 +7170,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - ProductSubscriptionConfiguration
+            tags: ["ProductSubscriptionConfiguration"]
         patch:
             operationId: patchProductIdSubscriptionConfiguration
             parameters:
@@ -7326,8 +7241,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by ID.
-            tags:
-                - ProductSubscriptionConfiguration
+            tags: ["ProductSubscriptionConfiguration"]
     /products/{id}/taxConfiguration:
         get:
             operationId: getProductIdTaxConfiguration
@@ -7394,8 +7308,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Product by ID.
-            tags:
-                - ProductTaxConfiguration
+            tags: ["ProductTaxConfiguration"]
         patch:
             operationId: patchProductIdTaxConfiguration
             parameters:
@@ -7466,8 +7379,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Product by ID.
-            tags:
-                - ProductTaxConfiguration
+            tags: ["ProductTaxConfiguration"]
     /relatedProducts/{id}:
         delete:
             operationId: deleteRelatedProduct
@@ -7504,8 +7416,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Related Product by ID.
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
         get:
             operationId: getRelatedProduct
             parameters:
@@ -7571,8 +7482,91 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Related Product by ID.
-            tags:
-                - RelatedProduct
+            tags: ["RelatedProduct"]
+    /skus:
+        get:
+            operationId: getSkusPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a list of Skus.
+            tags: ["Sku"]
     /skus/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteSkuByExternalReferenceCode
@@ -7608,8 +7602,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Sku by external reference code.
-            tags:
-                - Sku
+            tags: ["Sku"]
         get:
             operationId: getSkuByExternalReferenceCode
             parameters:
@@ -7674,8 +7667,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Sku by external reference code.
-            tags:
-                - Sku
+            tags: ["Sku"]
         patch:
             operationId: patchSkuByExternalReferenceCode
             parameters:
@@ -7745,8 +7737,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Sku by external reference code.
-            tags:
-                - Sku
+            tags: ["Sku"]
     /skus/{id}:
         delete:
             operationId: deleteSku
@@ -7783,8 +7774,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Sku by ID.
-            tags:
-                - Sku
+            tags: ["Sku"]
         get:
             operationId: getSku
             parameters:
@@ -7850,8 +7840,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Sku by ID.
-            tags:
-                - Sku
+            tags: ["Sku"]
         patch:
             operationId: patchSku
             parameters:
@@ -7922,8 +7911,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Sku by ID.
-            tags:
-                - Sku
+            tags: ["Sku"]
     /specifications:
         get:
             operationId: getSpecificationsPage
@@ -8003,8 +7991,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of Specifications.
-            tags:
-                - Specification
+            tags: ["Specification"]
         post:
             operationId: postSpecification
             requestBody:
@@ -8072,8 +8059,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a Specification.
-            tags:
-                - Specification
+            tags: ["Specification"]
     /specifications/{id}:
         delete:
             operationId: deleteSpecification
@@ -8110,8 +8096,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Deletes a Specification by ID.
-            tags:
-                - Specification
+            tags: ["Specification"]
         get:
             operationId: getSpecification
             parameters:
@@ -8177,8 +8162,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a Specification by ID.
-            tags:
-                - Specification
+            tags: ["Specification"]
         patch:
             operationId: patchSpecification
             parameters:
@@ -8249,8 +8233,7 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a Specification by ID.
-            tags:
-                - Specification
+            tags: ["Specification"]
 servers:
     - description:
           SwaggerHub API Auto Mocking

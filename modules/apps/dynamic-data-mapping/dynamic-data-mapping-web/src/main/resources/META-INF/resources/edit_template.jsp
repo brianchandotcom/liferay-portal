@@ -31,6 +31,7 @@ long groupId = BeanParamUtil.getLong(template, request, "groupId", PortalUtil.ge
 long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
+long structureId = ParamUtil.getLong(request, "structureId");
 
 boolean cacheable = BeanParamUtil.getBoolean(template, request, "cacheable", true);
 boolean smallImage = BeanParamUtil.getBoolean(template, request, "smallImage");
@@ -39,6 +40,10 @@ DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_D
 
 if ((structure == null) && (template != null)) {
 	structure = ddmDisplayContext.fetchStructure(template);
+}
+
+if ((structure == null) && (structureId > 0)) {
+	structure = DDMStructureLocalServiceUtil.fetchDDMStructure(structureId);
 }
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
@@ -78,6 +83,15 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
+
+long redirectID = 0;
+
+if ((classPK > 0) && (structureId > 0)) {
+	redirectID = structureId;
+}
+else {
+	redirectID = classPK;
+}
 %>
 
 <portlet:actionURL name="addTemplate" var="addTemplateURL">
@@ -90,7 +104,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
+		<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, redirectID, resourceClassNameId, portletResource) %>" />
 		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 		<aui:input name="portletResourceNamespace" type="hidden" value="<%= portletResourceNamespace %>" />
@@ -99,10 +113,11 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 		<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 		<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 		<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
-		<aui:input name="type" type="hidden" value="<%= type %>" />
+		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 		<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 		<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
-		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+		<aui:input name="type" type="hidden" value="<%= type %>" />
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
@@ -307,7 +322,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 											<aui:row>
 												<c:if test="<%= smallImage && (template != null) %>">
 													<aui:col width="<%= 50 %>">
-														<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+														<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />' class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
 													</aui:col>
 												</c:if>
 
@@ -423,8 +438,8 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 					},
 					function(event) {
-						if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
-							document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
+						if (document.<portlet:namespace />fm.<portlet:namespace />structureId.value != event.ddmstructureid) {
+							document.<portlet:namespace />fm.<portlet:namespace />structureId.value = event.ddmstructureid;
 
 							Liferay.fire('<portlet:namespace />refreshEditor');
 						}
@@ -470,6 +485,6 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			<aui:button onClick='<%= renderResponse.getNamespace() + "saveDraftTemplate();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 		</c:if>
 
-		<aui:button href="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" type="cancel" />
+		<aui:button href="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, redirectID, resourceClassNameId, portletResource) %>" type="cancel" />
 	</aui:button-row>
 </div>

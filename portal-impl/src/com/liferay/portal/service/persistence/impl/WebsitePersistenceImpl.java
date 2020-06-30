@@ -3950,8 +3950,6 @@ public class WebsitePersistenceImpl
 		"website.primary = ?";
 
 	public WebsitePersistenceImpl() {
-		setModelClass(Website.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3970,6 +3968,8 @@ public class WebsitePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Website.class);
 	}
 
 	/**

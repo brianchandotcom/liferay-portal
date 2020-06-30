@@ -25,9 +25,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDMTemplate template = (DDMTemplate)row.getObject();
 
-if (classPK == 0) {
-	classPK = template.getClassPK();
-}
+long structureId = ParamUtil.getLong(request, "structureId");
 %>
 
 <liferay-ui:icon-menu
@@ -42,8 +40,9 @@ if (classPK == 0) {
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			<portlet:param name="type" value="<%= template.getType() %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 		</portlet:renderURL>
 
@@ -92,6 +91,7 @@ if (classPK == 0) {
 			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

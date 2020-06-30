@@ -12,90 +12,94 @@
  * details.
  */
 
-var Speedwell = Speedwell || {features: {}};
+Liferay.component(
+	'SpeedwellMobileHelpers',
+	(function() {
+		let filtersButton,
+			filtersHeader,
+			addToCartInline,
+			addToCartInlineDefaultPosition;
 
-Speedwell.features.mobile = (function(w) {
-	'use strict';
+		const IS_OPEN_CLASS = 'is-open',
+			IS_FIXED_CLASS = 'is-fixed';
 
-	let filtersButton,
-		filtersHeader,
-		addToCartInline,
-		addToCartInlineDefaultPosition;
+		function setupFiltersHeader() {
+			filtersHeader.querySelector(
+				'.title'
+			).innerText = Liferay.Language.get('filters');
+		}
 
-	const IS_OPEN_CLASS = 'is-open',
-		IS_FIXED_CLASS = 'is-fixed';
-
-	function setupFiltersHeader() {
-		filtersHeader.querySelector('.title').innerText = Liferay.Language.get(
-			'filters'
-		);
-	}
-
-	function listenToFiltersButton() {
-		const filtersAreClosed = !filtersButton.classList.contains(
-			IS_OPEN_CLASS
-		);
-
-		filtersButton.classList.toggle(IS_OPEN_CLASS, filtersAreClosed);
-
-		filtersHeader
-			.querySelector('.close-button')
-			[filtersAreClosed ? 'addEventListener' : 'removeEventListener'](
-				'click',
-				listenToFiltersButton
+		function listenToFiltersButton() {
+			const filtersAreClosed = !filtersButton.classList.contains(
+				IS_OPEN_CLASS
 			);
-	}
 
-	function isFixed(element) {
-		return element.classList.contains(IS_FIXED_CLASS);
-	}
+			filtersButton.classList.toggle(IS_OPEN_CLASS, filtersAreClosed);
 
-	function restoreAddToCartButton() {
-		const isBelowViewport = w.scrollY < addToCartInlineDefaultPosition;
-
-		if (isBelowViewport && isFixed(addToCartInline)) {
-			addToCartInline.classList.remove(IS_FIXED_CLASS);
-			w.removeEventListener('scroll', restoreAddToCartButton);
-			w.addEventListener('scroll', fixAddToCartButton);
+			filtersHeader
+				.querySelector('.close-button')
+				[filtersAreClosed ? 'addEventListener' : 'removeEventListener'](
+					'click',
+					listenToFiltersButton
+				);
 		}
-	}
 
-	function fixAddToCartButton() {
-		const isAboveViewport =
-			addToCartInline.getBoundingClientRect().top <= 0;
-
-		if (isAboveViewport && !isFixed(addToCartInline)) {
-			addToCartInline.classList.add(IS_FIXED_CLASS);
-			w.removeEventListener('scroll', fixAddToCartButton);
-			w.addEventListener('scroll', restoreAddToCartButton);
+		function isFixed(element) {
+			return element.classList.contains(IS_FIXED_CLASS);
 		}
-	}
 
-	function selectElements() {
-		filtersButton = w.document.querySelector('.mobile-filters-button');
-		filtersHeader = w.document.querySelector('.mobile-filters-header');
-		addToCartInline = w.document.querySelector(
-			'.add-to-cart-button--inline .commerce-button'
-		);
-	}
+		function restoreAddToCartButton() {
+			const isBelowViewport =
+				window.scrollY < addToCartInlineDefaultPosition;
 
-	return {
-		getFiltersButton() {
-			return filtersButton;
-		},
-		initialize() {
-			selectElements();
-
-			if (!!filtersButton && !!filtersHeader) {
-				setupFiltersHeader();
-				filtersButton.addEventListener('click', listenToFiltersButton);
-			}
-
-			if (addToCartInline) {
-				addToCartInlineDefaultPosition = addToCartInline.getBoundingClientRect()
-					.top;
-				w.addEventListener('scroll', fixAddToCartButton);
+			if (isBelowViewport && isFixed(addToCartInline)) {
+				addToCartInline.classList.remove(IS_FIXED_CLASS);
+				window.removeEventListener('scroll', restoreAddToCartButton);
+				window.addEventListener('scroll', fixAddToCartButton);
 			}
 		}
-	};
-})(window);
+
+		function fixAddToCartButton() {
+			const isAboveViewport =
+				addToCartInline.getBoundingClientRect().top <= 0;
+
+			if (isAboveViewport && !isFixed(addToCartInline)) {
+				addToCartInline.classList.add(IS_FIXED_CLASS);
+				window.removeEventListener('scroll', fixAddToCartButton);
+				window.addEventListener('scroll', restoreAddToCartButton);
+			}
+		}
+
+		function selectElements() {
+			filtersButton = window.document.querySelector(
+				'.mobile-filters-button'
+			);
+			filtersHeader = window.document.querySelector(
+				'.mobile-filters-header'
+			);
+			addToCartInline = window.document.querySelector(
+				'.add-to-cart-button--inline .commerce-button'
+			);
+		}
+
+		selectElements();
+
+		if (!!filtersButton && !!filtersHeader) {
+			setupFiltersHeader();
+			filtersButton.addEventListener('click', listenToFiltersButton);
+		}
+
+		if (addToCartInline) {
+			addToCartInlineDefaultPosition = addToCartInline.getBoundingClientRect()
+				.top;
+			window.addEventListener('scroll', fixAddToCartButton);
+		}
+
+		return {
+			getFiltersButton() {
+				return filtersButton;
+			}
+		};
+	})(),
+	{destroyOnNavigate: true}
+);

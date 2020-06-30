@@ -20,6 +20,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Locale;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +63,20 @@ public interface AccountAddressResource {
 	public Response deleteAccountAddress(Long id) throws Exception;
 
 	public Response deleteAccountAddressBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
+	public AccountAddress getAccountAddress(Long id) throws Exception;
+
+	public AccountAddress patchAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception;
+
+	public AccountAddress putAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception;
+
+	public Response putAccountAddressBatch(
 			Long id, String callbackURL, Object object)
 		throws Exception;
 
@@ -114,6 +130,11 @@ public interface AccountAddressResource {
 		public AccountAddressResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
+
+		public Builder preferredLocale(Locale preferredLocale);
 
 		public Builder user(com.liferay.portal.kernel.model.User user);
 

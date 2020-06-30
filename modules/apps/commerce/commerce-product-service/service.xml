@@ -67,6 +67,8 @@
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 		<column name="commerceCurrencyCode" type="String" />
+		<column name="priceDisplayType" type="String" />
+		<column name="discountsTargetNetPrice" type="boolean" />
 
 		<!-- Order -->
 
@@ -304,6 +306,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_V" return-type="CPDefinition">
+			<finder-column name="CProductId" />
+			<finder-column name="version" />
+		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="CProductId" />
 			<finder-column name="status" />
@@ -431,6 +437,10 @@
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPOptionId" />
 		</finder>
+		<finder name="CPDI_R" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="required" />
+		</finder>
 		<finder name="C_SC" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="skuContributor" />
@@ -465,11 +475,11 @@
 		<!-- Other fields -->
 
 		<column name="CPDefinitionOptionRelId" type="long" />
+		<column name="CPInstanceUuid" type="String" />
+		<column name="CProductId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
-		<column name="CPInstanceUuid" type="String" />
-		<column name="CProductId" type="long" />
 		<column name="quantity" type="int" />
 		<column name="price" type="BigDecimal" />
 
@@ -489,6 +499,9 @@
 		</finder>
 		<finder name="CPDefinitionOptionRelId" return-type="Collection">
 			<finder-column name="CPDefinitionOptionRelId" />
+		</finder>
+		<finder name="CPInstanceUuid" return-type="Collection">
+			<finder-column name="CPInstanceUuid" />
 		</finder>
 		<finder name="Key" return-type="Collection">
 			<finder-column name="key" />
@@ -1150,8 +1163,12 @@
 		<exception>CPDefinitionMetaKeywords</exception>
 		<exception>CPDefinitionMetaTitle</exception>
 		<exception>CPDefinitionNameDefaultLanguage</exception>
+		<exception>CPDefinitionOptionRelPriceType</exception>
 		<exception>CPDefinitionOptionSKUContributor</exception>
+		<exception>CPDefinitionOptionValueRelCPInstance</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
+		<exception>CPDefinitionOptionValueRelPrice</exception>
+		<exception>CPDefinitionOptionValueRelQuantity</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
 		<exception>CPDisplayLayoutLayoutUuid</exception>
@@ -1173,6 +1190,7 @@
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
 		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>DuplicateCProduct</exception>
+		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>InvalidCommerceChannelType</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>

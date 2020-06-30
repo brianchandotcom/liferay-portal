@@ -143,7 +143,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	protected void populateExtraHelperUtilities(
-		Map<String, Object> velocityContext) {
+		Map<String, Object> velocityContext, boolean restrict) {
 
 		// Date tool
 

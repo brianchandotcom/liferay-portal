@@ -1658,8 +1658,6 @@ public class MemberRequestPersistenceImpl
 		"memberRequest.status = ?";
 
 	public MemberRequestPersistenceImpl() {
-		setModelClass(MemberRequest.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("key", "key_");
@@ -1677,6 +1675,8 @@ public class MemberRequestPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MemberRequest.class);
 	}
 
 	/**

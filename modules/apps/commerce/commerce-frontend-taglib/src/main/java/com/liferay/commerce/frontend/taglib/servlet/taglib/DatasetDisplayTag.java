@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -138,6 +137,14 @@ public class DatasetDisplayTag extends IncludeTag {
 		_namespace = namespace;
 	}
 
+	public void setNestedItemsKey(String nestedItemsKey) {
+		_nestedItemsKey = nestedItemsKey;
+	}
+
+	public void setNestedItemsReferenceKey(String nestedItemsReferenceKey) {
+		_nestedItemsReferenceKey = nestedItemsReferenceKey;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		_clayDataSetDisplayViewSerializer =
@@ -200,6 +207,8 @@ public class DatasetDisplayTag extends IncludeTag {
 		_id = null;
 		_itemsPerPage = 0;
 		_namespace = null;
+		_nestedItemsKey = null;
+		_nestedItemsReferenceKey = null;
 		_pageNumber = 0;
 		_paginationEntries = null;
 		_paginationSelectedEntry = 0;
@@ -215,8 +224,6 @@ public class DatasetDisplayTag extends IncludeTag {
 	}
 
 	protected List<ClayPaginationEntry> getClayPaginationEntries() {
-		String portletURLString = _portletURL.toString();
-
 		List<ClayPaginationEntry> clayPaginationEntries = new ArrayList<>();
 
 		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
@@ -224,11 +231,7 @@ public class DatasetDisplayTag extends IncludeTag {
 				continue;
 			}
 
-			String curDeltaURL = HttpUtil.setParameter(
-				portletURLString, _namespace + _deltaParam, curDelta);
-
-			clayPaginationEntries.add(
-				new ClayPaginationEntry(curDeltaURL, curDelta));
+			clayPaginationEntries.add(new ClayPaginationEntry(null, curDelta));
 		}
 
 		return clayPaginationEntries;
@@ -263,6 +266,11 @@ public class DatasetDisplayTag extends IncludeTag {
 			"liferay-commerce:dataset-display:itemsPerPage", _itemsPerPage);
 		request.setAttribute(
 			"liferay-commerce:dataset-display:namespace", _namespace);
+		request.setAttribute(
+			"liferay-commerce:dataset-display:nestedItemsKey", _nestedItemsKey);
+		request.setAttribute(
+			"liferay-commerce:dataset-display:nestedItemsReferenceKey",
+			_nestedItemsReferenceKey);
 		request.setAttribute(
 			"liferay-commerce:dataset-display:pageNumber", _pageNumber);
 		request.setAttribute(
@@ -331,6 +339,8 @@ public class DatasetDisplayTag extends IncludeTag {
 	private String _id;
 	private int _itemsPerPage;
 	private String _namespace;
+	private String _nestedItemsKey;
+	private String _nestedItemsReferenceKey;
 	private int _pageNumber;
 	private List<ClayPaginationEntry> _paginationEntries;
 	private int _paginationSelectedEntry;

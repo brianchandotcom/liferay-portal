@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -42,11 +44,13 @@ import javax.portlet.ActionRequest;
 public class AddressCommerceCheckoutStepUtil {
 
 	public AddressCommerceCheckoutStepUtil(
+		CommerceAccountLocalService commerceAccountLocalService,
 		int commerceAddressType, CommerceOrderService commerceOrderService,
 		CommerceAddressService commerceAddressService,
 		ModelResourcePermission<CommerceOrder>
 			commerceOrderModelResourcePermission) {
 
+		_commerceAccountLocalService = commerceAccountLocalService;
 		_commerceAddressType = commerceAddressType;
 		_commerceOrderService = commerceOrderService;
 		_commerceAddressService = commerceAddressService;
@@ -84,6 +88,22 @@ public class AddressCommerceCheckoutStepUtil {
 				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
 		}
 
+		if (commerceOrder.isGuestOrder()) {
+			String email = ParamUtil.getString(actionRequest, "email");
+
+			CommerceAccount commerceAccount =
+				_commerceAccountLocalService.addCommerceAccount(
+					name, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+					email, null, CommerceAccountConstants.ACCOUNT_TYPE_GUEST,
+					true, null, serviceContext);
+
+			commerceOrder.setCommerceAccountId(
+				commerceAccount.getCommerceAccountId());
+
+			commerceOrder = _commerceOrderService.updateCommerceOrder(
+				commerceOrder);
+		}
+
 		return _commerceAddressService.addCommerceAddress(
 			CommerceAccount.class.getName(),
 			commerceOrder.getCommerceAccountId(), name, description, street1,
@@ -102,11 +122,12 @@ public class AddressCommerceCheckoutStepUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
+		String commerceOrderUuid = ParamUtil.getString(
+			actionRequest, "commerceOrderUuid");
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
+		CommerceOrder commerceOrder =
+			_commerceOrderService.getCommerceOrderByUuidAndGroupId(
+				commerceOrderUuid, commerceContext.getCommerceChannelGroupId());
 
 		boolean newAddress = ParamUtil.getBoolean(actionRequest, "newAddress");
 
@@ -210,6 +231,7 @@ public class AddressCommerceCheckoutStepUtil {
 			commerceOrder.getAdvanceStatus(), commerceContext);
 	}
 
+	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final CommerceAddressService _commerceAddressService;
 	private int _commerceAddressType;
 	private final ModelResourcePermission<CommerceOrder>

@@ -21,20 +21,24 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -74,17 +78,10 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			@NestedFieldId("id") @NotNull Long cartId, Pagination pagination)
 		throws Exception {
 
-		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
-				cartId, pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int commerceOrderItemsCount =
-			_commerceOrderItemService.getCommerceOrderItemsCount(cartId);
-
 		return Page.of(
-			_toCartItems(commerceOrderItems), pagination,
-			commerceOrderItemsCount);
+			_toCartItems(
+				_commerceOrderItemService.getCommerceOrderItems(
+					cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 	}
 
 	@Override
@@ -134,13 +131,41 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 				cartItem.getQuantity(), commerceContext, serviceContext));
 	}
 
+	private List<CartItem> _handleProductBundle(List<CartItem> cartItems) {
+		Map<Long, CartItem> cartItemMap = new HashMap<>();
+
+		for (CartItem cartItem : cartItems) {
+			cartItemMap.put(cartItem.getId(), cartItem);
+		}
+
+		for (CartItem cartItem : cartItems) {
+			Long parentId = cartItem.getParentCartItemId();
+
+			if (parentId != null) {
+				CartItem parent = cartItemMap.get(parentId);
+
+				if (parent != null) {
+					if (parent.getCartItems() == null) {
+						parent.setCartItems(new CartItem[0]);
+					}
+
+					parent.setCartItems(
+						ArrayUtil.append(parent.getCartItems(), cartItem));
+					cartItemMap.remove(cartItem.getId());
+				}
+			}
+		}
+
+		return new ArrayList(cartItemMap.values());
+	}
+
 	private CartItem _toCartItem(CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
 		return _orderItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrderItem.getCommerceOrderItemId()));
+				commerceOrderItem.getCommerceOrderItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<CartItem> _toCartItems(
@@ -153,7 +178,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			cartItems.add(_toCartItem(commerceOrderItem));
 		}
 
-		return cartItems;
+		return _handleProductBundle(cartItems);
 	}
 
 	@Reference

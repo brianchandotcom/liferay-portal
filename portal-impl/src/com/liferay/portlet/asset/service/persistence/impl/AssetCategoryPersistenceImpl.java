@@ -11968,8 +11968,6 @@ public class AssetCategoryPersistenceImpl
 		"(assetCategory.externalReferenceCode IS NULL OR assetCategory.externalReferenceCode = '')";
 
 	public AssetCategoryPersistenceImpl() {
-		setModelClass(AssetCategory.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -11987,6 +11985,8 @@ public class AssetCategoryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(AssetCategory.class);
 	}
 
 	/**

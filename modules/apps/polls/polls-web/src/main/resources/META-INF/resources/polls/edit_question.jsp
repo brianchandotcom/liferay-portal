@@ -118,7 +118,7 @@ portletDisplay.setURLBack(redirect);
 					String value = GetterUtil.getString(LocalizationUtil.updateLocalization(localeChoiceDescriptionMap, "", "Description", LocaleUtil.toLanguageId(locale)));
 
 					if ((question != null) && !addChoice && !deleteChoice) {
-						choice = (PollsChoice)choices.get(i - 1);
+						choice = choices.get(i - 1);
 
 						value = choice.getDescription();
 					}

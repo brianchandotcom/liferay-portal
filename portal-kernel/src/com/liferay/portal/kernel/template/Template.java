@@ -14,15 +14,19 @@
 
 package com.liferay.portal.kernel.template;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Writer;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
  */
+@ProviderType
 public interface Template extends Map<String, Object> {
 
 	public void doProcessTemplate(Writer writer) throws Exception;
@@ -32,6 +36,10 @@ public interface Template extends Map<String, Object> {
 	public String[] getKeys();
 
 	public void prepare(HttpServletRequest request);
+
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void processTemplate(Writer writer) throws TemplateException;
 

@@ -46,7 +46,7 @@
 
 					<!-- Begin fragment <%= sectionId %> -->
 
-					<div class="form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
+					<div class='form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>' id="<%= sectionId %>">
 
 						<%
 						PortalIncludeUtil.include(

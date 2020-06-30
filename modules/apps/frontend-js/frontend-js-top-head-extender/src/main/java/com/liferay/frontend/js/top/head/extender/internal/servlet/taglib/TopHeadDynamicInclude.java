@@ -50,7 +50,10 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=100",
+	service = DynamicInclude.class
+)
 public class TopHeadDynamicInclude implements DynamicInclude {
 
 	@Override

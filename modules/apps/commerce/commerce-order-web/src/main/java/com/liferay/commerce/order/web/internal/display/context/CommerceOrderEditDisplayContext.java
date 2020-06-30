@@ -27,7 +27,6 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
@@ -35,10 +34,13 @@ import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrde
 import com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderScreenNavigationConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -77,8 +79,7 @@ import javax.portlet.RenderURL;
 public class CommerceOrderEditDisplayContext {
 
 	public CommerceOrderEditDisplayContext(
-			CommerceNotificationTemplateService
-				commerceNotificationTemplateService,
+			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceNotificationQueueEntryLocalService
 				commerceNotificationQueueEntryLocalService,
 			CommerceOrderEngine commerceOrderEngine,
@@ -89,11 +90,11 @@ public class CommerceOrderEditDisplayContext {
 			CommercePaymentMethodGroupRelService
 				commercePaymentMethodGroupRelService,
 			CommerceShipmentService commerceShipmentService,
+			CommerceShippingHelper commerceShippingHelper,
 			RenderRequest renderRequest)
 		throws PortalException {
 
-		_commerceNotificationTemplateService =
-			commerceNotificationTemplateService;
+		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceNotificationQueueEntryLocalService =
 			commerceNotificationQueueEntryLocalService;
 		_commerceOrderEngine = commerceOrderEngine;
@@ -104,6 +105,7 @@ public class CommerceOrderEditDisplayContext {
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commerceShipmentService = commerceShipmentService;
+		_commerceShippingHelper = commerceShippingHelper;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -166,6 +168,7 @@ public class CommerceOrderEditDisplayContext {
 		RenderURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+		portletURL.setParameter(Constants.CMD, Constants.ADD);
 		portletURL.setParameter(
 			"commerceOrderId", String.valueOf(getCommerceOrderId()));
 
@@ -177,6 +180,16 @@ public class CommerceOrderEditDisplayContext {
 				_commerceOrderRequestHelper.getRequest(), "add-new-address"));
 
 		return clayCreationMenu;
+	}
+
+	public String getCommerceChannelName() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		return commerceChannel.getName();
 	}
 
 	public PortletURL getCommerceNotificationQueueEntriesPortletURL() {
@@ -454,8 +467,10 @@ public class CommerceOrderEditDisplayContext {
 		PortletURL portletURL = getTransitionOrderPortletURL();
 
 		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
-			if (commerceOrderStatus.getKey() ==
-					CommerceOrderConstants.ORDER_STATUS_SHIPPED) {
+			if ((commerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_SHIPPED) ||
+				!commerceOrderStatus.isValidForOrder(_commerceOrder) ||
+				!commerceOrderStatus.isTransitionCriteriaMet(_commerceOrder)) {
 
 				continue;
 			}
@@ -556,6 +571,7 @@ public class CommerceOrderEditDisplayContext {
 					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) &&
 				 (_commerceOrder.getOrderStatus() !=
 					 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) ||
+				!commerceOrderStatus.isValidForOrder(_commerceOrder) ||
 				ArrayUtil.contains(
 					CommerceOrderConstants.ORDER_STATUSES_OPEN,
 					commerceOrderStatus.getKey()) ||
@@ -649,10 +665,9 @@ public class CommerceOrderEditDisplayContext {
 		return steps;
 	}
 
+	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceNotificationQueueEntryLocalService
 		_commerceNotificationQueueEntryLocalService;
-	private final CommerceNotificationTemplateService
-		_commerceNotificationTemplateService;
 	private final CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderEngine _commerceOrderEngine;
@@ -666,5 +681,6 @@ public class CommerceOrderEditDisplayContext {
 		_commercePaymentMethodGroupRelService;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
+	private final CommerceShippingHelper _commerceShippingHelper;
 
 }

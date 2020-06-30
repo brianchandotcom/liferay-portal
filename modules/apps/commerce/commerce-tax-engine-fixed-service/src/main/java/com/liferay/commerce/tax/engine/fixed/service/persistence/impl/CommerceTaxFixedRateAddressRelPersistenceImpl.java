@@ -1667,8 +1667,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			"commerceTaxFixedRateAddressRel.commerceCountryId = ?";
 
 	public CommerceTaxFixedRateAddressRelPersistenceImpl() {
-		setModelClass(CommerceTaxFixedRateAddressRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1687,6 +1685,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceTaxFixedRateAddressRel.class);
 	}
 
 	/**

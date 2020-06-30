@@ -912,8 +912,6 @@ public class ListTypePersistenceImpl
 		"(listType.type IS NULL OR listType.type = '')";
 
 	public ListTypePersistenceImpl() {
-		setModelClass(ListType.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -931,6 +929,8 @@ public class ListTypePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(ListType.class);
 	}
 
 	/**

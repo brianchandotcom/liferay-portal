@@ -2313,8 +2313,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		"(commerceInventoryWarehouseItem.externalReferenceCode IS NULL OR commerceInventoryWarehouseItem.externalReferenceCode = '')";
 
 	public CommerceInventoryWarehouseItemPersistenceImpl() {
-		setModelClass(CommerceInventoryWarehouseItem.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -2333,6 +2331,8 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceInventoryWarehouseItem.class);
 	}
 
 	/**

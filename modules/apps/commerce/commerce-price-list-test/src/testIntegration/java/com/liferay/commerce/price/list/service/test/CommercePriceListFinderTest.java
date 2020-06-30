@@ -469,6 +469,77 @@ public class CommercePriceListFinderTest {
 		Assert.assertNull(commercePriceListChannelRel);
 	}
 
+	@Test
+	public void testRetrieveUnqualifiedPriceListOverCatalogBasePriceList()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"A price list with no qualifier shall be selected over the " +
+				"catalog base price list if they have the same priority"
+		).given(
+			"A catalog with a base price list and price list with no " +
+				"qualifiers with same priority"
+		).when(
+			"The price list is discovered"
+		).then(
+			"The price list has no qualifiers and it is not the base price list"
+		);
+
+		CommercePriceList baseCommercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), true, _TYPE, 1.0);
+
+		Assert.assertEquals(
+			_commerceCatalog.getGroupId(), baseCommercePriceList.getGroupId());
+		Assert.assertEquals(
+			true, baseCommercePriceList.isCatalogBasePriceList());
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
+
+		CommercePriceList retrievedPriceList =
+			_commercePriceListLocalService.getCommercePriceListByUnqualified(
+				_commerceCatalog.getGroupId(), _TYPE);
+
+		Assert.assertEquals(
+			commercePriceList.getCommercePriceListId(),
+			retrievedPriceList.getCommercePriceListId());
+
+		Assert.assertEquals(false, retrievedPriceList.isCatalogBasePriceList());
+
+		CommercePriceListAccountRel commercePriceListAccountRel =
+			_commercePriceListAccountRelLocalService.
+				fetchCommercePriceListAccountRel(
+					_commerceAccount.getCommerceAccountId(),
+					retrievedPriceList.getCommercePriceListId());
+
+		Assert.assertNull(commercePriceListAccountRel);
+
+		long[] commerceAccountGroupIds =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				_commerceAccount.getCommerceAccountId());
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommercePriceListCommerceAccountGroupRel
+				commercePriceListCommerceAccountGroupRel =
+					_commercePriceListCommerceAccountGroupRelLocalService.
+						fetchCommercePriceListCommerceAccountGroupRel(
+							retrievedPriceList.getCommercePriceListId(),
+							commerceAccountGroupId);
+
+			Assert.assertNull(commercePriceListCommerceAccountGroupRel);
+		}
+
+		CommercePriceListChannelRel commercePriceListChannelRel =
+			_commercePriceListChannelRelLocalService.
+				fetchCommercePriceListChannelRel(
+					_commerceChannel.getCommerceChannelId(),
+					retrievedPriceList.getCommercePriceListId());
+
+		Assert.assertNull(commercePriceListChannelRel);
+	}
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 

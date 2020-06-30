@@ -18,9 +18,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrderNote",
 	service = {DTOConverter.class, NoteDTOConverter.class}
 )
-public class NoteDTOConverter implements DTOConverter {
+public class NoteDTOConverter
+	implements DTOConverter<CommerceOrderNote, CartComment> {
 
 	@Override
 	public String getContentType() {
@@ -44,7 +45,7 @@ public class NoteDTOConverter implements DTOConverter {
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.getCommerceOrderNote(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderNote.getCommerceOrderId());

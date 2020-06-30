@@ -17,3 +17,8 @@
 # Bundle Version 2.2.0
 #
 f89c7a1bc2515b43b0bd9371285ea3760be6fc40^..bea325ba2e80faa041c4d45e881ac5a0e48e4001=LRAC-5492
+
+#
+# Bundle Version 2.3.0
+#
+bea325ba2e80faa041c4d45e881ac5a0e48e4001^..42d979638b530aafb6ca4e73951afab93645c277=LRAC-5823

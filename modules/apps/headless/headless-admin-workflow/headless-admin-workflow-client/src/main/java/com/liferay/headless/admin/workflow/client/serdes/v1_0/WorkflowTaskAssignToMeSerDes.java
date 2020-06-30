@@ -123,10 +123,15 @@ public class WorkflowTaskAssignToMeSerDes {
 				"comment", String.valueOf(workflowTaskAssignToMe.getComment()));
 		}
 
-		map.put(
-			"dueDate",
-			liferayToJSONDateFormat.format(
-				workflowTaskAssignToMe.getDueDate()));
+		if (workflowTaskAssignToMe.getDueDate() == null) {
+			map.put("dueDate", null);
+		}
+		else {
+			map.put(
+				"dueDate",
+				liferayToJSONDateFormat.format(
+					workflowTaskAssignToMe.getDueDate()));
+		}
 
 		return map;
 	}

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -80,6 +81,8 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			actionRequest, CommerceAccount.class.getName(),
 			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameters(new HashMap<>());
 
 		String redirect = portletURL.toString();
 

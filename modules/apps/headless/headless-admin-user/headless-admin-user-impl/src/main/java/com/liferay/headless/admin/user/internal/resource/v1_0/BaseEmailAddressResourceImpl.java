@@ -265,10 +265,6 @@ public abstract class BaseEmailAddressResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		EmailAddress emailAddress, EmailAddress existingEmailAddress) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

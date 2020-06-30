@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.resource.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -88,34 +89,24 @@ public interface BlogPostingResource {
 			Long blogPostingId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getBlogPostingMyRating(Long blogPostingId)
-		throws Exception;
+	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception;
 
 	public HttpInvoker.HttpResponse getBlogPostingMyRatingHttpResponse(
 			Long blogPostingId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postBlogPostingMyRating(
-				Long blogPostingId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postBlogPostingMyRatingHttpResponse(
-			Long blogPostingId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long blogPostingId, Rating rating)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putBlogPostingMyRating(
-				Long blogPostingId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putBlogPostingMyRatingHttpResponse(
-			Long blogPostingId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public Page<BlogPosting> getSiteBlogPostingsPage(
@@ -641,8 +632,7 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				getBlogPostingMyRating(Long blogPostingId)
+		public Rating getBlogPostingMyRating(Long blogPostingId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -706,10 +696,7 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				postBlogPostingMyRating(
-					Long blogPostingId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -737,8 +724,7 @@ public interface BlogPostingResource {
 		}
 
 		public HttpInvoker.HttpResponse postBlogPostingMyRatingHttpResponse(
-				Long blogPostingId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+				Long blogPostingId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -776,10 +762,7 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				putBlogPostingMyRating(
-					Long blogPostingId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -807,8 +790,7 @@ public interface BlogPostingResource {
 		}
 
 		public HttpInvoker.HttpResponse putBlogPostingMyRatingHttpResponse(
-				Long blogPostingId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+				Long blogPostingId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

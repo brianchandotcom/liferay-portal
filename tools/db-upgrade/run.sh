@@ -63,7 +63,7 @@ fi
 
 CURRENT_IFS="${IFS}"
 
-IFS="," 
+IFS=","
 for path in ${CLASSPATH}
 do
 	exportJars ${path}

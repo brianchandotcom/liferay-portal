@@ -3,40 +3,40 @@
 spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat]
 
 expect "Please enter your database" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your database JDBC driver class name" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your database JDBC driver protocol" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your database host" {
-    send "[database.host]\r"
+	send "[database.host]\r"
 }
 
 expect "Please enter your database port" {
-    send "[database.port]\r"
+	send "[database.port]\r"
 }
 
 expect "Please enter your database name" {
-    send "\r"
+	send "\r"
 }
 
 expect "Please enter your database username" {
-    send "[database.username]\r"
+	send "[database.username]\r"
 }
 
 expect "Please enter your database password" {
-    send "[database.password]\r"
+	send "[database.password]\r"
 }
 
 set timeout 900
 
 expect {
-    "Checking to see if all upgrades have completed... done" {send_user "PASS"}
-    timeout {send_user "FAILED";exit 2}
+	"Checking to see if all upgrades have completed... done" {send_user "PASS"}
+	timeout {send_user "FAILED";exit 2}
 }

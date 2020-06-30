@@ -72,6 +72,11 @@ public class CommercePriceListUpgradeStepRegistrator
 			new CommercePriceListChannelRelUpgradeProcess(),
 			new CommercePriceListDiscountRelUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_1_1,
+			new com.liferay.commerce.price.list.internal.upgrade.v2_1_1.
+				CommercePriceListUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRICE LIST UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -86,6 +91,8 @@ public class CommercePriceListUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
 
 	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
+
+	private static final String _SCHEMA_VERSION_2_1_1 = "2.1.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceListUpgradeStepRegistrator.class);

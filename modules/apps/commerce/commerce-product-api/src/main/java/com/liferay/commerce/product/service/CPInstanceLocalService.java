@@ -613,6 +613,12 @@ public interface CPInstanceLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
+			long companyId, long cpDefinitionId, String keywords, int status,
+			Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			long companyId, long[] groupIds, String keywords, int status,
 			int start, int end, Sort sort)

@@ -3718,8 +3718,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		"(siteNavigationMenuItem.name IS NULL OR siteNavigationMenuItem.name LIKE '')";
 
 	public SiteNavigationMenuItemPersistenceImpl() {
-		setModelClass(SiteNavigationMenuItem.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3739,6 +3737,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(SiteNavigationMenuItem.class);
 	}
 
 	/**

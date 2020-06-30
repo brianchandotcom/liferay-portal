@@ -2813,8 +2813,6 @@ public class MDRRuleGroupPersistenceImpl
 		"mdrRuleGroup.groupId IN (";
 
 	public MDRRuleGroupPersistenceImpl() {
-		setModelClass(MDRRuleGroup.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2832,6 +2830,8 @@ public class MDRRuleGroupPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MDRRuleGroup.class);
 	}
 
 	/**

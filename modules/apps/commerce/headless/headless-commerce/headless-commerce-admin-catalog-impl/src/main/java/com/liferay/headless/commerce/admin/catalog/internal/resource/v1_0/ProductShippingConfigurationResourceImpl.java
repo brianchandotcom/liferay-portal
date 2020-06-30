@@ -19,12 +19,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductShippingConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductShippingConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductShippingConfigurationResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 
@@ -62,15 +61,8 @@ public class ProductShippingConfigurationResourceImpl
 					externalReferenceCode);
 		}
 
-		DTOConverter productShippingConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductShippingConfiguration");
-
-		return (ProductShippingConfiguration)
-			productShippingConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductShippingConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@NestedField(parentClass = Product.class, value = "shippingConfiguration")
@@ -87,15 +79,8 @@ public class ProductShippingConfigurationResourceImpl
 				"Unable to find Product with ID: " + id);
 		}
 
-		DTOConverter productShippingConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductShippingConfiguration");
-
-		return (ProductShippingConfiguration)
-			productShippingConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductShippingConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
@@ -144,6 +129,15 @@ public class ProductShippingConfigurationResourceImpl
 		return responseBuilder.build();
 	}
 
+	private ProductShippingConfiguration _toProductShippingConfiguration(
+			Long cpDefinitionId)
+		throws Exception {
+
+		return _productShippingConfigurationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				cpDefinitionId, contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private ProductShippingConfiguration _updateProductShippingConfiguration(
 			CPDefinition cpDefinition,
 			ProductShippingConfiguration productShippingConfiguration)
@@ -156,22 +150,16 @@ public class ProductShippingConfigurationResourceImpl
 				_serviceContextHelper.getServiceContext(
 					cpDefinition.getGroupId()));
 
-		DTOConverter productShippingConfigurationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				"ProductShippingConfiguration");
-
-		return (ProductShippingConfiguration)
-			productShippingConfigurationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinition.getCPDefinitionId()));
+		return _toProductShippingConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ProductShippingConfigurationDTOConverter
+		_productShippingConfigurationDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

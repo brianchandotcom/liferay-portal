@@ -16,9 +16,9 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPDefinitionOptionRelPriceTypeException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionSKUContributorException;
 import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionRelKeyException;
-import com.liferay.commerce.product.internal.util.JsonHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
+import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -67,6 +68,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,8 +106,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			importOptionValue, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
-			serviceContext);
+			importOptionValue, null, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -120,7 +121,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition option rel
 
-		validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
+		_validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
+
+		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
+
+		_validateCPDefinitionOptionKey(cpDefinitionId, cpOption.getKey());
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -129,6 +134,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.create(cpDefinitionOptionRelId);
+
+		_validatePriceType(cpDefinitionOptionRel, priceType);
 
 		if (cpDefinitionLocalService.isVersionable(
 				cpDefinitionId, serviceContext.getRequest())) {
@@ -143,10 +150,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			httpServletRequest.setAttribute(
 				"versionable#" + cpDefinitionId, Boolean.FALSE);
 		}
-
-		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
-
-		validateCPDefinitionOptionKey(cpDefinitionId, cpOption.getKey());
 
 		cpDefinitionOptionRel.setGroupId(groupId);
 		cpDefinitionOptionRel.setCompanyId(user.getCompanyId());
@@ -311,7 +314,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws PortalException {
 
-		if (JsonHelper.isEmpty(json)) {
+		if (_jsonHelper.isEmpty(json)) {
 			return Collections.emptyMap();
 		}
 
@@ -321,7 +324,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (JsonHelper.isArray(json)) {
+		if (_jsonHelper.isArray(json)) {
 			jsonArray = _jsonFactory.createJSONArray(json);
 		}
 		else {
@@ -346,7 +349,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				continue;
 			}
 
-			JSONArray valueJSONArray = JsonHelper.getValueAsJSONArray(
+			JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
 				"value", jsonObject);
 
 			for (int j = 0; j < valueJSONArray.length(); j++) {
@@ -501,6 +504,85 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasCPDefinitionPriceContributorCPDefinitionOptionRels(
+		long cpDefinitionId) {
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		if (cpDefinitionOptionRels.isEmpty()) {
+			return false;
+		}
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (cpDefinitionOptionRel.isPriceContributor()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean hasCPDefinitionRequiredCPDefinitionOptionRels(
+		long cpDefinitionId) {
+
+		long count = cpDefinitionOptionRelPersistence.countByCPDI_R(
+			cpDefinitionId, true);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean hasLinkedCPInstanceCPDefinitionOptionRels(
+		long cpDefinitionId) {
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			cpDefinitionOptionRelPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		if (cpDefinitionOptionRels.isEmpty()) {
+			return false;
+		}
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (!cpDefinitionOptionRel.isPriceContributor()) {
+				continue;
+			}
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
+
+				if (Validator.isNull(
+						cpDefinitionOptionValueRel.getCPInstanceUuid())) {
+
+					continue;
+				}
+
+				CPInstance cpInstance =
+					cpDefinitionOptionValueRel.fetchCPInstance();
+
+				if (cpInstance == null) {
+					continue;
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer<CPDefinitionOptionRel> indexer =
@@ -539,7 +621,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, serviceContext);
+			null, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -552,11 +634,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
+		_validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionRelId);
+
+		_validatePriceType(cpDefinitionOptionRel, priceType);
 
 		if (cpDefinitionLocalService.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId(),
@@ -725,8 +809,28 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validateCPDefinitionOptionKey(
-			long cpDefinitionId, String key)
+	private CPOptionConfiguration _getCPOptionConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			CPOptionConfiguration.class,
+			new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+	}
+
+	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+		long cpDefinitionId) {
+
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
+
+		if (cpDefinitionOptionRelsCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _validateCPDefinitionOptionKey(long cpDefinitionId, String key)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -737,7 +841,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 	}
 
-	protected void validateDDMFormFieldTypeName(
+	private void _validateDDMFormFieldTypeName(
 			String ddmFormFieldTypeName, boolean skuContributor)
 		throws PortalException {
 
@@ -765,25 +869,31 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		throw new CPDefinitionOptionSKUContributorException();
 	}
 
-	private CPOptionConfiguration _getCPOptionConfiguration()
-		throws ConfigurationException {
+	private void _validatePriceType(
+			CPDefinitionOptionRel cpDefinitionOptionRel, String priceType)
+		throws PortalException {
 
-		return _configurationProvider.getConfiguration(
-			CPOptionConfiguration.class,
-			new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
-	}
+		if (cpDefinitionOptionRel.isNew() ||
+			!cpDefinitionOptionRel.isPriceContributor() ||
+			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType)) {
 
-	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-		long cpDefinitionId) {
-
-		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelPersistence.countByC_SC(cpDefinitionId, true);
-
-		if (cpDefinitionOptionRelsCount > 0) {
-			return true;
+			return;
 		}
 
-		return false;
+		if (!cpDefinitionOptionValueRelLocalService.
+				hasCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId())) {
+
+			return;
+		}
+
+		if (Objects.equals(
+				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+
+			return;
+		}
+
+		throw new CPDefinitionOptionRelPriceTypeException();
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {
@@ -795,5 +905,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
+
+	@ServiceReference(type = JsonHelper.class)
+	private JsonHelper _jsonHelper;
 
 }

@@ -149,6 +149,20 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
+	public Map<Long, List<Long>>
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				long cpDefinitionId, String json)
+		throws PortalException {
+
+		_checkCommerceCatalogPermissionByCPDefinitionId(
+			cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				cpDefinitionId, json);
+	}
+
+	@Override
 	public Map<String, List<String>>
 			getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 				long cpInstanceId)

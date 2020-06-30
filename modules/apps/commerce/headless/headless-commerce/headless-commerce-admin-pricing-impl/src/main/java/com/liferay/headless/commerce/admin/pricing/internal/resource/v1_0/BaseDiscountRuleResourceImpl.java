@@ -411,10 +411,6 @@ public abstract class BaseDiscountRuleResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DiscountRule discountRule, DiscountRule existingDiscountRule) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

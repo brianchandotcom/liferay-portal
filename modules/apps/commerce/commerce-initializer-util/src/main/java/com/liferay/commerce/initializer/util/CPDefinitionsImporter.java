@@ -188,8 +188,8 @@ public class CPDefinitionsImporter {
 
 	private CPDefinition _addCPDefinition(
 			long catalogGroupId, String name, String shortDescription,
-			String description, String externalReferenceCode, String sku,
-			String taxCategory, long width, long height, long depth,
+			String description, String externalReferenceCode, boolean shippable,
+			String sku, String taxCategory, long width, long height, long depth,
 			long weight, boolean subscriptionEnabled, int subscriptionLength,
 			String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsProperties,
@@ -244,8 +244,8 @@ public class CPDefinitionsImporter {
 
 		return _cpDefinitionLocalService.addCPDefinition(
 			catalogGroupId, user.getUserId(), nameMap, shortDescriptionMap,
-			descriptionMap, nameMap, null, null, null, "simple", true, true,
-			false, false, 0D, width, height, depth, weight,
+			descriptionMap, nameMap, null, null, null, "simple", true,
+			shippable, false, false, 0D, width, height, depth, weight,
 			_getCPTaxCategoryId(taxCategory, serviceContext), false, false,
 			null, true, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -392,6 +392,7 @@ public class CPDefinitionsImporter {
 		String name = jsonObject.getString("Name");
 		String shortDescription = jsonObject.getString("ShortDescription");
 		String description = jsonObject.getString("Description");
+		boolean shippable = jsonObject.getBoolean("Shippable", true);
 		String sku = jsonObject.getString("Sku");
 		String taxCategory = jsonObject.getString("TaxCategory");
 
@@ -430,8 +431,9 @@ public class CPDefinitionsImporter {
 
 		cpDefinition = _addCPDefinition(
 			catalogGroupId, name, shortDescription, description,
-			externalReferenceCode, sku, taxCategory, width, height, length,
-			weight, subscriptionEnabled, subscriptionLength, subscriptionType,
+			externalReferenceCode, shippable, sku, taxCategory, width, height,
+			length, weight, subscriptionEnabled, subscriptionLength,
+			subscriptionType,
 			_getSubscriptionTypeSettingsProperties(subscriptionInfoJSONObject),
 			maxSubscriptionCycles, assetCategoryIds, assetTagNames,
 			serviceContext);

@@ -1257,8 +1257,6 @@ public class CountryPersistenceImpl
 		"country.active = ?";
 
 	public CountryPersistenceImpl() {
-		setModelClass(Country.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("number", "number_");
@@ -1278,6 +1276,8 @@ public class CountryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Country.class);
 	}
 
 	/**

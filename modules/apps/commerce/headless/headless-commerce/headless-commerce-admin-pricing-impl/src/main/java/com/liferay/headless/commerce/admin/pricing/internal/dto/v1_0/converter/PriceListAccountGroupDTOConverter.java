@@ -15,12 +15,13 @@
 package com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceListAccountGroup;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel",
 	service = {DTOConverter.class, PriceListAccountGroupDTOConverter.class}
 )
-public class PriceListAccountGroupDTOConverter implements DTOConverter {
+public class PriceListAccountGroupDTOConverter
+	implements DTOConverter
+		<CommerceDiscountCommerceAccountGroupRel, PriceListAccountGroup> {
 
 	@Override
 	public String getContentType() {
@@ -46,7 +49,7 @@ public class PriceListAccountGroupDTOConverter implements DTOConverter {
 			commercePriceListCommerceAccountGroupRel =
 				_commercePriceListCommerceAccountGroupRelService.
 					getCommercePriceListCommerceAccountGroupRel(
-						dtoConverterContext.getResourcePrimKey());
+						(Long)dtoConverterContext.getId());
 
 		CommerceAccountGroup commerceAccountGroup =
 			commercePriceListCommerceAccountGroupRel.getCommerceAccountGroup();

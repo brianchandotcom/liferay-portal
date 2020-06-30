@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Cart implements Cloneable {
 
+	public static Cart toDTO(String json) {
+		return CartSerDes.toDTO(json);
+	}
+
 	public String getAccount() {
 		return account;
 	}
@@ -342,6 +346,27 @@ public class Cart implements Cloneable {
 	}
 
 	protected CartComment[] notes;
+
+	public String getOrderUUID() {
+		return orderUUID;
+	}
+
+	public void setOrderUUID(String orderUUID) {
+		this.orderUUID = orderUUID;
+	}
+
+	public void setOrderUUID(
+		UnsafeSupplier<String, Exception> orderUUIDUnsafeSupplier) {
+
+		try {
+			orderUUID = orderUUIDUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String orderUUID;
 
 	public String getPaymentMethod() {
 		return paymentMethod;

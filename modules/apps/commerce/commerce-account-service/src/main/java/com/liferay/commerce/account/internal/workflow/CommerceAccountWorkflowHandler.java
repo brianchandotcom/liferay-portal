@@ -53,6 +53,11 @@ public class CommerceAccountWorkflowHandler
 	}
 
 	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
 	public CommerceAccount updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

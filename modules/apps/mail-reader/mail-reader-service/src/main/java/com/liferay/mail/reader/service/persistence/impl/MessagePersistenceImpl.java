@@ -1317,8 +1317,6 @@ public class MessagePersistenceImpl
 		"message.remoteMessageId = ?";
 
 	public MessagePersistenceImpl() {
-		setModelClass(Message.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("to", "to_");
@@ -1337,6 +1335,8 @@ public class MessagePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Message.class);
 	}
 
 	/**

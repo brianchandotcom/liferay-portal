@@ -11483,8 +11483,6 @@ public class MBCategoryPersistenceImpl
 		"mbCategory.status = ?";
 
 	public MBCategoryPersistenceImpl() {
-		setModelClass(MBCategory.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -11502,6 +11500,8 @@ public class MBCategoryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(MBCategory.class);
 	}
 
 	/**

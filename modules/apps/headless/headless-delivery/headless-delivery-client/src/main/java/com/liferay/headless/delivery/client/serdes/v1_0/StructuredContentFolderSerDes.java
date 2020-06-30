@@ -289,15 +289,25 @@ public class StructuredContentFolderSerDes {
 				String.valueOf(structuredContentFolder.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				structuredContentFolder.getDateCreated()));
+		if (structuredContentFolder.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					structuredContentFolder.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				structuredContentFolder.getDateModified()));
+		if (structuredContentFolder.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					structuredContentFolder.getDateModified()));
+		}
 
 		if (structuredContentFolder.getDescription() == null) {
 			map.put("description", null);

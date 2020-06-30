@@ -25,6 +25,8 @@ definition {
 	macro uploadSingleFile {
 		var key_uploadFileName = "${uploadFileName}";
 
+		SelectFrameTop(value1 = "relative=top");
+
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(

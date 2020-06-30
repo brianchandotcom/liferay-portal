@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -69,10 +70,24 @@ public class PartiallyShippedCommerceOrderStatusImpl
 		return PRIORITY;
 	}
 
+	@Override
+	public boolean isValidForOrder(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
 
 }

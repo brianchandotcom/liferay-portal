@@ -16,7 +16,9 @@ package com.liferay.headless.commerce.core.dto.v1_0.converter;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface DTOConverterRegistry {
 
 	public DTOConverter getDTOConverter(String modelClassName);

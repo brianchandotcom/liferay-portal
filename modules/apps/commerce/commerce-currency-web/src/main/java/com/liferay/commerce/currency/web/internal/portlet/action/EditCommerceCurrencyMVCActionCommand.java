@@ -18,6 +18,7 @@ import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.configuration.CommerceCurrencyConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
+import com.liferay.commerce.currency.exception.CommerceCurrencyFractionDigitsException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -118,6 +119,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof CommerceCurrencyCodeException ||
+					 e instanceof CommerceCurrencyFractionDigitsException ||
 					 e instanceof CommerceCurrencyNameException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -169,10 +171,18 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		String rate = ParamUtil.getString(actionRequest, "rate");
 		Map<Locale, String> formatPatternMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "formatPattern");
+
 		int maxFractionDigits = ParamUtil.getInteger(
 			actionRequest, "maxFractionDigits");
 		int minFractionDigits = ParamUtil.getInteger(
 			actionRequest, "minFractionDigits");
+
+		if ((maxFractionDigits < 0) || (minFractionDigits < 0) ||
+			(maxFractionDigits < minFractionDigits)) {
+
+			throw new CommerceCurrencyFractionDigitsException();
+		}
+
 		String roundingMode = ParamUtil.getString(
 			actionRequest, "roundingMode");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");

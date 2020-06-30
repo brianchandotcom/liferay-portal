@@ -21,9 +21,9 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.price.list.model.CommercePriceList",
 	service = {DTOConverter.class, PriceListDTOConverter.class}
 )
-public class PriceListDTOConverter implements DTOConverter {
+public class PriceListDTOConverter
+	implements DTOConverter<CommercePriceList, PriceList> {
 
 	@Override
 	public String getContentType() {
@@ -47,7 +48,7 @@ public class PriceListDTOConverter implements DTOConverter {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.getCommercePriceList(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CommerceCurrency commerceCurrency =
 			commercePriceList.getCommerceCurrency();

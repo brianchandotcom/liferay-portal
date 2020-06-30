@@ -90,7 +90,7 @@ public class ProductOptionSerDes {
 
 			sb.append("\"");
 
-			sb.append(productOption.getFieldType());
+			sb.append(_escape(productOption.getFieldType()));
 
 			sb.append("\"");
 		}
@@ -295,9 +295,7 @@ public class ProductOptionSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "fieldType")) {
 				if (jsonParserFieldValue != null) {
-					productOption.setFieldType(
-						ProductOption.FieldType.create(
-							(String)jsonParserFieldValue));
+					productOption.setFieldType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -401,10 +399,13 @@ public class ProductOptionSerDes {
 
 				sb.append("]");
 			}
-			else {
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
 			}
 
 			if (iterator.hasNext()) {

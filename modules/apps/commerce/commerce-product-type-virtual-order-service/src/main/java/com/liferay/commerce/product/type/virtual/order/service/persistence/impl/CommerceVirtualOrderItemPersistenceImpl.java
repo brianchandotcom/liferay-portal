@@ -1708,8 +1708,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			"commerceVirtualOrderItem.commerceOrderItemId = ?";
 
 	public CommerceVirtualOrderItemPersistenceImpl() {
-		setModelClass(CommerceVirtualOrderItem.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1728,6 +1726,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommerceVirtualOrderItem.class);
 	}
 
 	/**

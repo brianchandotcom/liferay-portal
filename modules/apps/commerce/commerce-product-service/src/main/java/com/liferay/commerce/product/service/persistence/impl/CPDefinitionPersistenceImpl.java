@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -4067,6 +4068,246 @@ public class CPDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 =
 		"cpDefinition.status = ?";
 
+	private FinderPath _finderPathFetchByC_V;
+	private FinderPath _finderPathCountByC_V;
+
+	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the matching cp definition
+	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	 */
+	@Override
+	public CPDefinition findByC_V(long CProductId, int version)
+		throws NoSuchCPDefinitionException {
+
+		CPDefinition cpDefinition = fetchByC_V(CProductId, version);
+
+		if (cpDefinition == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("CProductId=");
+			sb.append(CProductId);
+
+			sb.append(", version=");
+			sb.append(version);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPDefinitionException(sb.toString());
+		}
+
+		return cpDefinition;
+	}
+
+	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 */
+	@Override
+	public CPDefinition fetchByC_V(long CProductId, int version) {
+		return fetchByC_V(CProductId, version, true);
+	}
+
+	/**
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	 */
+	@Override
+	public CPDefinition fetchByC_V(
+		long CProductId, int version, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {CProductId, version};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_V, finderArgs, this);
+		}
+
+		if (result instanceof CPDefinition) {
+			CPDefinition cpDefinition = (CPDefinition)result;
+
+			if ((CProductId != cpDefinition.getCProductId()) ||
+				(version != cpDefinition.getVersion())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_CPDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
+
+			sb.append(_FINDER_COLUMN_C_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CProductId);
+
+				queryPos.add(version);
+
+				List<CPDefinition> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_V, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {CProductId, version};
+							}
+
+							_log.warn(
+								"CPDefinitionPersistenceImpl.fetchByC_V(long, int, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					CPDefinition cpDefinition = list.get(0);
+
+					result = cpDefinition;
+
+					cacheResult(cpDefinition);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByC_V, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPDefinition)result;
+		}
+	}
+
+	/**
+	 * Removes the cp definition where CProductId = &#63; and version = &#63; from the database.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the cp definition that was removed
+	 */
+	@Override
+	public CPDefinition removeByC_V(long CProductId, int version)
+		throws NoSuchCPDefinitionException {
+
+		CPDefinition cpDefinition = findByC_V(CProductId, version);
+
+		return remove(cpDefinition);
+	}
+
+	/**
+	 * Returns the number of cp definitions where CProductId = &#63; and version = &#63;.
+	 *
+	 * @param CProductId the c product ID
+	 * @param version the version
+	 * @return the number of matching cp definitions
+	 */
+	@Override
+	public int countByC_V(long CProductId, int version) {
+		FinderPath finderPath = _finderPathCountByC_V;
+
+		Object[] finderArgs = new Object[] {CProductId, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
+
+			sb.append(_FINDER_COLUMN_C_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CProductId);
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_V_CPRODUCTID_2 =
+		"cpDefinition.CProductId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_V_VERSION_2 =
+		"cpDefinition.version = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
 	private FinderPath _finderPathCountByC_S;
@@ -5183,8 +5424,6 @@ public class CPDefinitionPersistenceImpl
 		"cpDefinition.status = ?";
 
 	public CPDefinitionPersistenceImpl() {
-		setModelClass(CPDefinition.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5204,6 +5443,8 @@ public class CPDefinitionPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinition.class);
 	}
 
 	/**
@@ -5220,6 +5461,13 @@ public class CPDefinitionPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
 			new Object[] {cpDefinition.getUuid(), cpDefinition.getGroupId()},
+			cpDefinition);
+
+		finderCache.putResult(
+			_finderPathFetchByC_V,
+			new Object[] {
+				cpDefinition.getCProductId(), cpDefinition.getVersion()
+			},
 			cpDefinition);
 
 		cpDefinition.resetOriginalValues();
@@ -5318,6 +5566,16 @@ public class CPDefinitionPersistenceImpl
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, cpDefinitionModelImpl, false);
+
+		args = new Object[] {
+			cpDefinitionModelImpl.getCProductId(),
+			cpDefinitionModelImpl.getVersion()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByC_V, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByC_V, args, cpDefinitionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -5343,6 +5601,28 @@ public class CPDefinitionPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				cpDefinitionModelImpl.getCProductId(),
+				cpDefinitionModelImpl.getVersion()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_V, args);
+			finderCache.removeResult(_finderPathFetchByC_V, args);
+		}
+
+		if ((cpDefinitionModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_V.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				cpDefinitionModelImpl.getOriginalCProductId(),
+				cpDefinitionModelImpl.getOriginalVersion()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_V, args);
+			finderCache.removeResult(_finderPathFetchByC_V, args);
 		}
 	}
 
@@ -6386,6 +6666,20 @@ public class CPDefinitionPersistenceImpl
 			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
+
+		_finderPathFetchByC_V = new FinderPath(
+			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, CPDefinitionImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			CPDefinitionModelImpl.CPRODUCTID_COLUMN_BITMASK |
+			CPDefinitionModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByC_V = new FinderPath(
+			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByC_S = new FinderPath(

@@ -3960,8 +3960,6 @@ public class CPDefinitionLinkPersistenceImpl
 		"(cpDefinitionLink.type IS NULL OR cpDefinitionLink.type = '')";
 
 	public CPDefinitionLinkPersistenceImpl() {
-		setModelClass(CPDefinitionLink.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3980,6 +3978,8 @@ public class CPDefinitionLinkPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinitionLink.class);
 	}
 
 	/**

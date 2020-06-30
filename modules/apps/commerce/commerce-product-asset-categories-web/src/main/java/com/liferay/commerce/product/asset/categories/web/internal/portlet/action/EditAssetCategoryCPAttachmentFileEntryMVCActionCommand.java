@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -86,6 +88,11 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				_log.error(e, e);
+
+				throw e;
 			}
 		}
 	}
@@ -166,6 +173,9 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				neverExpire, titleMap, null, priority, type, serviceContext);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditAssetCategoryCPAttachmentFileEntryMVCActionCommand.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

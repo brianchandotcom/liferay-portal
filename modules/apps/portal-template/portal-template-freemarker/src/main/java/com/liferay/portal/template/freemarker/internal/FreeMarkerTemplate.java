@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -24,6 +26,7 @@ import com.liferay.portal.template.TemplateResourceThreadLocal;
 
 import freemarker.core.ParseException;
 
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.util.WrapperTemplateModel;
 
 import freemarker.template.AdapterTemplateModel;
@@ -32,6 +35,7 @@ import freemarker.template.ObjectWrapper;
 import freemarker.template.SimpleCollection;
 import freemarker.template.Template;
 import freemarker.template.TemplateCollectionModel;
+import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateHashModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -47,6 +51,9 @@ import java.security.PrivilegedExceptionAction;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Mika Koivisto
  * @author Tina Tian
@@ -58,7 +65,8 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper, long interval,
-		boolean restricted, ObjectWrapper objectWrapper) {
+		boolean restricted, BeansWrapper beansWrapper,
+		FreeMarkerManager freeMarkerManager) {
 
 		super(
 			templateResource, errorTemplateResource, context,
@@ -66,7 +74,17 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 			restricted);
 
 		_configuration = configuration;
-		_objectWrapper = objectWrapper;
+		_beansWrapper = beansWrapper;
+		_freeMarkerManager = freeMarkerManager;
+	}
+
+	@Override
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		_freeMarkerManager.addTaglibSupport(
+			context, httpServletRequest, httpServletResponse, _beansWrapper);
 	}
 
 	@Override
@@ -123,10 +141,10 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 				getTemplateResourceUUID(templateResource),
 				TemplateConstants.DEFAUT_ENCODING);
 
-			template.setObjectWrapper(_objectWrapper);
+			template.setObjectWrapper(_beansWrapper);
 
 			template.process(
-				new CachableDefaultMapAdapter(context, _objectWrapper), writer);
+				new CachableDefaultMapAdapter(context, _beansWrapper), writer);
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
@@ -134,12 +152,35 @@ public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 		}
 	}
 
+	@Override
+	protected Object putClass(String key, Class<?> clazz) {
+		try {
+			TemplateHashModel templateHashModel =
+				_beansWrapper.getStaticModels();
+
+			return context.put(key, templateHashModel.get(clazz.getName()));
+		}
+		catch (TemplateModelException templateModelException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Variable " + key + " registration fail",
+					templateModelException);
+			}
+
+			return null;
+		}
+	}
+
 	private static final TemplateModel _NULL_TEMPLATE_MODEL =
 		new TemplateModel() {
 		};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FreeMarkerTemplate.class);
+
+	private final BeansWrapper _beansWrapper;
 	private final Configuration _configuration;
-	private final ObjectWrapper _objectWrapper;
+	private final FreeMarkerManager _freeMarkerManager;
 
 	private class CachableDefaultMapAdapter
 		extends WrappingTemplateModel

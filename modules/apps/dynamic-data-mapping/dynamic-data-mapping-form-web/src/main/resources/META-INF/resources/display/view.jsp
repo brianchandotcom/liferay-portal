@@ -275,9 +275,15 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								Liferay.Session.extend();
 							}
 
-							<portlet:namespace />startAutoExtendSession();
+							<portlet:namespace />sessionIntervalId = setInterval(function() {
+								if (Liferay.Session) {
+									clearInterval(<portlet:namespace />sessionIntervalId);
 
-							<portlet:namespace />fireFormView();
+									<portlet:namespace />startAutoExtendSession();
+
+									<portlet:namespace />fireFormView();
+								}
+							}, 1000);
 						</c:otherwise>
 					</c:choose>
 				</aui:script>

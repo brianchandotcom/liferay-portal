@@ -25,13 +25,17 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.option.CommerceOptionValueHelper;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -84,10 +88,10 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
+		String commerceOrderUuid = ParamUtil.getString(
+			actionRequest, "commerceOrderUuid");
 
-		_validateCommerceOrder(actionRequest, commerceOrderId);
+		_validateCommerceOrder(actionRequest, commerceOrderUuid);
 
 		_checkoutCommerceOrder(_portal.getHttpServletRequest(actionRequest));
 	}
@@ -101,9 +105,11 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceOrderHttpHelper, _commerceOrderPriceCalculation,
+					_commerceChannelLocalService, _commerceOrderHttpHelper,
+					_commerceOrderPriceCalculation,
 					_commerceOrderValidatorRegistry, _commercePaymentEngine,
 					_commerceProductPriceCalculation, _cpInstanceHelper,
+					_commerceOptionValueHelper, _percentageFormatter,
 					httpServletRequest);
 
 		CommerceOrder commerceOrder =
@@ -189,13 +195,20 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	}
 
 	private void _validateCommerceOrder(
-			ActionRequest actionRequest, long commerceOrderId)
+			ActionRequest actionRequest, String commerceOrderUuid)
 		throws PortalException {
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
+		long groupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				_portal.getScopeGroupId(actionRequest));
 
-		if (commerceOrder.getShippingAddressId() <= 0) {
+		CommerceOrder commerceOrder =
+			_commerceOrderService.getCommerceOrderByUuidAndGroupId(
+				commerceOrderUuid, groupId);
+
+		if ((commerceOrder.getShippingAddressId() <= 0) &&
+			_commerceShippingHelper.isShippable(commerceOrder)) {
+
 			throw new CommerceOrderShippingAddressException();
 		}
 
@@ -230,7 +243,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		int subscriptionCommerceOrderItemsCount =
 			_commerceOrderItemService.countSubscriptionCommerceOrderItems(
-				commerceOrderId);
+				commerceOrder.getCommerceOrderId());
 
 		if ((subscriptionCommerceOrderItemsCount > 0) &&
 			commercePaymentMethodKey.isEmpty()) {
@@ -243,7 +256,13 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCommerceCheckoutStep.class);
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
 	private CommerceCheckoutStepHelper _commerceCheckoutStepHelper;
+
+	@Reference
+	private CommerceOptionValueHelper _commerceOptionValueHelper;
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
@@ -270,10 +289,16 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference
 	private Portal _portal;

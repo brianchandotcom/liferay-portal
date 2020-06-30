@@ -34,6 +34,12 @@ if (commerceAddressId == 0) {
 
 String selectLabel = "choose-" + baseAddressCheckoutStepDisplayContext.getTitle();
 
+CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+if (commerceOrder.isGuestOrder()) {
+	commerceAddressId = 0;
+}
+
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
 long commerceCountryId = BeanParamUtil.getLong(currentCommerceAddress, request, "commerceCountryId", 0);
@@ -41,30 +47,32 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 %>
 
 <div class="form-group-autofit">
-	<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
-		<aui:option label="add-new-address" value="0" />
+	<c:if test="<%= !commerceOrder.isGuestOrder() %>">
+		<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
+			<aui:option label="add-new-address" value="0" />
 
-		<%
-		boolean addressWasFound = false;
+			<%
+			boolean addressWasFound = false;
 
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-		boolean selectedAddress = commerceAddressId == commerceAddress.getCommerceAddressId();
+			for (CommerceAddress commerceAddress : commerceAddresses) {
+				boolean selectedAddress = commerceAddressId == commerceAddress.getCommerceAddressId();
 
-		if (selectedAddress) {
-			addressWasFound = true;
-		}
-		%>
+				if (selectedAddress) {
+					addressWasFound = true;
+				}
+			%>
 
-			<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceRegionId())) %>" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" selected="<%= selectedAddress %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
+				<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceRegionId())) %>" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" selected="<%= selectedAddress %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-		<c:if test="<%= (currentCommerceAddress != null) && !addressWasFound %>">
-			<aui:option label="<%= currentCommerceAddress.getName() %>" selected="<%= true %>" value="<%= currentCommerceAddress.getCommerceAddressId() %>" />
-		</c:if>
-	</aui:select>
+			<c:if test="<%= (currentCommerceAddress != null) && !addressWasFound %>">
+				<aui:option label="<%= currentCommerceAddress.getName() %>" selected="<%= true %>" value="<%= currentCommerceAddress.getCommerceAddressId() %>" />
+			</c:if>
+		</aui:select>
+	</c:if>
 
 	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= paramName %>" type="hidden" value="<%= commerceAddressId %>" />
 
@@ -113,6 +121,15 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceRegionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
 	</div>
+
+	<div class="form-group-autofit">
+		<c:if test="<%= commerceOrder.isGuestOrder() %>">
+			<aui:input name="email" type="text" wrapperCssClass="form-group-item">
+				<aui:validator name="email" />
+				<aui:validator name="required" />
+			</aui:input>
+		</c:if>
+	</div>
 </div>
 
 <c:if test="<%= Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) %>">
@@ -149,10 +166,15 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 			A.all('.address-fields select').set('selectedIndex', 0);
 			A.all('.address-fields input').val('');
-			A.one('#<portlet:namespace />use-as-billing').attr(
-				'checked',
-				<%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>
-			);
+
+			var useAsBillingField = A.one('#<portlet:namespace />use-as-billing');
+
+			if (useAsBillingField) {
+				useAsBillingField.attr(
+					'checked',
+					<%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>
+				);
+			}
 		},
 		['aui-base']
 	);
@@ -185,10 +207,6 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				}
 
 				commerceAddressParamName.val(commerceAddressVal);
-				Liferay.Util.toggleDisabled(
-					commerceAddressParamName,
-					commerceAddressVal === '0'
-				);
 				newAddress.val(Number(commerceAddressVal === '0'));
 			}
 		},

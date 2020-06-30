@@ -31,6 +31,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.layout.util.GroupControlPanelLayoutUtil;
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -75,6 +76,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
@@ -494,7 +497,7 @@ public class LayoutsAdminDisplayContext {
 				LayoutRevision layoutRevision =
 					LayoutStagingUtil.getLayoutRevision(layout);
 
-				if (layoutRevision.isIncomplete()) {
+				if ((layoutRevision != null) && layoutRevision.isIncomplete()) {
 					continue;
 				}
 			}
@@ -522,17 +525,10 @@ public class LayoutsAdminDisplayContext {
 					_request, layoutTypeResourceBundle,
 					"layout.types." + layout.getType()));
 
-			layoutJSONObject.put(
-				"homePage",
-				_getHomePagePlid(privateLayout) == layout.getPlid());
-
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), layout.isPrivateLayout(), layout.getLayoutId());
 
 			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
-
-			layoutJSONObject.put(
-				"homePageTitle", _getHomePageTitle(privateLayout));
 
 			LayoutType layoutType = layout.getLayoutType();
 
@@ -567,20 +563,6 @@ public class LayoutsAdminDisplayContext {
 
 	public Long getLiveGroupId() {
 		return _groupDisplayContextHelper.getLiveGroupId();
-	}
-
-	public String getMarkAsHomePageLayoutURL(Layout layout) {
-		PortletURL markAsHomePageLayoutURL =
-			_liferayPortletResponse.createActionURL();
-
-		markAsHomePageLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/mark_as_home_page_layout");
-		markAsHomePageLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		markAsHomePageLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-
-		return markAsHomePageLayoutURL.toString();
 	}
 
 	public String getMoveLayoutColumnItemURL() {
@@ -741,6 +723,10 @@ public class LayoutsAdminDisplayContext {
 		return portletURL;
 	}
 
+	public String getRobots() {
+		return ParamUtil.getString(_request, "robots", _getStrictRobots());
+	}
+
 	public String getRootNodeName() {
 		if (_rootNodeName != null) {
 			return _rootNodeName;
@@ -841,7 +827,7 @@ public class LayoutsAdminDisplayContext {
 		return _selLayout;
 	}
 
-	public LayoutSet getSelLayoutSet() throws PortalException {
+	public LayoutSet getSelLayoutSet() {
 		if (_selLayoutSet != null) {
 			return _selLayoutSet;
 		}
@@ -852,7 +838,7 @@ public class LayoutsAdminDisplayContext {
 			group = getLiveGroup();
 		}
 
-		_selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+		_selLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 			group.getGroupId(), isPrivateLayout());
 
 		return _selLayoutSet;
@@ -898,6 +884,32 @@ public class LayoutsAdminDisplayContext {
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+	}
+
+	public String getVirtualHostname() {
+		LayoutSet layoutSet = getSelLayoutSet();
+
+		if (layoutSet == null) {
+			return StringPool.BLANK;
+		}
+
+		String virtualHostname = PortalUtil.getVirtualHostname(layoutSet);
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNull(virtualHostname) && scopeGroup.isStagingGroup()) {
+			Group liveGroup = scopeGroup.getLiveGroup();
+
+			LayoutSet liveGroupLayoutSet = liveGroup.getPublicLayoutSet();
+
+			if (layoutSet.isPrivateLayout()) {
+				liveGroupLayoutSet = liveGroup.getPrivateLayoutSet();
+			}
+
+			virtualHostname = PortalUtil.getVirtualHostname(liveGroupLayoutSet);
+		}
+
+		return virtualHostname;
 	}
 
 	public boolean hasLayouts() {
@@ -1158,15 +1170,6 @@ public class LayoutsAdminDisplayContext {
 
 		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
-
-			if ((layout.getParentLayoutId() ==
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
-				(_getHomePagePlid(isPrivateLayout()) != layout.getPlid())) {
-
-				jsonObject.put(
-					"markAsHomePageLayoutURL",
-					getMarkAsHomePageLayoutURL(layout));
-			}
 		}
 
 		if (isShowOrphanPortletsAction(layout)) {
@@ -1336,30 +1339,6 @@ public class LayoutsAdminDisplayContext {
 		return new long[0];
 	}
 
-	private long _getHomePagePlid(boolean privateLayout) {
-		if (_homePagePlid != null) {
-			return _homePagePlid;
-		}
-
-		_homePagePlid = LayoutLocalServiceUtil.getDefaultPlid(
-			getSelGroupId(), privateLayout);
-
-		return _homePagePlid;
-	}
-
-	private String _getHomePageTitle(boolean privateLayout) {
-		if (_homePageTitle != null) {
-			return _homePageTitle;
-		}
-
-		Layout defaultLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
-			getSelGroupId(), privateLayout);
-
-		_homePageTitle = defaultLayout.getName(_themeDisplay.getLocale());
-
-		return _homePageTitle;
-	}
-
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
 		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1460,6 +1439,23 @@ public class LayoutsAdminDisplayContext {
 		return jsonArray;
 	}
 
+	private String _getStrictRobots() {
+		LayoutSet layoutSet = getSelLayoutSet();
+
+		if (layoutSet != null) {
+			return GetterUtil.getString(
+				layoutSet.getSettingsProperty(
+					layoutSet.isPrivateLayout() + "-robots.txt"),
+				ContentUtil.get(
+					RobotsUtil.class.getClassLoader(),
+					PropsValues.ROBOTS_TXT_WITH_SITEMAP));
+		}
+
+		return ContentUtil.get(
+			RobotsUtil.class.getClassLoader(),
+			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+	}
+
 	private String _getTitle(boolean privatePages) {
 		String title = "pages";
 
@@ -1501,8 +1497,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
-	private Long _homePagePlid;
-	private String _homePageTitle;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private final LiferayPortletRequest _liferayPortletRequest;

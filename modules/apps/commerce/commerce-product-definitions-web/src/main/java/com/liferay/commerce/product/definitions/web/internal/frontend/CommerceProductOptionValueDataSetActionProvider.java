@@ -146,7 +146,7 @@ public class CommerceProductOptionValueDataSetActionProvider
 			PortletProvider.Action.MANAGE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCPDefinitionOptionValueRel");
+			"mvcRenderCommandName", "editProductDefinitionOptionValueRel");
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();

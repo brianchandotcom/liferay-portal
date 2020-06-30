@@ -4578,8 +4578,6 @@ public class AddressPersistenceImpl
 		"address.primary = ?";
 
 	public AddressPersistenceImpl() {
-		setModelClass(Address.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -4598,6 +4596,8 @@ public class AddressPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Address.class);
 	}
 
 	/**

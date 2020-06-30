@@ -170,7 +170,7 @@ public class CSVBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 			}
 		}
 	}
@@ -193,7 +193,8 @@ public class CSVBatchEngineImportTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (ArrayIndexOutOfBoundsException aioobe) {
+			catch (ArrayIndexOutOfBoundsException
+						arrayIndexOutOfBoundsException) {
 			}
 		}
 	}

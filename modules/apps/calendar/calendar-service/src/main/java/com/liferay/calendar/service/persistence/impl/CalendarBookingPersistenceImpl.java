@@ -5429,8 +5429,6 @@ public class CalendarBookingPersistenceImpl
 		"calendarBooking.status = ?";
 
 	public CalendarBookingPersistenceImpl() {
-		setModelClass(CalendarBooking.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -5448,6 +5446,8 @@ public class CalendarBookingPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CalendarBooking.class);
 	}
 
 	/**

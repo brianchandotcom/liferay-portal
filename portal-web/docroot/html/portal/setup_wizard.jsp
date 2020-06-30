@@ -38,7 +38,7 @@
 
 	<div class="container" id="content">
 		<div class="sheet sheet-lg" id="main-content">
-			<h2 class="sheet-title" title="<liferay-ui:message key="basic-configuration" />">
+			<h2 class="sheet-title" title='<liferay-ui:message key="basic-configuration" />'>
 				<liferay-ui:message key="basic-configuration" />
 			</h2>
 
@@ -132,7 +132,7 @@
 											<dl class="database-values dl-horizontal">
 												<c:choose>
 													<c:when test="<%= Validator.isNotNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
-														<dt title="<liferay-ui:message key="jdbc-default-jndi-name" />">
+														<dt title='<liferay-ui:message key="jdbc-default-jndi-name" />'>
 															<liferay-ui:message key="jdbc-default-jndi-name" />
 														</dt>
 														<dd>
@@ -140,25 +140,25 @@
 														</dd>
 													</c:when>
 													<c:otherwise>
-														<dt title="<liferay-ui:message key="jdbc-url" />">
+														<dt title='<liferay-ui:message key="jdbc-url" />'>
 															<liferay-ui:message key="jdbc-url" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_URL %>
 														</dd>
-														<dt title="<liferay-ui:message key="jdbc-driver-class-name" />">
+														<dt title='<liferay-ui:message key="jdbc-driver-class-name" />'>
 															<liferay-ui:message key="jdbc-driver-class-name" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>
 														</dd>
-														<dt title="<liferay-ui:message key="user-name" />">
+														<dt title='<liferay-ui:message key="user-name" />'>
 															<liferay-ui:message key="user-name" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_USERNAME %>
 														</dd>
-														<dt title="<liferay-ui:message key="password" />">
+														<dt title='<liferay-ui:message key="password" />'>
 															<liferay-ui:message key="password" />
 														</dt>
 														<dd>
@@ -171,7 +171,7 @@
 									</c:choose>
 
 									<c:if test="<%= Validator.isNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
-										<a href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>" id="customDatabaseOptionsLink">
+										<a href='<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>' id="customDatabaseOptionsLink">
 											(<liferay-ui:message key="change" />)
 										</a>
 									</c:if>
@@ -180,7 +180,7 @@
 								<div class="hide" id="customDatabaseOptions">
 									<div class="connection-messages" id="connectionMessages"></div>
 
-									<a class="d-inline-block database-options mb-3" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
+									<a class="d-inline-block database-options mb-3" href='<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>' id="defaultDatabaseOptionsLink">
 										&laquo; <liferay-ui:message key='<%= defaultDatabase ? "use-default-database" : "use-configured-database" %>' />
 									</a>
 

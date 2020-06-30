@@ -18,10 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -36,19 +38,19 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityField;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -172,28 +174,80 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(page);
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testGetUserAccountsPageWithPagination() throws Exception {
+		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+		UserAccount userAccount3 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+		UserAccount userAccount4 = userAccountResource.getUserAccount(
+			_testUser.getUserId());
+
+		Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+
+		Assert.assertEquals(userAccounts1.toString(), 2, userAccounts1.size());
+
+		Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
+			null, null, Pagination.of(1, 4), null);
+
+		Assert.assertEquals(4, page2.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				userAccount1, userAccount2, userAccount3, userAccount4),
+			(List<UserAccount>)page2.getItems());
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testGetUserAccountsPageWithSortDateTime() throws Exception {
+	public void testGetUserAccountsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		UserAccount userAccount1 = randomUserAccount();
+		UserAccount userAccount2 = randomUserAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
+		}
+
+		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
+		userAccount2 = testGetUserAccountsPage_addUserAccount(userAccount2);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> descPage =
+				userAccountResource.getUserAccountsPage(
+					null, String.format("id ne '%s'", _testUser.getUserId()),
+					Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(userAccount2, userAccount1),
+				(List<UserAccount>)descPage.getItems());
+		}
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testGetUserAccountsPageWithSortString() throws Exception {
-	}
+	public void testGraphQLGetMyUserAccount() throws Exception {
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			_testUser.getUserId());
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetMyUserAccount() {
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"myUserAccount", getGraphQLFields())),
+						"JSONObject/data", "JSONObject/myUserAccount"))));
 	}
 
 	@Override
@@ -201,43 +255,29 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGraphQLGetUserAccountsPage() throws Exception {
 		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
 		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
+		UserAccount userAccount3 = userAccountResource.getUserAccount(
+			_testUser.getUserId());
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"userAccounts",
-				new HashMap<String, Object>() {
-					{
-						put("page", 1);
-						put("pageSize", 3);
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
-			"userAccounts");
+		JSONObject userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"userAccounts",
+					HashMapBuilder.<String, Object>put(
+						"page", 1
+					).put(
+						"pageSize", 3
+					).build(),
+					new GraphQLField("items", getGraphQLFields()),
+					new GraphQLField("page"), new GraphQLField("totalCount"))),
+			"JSONObject/data", "JSONObject/userAccounts");
 
 		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
-			Arrays.asList(userAccount1, userAccount2),
-			userAccountsJSONObject.getJSONArray("items"));
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2, userAccount3),
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
 	}
 
 	@Override
@@ -248,16 +288,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"emailAddress"};
-	}
-
-	@Override
-	protected UserAccount randomUserAccount() throws Exception {
-		UserAccount userAccount = super.randomUserAccount();
-
-		userAccount.setEmailAddress(
-			userAccount.getEmailAddress() + "@liferay.com");
-
-		return userAccount;
 	}
 
 	@Override

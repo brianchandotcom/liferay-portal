@@ -17,8 +17,8 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.product.model.CommerceCatalog",
 	service = {CatalogDTOConverter.class, DTOConverter.class}
 )
-public class CatalogDTOConverter implements DTOConverter {
+public class CatalogDTOConverter
+	implements DTOConverter<CommerceCatalog, Catalog> {
 
 	@Override
 	public String getContentType() {
@@ -42,10 +43,11 @@ public class CatalogDTOConverter implements DTOConverter {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.getCommerceCatalog(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		return new Catalog() {
 			{
+				actions = dtoConverterContext.getActions();
 				currencyCode = commerceCatalog.getCommerceCurrencyCode();
 				defaultLanguageId =
 					commerceCatalog.getCatalogDefaultLanguageId();

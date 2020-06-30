@@ -1153,6 +1153,198 @@ public class CPDefinitionOptionRelUtil {
 	}
 
 	/**
+	 * Returns all the cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @return the matching cp definition option rels
+	 */
+	public static List<CPDefinitionOptionRel> findByCPDI_R(
+		long CPDefinitionId, boolean required) {
+
+		return getPersistence().findByCPDI_R(CPDefinitionId, required);
+	}
+
+	/**
+	 * Returns a range of all the cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @return the range of matching cp definition option rels
+	 */
+	public static List<CPDefinitionOptionRel> findByCPDI_R(
+		long CPDefinitionId, boolean required, int start, int end) {
+
+		return getPersistence().findByCPDI_R(
+			CPDefinitionId, required, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition option rels
+	 */
+	public static List<CPDefinitionOptionRel> findByCPDI_R(
+		long CPDefinitionId, boolean required, int start, int end,
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator) {
+
+		return getPersistence().findByCPDI_R(
+			CPDefinitionId, required, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp definition option rels
+	 */
+	public static List<CPDefinitionOptionRel> findByCPDI_R(
+		long CPDefinitionId, boolean required, int start, int end,
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCPDI_R(
+			CPDefinitionId, required, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first cp definition option rel in the ordered set where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a matching cp definition option rel could not be found
+	 */
+	public static CPDefinitionOptionRel findByCPDI_R_First(
+			long CPDefinitionId, boolean required,
+			OrderByComparator<CPDefinitionOptionRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionRelException {
+
+		return getPersistence().findByCPDI_R_First(
+			CPDefinitionId, required, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cp definition option rel in the ordered set where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option rel, or <code>null</code> if a matching cp definition option rel could not be found
+	 */
+	public static CPDefinitionOptionRel fetchByCPDI_R_First(
+		long CPDefinitionId, boolean required,
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator) {
+
+		return getPersistence().fetchByCPDI_R_First(
+			CPDefinitionId, required, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp definition option rel in the ordered set where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a matching cp definition option rel could not be found
+	 */
+	public static CPDefinitionOptionRel findByCPDI_R_Last(
+			long CPDefinitionId, boolean required,
+			OrderByComparator<CPDefinitionOptionRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionRelException {
+
+		return getPersistence().findByCPDI_R_Last(
+			CPDefinitionId, required, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp definition option rel in the ordered set where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option rel, or <code>null</code> if a matching cp definition option rel could not be found
+	 */
+	public static CPDefinitionOptionRel fetchByCPDI_R_Last(
+		long CPDefinitionId, boolean required,
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator) {
+
+		return getPersistence().fetchByCPDI_R_Last(
+			CPDefinitionId, required, orderByComparator);
+	}
+
+	/**
+	 * Returns the cp definition option rels before and after the current cp definition option rel in the ordered set where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the primary key of the current cp definition option rel
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a cp definition option rel with the primary key could not be found
+	 */
+	public static CPDefinitionOptionRel[] findByCPDI_R_PrevAndNext(
+			long CPDefinitionOptionRelId, long CPDefinitionId, boolean required,
+			OrderByComparator<CPDefinitionOptionRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionRelException {
+
+		return getPersistence().findByCPDI_R_PrevAndNext(
+			CPDefinitionOptionRelId, CPDefinitionId, required,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the cp definition option rels where CPDefinitionId = &#63; and required = &#63; from the database.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 */
+	public static void removeByCPDI_R(long CPDefinitionId, boolean required) {
+		getPersistence().removeByCPDI_R(CPDefinitionId, required);
+	}
+
+	/**
+	 * Returns the number of cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param required the required
+	 * @return the number of matching cp definition option rels
+	 */
+	public static int countByCPDI_R(long CPDefinitionId, boolean required) {
+		return getPersistence().countByCPDI_R(CPDefinitionId, required);
+	}
+
+	/**
 	 * Returns all the cp definition option rels where CPDefinitionId = &#63; and skuContributor = &#63;.
 	 *
 	 * @param CPDefinitionId the cp definition ID

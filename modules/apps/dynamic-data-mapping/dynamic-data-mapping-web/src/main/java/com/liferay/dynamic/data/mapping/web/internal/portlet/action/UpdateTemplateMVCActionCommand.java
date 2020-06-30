@@ -73,6 +73,9 @@ public class UpdateTemplateMVCActionCommand
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
+
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			uploadPortletRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -93,13 +96,19 @@ public class UpdateTemplateMVCActionCommand
 			uploadPortletRequest, "smallImageURL");
 		File smallImageFile = uploadPortletRequest.getFile("smallImageFile");
 
+		long selectedStructureId = classPK;
+
+		if ((classPK == 0) && (structureId > 0)) {
+			selectedStructureId = structureId;
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		return ddmTemplateService.updateTemplate(
-			templateId, classPK, nameMap, descriptionMap, type, mode, language,
-			script, cacheable, smallImage, smallImageURL, smallImageFile,
-			serviceContext);
+			templateId, selectedStructureId, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 }

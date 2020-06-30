@@ -16,7 +16,10 @@ package com.liferay.headless.commerce.core.dto.v1_0.converter;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ * 					 com.liferay.portal.vulcan.dto.converter.DTOConverter}
  */
+@Deprecated
 public interface DTOConverter {
 
 	public String getContentType();

@@ -22,8 +22,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
+import com.liferay.commerce.price.CommerceOrderItemPrice;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -37,17 +38,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,161 +89,268 @@ public class CommercePendingOrderItemDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		List<OrderItem> orderItems = new ArrayList<>();
-
-		OrderFilterImpl orderFilterImpl = (OrderFilterImpl)filter;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
-				orderFilterImpl.getCommerceOrderId(),
-				pagination.getStartPosition(), pagination.getEndPosition());
-
-		CommerceOrder commerceOrder = null;
-		Map<Long, List<CommerceOrderValidatorResult>>
-			commerceOrderValidatorResultMap = null;
-
-		if (!commerceOrderItems.isEmpty()) {
-			CommerceOrderItem firstCommerceOrderItem = commerceOrderItems.get(
-				0);
-
-			commerceOrder = _commerceOrderService.getCommerceOrder(
-				firstCommerceOrderItem.getCommerceOrderId());
-
-			commerceOrderValidatorResultMap =
-				_commerceOrderValidatorRegistry.
-					getCommerceOrderValidatorResults(
-						themeDisplay.getLocale(), commerceOrder);
-		}
+		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
+			_getBaseModelSearchResult(
+				httpServletRequest, filter, pagination, sort);
 
 		try {
-			for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-				String formattedUnitPrice = StringPool.BLANK;
-				String formattedPromoPrice = StringPool.BLANK;
-				String formattedDiscountAmount = StringPool.BLANK;
-				String formattedFinalPrice = StringPool.BLANK;
+			List<CommerceOrderItem> commerceOrderItems =
+				baseModelSearchResult.getBaseModels();
 
-				CommerceMoney unitPriceMoney =
-					commerceOrderItem.getUnitPriceMoney();
-
-				if (unitPriceMoney != null) {
-					formattedUnitPrice = unitPriceMoney.format(
-						themeDisplay.getLocale());
-				}
-
-				CommerceMoney promoPriceMoney =
-					commerceOrderItem.getPromoPriceMoney();
-
-				BigDecimal promoPrice = promoPriceMoney.getPrice();
-
-				if ((promoPriceMoney != null) &&
-					(promoPrice.compareTo(BigDecimal.ZERO) > 0)) {
-
-					formattedPromoPrice = promoPriceMoney.format(
-						themeDisplay.getLocale());
-				}
-
-				CommerceMoney finalPriceMoney =
-					commerceOrderItem.getFinalPriceMoney();
-
-				if (finalPriceMoney != null) {
-					formattedFinalPrice = finalPriceMoney.format(
-						themeDisplay.getLocale());
-				}
-
-				CommerceMoney discountAmount =
-					commerceOrderItem.getDiscountAmountMoney();
-
-				if (discountAmount != null) {
-					formattedDiscountAmount = discountAmount.format(
-						themeDisplay.getLocale());
-				}
-
-				List<CommerceOrderValidatorResult>
-					commerceOrderValidatorResults =
-						commerceOrderValidatorResultMap.get(
-							commerceOrderItem.getCommerceOrderItemId());
-
-				List<String> errorMessages = new ArrayList<>();
-
-				for (CommerceOrderValidatorResult commerceOrderValidatorResult :
-						commerceOrderValidatorResults) {
-
-					errorMessages.add(
-						commerceOrderValidatorResult.getLocalizedMessage());
-				}
-
-				String formattedSubscriptionPeriod = null;
-
-				CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
-
-				if ((cpInstance != null) &&
-					(cpInstance.getCPSubscriptionInfo() != null)) {
-
-					CPSubscriptionInfo cpSubscriptionInfo =
-						cpInstance.getCPSubscriptionInfo();
-
-					Locale locale = themeDisplay.getLocale();
-
-					String period = StringPool.BLANK;
-
-					CPSubscriptionType cpSubscriptionType =
-						_cpSubscriptionTypeRegistry.getCPSubscriptionType(
-							cpSubscriptionInfo.getSubscriptionType());
-
-					if (cpSubscriptionType != null) {
-						period = cpSubscriptionType.getLabel(locale);
-
-						if (cpSubscriptionInfo.getSubscriptionLength() > 1) {
-							period = LanguageUtil.get(
-								locale,
-								StringUtil.toLowerCase(
-									cpSubscriptionType.getLabel(LocaleUtil.US) +
-										CharPool.LOWER_CASE_S));
-						}
-					}
-
-					formattedSubscriptionPeriod = LanguageUtil.format(
-						locale, "every-x-x",
-						new Object[] {
-							cpSubscriptionInfo.getSubscriptionLength(), period
-						});
-				}
-
-				List<KeyValuePair> keyValuePairs =
-					_cpInstanceHelper.getKeyValuePairs(
-						commerceOrderItem.getCPDefinitionId(),
-						commerceOrderItem.getJson(), themeDisplay.getLocale());
-
-				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
-
-				for (KeyValuePair keyValuePair : keyValuePairs) {
-					stringJoiner.add(keyValuePair.getValue());
-				}
-
-				orderItems.add(
-					new OrderItem(
-						commerceOrderItem.getCommerceOrderItemId(),
-						commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getSku(),
-						commerceOrderItem.getName(themeDisplay.getLocale()),
-						stringJoiner.toString(), formattedUnitPrice,
-						formattedPromoPrice, formattedDiscountAmount,
-						commerceOrderItem.getQuantity(), formattedFinalPrice,
-						_cpInstanceHelper.getCPInstanceThumbnailSrc(
-							commerceOrderItem.getCPInstanceId()),
-						CommerceOrderClayTableUtil.getViewShipmentURL(
-							commerceOrderItem.getCommerceOrderId(),
-							themeDisplay),
-						0, ArrayUtil.toStringArray(errorMessages),
-						formattedSubscriptionPeriod));
-			}
+			return _getOrderItems(commerceOrderItems, httpServletRequest);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+
+		return Collections.emptyList();
+	}
+
+	private String _formatDiscountAmount(
+			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
+		throws PortalException {
+
+		if (commerceOrderItemPrice.getDiscountAmount() == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceMoney discountAmountMoney =
+			commerceOrderItemPrice.getDiscountAmount();
+
+		return discountAmountMoney.format(locale);
+	}
+
+	private String _formatFinalPrice(
+			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
+		throws PortalException {
+
+		if (commerceOrderItemPrice.getFinalPrice() == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceMoney finalPrice = commerceOrderItemPrice.getFinalPrice();
+
+		return finalPrice.format(locale);
+	}
+
+	private String _formatPromoPrice(
+			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
+		throws PortalException {
+
+		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
+
+		if (promoPrice == null) {
+			return StringPool.BLANK;
+		}
+
+		BigDecimal price = promoPrice.getPrice();
+
+		if (price.compareTo(BigDecimal.ZERO) <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return promoPrice.format(locale);
+	}
+
+	private String _formatSubscriptionPeriod(
+			CommerceOrderItem commerceOrderItem, Locale locale)
+		throws PortalException {
+
+		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+		if ((cpInstance == null) ||
+			(cpInstance.getCPSubscriptionInfo() == null)) {
+
+			return null;
+		}
+
+		CPSubscriptionInfo cpSubscriptionInfo =
+			cpInstance.getCPSubscriptionInfo();
+
+		String period = StringPool.BLANK;
+
+		CPSubscriptionType cpSubscriptionType =
+			_cpSubscriptionTypeRegistry.getCPSubscriptionType(
+				cpSubscriptionInfo.getSubscriptionType());
+
+		if (cpSubscriptionType != null) {
+			period = cpSubscriptionType.getLabel(locale);
+
+			if (cpSubscriptionInfo.getSubscriptionLength() > 1) {
+				period = LanguageUtil.get(
+					locale,
+					StringUtil.toLowerCase(
+						cpSubscriptionType.getLabel(LocaleUtil.US) +
+							CharPool.LOWER_CASE_S));
+			}
+		}
+
+		return LanguageUtil.format(
+			locale, "every-x-x",
+			new Object[] {cpSubscriptionInfo.getSubscriptionLength(), period});
+	}
+
+	private String _formatUnitPrice(
+			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
+		throws PortalException {
+
+		if (commerceOrderItemPrice.getUnitPrice() == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceMoney unitPrice = commerceOrderItemPrice.getUnitPrice();
+
+		return unitPrice.format(locale);
+	}
+
+	private BaseModelSearchResult<CommerceOrderItem> _getBaseModelSearchResult(
+			HttpServletRequest httpServletRequest, Filter filter,
+			Pagination pagination, Sort sort)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		int start = 0;
+		int end = 0;
+
+		if (pagination != null) {
+			start = pagination.getStartPosition();
+			end = pagination.getEndPosition();
+		}
+
+		return _commerceOrderItemService.search(
+			commerceOrderId, 0, filter.getKeywords(), start, end, sort);
+	}
+
+	private List<OrderItem> _getChildOrderItems(
+			CommerceOrderItem commerceOrderItem,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		List<CommerceOrderItem> childCommerceOrderItems =
+			_commerceOrderItemService.getChildCommerceOrderItems(
+				commerceOrderItem.getCommerceOrderItemId());
+
+		return _getOrderItems(childCommerceOrderItems, httpServletRequest);
+	}
+
+	private long _getCommerceOptionValueCPDefinitionId(
+		CommerceOrderItem commerceOrderItem) {
+
+		if (!commerceOrderItem.hasParentCommerceOrderItem()) {
+			return commerceOrderItem.getCPDefinitionId();
+		}
+
+		return commerceOrderItem.getParentCommerceOrderItemCPDefinitionId();
+	}
+
+	private String[] _getCommerceOrderErrorMessages(
+		CommerceOrderItem commerceOrderItem,
+		Map<Long, List<CommerceOrderValidatorResult>>
+			commerceOrderValidatorResultMap) {
+
+		List<String> errorMessages = new ArrayList<>();
+
+		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
+			commerceOrderValidatorResultMap.get(
+				commerceOrderItem.getCommerceOrderItemId());
+
+		for (CommerceOrderValidatorResult commerceOrderValidatorResult :
+				commerceOrderValidatorResults) {
+
+			errorMessages.add(
+				commerceOrderValidatorResult.getLocalizedMessage());
+		}
+
+		return ArrayUtil.toStringArray(errorMessages);
+	}
+
+	private String _getCommerceOrderOptions(
+			CommerceOrderItem commerceOrderItem, Locale locale)
+		throws PortalException {
+
+		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+
+		List<KeyValuePair> commerceOptionValueKeyValuePairs =
+			_cpInstanceHelper.getKeyValuePairs(
+				_getCommerceOptionValueCPDefinitionId(commerceOrderItem),
+				commerceOrderItem.getJson(), locale);
+
+		for (KeyValuePair keyValuePair : commerceOptionValueKeyValuePairs) {
+			stringJoiner.add(keyValuePair.getValue());
+		}
+
+		return stringJoiner.toString();
+	}
+
+	private Map<Long, List<CommerceOrderValidatorResult>>
+			_getCommerceOrderValidatorResultMap(
+				List<CommerceOrderItem> commerceOrderItems,
+				ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (commerceOrderItems.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
+			themeDisplay.getLocale(),
+			_commerceOrderService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId()));
+	}
+
+	private List<OrderItem> _getOrderItems(
+			List<CommerceOrderItem> commerceOrderItems,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		List<OrderItem> orderItems = new ArrayList<>();
+
+		if (commerceOrderItems.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Locale locale = themeDisplay.getLocale();
+
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+			CommerceOrderItemPrice commerceOrderItemPrice =
+				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
+					commerceOrder.getCommerceCurrency(), commerceOrderItem);
+
+			Map<Long, List<CommerceOrderValidatorResult>>
+				commerceOrderValidatorResultMap =
+					_getCommerceOrderValidatorResultMap(
+						commerceOrderItems, themeDisplay);
+
+			orderItems.add(
+				new OrderItem(
+					commerceOrderItem.getCommerceOrderItemId(),
+					commerceOrderItem.getCommerceOrderId(),
+					commerceOrderItem.getSku(),
+					commerceOrderItem.getName(locale),
+					_getCommerceOrderOptions(commerceOrderItem, locale),
+					_getChildOrderItems(commerceOrderItem, httpServletRequest),
+					commerceOrderItem.getParentCommerceOrderItemId(),
+					_formatUnitPrice(commerceOrderItemPrice, locale),
+					_formatPromoPrice(commerceOrderItemPrice, locale),
+					_formatDiscountAmount(commerceOrderItemPrice, locale),
+					commerceOrderItem.getQuantity(),
+					_formatFinalPrice(commerceOrderItemPrice, locale),
+					_cpInstanceHelper.getCPInstanceThumbnailSrc(
+						commerceOrderItem.getCPInstanceId()),
+					0,
+					_getCommerceOrderErrorMessages(
+						commerceOrderItem, commerceOrderValidatorResultMap),
+					_formatSubscriptionPeriod(commerceOrderItem, locale)));
 		}
 
 		return orderItems;
@@ -250,6 +361,9 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

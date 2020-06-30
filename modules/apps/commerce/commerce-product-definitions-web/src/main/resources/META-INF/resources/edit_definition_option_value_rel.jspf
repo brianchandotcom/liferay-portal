@@ -16,6 +16,7 @@
 
 <%
 long cpDefinitionId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionId();
+CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
 long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
 long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRelId();
 %>
@@ -28,33 +29,125 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 
 <aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
 
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelCPInstanceException.class %>" message="please-select-a-valid-sku" />
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="that-key-is-already-being-used" />
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelPriceException.class %>" message="please-enter-a-valid-price" />
 
-<aui:input id="optionValueName" name="name" />
+<aui:input defaultLanguageId="<%= cpDefinitionOptionValueRelDisplayContext.getCatalogDefaultLanguageId() %>" id="optionValueName" name="name" />
 
-<aui:input name="priority" />
+<aui:input label="position" name="priority" />
 
 <aui:input helpMessage="key-help" name="key" />
 
-<c:if test="<%= cpDefinitionOptionValueRel == null %>">
-	<aui:script require="commerce-frontend-js/utilities/index.es as utilities">
-		function slugify(string) {
-			return string.toLowerCase().replace(/[^a-z1-9]+/g, '-');
-		}
+<c:if test="<%= cpDefinitionOptionValueRel != null %>">
 
-		const form = document.getElementById(
+	<%
+	CommerceCurrency commerceCurrency = cpDefinitionOptionValueRelDisplayContext.getCommerceCurrency();
+
+	BigDecimal price = cpDefinitionOptionValueRel.getPrice();
+
+	if (price == null) {
+		price = BigDecimal.ZERO;
+	}
+	%>
+
+	<c:if test="<%= cpDefinitionOptionRel.isPriceTypeStatic() %>">
+		<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
+			<aui:validator name="min">0</aui:validator>
+			<aui:validator name="number" />
+		</aui:input>
+	</c:if>
+
+	<c:if test="<%= cpDefinitionOptionRel.isPriceContributor() %>">
+		<div class="sheet-section">
+			<h3 class="sheet-subtitle"><%= LanguageUtil.get(request, "product") %></h3>
+
+			<div class="row">
+				<div class="col">
+					<label class="control-label" for="skuId"><%= LanguageUtil.get(request, "sku") %></label>
+
+					<div id="autocomplete-root"></div>
+				</div>
+
+				<div class="col-4">
+					<aui:input name="quantity" wrapperCssClass="mb-0">
+						<aui:validator name="min">1</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
+				</div>
+
+				<div class="align-items-end col-auto d-flex">
+					<button class="btn btn-monospaced btn-secondary" id="remove-sku-button" onclick='<%= renderResponse.getNamespace() + "removeSku();" %>' type="button">
+						<clay:icon
+							symbol="trash"
+						/>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<%
+		String cpInstanceId = StringPool.BLANK;
+		String cpInstanceLabel = StringPool.BLANK;
+
+		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+
+		if (cpInstance != null) {
+			cpInstanceId = String.valueOf(cpInstance.getCPInstanceId());
+			cpInstanceLabel = cpInstance.getSku();
+		}
+		%>
+
+		<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
+			autocomplete.default('autocomplete', 'autocomplete-root', {
+				apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
+				initialLabel: '<%= cpInstanceLabel %>',
+				initialValue: '<%= cpInstanceId %>',
+				inputId: 'skuId',
+				inputName: '<%= renderResponse.getNamespace() %>cpInstanceId',
+				itemsKey: 'id',
+				itemsLabel: 'sku'
+			});
+
+			Liferay.on(events.AUTOCOMPLETE_VALUE_UPDATED, function(e) {
+				var quantityInput = document.getElementById(
+					'<%= renderResponse.getNamespace() %>quantity'
+				);
+				var deleteButton = document.getElementById('remove-sku-button');
+
+				if (e.value) {
+					quantityInput.disabled = false;
+					deleteButton.disabled = false;
+				} else {
+					quantityInput.disabled = true;
+					deleteButton.disabled = true;
+				}
+			});
+
+			Liferay.provide(window, '<portlet:namespace />removeSku', function() {
+				var url = new URL(
+					'<%= cpDefinitionOptionValueRelDisplayContext.getRemoveSkuUrl(currentURL) %>'
+				);
+
+				window.location.href = url.toString();
+			});
+		</aui:script>
+	</c:if>
+</c:if>
+
+<c:if test="<%= cpDefinitionOptionValueRel == null %>">
+	<aui:script require="commerce-frontend-js/utilities/debounce as debounce, commerce-frontend-js/utilities/slugify as slugify">
+		var form = document.getElementById(
 			'<portlet:namespace />cpDefinitionOptionValueRelfm'
 		);
 
-		const keyInput = form.querySelector('#<portlet:namespace />key');
-		const nameInput = form.querySelector('#<portlet:namespace />optionValueName');
-
-		const debounce = utilities.debounce;
+		var keyInput = form.querySelector('#<portlet:namespace />key');
+		var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
 
 		var handleOnNameInput = function() {
-			keyInput.value = slugify(nameInput.value);
+			keyInput.value = slugify.default(nameInput.value);
 		};
 
-		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+		nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
 	</aui:script>
 </c:if>

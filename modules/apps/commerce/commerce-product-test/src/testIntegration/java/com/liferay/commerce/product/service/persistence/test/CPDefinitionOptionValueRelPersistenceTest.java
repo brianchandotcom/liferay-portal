@@ -151,16 +151,16 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			RandomTestUtil.nextLong());
 
+		newCPDefinitionOptionValueRel.setCPInstanceUuid(
+			RandomTestUtil.randomString());
+
+		newCPDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
+
 		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
 		newCPDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
-
-		newCPDefinitionOptionValueRel.setCPInstanceUuid(
-			RandomTestUtil.randomString());
-
-		newCPDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
 
 		newCPDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
 
@@ -207,6 +207,12 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
 			newCPDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getCPInstanceUuid(),
+			newCPDefinitionOptionValueRel.getCPInstanceUuid());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getCProductId(),
+			newCPDefinitionOptionValueRel.getCProductId());
+		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getName(),
 			newCPDefinitionOptionValueRel.getName());
 		AssertUtils.assertEquals(
@@ -215,12 +221,6 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getKey(),
 			newCPDefinitionOptionValueRel.getKey());
-		Assert.assertEquals(
-			existingCPDefinitionOptionValueRel.getCPInstanceUuid(),
-			newCPDefinitionOptionValueRel.getCPInstanceUuid());
-		Assert.assertEquals(
-			existingCPDefinitionOptionValueRel.getCProductId(),
-			newCPDefinitionOptionValueRel.getCProductId());
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getQuantity(),
 			newCPDefinitionOptionValueRel.getQuantity());
@@ -278,6 +278,15 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCPInstanceUuid() throws Exception {
+		_persistence.countByCPInstanceUuid("");
+
+		_persistence.countByCPInstanceUuid("null");
+
+		_persistence.countByCPInstanceUuid((String)null);
+	}
+
+	@Test
 	public void testCountByKey() throws Exception {
 		_persistence.countByKey("");
 
@@ -328,9 +337,9 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			"CPDefinitionOptionValueRel", "uuid", true,
 			"CPDefinitionOptionValueRelId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPDefinitionOptionRelId", true, "name", true,
-			"priority", true, "key", true, "CPInstanceUuid", true, "CProductId",
-			true, "quantity", true, "price", true);
+			"modifiedDate", true, "CPDefinitionOptionRelId", true,
+			"CPInstanceUuid", true, "CProductId", true, "name", true,
+			"priority", true, "key", true, "quantity", true, "price", true);
 	}
 
 	@Test
@@ -641,16 +650,16 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			RandomTestUtil.nextLong());
 
+		cpDefinitionOptionValueRel.setCPInstanceUuid(
+			RandomTestUtil.randomString());
+
+		cpDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
+
 		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
-
-		cpDefinitionOptionValueRel.setCPInstanceUuid(
-			RandomTestUtil.randomString());
-
-		cpDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
 
 		cpDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
 

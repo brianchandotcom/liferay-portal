@@ -406,11 +406,6 @@ public abstract class BaseMeasurementUnitResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		MeasurementUnit measurementUnit,
-		MeasurementUnit existingMeasurementUnit) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

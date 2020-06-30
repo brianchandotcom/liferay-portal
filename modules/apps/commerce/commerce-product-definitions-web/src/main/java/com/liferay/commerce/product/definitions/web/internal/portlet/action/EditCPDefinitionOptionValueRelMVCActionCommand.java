@@ -15,9 +15,12 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelCPInstanceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -83,18 +86,38 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitionOptionValueRels(actionRequest);
 			}
+			else if (cmd.equals("deleteSku")) {
+				resetCPInstanceAndQuantity(actionRequest);
+			}
 		}
 		catch (Exception e) {
-			if (e instanceof CPDefinitionOptionValueRelKeyException) {
+			if (e instanceof CPDefinitionOptionValueRelCPInstanceException ||
+				e instanceof CPDefinitionOptionValueRelKeyException ||
+				e instanceof CPDefinitionOptionValueRelPriceException) {
+
+				hideDefaultErrorMessage(actionRequest);
+
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_definition_option_value_rel.jsp");
+					"mvcRenderCommandName", "editCPDefinitionOptionValueRel");
 			}
 			else {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	protected CPDefinitionOptionValueRel resetCPInstanceAndQuantity(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionValueRelId");
+
+		return _cpDefinitionOptionValueRelService.
+			resetCPInstanceCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId);
 	}
 
 	protected CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(

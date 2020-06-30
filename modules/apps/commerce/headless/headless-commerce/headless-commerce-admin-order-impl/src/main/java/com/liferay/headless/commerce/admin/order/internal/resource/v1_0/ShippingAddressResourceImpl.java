@@ -21,12 +21,11 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.ShippingAddressDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 
 import javax.ws.rs.core.Response;
@@ -64,13 +63,10 @@ public class ShippingAddressResourceImpl
 			_commerceAddressService.getCommerceAddress(
 				commerceOrder.getShippingAddressId());
 
-		DTOConverter shippingAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ShippingAddress");
-
-		return (ShippingAddress)shippingAddressDTOConverter.toDTO(
+		return _shippingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = Order.class, value = "shippingAddress")
@@ -87,13 +83,10 @@ public class ShippingAddressResourceImpl
 			return new ShippingAddress();
 		}
 
-		DTOConverter shippingAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter("ShippingAddress");
-
-		return (ShippingAddress)shippingAddressDTOConverter.toDTO(
+		return _shippingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -142,9 +135,9 @@ public class ShippingAddressResourceImpl
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
-	private ServiceContextHelper _serviceContextHelper;
+	private ShippingAddressDTOConverter _shippingAddressDTOConverter;
 
 }

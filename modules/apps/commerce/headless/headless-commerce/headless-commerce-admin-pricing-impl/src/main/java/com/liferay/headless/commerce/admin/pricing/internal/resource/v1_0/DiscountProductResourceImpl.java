@@ -22,12 +22,11 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountProduct;
+import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountProductDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountProductUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountProductResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -129,14 +128,8 @@ public class DiscountProductResourceImpl
 				discountProduct, commerceDiscount,
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountCategoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				_DTO_CONVERTER_MODEL_CLASS_NAME);
-
-		return (DiscountProduct)discountCategoryDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountRel.getCommerceDiscountRelId()));
+		return _toDiscountProduct(
+			commerceDiscountRel.getCommerceDiscountRelId());
 	}
 
 	@Override
@@ -151,14 +144,17 @@ public class DiscountProductResourceImpl
 				_commerceDiscountService.getCommerceDiscount(id),
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter discountCategoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				_DTO_CONVERTER_MODEL_CLASS_NAME);
+		return _toDiscountProduct(
+			commerceDiscountRel.getCommerceDiscountRelId());
+	}
 
-		return (DiscountProduct)discountCategoryDTOConverter.toDTO(
+	private DiscountProduct _toDiscountProduct(Long commerceDiscountRelId)
+		throws Exception {
+
+		return _discountProductDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceDiscountRel.getCommerceDiscountRelId()));
+				commerceDiscountRelId,
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<DiscountProduct> _toDiscountProducts(
@@ -167,23 +163,14 @@ public class DiscountProductResourceImpl
 
 		List<DiscountProduct> discountProducts = new ArrayList<>();
 
-		DTOConverter discountCategoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				_DTO_CONVERTER_MODEL_CLASS_NAME);
-
 		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
 			discountProducts.add(
-				(DiscountProduct)discountCategoryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceDiscountRel.getCommerceDiscountRelId())));
+				_toDiscountProduct(
+					commerceDiscountRel.getCommerceDiscountRelId()));
 		}
 
 		return discountProducts;
 	}
-
-	private static final String _DTO_CONVERTER_MODEL_CLASS_NAME =
-		CommerceDiscountRel.class.getName() + "-Product";
 
 	@Reference
 	private CommerceDiscountRelService _commerceDiscountRelService;
@@ -195,7 +182,7 @@ public class DiscountProductResourceImpl
 	private CProductLocalService _cProductLocalService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private DiscountProductDTOConverter _discountProductDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

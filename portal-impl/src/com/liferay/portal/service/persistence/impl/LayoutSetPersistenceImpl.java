@@ -1618,8 +1618,6 @@ public class LayoutSetPersistenceImpl
 		"layoutSet.logoId = ?";
 
 	public LayoutSetPersistenceImpl() {
-		setModelClass(LayoutSet.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("settings", "settings_");
@@ -1637,6 +1635,8 @@ public class LayoutSetPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(LayoutSet.class);
 	}
 
 	/**

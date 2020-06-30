@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property osgi.app.includes = "commerce";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
@@ -25,7 +26,7 @@ definition {
 	@ignore = "true"
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAdmin#CreateNewAvailabilityEstimate";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -46,7 +47,7 @@ definition {
 	@ignore = "true"
 	test CreateNewCountry {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAdmin#CreateNewCountry";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -79,7 +80,7 @@ definition {
 	@ignore = "true"
 	test CreateNewMeasurementUnits {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAdmin#CreateNewMeasurementUnits";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -110,7 +111,7 @@ definition {
 	@ignore = "true"
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAdmin#CreateNewNotificationTemplate";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
 
 		CommerceEntry.createNewAccountGroup(
 			criteriaType = "Users",

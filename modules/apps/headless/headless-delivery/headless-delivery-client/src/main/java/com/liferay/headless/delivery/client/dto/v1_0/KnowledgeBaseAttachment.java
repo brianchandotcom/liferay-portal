@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class KnowledgeBaseAttachment implements Cloneable {
 
+	public static KnowledgeBaseAttachment toDTO(String json) {
+		return KnowledgeBaseAttachmentSerDes.toDTO(json);
+	}
+
 	public String getContentUrl() {
 		return contentUrl;
 	}

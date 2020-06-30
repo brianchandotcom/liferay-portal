@@ -17,6 +17,8 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -25,7 +27,6 @@ import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -145,16 +146,31 @@ public class AvailabilityCommerceOrderValidatorImpl
 			return new CommerceOrderValidatorResult(true);
 		}
 
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+			_commerceInventoryBookedQuantityLocalService.
+				fetchCommerceInventoryBookedQuantity(
+					commerceOrderItem.getBookedQuantityId());
+
 		int availableQuantity = _commerceInventoryEngine.getStockQuantity(
 			cpInstance.getCompanyId(), commerceOrderItem.getGroupId(),
 			cpInstance.getSku());
 
 		int orderQuantity = commerceOrderItem.getQuantity();
 
-		if (orderQuantity > availableQuantity) {
+		if ((orderQuantity > availableQuantity) &&
+			(commerceInventoryBookedQuantity == null)) {
+
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
 				_getLocalizedMessage(locale, "that-quantity-is-unavailable"));
+		}
+		else if ((commerceInventoryBookedQuantity != null) &&
+				 (orderQuantity !=
+					 commerceInventoryBookedQuantity.getQuantity())) {
+
+			return new CommerceOrderValidatorResult(
+				commerceOrderItem.getCommerceOrderItemId(), false,
+				_getLocalizedMessage(locale, "that-quantity-is-not-allowed"));
 		}
 
 		return new CommerceOrderValidatorResult(true);
@@ -172,10 +188,11 @@ public class AvailabilityCommerceOrderValidatorImpl
 	}
 
 	@Reference
-	private CommerceInventoryEngine _commerceInventoryEngine;
+	private CommerceInventoryBookedQuantityLocalService
+		_commerceInventoryBookedQuantityLocalService;
 
 	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+	private CommerceInventoryEngine _commerceInventoryEngine;
 
 	@Reference
 	private CPDefinitionInventoryEngineRegistry

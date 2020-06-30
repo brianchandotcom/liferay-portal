@@ -1034,7 +1034,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				privateLayout);
 
 			List<Layout> layouts = layoutPersistence.findByG_P(
-				groupId, privateLayout, 0, end, new LayoutPriorityComparator());
+				groupId, privateLayout, 0, end, null);
 
 			if (end > 1) {
 				return layouts.stream(

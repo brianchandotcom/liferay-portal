@@ -16,7 +16,7 @@
 
 <%@ include file="/incomplete_process_message/init.jsp" %>
 
-<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "" %> incomplete-process-message">
+<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "" %> incomplete-process-message'>
 	<div class="alert alert-info">
 		<c:choose>
 			<c:when test="<%= incompleteBackgroundTaskCount == 1 %>">

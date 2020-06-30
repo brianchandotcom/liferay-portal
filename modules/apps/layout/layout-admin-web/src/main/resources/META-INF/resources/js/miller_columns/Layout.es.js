@@ -15,7 +15,6 @@ import {
 	clearPath,
 	deleteEmptyColumns,
 	setActiveItem,
-	setHomePage
 } from './utils/LayoutUpdateUtils.es';
 import {
 	columnIsItemChild,
@@ -298,8 +297,6 @@ class Layout extends Component {
 					priority = dropData.priority;
 				}
 			}
-
-			layoutColumns = setHomePage(layoutColumns);
 
 			const droppedItemParentPlid = this._draggingItemParentPlid;
 
@@ -786,8 +783,6 @@ Layout.STATE = {
 				active: Config.bool().required(),
 				checked: Config.bool().required(),
 				hasChild: Config.bool().required(),
-				homePage: Config.bool().required(),
-				homePageTitle: Config.string().required(),
 				parentable: Config.bool().required(),
 				plid: Config.string().required(),
 				title: Config.string().required(),

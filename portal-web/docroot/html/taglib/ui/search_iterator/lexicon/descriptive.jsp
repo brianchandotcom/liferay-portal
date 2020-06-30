@@ -53,7 +53,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 		boolean allRowsIsChecked = true;
 
 		for (int i = 0; i < curResultRows.size(); i++) {
-			com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)curResultRows.get(i);
+			com.liferay.portal.kernel.dao.search.ResultRow row = curResultRows.get(i);
 
 			primaryKeysJSONArray.put(row.getPrimaryKey());
 
@@ -116,7 +116,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 					request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY, entry);
 				%>
 
-					<div class="<%= entry.getCssClass() %> <%= (entry.getColspan() > 1) ? "autofit-col autofit-col-expand" : "autofit-col" %>" data-qa-id="rowItemContent">
+					<div class='<%= entry.getCssClass() %> <%= (entry.getColspan() > 1) ? "autofit-col autofit-col-expand" : "autofit-col" %>' data-qa-id="rowItemContent">
 
 						<%
 						entry.print(pageContext.getOut(), request, response);

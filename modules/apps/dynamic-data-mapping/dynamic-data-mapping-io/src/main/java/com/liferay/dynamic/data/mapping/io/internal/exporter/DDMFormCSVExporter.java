@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -80,10 +79,13 @@ public class DDMFormCSVExporter extends BaseDDMFormExporter {
 
 		Locale locale = getLocale();
 
-		for (DDMFormField ddmFormField : ddmFormFields.values()) {
-			LocalizedValue label = ddmFormField.getLabel();
+		Map<String, String> ddmFormFieldsLabels = getDDMFormFieldsLabels(
+			ddmFormFields.values(), locale);
 
-			sb.append(CSVUtil.encode(label.getString(locale)));
+		for (DDMFormField ddmFormField : ddmFormFields.values()) {
+			String label = ddmFormFieldsLabels.get(ddmFormField.getName());
+
+			sb.append(CSVUtil.encode(label));
 
 			sb.append(CharPool.COMMA);
 		}

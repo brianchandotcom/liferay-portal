@@ -3947,8 +3947,6 @@ public class PhonePersistenceImpl
 		"phone.primary = ?";
 
 	public PhonePersistenceImpl() {
-		setModelClass(Phone.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -3968,6 +3966,8 @@ public class PhonePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Phone.class);
 	}
 
 	/**

@@ -89,10 +89,11 @@ public class CPDefinitionOptionValueRelModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionOptionRelId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"key_", Types.VARCHAR},
+		{"CPDefinitionOptionRelId", Types.BIGINT},
 		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"quantity", Types.INTEGER}, {"price", Types.DECIMAL}
+		{"name", Types.VARCHAR}, {"priority", Types.DOUBLE},
+		{"key_", Types.VARCHAR}, {"quantity", Types.INTEGER},
+		{"price", Types.DECIMAL}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,17 +109,17 @@ public class CPDefinitionOptionValueRelModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPInstanceUuid", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("CPInstanceUuid", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,quantity INTEGER,price DECIMAL(30, 16) null)";
+		"create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,price DECIMAL(30, 16) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionValueRel";
@@ -152,15 +153,17 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	public static final long CPDEFINITIONOPTIONRELID_COLUMN_BITMASK = 1L;
 
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long CPINSTANCEUUID_COLUMN_BITMASK = 2L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long KEY_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long KEY_COLUMN_BITMASK = 16L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -188,11 +191,11 @@ public class CPDefinitionOptionValueRelModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionOptionRelId(
 			soapModel.getCPDefinitionOptionRelId());
+		model.setCPInstanceUuid(soapModel.getCPInstanceUuid());
+		model.setCProductId(soapModel.getCProductId());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
 		model.setKey(soapModel.getKey());
-		model.setCPInstanceUuid(soapModel.getCPInstanceUuid());
-		model.setCProductId(soapModel.getCProductId());
 		model.setQuantity(soapModel.getQuantity());
 		model.setPrice(soapModel.getPrice());
 
@@ -595,6 +598,58 @@ public class CPDefinitionOptionValueRelModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"CPInstanceUuid",
+			new Function<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public Object apply(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+
+					return cpDefinitionOptionValueRel.getCPInstanceUuid();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"CPInstanceUuid",
+			new BiConsumer<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public void accept(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+					Object CPInstanceUuidObject) {
+
+					cpDefinitionOptionValueRel.setCPInstanceUuid(
+						(String)CPInstanceUuidObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"CProductId",
+			new Function<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public Object apply(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+
+					return cpDefinitionOptionValueRel.getCProductId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"CProductId",
+			new BiConsumer<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public void accept(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+					Object CProductIdObject) {
+
+					cpDefinitionOptionValueRel.setCProductId(
+						(Long)CProductIdObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"name",
 			new Function<CPDefinitionOptionValueRel, Object>() {
 
@@ -667,58 +722,6 @@ public class CPDefinitionOptionValueRelModelImpl
 					Object keyObject) {
 
 					cpDefinitionOptionValueRel.setKey((String)keyObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"CPInstanceUuid",
-			new Function<CPDefinitionOptionValueRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
-
-					return cpDefinitionOptionValueRel.getCPInstanceUuid();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"CPInstanceUuid",
-			new BiConsumer<CPDefinitionOptionValueRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
-					Object CPInstanceUuidObject) {
-
-					cpDefinitionOptionValueRel.setCPInstanceUuid(
-						(String)CPInstanceUuidObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"CProductId",
-			new Function<CPDefinitionOptionValueRel, Object>() {
-
-				@Override
-				public Object apply(
-					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
-
-					return cpDefinitionOptionValueRel.getCProductId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"CProductId",
-			new BiConsumer<CPDefinitionOptionValueRel, Object>() {
-
-				@Override
-				public void accept(
-					CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
-					Object CProductIdObject) {
-
-					cpDefinitionOptionValueRel.setCProductId(
-						(Long)CProductIdObject);
 				}
 
 			});
@@ -962,6 +965,43 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	@JSON
 	@Override
+	public String getCPInstanceUuid() {
+		if (_CPInstanceUuid == null) {
+			return "";
+		}
+		else {
+			return _CPInstanceUuid;
+		}
+	}
+
+	@Override
+	public void setCPInstanceUuid(String CPInstanceUuid) {
+		_columnBitmask |= CPINSTANCEUUID_COLUMN_BITMASK;
+
+		if (_originalCPInstanceUuid == null) {
+			_originalCPInstanceUuid = _CPInstanceUuid;
+		}
+
+		_CPInstanceUuid = CPInstanceUuid;
+	}
+
+	public String getOriginalCPInstanceUuid() {
+		return GetterUtil.getString(_originalCPInstanceUuid);
+	}
+
+	@JSON
+	@Override
+	public long getCProductId() {
+		return _CProductId;
+	}
+
+	@Override
+	public void setCProductId(long CProductId) {
+		_CProductId = CProductId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -1100,33 +1140,6 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	public String getOriginalKey() {
 		return GetterUtil.getString(_originalKey);
-	}
-
-	@JSON
-	@Override
-	public String getCPInstanceUuid() {
-		if (_CPInstanceUuid == null) {
-			return "";
-		}
-		else {
-			return _CPInstanceUuid;
-		}
-	}
-
-	@Override
-	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_CPInstanceUuid = CPInstanceUuid;
-	}
-
-	@JSON
-	@Override
-	public long getCProductId() {
-		return _CProductId;
-	}
-
-	@Override
-	public void setCProductId(long CProductId) {
-		_CProductId = CProductId;
 	}
 
 	@JSON
@@ -1273,11 +1286,11 @@ public class CPDefinitionOptionValueRelModelImpl
 		cpDefinitionOptionValueRelImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(
 			getCPDefinitionOptionRelId());
+		cpDefinitionOptionValueRelImpl.setCPInstanceUuid(getCPInstanceUuid());
+		cpDefinitionOptionValueRelImpl.setCProductId(getCProductId());
 		cpDefinitionOptionValueRelImpl.setName(getName());
 		cpDefinitionOptionValueRelImpl.setPriority(getPriority());
 		cpDefinitionOptionValueRelImpl.setKey(getKey());
-		cpDefinitionOptionValueRelImpl.setCPInstanceUuid(getCPInstanceUuid());
-		cpDefinitionOptionValueRelImpl.setCProductId(getCProductId());
 		cpDefinitionOptionValueRelImpl.setQuantity(getQuantity());
 		cpDefinitionOptionValueRelImpl.setPrice(getPrice());
 
@@ -1373,6 +1386,9 @@ public class CPDefinitionOptionValueRelModelImpl
 		cpDefinitionOptionValueRelModelImpl.
 			_setOriginalCPDefinitionOptionRelId = false;
 
+		cpDefinitionOptionValueRelModelImpl._originalCPInstanceUuid =
+			cpDefinitionOptionValueRelModelImpl._CPInstanceUuid;
+
 		cpDefinitionOptionValueRelModelImpl._originalKey =
 			cpDefinitionOptionValueRelModelImpl._key;
 
@@ -1433,6 +1449,18 @@ public class CPDefinitionOptionValueRelModelImpl
 		cpDefinitionOptionValueRelCacheModel.CPDefinitionOptionRelId =
 			getCPDefinitionOptionRelId();
 
+		cpDefinitionOptionValueRelCacheModel.CPInstanceUuid =
+			getCPInstanceUuid();
+
+		String CPInstanceUuid =
+			cpDefinitionOptionValueRelCacheModel.CPInstanceUuid;
+
+		if ((CPInstanceUuid != null) && (CPInstanceUuid.length() == 0)) {
+			cpDefinitionOptionValueRelCacheModel.CPInstanceUuid = null;
+		}
+
+		cpDefinitionOptionValueRelCacheModel.CProductId = getCProductId();
+
 		cpDefinitionOptionValueRelCacheModel.name = getName();
 
 		String name = cpDefinitionOptionValueRelCacheModel.name;
@@ -1450,18 +1478,6 @@ public class CPDefinitionOptionValueRelModelImpl
 		if ((key != null) && (key.length() == 0)) {
 			cpDefinitionOptionValueRelCacheModel.key = null;
 		}
-
-		cpDefinitionOptionValueRelCacheModel.CPInstanceUuid =
-			getCPInstanceUuid();
-
-		String CPInstanceUuid =
-			cpDefinitionOptionValueRelCacheModel.CPInstanceUuid;
-
-		if ((CPInstanceUuid != null) && (CPInstanceUuid.length() == 0)) {
-			cpDefinitionOptionValueRelCacheModel.CPInstanceUuid = null;
-		}
-
-		cpDefinitionOptionValueRelCacheModel.CProductId = getCProductId();
 
 		cpDefinitionOptionValueRelCacheModel.quantity = getQuantity();
 
@@ -1563,13 +1579,14 @@ public class CPDefinitionOptionValueRelModelImpl
 	private long _CPDefinitionOptionRelId;
 	private long _originalCPDefinitionOptionRelId;
 	private boolean _setOriginalCPDefinitionOptionRelId;
+	private String _CPInstanceUuid;
+	private String _originalCPInstanceUuid;
+	private long _CProductId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private double _priority;
 	private String _key;
 	private String _originalKey;
-	private String _CPInstanceUuid;
-	private long _CProductId;
 	private int _quantity;
 	private BigDecimal _price;
 	private long _columnBitmask;

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
-import com.liferay.commerce.product.util.DDMFormValuesUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -86,9 +85,18 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		return ddmFormValues;
 	}
 
+	/**
+	 * @param json1
+	 * @param json2
+	 * @return
+	 *
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link JsonHelper#equals(String, String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean equals(String json1, String json2) throws PortalException {
-		return DDMFormValuesUtil.equals(json1, json2);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

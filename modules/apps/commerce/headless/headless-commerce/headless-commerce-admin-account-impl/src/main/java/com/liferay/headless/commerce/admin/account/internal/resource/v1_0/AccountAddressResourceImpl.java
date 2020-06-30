@@ -27,14 +27,13 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
+import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountAddressDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountAddressResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -60,6 +59,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 
 	@Override
+	public Response deleteAccountAddress(Long id) throws Exception {
+		_commerceAddressService.deleteCommerceAddress(id);
+
+		Response.ResponseBuilder responseBuilder = Response.noContent();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	public Response deleteAccountAddressByExternalReferenceCode(
 			@NotNull String externalReferenceCode)
 		throws Exception {
@@ -80,6 +88,14 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
+	}
+
+	@Override
+	public AccountAddress getAccountAddress(Long id) throws Exception {
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(id);
+
+		return _toAccountAddress(commerceAddress);
 	}
 
 	@Override
@@ -127,6 +143,43 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 
 		return _getAccountAddressesPage(
 			_commerceAccountService.getCommerceAccount(id), pagination);
+	}
+
+	@Override
+	public AccountAddress patchAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception {
+
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(id);
+
+		commerceAddress = _commerceAddressService.updateCommerceAddress(
+			commerceAddress.getCommerceAddressId(),
+			GetterUtil.getString(
+				accountAddress.getName(), commerceAddress.getName()),
+			GetterUtil.getString(
+				accountAddress.getDescription(),
+				commerceAddress.getDescription()),
+			GetterUtil.getString(
+				accountAddress.getStreet1(), commerceAddress.getStreet1()),
+			GetterUtil.getString(
+				accountAddress.getStreet2(), commerceAddress.getStreet2()),
+			GetterUtil.getString(
+				accountAddress.getStreet3(), commerceAddress.getStreet3()),
+			GetterUtil.getString(
+				accountAddress.getCity(), commerceAddress.getCity()),
+			GetterUtil.getString(
+				accountAddress.getZip(), commerceAddress.getZip()),
+			commerceAddress.getCommerceRegionId(),
+			commerceAddress.getCommerceCountryId(),
+			GetterUtil.getString(
+				accountAddress.getPhoneNumber(),
+				commerceAddress.getPhoneNumber()),
+			GetterUtil.getInteger(
+				accountAddress.getType(), commerceAddress.getType()),
+			_serviceContextHelper.getServiceContext());
+
+		return _toAccountAddress(commerceAddress);
 	}
 
 	@Override
@@ -235,6 +288,32 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 			_commerceAccountService.getCommerceAccount(id), accountAddress);
 	}
 
+	@Override
+	public AccountAddress putAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception {
+
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(id);
+
+		commerceAddress = _commerceAddressService.updateCommerceAddress(
+			commerceAddress.getCommerceAddressId(),
+			GetterUtil.getString(accountAddress.getName()),
+			GetterUtil.getString(accountAddress.getDescription()),
+			GetterUtil.getString(accountAddress.getStreet1()),
+			GetterUtil.getString(accountAddress.getStreet2()),
+			GetterUtil.getString(accountAddress.getStreet3()),
+			GetterUtil.getString(accountAddress.getCity()),
+			GetterUtil.getString(accountAddress.getZip()),
+			commerceAddress.getCommerceRegionId(),
+			commerceAddress.getCommerceCountryId(),
+			GetterUtil.getString(accountAddress.getPhoneNumber()),
+			GetterUtil.getInteger(accountAddress.getType()),
+			_serviceContextHelper.getServiceContext());
+
+		return _toAccountAddress(commerceAddress);
+	}
+
 	private AccountAddress _addAccountAddress(
 			CommerceAccount commerceAccount, AccountAddress accountAddress)
 		throws Exception {
@@ -262,14 +341,10 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 					accountAddress.getExternalReferenceCode(), null),
 				_serviceContextHelper.getServiceContext());
 
-		DTOConverter accountAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAddress.class.getName());
-
-		return (AccountAddress)accountAddressDTOConverter.toDTO(
+		return _accountAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private Page<AccountAddress> _getAccountAddressesPage(
@@ -312,14 +387,10 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 	private AccountAddress _toAccountAddress(CommerceAddress commerceAddress)
 		throws Exception {
 
-		DTOConverter accountAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAddress.class.getName());
-
-		return (AccountAddress)accountAddressDTOConverter.toDTO(
+		return _accountAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceAddress.getCommerceAddressId()));
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<AccountAddress> _toAccountAddresses(
@@ -328,20 +399,19 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 
 		List<AccountAddress> accountAddresses = new ArrayList<>();
 
-		DTOConverter accountAddressDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceAddress.class.getName());
-
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 			accountAddresses.add(
-				(AccountAddress)accountAddressDTOConverter.toDTO(
+				_accountAddressDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceAddress.getCommerceAddressId())));
+						commerceAddress.getCommerceAddressId(),
+						contextAcceptLanguage.getPreferredLocale())));
 		}
 
 		return accountAddresses;
 	}
+
+	@Reference
+	private AccountAddressDTOConverter _accountAddressDTOConverter;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
@@ -354,9 +424,6 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 
 	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

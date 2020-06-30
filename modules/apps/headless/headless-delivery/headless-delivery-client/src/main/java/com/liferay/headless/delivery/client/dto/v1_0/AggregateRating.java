@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class AggregateRating implements Cloneable {
 
+	public static AggregateRating toDTO(String json) {
+		return AggregateRatingSerDes.toDTO(json);
+	}
+
 	public Double getBestRating() {
 		return bestRating;
 	}

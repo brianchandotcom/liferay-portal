@@ -769,8 +769,6 @@ public class DLSyncEventPersistenceImpl
 		"dlSyncEvent.typePK = ?";
 
 	public DLSyncEventPersistenceImpl() {
-		setModelClass(DLSyncEvent.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -788,6 +786,8 @@ public class DLSyncEventPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(DLSyncEvent.class);
 	}
 
 	/**

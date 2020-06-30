@@ -1065,13 +1065,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			if (DLUtil.compareVersions(
 					record.getVersion(), recordVersion.getVersion()) <= 0) {
 
+				record.setVersionUserId(recordVersion.getUserId());
+				record.setVersionUserName(recordVersion.getUserName());
 				record.setDDMStorageId(recordVersion.getDDMStorageId());
 				record.setRecordSetId(recordVersion.getRecordSetId());
 				record.setVersion(recordVersion.getVersion());
-				record.setDisplayIndex(recordVersion.getDisplayIndex());
 				record.setVersion(recordVersion.getVersion());
-				record.setVersionUserId(recordVersion.getUserId());
-				record.setVersionUserName(recordVersion.getUserName());
+				record.setDisplayIndex(recordVersion.getDisplayIndex());
 
 				record = ddlRecordPersistence.update(record);
 			}

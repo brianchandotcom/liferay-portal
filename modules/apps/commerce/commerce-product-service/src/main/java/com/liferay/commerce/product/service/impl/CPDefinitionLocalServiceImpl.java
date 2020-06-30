@@ -190,6 +190,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserId(user.getUserId());
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setCProductId(cProduct.getCProductId());
+		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 		cpDefinition.setShippable(shippable);
@@ -200,7 +201,6 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
-		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setTaxExempt(taxExempt);
 		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
@@ -762,8 +762,15 @@ public class CPDefinitionLocalServiceImpl
 			return null;
 		}
 
-		return cpDefinitionPersistence.fetchByPrimaryKey(
+		CPDefinition cpDefinition = cpDefinitionPersistence.fetchByPrimaryKey(
 			cProduct.getPublishedCPDefinitionId());
+
+		if (cpDefinition != null) {
+			return cpDefinition;
+		}
+
+		return cpDefinitionPersistence.fetchByC_V(
+			cProduct.getCProductId(), cProduct.getLatestVersion());
 	}
 
 	@Override
@@ -774,8 +781,15 @@ public class CPDefinitionLocalServiceImpl
 			return null;
 		}
 
-		return cpDefinitionPersistence.fetchByPrimaryKey(
+		CPDefinition cpDefinition = cpDefinitionPersistence.fetchByPrimaryKey(
 			cProduct.getPublishedCPDefinitionId());
+
+		if (cpDefinition != null) {
+			return cpDefinition;
+		}
+
+		return cpDefinitionPersistence.fetchByC_V(
+			cProduct.getCProductId(), cProduct.getLatestVersion());
 	}
 
 	@Override
@@ -1143,6 +1157,23 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasChildCPDefinitions(long cpDefinitionId) {
+		if (cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+				cpDefinitionId) <= 0) {
+
+			return false;
+		}
+
+		if (!cpDefinitionOptionRelLocalService.
+				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isPublishedCPDefinition(CPDefinition cpDefinition) {
 		CProduct cProduct = cProductLocalService.fetchCProduct(
 			cpDefinition.getCProductId());
@@ -1358,6 +1389,7 @@ public class CPDefinitionLocalServiceImpl
 			}
 		}
 
+		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 		cpDefinition.setShippable(shippable);
 		cpDefinition.setFreeShipping(freeShipping);
@@ -1367,7 +1399,6 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
-		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setTaxExempt(taxExempt);
 		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
@@ -1963,7 +1994,7 @@ public class CPDefinitionLocalServiceImpl
 			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException {
 
-		if (ignoreSKUCombinations) {
+		if (!ignoreSKUCombinations) {
 			int cpInstancesCount =
 				cpInstanceLocalService.getCPDefinitionInstancesCount(
 					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);

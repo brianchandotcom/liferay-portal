@@ -314,7 +314,8 @@ info:
         email: team-commerce@liferay.com
         name: Commerce Team
     description:
-        Liferay Commerce Admin Site Setting API
+        "Liferay Commerce Admin Site Setting API. A Java client JAR is available for use with the group ID
+        'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.site.setting.client', and version '1.0.3'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -327,17 +328,17 @@ paths:
             operationId: deleteAvailabilityEstimate
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -364,17 +365,17 @@ paths:
             operationId: getAvailabilityEstimate
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -431,17 +432,17 @@ paths:
             operationId: putAvailabilityEstimate
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -504,31 +505,31 @@ paths:
             operationId: getCommerceAdminSiteSettingGroupAvailabilityEstimatePage
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -586,17 +587,17 @@ paths:
             operationId: postCommerceAdminSiteSettingGroupAvailabilityEstimate
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -669,44 +670,44 @@ paths:
             operationId: getCommerceAdminSiteSettingGroupMeasurementUnitPage
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: type
-                      required: false
-                      schema:
-                          description:
-                              Type to filter
-                          example: 0
-                          format: int32
-                          maximum: 1
-                          minimum: 0
-                          type: integer
-                      style: form
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      description:
+                          Type to filter
+                      example: 0
+                      format: int32
+                      maximum: 1
+                      minimum: 0
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -764,17 +765,17 @@ paths:
             operationId: postCommerceAdminSiteSettingGroupMeasurementUnit
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -847,31 +848,31 @@ paths:
             operationId: getCommerceAdminSiteSettingGroupTaxCategoryPage
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -929,17 +930,17 @@ paths:
             operationId: postCommerceAdminSiteSettingGroupTaxCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1012,41 +1013,41 @@ paths:
             operationId: getCommerceAdminSiteSettingGroupWarehousePage
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
                 - in: query
-                      explode: true
-                      name: active
-                      required: false
-                      schema:
-                          description:
-                              Active to filter
-                          example: true
-                          type: boolean
-                      style: form
+                  explode: true
+                  name: active
+                  required: false
+                  schema:
+                      description:
+                          Active to filter
+                      example: true
+                      type: boolean
+                  style: form
                 - in: query
-                      explode: true
-                      name: page
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
                 - in: query
-                      explode: true
-                      name: pageSize
-                      required: false
-                      schema:
-                          type: integer
-                      style: form
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
             responses:
                 200:
                     content:
@@ -1104,17 +1105,17 @@ paths:
             operationId: postCommerceAdminSiteSettingGroupWarehouse
             parameters:
                 - in: path
-                      explode: false
-                      name: groupId
-                      required: true
-                      schema:
-                          description:
-                              Group to filter (Liferay site)
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: groupId
+                  required: true
+                  schema:
+                      description:
+                          Group to filter (Liferay site)
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1187,17 +1188,17 @@ paths:
             operationId: deleteMeasurementUnit
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -1224,17 +1225,17 @@ paths:
             operationId: getMeasurementUnit
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1291,17 +1292,17 @@ paths:
             operationId: putMeasurementUnit
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1364,17 +1365,17 @@ paths:
             operationId: deleteTaxCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -1401,17 +1402,17 @@ paths:
             operationId: getTaxCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1468,17 +1469,17 @@ paths:
             operationId: putTaxCategory
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:
@@ -1541,17 +1542,17 @@ paths:
             operationId: deleteWarehouse
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 204:
                     description:
@@ -1578,17 +1579,17 @@ paths:
             operationId: getWarehouse
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             responses:
                 200:
                     content:
@@ -1645,17 +1646,17 @@ paths:
             operationId: putWarehouse
             parameters:
                 - in: path
-                      explode: false
-                      name: id
-                      required: true
-                      schema:
-                          description:
-                              The resource Id
-                          example: 30130
-                          format: int64
-                          minimum: 0
-                          type: integer
-                      style: simple
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
             requestBody:
                 content:
                     application/json:

@@ -65,7 +65,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 			%>
 
-				<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= rootLayoutRevision.getLayoutRevisionId() %>">
+				<div class='layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= rootLayoutRevision.getLayoutRevisionId() %>">
 					<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
 
 						<%
@@ -121,7 +121,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 										<span class="current-version"><liferay-ui:message key="current-version" /></span>
 									</c:when>
 									<c:otherwise>
-										<a class="layout-revision selection-handle" data-layoutRevisionId="<%= curLayoutRevision.getLayoutRevisionId() %>" data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:;" onclick="<%= renderResponse.getNamespace() + "selectRevision(" + curLayoutRevision.getLayoutRevisionId() + ", " + curLayoutRevision.getLayoutSetBranchId() + ");" %>" title="<liferay-ui:message key="go-to-this-version" />">
+										<a class="layout-revision selection-handle" data-layoutRevisionId="<%= curLayoutRevision.getLayoutRevisionId() %>" data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:;" onclick='<%= renderResponse.getNamespace() + "selectRevision(" + curLayoutRevision.getLayoutRevisionId() + ", " + curLayoutRevision.getLayoutSetBranchId() + ");" %>' title='<liferay-ui:message key="go-to-this-version" />'>
 											<%= curLayoutRevision.getLayoutRevisionId() %>
 										</a>
 									</c:otherwise>

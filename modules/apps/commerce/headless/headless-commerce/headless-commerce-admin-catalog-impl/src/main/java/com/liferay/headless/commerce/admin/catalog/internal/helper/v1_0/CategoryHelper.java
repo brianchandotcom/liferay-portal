@@ -20,10 +20,9 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.CategoryDTOConverter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -74,15 +73,11 @@ public class CategoryHelper {
 
 		List<Category> categories = new ArrayList<>();
 
-		DTOConverter categoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				AssetCategory.class.getName());
-
 		for (AssetCategory category : assetCategories) {
 			categories.add(
-				(Category)categoryDTOConverter.toDTO(
+				_categoryDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						locale, category.getCategoryId())));
+						category.getCategoryId(), locale)));
 		}
 
 		return categories;
@@ -92,12 +87,12 @@ public class CategoryHelper {
 	private AssetCategoryService _assetCategoryService;
 
 	@Reference
+	private CategoryDTOConverter _categoryDTOConverter;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

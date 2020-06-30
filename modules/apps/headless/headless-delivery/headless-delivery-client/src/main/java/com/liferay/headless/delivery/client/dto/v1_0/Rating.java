@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class Rating implements Cloneable {
 
+	public static Rating toDTO(String json) {
+		return RatingSerDes.toDTO(json);
+	}
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

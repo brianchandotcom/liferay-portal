@@ -2945,8 +2945,6 @@ public class AssetLinkPersistenceImpl
 		"assetLink.type = ?";
 
 	public AssetLinkPersistenceImpl() {
-		setModelClass(AssetLink.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
@@ -2964,6 +2962,8 @@ public class AssetLinkPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(AssetLink.class);
 	}
 
 	/**

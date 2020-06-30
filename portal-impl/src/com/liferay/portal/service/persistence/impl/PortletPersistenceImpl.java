@@ -834,8 +834,6 @@ public class PortletPersistenceImpl
 		"(portlet.portletId IS NULL OR portlet.portletId = '')";
 
 	public PortletPersistenceImpl() {
-		setModelClass(Portlet.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("id", "id_");
@@ -854,6 +852,8 @@ public class PortletPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(Portlet.class);
 	}
 
 	/**

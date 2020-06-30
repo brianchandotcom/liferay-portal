@@ -17,8 +17,8 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {formatActionUrl} from '../../../utilities/index.es';
-import DatasetDisplayContext from '../DatasetDisplayContext.es';
+import {formatActionUrl} from '../../../utilities/index';
+import DatasetDisplayContext from '../DatasetDisplayContext';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer(props) {
@@ -29,18 +29,25 @@ function ActionLinkRenderer(props) {
 		openSidePanel
 	} = useContext(DatasetDisplayContext);
 
+	if (!props.actions || !props.actions.length) {
+		if (props.value) {
+			return <DefaultContent value={props.value} />;
+		}
+		return null;
+	}
+
 	const currentAction =
 		props.options && props.options.actionId
 			? props.actions.find(action => action.id === props.options.actionId)
 			: props.actions[0];
 
+	if (!currentAction) {
+		return null;
+	}
+
 	const formattedHref =
 		currentAction.href &&
 		formatActionUrl(currentAction.href, props.itemData);
-
-	if (!currentAction) {
-		return <DefaultContent value={props.value} />;
-	}
 
 	function handleClickOnLink(e) {
 		e.preventDefault();

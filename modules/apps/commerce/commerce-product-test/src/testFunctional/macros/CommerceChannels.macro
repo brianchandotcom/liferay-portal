@@ -1,0 +1,25 @@
+definition {
+
+	macro activatePaymentMethod {
+		Click(
+			key_paymentMethod = "${paymentMethod}",
+			locator1 = "CommerceEntry#CHANNEL_PAYMENT_METHOD_NAME");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${paymentMethod}");
+
+		Type(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Pay with ${paymentMethod}.");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
+}

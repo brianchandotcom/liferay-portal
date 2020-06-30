@@ -53,6 +53,11 @@ public class CPAttachmentFileEntryWorkflowHandler
 	}
 
 	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
 	public CPAttachmentFileEntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

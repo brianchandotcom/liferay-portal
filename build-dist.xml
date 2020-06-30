@@ -3725,7 +3725,7 @@ plugins.includes=</echo>
 
 				<execute dir="dist/${tstamp.value}">
 					<![CDATA[
-						7z a -md1024m ${project.dir}/dist/${zip.executable.file}-${lp.version}.7z liferay-portal-${lp.version}
+						7z a ${project.dir}/dist/${zip.executable.file}-${lp.version}.7z liferay-portal-${lp.version}
 					]]>
 				</execute>
 

@@ -1727,8 +1727,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		"cpDefinitionVirtualSetting.classPK = ?";
 
 	public CPDefinitionVirtualSettingPersistenceImpl() {
-		setModelClass(CPDefinitionVirtualSetting.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -1749,6 +1747,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CPDefinitionVirtualSetting.class);
 	}
 
 	/**

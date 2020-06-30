@@ -1186,8 +1186,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		"commercePricingClassCPDefinitionRel.CPDefinitionId = ?";
 
 	public CommercePricingClassCPDefinitionRelPersistenceImpl() {
-		setModelClass(CommercePricingClassCPDefinitionRel.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
@@ -1207,6 +1205,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CommercePricingClassCPDefinitionRel.class);
 	}
 
 	/**

@@ -43,7 +43,8 @@
 	},
 	"jest": {
 		"globals": {
-			"Liferay": {}
+			"Liferay": {
+			}
 		},
 		"setupFiles": [
 			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
@@ -67,5 +68,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "2.0.53"
+	"version": "2.0.55"
 }

@@ -30,6 +30,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormStructure implements Cloneable {
 
+	public static FormStructure toDTO(String json) {
+		return FormStructureSerDes.toDTO(json);
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}

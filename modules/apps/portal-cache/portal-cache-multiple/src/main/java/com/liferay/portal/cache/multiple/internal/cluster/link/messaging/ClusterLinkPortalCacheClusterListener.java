@@ -16,11 +16,11 @@ package com.liferay.portal.cache.multiple.internal.cluster.link.messaging;
 
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEventType;
+import com.liferay.portal.cache.multiple.internal.PortalCacheManagerUtil;
 import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -66,12 +66,12 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		PortalCacheClusterEvent portalCacheClusterEvent) {
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
+			PortalCacheManagerUtil.getPortalCacheManager(
 				portalCacheClusterEvent.getPortalCacheManagerName());
 
 		PortalCache<Serializable, Serializable> portalCache =
 			(PortalCache<Serializable, Serializable>)
-				portalCacheManager.getPortalCache(
+				portalCacheManager.fetchPortalCache(
 					portalCacheClusterEvent.getPortalCacheName());
 
 		if (portalCache == null) {

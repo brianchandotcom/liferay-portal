@@ -81,7 +81,15 @@ public class AddTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		String language = ParamUtil.getString(
 			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
+		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+
 		String script = getScript(uploadPortletRequest);
+
+		long selectedStructureId = classPK;
+
+		if ((classPK == 0) && (structureId > 0)) {
+			selectedStructureId = structureId;
+		}
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");
@@ -95,9 +103,10 @@ public class AddTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		return ddmTemplateService.addTemplate(
-			groupId, classNameId, classPK, resourceClassNameId, templateKey,
-			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+			groupId, classNameId, selectedStructureId, resourceClassNameId,
+			templateKey, nameMap, descriptionMap, type, mode, language, script,
+			cacheable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
 	}
 
 	@Override

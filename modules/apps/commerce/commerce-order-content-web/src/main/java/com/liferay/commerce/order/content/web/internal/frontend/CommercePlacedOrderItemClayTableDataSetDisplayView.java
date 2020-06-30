@@ -20,7 +20,6 @@ import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
-import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,14 +40,11 @@ public class CommercePlacedOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
 
-		ClayTableSchemaField skuField = clayTableSchemaBuilder.addField(
-			"sku", "sku");
-
-		skuField.setContentRenderer("commerceTableCellImageName");
-
 		clayTableSchemaBuilder.addField("name", "name");
 
 		clayTableSchemaBuilder.addField("options", "options");
+
+		clayTableSchemaBuilder.addField("sku", "sku");
 
 		ClayTableSchemaField priceField = clayTableSchemaBuilder.addField(
 			"price", "price");
@@ -62,12 +58,6 @@ public class CommercePlacedOrderItemClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addField("total", "total");
 
 		clayTableSchemaBuilder.addField("shippedQuantity", "shipped-quantity");
-
-		ClayTableSchemaField clayTableSchemaField =
-			clayTableSchemaBuilder.addField(
-				"viewShipmentsURL", StringPool.BLANK);
-
-		clayTableSchemaField.setContentRenderer("commerceTableCellModalLink");
 
 		return clayTableSchemaBuilder.build();
 	}

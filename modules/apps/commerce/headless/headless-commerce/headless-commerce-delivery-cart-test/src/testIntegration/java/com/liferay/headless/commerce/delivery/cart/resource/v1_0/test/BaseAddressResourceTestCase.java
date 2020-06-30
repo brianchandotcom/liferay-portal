@@ -27,8 +27,8 @@ import com.liferay.headless.commerce.delivery.cart.client.http.HttpInvoker;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.cart.client.resource.v1_0.AddressResource;
 import com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0.AddressSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -42,17 +42,20 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,27 +233,41 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGraphQLGetCartBillingAddres() throws Exception {
 		Address address = testGraphQLAddress_addAddress();
 
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"cartBillingAddres",
-				new HashMap<String, Object>() {
-					{
-						put("cartId", null);
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
 		Assert.assertTrue(
-			equalsJSONObject(
-				address, dataJSONObject.getJSONObject("cartBillingAddres")));
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartBillingAddres",
+								new HashMap<String, Object>() {
+									{
+										put("cartId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/cartBillingAddres"))));
+	}
+
+	@Test
+	public void testGraphQLGetCartBillingAddresNotFound() throws Exception {
+		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartBillingAddres",
+						new HashMap<String, Object>() {
+							{
+								put("cartId", irrelevantCartId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Test
@@ -272,27 +289,41 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGraphQLGetCartShippingAddres() throws Exception {
 		Address address = testGraphQLAddress_addAddress();
 
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"cartShippingAddres",
-				new HashMap<String, Object>() {
-					{
-						put("cartId", null);
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
 		Assert.assertTrue(
-			equalsJSONObject(
-				address, dataJSONObject.getJSONObject("cartShippingAddres")));
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartShippingAddres",
+								new HashMap<String, Object>() {
+									{
+										put("cartId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/cartShippingAddres"))));
+	}
+
+	@Test
+	public void testGraphQLGetCartShippingAddresNotFound() throws Exception {
+		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartShippingAddres",
+						new HashMap<String, Object>() {
+							{
+								put("cartId", irrelevantCartId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	protected Address testGraphQLAddress_addAddress() throws Exception {
@@ -345,25 +376,6 @@ public abstract class BaseAddressResourceTestCase {
 
 			Assert.assertTrue(
 				addresses2 + " does not contain " + address1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Address> addresses, JSONArray jsonArray) {
-
-		for (Address address : addresses) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(address, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + address, contains);
 		}
 	}
 
@@ -542,13 +554,50 @@ public abstract class BaseAddressResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.commerce.delivery.cart.dto.v1_0.
+						Address.class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				vulcanGraphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (vulcanGraphQLField != null) {
+				Class<?> clazz = field.getType();
+
+				if (clazz.isArray()) {
+					clazz = clazz.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(clazz));
+
+				graphQLFields.add(
+					new GraphQLField(field.getName(), childrenGraphQLFields));
+			}
 		}
 
 		return graphQLFields;
@@ -752,201 +801,25 @@ public abstract class BaseAddressResourceTestCase {
 		return true;
 	}
 
-	protected boolean equalsJSONObject(Address address, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("city", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getCity(), jsonObject.getString("city"))) {
+	protected boolean equals(
+		Map<String, Object> map1, Map<String, Object> map2) {
+
+		if (Objects.equals(map1.keySet(), map2.keySet())) {
+			for (Map.Entry<String, Object> entry : map1.entrySet()) {
+				if (entry.getValue() instanceof Map) {
+					if (!equals(
+							(Map)entry.getValue(),
+							(Map)map2.get(entry.getKey()))) {
+
+						return false;
+					}
+				}
+				else if (!Objects.deepEquals(
+							entry.getValue(), map2.get(entry.getKey()))) {
 
 					return false;
 				}
-
-				continue;
 			}
-
-			if (Objects.equals("country", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getCountry(),
-						jsonObject.getString("country"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("countryISOCode", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getCountryISOCode(),
-						jsonObject.getString("countryISOCode"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("latitude", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getLatitude(),
-						jsonObject.getDouble("latitude"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("longitude", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getLongitude(),
-						jsonObject.getDouble("longitude"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("phoneNumber", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getPhoneNumber(),
-						jsonObject.getString("phoneNumber"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("region", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getRegion(), jsonObject.getString("region"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("regionISOCode", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getRegionISOCode(),
-						jsonObject.getString("regionISOCode"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("street1", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getStreet1(),
-						jsonObject.getString("street1"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("street2", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getStreet2(),
-						jsonObject.getString("street2"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("street3", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getStreet3(),
-						jsonObject.getString("street3"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getType(), jsonObject.getString("type"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("typeId", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getTypeId(), jsonObject.getInt("typeId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("vatNumber", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getVatNumber(),
-						jsonObject.getString("vatNumber"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("zip", fieldName)) {
-				if (!Objects.deepEquals(
-						address.getZip(), jsonObject.getString("zip"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -1155,27 +1028,52 @@ public abstract class BaseAddressResourceTestCase {
 		return httpResponse.getContent();
 	}
 
+	protected JSONObject invokeGraphQLMutation(GraphQLField graphQLField)
+		throws Exception {
+
+		GraphQLField mutationGraphQLField = new GraphQLField(
+			"mutation", graphQLField);
+
+		return JSONFactoryUtil.createJSONObject(
+			invoke(mutationGraphQLField.toString()));
+	}
+
+	protected JSONObject invokeGraphQLQuery(GraphQLField graphQLField)
+		throws Exception {
+
+		GraphQLField queryGraphQLField = new GraphQLField(
+			"query", graphQLField);
+
+		return JSONFactoryUtil.createJSONObject(
+			invoke(queryGraphQLField.toString()));
+	}
+
 	protected Address randomAddress() throws Exception {
 		return new Address() {
 			{
-				city = RandomTestUtil.randomString();
-				country = RandomTestUtil.randomString();
-				countryISOCode = RandomTestUtil.randomString();
-				description = RandomTestUtil.randomString();
+				city = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				country = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				countryISOCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				latitude = RandomTestUtil.randomDouble();
 				longitude = RandomTestUtil.randomDouble();
-				name = RandomTestUtil.randomString();
-				phoneNumber = RandomTestUtil.randomString();
-				region = RandomTestUtil.randomString();
-				regionISOCode = RandomTestUtil.randomString();
-				street1 = RandomTestUtil.randomString();
-				street2 = RandomTestUtil.randomString();
-				street3 = RandomTestUtil.randomString();
-				type = RandomTestUtil.randomString();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				phoneNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				region = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				regionISOCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				typeId = RandomTestUtil.randomInt();
-				vatNumber = RandomTestUtil.randomString();
-				zip = RandomTestUtil.randomString();
+				vatNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				zip = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1201,9 +1099,22 @@ public abstract class BaseAddressResourceTestCase {
 			this(key, new HashMap<>(), graphQLFields);
 		}
 
+		public GraphQLField(String key, List<GraphQLField> graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
 		public GraphQLField(
 			String key, Map<String, Object> parameterMap,
 			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = Arrays.asList(graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			List<GraphQLField> graphQLFields) {
 
 			_key = key;
 			_parameterMap = parameterMap;
@@ -1231,7 +1142,7 @@ public abstract class BaseAddressResourceTestCase {
 				sb.append(")");
 			}
 
-			if (_graphQLFields.length > 0) {
+			if (!_graphQLFields.isEmpty()) {
 				sb.append("{");
 
 				for (GraphQLField graphQLField : _graphQLFields) {
@@ -1247,7 +1158,7 @@ public abstract class BaseAddressResourceTestCase {
 			return sb.toString();
 		}
 
-		private final GraphQLField[] _graphQLFields;
+		private final List<GraphQLField> _graphQLFields;
 		private final String _key;
 		private final Map<String, Object> _parameterMap;
 

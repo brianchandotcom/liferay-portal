@@ -45,7 +45,6 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -63,7 +62,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Map;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -215,7 +213,7 @@ public class OrderResourceImpl
 					commerceOrder,
 					_commerceContextFactory.create(
 						contextCompany.getCompanyId(),
-						commerceOrder.getGroupId(), _user.getUserId(),
+						commerceOrder.getGroupId(), contextUser.getUserId(),
 						commerceOrder.getCommerceOrderId(),
 						commerceOrder.getCommerceAccountId()),
 					serviceContext);
@@ -291,7 +289,7 @@ public class OrderResourceImpl
 				commerceOrder.getExternalReferenceCode()),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-				_user.getUserId(), 0,
+				contextUser.getUserId(), 0,
 				GetterUtil.getLong(
 					order.getAccountId(),
 					commerceOrder.getCommerceAccountId())));
@@ -315,7 +313,7 @@ public class OrderResourceImpl
 
 		if (commerceOrder.getOrderStatus() != order.getOrderStatus()) {
 			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
-				commerceOrder, order.getOrderStatus(), _user.getUserId());
+				commerceOrder, order.getOrderStatus(), contextUser.getUserId());
 		}
 
 		return commerceOrder;
@@ -359,7 +357,7 @@ public class OrderResourceImpl
 		}
 
 		CommerceOrder commerceOrder = _commerceOrderService.upsertCommerceOrder(
-			_user.getUserId(), commerceChannel.getGroupId(),
+			contextUser.getUserId(), commerceChannel.getGroupId(),
 			commerceAccount.getCommerceAccountId(),
 			commerceCurrency.getCommerceCurrencyId(),
 			GetterUtil.getLong(order.getBillingAddressId()),
@@ -376,7 +374,8 @@ public class OrderResourceImpl
 			order.getAdvanceStatus(), order.getExternalReferenceCode(),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-				_user.getUserId(), 0, commerceAccount.getCommerceAccountId()),
+				contextUser.getUserId(), 0,
+				commerceAccount.getCommerceAccountId()),
 			serviceContext);
 
 		// Order date
@@ -452,8 +451,5 @@ public class OrderResourceImpl
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
-
-	@Context
-	private User _user;
 
 }

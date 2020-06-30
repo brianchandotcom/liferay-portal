@@ -56,11 +56,17 @@ class CartFlusher extends Component {
 	}
 
 	_handleConfirm() {
-		fetch(this.apiEndpoint, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'DELETE'
-		})
+		fetch(
+			`${this.cartAPI}/${this.orderId}?commerceAccountId=${
+				this.commerceAccountId
+			}&
+			groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}`,
+			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
+				method: 'DELETE'
+			}
+		)
 			.then(response => response.json())
 			.then(({products, success, summary}) => {
 				this.isAsking = false;
@@ -84,8 +90,11 @@ class CartFlusher extends Component {
 Soy.register(CartFlusher, template);
 
 CartFlusher.STATE = {
-	apiEndpoint: Config.string(),
-	isAsking: Config.bool().value(false)
+	apiEndpoint: Config.string,
+	cartAPI: Config.string().required(),
+	commerceAccountId: Config.oneOfType([Config.number(), Config.string()]),
+	isAsking: Config.bool().value(false),
+	orderId: Config.oneOfType([Config.number(), Config.string()])
 };
 
 export {CartFlusher};

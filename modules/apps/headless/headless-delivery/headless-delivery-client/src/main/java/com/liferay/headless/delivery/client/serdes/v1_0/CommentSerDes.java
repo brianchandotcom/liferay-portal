@@ -177,13 +177,23 @@ public class CommentSerDes {
 			map.put("creator", String.valueOf(comment.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(comment.getDateCreated()));
+		if (comment.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(comment.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(comment.getDateModified()));
+		if (comment.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(comment.getDateModified()));
+		}
 
 		if (comment.getId() == null) {
 			map.put("id", null);

@@ -6261,8 +6261,6 @@ public class CalendarResourcePersistenceImpl
 		"calendarResource.active = ?";
 
 	public CalendarResourcePersistenceImpl() {
-		setModelClass(CalendarResource.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -6282,6 +6280,8 @@ public class CalendarResourcePersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(CalendarResource.class);
 	}
 
 	/**

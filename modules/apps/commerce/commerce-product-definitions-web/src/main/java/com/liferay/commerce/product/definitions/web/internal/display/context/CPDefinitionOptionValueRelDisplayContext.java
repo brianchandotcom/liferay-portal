@@ -19,6 +19,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
@@ -26,8 +27,12 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,12 +67,11 @@ public class CPDefinitionOptionValueRelDisplayContext
 	}
 
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			getCPDefinitionOptionValueRel();
+		CPDefinition cpDefinition = getCPDefinition();
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
-				cpDefinitionOptionValueRel.getGroupId());
+				cpDefinition.getGroupId());
 
 		return _commerceCurrencyLocalService.getCommerceCurrency(
 			commerceCatalog.getCompanyId(),
@@ -101,15 +105,8 @@ public class CPDefinitionOptionValueRelDisplayContext
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel()
 		throws PortalException {
 
-		if (_cpDefinitionOptionValueRel != null) {
-			return _cpDefinitionOptionValueRel;
-		}
-
-		_cpDefinitionOptionValueRel =
-			actionHelper.getCPDefinitionOptionValueRel(
-				cpRequestHelper.getRenderRequest());
-
-		return _cpDefinitionOptionValueRel;
+		return actionHelper.getCPDefinitionOptionValueRel(
+			cpRequestHelper.getRenderRequest());
 	}
 
 	public long getCPDefinitionOptionValueRelId() throws PortalException {
@@ -121,6 +118,20 @@ public class CPDefinitionOptionValueRelDisplayContext
 		}
 
 		return cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
+	}
+
+	public String getRemoveSkuUrl(String redirect) throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createActionURL();
+
+		portletURL.setParameter(Constants.CMD, "deleteSku");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "editProductDefinitionOptionValueRel");
+		portletURL.setParameter(
+			"cpDefinitionOptionValueRelId",
+			String.valueOf(getCPDefinitionOptionValueRelId()));
+		portletURL.setParameter("redirect", redirect);
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -142,6 +153,5 @@ public class CPDefinitionOptionValueRelDisplayContext
 	private final CommerceCatalogLocalService _commerceCatalogLocalService;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;
-	private CPDefinitionOptionValueRel _cpDefinitionOptionValueRel;
 
 }

@@ -18,10 +18,10 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Locale;
 
@@ -35,7 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address",
 	service = {AddressDTOConverter.class, DTOConverter.class}
 )
-public class AddressDTOConverter implements DTOConverter {
+public class AddressDTOConverter
+	implements DTOConverter<CommerceAddress, Address> {
 
 	@Override
 	public String getContentType() {
@@ -47,7 +48,7 @@ public class AddressDTOConverter implements DTOConverter {
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.getCommerceAddress(
-				dtoConverterContext.getResourcePrimKey());
+				(Long)dtoConverterContext.getId());
 
 		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
 

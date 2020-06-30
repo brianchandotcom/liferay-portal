@@ -166,6 +166,22 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceChannel updateCommerceChannel(
+			long commerceChannelId, long siteGroupId, String name, String type,
+			UnicodeProperties typeSettingsProperties,
+			String commerceCurrencyCode, String priceDisplayType,
+			boolean discountsTargetNetPrice)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
+
+		return commerceChannelLocalService.updateCommerceChannel(
+			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
+			commerceCurrencyCode, priceDisplayType, discountsTargetNetPrice);
+	}
+
+	@Override
 	public CommerceChannel updateCommerceChannelExternalReferenceCode(
 			long commerceChannelId, String externalReferenceCode)
 		throws PortalException {

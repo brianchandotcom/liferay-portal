@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.UserAttributes;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -114,8 +115,22 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getActorName(long actorId) {
-		return HtmlUtil.escape(
-			PortalUtil.getUserName(actorId, StringPool.BLANK));
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			HtmlUtil.escape(
+				PortalUtil.getUserName(
+					actorId, StringPool.BLANK,
+					UserAttributes.USER_NAME_NICKNAME)));
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(
+			HtmlUtil.escape(
+				PortalUtil.getUserName(
+					actorId, StringPool.BLANK, UserAttributes.USER_NAME_FULL)));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	public long[] getActorsIds(WorkflowTask workflowTask)

@@ -2055,8 +2055,6 @@ public class FriendlyURLEntryPersistenceImpl
 		"friendlyURLEntry.classPK = ?";
 
 	public FriendlyURLEntryPersistenceImpl() {
-		setModelClass(FriendlyURLEntry.class);
-
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2074,6 +2072,8 @@ public class FriendlyURLEntryPersistenceImpl
 				_log.debug(exception, exception);
 			}
 		}
+
+		setModelClass(FriendlyURLEntry.class);
 	}
 
 	/**

@@ -26,6 +26,8 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
+import java.util.Objects;
+
 /**
  * @author Tina Tian
  */
@@ -39,11 +41,14 @@ public class SerializableObjectWrapper implements Serializable {
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
-		return (T)serializableWrapper._serializable;
+		SerializableHolder serializableHolder =
+			serializableWrapper._serializableHolder;
+
+		return (T)serializableHolder.getSerializable();
 	}
 
 	public SerializableObjectWrapper(Serializable serializable) {
-		_serializable = serializable;
+		_serializableHolder = new SerializableHolder(serializable, null);
 	}
 
 	@Override
@@ -59,12 +64,19 @@ public class SerializableObjectWrapper implements Serializable {
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
-		return _serializable.equals(serializableWrapper._serializable);
+		SerializableHolder serializableHolder =
+			serializableWrapper._serializableHolder;
+
+		return Objects.equals(
+			_serializableHolder.getSerializable(),
+			serializableHolder.getSerializable());
 	}
 
 	@Override
 	public int hashCode() {
-		return _serializable.hashCode();
+		Serializable serializable = _serializableHolder.getSerializable();
+
+		return serializable.hashCode();
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)
@@ -74,14 +86,7 @@ public class SerializableObjectWrapper implements Serializable {
 
 		objectInputStream.readFully(data);
 
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
-
-		try {
-			_serializable = deserializer.readObject();
-		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error("Unable to deserialize object", cnfe);
-		}
+		_serializableHolder = new SerializableHolder(null, data);
 	}
 
 	private void writeObject(ObjectOutputStream objectOutputStream)
@@ -89,7 +94,7 @@ public class SerializableObjectWrapper implements Serializable {
 
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(_serializable);
+		serializer.writeObject(_serializableHolder.getSerializable());
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -102,6 +107,44 @@ public class SerializableObjectWrapper implements Serializable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SerializableObjectWrapper.class);
 
-	private Serializable _serializable;
+	private static final long serialVersionUID = 5383490138816033114L;
+
+	private SerializableHolder _serializableHolder;
+
+	private static class SerializableHolder {
+
+		public Serializable getSerializable() {
+			Serializable serializable = _serializable;
+
+			if (serializable == null) {
+				if (_bytes == null) {
+					return null;
+				}
+
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(_bytes));
+
+				try {
+					serializable = deserializer.readObject();
+
+					_serializable = serializable;
+				}
+				catch (ClassNotFoundException cnfe) {
+					_log.error("Unable to deserialize object", cnfe);
+				}
+			}
+
+			return serializable;
+		}
+
+		private SerializableHolder(Serializable serializable, byte[] bytes) {
+			_serializable = serializable;
+			_bytes = bytes;
+		}
+
+		private final byte[] _bytes;
+		private volatile Serializable _serializable;
+
+	}
 
 }

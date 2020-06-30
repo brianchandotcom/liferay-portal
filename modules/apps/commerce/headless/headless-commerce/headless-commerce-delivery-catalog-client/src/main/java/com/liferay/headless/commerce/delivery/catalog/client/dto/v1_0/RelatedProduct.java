@@ -28,6 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public class RelatedProduct implements Cloneable {
 
+	public static RelatedProduct toDTO(String json) {
+		return RelatedProductSerDes.toDTO(json);
+	}
+
 	public Long getId() {
 		return id;
 	}

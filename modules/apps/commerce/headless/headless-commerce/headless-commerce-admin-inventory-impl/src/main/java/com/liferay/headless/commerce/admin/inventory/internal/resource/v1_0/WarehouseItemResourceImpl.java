@@ -24,12 +24,10 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
+import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.WarehouseItemDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -41,7 +39,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -129,14 +126,10 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 	@Override
 	public WarehouseItem getWarehouseItem(Long id) throws Exception {
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
-		return (WarehouseItem)warehouseItemDTOConverter.toDTO(
+		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+				GetterUtil.getLong(id),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -285,7 +278,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					upsertCommerceInventoryWarehouseItem(
-						_user.getCompanyId(), _user.getUserId(),
+						contextUser.getCompanyId(), contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
 						warehouseItem.getExternalReferenceCode(),
@@ -295,21 +288,17 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					upsertCommerceInventoryWarehouseItem(
-						_user.getUserId(),
+						contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
 						warehouseItem.getSku(), warehouseItem.getQuantity());
 		}
 
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
-		return (WarehouseItem)warehouseItemDTOConverter.toDTO(
+		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
 				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId()));
+					getCommerceInventoryWarehouseItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -328,7 +317,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		else if (warehouseItem.getWarehouseExternalReferenceCode() != null) {
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-					_user.getCompanyId(),
+					contextUser.getCompanyId(),
 					warehouseItem.getWarehouseExternalReferenceCode());
 		}
 
@@ -351,21 +340,17 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					_user.getUserId(),
+					contextUser.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					externalReferenceCode, warehouseItem.getSku(),
 					warehouseItem.getQuantity());
 
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
-		return (WarehouseItem)warehouseItemDTOConverter.toDTO(
+		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
 				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId()));
+					getCommerceInventoryWarehouseItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -380,21 +365,17 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					_user.getUserId(),
+					contextUser.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					warehouseItem.getExternalReferenceCode(),
 					warehouseItem.getSku(), warehouseItem.getQuantity());
 
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
-		return (WarehouseItem)warehouseItemDTOConverter.toDTO(
+		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
 				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId()));
+					getCommerceInventoryWarehouseItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private Date _addDaysToDate(Date date, int increment) {
@@ -411,15 +392,11 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem)
 		throws Exception {
 
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
-		return (WarehouseItem)warehouseItemDTOConverter.toDTO(
+		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
 				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId()));
+					getCommerceInventoryWarehouseItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private List<WarehouseItem> _toWarehouseItems(
@@ -429,19 +406,15 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		List<WarehouseItem> warehouseItems = new ArrayList<>();
 
-		DTOConverter warehouseItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceInventoryWarehouseItem.class.getName());
-
 		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
 				commerceInventoryWarehouseItems) {
 
 			warehouseItems.add(
-				(WarehouseItem)warehouseItemDTOConverter.toDTO(
+				_warehouseItemDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
 						commerceInventoryWarehouseItem.
-							getCommerceInventoryWarehouseItemId())));
+							getCommerceInventoryWarehouseItemId(),
+						contextAcceptLanguage.getPreferredLocale())));
 		}
 
 		return warehouseItems;
@@ -458,9 +431,6 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		_commerceInventoryWarehouseService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Context
-	private User _user;
+	private WarehouseItemDTOConverter _warehouseItemDTOConverter;
 
 }

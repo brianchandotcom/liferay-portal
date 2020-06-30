@@ -15,12 +15,7 @@
 import React from 'react';
 
 export default function Expose({active, children, onClose}) {
-	const [height, setHeight] = React.useState(0);
 	const content = React.useRef();
-
-	React.useEffect(() => {
-		setHeight(content.current.getBoundingClientRect().height);
-	}, [content]);
 
 	React.useEffect(() => {
 		const handleEscKey = e => e.key === 'Escape' && onClose();
@@ -33,10 +28,7 @@ export default function Expose({active, children, onClose}) {
 	}, [active, onClose]);
 
 	return (
-		<div
-			className={`expose mb-4 ${active ? 'is-open' : 'is-closed'}`}
-			style={active ? {height} : {}}
-		>
+		<div className={`expose mb-4 ${active ? 'is-open' : 'is-closed'}`}>
 			<div className="expose__backdrop" onClick={onClose} />
 			<div className="expose__content" ref={content}>
 				{children}

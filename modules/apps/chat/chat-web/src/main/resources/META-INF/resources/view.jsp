@@ -23,11 +23,11 @@
 	%>
 
 	<liferay-util:html-top>
-		<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+		<link href='<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/css/main.css", portlet.getTimestamp()) %>' rel="stylesheet" type="text/css" />
 	</liferay-util:html-top>
 
 	<liferay-util:html-bottom>
-		<script data-senna-track="temporary" defer="defer" src="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/js/main.js", portlet.getTimestamp()) %>" type="text/javascript"></script>
+		<script data-senna-track="temporary" defer="defer" src='<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/js/main.js", portlet.getTimestamp()) %>' type="text/javascript"></script>
 	</liferay-util:html-bottom>
 
 	<%
@@ -67,7 +67,7 @@
 
 			<div class="chat-tabs-container">
 				<ul class="chat-tabs">
-					<li class="buddy-list loading <%= openPanelId.equals("buddylist") ? "selected" : "" %>">
+					<li class='buddy-list loading <%= openPanelId.equals("buddylist") ? "selected" : "" %>'>
 						<div class="chat-panel-trigger" panelId="buddylist" tabindex="0">
 							<span class="trigger-name"><%= LanguageUtil.format(request, "online-friends-x", "(" + buddiesCount + ")", false) %></span>
 						</div>
@@ -118,7 +118,7 @@
 							</div>
 						</div>
 					</li>
-					<li class="chat-settings <%= openPanelId.equals("settings") ? "selected" : "" %>">
+					<li class='chat-settings <%= openPanelId.equals("settings") ? "selected" : "" %>'>
 						<div class="chat-panel-trigger" panelId="settings" tabindex="0">
 							<span class="trigger-name"><liferay-ui:message key="settings" /></span>
 						</div>
@@ -147,7 +147,7 @@
 								</ul>
 
 								<div class="ctrl-holder">
-									<input id="saveSettings" type="submit" value="<liferay-ui:message key="save" />" />
+									<input id="saveSettings" type="submit" value='<liferay-ui:message key="save" />' />
 								</div>
 							</div>
 						</div>

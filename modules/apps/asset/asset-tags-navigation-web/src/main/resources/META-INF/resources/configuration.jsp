@@ -55,7 +55,7 @@
 
 				<aui:input name="preferences--showAssetCount--" type="toggle-switch" value="<%= showAssetCount %>" />
 
-				<div class="<%= showAssetCount ? "" : "hide" %>" id="<portlet:namespace />assetCountOptions">
+				<div class='<%= showAssetCount ? "" : "hide" %>' id="<portlet:namespace />assetCountOptions">
 					<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">
 						<aui:option label="any" value="<%= classNameId == 0 %>" />
 

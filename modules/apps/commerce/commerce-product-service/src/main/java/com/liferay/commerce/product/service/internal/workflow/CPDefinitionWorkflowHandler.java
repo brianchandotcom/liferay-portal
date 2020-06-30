@@ -53,6 +53,11 @@ public class CPDefinitionWorkflowHandler
 	}
 
 	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
 	public CPDefinition updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

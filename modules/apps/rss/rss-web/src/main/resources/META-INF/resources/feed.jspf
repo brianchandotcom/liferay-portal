@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(rssFeed.getURL()) && (syndFeed != null) %>">
-		<div class="feed <%= last ? "last" : StringPool.BLANK %>">
+		<div class='feed <%= last ? "last" : StringPool.BLANK %>'>
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 

@@ -63,8 +63,9 @@ public class CommerceThemeMiniumHttpHelper {
 			_panelAppRegistry, _panelCategoryRegistry);
 
 		return panelCategoryHelper.getNotificationsCount(
-			PanelCategoryKeys.USER, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup(), themeDisplay.getUser());
+			PanelCategoryKeys.USER_MY_ACCOUNT,
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			themeDisplay.getUser());
 	}
 
 	public String getNotificationsURL(HttpServletRequest httpServletRequest)

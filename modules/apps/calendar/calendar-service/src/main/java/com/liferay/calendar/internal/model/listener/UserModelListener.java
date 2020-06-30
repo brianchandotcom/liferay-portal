@@ -18,6 +18,7 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -60,6 +61,10 @@ public class UserModelListener extends BaseModelListener<User> {
 			Map<Locale, String> nameMap = new HashMap<>();
 
 			nameMap.put(LocaleUtil.getSiteDefault(), user.getFullName());
+
+			if (user.isDefaultUser() && name.equals(GroupConstants.GUEST)) {
+				return;
+			}
 
 			calendarResource.setNameMap(
 				LocalizationUtil.populateLocalizationMap(

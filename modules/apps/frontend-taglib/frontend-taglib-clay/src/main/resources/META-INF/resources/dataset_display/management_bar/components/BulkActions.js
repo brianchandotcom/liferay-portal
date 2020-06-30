@@ -59,7 +59,7 @@ function BulkActions({
 	selectAllItems,
 	selectedItemsKey,
 	selectedItemsValue,
-	totalItemsCount,
+	total,
 }) {
 	const {actionParameterName} = useContext(DatasetDisplayContext);
 	const [
@@ -152,8 +152,7 @@ function BulkActions({
 							<li className="nav-item">
 								<span className="text-truncate">
 									{selectedItemsValue.length}{' '}
-									{Liferay.Language.get('of')}{' '}
-									{totalItemsCount}{' '}
+									{Liferay.Language.get('of')} {total}{' '}
 									{Liferay.Language.get('items-selected')}
 								</span>
 								<ClayLink
@@ -210,7 +209,7 @@ BulkActions.propTypes = {
 	),
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
-	totalItemsCount: PropTypes.number.isRequired,
+	total: PropTypes.number.isRequired,
 };
 
 export default BulkActions;

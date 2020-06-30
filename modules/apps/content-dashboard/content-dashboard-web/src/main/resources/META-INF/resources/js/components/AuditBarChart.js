@@ -32,22 +32,6 @@ import {shortenNumber} from '../utils/shortenNumber';
 
 export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
-		const axisNames = vocabularies.reduce((_acc, category) => {
-			if (!category.categories) {
-				return {x: category.vocabularyName};
-			}
-
-			return category.categories.reduce(
-				(acc, {vocabularyName}) => {
-					return {
-						...acc,
-						y: vocabularyName,
-					};
-				},
-				{x: category.vocabularyName}
-			);
-		}, {});
-
 		const dataKeys = new Set();
 
 		const bars = vocabularies.reduce((acc, category) => {
@@ -101,10 +85,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			{colors: {}, legendCheckboxes: {}}
 		);
 
-		return {axisNames, bars, colors, data, legendCheckboxes};
+		return {bars, colors, data, legendCheckboxes};
 	}, [vocabularies]);
 
-	const {axisNames, bars, colors, data, legendCheckboxes} = auditBarChartData;
+	const {bars, colors, data, legendCheckboxes} = auditBarChartData;
 
 	const height = !bars.length
 		? BAR_CHART.height - BAR_CHART.legendHeight
@@ -177,13 +161,20 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		);
 	};
 
+	const showLegend = !!bars.length;
+
+	const axisNames = {
+		x: vocabularies[0]?.vocabularyName,
+		y: showLegend && vocabularies[0]?.categories?.[0]?.vocabularyName,
+	};
+
 	const noCheckboxesChecked = Object.keys(checkboxes).every(
 		(i) => checkboxes[i] === false
 	);
 
 	return (
 		<>
-			{noCheckboxesChecked && (
+			{Object.keys(checkboxes).length > 0 && noCheckboxesChecked && (
 				<ClayEmptyState
 					className="empty-state no-categories-selected text-center"
 					description={Liferay.Language.get(
@@ -194,9 +185,9 @@ export default function AuditBarChart({rtl, vocabularies}) {
 					)}
 				/>
 			)}
-			<ResponsiveContainer height={height}>
+			<ResponsiveContainer className="mb-3" height={height}>
 				<BarChart data={data} height={height} width={BAR_CHART.width}>
-					{bars.length && (
+					{showLegend && (
 						<Legend
 							align={rtl ? 'right' : 'left'}
 							content={renderLegend}

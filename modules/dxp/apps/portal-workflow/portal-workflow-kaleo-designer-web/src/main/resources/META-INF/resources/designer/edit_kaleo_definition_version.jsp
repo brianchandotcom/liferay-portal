@@ -79,6 +79,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 		%>
 
+		<div class="container-fluid container-fluid-max-xl lfr-alert-container"></div>
+
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
 			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 

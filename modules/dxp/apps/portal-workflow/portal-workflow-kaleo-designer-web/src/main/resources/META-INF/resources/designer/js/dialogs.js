@@ -168,13 +168,9 @@ AUI.add(
 		};
 
 		var showActionUndoneSuccessMessage = function () {
-			var successMessage = Liferay.Language.get('action-undone');
-
 			Liferay.Util.openToast({
-				container: document.querySelector('.portlet-column'),
-				message: successMessage,
-				title: Liferay.Language.get('success'),
-				type: 'success',
+				container: document.querySelector('.lfr-alert-container'),
+				message: Liferay.Language.get('action-undone'),
 			});
 		};
 
@@ -190,17 +186,16 @@ AUI.add(
 				undo +
 				'</a>';
 
-			var successMessage = Liferay.Language.get(
+			var message = Liferay.Language.get(
 				'definition-imported-sucessfully'
 			);
 
-			successMessage += undoLink;
+			message += undoLink;
 
 			Liferay.Util.openToast({
-				container: document.querySelector('.portlet-column'),
-				message: successMessage,
-				title: Liferay.Language.get('success'),
-				type: 'success',
+				container: document.querySelector('.lfr-alert-container'),
+				message,
+				messageType: 'html',
 			});
 		};
 

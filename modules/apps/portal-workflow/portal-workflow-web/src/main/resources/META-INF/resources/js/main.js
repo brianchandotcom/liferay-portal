@@ -418,10 +418,9 @@ AUI.add(
 				successMessage += undoLink;
 
 				Liferay.Util.openToast({
-					container: document.querySelector('.portlet-column'),
+					container: document.querySelector('.lfr-alert-container'),
 					message: successMessage,
-					title: Liferay.Language.get('success'),
-					type: 'success',
+					messageType: 'html',
 				});
 			},
 

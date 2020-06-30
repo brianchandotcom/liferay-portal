@@ -272,6 +272,17 @@
 	font-weight: 600;
 }
 
+.lfr-alert-container {
+	display: flex;
+	justify-content: center;
+	position: relative;
+
+	> div {
+		position: absolute;
+		width: 100%;
+	}
+}
+
 .lfr-portlet-workflowdesigner-draft-version {
 	display: inline;
 }

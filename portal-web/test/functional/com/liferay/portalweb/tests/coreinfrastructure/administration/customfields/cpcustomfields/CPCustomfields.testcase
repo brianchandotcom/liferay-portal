@@ -311,6 +311,8 @@ definition {
 
 	@priority = "4"
 	test EditRevertCustomFieldWikiPage {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -325,7 +327,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 

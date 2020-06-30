@@ -243,7 +243,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 
@@ -692,7 +692,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
 
@@ -956,7 +956,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
@@ -1808,6 +1808,8 @@ definition {
 
 	@priority = "4"
 	test ViewPrivatePageSiteMemberRole {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1842,7 +1844,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Memberships",
-			site = "Guest");
+			site = "${siteName}");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 

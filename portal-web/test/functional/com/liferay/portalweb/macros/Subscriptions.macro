@@ -15,7 +15,7 @@ definition {
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
-		Click(locator1 = "Button#UNSUBSCRIBE");
+		Click(locator1 = "MySubscriptions#UNSUBSCRIBE");
 
 		Alert.viewSuccessMessage();
 	}

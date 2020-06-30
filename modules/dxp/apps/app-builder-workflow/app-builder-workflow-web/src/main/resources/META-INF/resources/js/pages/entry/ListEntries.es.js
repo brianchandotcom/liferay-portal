@@ -262,6 +262,9 @@ export default function ListEntries({history}) {
 					isLoading={isFetching}
 					items={buildWorkflowItems(items)}
 					keywords={query.keywords}
+					noActionsMessage={Liferay.Language.get(
+						'you-dont-have-permission-to-manage-this-entry'
+					)}
 					totalCount={totalCount}
 				/>
 			</SearchContext.Provider>

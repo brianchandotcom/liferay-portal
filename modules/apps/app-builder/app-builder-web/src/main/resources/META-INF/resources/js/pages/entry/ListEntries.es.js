@@ -72,6 +72,9 @@ export default function ListEntries() {
 					title: Liferay.Language.get('there-are-no-entries-yet'),
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}
+				noActionsMessage={Liferay.Language.get(
+					'you-dont-have-permission-to-manage-this-entry'
+				)}
 				queryParams={{dataListViewId}}
 			>
 				{buildEntries(fieldNames, dataDefinition, permissions)}

@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -77,7 +79,8 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		User user = userLocalService.getUser(accountUserId);
 
-		_validateEmailAddress(accountEntryId, user.getEmailAddress());
+		_validateEmailAddress(
+			user.getCompanyId(), accountEntryId, user.getEmailAddress());
 
 		accountEntryUserRel = createAccountEntryUserRel(
 			counterLocalService.increment());
@@ -104,7 +107,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			companyId = accountEntry.getCompanyId();
 		}
 
-		_validateEmailAddress(accountEntryId, emailAddress);
+		_validateEmailAddress(companyId, accountEntryId, emailAddress);
 
 		boolean autoPassword = true;
 		String password1 = null;
@@ -301,8 +304,20 @@ public class AccountEntryUserRelLocalServiceImpl
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
 
-	private void _validateEmailAddress(long accountEntryId, String emailAddress)
+	private void _validateEmailAddress(
+			long companyId, long accountEntryId, String emailAddress)
 		throws PortalException {
+
+		AccountEntryEmailDomainsConfiguration
+			accountEntryEmailDomainsConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AccountEntryEmailDomainsConfiguration.class, companyId);
+
+		if (!accountEntryEmailDomainsConfiguration.
+				enableEmailDomainValidation()) {
+
+			return;
+		}
 
 		long userId = GuestOrUserUtil.getGuestOrUserId();
 
@@ -337,5 +352,8 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryUserRelLocalServiceImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -63,6 +63,27 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
 	}
 
+	macro rateStarCollectionItem {
+		Click(
+			key_colPosition = "${colPosition}",
+			key_rowPosition = "${rowPosition}",
+			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR");
+
+		if (isSet(checkDeleteButton)) {
+			AssertElementPresent(locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_DELETE_DISABLE");
+		}
+
+		Click.clickNoMouseOver(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_COUNT");
+
+		AssertElementPresent(
+			key_colPosition = "${colPosition}",
+			key_rowPosition = "${rowPosition}",
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
+	}
+
 	macro rateThumb {
 		if (isSet(blogCommentRating)) {
 			Click.mouseOverClick(

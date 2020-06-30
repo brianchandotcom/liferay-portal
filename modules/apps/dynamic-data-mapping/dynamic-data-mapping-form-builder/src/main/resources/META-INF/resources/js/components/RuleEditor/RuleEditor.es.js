@@ -1041,8 +1041,17 @@ class RuleEditor extends Component {
 		const secondOperand = operands[1];
 
 		if (value.length == 0) {
+			if (secondOperand) {
+				conditions[index].operands.splice(1, 1);
+
+				this.setState({
+					conditions,
+				});
+			}
+
 			return;
 		}
+
 		let secondOperandType = 'field';
 		let valueType = 'field';
 		if (value[0] == 'value') {

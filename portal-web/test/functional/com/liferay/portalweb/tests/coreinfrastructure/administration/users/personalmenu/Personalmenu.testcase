@@ -160,6 +160,8 @@ definition {
 
 		Portlet.viewNoSpecificPG(portletName = "Notifications");
 
+		Navigator.gotoPage(pageName = "Home");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Web Content");

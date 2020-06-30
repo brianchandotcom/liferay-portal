@@ -18,9 +18,14 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 
+import java.io.Serializable;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author André de Oliveira
  */
+@ProviderType
 public interface UIDFactory {
 
 	public String getUID(ClassedModel classedModel);
@@ -28,6 +33,10 @@ public interface UIDFactory {
 	public String getUID(com.liferay.portal.kernel.search.Document document);
 
 	public String getUID(Document document);
+
+	public String getUID(
+		String modelClassName, Serializable primaryKeyObject,
+		long ctCollectionId);
 
 	public void setUID(
 		ClassedModel classedModel,

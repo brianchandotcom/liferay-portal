@@ -27,6 +27,142 @@ definition {
 		}
 	}
 
+	@description = "Filter and order the apps created using App Builder"
+	@priority = "5"
+	test FilterAndOrderApps {
+
+		GlobalMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "First App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Second App",
+			deployOption = "Standalone",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Third App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Fourth App",
+			deployOption = "Product",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		GlobalMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAdmin.validateFilterAndOrder();
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Create Date");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Fourth App");
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Modified Date");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Fourth App");
+
+		AppBuilderAdmin.filterListAscendAndDescend();
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "First App");
+
+		AppBuilderAdmin.chooseMultipleFilter(
+			statusFilterOption = "Deployed",
+			deploymentFilterOption = "Product Menu");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "First App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Second App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Third App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Fourth App");
+
+		AppBuilderAdmin.clearFilter();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "Standalone");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Second App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "First App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Third App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Fourth App");
+
+		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "Widget");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Third App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "First App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Second App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Fourth App");
+
+		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "Product Menu");
+
+		AppBuilderAdmin.searchByItem(itemName = "Fourth App");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Fourth App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "First App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Second App");
+
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Third App");
+
+		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "First App");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Second App");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Third App");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Fourth App");
+
+	}
+
 	@description = "Automate LPS-111262 & LPS-111681"
 	@priority = "5"
 	test ValidateListOfStandardApps {

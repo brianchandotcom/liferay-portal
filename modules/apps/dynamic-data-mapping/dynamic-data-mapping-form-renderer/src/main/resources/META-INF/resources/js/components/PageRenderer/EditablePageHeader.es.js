@@ -15,7 +15,7 @@
 import React from 'react';
 
 export const PageHeader = ({description, placeholder, title}) => (
-	<div className="pl-3 pr-3">
+	<div>
 		<input
 			className="form-builder-page-header-title form-control p-0"
 			defaultValue={title}

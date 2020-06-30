@@ -120,30 +120,30 @@ public class GitWorkingDirectory {
 
 		LocalGitBranch localGitBranch = createLocalGitBranch(
 			JenkinsResultsParserUtil.combine(
-				getUpstreamBranchName(), "-temp-",
+				branchInformation.getUpstreamBranchName(), "-temp-",
 				String.valueOf(System.currentTimeMillis())),
 			true);
 
 		try {
-			localGitBranch = fetch(
-				localGitBranch, true,
-				branchInformation.getCachedRemoteGitRef());
-		}
-		catch (Exception exception) {
-			fetch(branchInformation.getSenderRemoteGitRef());
+			RemoteGitRef cacheBranchFromGitHubDev =
+				GitHubDevSyncUtil.fetchCacheBranchFromGitHubDev(
+					this, branchInformation.getCachedRemoteGitRefName());
 
 			localGitBranch = createLocalGitBranch(
 				localGitBranch.getName(), true,
-				branchInformation.getSenderBranchSHA());
+				cacheBranchFromGitHubDev.getSHA());
+		}
+		catch (Exception exception) {
+			RemoteGitRef senderRemoteGitRef =
+				branchInformation.getSenderRemoteGitRef();
 
-			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
-				JenkinsResultsParserUtil.combine(
-					getUpstreamBranchName(), "-temp-upstream-",
-					String.valueOf(System.currentTimeMillis())),
-				true, branchInformation.getUpstreamBranchSHA());
-
-			localGitBranch = rebase(
-				true, upstreamLocalGitBranch, localGitBranch);
+			localGitBranch = getRebasedLocalGitBranch(
+				localGitBranch.getName(),
+				branchInformation.getSenderBranchName(),
+				senderRemoteGitRef.getRemoteURL(),
+				branchInformation.getSenderBranchSHA(),
+				branchInformation.getUpstreamBranchName(),
+				branchInformation.getUpstreamBranchSHA());
 		}
 
 		checkoutLocalGitBranch(localGitBranch);

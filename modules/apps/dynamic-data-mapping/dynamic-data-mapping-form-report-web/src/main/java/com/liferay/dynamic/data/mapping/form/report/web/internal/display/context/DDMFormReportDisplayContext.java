@@ -119,17 +119,11 @@ public class DDMFormReportDisplayContext {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(), DDMFormReportPortlet.class);
 
-		String languageKey = "report-was-last-modified-on-x";
-
 		Date modifiedDate = _ddmFormInstanceReport.getModifiedDate();
 
 		int daysBetween = DateUtil.getDaysBetween(
 			new Date(modifiedDate.getTime()), new Date(),
 			themeDisplay.getTimeZone());
-
-		if (daysBetween < 2) {
-			languageKey = "report-was-last-modified-x";
-		}
 
 		String relativeTimeDescription = StringUtil.removeSubstring(
 			Time.getRelativeTimeDescription(
@@ -143,7 +137,8 @@ public class DDMFormReportDisplayContext {
 		}
 
 		return LanguageUtil.format(
-			resourceBundle, languageKey, relativeTimeDescription, false);
+			resourceBundle, "last-entry-sent-x", relativeTimeDescription,
+			false);
 	}
 
 	public int getTotalItems() throws PortalException {

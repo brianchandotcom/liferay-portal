@@ -52,7 +52,7 @@ definition {
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -71,7 +71,7 @@ definition {
 			symbolicName = "com.liferay.gogo.shell.web");
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
-			category = "Configuration",
+			category = "System",
 			consoleText = "STOPPED com.liferay.gogo.shell.web",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
@@ -83,7 +83,7 @@ definition {
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}
@@ -95,7 +95,7 @@ definition {
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -126,7 +126,7 @@ definition {
 			symbolicName = "${symbolicName}");
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
-			category = "Configuration",
+			category = "System",
 			consoleText = "${consoleText}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");

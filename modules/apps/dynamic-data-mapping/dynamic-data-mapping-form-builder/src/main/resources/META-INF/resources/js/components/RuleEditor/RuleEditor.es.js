@@ -1040,6 +1040,9 @@ class RuleEditor extends Component {
 		const {operands} = conditions[index];
 		const secondOperand = operands[1];
 
+		if (value.length == 0) {
+			return;
+		}
 		let secondOperandType = 'field';
 		let valueType = 'field';
 		if (value[0] == 'value') {

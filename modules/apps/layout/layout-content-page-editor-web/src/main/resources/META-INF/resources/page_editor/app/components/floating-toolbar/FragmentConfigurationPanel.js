@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {FRAGMENT_CONFIGURATION_ROLES} from '../../config/constants/fragmentConfigurationRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
@@ -31,7 +32,11 @@ export const FragmentConfigurationPanel = ({item}) => {
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const configuration = fragmentEntryLink.configuration;
+	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
+		(fieldSet) =>
+			fieldSet.configurationRole !== FRAGMENT_CONFIGURATION_ROLES.style
+	);
+
 	const defaultConfigurationValues =
 		fragmentEntryLink.defaultConfigurationValues;
 
@@ -65,7 +70,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 
 	return (
 		<>
-			{configuration.fieldSets.map((fieldSet, index) => {
+			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
 						configurationValues={getConfigurationValues(

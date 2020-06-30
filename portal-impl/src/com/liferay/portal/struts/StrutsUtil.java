@@ -17,6 +17,7 @@ package com.liferay.portal.struts;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.struts.constants.ActionConstants;
 
 import java.io.IOException;
 

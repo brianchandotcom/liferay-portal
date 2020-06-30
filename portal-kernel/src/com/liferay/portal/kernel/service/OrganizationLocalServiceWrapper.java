@@ -31,11 +31,6 @@ public class OrganizationLocalServiceWrapper
 		_organizationLocalService = organizationLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link OrganizationLocalServiceUtil} to access the organization local service. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addGroupOrganization(long groupId, long organizationId) {
 		_organizationLocalService.addGroupOrganization(groupId, organizationId);
@@ -845,6 +840,9 @@ public class OrganizationLocalServiceWrapper
 		return _organizationLocalService.getParentOrganizations(organizationId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

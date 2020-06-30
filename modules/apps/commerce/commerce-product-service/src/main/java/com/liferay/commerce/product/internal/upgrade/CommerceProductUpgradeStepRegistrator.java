@@ -30,8 +30,11 @@ import com.liferay.commerce.product.internal.upgrade.v1_4_0.CPDefinitionSpecific
 import com.liferay.commerce.product.internal.upgrade.v1_5_0.CProductExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.CPDefinitionTrashEntriesUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.CommerceCatalogUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v1_6_0.CommerceChannelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_7_0.CPDefinitionFiltersUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_0_0.CPInstanceOptionValueRelUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_1_0.CommerceCatalogSystemUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_1_0.SubscriptionUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.CPDefinitionOptionValueRelUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -87,8 +91,8 @@ public class CommerceProductUpgradeStepRegistrator
 
 		registry.register(
 			_SCHEMA_VERSION_1_5_0, _SCHEMA_VERSION_1_6_0,
-			new CommerceChannelUpgradeProcess(),
-			new CommerceCatalogUpgradeProcess(_groupLocalService),
+			new CommerceCatalogUpgradeProcess(
+				_classNameLocalService, _groupLocalService),
 			new CPDefinitionTrashEntriesUpgradeProcess(_classNameLocalService));
 
 		registry.register(
@@ -127,6 +131,30 @@ public class CommerceProductUpgradeStepRegistrator
 			_SCHEMA_VERSION_1_11_0, _SCHEMA_VERSION_1_11_1,
 			new CPDisplayLayoutUpgradeProcess(_layoutLocalService));
 
+		registry.register(
+			_SCHEMA_VERSION_1_11_1, _SCHEMA_VERSION_1_11_2,
+			new com.liferay.commerce.product.internal.upgrade.v1_11_2.
+				CPDefinitionLinkUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_1_11_2, _SCHEMA_VERSION_2_0_0,
+			new CPInstanceOptionValueRelUpgradeProcess(
+				_jsonFactory, _portalUUID));
+
+		registry.register(
+			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			new CommerceCatalogSystemUpgradeProcess(),
+			new SubscriptionUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
+			new CPDefinitionOptionValueRelUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_2_2_1,
+			new com.liferay.commerce.product.internal.upgrade.v2_2_1.
+				CPDefinitionOptionValueRelUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -160,6 +188,16 @@ public class CommerceProductUpgradeStepRegistrator
 
 	private static final String _SCHEMA_VERSION_1_11_1 = "1.11.1";
 
+	private static final String _SCHEMA_VERSION_1_11_2 = "1.11.2";
+
+	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
+
+	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
+
+	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
+
+	private static final String _SCHEMA_VERSION_2_2_1 = "2.2.1";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductUpgradeStepRegistrator.class);
 
@@ -180,6 +218,9 @@ public class CommerceProductUpgradeStepRegistrator
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

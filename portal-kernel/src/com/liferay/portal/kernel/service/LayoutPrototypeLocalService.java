@@ -59,7 +59,7 @@ import java.util.Map;
 public interface LayoutPrototypeLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPrototypeLocalServiceUtil} to access the layout prototype local service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutPrototypeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -296,6 +296,9 @@ public interface LayoutPrototypeLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

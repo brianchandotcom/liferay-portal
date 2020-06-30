@@ -33,7 +33,7 @@ public abstract class CommerceNotificationQueueEntryBaseImpl
 	extends CommerceNotificationQueueEntryModelImpl
 	implements CommerceNotificationQueueEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce notification queue entry model instance should use the <code>CommerceNotificationQueueEntry</code> interface instead.

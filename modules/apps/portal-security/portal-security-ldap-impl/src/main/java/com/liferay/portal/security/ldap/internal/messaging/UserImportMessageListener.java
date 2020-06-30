@@ -35,6 +35,8 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -168,6 +170,17 @@ public class UserImportMessageListener
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
+	private Date _getFutureDate(int interval) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setLenient(true);
+		calendar.setTime(new Date());
+
+		calendar.add(Calendar.MINUTE, interval);
+
+		return calendar.getTime();
+	}
+
 	private void _updateDefaultImportInterval(int interval) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -180,7 +193,8 @@ public class UserImportMessageListener
 		String className = clazz.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, interval, TimeUnit.MINUTE);
+			className, className, _getFutureDate(interval), null, interval,
+			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);

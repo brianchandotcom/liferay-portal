@@ -33,11 +33,6 @@ public class SiteNavigationMenuServiceWrapper
 		_siteNavigationMenuService = siteNavigationMenuService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuServiceUtil} to access the site navigation menu remote service. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu
 			addSiteNavigationMenu(

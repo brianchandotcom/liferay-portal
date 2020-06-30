@@ -8,7 +8,7 @@ definition {
 	}
 
 	macro gotoEntry {
-		AssertClick(
+		AssertClickNoError(
 			key_entryName = "${entryName}",
 			locator1 = "CommerceNavigation#ENTRY_NAME",
 			value1 = "${entryName}");

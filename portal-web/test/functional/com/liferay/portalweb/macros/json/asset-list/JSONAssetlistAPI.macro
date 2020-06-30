@@ -1,0 +1,20 @@
+definition {
+
+	@summary = "Directly creates an Asset List Entry using the JSON API"
+	macro _addAssetListEntry {
+		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetlist.assetlistentry/add-asset-list-entry \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d title=${title} \
+			-d type=${type}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

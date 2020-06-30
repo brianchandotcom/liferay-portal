@@ -32,13 +32,16 @@ if (commerceShippingFixedOption != null) {
 
 <portlet:actionURL name="editCommerceShippingFixedOption" var="editCommerceShippingFixedOptionActionURL" />
 
-<div class="container-fluid-1280 sheet">
-	<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingFixedOption();" %>'>
+<commerce-ui:side-panel-content
+	title='<%= LanguageUtil.get(resourceBundle, "shipping-option") %>'
+>
+	<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<div class="lfr-form-content">
+		<commerce-ui:panel>
 			<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
 
 			<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="description" />
@@ -50,50 +53,10 @@ if (commerceShippingFixedOption != null) {
 			</c:if>
 
 			<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="priority" />
-		</div>
+		</commerce-ui:panel>
 
 		<aui:button-row>
-			<aui:button name="saveButton" primary="<%= true %>" type="submit" value="save" />
-
-			<aui:button name="cancelButton" type="cancel" />
+			<aui:button type="submit" value="save" />
 		</aui:button-row>
 	</aui:form>
-</div>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveCommerceShippingFixedOption',
-		function() {
-			var A = AUI();
-
-			var url = '<%= editCommerceShippingFixedOptionActionURL %>';
-
-			A.io.request(
-				url,
-				{
-					form: {
-						id: '<portlet:namespace/>fm'
-					},
-					method: 'POST',
-					on: {
-						success: function() {
-							Liferay.Util.getOpener().refreshPortlet();
-							Liferay.Util.getOpener().closePopup('editShippingFixedOptionDialog');
-						}
-					}
-				}
-			);
-		},
-		['aui-base', 'aui-io-request', 'io-form']
-	);
-</aui:script>
-
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace/>cancelButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.getOpener().closePopup('editShippingFixedOptionDialog');
-		}
-	);
-</aui:script>
+</commerce-ui:side-panel-content>

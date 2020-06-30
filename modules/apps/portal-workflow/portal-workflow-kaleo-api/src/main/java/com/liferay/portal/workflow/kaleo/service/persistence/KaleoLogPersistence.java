@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface KaleoLogPersistence extends BasePersistence<KaleoLog> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoLogUtil} to access the kaleo log persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

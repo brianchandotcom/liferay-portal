@@ -56,7 +56,7 @@ import java.util.List;
 )
 public interface CommerceAccountGroupRelService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountGroupRelServiceUtil} to access the commerce account group rel remote service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -66,7 +66,15 @@ public interface CommerceAccountGroupRelService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCommerceAccountGroupRel(long commerceAccountGroupRelId)
+		throws PortalException;
+
 	public void deleteCommerceAccountGroupRels(String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceAccountGroupRel getCommerceAccountGroupRel(
+			long commerceAccountGroupRelId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccountGroupRel> getCommerceAccountGroupRels(

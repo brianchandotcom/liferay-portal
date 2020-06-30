@@ -40,7 +40,7 @@ import java.util.Set;
 public interface SiteNavigationMenuPersistence
 	extends BasePersistence<SiteNavigationMenu> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuUtil} to access the site navigation menu persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

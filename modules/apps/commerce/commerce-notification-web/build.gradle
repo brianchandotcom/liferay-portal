@@ -12,7 +12,9 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-account-item-selector-api")
-	compileOnly project(":apps:commerce:commerce-admin-api")
 	compileOnly project(":apps:commerce:commerce-api")
+	compileOnly project(":apps:commerce:commerce-frontend-api")
+	compileOnly project(":apps:commerce:commerce-frontend-taglib")
 	compileOnly project(":apps:commerce:commerce-notification-api")
+	compileOnly project(":apps:commerce:commerce-product-api")
 }

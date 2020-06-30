@@ -30,6 +30,11 @@
 				"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 			},
 			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 5,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet"
+			},
+			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_minium"
@@ -59,7 +64,8 @@
 						"portletPreferences": {
 							"cpContentListRendererKey": "list-minium",
 							"dataSource": "assetCategoriesAndTagsDataSource",
-							"groupe--cpTypeListEntryRendererKey": "list-entry-minium",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
+							"paginationDelta": 5,
 							"renderSelection": "custom",
 							"selectionStyle": "dataSource",
 							"simple--cpTypeListEntryRendererKey": "list-entry-minium",
@@ -258,9 +264,10 @@
 			"layout-template-id": "2_columns_ii",
 			"layoutUpdateable": true,
 			"lfr-theme:regular:is-login-page": true,
+			"lfr-theme:regular:redirect-to-private-layouts": true,
 			"lfr-theme:regular:show-sidebar": false,
 			"lfr-theme:regular:show-topbar": false,
-			"lfr-theme:regular:wide-layout": true,
+			"lfr-theme:regular:wide-layout": false,
 			"sitemap-changefreq": "daily",
 			"sitemap-include": 1
 		},

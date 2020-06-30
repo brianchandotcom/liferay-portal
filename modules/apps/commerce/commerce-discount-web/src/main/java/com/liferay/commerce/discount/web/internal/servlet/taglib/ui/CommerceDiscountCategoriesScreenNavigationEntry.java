@@ -119,7 +119,7 @@ public class CommerceDiscountCategoriesScreenNavigationEntry
 				_commerceDiscountRelService, _commerceDiscountService,
 				_commerceDiscountTargetRegistry,
 				_commerceDiscountCommerceAccountGroupRelService,
-				_cpDefinitionService, httpServletRequest, _itemSelector);
+				_cpDefinitionService, null, httpServletRequest, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceDiscountRelDisplayContext);

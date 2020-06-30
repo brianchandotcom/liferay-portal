@@ -15,16 +15,16 @@
 package com.liferay.commerce.shipment.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
-import com.liferay.commerce.exception.CommerceOrderValidatorException;
+import com.liferay.commerce.exception.CommerceShipmentInactiveWarehouseException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
@@ -33,8 +33,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
-import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -42,6 +42,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -100,7 +102,10 @@ public class CommerceShipmentTest {
 		_user = UserTestUtil.addUser(_company);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_company.getGroupId());
+			_company.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_commerceCurrency.getCode());
 
 		_commerceOrders = new ArrayList<>();
 	}
@@ -110,6 +115,14 @@ public class CommerceShipmentTest {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
+
+		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
+
+		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel);
+
+		_commerceCurrencyLocalService.deleteCommerceCurrency(_commerceCurrency);
+
+		_userLocalService.deleteUser(_user);
 
 		_companyLocalService.deleteCompany(_company);
 	}
@@ -127,18 +140,15 @@ public class CommerceShipmentTest {
 			"An exception is raised"
 		);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_company.getGroupId(), _user.getUserId(),
-			_commerceCurrency.getCommerceCurrencyId(),
-			commerceChannel.getSiteGroupId());
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
 		CommerceShippingMethod commerceShippingMethod =
 			CommerceTestUtil.addFixedRateCommerceShippingMethod(
-				commerceOrder.getGroupId(), value);
+				_user.getUserId(), commerceOrder.getGroupId(), value);
 
 		commerceOrder.setCommerceShippingMethodId(
 			commerceShippingMethod.getCommerceShippingMethodId());
@@ -147,14 +157,8 @@ public class CommerceShipmentTest {
 
 		_commerceOrders.add(commerceOrder);
 
-		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
-			null, commerceOrder);
-
-		_commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commerceContext,
-			ServiceContextTestUtil.getServiceContext(
-				commerceOrder.getGroupId()));
+		_commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
 	}
 
 	@Test
@@ -169,15 +173,12 @@ public class CommerceShipmentTest {
 			"Multiple shipments are created"
 		);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
@@ -207,15 +208,12 @@ public class CommerceShipmentTest {
 			"The shipment is associated to the order"
 		);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
@@ -247,25 +245,22 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance = _createCPInstance();
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -335,11 +330,9 @@ public class CommerceShipmentTest {
 
 		_cpInstanceLocalService.updateCPInstance(cpInstance);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -351,16 +344,15 @@ public class CommerceShipmentTest {
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		int orderedQuantity = 1;
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			commerceOrder.getCommerceAccount(), commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
@@ -397,11 +389,9 @@ public class CommerceShipmentTest {
 
 		_cpInstanceLocalService.updateCPInstance(cpInstance);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -413,9 +403,8 @@ public class CommerceShipmentTest {
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		BigDecimal expectedDiscountAmount = BigDecimal.valueOf(3);
 
@@ -432,7 +421,7 @@ public class CommerceShipmentTest {
 		int orderedQuantity = 1;
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			commerceOrder.getCommerceAccount(), commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
@@ -475,15 +464,12 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance2 = _createCPInstance(cpInstance1.getGroupId());
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
@@ -496,12 +482,12 @@ public class CommerceShipmentTest {
 				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -573,25 +559,22 @@ public class CommerceShipmentTest {
 		cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), cpInstance.getSku());
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -627,15 +610,12 @@ public class CommerceShipmentTest {
 			"An exception shall be raised"
 		);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
@@ -644,17 +624,11 @@ public class CommerceShipmentTest {
 
 		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 
-		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
-			null, commerceOrder);
-
 		CommerceShipmentTestUtil.createEmptyOrderShipment(
 			commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
-		_commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commerceContext,
-			ServiceContextTestUtil.getServiceContext(
-				commerceOrder.getGroupId()));
+		_commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
 	}
 
 	@Test
@@ -676,25 +650,22 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance2 = _createCPInstance(cpInstance1.getGroupId());
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 10;
 
@@ -726,8 +697,9 @@ public class CommerceShipmentTest {
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			List<CommerceShipmentItem> commerceShipmentItems =
-				_commerceShipmentItemLocalService.getCommerceShipmentItems(
-					commerceOrderItem.getCommerceOrderItemId());
+				_commerceShipmentItemLocalService.
+					getCommerceShipmentItemsByCommerceOrderItemId(
+						commerceOrderItem.getCommerceOrderItemId());
 
 			Assert.assertEquals(
 				commerceShipmentItems.toString(), 1,
@@ -735,7 +707,7 @@ public class CommerceShipmentTest {
 		}
 	}
 
-	@Test(expected = CommerceOrderValidatorException.class)
+	@Test(expected = CommerceShipmentInactiveWarehouseException.class)
 	public void testCreateShippingFromInactiveWarehouse() throws Exception {
 		frutillaRule.scenario(
 			"Attach a shipment to a item that is stocked in an inactive " +
@@ -750,25 +722,22 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance = _createCPInstance();
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), false);
+				_commerceChannel.getCommerceChannelId(), false);
 
 		int quantity = 10;
 
@@ -808,10 +777,8 @@ public class CommerceShipmentTest {
 			"An exception shall be raised"
 		);
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		CommerceShipmentTestUtil.createEmptyOrderShipment(
-			commerceChannel.getGroupId(), 0);
+			_commerceChannel.getGroupId(), 0);
 	}
 
 	@Test(expected = CommerceShipmentItemQuantityException.class)
@@ -830,25 +797,22 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance = _createCPInstance();
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 5;
 
@@ -868,8 +832,9 @@ public class CommerceShipmentTest {
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		List<CommerceShipmentItem> commerceShipmentItems =
-			_commerceShipmentItemLocalService.getCommerceShipmentItems(
-				commerceOrderItem.getCommerceOrderItemId());
+			_commerceShipmentItemLocalService.
+				getCommerceShipmentItemsByCommerceOrderItemId(
+					commerceOrderItem.getCommerceOrderItemId());
 
 		CommerceShipmentItem commerceShipmentItem = commerceShipmentItems.get(
 			0);
@@ -898,25 +863,22 @@ public class CommerceShipmentTest {
 
 		CPInstance cpInstance = _createCPInstance();
 
-		CommerceChannel commerceChannel = _createCommerceChannel();
-
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		CommerceOrder commerceOrder =
 			CommerceTestUtil.createCommerceOrderForShipping(
-				_company.getGroupId(), _user.getUserId(),
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceChannel.getSiteGroupId(), value);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
 
 		_commerceOrders.add(commerceOrder);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceOrder.getCommerceCurrency(), commerceChannel, null, null,
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
 			null, commerceOrder);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_createCommerceInventoryWarehouse(
-				commerceChannel.getCommerceChannelId(), true);
+				_commerceChannel.getCommerceChannelId(), true);
 
 		int quantity = 5;
 
@@ -937,30 +899,17 @@ public class CommerceShipmentTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private CommerceChannel _createCommerceChannel() throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			_company.getGroupId(), _user.getUserId(), 0);
-
-		return CommerceTestUtil.addCommerceChannel(
-			group.getGroupId(), _commerceCurrency.getCode());
-	}
-
 	private CommerceInventoryWarehouse _createCommerceInventoryWarehouse(
 			long commerceChannelId, boolean active)
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup(
-			_company.getGroupId(), _user.getUserId(), 0);
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				group.getGroupId(), active);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(active);
 
 		_commerceChannelRelLocalService.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceChannelId,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			commerceChannelId, ServiceContextTestUtil.getServiceContext());
 
 		return commerceInventoryWarehouse;
 	}
@@ -976,13 +925,21 @@ public class CommerceShipmentTest {
 		return CPTestUtil.addCPInstanceWithRandomSku(groupId);
 	}
 
+	private CommerceChannel _commerceChannel;
+
 	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Inject
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Inject
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
@@ -999,9 +956,6 @@ public class CommerceShipmentTest {
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
 	@Inject
-	private CommerceShippingEngine _commerceShippingEngine;
-
-	@Inject
 	private CommerceShippingHelper _commerceShippingHelper;
 
 	private Company _company;
@@ -1016,5 +970,8 @@ public class CommerceShipmentTest {
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

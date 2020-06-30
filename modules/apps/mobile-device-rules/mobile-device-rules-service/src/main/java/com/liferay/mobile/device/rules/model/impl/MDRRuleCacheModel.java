@@ -175,7 +175,9 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		ruleId = objectInput.readLong();
@@ -193,7 +195,7 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		type = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -248,10 +250,10 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 
 		objectOutput.writeLong(lastPublishDate);

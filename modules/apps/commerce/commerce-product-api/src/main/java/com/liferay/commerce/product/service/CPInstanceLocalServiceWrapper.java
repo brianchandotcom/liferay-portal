@@ -48,6 +48,116 @@ public class CPInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
+			String manufacturerPartNumber, boolean purchasable,
+			java.util.Map<Long, java.util.List<Long>>
+				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
+			double width, double height, double depth, double weight,
+			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+			java.math.BigDecimal cost, boolean published,
+			String externalReferenceCode, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, boolean overrideSubscriptionInfo,
+			boolean subscriptionEnabled, int subscriptionLength,
+			String subscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				subscriptionTypeSettingsProperties,
+			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
+			int deliverySubscriptionLength, String deliverySubscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				deliverySubscriptionTypeSettingsProperties,
+			long deliveryMaxSubscriptionCycles,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceLocalService.addCPInstance(
+			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
+			purchasable, cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
+			width, height, depth, weight, price, promoPrice, cost, published,
+			externalReferenceCode, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
+			subscriptionType, subscriptionTypeSettingsProperties,
+			maxSubscriptionCycles, deliverySubscriptionEnabled,
+			deliverySubscriptionLength, deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsProperties,
+			deliveryMaxSubscriptionCycles, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPInstance addCPInstance(
+			long cpDefinitionId, long groupId, String sku, String gtin,
+			String manufacturerPartNumber, boolean purchasable,
+			java.util.Map<Long, java.util.List<Long>>
+				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
+			double width, double height, double depth, double weight,
+			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+			java.math.BigDecimal cost, boolean published,
+			String externalReferenceCode, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, boolean overrideSubscriptionInfo,
+			boolean subscriptionEnabled, int subscriptionLength,
+			String subscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				subscriptionTypeSettingsProperties,
+			long maxSubscriptionCycles,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceLocalService.addCPInstance(
+			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
+			purchasable, cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
+			width, height, depth, weight, price, promoPrice, cost, published,
+			externalReferenceCode, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
+			subscriptionType, subscriptionTypeSettingsProperties,
+			maxSubscriptionCycles, serviceContext);
+	}
+
+	/**
+	 * @param cpDefinitionId
+	 * @param groupId
+	 * @param sku
+	 * @param gtin
+	 * @param manufacturerPartNumber
+	 * @param purchasable
+	 * @param json
+	 * @param published
+	 * @param displayDateMonth
+	 * @param displayDateDay
+	 * @param displayDateYear
+	 * @param displayDateHour
+	 * @param displayDateMinute
+	 * @param expirationDateMonth
+	 * @param expirationDateDay
+	 * @param expirationDateYear
+	 * @param expirationDateHour
+	 * @param expirationDateMinute
+	 * @param neverExpire
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link #addCPInstance(long,
+	 long, String, String, String, boolean, Map, double, double,
+	 double, double, BigDecimal, BigDecimal, BigDecimal, boolean,
+	 String, int, int, int, int, int, int, int, int, int, int,
+	 boolean, boolean, boolean, int, String, UnicodeProperties,
+	 long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPInstance addCPInstance(
+			long cpDefinitionId, long groupId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, String json,
 			boolean published, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -66,6 +176,51 @@ public class CPInstanceLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @param cpDefinitionId
+	 * @param groupId
+	 * @param sku
+	 * @param gtin
+	 * @param manufacturerPartNumber
+	 * @param purchasable
+	 * @param json
+	 * @param width
+	 * @param height
+	 * @param depth
+	 * @param weight
+	 * @param price
+	 * @param promoPrice
+	 * @param cost
+	 * @param published
+	 * @param externalReferenceCode
+	 * @param displayDateMonth
+	 * @param displayDateDay
+	 * @param displayDateYear
+	 * @param displayDateHour
+	 * @param displayDateMinute
+	 * @param expirationDateMonth
+	 * @param expirationDateDay
+	 * @param expirationDateYear
+	 * @param expirationDateHour
+	 * @param expirationDateMinute
+	 * @param neverExpire
+	 * @param overrideSubscriptionInfo
+	 * @param subscriptionEnabled
+	 * @param subscriptionLength
+	 * @param subscriptionType
+	 * @param subscriptionTypeSettingsProperties
+	 * @param maxSubscriptionCycles
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link #addCPInstance(long,
+	 long, String, String, String, boolean, Map, double, double,
+	 double, double, BigDecimal, BigDecimal, BigDecimal, boolean,
+	 String, int, int, int, int, int, int, int, int, int, int,
+	 boolean, boolean, boolean, int, String, UnicodeProperties,
+	 long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
@@ -99,6 +254,45 @@ public class CPInstanceLocalServiceWrapper
 			maxSubscriptionCycles, serviceContext);
 	}
 
+	/**
+	 * @param cpDefinitionId
+	 * @param groupId
+	 * @param sku
+	 * @param gtin
+	 * @param manufacturerPartNumber
+	 * @param purchasable
+	 * @param json
+	 * @param width
+	 * @param height
+	 * @param depth
+	 * @param weight
+	 * @param price
+	 * @param promoPrice
+	 * @param cost
+	 * @param published
+	 * @param externalReferenceCode
+	 * @param displayDateMonth
+	 * @param displayDateDay
+	 * @param displayDateYear
+	 * @param displayDateHour
+	 * @param displayDateMinute
+	 * @param expirationDateMonth
+	 * @param expirationDateDay
+	 * @param expirationDateYear
+	 * @param expirationDateHour
+	 * @param expirationDateMinute
+	 * @param neverExpire
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link #addCPInstance(long,
+	 long, String, String, String, boolean, Map, double, double,
+	 double, double, BigDecimal, BigDecimal, BigDecimal, boolean,
+	 String, int, int, int, int, int, int, int, int, int, int,
+	 boolean, boolean, boolean, int, String, UnicodeProperties,
+	 long, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
@@ -364,11 +558,39 @@ public class CPInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance>
+		getCPDefinitionApprovedCPInstances(long cpDefinitionId) {
+
+		return _cpInstanceLocalService.getCPDefinitionApprovedCPInstances(
+			cpDefinitionId);
+	}
+
+	/**
+	 * @param cpDefinitionId
+	 * @return
+	 * @deprecated As of Athanasius (7.3.x), use workflow aware method {@link
+	 #getCPDefinitionInstances(long, int, int, int,
+	 OrderByComparator)} or {@link
+	 #getCPDefinitionApprovedCPInstances(long)}
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance>
 		getCPDefinitionInstances(long cpDefinitionId) {
 
 		return _cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
 	}
 
+	/**
+	 * @param cpDefinitionId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @deprecated As of Athanasius (7.3.x), use workflow aware method {@link
+	 #getCPDefinitionInstances(long, int, int, int,
+	 OrderByComparator)} or {@link
+	 #getCPDefinitionApprovedCPInstances(long)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance>
 		getCPDefinitionInstances(long cpDefinitionId, int start, int end) {
@@ -566,6 +788,9 @@ public class CPInstanceLocalServiceWrapper
 		return _cpInstanceLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -577,6 +802,33 @@ public class CPInstanceLocalServiceWrapper
 	@Override
 	public String[] getSKUs(long cpDefinitionId) {
 		return _cpInstanceLocalService.getSKUs(cpDefinitionId);
+	}
+
+	@Override
+	public void inactivateCPDefinitionOptionRelCPInstances(
+			long userId, long cpDefinitionId, long cpDefinitionOptionRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpInstanceLocalService.inactivateCPDefinitionOptionRelCPInstances(
+			userId, cpDefinitionId, cpDefinitionOptionRelId);
+	}
+
+	@Override
+	public void inactivateCPDefinitionOptionValueRelCPInstances(
+			long userId, long cpDefinitionId, long cpDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpInstanceLocalService.inactivateCPDefinitionOptionValueRelCPInstances(
+			userId, cpDefinitionId, cpDefinitionOptionValueRelId);
+	}
+
+	@Override
+	public void inactivateIncompatibleCPInstances(
+			long userId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpInstanceLocalService.inactivateIncompatibleCPInstances(
+			userId, cpDefinitionId);
 	}
 
 	@Override
@@ -711,6 +963,26 @@ public class CPInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateStatus(
+			long userId, long cpInstanceId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceLocalService.updateStatus(
+			userId, cpInstanceId, status);
+	}
+
+	/**
+	 * @param userId
+	 * @param cpInstanceId
+	 * @param status
+	 * @param serviceContext
+	 * @param workflowContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link #updateStatus(long, long, int)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPInstance updateStatus(
 			long userId, long cpInstanceId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
 			java.util.Map<String, java.io.Serializable> workflowContext)
@@ -720,6 +992,34 @@ public class CPInstanceLocalServiceWrapper
 			userId, cpInstanceId, status, serviceContext, workflowContext);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance updateSubscriptionInfo(
+			long cpInstanceId, boolean overrideSubscriptionInfo,
+			boolean subscriptionEnabled, int subscriptionLength,
+			String subscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				subscriptionTypeSettingsProperties,
+			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
+			int deliverySubscriptionLength, String deliverySubscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				deliverySubscriptionTypeSettingsProperties,
+			long deliveryMaxSubscriptionCycles)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceLocalService.updateSubscriptionInfo(
+			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
+			subscriptionLength, subscriptionType,
+			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
+			deliverySubscriptionEnabled, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsProperties,
+			deliveryMaxSubscriptionCycles);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateSubscriptionInfo(
 			long cpInstanceId, boolean overrideSubscriptionInfo,

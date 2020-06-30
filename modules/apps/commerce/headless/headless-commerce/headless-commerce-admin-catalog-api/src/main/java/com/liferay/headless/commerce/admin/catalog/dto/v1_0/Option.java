@@ -22,9 +22,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -35,6 +34,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -51,6 +52,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Option")
 public class Option {
 
+	@GraphQLName("FieldType")
 	public static enum FieldType {
 
 		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
@@ -114,6 +116,7 @@ public class Option {
 	protected Long catalogId;
 
 	@Schema
+	@Valid
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -199,6 +202,7 @@ public class Option {
 	protected Boolean facetable;
 
 	@Schema
+	@Valid
 	public FieldType getFieldType() {
 		return fieldType;
 	}
@@ -236,6 +240,7 @@ public class Option {
 	@NotNull
 	protected FieldType fieldType;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -290,6 +295,7 @@ public class Option {
 	protected String key;
 
 	@Schema
+	@Valid
 	public Map<String, String> getName() {
 		return name;
 	}
@@ -317,6 +323,35 @@ public class Option {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
+
+	@Schema
+	@Valid
+	public OptionValue[] getOptionValues() {
+		return optionValues;
+	}
+
+	public void setOptionValues(OptionValue[] optionValues) {
+		this.optionValues = optionValues;
+	}
+
+	@JsonIgnore
+	public void setOptionValues(
+		UnsafeSupplier<OptionValue[], Exception> optionValuesUnsafeSupplier) {
+
+		try {
+			optionValues = optionValuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected OptionValue[] optionValues;
 
 	@Schema
 	public Double getPriority() {
@@ -401,34 +436,6 @@ public class Option {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
-
-	@Schema
-	public OptionValue[] getValues() {
-		return values;
-	}
-
-	public void setValues(OptionValue[] values) {
-		this.values = values;
-	}
-
-	@JsonIgnore
-	public void setValues(
-		UnsafeSupplier<OptionValue[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected OptionValue[] values;
 
 	@Override
 	public boolean equals(Object object) {
@@ -549,6 +556,26 @@ public class Option {
 			sb.append(_toJSON(name));
 		}
 
+		if (optionValues != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionValues\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < optionValues.length; i++) {
+				sb.append(String.valueOf(optionValues[i]));
+
+				if ((i + 1) < optionValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -579,30 +606,16 @@ public class Option {
 			sb.append(skuContributor);
 		}
 
-		if (values != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"values\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < values.length; i++) {
-				sb.append(String.valueOf(values[i]));
-
-				if ((i + 1) < values.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface PhonePersistence extends BasePersistence<Phone> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneUtil} to access the phone persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -28,12 +28,17 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = CommerceShippingHelper.class)
 public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 
 	@Override
 	public Dimensions getDimensions(CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return new Dimensions(0, 0, 0);
+		}
+
 		return new Dimensions(
 			cpInstance.getWidth(), cpInstance.getHeight(),
 			cpInstance.getDepth());
@@ -47,7 +52,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
 			if (commerceOrderItem.getQuantity() == 1) {
-				return getDimensions(commerceOrderItem.getCPInstance());
+				return getDimensions(commerceOrderItem.fetchCPInstance());
 			}
 		}
 
@@ -64,7 +69,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			}
 
 			Dimensions dimensions = getDimensions(
-				commerceOrderItem.getCPInstance());
+				commerceOrderItem.fetchCPInstance());
 
 			double width = dimensions.getWidth();
 			double height = dimensions.getHeight();
@@ -92,6 +97,10 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 
 	@Override
 	public double getWeight(CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return 0;
+		}
+
 		return cpInstance.getWeight();
 	}
 
@@ -109,7 +118,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			}
 
 			weight +=
-				getWeight(commerceOrderItem.getCPInstance()) *
+				getWeight(commerceOrderItem.fetchCPInstance()) *
 					commerceOrderItem.getQuantity();
 		}
 

@@ -33,6 +33,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The flagged asset's content URL.</description>
+			<name>contentURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The CSS classes to be applied to the element.</description>
 			<name>elementClasses</name>
 			<required>false</required>

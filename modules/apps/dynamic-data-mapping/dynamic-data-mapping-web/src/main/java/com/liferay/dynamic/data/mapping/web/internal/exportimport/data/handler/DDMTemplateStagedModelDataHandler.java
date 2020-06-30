@@ -319,6 +319,10 @@ public class DDMTemplateStagedModelDataHandler
 				uuid, groupId, classNameId, templateKey, preloaded);
 		}
 
+		if (existingTemplate == null) {
+			return;
+		}
+
 		Map<Long, Long> templateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMTemplate.class);
@@ -465,7 +469,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			try {
 				portletDataContext.importPermissions(
-					getResourceName(template), template.getPrimaryKey(),
+					getResourceName(importedTemplate), template.getPrimaryKey(),
 					importedTemplate.getPrimaryKey());
 			}
 			catch (Exception e) {

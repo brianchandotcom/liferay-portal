@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_VIRTUAL_INSTANCE,
+		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
 		"mvc.command.name=editCommerceCurrency"
 	},
 	service = MVCActionCommand.class
@@ -177,6 +177,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "roundingMode");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		String symbol = ParamUtil.getString(actionRequest, "symbol");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -186,13 +187,13 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceCurrencyId <= 0) {
 			commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
-				serviceContext.getUserId(), code, nameMap, new BigDecimal(rate),
-				formatPatternMap, maxFractionDigits, minFractionDigits,
-				roundingMode, primary, priority, active, serviceContext);
+				serviceContext.getUserId(), code, nameMap, symbol,
+				new BigDecimal(rate), formatPatternMap, maxFractionDigits,
+				minFractionDigits, roundingMode, primary, priority, active);
 		}
 		else {
 			commerceCurrency = _commerceCurrencyService.updateCommerceCurrency(
-				commerceCurrencyId, code, nameMap, new BigDecimal(rate),
+				commerceCurrencyId, code, nameMap, symbol, new BigDecimal(rate),
 				formatPatternMap, maxFractionDigits, minFractionDigits,
 				roundingMode, primary, priority, active, serviceContext);
 		}

@@ -66,13 +66,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		DecimalFormat decimalFormat = getDecimalFormat(
 			commerceCurrency, locale);
 
-		String value = decimalFormat.format(price);
-
-		if (commerceCurrency == null) {
-			return value;
-		}
-
-		return value;
+		return decimalFormat.format(price);
 	}
 
 	@Override
@@ -112,8 +106,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	protected DecimalFormat getDecimalFormat(
-			CommerceCurrency commerceCurrency, Locale locale)
-		throws PortalException {
+		CommerceCurrency commerceCurrency, Locale locale) {
 
 		String formatPattern = CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN;
 		int maxFractionDigits =

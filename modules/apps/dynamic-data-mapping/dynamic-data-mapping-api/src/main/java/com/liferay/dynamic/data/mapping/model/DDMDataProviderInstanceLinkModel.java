@@ -39,7 +39,7 @@ import java.io.Serializable;
 public interface DDMDataProviderInstanceLinkModel
 	extends BaseModel<DDMDataProviderInstanceLink>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm data provider instance link model instance should use the {@link DDMDataProviderInstanceLink} interface instead.

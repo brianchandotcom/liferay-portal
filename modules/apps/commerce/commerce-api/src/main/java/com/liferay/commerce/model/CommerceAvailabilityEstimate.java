@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceAvailabilityEstimate
 	extends CommerceAvailabilityEstimateModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.model.impl.CommerceAvailabilityEstimateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

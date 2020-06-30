@@ -182,12 +182,6 @@ td.lfr-name-column {
 	padding-top: $baseline * 5;
 }
 
-.lfr-ddm-field-settings-confirmation-message {
-	margin: 0;
-	padding: $horizontal-spacing;
-	text-align: center;
-}
-
 .form-builder-sidebar,
 .portlet-forms {
 	.form-group .alloy-editor-container.input-group .alloy-editor-placeholder.ae-placeholder {
@@ -217,6 +211,20 @@ td.lfr-name-column {
 			margin-left: 0;
 		}
 	}
+}
+
+.form-builder-success-page {
+	padding: 35px;
+}
+
+.form-group.liferay-ddm-form-field-checkbox-multiple label {
+	float: none;
+}
+
+.lfr-ddm-field-settings-confirmation-message {
+	margin: 0;
+	padding: $horizontal-spacing;
+	text-align: center;
 }
 
 .lfr-ddm-field-settings-yes {
@@ -375,10 +383,6 @@ td.lfr-name-column {
 	.lfr-ddm-form-page .required-warning {
 		margin-top: 0;
 	}
-}
-
-.form-builder-success-page {
-	padding: 35px;
 }
 
 .progress-bar-success-item {

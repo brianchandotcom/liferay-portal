@@ -32,11 +32,6 @@ public class KBArticleLocalServiceWrapper
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link KBArticleLocalServiceUtil} to access the kb article local service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addAttachment(
 			long userId, long resourcePrimKey, String fileName,
@@ -722,6 +717,9 @@ public class KBArticleLocalServiceWrapper
 		return _kbArticleLocalService.getPersistedModel(resourcePrimKey);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

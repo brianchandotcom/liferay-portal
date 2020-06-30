@@ -444,9 +444,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContentFolder1, entityField.getName(), "Aaa");
+						structuredContentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContentFolder2, entityField.getName(), "Bbb");
+						structuredContentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -890,9 +892,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContentFolder1, entityField.getName(), "Aaa");
+						structuredContentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContentFolder2, entityField.getName(), "Bbb");
+						structuredContentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1013,6 +1017,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	@Test
 	public void testDeleteStructuredContentFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContentFolder structuredContentFolder =
 			testDeleteStructuredContentFolder_addStructuredContentFolder();
 
@@ -1160,8 +1165,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				randomPatchStructuredContentFolder);
 
 		StructuredContentFolder expectedPatchStructuredContentFolder =
-			(StructuredContentFolder)BeanUtils.cloneBean(
-				postStructuredContentFolder);
+			postStructuredContentFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchStructuredContentFolder,
@@ -1572,6 +1576,14 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (structuredContentFolder.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (structuredContentFolder.getCreator() == null) {
 					valid = false;
@@ -1708,6 +1720,17 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContentFolder1.getActions(),
+						structuredContentFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1979,6 +2002,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

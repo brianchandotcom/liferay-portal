@@ -20,6 +20,6 @@
 CartTotalCommerceDiscountRuleDisplayContext cartTotalCommerceDiscountRuleDisplayContext = (CartTotalCommerceDiscountRuleDisplayContext)request.getAttribute("view.jsp-cartTotalCommerceDiscountRuleDisplayContext");
 %>
 
-<aui:input label="cart-total-minimum-amount" name="typeSettings" suffix="<%= HtmlUtil.escape(cartTotalCommerceDiscountRuleDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= cartTotalCommerceDiscountRuleDisplayContext.getTypeSettings() %>">
+<aui:input label="cart-total-minimum-amount" name="typeSettings" required="<%= true %>" suffix="<%= HtmlUtil.escape(cartTotalCommerceDiscountRuleDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= cartTotalCommerceDiscountRuleDisplayContext.getTypeSettings() %>">
 	<aui:validator name="number" />
 </aui:input>

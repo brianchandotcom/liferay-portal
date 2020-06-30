@@ -47,7 +47,7 @@ public interface CPInstanceModel
 	extends BaseModel<CPInstance>, ShardedModel, StagedGroupedModel,
 			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp instance model instance should use the {@link CPInstance} interface instead.
@@ -322,21 +322,6 @@ public interface CPInstanceModel
 	public void setPurchasable(boolean purchasable);
 
 	/**
-	 * Returns the json of this cp instance.
-	 *
-	 * @return the json of this cp instance
-	 */
-	@AutoEscape
-	public String getJson();
-
-	/**
-	 * Sets the json of this cp instance.
-	 *
-	 * @param json the json of this cp instance
-	 */
-	public void setJson(String json);
-
-	/**
 	 * Returns the width of this cp instance.
 	 *
 	 * @return the width of this cp instance
@@ -598,6 +583,88 @@ public interface CPInstanceModel
 	 * @param maxSubscriptionCycles the max subscription cycles of this cp instance
 	 */
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles);
+
+	/**
+	 * Returns the delivery subscription enabled of this cp instance.
+	 *
+	 * @return the delivery subscription enabled of this cp instance
+	 */
+	public boolean getDeliverySubscriptionEnabled();
+
+	/**
+	 * Returns <code>true</code> if this cp instance is delivery subscription enabled.
+	 *
+	 * @return <code>true</code> if this cp instance is delivery subscription enabled; <code>false</code> otherwise
+	 */
+	public boolean isDeliverySubscriptionEnabled();
+
+	/**
+	 * Sets whether this cp instance is delivery subscription enabled.
+	 *
+	 * @param deliverySubscriptionEnabled the delivery subscription enabled of this cp instance
+	 */
+	public void setDeliverySubscriptionEnabled(
+		boolean deliverySubscriptionEnabled);
+
+	/**
+	 * Returns the delivery subscription length of this cp instance.
+	 *
+	 * @return the delivery subscription length of this cp instance
+	 */
+	public int getDeliverySubscriptionLength();
+
+	/**
+	 * Sets the delivery subscription length of this cp instance.
+	 *
+	 * @param deliverySubscriptionLength the delivery subscription length of this cp instance
+	 */
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength);
+
+	/**
+	 * Returns the delivery subscription type of this cp instance.
+	 *
+	 * @return the delivery subscription type of this cp instance
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionType();
+
+	/**
+	 * Sets the delivery subscription type of this cp instance.
+	 *
+	 * @param deliverySubscriptionType the delivery subscription type of this cp instance
+	 */
+	public void setDeliverySubscriptionType(String deliverySubscriptionType);
+
+	/**
+	 * Returns the delivery subscription type settings of this cp instance.
+	 *
+	 * @return the delivery subscription type settings of this cp instance
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionTypeSettings();
+
+	/**
+	 * Sets the delivery subscription type settings of this cp instance.
+	 *
+	 * @param deliverySubscriptionTypeSettings the delivery subscription type settings of this cp instance
+	 */
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings);
+
+	/**
+	 * Returns the delivery max subscription cycles of this cp instance.
+	 *
+	 * @return the delivery max subscription cycles of this cp instance
+	 */
+	public long getDeliveryMaxSubscriptionCycles();
+
+	/**
+	 * Sets the delivery max subscription cycles of this cp instance.
+	 *
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this cp instance
+	 */
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles);
 
 	/**
 	 * Returns the status of this cp instance.

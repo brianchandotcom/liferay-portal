@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface ReleasePersistence extends BasePersistence<Release> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReleaseUtil} to access the release persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

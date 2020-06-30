@@ -1,6 +1,20 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 AUI.add(
 	'liferay-commerce-frontend-asset-categories-selector',
-	function(A) {
+	A => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -30,250 +44,260 @@ AUI.add(
 		 * moreResultsLabel {String}: The localized label for link "Load more results".
 		 */
 
-		var AssetTaglibCategoriesSelector = A.Component.create(
-			{
-				ATTRS: {
-					categoryIds: {
-						setter: function(value) {
-							if (Lang.isString(value)) {
-								value = value.split(',');
-							}
+		var AssetTaglibCategoriesSelector = A.Component.create({
+			ATTRS: {
+				categoryIds: {
+					setter(value) {
+						if (Lang.isString(value)) {
+							value = value.split(',');
+						}
 
-							return value;
-						},
-						validator: '_isValidEntries',
-						value: []
+						return value;
 					},
+					validator: '_isValidEntries',
+					value: []
+				},
 
-					categoryTitles: {
-						setter: function(value) {
-							if (Lang.isString(value)) {
-								value = value.split('_CATEGORY_');
-							}
+				categoryTitles: {
+					setter(value) {
+						if (Lang.isString(value)) {
+							value = value.split('_CATEGORY_');
+						}
 
-							return value;
-						},
-						value: []
+						return value;
 					},
+					value: []
+				},
 
-					label: {
-						validator: '_isValidString',
-						value: Liferay.Language.get('select')
+				label: {
+					validator: '_isValidString',
+					value: Liferay.Language.get('select')
+				},
+
+				labelNode: {
+					setter(value) {
+						return A.one(value) || A.Attribute.INVALID_VALUE;
 					},
+					value: null
+				},
 
-					labelNode: {
-						setter: function(value) {
-							return A.one(value) || A.Attribute.INVALID_VALUE;
-						},
-						value: null
-					},
+				maxEntries: {
+					validator: Lang.isNumber,
+					value: -1
+				},
 
-					maxEntries: {
-						validator: Lang.isNumber,
-						value: -1
-					},
+				moreResultsLabel: {
+					validator: '_isValidString',
+					value: Liferay.Language.get('load-more-results')
+				},
 
-					moreResultsLabel: {
-						validator: '_isValidString',
-						value: Liferay.Language.get('load-more-results')
-					},
+				singleSelect: {
+					validator: Lang.isBoolean,
+					value: false
+				},
 
-					singleSelect: {
-						validator: Lang.isBoolean,
-						value: false
-					},
+				title: {
+					validator: '_isValidString',
+					value: Liferay.Language.get('select-categories')
+				},
 
-					title: {
-						validator: '_isValidString',
-						value: Liferay.Language.get('select-categories')
-					},
+				vocabularyIds: {
+					validator: '_isValidString',
+					value: null
+				}
+			},
 
-					vocabularyIds: {
-						validator: '_isValidString',
-						value: null
+			EXTENDS: Liferay.AssetTaglibTagsSelector,
+
+			NAME,
+
+			prototype: {
+				_afterTBLFocusedChange: EMPTY_FN,
+
+				_applyARIARoles() {
+					var instance = this;
+
+					var labelNode = instance.get('labelNode');
+
+					if (labelNode) {
+						var boundingBox = instance.get(BOUNDING_BOX);
+
+						boundingBox.attr('aria-labelledby', labelNode.attr(ID));
+
+						labelNode.attr('for', boundingBox.attr(ID));
 					}
 				},
 
-				EXTENDS: Liferay.AssetTaglibTagsSelector,
+				_bindTagsSelector: EMPTY_FN,
 
-				NAME: NAME,
+				_isValidEntries(value) {
+					return (
+						(Lang.isString(value) && value !== '') ||
+						Lang.isArray(value)
+					);
+				},
 
-				prototype: {
-					TREEVIEWS: {},
-					UI_EVENTS: {},
+				_isValidString(value) {
+					return Lang.isString(value) && value.length;
+				},
 
-					renderUI: function() {
-						var instance = this;
+				_onBoundingBoxClick: EMPTY_FN,
 
-						AssetTaglibCategoriesSelector.superclass.constructor.superclass.renderUI.apply(instance, arguments);
+				_renderIcons() {
+					var instance = this;
 
-						instance._renderIcons();
+					var contentBox = instance.get('contentBox');
 
-						instance.inputContainer.addClass('hide-accessible');
+					if (instance.get('portletURL')) {
+						instance.icons = new A.Toolbar({
+							children: [
+								{
+									label: instance.get('label'),
+									on: {
+										click(event) {
+											event.data = event.data
+												? event.data
+												: {};
 
-						instance._applyARIARoles();
-					},
+											instance._showSelectPopup(event);
+										}
+									},
+									title: instance.get('title')
+								}
+							]
+						}).render(contentBox);
+					}
 
-					bindUI: function() {
-						var instance = this;
+					var iconsBoundingBox = instance.icons.get(BOUNDING_BOX);
 
-						AssetTaglibCategoriesSelector.superclass.bindUI.apply(instance, arguments);
-					},
+					instance.entryHolder.placeAfter(iconsBoundingBox);
+				},
 
-					syncUI: function() {
-						var instance = this;
+				_showSelectPopup(event) {
+					var instance = this;
 
-						AssetTaglibCategoriesSelector.superclass.constructor.superclass.syncUI.apply(instance, arguments);
+					event.domEvent.preventDefault();
 
-						instance.entries.getKey = function(obj) {
-							return obj.categoryId;
+					instance.set('categoryIds', instance.entries.keys);
+
+					var uri = Lang.sub(
+						decodeURIComponent(instance.get('portletURL')),
+						{
+							selectedCategories: instance.get('categoryIds'),
+							singleSelect: instance.get('singleSelect'),
+							vocabularyIds: instance.get('vocabularyIds')
+						}
+					);
+
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+						eventName: instance.get('eventName'),
+						on: {
+							selectedItemChange(event) {
+								var data = event.newVal;
+
+								if (data) {
+									for (var key in data) {
+										var found = false;
+
+										instance.entries.each(item => {
+											if (key === item.value) {
+												found = true;
+											}
+
+											if (
+												key === item.value &&
+												data[key].unchecked
+											) {
+												instance.entries.remove(item);
+											}
+										});
+
+										data[key][0] = key;
+
+										if (!found && !data[key].unchecked) {
+											instance.entries.add(data[key]);
+										}
+									}
+								}
+
+								instance.set(
+									'categoryIds',
+									instance.entries.keys
+								);
+
+								instance._updateInputHidden();
+							}
+						},
+						'strings.add': Liferay.Language.get('add'),
+						title: Liferay.Language.get('select-categories'),
+						url: uri
+					});
+
+					itemSelectorDialog.open();
+				},
+
+				_updateInputHidden() {
+					var instance = this;
+
+					var hiddenInput = instance.get('hiddenInput');
+
+					hiddenInput.val(instance.entries.keys.join(','));
+				},
+
+				TREEVIEWS: {},
+				UI_EVENTS: {},
+
+				bindUI() {
+					var instance = this;
+
+					AssetTaglibCategoriesSelector.superclass.bindUI.apply(
+						instance,
+						arguments
+					);
+				},
+
+				renderUI() {
+					var instance = this;
+
+					AssetTaglibCategoriesSelector.superclass.constructor.superclass.renderUI.apply(
+						instance,
+						arguments
+					);
+
+					instance._renderIcons();
+
+					instance.inputContainer.addClass('hide-accessible');
+
+					instance._applyARIARoles();
+				},
+
+				syncUI() {
+					var instance = this;
+
+					AssetTaglibCategoriesSelector.superclass.constructor.superclass.syncUI.apply(
+						instance,
+						arguments
+					);
+
+					instance.entries.getKey = function(obj) {
+						return obj.categoryId;
+					};
+
+					var categoryTitles = instance.get('categoryTitles');
+
+					var categoryIds = instance.get('categoryIds');
+
+					categoryIds.forEach((item, index) => {
+						var entry = {
+							categoryId: item,
+							value: LString.unescapeHTML(categoryTitles[index])
 						};
 
-						var categoryTitles = instance.get('categoryTitles');
-
-						var categoryIds = instance.get('categoryIds');
-
-						categoryIds.forEach(
-							function(item, index) {
-								var entry = {
-									categoryId: item,
-									value: LString.unescapeHTML(categoryTitles[index])
-								};
-
-								instance.entries.add(entry);
-							}
-						);
-					},
-
-					_afterTBLFocusedChange: EMPTY_FN,
-
-					_applyARIARoles: function() {
-						var instance = this;
-
-						var labelNode = instance.get('labelNode');
-
-						if (labelNode) {
-							var boundingBox = instance.get(BOUNDING_BOX);
-
-							boundingBox.attr('aria-labelledby', labelNode.attr(ID));
-
-							labelNode.attr('for', boundingBox.attr(ID));
-						}
-					},
-
-					_bindTagsSelector: EMPTY_FN,
-
-					_isValidEntries: function(value) {
-						return (Lang.isString(value) && value !== '') || Lang.isArray(value);
-					},
-
-					_isValidString: function(value) {
-						return Lang.isString(value) && value.length;
-					},
-
-					_onBoundingBoxClick: EMPTY_FN,
-
-					_renderIcons: function() {
-						var instance = this;
-
-						var contentBox = instance.get('contentBox');
-
-						if (instance.get('portletURL')) {
-							instance.icons = new A.Toolbar(
-								{
-									children: [
-										{
-											label: instance.get('label'),
-											on: {
-												click: function(event) {
-													event.data = event.data ? event.data : {};
-
-													instance._showSelectPopup(event);
-												}
-											},
-											title: instance.get('title')
-										}
-									]
-								}
-							).render(contentBox);
-						}
-
-						var iconsBoundingBox = instance.icons.get(BOUNDING_BOX);
-
-						instance.entryHolder.placeAfter(iconsBoundingBox);
-					},
-
-					_showSelectPopup: function(event) {
-						var instance = this;
-
-						event.domEvent.preventDefault();
-
-						instance.set('categoryIds', instance.entries.keys);
-
-						var uri = Lang.sub(
-							decodeURIComponent(instance.get('portletURL')),
-							{
-								selectedCategories: instance.get('categoryIds'),
-								singleSelect: instance.get('singleSelect'),
-								vocabularyIds: instance.get('vocabularyIds')
-							}
-						);
-
-						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-							{
-								eventName: instance.get('eventName'),
-								on: {
-									selectedItemChange: function(event) {
-										var data = event.newVal;
-
-										if (data) {
-											for (var key in data) {
-												var found = false;
-
-												instance.entries.each(
-													function(item) {
-														if (key === item.value) {
-															found = true;
-														}
-
-														if (key === item.value && data[key].unchecked) {
-															instance.entries.remove(item);
-														}
-													}
-												);
-
-												data[key][0] = key;
-
-												if (!found && !data[key].unchecked) {
-													instance.entries.add(data[key]);
-												}
-											}
-										}
-
-										instance.set('categoryIds', instance.entries.keys);
-
-										instance._updateInputHidden();
-									}
-								},
-								'strings.add': Liferay.Language.get('add'),
-								title: Liferay.Language.get('select-categories'),
-								url: uri
-							}
-						);
-
-						itemSelectorDialog.open();
-					},
-
-					_updateInputHidden: function() {
-						var instance = this;
-
-						var hiddenInput = instance.get('hiddenInput');
-
-						hiddenInput.val(instance.entries.keys.join(','));
-					}
+						instance.entries.add(entry);
+					});
 				}
 			}
-		);
+		});
 
 		Liferay.AssetTaglibCategoriesSelector = AssetTaglibCategoriesSelector;
 	},

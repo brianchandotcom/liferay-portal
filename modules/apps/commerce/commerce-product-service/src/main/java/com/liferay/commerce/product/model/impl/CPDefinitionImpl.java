@@ -38,11 +38,9 @@ import com.liferay.commerce.product.service.CProductLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -59,6 +57,7 @@ import java.util.TreeSet;
  * @author Marco Leo
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
@@ -222,11 +221,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
-			Company company = CompanyLocalServiceUtil.getCompany(
-				getCompanyId());
-
-			return CommerceMediaResolverUtil.getDefaultUrl(
-				company.getGroupId());
+			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
 		}
 
 		return CommerceMediaResolverUtil.getUrl(
@@ -239,15 +234,24 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
-			Company company = CompanyLocalServiceUtil.getCompany(
-				getCompanyId());
-
-			return CommerceMediaResolverUtil.getDefaultUrl(
-				company.getGroupId());
+			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
 		}
 
 		return CommerceMediaResolverUtil.getThumbnailUrl(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+	}
+
+	@Override
+	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
+		if (_deliverySubscriptionTypeSettingsProperties == null) {
+			_deliverySubscriptionTypeSettingsProperties = new UnicodeProperties(
+				true);
+
+			_deliverySubscriptionTypeSettingsProperties.fastLoad(
+				getDeliverySubscriptionTypeSettings());
+		}
+
+		return _deliverySubscriptionTypeSettingsProperties;
 	}
 
 	@Override
@@ -388,6 +392,31 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public void setDeliverySubscriptionTypeSettings(
+		String subscriptionTypeSettings) {
+
+		super.setDeliverySubscriptionTypeSettings(subscriptionTypeSettings);
+
+		_deliverySubscriptionTypeSettingsProperties = null;
+	}
+
+	@Override
+	public void setDeliverySubscriptionTypeSettingsProperties(
+		UnicodeProperties deliverySubscriptionTypeSettingsProperties) {
+
+		_deliverySubscriptionTypeSettingsProperties =
+			deliverySubscriptionTypeSettingsProperties;
+
+		if (_deliverySubscriptionTypeSettingsProperties == null) {
+			_deliverySubscriptionTypeSettingsProperties =
+				new UnicodeProperties();
+		}
+
+		super.setDeliverySubscriptionTypeSettings(
+			_deliverySubscriptionTypeSettingsProperties.toString());
+	}
+
+	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
 		_descriptionMap = descriptionMap;
 	}
@@ -436,6 +465,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 		_urlTitleMap = urlTitleMap;
 	}
 
+	private UnicodeProperties _deliverySubscriptionTypeSettingsProperties;
 	private Map<Locale, String> _descriptionMap;
 	private String _layoutUuid;
 	private Map<Locale, String> _metaDescriptionMap;

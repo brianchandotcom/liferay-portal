@@ -32,7 +32,7 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUt
 public abstract class CommerceAccountUserRelBaseImpl
 	extends CommerceAccountUserRelModelImpl implements CommerceAccountUserRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account user rel model instance should use the <code>CommerceAccountUserRel</code> interface instead.

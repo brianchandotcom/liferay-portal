@@ -16,11 +16,9 @@ package com.liferay.commerce.product.asset.categories.web.internal.portlet.actio
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -93,10 +91,9 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 			String urlTitle = urlTitleMap.get(locale);
 
 			if (Validator.isNotNull(urlTitle)) {
-				urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
+				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					assetCategory.getCategoryId(),
-					LanguageUtil.getLanguageId(locale), urlTitle);
+					assetCategory.getCategoryId(), urlTitle);
 
 				newUrlTitleMap.put(locale, urlTitle);
 			}
@@ -109,13 +106,10 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 	private AssetCategoryService _assetCategoryService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
-
-	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private Portal _portal;

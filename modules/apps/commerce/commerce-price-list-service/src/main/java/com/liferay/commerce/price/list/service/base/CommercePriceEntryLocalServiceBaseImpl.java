@@ -18,7 +18,9 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelPersistence;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence;
@@ -26,6 +28,8 @@ import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -34,12 +38,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -48,11 +57,13 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -76,7 +87,7 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements CommercePriceEntryLocalService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil</code>.
@@ -167,7 +178,7 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -187,7 +198,7 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -369,8 +380,43 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
+
+					Property workflowStatusProperty =
+						PropertyFactoryUtil.forName("status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(
+							workflowStatusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									CommercePriceEntry.class.getName());
+
+						dynamicQuery.add(
+							workflowStatusProperty.in(
+								stagedModelDataHandler.
+									getExportableStatuses()));
+					}
 				}
 
 			});
@@ -409,6 +455,13 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 			(CommercePriceEntry)persistedModel);
 	}
 
+	public BasePersistence<CommercePriceEntry> getBasePersistence() {
+		return commercePriceEntryPersistence;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
@@ -437,7 +490,7 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	 * Returns a range of all the commerce price entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of commerce price entries
@@ -629,6 +682,56 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce price list channel rel local service.
+	 *
+	 * @return the commerce price list channel rel local service
+	 */
+	public com.liferay.commerce.price.list.service.
+		CommercePriceListChannelRelLocalService
+			getCommercePriceListChannelRelLocalService() {
+
+		return commercePriceListChannelRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list channel rel local service.
+	 *
+	 * @param commercePriceListChannelRelLocalService the commerce price list channel rel local service
+	 */
+	public void setCommercePriceListChannelRelLocalService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListChannelRelLocalService
+				commercePriceListChannelRelLocalService) {
+
+		this.commercePriceListChannelRelLocalService =
+			commercePriceListChannelRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list channel rel persistence.
+	 *
+	 * @return the commerce price list channel rel persistence
+	 */
+	public CommercePriceListChannelRelPersistence
+		getCommercePriceListChannelRelPersistence() {
+
+		return commercePriceListChannelRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list channel rel persistence.
+	 *
+	 * @param commercePriceListChannelRelPersistence the commerce price list channel rel persistence
+	 */
+	public void setCommercePriceListChannelRelPersistence(
+		CommercePriceListChannelRelPersistence
+			commercePriceListChannelRelPersistence) {
+
+		this.commercePriceListChannelRelPersistence =
+			commercePriceListChannelRelPersistence;
+	}
+
+	/**
 	 * Returns the commerce price list commerce account group rel local service.
 	 *
 	 * @return the commerce price list commerce account group rel local service
@@ -676,6 +779,56 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 
 		this.commercePriceListCommerceAccountGroupRelPersistence =
 			commercePriceListCommerceAccountGroupRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce price list discount rel local service.
+	 *
+	 * @return the commerce price list discount rel local service
+	 */
+	public com.liferay.commerce.price.list.service.
+		CommercePriceListDiscountRelLocalService
+			getCommercePriceListDiscountRelLocalService() {
+
+		return commercePriceListDiscountRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list discount rel local service.
+	 *
+	 * @param commercePriceListDiscountRelLocalService the commerce price list discount rel local service
+	 */
+	public void setCommercePriceListDiscountRelLocalService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListDiscountRelLocalService
+				commercePriceListDiscountRelLocalService) {
+
+		this.commercePriceListDiscountRelLocalService =
+			commercePriceListDiscountRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list discount rel persistence.
+	 *
+	 * @return the commerce price list discount rel persistence
+	 */
+	public CommercePriceListDiscountRelPersistence
+		getCommercePriceListDiscountRelPersistence() {
+
+		return commercePriceListDiscountRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list discount rel persistence.
+	 *
+	 * @param commercePriceListDiscountRelPersistence the commerce price list discount rel persistence
+	 */
+	public void setCommercePriceListDiscountRelPersistence(
+		CommercePriceListDiscountRelPersistence
+			commercePriceListDiscountRelPersistence) {
+
+		this.commercePriceListDiscountRelPersistence =
+			commercePriceListDiscountRelPersistence;
 	}
 
 	/**
@@ -949,8 +1102,8 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -985,6 +1138,17 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 		commercePriceListAccountRelPersistence;
 
 	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService.class
+	)
+	protected com.liferay.commerce.price.list.service.
+		CommercePriceListChannelRelLocalService
+			commercePriceListChannelRelLocalService;
+
+	@BeanReference(type = CommercePriceListChannelRelPersistence.class)
+	protected CommercePriceListChannelRelPersistence
+		commercePriceListChannelRelPersistence;
+
+	@BeanReference(
 		type = com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService.class
 	)
 	protected com.liferay.commerce.price.list.service.
@@ -996,6 +1160,17 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	)
 	protected CommercePriceListCommerceAccountGroupRelPersistence
 		commercePriceListCommerceAccountGroupRelPersistence;
+
+	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalService.class
+	)
+	protected com.liferay.commerce.price.list.service.
+		CommercePriceListDiscountRelLocalService
+			commercePriceListDiscountRelLocalService;
+
+	@BeanReference(type = CommercePriceListDiscountRelPersistence.class)
+	protected CommercePriceListDiscountRelPersistence
+		commercePriceListDiscountRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService.class

@@ -1,0 +1,57 @@
+definition {
+
+	macro _addRole {
+		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/add-role \
+				-u test@liferay.com:test \
+				-d className=com.liferay.portal.kernel.model.Role \
+				-d classPK=0 \
+				-d name=${name} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d type=${type} \
+				-d subtype=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _assignRoleToUser {
+		Variables.assertDefined(parameterList = "${roleId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-role-users \
+				-u test@liferay.com:test \
+				-d roleId=${roleId} \
+				-d userIds=${userId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _getRoleIdByName {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/get-role \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d name=${name}
+		''';
+
+		var roleId = JSONCurlUtil.post("${curl}", "$['roleId']");
+
+		return "${roleId}";
+	}
+
+}

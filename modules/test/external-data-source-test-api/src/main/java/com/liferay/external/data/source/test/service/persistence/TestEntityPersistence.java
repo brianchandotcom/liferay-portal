@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TestEntityUtil} to access the test entity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

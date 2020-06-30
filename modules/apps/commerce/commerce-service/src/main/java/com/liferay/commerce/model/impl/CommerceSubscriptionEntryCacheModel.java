@@ -66,7 +66,7 @@ public class CommerceSubscriptionEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -108,6 +108,24 @@ public class CommerceSubscriptionEntryCacheModel
 		sb.append(nextIterationDate);
 		sb.append(", startDate=");
 		sb.append(startDate);
+		sb.append(", deliverySubscriptionLength=");
+		sb.append(deliverySubscriptionLength);
+		sb.append(", deliverySubscriptionType=");
+		sb.append(deliverySubscriptionType);
+		sb.append(", deliverySubscriptionTypeSettings=");
+		sb.append(deliverySubscriptionTypeSettings);
+		sb.append(", deliveryCurrentCycle=");
+		sb.append(deliveryCurrentCycle);
+		sb.append(", deliveryMaxSubscriptionCycles=");
+		sb.append(deliveryMaxSubscriptionCycles);
+		sb.append(", deliverySubscriptionStatus=");
+		sb.append(deliverySubscriptionStatus);
+		sb.append(", deliveryLastIterationDate=");
+		sb.append(deliveryLastIterationDate);
+		sb.append(", deliveryNextIterationDate=");
+		sb.append(deliveryNextIterationDate);
+		sb.append(", deliveryStartDate=");
+		sb.append(deliveryStartDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -208,13 +226,66 @@ public class CommerceSubscriptionEntryCacheModel
 			commerceSubscriptionEntryImpl.setStartDate(new Date(startDate));
 		}
 
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionLength(
+			deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			commerceSubscriptionEntryImpl.setDeliverySubscriptionType("");
+		}
+		else {
+			commerceSubscriptionEntryImpl.setDeliverySubscriptionType(
+				deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			commerceSubscriptionEntryImpl.setDeliverySubscriptionTypeSettings(
+				"");
+		}
+		else {
+			commerceSubscriptionEntryImpl.setDeliverySubscriptionTypeSettings(
+				deliverySubscriptionTypeSettings);
+		}
+
+		commerceSubscriptionEntryImpl.setDeliveryCurrentCycle(
+			deliveryCurrentCycle);
+		commerceSubscriptionEntryImpl.setDeliveryMaxSubscriptionCycles(
+			deliveryMaxSubscriptionCycles);
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionStatus(
+			deliverySubscriptionStatus);
+
+		if (deliveryLastIterationDate == Long.MIN_VALUE) {
+			commerceSubscriptionEntryImpl.setDeliveryLastIterationDate(null);
+		}
+		else {
+			commerceSubscriptionEntryImpl.setDeliveryLastIterationDate(
+				new Date(deliveryLastIterationDate));
+		}
+
+		if (deliveryNextIterationDate == Long.MIN_VALUE) {
+			commerceSubscriptionEntryImpl.setDeliveryNextIterationDate(null);
+		}
+		else {
+			commerceSubscriptionEntryImpl.setDeliveryNextIterationDate(
+				new Date(deliveryNextIterationDate));
+		}
+
+		if (deliveryStartDate == Long.MIN_VALUE) {
+			commerceSubscriptionEntryImpl.setDeliveryStartDate(null);
+		}
+		else {
+			commerceSubscriptionEntryImpl.setDeliveryStartDate(
+				new Date(deliveryStartDate));
+		}
+
 		commerceSubscriptionEntryImpl.resetOriginalValues();
 
 		return commerceSubscriptionEntryImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		commerceSubscriptionEntryId = objectInput.readLong();
@@ -235,7 +306,7 @@ public class CommerceSubscriptionEntryCacheModel
 
 		subscriptionLength = objectInput.readInt();
 		subscriptionType = objectInput.readUTF();
-		subscriptionTypeSettings = objectInput.readUTF();
+		subscriptionTypeSettings = (String)objectInput.readObject();
 
 		currentCycle = objectInput.readLong();
 
@@ -245,6 +316,19 @@ public class CommerceSubscriptionEntryCacheModel
 		lastIterationDate = objectInput.readLong();
 		nextIterationDate = objectInput.readLong();
 		startDate = objectInput.readLong();
+
+		deliverySubscriptionLength = objectInput.readInt();
+		deliverySubscriptionType = objectInput.readUTF();
+		deliverySubscriptionTypeSettings = objectInput.readUTF();
+
+		deliveryCurrentCycle = objectInput.readLong();
+
+		deliveryMaxSubscriptionCycles = objectInput.readLong();
+
+		deliverySubscriptionStatus = objectInput.readInt();
+		deliveryLastIterationDate = objectInput.readLong();
+		deliveryNextIterationDate = objectInput.readLong();
+		deliveryStartDate = objectInput.readLong();
 	}
 
 	@Override
@@ -295,10 +379,10 @@ public class CommerceSubscriptionEntryCacheModel
 		}
 
 		if (subscriptionTypeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(subscriptionTypeSettings);
+			objectOutput.writeObject(subscriptionTypeSettings);
 		}
 
 		objectOutput.writeLong(currentCycle);
@@ -309,6 +393,31 @@ public class CommerceSubscriptionEntryCacheModel
 		objectOutput.writeLong(lastIterationDate);
 		objectOutput.writeLong(nextIterationDate);
 		objectOutput.writeLong(startDate);
+
+		objectOutput.writeInt(deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionTypeSettings);
+		}
+
+		objectOutput.writeLong(deliveryCurrentCycle);
+
+		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
+
+		objectOutput.writeInt(deliverySubscriptionStatus);
+		objectOutput.writeLong(deliveryLastIterationDate);
+		objectOutput.writeLong(deliveryNextIterationDate);
+		objectOutput.writeLong(deliveryStartDate);
 	}
 
 	public String uuid;
@@ -331,5 +440,14 @@ public class CommerceSubscriptionEntryCacheModel
 	public long lastIterationDate;
 	public long nextIterationDate;
 	public long startDate;
+	public int deliverySubscriptionLength;
+	public String deliverySubscriptionType;
+	public String deliverySubscriptionTypeSettings;
+	public long deliveryCurrentCycle;
+	public long deliveryMaxSubscriptionCycles;
+	public int deliverySubscriptionStatus;
+	public long deliveryLastIterationDate;
+	public long deliveryNextIterationDate;
+	public long deliveryStartDate;
 
 }

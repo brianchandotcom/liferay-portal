@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
 import com.liferay.portal.security.auth.verifier.internal.portal.session.PortalSessionAuthVerifier;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -42,6 +43,12 @@ public class PortalSessionAuthVerifierPublisher
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		if (!properties.containsKey("check.csrf.token")) {
+			properties = new HashMap<>(properties);
+
+			properties.put("check.csrf.token", false);
+		}
+
 		super.activate(bundleContext, properties);
 	}
 
@@ -62,6 +69,15 @@ public class PortalSessionAuthVerifierPublisher
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		super.modified(bundleContext, properties);
+	}
+
+	@Override
+	protected String translateKey(String authVerifierPropertyName, String key) {
+		if (key.equals("hostsAllowed")) {
+			key = "check.csrf.token";
+		}
+
+		return super.translateKey(authVerifierPropertyName, key);
 	}
 
 	private final AuthVerifier _authVerifier = new PortalSessionAuthVerifier();

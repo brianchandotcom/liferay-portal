@@ -678,11 +678,6 @@ public class DDMTemplateVersionWrapper
 		return _ddmTemplateVersion.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm template version model instance should use the <code>DDMTemplateVersion</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmTemplateVersion.persist();

@@ -13,11 +13,6 @@
 }
 
 .commerce-modal-wrapper {
-	.lexicon-icon {
-		height: 22px;
-		width: 24px;
-	}
-
 	.modal {
 		display: none;
 
@@ -57,6 +52,6 @@
 	background-color: rgb(52, 55, 62);
 
 	&.show {
-		opacity: .6;
+		opacity: 0.6;
 	}
 }

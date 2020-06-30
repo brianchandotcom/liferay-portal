@@ -45,7 +45,7 @@ public interface RatingsEntryModel
 	extends AttachedModel, BaseModel<RatingsEntry>, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ratings entry model instance should use the {@link RatingsEntry} interface instead.

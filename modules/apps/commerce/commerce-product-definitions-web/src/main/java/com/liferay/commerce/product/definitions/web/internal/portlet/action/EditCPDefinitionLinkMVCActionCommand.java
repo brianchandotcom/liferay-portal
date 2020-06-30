@@ -76,8 +76,10 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinitionLink.class.getName(), actionRequest);
 
 		long[] cProductIds = ListUtil.toLongArray(
-			_cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId),
+			_cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId, type),
 			CPDefinitionLinkModel::getCProductId);
+
+		boolean successMessage = false;
 
 		for (long curCPDefinitionId : cpDefinitionIds2) {
 			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -88,7 +90,13 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			if (!ArrayUtil.contains(cProductIds, cProductId)) {
 				_cpDefinitionLinkService.addCPDefinitionLink(
 					cpDefinitionId, cProductId, 0.0, type, serviceContext);
+
+				successMessage = true;
 			}
+		}
+
+		if (!successMessage) {
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

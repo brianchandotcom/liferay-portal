@@ -41,6 +41,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 
+import org.jgroups.logging.CustomLogFactory;
+import org.jgroups.logging.LogFactory;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -103,6 +106,21 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		initBindAddress(
 			GetterUtil.getString(
 				_props.get(PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS)));
+
+		LogFactory.setCustomLogFactory(
+			new CustomLogFactory() {
+
+				@Override
+				public org.jgroups.logging.Log getLog(Class clazz) {
+					return new JGroupsLogAdapter(clazz);
+				}
+
+				@Override
+				public org.jgroups.logging.Log getLog(String category) {
+					return new JGroupsLogAdapter(category);
+				}
+
+			});
 
 		_bundleTracker = new BundleTracker<ClassLoader>(
 			bundleContext, Bundle.ACTIVE, null) {

@@ -38,7 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
+public class MoveLayoutMVCActionCommand
+	extends GetLayoutChildrenMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -61,6 +62,10 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			_layoutService.updateParentLayoutIdAndPriority(
 				plid, parentPlid, priority);
 		}
+
+		long checkPlid = ParamUtil.getLong(actionRequest, "checkPlid");
+
+		writeChildLayoutsAsJSON(actionRequest, actionResponse, checkPlid);
 	}
 
 	@Reference

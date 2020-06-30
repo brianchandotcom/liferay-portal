@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface PortletPreferencesService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesServiceUtil} to access the portlet preferences remote service. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -61,23 +61,23 @@ public interface PortletPreferencesService extends BaseService {
 
 	public void restoreArchivedPreferences(
 			long groupId, Layout layout, String portletId, long portletItemId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException;
 
 	public void restoreArchivedPreferences(
 			long groupId, Layout layout, String portletId,
 			PortletItem portletItem,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException;
 
 	public void restoreArchivedPreferences(
 			long groupId, String name, Layout layout, String portletId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException;
 
 	public void updateArchivePreferences(
 			long userId, long groupId, String name, String portletId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException;
 
 }

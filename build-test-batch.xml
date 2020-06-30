@@ -643,6 +643,36 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						file="test-results/TESTS-TestSuites.xml"
 						tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml"
 					/>
+
+					<if>
+						<available file="${analytics.cloud.faro.dir}/osb-faro-functional-test/build/reports" />
+						<then>
+							<mkdir dir="${env.WORKSPACE}/test-results/cucumber/build/reports" />
+
+							<copy
+								todir="${env.WORKSPACE}/test-results/cucumber/build/reports"
+							>
+								<fileset
+									dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/build/reports"
+								/>
+							</copy>
+						</then>
+					</if>
+
+					<if>
+						<available file="${analytics.cloud.faro.dir}/osb-faro-functional-test/test-results/functional/screenshots" />
+						<then>
+							<mkdir dir="${env.WORKSPACE}/test-results/cucumber/screenshots" />
+
+							<copy
+								todir="${env.WORKSPACE}/test-results/cucumber/screenshots"
+							>
+								<fileset
+									dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/test-results/functional/screenshots"
+								/>
+							</copy>
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -1002,6 +1032,8 @@ app.server.type=@{app.server.type}]]></echo>
 			<setup-yarn />
 
 			<antcall inheritAll="false" target="install-portal-snapshots" />
+
+			<update-commerce-modules />
 
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 
@@ -1411,6 +1443,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<var name="app.server.type" value="@{app.server.type}" />
 			<var name="app.server.version" value="@{app.server.version}" />
+			<var name="database.type" value="@{database.type}" />
 
 			<if>
 				<matches pattern="[A-z]+" string="${axis.variable}" />
@@ -1498,6 +1531,16 @@ app.server.type=@{app.server.type}]]></echo>
 								test.sql.zip.url="${test.sql.zip.url}"
 							/>
 
+							<gradle-execute dir="modules/core" task="deploy">
+								<arg value="--parallel" />
+								<arg value="-Dbuild.profile=portal-pre" />
+								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+							</gradle-execute>
+
+							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+							<ant dir="portal-test" inheritAll="false" target="jar" />
+
 							<local name="artifact.version" />
 
 							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
@@ -1507,6 +1550,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
@@ -1685,6 +1729,8 @@ app.server.type=@{app.server.type}]]></echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -1867,6 +1913,8 @@ log.sanitizer.enabled=false</echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -2173,6 +2221,8 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -2782,6 +2832,8 @@ log.sanitizer.enabled=false</echo>
 				<equals arg1="${build.profile}" arg2="dxp" />
 				<then>
 					<antcall inheritAll="false" target="setup-profile-dxp" />
+
+					<antcall target="install-portal-snapshots" />
 				</then>
 			</if>
 
@@ -3050,6 +3102,39 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-commerce-modules">
+		<sequential>
+			<if>
+				<contains string="${env.CI_TEST_SUITE}" substring="commerce" />
+				<then>
+					<if>
+						<equals arg1="${build.profile}" arg2="dxp" />
+						<then>
+							<echo>Building Commerce with DXP profile.</echo>
+
+							<antcall inheritAll="false" target="setup-profile-dxp" />
+
+							<gradle-execute dir="${project.dir}/modules/apps/commerce" task="deploy">
+								<arg value="clean" />
+							</gradle-execute>
+
+							<gradle-execute dir="${project.dir}/modules/dxp/apps/commerce" task="deploy">
+								<arg value="clean" />
+							</gradle-execute>
+						</then>
+						<else>
+							<echo>Building Commerce.</echo>
+
+							<gradle-execute dir="${project.dir}/modules/apps/commerce" task="deploy">
+								<arg value="clean" />
+							</gradle-execute>
+						</else>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-app-server-log-message">
 		<attribute name="log.message" />
 
@@ -3137,11 +3222,22 @@ log.sanitizer.enabled=false</echo>
 	</macrodef>
 
 	<target name="analytics-cloud-cucumber-tomcat90-mysql57-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
 			database.version="5.7"
 			functional.test.type="analytics-cloud"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
 
@@ -3795,6 +3891,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-mysql57-jdk8_stable">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-mysql57-jdk8_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -3963,6 +4063,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="functional-upgrade-tomcat90-mysql57-jdk8_stable">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="functional-upgrade-tomcat90-mysql57-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
@@ -4021,6 +4125,49 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-wildfly110-mariadb102-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
+	</target>
+
+	<target name="gogo-shell-client-jdk8">
+		<run-batch-test>
+			<test-action>
+				<database-test-run-test database.type="mysql" stop.app.server="true">
+					<test-action>
+						<local name="junit.failure.count" />
+						<local name="junit.failure.message" />
+
+						<trycatch property="junit.failure.message">
+							<try>
+								<for keepgoing="true" list="enable-access-to-gogo-shell-command,no-default-access-to-gogo-shell-command" param="gogoshell.test.target">
+									<sequential>
+										<ant antfile="${project.dir}/build-test-gogo-shell-client.xml" target="@{gogoshell.test.target}" />
+
+										<antcall inheritall="false" target="stop-app-server" />
+									</sequential>
+								</for>
+							</try>
+							<finally>
+								<condition else="0" property="junit.failure.count" value="1">
+									<isset property="junit.failure.message" />
+								</condition>
+
+								<get-junit-failure-message-element />
+
+								<generate-backend-batch-junit-report
+									junit.failure.count="${junit.failure.count}"
+									junit.failure.message.element="${junit.failure.message.element}"
+									test.class.name="GogoShellClient"
+									test.command.name="gogoShellClient"
+								/>
+							</finally>
+						</trycatch>
+					</test-action>
+				</database-test-run-test>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
 	</target>
 
 	<target name="gradle-plugins-test-jdk8">
@@ -4095,86 +4242,9 @@ log.sanitizer.enabled=false</echo>
 	<target name="js-unit-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for keepgoing="true" param="js.test.dir">
-					<path>
-						<dirset
-							dir="modules"
-							excludes="dxp/**,node_modules/**,**/node_modules/**,${base.dir}/**/test/stories/**"
-							includes="**/test"
-						/>
-					</path>
-					<sequential>
-						<if>
-							<resourcecontains
-								resource="@{js.test.dir}/../package.json"
-								substring="&quot;test&quot;:"
-							/>
-							<then>
-								<var name="js.project.dir.native" unset="true" />
-								<var name="js.project.dir.unix" unset="true" />
-
-								<dirname file="@{js.test.dir}" property="js.project.dir.native" />
-
-								<pathconvert property="js.project.dir.unix" targetos="unix">
-									<path location="${js.project.dir.native}" />
-								</pathconvert>
-
-								<propertyregex
-									global="false"
-									input="${js.project.dir.unix}"
-									override="yes"
-									property="js.project.path"
-									regexp="^.*/modules(/.*)"
-									select="\1"
-								/>
-
-								<propertyregex
-									global="true"
-									input="${js.project.path}"
-									override="yes"
-									property="js.project.path"
-									regexp="/"
-									replace=":"
-								/>
-
-								<echo message="Executing Gradle task: ${js.project.path}:packageRunTest" />
-
-								<gradle-execute dir="modules" task="${js.project.path}:packageRunTest">
-									<arg value="-DpackageRunTest.ignore.failures=true" />
-								</gradle-execute>
-							</then>
-						</if>
-					</sequential>
-				</for>
-
-				<replace
-					dir="modules"
-					includes="**/TEST-frontend-js.xml"
-				>
-					<replacefilter>
-						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-					<replacefilter>
-						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-				</replace>
-			</test-action>
-
-			<test-set-up>
-				<setup-test-environment />
-			</test-set-up>
-		</run-batch-test>
-	</target>
-
-	<target name="js-unit-private-jdk8">
-		<run-batch-test>
-			<test-action>
-				<gradle-execute dir="modules/dxp" task="packageRunTest">
+				<gradle-execute dir="modules" task="packageRunTest">
 					<arg value="--continue" />
 					<arg value="--parallel" />
-					<arg value="-DpackageRunTest.ignore.failures=true" />
 				</gradle-execute>
 
 				<replace
@@ -4353,7 +4423,7 @@ log.sanitizer.enabled=false</echo>
 			<test-set-up>
 				<setup-test-environment />
 
-				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout--verbose  > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout--verbose > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 
 				<execute>
 					<![CDATA[
@@ -4520,6 +4590,10 @@ log.sanitizer.enabled=false</echo>
 		<run-modules-integration-test database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="modules-integration-mysql57-jdk8_stable">
+		<run-modules-integration-test database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="modules-integration-oracle122-jdk8">
 		<run-modules-integration-test database.type="oracle" />
 	</target>
@@ -4682,6 +4756,10 @@ log.sanitizer.enabled=false</echo>
 				<stop-suite-search-engine />
 			</test-tear-down>
 		</run-batch-test>
+	</target>
+
+	<target name="modules-unit-jdk8_stable">
+		<antcall target="modules-unit-jdk8" />
 	</target>
 
 	<target name="oracle-service-start">
@@ -5850,6 +5928,10 @@ ${output.content}</echo>
 				<delete file="${app.server.lib.portal.dir}/util-taglib.jar" />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="unit-jdk8_stable">
+		<antcall target="unit-jdk8" />
 	</target>
 
 	<target name="wsdd-builder-jdk8">

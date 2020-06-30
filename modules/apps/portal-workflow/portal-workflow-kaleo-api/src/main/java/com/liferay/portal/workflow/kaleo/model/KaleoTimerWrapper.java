@@ -433,11 +433,6 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		return _kaleoTimer.isRecurring();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo timer model instance should use the <code>KaleoTimer</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoTimer.persist();

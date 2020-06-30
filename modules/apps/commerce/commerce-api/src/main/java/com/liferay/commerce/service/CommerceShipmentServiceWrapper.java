@@ -33,11 +33,19 @@ public class CommerceShipmentServiceWrapper
 		_commerceShipmentService = commerceShipmentService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentServiceUtil} to access the commerce shipment remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
+	@Override
+	public com.liferay.commerce.model.CommerceShipment addCommerceShipment(
+			long groupId, long commerceAccountId, long commerceAddressId,
+			long commerceShippingMethodId, String commerceShippingOptionName,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.addCommerceShipment(
+			groupId, commerceAccountId, commerceAddressId,
+			commerceShippingMethodId, commerceShippingOptionName,
+			serviceContext);
+	}
+
 	@Override
 	public com.liferay.commerce.model.CommerceShipment addCommerceShipment(
 			long commerceOrderId,
@@ -48,11 +56,24 @@ public class CommerceShipmentServiceWrapper
 			commerceOrderId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
+	 */
+	@Deprecated
 	@Override
 	public void deleteCommerceShipment(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceShipmentService.deleteCommerceShipment(commerceShipmentId);
+	}
+
+	@Override
+	public void deleteCommerceShipment(
+			long commerceShipmentId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceShipmentService.deleteCommerceShipment(
+			commerceShipmentId, restoreStockQuantity);
 	}
 
 	@Override
@@ -90,6 +111,41 @@ public class CommerceShipmentServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+			getCommerceShipments(
+				long companyId, long commerceAddressId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.model.CommerceShipment>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.getCommerceShipments(
+			companyId, commerceAddressId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+			getCommerceShipments(
+				long companyId, long[] groupIds, long[] commerceAccountIds,
+				String keywords, int[] shipmentStatuses,
+				boolean excludeShipmentStatus, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.getCommerceShipments(
+			companyId, groupIds, commerceAccountIds, keywords, shipmentStatuses,
+			excludeShipmentStatus, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+		getCommerceShipmentsByOrderId(
+			long commerceOrderId, int start, int end) {
+
+		return _commerceShipmentService.getCommerceShipmentsByOrderId(
+			commerceOrderId, start, end);
+	}
+
+	@Override
 	public int getCommerceShipmentsCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -104,6 +160,32 @@ public class CommerceShipmentServiceWrapper
 			companyId, status);
 	}
 
+	@Override
+	public int getCommerceShipmentsCount(long companyId, long commerceAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.getCommerceShipmentsCount(
+			companyId, commerceAddressId);
+	}
+
+	@Override
+	public int getCommerceShipmentsCount(
+			long companyId, long[] groupIds, long[] commerceAccountIds,
+			String keywords, int[] shipmentStatuses,
+			boolean excludeShipmentStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.getCommerceShipmentsCount(
+			companyId, groupIds, commerceAccountIds, keywords, shipmentStatuses,
+			excludeShipmentStatus);
+	}
+
+	@Override
+	public int getCommerceShipmentsCountByOrderId(long commerceOrderId) {
+		return _commerceShipmentService.getCommerceShipmentsCountByOrderId(
+			commerceOrderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -112,6 +194,28 @@ public class CommerceShipmentServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _commerceShipmentService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateCarrierDetails(
+			long commerceShipmentId, String carrier, String trackingNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateCarrierDetails(
+			commerceShipmentId, carrier, trackingNumber);
 	}
 
 	@Override
@@ -150,6 +254,37 @@ public class CommerceShipmentServiceWrapper
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
 			expectedDateHour, expectedDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateExpectedDate(
+			long commerceShipmentId, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateExpectedDate(
+			commerceShipmentId, expectedDateMonth, expectedDateDay,
+			expectedDateYear, expectedDateHour, expectedDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateShippingDate(
+			long commerceShipmentId, int shippingDateMonth, int shippingDateDay,
+			int shippingDateYear, int shippingDateHour, int shippingDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateShippingDate(
+			commerceShipmentId, shippingDateMonth, shippingDateDay,
+			shippingDateYear, shippingDateHour, shippingDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateStatus(
+			long commerceShipmentId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateStatus(
+			commerceShipmentId, status);
 	}
 
 	@Override

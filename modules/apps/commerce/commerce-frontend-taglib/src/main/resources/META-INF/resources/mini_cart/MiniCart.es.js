@@ -1,13 +1,28 @@
-import 'clay-icon';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
-import debounce from 'metal-debounce';
+import 'clay-icon';
 import Component from 'metal-component';
+import debounce from 'metal-debounce';
 import Soy, {Config} from 'metal-soy';
 
 import template from './MiniCart.soy';
 
 import './CartFlusher.es';
+
 import './CommerceCartItem.es';
+
 import './Summary.es';
 
 const ALL = 'all',
@@ -15,30 +30,28 @@ const ALL = 'all',
 	OPEN_CART_CLASS = 'cart-open';
 
 function notifyProductRemoval(productId = ALL) {
-	Liferay.fire(
-		'productRemovedFromCart',
-		{productId}
-	);
+	Liferay.fire('productRemovedFromCart', {productId});
 }
 
 class Cart extends Component {
-
 	created() {
-		this._topbar = window.document.querySelector(`.${COMMERCE_TOPBAR_CLASS}`);
+		this._topbar = window.document.querySelector(
+			`.${COMMERCE_TOPBAR_CLASS}`
+		);
 		this._handleClickOutside = this._handleClickOutside.bind(this);
 		this._refreshCartUsingData = this._refreshCartUsingData.bind(this);
 		this.reset = this.reset.bind(this);
 		this._setAndRefreshOrder = this._setAndRefreshOrder.bind(this);
 
-		this.flushCartUrl = `${this.cartAPI}/${this.orderId}?commerceAccountId=${this.commerceAccountId}&
+		this.flushCartUrl = `${this.cartAPI}/${
+			this.orderId
+		}?commerceAccountId=${this.commerceAccountId}&
 			groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}`;
 	}
 
 	_handleClickOutside(e) {
 		const topBar = this._topbar || document.body;
-		if (
-			topBar.contains(e.target) && !this.element.contains(e.target)
-		) {
+		if (topBar.contains(e.target) && !this.element.contains(e.target)) {
 			this.close();
 		}
 	}
@@ -52,22 +65,29 @@ class Cart extends Component {
 
 	open() {
 		this._open = true;
-		this._topbar && this._topbar.classList.add(OPEN_CART_CLASS);
+
+		if (this._topbar) {
+			this._topbar.classList.add(OPEN_CART_CLASS);
+		}
+
 		this.element.addEventListener('transitionend', () => {
 			window.addEventListener('click', this._handleClickOutside);
 		});
+
 		return this._open;
 	}
 
 	close() {
 		this._open = false;
-		this._topbar && this._topbar.classList.remove(OPEN_CART_CLASS);
-		this.element.addEventListener(
-			'transitionend',
-			() => {
-				window.removeEventListener('click', this._handleClickOutside);
-			}
-		);
+
+		if (this._topbar) {
+			this._topbar.classList.remove(OPEN_CART_CLASS);
+		}
+
+		this.element.addEventListener('transitionend', () => {
+			window.removeEventListener('click', this._handleClickOutside);
+		});
+
 		return this._open;
 	}
 
@@ -81,8 +101,7 @@ class Cart extends Component {
 			this._loading = false;
 			this.pendingOperations = [];
 			return true;
-		}
-		catch (error) {
+		} catch (error) {
 			return false;
 		}
 	}
@@ -99,17 +118,9 @@ class Cart extends Component {
 			this
 		);
 
-		window.Liferay.on(
-			'accountSelected',
-			this.reset,
-			this
-		);
+		window.Liferay.on('accountSelected', this.reset, this);
 
-		window.Liferay.on(
-			'orderSelected',
-			this._setAndRefreshOrder,
-			this
-		);
+		window.Liferay.on('orderSelected', this._setAndRefreshOrder, this);
 
 		this._getData();
 	}
@@ -122,17 +133,9 @@ class Cart extends Component {
 			this
 		);
 
-		window.Liferay.detach(
-			'accountSelected',
-			this.reset,
-			this
-		);
+		window.Liferay.detach('accountSelected', this.reset, this);
 
-		window.Liferay.detach(
-			'orderSelected',
-			this._setAndRefreshOrder,
-			this
-		);
+		window.Liferay.detach('orderSelected', this._setAndRefreshOrder, this);
 	}
 
 	_getData() {
@@ -162,100 +165,87 @@ class Cart extends Component {
 		if (!rawProducts) {
 			return null;
 		}
-		const normalizedProducts = rawProducts.map(
-			productData => {
-				return Object.assign(
-					{
-						sendDeleteRequest: debounce(
-							() => this._sendDeleteRequest(productData.id),
-							500
-						),
-						sendUpdateRequest: debounce(
-							() => this._sendUpdateRequest(productData.id),
-							500
-						)
-					},
-					productStateSchema,
-					productData
-				);
-			}
-		);
+		const normalizedProducts = rawProducts.map(productData => {
+			return {
+				sendDeleteRequest: debounce(
+					() => this._sendDeleteRequest(productData.id),
+					500
+				),
+				sendUpdateRequest: debounce(
+					() => this._sendUpdateRequest(productData.id),
+					500
+				),
+				...productStateSchema,
+				...productData
+			};
+		});
 		return normalizedProducts;
 	}
 
 	_updateProductQuantity(productId, quantity) {
 		this._addPendingOperation(productId);
-		this._setProductProperties(
-			productId,
-			{
-				deleteDisabled: true,
-				quantity: quantity,
-				updating: true
-			}
-		);
+		this._setProductProperties(productId, {
+			deleteDisabled: true,
+			quantity,
+			updating: true
+		});
 		return this._getProductProperty(productId, 'sendUpdateRequest')();
 	}
 
 	_handleSubmitQuantity(productId, quantity) {
-		this._setProductProperties(
-			productId,
-			{
-				inputChanged: false
-			}
-		);
+		this._setProductProperties(productId, {
+			inputChanged: false
+		});
 		return this._updateProductQuantity(productId, quantity);
 	}
 
 	_removeProductsFromCart(products = []) {
-		products.length && products.forEach(product => {
-			const {
-				id: orderProductId,
-				cpinstanceId: catalogProductId
-			} = product;
+		if (products.length) {
+			products.forEach(product => {
+				const {
+					cpinstanceId: catalogProductId,
+					id: orderProductId
+				} = product;
 
-			notifyProductRemoval(catalogProductId.toString());
+				notifyProductRemoval(catalogProductId.toString());
 
-			this._setProductProperties(
-				orderProductId,
-				{
+				this._setProductProperties(orderProductId, {
 					collapsed: true,
 					deleteDisabled: true,
 					inputChanged: false,
 					updating: false
-				}
-			);
-		});
+				});
+			});
+		}
 	}
 
 	_setProductProperties(productId, newProperties) {
-		this.products = this.products.map(
-			product => {
-				return product.id === productId ? Object.assign(
-					{},
-					product,
-					newProperties
-				) :
-					product;
-			}
-		);
+		this.products = this.products.map(product => {
+			return product.id === productId
+				? {
+						...product,
+						...newProperties
+				  }
+				: product;
+		});
 		return this.products;
 	}
 
 	_getProductProperty(productId, key) {
 		return this.products.reduce(
-			(property, product) => product.id === productId ? product[key] : property,
+			(property, product) =>
+				product.id === productId ? product[key] : property,
 			null
 		);
 	}
 
 	_subtractProducts(orArray, subArray) {
 		return new Promise(resolve => {
-			const result = subArray.reduce(
-				(arrayToBeFiltered, elToRemove) => {
-					return arrayToBeFiltered.filter((elToCheck) => elToCheck.id !== elToRemove.id);
-				},
-				orArray
-			);
+			const result = subArray.reduce((arrayToBeFiltered, elToRemove) => {
+				return arrayToBeFiltered.filter(
+					elToCheck => elToCheck.id !== elToRemove.id
+				);
+			}, orArray);
 
 			return resolve(result);
 		});
@@ -263,10 +253,10 @@ class Cart extends Component {
 
 	_handleDeleteAllItems({products, summary}) {
 		this.products = products;
-		this.summary = Object.assign({},
-			this.summary,
-			summary
-		);
+		this.summary = {
+			...this.summary,
+			...summary
+		};
 
 		notifyProductRemoval();
 	}
@@ -281,39 +271,27 @@ class Cart extends Component {
 			return false;
 		}
 
-		this._setProductProperties(
-			productId,
-			{
-				deleteDisabled: true,
-				deleting: true
-			}
-		);
+		this._setProductProperties(productId, {
+			deleteDisabled: true,
+			deleting: true
+		});
 
-		return setTimeout(
-			() => {
-				const deleting = this._getProductProperty(productId, 'deleting');
-				if (deleting) {
-					this._setProductProperties(
-						productId,
-						{
-							collapsed: true
-						}
-					);
-					this._getProductProperty(productId, 'sendDeleteRequest')();
-				}
-			},
-			2000
-		);
+		return setTimeout(() => {
+			const deleting = this._getProductProperty(productId, 'deleting');
+			if (deleting) {
+				this._setProductProperties(productId, {
+					collapsed: true
+				});
+				this._getProductProperty(productId, 'sendDeleteRequest')();
+			}
+		}, 2000);
 	}
 
 	_handleCancelItemDeletion(productId) {
-		this._setProductProperties(
-			productId,
-			{
-				deleteDisabled: false,
-				deleting: false
-			}
-		);
+		this._setProductProperties(productId, {
+			deleteDisabled: false,
+			deleting: false
+		});
 		return this._removePendingOperation();
 	}
 
@@ -333,153 +311,144 @@ class Cart extends Component {
 
 	_sendUpdateRequest(productId) {
 		return fetch(
-			`${this.cartAPI}/cart-item/${productId}?commerceAccountId=${this.commerceAccountId}&
+			`${this.cartAPI}/cart-item/${productId}?commerceAccountId=${
+				this.commerceAccountId
+			}&
 				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}&
 				quantity=${this._getProductProperty(productId, 'quantity')}`,
 			{
-				headers: new Headers({'Content-Type': 'application/json',
-					'Accept': 'application/json'}),
+				credentials: 'include',
+				headers: new Headers({
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'x-csrf-token': Liferay.authToken
+				}),
 				method: 'PUT'
 			}
 		)
 			.then(response => response.json())
-			.then(
-				(jsonresponse) => {
-					if (jsonresponse.success) {
-						this._handleProductUpdate(productId, jsonresponse.products);
-						this.summary = jsonresponse.summary;
-						return this.summary;
-					}
+			.then(jsonresponse => {
+				if (jsonresponse.success) {
+					this._handleProductUpdate(productId, jsonresponse.products);
+					this.summary = jsonresponse.summary;
+					return this.summary;
+				}
 
-					this._handleResponseErrors(productId, jsonresponse);
-					return this._removePendingOperation(productId);
-				}
-			)
-			.catch(
-				err => {
-					this._removePendingOperation(productId);
-					this._setProductProperties(
-						productId,
-						{
-							deleteDisabled: false,
-							updating: false
-						}
-					);
-				}
-			);
+				this._handleResponseErrors(productId, jsonresponse);
+				return this._removePendingOperation(productId);
+			})
+			.catch(_err => {
+				this._removePendingOperation(productId);
+				this._setProductProperties(productId, {
+					deleteDisabled: false,
+					updating: false
+				});
+			});
 	}
 
 	_handleProductUpdate(productId, products) {
-		const updatedPrice = products.reduce(
-			(acc, el) => {
-				return el.id === productId ? el.price : acc;
-			},
-			null
-		);
+		const updatedPrice = products.reduce((acc, el) => {
+			return el.id === productId ? el.price : acc;
+		}, null);
 		this._removePendingOperation(productId);
-		return this._setProductProperties(
-			productId,
-			{
-				deleteDisabled: false,
-				errorMessages: null,
-				price: updatedPrice,
-				updating: false
-			}
-		);
+		return this._setProductProperties(productId, {
+			deleteDisabled: false,
+			errorMessages: null,
+			price: updatedPrice,
+			updating: false
+		});
 	}
 
 	_handleResponseErrors(productId, res) {
-		const errorMessages = res.errorMessages ? res.errorMessages : res.validatorErrors.map(item => item.message);
-		return this._setProductProperties(
-			productId,
-			{
-				deleteDisabled: false,
-				errorMessages,
-				updating: false
-			}
-		);
+		const errorMessages = res.errorMessages
+			? res.errorMessages
+			: res.validatorErrors.map(item => item.message);
+		return this._setProductProperties(productId, {
+			deleteDisabled: false,
+			errorMessages,
+			updating: false
+		});
 	}
 
 	_getProducts() {
 		return fetch(
-			`${this.cartAPI}/${this.orderId}?commerceAccountId=${this.commerceAccountId}&
+			`${this.cartAPI}/${this.orderId}?commerceAccountId=${
+				this.commerceAccountId
+			}&
 				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}`,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
 			.then(response => response.json())
-			.then(
-				updatedCart => {
-					this.products = updatedCart.products;
-					this.summary = updatedCart.summary;
-					this.valid = updatedCart.valid;
-					return !!(this.products && this.summary);
-				}
-			)
-			.catch(
-				err => {
-					return err;
-				}
-			);
+			.then(updatedCart => {
+				this.products = updatedCart.products;
+				this.summary = updatedCart.summary;
+				this.valid = updatedCart.valid;
+				return !!(this.products && this.summary);
+			})
+			.catch(err => {
+				return err;
+			});
 	}
 
 	syncProducts() {
-		this.productsQuantity = this.products ?
-			this.products.reduce(
-				(quantity, product) => {
+		this.productsQuantity = this.products
+			? this.products.reduce((quantity, product) => {
 					return product.collapsed ? quantity : quantity + 1;
-				},
-				0
-			) :
-			0;
+			  }, 0)
+			: 0;
 	}
 
 	_sendDeleteRequest(productId = null) {
-		const endpoint = productId ?
-			`${this.cartAPI}/cart-item/${productId}?commerceAccountId=${this.commerceAccountId}&
-				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}` :
-			'';
+		const endpoint = productId
+			? `${this.cartAPI}/cart-item/${productId}?commerceAccountId=${
+					this.commerceAccountId
+			  }&
+				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}`
+			: '';
 
-		!!productId && this._addPendingOperation(productId);
+		if (productId) {
+			this._addPendingOperation(productId);
+		}
 
-		return fetch(endpoint,
-			{
-				method: 'DELETE'
-			}
-		)
+		return fetch(endpoint, {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'DELETE'
+		})
 			.then(response => response.json())
-			.then(
-				(jsonresponse) => {
-					if (jsonresponse.success) {
-
-						if (productId) {
-							this._removePendingOperation(productId);
-							this._setProductProperties(
-								productId,
-								{
-									deleteDisabled: false
-								}
-							);
-						}
-
-						this.summary = jsonresponse.summary;
-
-						this._subtractProducts(this.products, jsonresponse.products)
-							.then(
-								products => {
-									setTimeout(() => this._removeProductsFromCart(products), 50);
-								});
+			.then(jsonresponse => {
+				if (jsonresponse.success) {
+					if (productId) {
+						this._removePendingOperation(productId);
+						this._setProductProperties(productId, {
+							deleteDisabled: false
+						});
 					}
 
-					this._handleResponseErrors(productId, jsonresponse);
+					this.summary = jsonresponse.summary;
+
+					this._subtractProducts(
+						this.products,
+						jsonresponse.products
+					).then(products => {
+						setTimeout(
+							() => this._removeProductsFromCart(products),
+							50
+						);
+					});
 				}
-			)
-			.catch(
-				err => {
-					!!productId && this._removePendingOperation(productId);
+
+				this._handleResponseErrors(productId, jsonresponse);
+			})
+			.catch(_err => {
+				if (productId) {
+					this._removePendingOperation(productId);
 				}
-			);
+			});
 	}
 }
 
@@ -494,56 +463,38 @@ const productStateSchema = {
 };
 
 Cart.STATE = {
+	_loading: Config.bool()
+		.internal()
+		.value(false),
+	_open: Config.bool()
+		.internal()
+		.value(false),
 	cartAPI: Config.string().required(),
-	orderId: Config.oneOfType(
-		[
-			Config.number(),
-			Config.string()
-		]
-	),
 	checkoutUrl: Config.string().required(),
-	commerceAccountId: Config.oneOfType(
-		[
-			Config.number(),
-			Config.string()
-		]
-	),
+	commerceAccountId: Config.oneOfType([Config.number(), Config.string()]),
 	detailsUrl: Config.string(),
-	valid: Config.bool(),
 	disabled: Config.bool().value(false),
 	displayDiscountLevels: Config.bool().value(false),
 	flushCartUrl: Config.string(),
-	pendingOperations: Config.array().value(
-		[]
-	),
-
-	/**
-	 * For each product in the cart,
-	 * the related object received from the endpoint
-	 * contains 2 ID's:
-	 *
-	 * @param productId The id of the product relative to the cart.
-	 * @param cpinstanceId The id of the product relative to the catalog.
-	 */
-
+	orderId: Config.oneOfType([Config.number(), Config.string()]),
+	pendingOperations: Config.array().value([]),
 	products: {
 		setter: 'normalizeProducts',
 		value: null
 	},
-	productsQuantity: Config.number().internal().value(0),
+	productsQuantity: Config.number()
+		.internal()
+		.value(0),
 	spritemap: Config.string().required(),
-	workflowStatus: Config.number(),
-	summary: Config.shapeOf(
-		{
-			checkoutUrl: Config.string(),
-			discount: Config.string(),
-			itemsQuantity: Config.number(),
-			subtotal: Config.string(),
-			total: Config.string()
-		}
-	),
-	_loading: Config.bool().internal().value(false),
-	_open: Config.bool().internal().value(false)
+	summary: Config.shapeOf({
+		checkoutUrl: Config.string(),
+		discount: Config.string(),
+		itemsQuantity: Config.number(),
+		subtotal: Config.string(),
+		total: Config.string()
+	}),
+	valid: Config.bool(),
+	workflowStatus: Config.number()
 };
 
 export {Cart};

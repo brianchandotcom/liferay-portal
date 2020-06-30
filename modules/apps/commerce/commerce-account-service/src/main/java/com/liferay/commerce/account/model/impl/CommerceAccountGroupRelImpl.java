@@ -14,13 +14,26 @@
 
 package com.liferay.commerce.account.model.impl;
 
+import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.commerce.account.service.CommerceAccountGroupLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceAccountGroupRelImpl
 	extends CommerceAccountGroupRelBaseImpl {
 
 	public CommerceAccountGroupRelImpl() {
+	}
+
+	@Override
+	public CommerceAccountGroup getCommerceAccountGroup()
+		throws PortalException {
+
+		return CommerceAccountGroupLocalServiceUtil.getCommerceAccountGroup(
+			getCommerceAccountGroupId());
 	}
 
 }

@@ -17,6 +17,7 @@
 					{delcall SearchResults.Item variant="$item.type"}
 						{param queryValue: $queryValue /}
 						{param item: $item /}
+						{param spritemap: $spritemap /}
 						{param _handleClick: $_handleClick /}
 					{/delcall}
 				{/foreach}
@@ -26,21 +27,21 @@
 			<div class="commerce-suggestions__hints">
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'to-navigate' /}
+					{param symbol: 'order-arrows' /}
 				{/call}
 				<span>
 					{msg desc="to navigate"}to-navigate{/msg}
 				</span>
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'to-select' /}
+					{param symbol: 'enter' /}
 				{/call}
 				<span>
 					{msg desc="to select"}to-select{/msg}
 				</span>
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'to-dismiss' /}
+					{param symbol: 'esc' /}
 				{/call}
 				<span>
 					{msg desc="to dismiss"}to-dismiss{/msg}
@@ -53,6 +54,7 @@
 {deltemplate SearchResults.Item}
 	{@param? queryValue: string }
 	{@param item: ? }
+	{@param spritemap: string }
 	{@param? _handleClick: ? }
 
 	<div
@@ -64,7 +66,17 @@
 		{if $item.selected}ref="selected"{/if}
 	>
 		<div class="commerce-item commerce-item--search">
-			<img alt="" class="commerce-item__image" src="{$item.image}">
+			{if $item.image}
+				<img alt="{$item.title}" class="commerce-item__image" src="{$item.image}">
+			{/if}
+			{if $item.icon}
+				<div class="commerce-item__icon">
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: $item.icon /}
+					{/call}
+				</div>
+			{/if}
 			<div class="commerce-item__content">
 				{$item.title}<br>
 				{$item.subtitle}
@@ -76,6 +88,7 @@
 {deltemplate SearchResults.Item variant="'category'"}
 	{@param? queryValue: string }
 	{@param item: ? }
+	{@param spritemap: string }
 	{@param? _handleClick: ? }
 
 	<div
@@ -93,6 +106,7 @@
 {deltemplate SearchResults.Item variant="'label'"}
 	{@param? queryValue: string }
 	{@param item: ? }
+	{@param spritemap: string }
 	{@param? _handleClick: ? }
 
 	<div

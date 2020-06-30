@@ -1,0 +1,544 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.internal.order.engine;
+
+import com.liferay.commerce.constants.CommerceDestinationNames;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
+import com.liferay.commerce.exception.CommerceOrderValidatorException;
+import com.liferay.commerce.internal.order.status.CompletedCommerceOrderStatusImpl;
+import com.liferay.commerce.internal.order.status.ShippedCommerceOrderStatusImpl;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeConstants;
+import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.notification.util.CommerceNotificationHelper;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.order.status.CommerceOrderStatus;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
+import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceShipmentLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
+import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelperUtil;
+import com.liferay.commerce.util.CommerceShippingHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
+/**
+ * @author Alec Sloan
+ */
+@Component(immediate = true, service = CommerceOrderEngine.class)
+public class CommerceOrderEngineImpl implements CommerceOrderEngine {
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	public CommerceOrder checkCommerceOrderShipmentStatus(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		CommerceOrderStatus shippedCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				ShippedCommerceOrderStatusImpl.KEY);
+
+		CommerceOrderStatus completedCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				CompletedCommerceOrderStatusImpl.KEY);
+
+		int[] commerceShipmentStatuses =
+			_commerceShipmentLocalService.
+				getCommerceShipmentStatusesByCommerceOrderId(
+					commerceOrder.getCommerceOrderId());
+
+		if (shippedCommerceOrderStatus.isTransitionCriteriaMet(commerceOrder)) {
+			commerceOrder = transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED, 0);
+		}
+		else if (completedCommerceOrderStatus.isTransitionCriteriaMet(
+					commerceOrder) &&
+				 (commerceShipmentStatuses.length == 1) &&
+				 (commerceShipmentStatuses[0] ==
+					 CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
+
+			commerceOrder = transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+				0);
+		}
+		else {
+			commerceOrder = transitionCommerceOrder(
+				commerceOrder,
+				CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED, 0);
+		}
+
+		return commerceOrder;
+	}
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	public CommerceOrder checkoutCommerceOrder(
+			CommerceOrder commerceOrder, long userId)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+			CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER);
+
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				commerceOrder.getOrderStatus());
+
+		if ((currentCommerceOrderStatus == null) ||
+			(currentCommerceOrderStatus.getKey() !=
+				CommerceOrderConstants.ORDER_STATUS_OPEN)) {
+
+			throw new CommerceOrderStatusException();
+		}
+
+		_validateCheckout(commerceOrder);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
+		serviceContext.setUserId(userId);
+
+		long commerceOrderId = commerceOrder.getCommerceOrderId();
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), userId,
+			commerceOrderId, commerceOrder.getCommerceAccountId());
+
+		_bookQuantities(commerceOrder);
+
+		commerceOrder = CommerceOrderLocalServiceUtil.recalculatePrice(
+			commerceOrderId, commerceContext);
+
+		// Commerce addresses
+
+		if (commerceOrder.getBillingAddressId() > 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressLocalService.copyCommerceAddress(
+					commerceOrder.getBillingAddressId(),
+					commerceOrder.getModelClassName(), commerceOrderId,
+					serviceContext);
+
+			commerceOrder.setBillingAddressId(
+				commerceAddress.getCommerceAddressId());
+		}
+
+		if (commerceOrder.getShippingAddressId() > 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressLocalService.copyCommerceAddress(
+					commerceOrder.getShippingAddressId(),
+					commerceOrder.getModelClassName(), commerceOrderId,
+					serviceContext);
+
+			commerceOrder.setShippingAddressId(
+				commerceAddress.getCommerceAddressId());
+		}
+
+		CommercePaymentMethod commercePaymentMethod =
+			_commercePaymentMethodRegistry.getCommercePaymentMethod(
+				commerceOrder.getCommercePaymentMethodKey());
+
+		if ((commerceOrder.getPaymentStatus() ==
+				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+			((commercePaymentMethod != null) &&
+			 (commercePaymentMethod.getPaymentType() ==
+				 CommercePaymentConstants.
+					 COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE) &&
+			 (commerceOrder.getPaymentStatus() ==
+				 CommerceOrderConstants.PAYMENT_STATUS_PENDING))) {
+
+			return transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
+				userId);
+		}
+
+		return transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
+			userId);
+	}
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	public CommerceOrderStatus getCurrentCommerceOrderStatus(
+		CommerceOrder commerceOrder) {
+
+		return _commerceOrderStatusRegistry.getCommerceOrderStatus(
+			commerceOrder.getOrderStatus());
+	}
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	public List<CommerceOrderStatus> getNextCommerceOrderStatuses(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				commerceOrder.getOrderStatus());
+
+		List<CommerceOrderStatus> nextCommerceOrderStatuses = new ArrayList<>();
+
+		if (currentCommerceOrderStatus == null) {
+			return nextCommerceOrderStatuses;
+		}
+		else if (currentCommerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_ON_HOLD) {
+
+			nextCommerceOrderStatuses.add(
+				_commerceOrderStatusRegistry.getCommerceOrderStatus(
+					CommerceOrderConstants.ORDER_STATUS_ON_HOLD));
+
+			return nextCommerceOrderStatuses;
+		}
+
+		List<CommerceOrderStatus> commerceOrderStatuses =
+			_commerceOrderStatusRegistry.getCommerceOrderStatuses();
+
+		int currentOrderStatusIndex = commerceOrderStatuses.indexOf(
+			currentCommerceOrderStatus);
+
+		if (currentOrderStatusIndex != (commerceOrderStatuses.size() - 1)) {
+			CommerceOrderStatus nextCommerceOrderStatus =
+				commerceOrderStatuses.get(currentOrderStatusIndex + 1);
+
+			for (CommerceOrderStatus commerceOrderStatus :
+					commerceOrderStatuses) {
+
+				if (commerceOrderStatus.isTransitionCriteriaMet(
+						commerceOrder) &&
+					(((commerceOrderStatus.getPriority() ==
+						CommerceOrderConstants.ORDER_STATUS_ANY) &&
+					  (currentCommerceOrderStatus.getKey() !=
+						  CommerceOrderConstants.ORDER_STATUS_OPEN)) ||
+					 (commerceOrderStatus.getPriority() ==
+						 nextCommerceOrderStatus.getPriority()))) {
+
+					nextCommerceOrderStatuses.add(commerceOrderStatus);
+				}
+			}
+		}
+
+		return nextCommerceOrderStatuses;
+	}
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	public CommerceOrder transitionCommerceOrder(
+			CommerceOrder commerceOrder, int orderStatus, long userId)
+		throws PortalException {
+
+		CommerceOrderStatus commerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(orderStatus);
+
+		if (commerceOrderStatus == null) {
+			throw new CommerceOrderStatusException();
+		}
+
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderStatusRegistry.getCommerceOrderStatus(
+				commerceOrder.getOrderStatus());
+
+		if (!currentCommerceOrderStatus.isComplete(commerceOrder) ||
+			!commerceOrderStatus.isTransitionCriteriaMet(commerceOrder) ||
+			((currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_ON_HOLD) &&
+			 (commerceOrderStatus.getKey() !=
+				 CommerceOrderConstants.ORDER_STATUS_ON_HOLD) &&
+			 (commerceOrderStatus.getKey() !=
+				 CommerceOrderConstants.ORDER_STATUS_PROCESSING))) {
+
+			throw new CommerceOrderStatusException();
+		}
+
+		_sendOrderStatusMessage(commerceOrder, commerceOrderStatus.getKey());
+
+		return commerceOrderStatus.doTransition(commerceOrder, userId);
+	}
+
+	private void _bookQuantities(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			Map<String, String> context = new HashMap<>();
+
+			context.put(
+				CommerceInventoryAuditTypeConstants.ORDER_ID,
+				String.valueOf(commerceOrderItem.getCommerceOrderId()));
+			context.put(
+				CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
+				String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
+
+			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+				_commerceInventoryBookedQuantityLocalService.
+					addCommerceBookedQuantity(
+						commerceOrderItem.getUserId(),
+						commerceOrderItem.getSku(),
+						commerceOrderItem.getQuantity(), null, context);
+
+			_commerceOrderItemLocalService.updateCommerceOrderItem(
+				commerceOrderItem.getCommerceOrderItemId(),
+				commerceInventoryBookedQuantity.
+					getCommerceInventoryBookedQuantityId());
+		}
+
+		// Low stock action
+
+		long companyId = commerceOrder.getCompanyId();
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				commerceOrderItem.getCPInstanceId());
+
+			CPDefinitionInventory cpDefinitionInventory =
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						cpInstance.getCPDefinitionId());
+
+			CommerceLowStockActivity commerceLowStockActivity =
+				_commerceLowStockActivityRegistry.getCommerceLowStockActivity(
+					cpDefinitionInventory);
+
+			if (commerceLowStockActivity == null) {
+				return;
+			}
+
+			int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+				companyId, commerceOrderItem.getSku());
+
+			CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+				_cpDefinitionInventoryEngineRegistry.
+					getCPDefinitionInventoryEngine(cpDefinitionInventory);
+
+			if (stockQuantity <=
+					cpDefinitionInventoryEngine.getMinStockQuantity(
+						cpInstance)) {
+
+				commerceLowStockActivity.execute(cpInstance);
+			}
+		}
+	}
+
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	private void _sendOrderStatusMessage(
+		CommerceOrder commerceOrder, int orderStatus) {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+
+					//Commerce Subscription
+
+					if ((orderStatus ==
+							CommerceOrderConstants.ORDER_STATUS_PENDING) &&
+						(commerceOrder.getPaymentStatus() ==
+							CommerceOrderConstants.PAYMENT_STATUS_PAID)) {
+
+						CommerceSubscriptionEntryHelperUtil.
+							checkCommerceSubscriptions(commerceOrder);
+					}
+
+					//Commerce Notification
+
+					_commerceNotificationHelper.sendNotifications(
+						commerceOrder.getGroupId(), commerceOrder.getUserId(),
+						CommerceOrderConstants.getNotificationKey(orderStatus),
+						commerceOrder);
+
+					//Commerce Order Status Message
+
+					Message message = new Message();
+
+					message.put(
+						"commerceOrderId", commerceOrder.getCommerceOrderId());
+
+					MessageBusUtil.sendMessage(
+						CommerceDestinationNames.ORDER_STATUS, message);
+
+					return null;
+				}
+
+			});
+	}
+
+	private void _validateCheckout(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!_commerceOrderValidatorRegistry.isValid(null, commerceOrder)) {
+			throw new CommerceOrderValidatorException();
+		}
+
+		if (commerceOrder.isB2B() &&
+			(commerceOrder.getBillingAddressId() <= 0)) {
+
+			throw new CommerceOrderBillingAddressException();
+		}
+
+		CommerceShippingMethod commerceShippingMethod = null;
+
+		long commerceShippingMethodId =
+			commerceOrder.getCommerceShippingMethodId();
+
+		if (commerceShippingMethodId > 0) {
+			commerceShippingMethod =
+				_commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			if (!commerceShippingMethod.isActive()) {
+				commerceShippingMethod = null;
+			}
+			else if (commerceOrder.getShippingAddressId() <= 0) {
+				throw new CommerceOrderShippingAddressException();
+			}
+		}
+
+		if ((commerceShippingMethod == null) &&
+			(_commerceShippingMethodLocalService.
+				getCommerceShippingMethodsCount(
+					commerceOrder.getGroupId(), true) > 0) &&
+			_commerceShippingHelper.isShippable(commerceOrder)) {
+
+			throw new CommerceOrderShippingMethodException();
+		}
+	}
+
+	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
+
+	@Reference
+	private CommerceInventoryBookedQuantityLocalService
+		_commerceInventoryBookedQuantityLocalService;
+
+	@Reference
+	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Reference
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
+
+	@Reference
+	private CommerceNotificationHelper _commerceNotificationHelper;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
+
+	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+
+	@Reference
+	private CommerceShipmentLocalService _commerceShipmentLocalService;
+
+	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+}

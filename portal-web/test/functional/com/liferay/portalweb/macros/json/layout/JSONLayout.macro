@@ -1,0 +1,241 @@
+definition {
+
+	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
+	macro addPrivateLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}");
+
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var type = JSONLayoutSetter.setType(type = "${type}");
+
+		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutId = "${parentLayoutId}",
+			privateLayout = "true",
+			serviceContext = "${serviceContext}",
+			type = "${type}");
+	}
+
+	@summary = "Add a private site page or private child site page to an existing site via groupName"
+	macro addPrivateLayoutByGroupName {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var type = JSONLayoutSetter.setType(type = "${type}");
+
+		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutId = "${parentLayoutId}",
+			privateLayout = "true",
+			serviceContext = "${serviceContext}",
+			type = "${type}");
+	}
+
+	@summary = "Add a public site page  or public child site page to an existing site or child site via groupKey"
+	macro addPublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var type = JSONLayoutSetter.setType(type = "${type}");
+
+		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutId = "${parentLayoutId}",
+			privateLayout = "false",
+			serviceContext = "${serviceContext}",
+			type = "${type}");
+	}
+
+	@summary = "Add a public site page or public child site page to an existing site via groupName"
+	macro addPublicLayoutByGroupName {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var type = JSONLayoutSetter.setType(type = "${type}");
+
+		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutId = "${parentLayoutId}",
+			privateLayout = "false",
+			serviceContext = "${serviceContext}",
+			type = "${type}");
+	}
+
+	@summary = "Add a widget to a private layout via widgetName"
+	macro addWidgetToPrivateLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true");
+
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true",
+			widgetName = "${widgetName}");
+
+		JSONLayoutAPI._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "true",
+			typeSettings = "${typeSettings}");
+	}
+
+	@summary = "Add a widget to a public layout via widgetName"
+	macro addWidgetToPublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
+			column = "${column}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false",
+			widgetName = "${widgetName}");
+
+		JSONLayoutAPI._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
+	}
+
+	@summary = "Delete a public site page under an existing site via groupKey"
+	macro deletePublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutAPI._deleteLayout(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			serviceContext = "${serviceContext}");
+	}
+
+	@summary = "Get page scope id from an existing site via groupName"
+	macro getPageScopeIdByGroupName {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		JSONLayoutAPI._getDefaultPlidByGroupId(
+			groupId = "${groupId}",
+			privateLayout = "false");
+	}
+
+	macro updateLayoutTemplateOfPublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
+			column = "${column}",
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			layoutTemplate = "${layoutTemplate}",
+			privateLayout = "false");
+
+		JSONLayoutAPI._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
+	}
+
+}

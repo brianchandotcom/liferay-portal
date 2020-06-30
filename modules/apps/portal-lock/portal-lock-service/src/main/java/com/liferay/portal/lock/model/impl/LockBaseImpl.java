@@ -31,7 +31,7 @@ import com.liferay.portal.lock.service.LockLocalServiceUtil;
  */
 public abstract class LockBaseImpl extends LockModelImpl implements Lock {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a lock model instance should use the <code>Lock</code> interface instead.

@@ -63,6 +63,30 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
+				long userId, long groupId, long classPK, long commerceCountryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
+				CommercePaymentMethodGroupRelServiceUtil.
+					addCommerceAddressRestriction(
+						userId, groupId, classPK, commerceCountryId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
 				long classPK, long commerceCountryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -75,31 +99,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelSoap
-				createCommercePaymentMethodGroupRel(long groupId)
-			throws RemoteException {
-
-		try {
-			com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				returnValue =
-					CommercePaymentMethodGroupRelServiceUtil.
-						createCommercePaymentMethodGroupRel(groupId);
-
-			return com.liferay.commerce.payment.model.
-				CommercePaymentMethodGroupRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -111,10 +114,26 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			CommercePaymentMethodGroupRelServiceUtil.
 				deleteCommerceAddressRestriction(commerceAddressRestrictionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCommerceAddressRestrictions(
+			long commercePaymentMethodGroupRelId)
+		throws RemoteException {
+
+		try {
+			CommercePaymentMethodGroupRelServiceUtil.
+				deleteCommerceAddressRestrictions(
+					commercePaymentMethodGroupRelId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -127,10 +146,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 				deleteCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -149,10 +168,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -175,10 +194,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -192,10 +211,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -215,10 +234,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -236,10 +255,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -258,10 +277,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -280,10 +299,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -304,10 +323,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -331,10 +350,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -358,10 +377,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -382,10 +401,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -399,10 +418,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -417,10 +436,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -438,10 +457,10 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

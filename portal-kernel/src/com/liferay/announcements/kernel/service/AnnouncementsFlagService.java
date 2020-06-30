@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface AnnouncementsFlagService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsFlagServiceUtil} to access the announcements flag remote service. Add custom service methods to <code>com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

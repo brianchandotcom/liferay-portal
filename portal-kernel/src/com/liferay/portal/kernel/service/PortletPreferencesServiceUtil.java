@@ -30,16 +30,10 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class PortletPreferencesServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesServiceUtil} to access the portlet preferences remote service. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static void deleteArchivedPreferences(long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,41 +53,41 @@ public class PortletPreferencesServiceUtil {
 	public static void restoreArchivedPreferences(
 			long groupId, com.liferay.portal.kernel.model.Layout layout,
 			String portletId, long portletItemId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().restoreArchivedPreferences(
-			groupId, layout, portletId, portletItemId, preferences);
+			groupId, layout, portletId, portletItemId, jxPortletPreferences);
 	}
 
 	public static void restoreArchivedPreferences(
 			long groupId, com.liferay.portal.kernel.model.Layout layout,
 			String portletId,
 			com.liferay.portal.kernel.model.PortletItem portletItem,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().restoreArchivedPreferences(
-			groupId, layout, portletId, portletItem, preferences);
+			groupId, layout, portletId, portletItem, jxPortletPreferences);
 	}
 
 	public static void restoreArchivedPreferences(
 			long groupId, String name,
 			com.liferay.portal.kernel.model.Layout layout, String portletId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().restoreArchivedPreferences(
-			groupId, name, layout, portletId, preferences);
+			groupId, name, layout, portletId, jxPortletPreferences);
 	}
 
 	public static void updateArchivePreferences(
 			long userId, long groupId, String name, String portletId,
-			javax.portlet.PortletPreferences preferences)
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().updateArchivePreferences(
-			userId, groupId, name, portletId, preferences);
+			userId, groupId, name, portletId, jxPortletPreferences);
 	}
 
 	public static PortletPreferencesService getService() {

@@ -349,11 +349,6 @@ public class SiteNavigationMenuWrapper
 		return _siteNavigationMenu.isPrimary();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a site navigation menu model instance should use the <code>SiteNavigationMenu</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_siteNavigationMenu.persist();

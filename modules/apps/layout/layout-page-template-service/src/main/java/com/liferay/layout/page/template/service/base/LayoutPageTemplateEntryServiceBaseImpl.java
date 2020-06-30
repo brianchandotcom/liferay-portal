@@ -47,7 +47,7 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, LayoutPageTemplateEntryService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>LayoutPageTemplateEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil</code>.
@@ -338,8 +338,8 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

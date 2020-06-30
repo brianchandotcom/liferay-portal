@@ -39,7 +39,7 @@ import java.util.Date;
 public interface PasswordTrackerModel
 	extends BaseModel<PasswordTracker>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a password tracker model instance should use the {@link PasswordTracker} interface instead.

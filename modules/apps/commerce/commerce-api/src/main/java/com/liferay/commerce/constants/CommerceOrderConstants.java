@@ -35,18 +35,14 @@ public class CommerceOrderConstants {
 
 	public static final String ORDER_NOTIFICATION_PLACED = "order-placed";
 
-	public static final String ORDER_NOTIFICATION_SHIPPED = "order-shipped";
+	public static final String ORDER_NOTIFICATION_PROCESSING =
+		"order-processing";
 
-	public static final String ORDER_NOTIFICATION_TRANSMITTED =
-		"order-transmitted";
+	public static final String ORDER_NOTIFICATION_SHIPPED = "order-shipped";
 
 	public static final int ORDER_STATUS_ANY = WorkflowConstants.STATUS_ANY;
 
-	public static final int ORDER_STATUS_AWAITING_FULFILLMENT = 11;
-
 	public static final int ORDER_STATUS_AWAITING_PICKUP = 13;
-
-	public static final int ORDER_STATUS_AWAITING_SHIPMENT = 12;
 
 	public static final int ORDER_STATUS_CANCELLED =
 		WorkflowConstants.STATUS_IN_TRASH;
@@ -61,11 +57,18 @@ public class CommerceOrderConstants {
 	public static final int ORDER_STATUS_IN_PROGRESS =
 		WorkflowConstants.STATUS_INCOMPLETE;
 
+	public static final int ORDER_STATUS_ON_HOLD = 20;
+
 	public static final int ORDER_STATUS_OPEN = WorkflowConstants.STATUS_DRAFT;
 
 	public static final int ORDER_STATUS_PARTIALLY_REFUNDED = 19;
 
 	public static final int ORDER_STATUS_PARTIALLY_SHIPPED = 14;
+
+	public static final int ORDER_STATUS_PENDING =
+		WorkflowConstants.STATUS_PENDING;
+
+	public static final int ORDER_STATUS_PROCESSING = 10;
 
 	public static final int ORDER_STATUS_REFUNDED = 17;
 
@@ -73,19 +76,21 @@ public class CommerceOrderConstants {
 
 	public static final int ORDER_STATUS_SUBSCRIPTION = 9;
 
-	public static final int ORDER_STATUS_TO_TRANSMIT =
-		WorkflowConstants.STATUS_PENDING;
+	public static final int[] ORDER_STATUSES_COMPLETED = {
+		ORDER_STATUS_COMPLETED, ORDER_STATUS_CANCELLED, ORDER_STATUS_DECLINED
+	};
 
-	public static final int ORDER_STATUS_TRANSMITTED = 10;
+	public static final int[] ORDER_STATUSES_OPEN = {
+		ORDER_STATUS_IN_PROGRESS, ORDER_STATUS_OPEN
+	};
 
-	public static final int[] ORDER_STATUSES = {
-		ORDER_STATUS_ANY, ORDER_STATUS_COMPLETED, ORDER_STATUS_TO_TRANSMIT,
-		ORDER_STATUS_OPEN, ORDER_STATUS_IN_PROGRESS, ORDER_STATUS_CANCELLED,
-		ORDER_STATUS_SUBSCRIPTION, ORDER_STATUS_TRANSMITTED,
-		ORDER_STATUS_AWAITING_FULFILLMENT, ORDER_STATUS_AWAITING_SHIPMENT,
-		ORDER_STATUS_AWAITING_PICKUP, ORDER_STATUS_PARTIALLY_SHIPPED,
-		ORDER_STATUS_SHIPPED, ORDER_STATUS_DECLINED, ORDER_STATUS_REFUNDED,
-		ORDER_STATUS_DISPUTED, ORDER_STATUS_PARTIALLY_REFUNDED
+	public static final int[] ORDER_STATUSES_PENDING = {
+		ORDER_STATUS_PENDING, ORDER_STATUS_ON_HOLD
+	};
+
+	public static final int[] ORDER_STATUSES_PROCESSING = {
+		ORDER_STATUS_PROCESSING, ORDER_STATUS_PARTIALLY_SHIPPED,
+		ORDER_STATUS_SHIPPED
 	};
 
 	public static final int PAYMENT_STATUS_AUTHORIZED =
@@ -97,22 +102,25 @@ public class CommerceOrderConstants {
 	public static final int PAYMENT_STATUS_PENDING =
 		WorkflowConstants.STATUS_PENDING;
 
-	public static final int[] PAYMENT_STATUSES = {
-		PAYMENT_STATUS_AUTHORIZED, PAYMENT_STATUS_PAID, PAYMENT_STATUS_PENDING
-	};
-
 	public static final String RESOURCE_NAME = "com.liferay.commerce.order";
 
 	public static final long TYPE_PK_APPROVAL = 0;
 
-	public static final long TYPE_PK_TRANSMISSION = 1;
+	public static final long TYPE_PK_FULFILLMENT = 1;
 
 	public static String getNotificationKey(int orderStatus) {
-		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_TRANSMITTED) {
-			return ORDER_NOTIFICATION_TRANSMITTED;
+		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_PENDING) {
+			return ORDER_NOTIFICATION_PLACED;
 		}
 		else if (orderStatus ==
-					CommerceOrderConstants.ORDER_STATUS_AWAITING_SHIPMENT) {
+					CommerceOrderConstants.ORDER_STATUS_PROCESSING) {
+
+			return ORDER_NOTIFICATION_PROCESSING;
+		}
+		else if (orderStatus ==
+					CommerceOrderConstants.ORDER_STATUS_PROCESSING) {
+
+			//TODO check correct status
 
 			return ORDER_NOTIFICATION_AWAITING_SHIPMENT;
 		}
@@ -133,16 +141,13 @@ public class CommerceOrderConstants {
 
 	public static String getOrderStatusLabel(int orderStatus) {
 		if (orderStatus == ORDER_STATUS_ANY) {
-			return "any";
-		}
-		else if (orderStatus == ORDER_STATUS_AWAITING_FULFILLMENT) {
-			return "awaiting-fulfillment";
+			return WorkflowConstants.LABEL_ANY;
 		}
 		else if (orderStatus == ORDER_STATUS_AWAITING_PICKUP) {
 			return "awaiting-pickup";
 		}
-		else if (orderStatus == ORDER_STATUS_AWAITING_SHIPMENT) {
-			return "awaiting-shipment";
+		else if (orderStatus == ORDER_STATUS_ON_HOLD) {
+			return "on-hold";
 		}
 		else if (orderStatus == ORDER_STATUS_CANCELLED) {
 			return "cancelled";
@@ -155,6 +160,9 @@ public class CommerceOrderConstants {
 		}
 		else if (orderStatus == ORDER_STATUS_DISPUTED) {
 			return "disputed";
+		}
+		else if (orderStatus == ORDER_STATUS_PROCESSING) {
+			return "processing";
 		}
 		else if (orderStatus == ORDER_STATUS_IN_PROGRESS) {
 			return "in-progress";
@@ -177,14 +185,41 @@ public class CommerceOrderConstants {
 		else if (orderStatus == ORDER_STATUS_SUBSCRIPTION) {
 			return "subscription";
 		}
-		else if (orderStatus == ORDER_STATUS_TO_TRANSMIT) {
-			return "to-transmit";
-		}
-		else if (orderStatus == ORDER_STATUS_TRANSMITTED) {
-			return "transmitted";
+		else if (orderStatus == ORDER_STATUS_PENDING) {
+			return "pending";
 		}
 
 		return null;
+	}
+
+	public static String getOrderStatusLabelStyle(int orderStatus) {
+		if ((orderStatus == ORDER_STATUS_CANCELLED) ||
+			(orderStatus == ORDER_STATUS_DECLINED)) {
+
+			return "danger";
+		}
+		else if (orderStatus == ORDER_STATUS_COMPLETED) {
+			return "success";
+		}
+		else if (orderStatus == ORDER_STATUS_ON_HOLD) {
+			return "warning";
+		}
+
+		return "info";
+	}
+
+	public static String getPaymentLabelStyle(int paymentStatus) {
+		if (paymentStatus == PAYMENT_STATUS_AUTHORIZED) {
+			return "info";
+		}
+		else if (paymentStatus == PAYMENT_STATUS_PAID) {
+			return "success";
+		}
+		else if (paymentStatus == PAYMENT_STATUS_PENDING) {
+			return "warning";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public static String getPaymentStatusLabel(int paymentStatus) {
@@ -199,6 +234,17 @@ public class CommerceOrderConstants {
 		}
 
 		return null;
+	}
+
+	public static String getStatusLabelStyle(int status) {
+		if (status == WorkflowConstants.STATUS_DENIED) {
+			return "danger";
+		}
+		else if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "success";
+		}
+
+		return "info";
 	}
 
 }

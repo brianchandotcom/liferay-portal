@@ -36,7 +36,7 @@ import java.io.Serializable;
 public interface RecentLayoutSetBranchModel
 	extends BaseModel<RecentLayoutSetBranch>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a recent layout set branch model instance should use the {@link RecentLayoutSetBranch} interface instead.

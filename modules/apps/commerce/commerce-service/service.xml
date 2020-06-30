@@ -405,6 +405,9 @@
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
 		</finder>
+		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
+			<finder-column name="bookedQuantityId" />
+		</finder>
 		<finder name="C_I" return-type="Collection">
 			<finder-column name="commerceOrderId" />
 			<finder-column name="CPInstanceId" />
@@ -416,6 +419,7 @@
 
 		<!-- References -->
 
+		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceOrderNote" remote-service="true">
@@ -579,6 +583,10 @@
 		<finder name="GroupIds" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="commerceAddressId" />
+		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="status" />
@@ -622,6 +630,18 @@
 		</finder>
 		<finder name="CommerceShipment" return-type="Collection">
 			<finder-column name="commerceShipmentId" />
+		</finder>
+		<finder name="CommerceOrderItemId" return-type="Collection">
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="commerceShipmentId" />
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceShipmentItem" unique="true">
+			<finder-column name="commerceShipmentId" />
+			<finder-column name="commerceOrderItemId" />
+			<finder-column name="commerceInventoryWarehouseId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceShippingMethod" remote-service="true">
@@ -707,6 +727,15 @@
 		<column name="lastIterationDate" type="Date" />
 		<column name="nextIterationDate" type="Date" />
 		<column name="startDate" type="Date" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="deliveryCurrentCycle" type="long" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionStatus" type="int" />
+		<column name="deliveryLastIterationDate" type="Date" />
+		<column name="deliveryNextIterationDate" type="Date" />
+		<column name="deliveryStartDate" type="Date" />
 
 		<!-- Order -->
 

@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_VIRTUAL_INSTANCE,
+		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
 		"mvc.command.name=editCommerceCountry"
 	},
 	service = MVCActionCommand.class
@@ -149,8 +149,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest,
-			CommerceAdminPortletKeys.COMMERCE_ADMIN_VIRTUAL_INSTANCE,
+			actionRequest, CommerceAdminPortletKeys.COMMERCE_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		if (commerceCountry != null) {

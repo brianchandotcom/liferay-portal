@@ -20,16 +20,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommerceInventoryAuditLocalServiceImpl
 	extends CommerceInventoryAuditLocalServiceBaseImpl {
 
 	@Override
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String sku, int quantity, String description)
+			long userId, String sku, String logType, String logTypeSettings,
+			int quantity)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -43,7 +46,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 		commerceInventoryAudit.setUserId(user.getUserId());
 		commerceInventoryAudit.setUserName(user.getFullName());
 		commerceInventoryAudit.setSku(sku);
-		commerceInventoryAudit.setDescription(description);
+		commerceInventoryAudit.setLogType(logType);
+		commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
 		commerceInventoryAudit.setQuantity(quantity);
 
 		return commerceInventoryAuditPersistence.update(commerceInventoryAudit);
@@ -52,6 +56,19 @@ public class CommerceInventoryAuditLocalServiceImpl
 	@Override
 	public void checkCommerceInventoryAudit(Date date) {
 		commerceInventoryAuditPersistence.removeByLtCreateDate(date);
+	}
+
+	@Override
+	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
+		long companyId, String sku, int start, int end) {
+
+		return commerceInventoryAuditPersistence.findByC_S(
+			companyId, sku, start, end);
+	}
+
+	@Override
+	public int getCommerceInventoryAuditsCount(long companyId, String sku) {
+		return commerceInventoryAuditPersistence.countByC_S(companyId, sku);
 	}
 
 }

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface PasswordPolicy extends PasswordPolicyModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordPolicyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

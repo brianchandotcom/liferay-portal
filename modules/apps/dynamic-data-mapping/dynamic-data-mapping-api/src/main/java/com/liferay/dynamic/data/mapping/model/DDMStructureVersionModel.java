@@ -48,7 +48,7 @@ public interface DDMStructureVersionModel
 	extends BaseModel<DDMStructureVersion>, LocalizedModel, ShardedModel,
 			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm structure version model instance should use the {@link DDMStructureVersion} interface instead.

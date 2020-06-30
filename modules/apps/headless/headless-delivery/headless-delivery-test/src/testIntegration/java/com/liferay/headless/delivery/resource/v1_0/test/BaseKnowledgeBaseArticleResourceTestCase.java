@@ -214,6 +214,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testDeleteKnowledgeBaseArticle() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
@@ -359,7 +360,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				randomPatchKnowledgeBaseArticle);
 
 		KnowledgeBaseArticle expectedPatchKnowledgeBaseArticle =
-			(KnowledgeBaseArticle)BeanUtils.cloneBean(postKnowledgeBaseArticle);
+			postKnowledgeBaseArticle.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchKnowledgeBaseArticle, randomPatchKnowledgeBaseArticle);
@@ -414,6 +415,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testDeleteKnowledgeBaseArticleMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
 
@@ -747,9 +749,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1115,9 +1119,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1461,9 +1467,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1649,12 +1657,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleSubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleSubscribeHttpResponse(
+					knowledgeBaseArticle.getSiteId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleSubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleSubscribeHttpResponse(
+					knowledgeBaseArticle.getSiteId()));
 	}
 
 	protected KnowledgeBaseArticle
@@ -1674,12 +1684,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(
+					knowledgeBaseArticle.getSiteId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(
+					knowledgeBaseArticle.getSiteId()));
 	}
 
 	protected KnowledgeBaseArticle
@@ -2120,6 +2132,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (knowledgeBaseArticle.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (knowledgeBaseArticle.getAggregateRating() == null) {
 					valid = false;
@@ -2327,6 +2347,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (rating.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (rating.getBestRating() == null) {
 					valid = false;
@@ -2408,6 +2436,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle1.getActions(),
+						knowledgeBaseArticle2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2672,6 +2711,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getActions(), rating2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						rating1.getBestRating(), rating2.getBestRating())) {
@@ -2919,6 +2968,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("aggregateRating")) {
 			throw new IllegalArgumentException(

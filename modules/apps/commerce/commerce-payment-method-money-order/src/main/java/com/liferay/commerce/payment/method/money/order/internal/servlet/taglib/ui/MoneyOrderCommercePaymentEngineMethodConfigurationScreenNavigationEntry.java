@@ -19,6 +19,8 @@ import com.liferay.commerce.payment.method.money.order.internal.MoneyOrderCommer
 import com.liferay.commerce.payment.method.money.order.internal.configuration.MoneyOrderGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.money.order.internal.constants.MoneyOrderCommercePaymentEngineMethodConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -82,10 +84,15 @@ public class
 
 	@Override
 	public boolean isVisible(
-		User user, CommercePaymentMethodGroupRel commercePaymentMethod) {
+		User user,
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
+
+		if (commercePaymentMethodGroupRel == null) {
+			return false;
+		}
 
 		if (MoneyOrderCommercePaymentMethod.KEY.equals(
-				commercePaymentMethod.getEngineKey())) {
+				commercePaymentMethodGroupRel.getEngineKey())) {
 
 			return true;
 		}
@@ -100,6 +107,12 @@ public class
 		throws IOException {
 
 		try {
+			long commerceChannelId = ParamUtil.getLong(
+				httpServletRequest, "commerceChannelId");
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannel(commerceChannelId);
+
 			MoneyOrderGroupServiceConfiguration
 				moneyOrderGroupServiceConfiguration =
 					_configurationProvider.getConfiguration(
@@ -107,7 +120,7 @@ public class
 						new ParameterMapSettingsLocator(
 							httpServletRequest.getParameterMap(),
 							new GroupServiceSettingsLocator(
-								_portal.getScopeGroupId(httpServletRequest),
+								commerceChannel.getGroupId(),
 								MoneyOrderCommercePaymentEngineMethodConstants.
 									SERVICE_NAME)));
 
@@ -125,13 +138,13 @@ public class
 	}
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.money.order)"

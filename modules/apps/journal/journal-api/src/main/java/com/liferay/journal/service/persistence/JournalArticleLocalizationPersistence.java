@@ -40,7 +40,7 @@ import java.util.Set;
 public interface JournalArticleLocalizationPersistence
 	extends BasePersistence<JournalArticleLocalization> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleLocalizationUtil} to access the journal article localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

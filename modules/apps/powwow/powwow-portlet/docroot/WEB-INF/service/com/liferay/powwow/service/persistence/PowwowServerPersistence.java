@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface PowwowServerPersistence extends BasePersistence<PowwowServer> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowServerUtil} to access the powwow server persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

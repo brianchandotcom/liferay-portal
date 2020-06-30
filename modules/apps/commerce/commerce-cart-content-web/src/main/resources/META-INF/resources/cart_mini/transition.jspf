@@ -42,9 +42,13 @@
 
 			var form = A.one('#<portlet:namespace />transitionFm');
 
-			A.one('#<portlet:namespace />transitionCommerceOrderId').val(link.getData('commerceOrderId'));
+			A.one('#<portlet:namespace />transitionCommerceOrderId').val(
+				link.getData('commerceOrderId')
+			);
 			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
-			A.one('#<portlet:namespace />transitionName').val(link.getData('transitionName'))
+			A.one('#<portlet:namespace />transitionName').val(
+				link.getData('transitionName')
+			);
 
 			if (workflowTaskId <= 0) {
 				submitForm(form);
@@ -52,56 +56,57 @@
 				return;
 			}
 
-			var transitionComments = A.one('#<portlet:namespace />transitionComments');
+			var transitionComments = A.one(
+				'#<portlet:namespace />transitionComments'
+			);
 
 			transitionComments.show();
 
-			var dialog = Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						bodyContent: form,
-						destroyOnHide: true,
-						height: 400,
-						resizable: false,
-						toolbars: {
-							footer: [
-								{
-									cssClass: 'btn-primary mr-2',
-									label: '<liferay-ui:message key="done" />',
-									on: {
-										click: function() {
-											submitForm(form);
-										}
-									}
-								},
-								{
-									cssClass: 'btn-cancel',
-									label: '<liferay-ui:message key="cancel" />',
-									on: {
-										click: function() {
-											dialog.hide();
-										}
+			var dialog = Liferay.Util.Window.getWindow({
+				dialog: {
+					bodyContent: form,
+					destroyOnHide: true,
+					height: 400,
+					resizable: false,
+					toolbars: {
+						footer: [
+							{
+								cssClass: 'btn-primary mr-2',
+								label: '<liferay-ui:message key="done" />',
+								on: {
+									click: function() {
+										submitForm(form);
 									}
 								}
-							],
-							header: [
-								{
-									cssClass: 'close',
-									discardDefaultButtonCssClasses: true,
-									labelHTML: '<span aria-hidden="true">&times;</span>',
-									on: {
-										click: function(event) {
-											dialog.hide();
-										}
+							},
+							{
+								cssClass: 'btn-cancel',
+								label: '<liferay-ui:message key="cancel" />',
+								on: {
+									click: function() {
+										dialog.hide();
 									}
 								}
-							]
-						},
-						width: 720
+							}
+						],
+						header: [
+							{
+								cssClass: 'close',
+								discardDefaultButtonCssClasses: true,
+								labelHTML:
+									'<span aria-hidden="true">&times;</span>',
+								on: {
+									click: function(event) {
+										dialog.hide();
+									}
+								}
+							}
+						]
 					},
-					title: link.text()
-				}
-			);
+					width: 720
+				},
+				title: link.text()
+			});
 		},
 		['aui-base', 'liferay-util-window']
 	);

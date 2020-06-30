@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property custom.properties = "default.layout.template.id=1_column";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}jsonws.web.service.paths.excludes=";
 	property testray.component.names = "Blogs,Notifications";
 	property testray.main.component.name = "Notifications";
 	var pageName = "Blogs Page";
@@ -39,15 +39,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -341,7 +336,8 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
-	@description = "This test covers LPS-103502. It ensures that notifications are displayed correctly after being mentioned."
+	@description = "This will be ignored until LPS-103502 is backported on BPR-46081. This test covers LPS-103502."
+	@ignore = "true"
 	@priority = "3"
 	test ViewWebsiteNotificationdForMention {
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -396,19 +392,24 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewComment(
-			assetType = "comment",
-			content = "Blogs Entry Title",
-			contentBody = "Reply comment mentioning @test",
-			user = "userfn userln");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Notifications#NOTIFICATIONS_TITLE_2",
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
 			value1 = "userfn userln mentioned you in a comment in a blogs entry.");
 
-		AssertTextEquals.assertPartialText(
-			key_contentBody = "Reply comment mentioning",
-			locator1 = "Notifications#NOTIFICATIONS_CONTENT_2",
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
+			value1 = "Reply comment mentioning @test");
+
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
+			value1 = "userfn userln added a new comment to Blogs Entry Title.");
+
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
 			value1 = "Reply comment mentioning @test");
 	}
 

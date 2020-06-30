@@ -44,10 +44,15 @@ String termsOfUseContent = ParamUtil.getString(request, "termsOfUseContent");
 
 <aui:script>
 	function <portlet:namespace />agreeTermsOfUse() {
-		Liferay.Util.getOpener().<portlet:namespace />downloadCommerceVirtualOrderItem('<portlet:namespace />viewTermsOfUseDialog', '<%= commerceVirtualOrderItemId %>');
+		Liferay.Util.getOpener().<portlet:namespace />downloadCommerceVirtualOrderItem(
+			'<portlet:namespace />viewTermsOfUseDialog',
+			'<%= commerceVirtualOrderItemId %>'
+		);
 	}
 
 	function <portlet:namespace />closeDialog() {
-		Liferay.Util.getOpener().<portlet:namespace />closePopup('<portlet:namespace />viewTermsOfUseDialog');
+		Liferay.Util.getOpener().<portlet:namespace />closePopup(
+			'<portlet:namespace />viewTermsOfUseDialog'
+		);
 	}
 </aui:script>

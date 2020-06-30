@@ -492,10 +492,15 @@ public class TaxonomyVocabularyResourceImpl
 				dateModified = assetVocabulary.getModifiedDate();
 				description = assetVocabulary.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
+				description_i18n = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetVocabulary.getDescriptionMap());
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-
+				name_i18n = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetVocabulary.getTitleMap());
 				numberOfTaxonomyCategories = Optional.ofNullable(
 					assetVocabulary.getCategories()
 				).map(

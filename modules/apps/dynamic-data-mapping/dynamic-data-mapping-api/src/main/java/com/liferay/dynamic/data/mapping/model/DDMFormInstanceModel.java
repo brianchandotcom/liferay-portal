@@ -48,7 +48,7 @@ public interface DDMFormInstanceModel
 	extends BaseModel<DDMFormInstance>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm form instance model instance should use the {@link DDMFormInstance} interface instead.

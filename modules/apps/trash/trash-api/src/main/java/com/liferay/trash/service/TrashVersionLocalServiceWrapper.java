@@ -33,11 +33,6 @@ public class TrashVersionLocalServiceWrapper
 		_trashVersionLocalService = trashVersionLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link TrashVersionLocalServiceUtil} to access the trash version local service. Add custom service methods to <code>com.liferay.trash.service.impl.TrashVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.trash.model.TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,
@@ -261,6 +256,9 @@ public class TrashVersionLocalServiceWrapper
 		return _trashVersionLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

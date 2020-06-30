@@ -41,8 +41,6 @@ public interface CommerceAdminModule {
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
 
-	public int getType();
-
 	public boolean isVisible(long groupId) throws PortalException;
 
 	public void render(

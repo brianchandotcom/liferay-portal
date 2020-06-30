@@ -46,6 +46,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"basePrice": {
+			"store": true,
+			"type": "double"
+		},
 		"commerceAccountGroupIds_required_matches": {
 			"store": true,
 			"type": "integer"

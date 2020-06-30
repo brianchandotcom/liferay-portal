@@ -18,16 +18,21 @@
 
 <%
 AuthorizeNetGroupServiceConfiguration authorizeNetCommercePaymentEngineGroupServiceConfiguration = (AuthorizeNetGroupServiceConfiguration)request.getAttribute(AuthorizeNetGroupServiceConfiguration.class.getName());
+
+long commerceChannelId = ParamUtil.getLong(request, "commerceChannelId");
 %>
 
 <portlet:actionURL name="editAuthorizeNetCommercePaymentMethodConfiguration" var="editCommercePaymentMethodActionURL" />
 
 <aui:form action="<%= editCommercePaymentMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset label="authentication">
+	<commerce-ui:panel>
+		<commerce-ui:info-box
+			title="authentication"
+		>
 			<aui:input label="api-login-id" name="settings--apiLoginId--" value="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.apiLoginId() %>" />
 
 			<aui:input label="transaction-key" name="settings--transactionKey--" value="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.transactionKey() %>" />
@@ -45,22 +50,26 @@ AuthorizeNetGroupServiceConfiguration authorizeNetCommercePaymentEngineGroupServ
 				%>
 
 			</aui:select>
-		</aui:fieldset>
+		</commerce-ui:info-box>
 
-		<aui:fieldset label="display">
+		<commerce-ui:info-box
+			title="display"
+		>
 			<aui:input checked="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.showBankAccount() %>" label="show-bank-account" name="settings--showBankAccount--" type="checkbox" />
 
 			<aui:input checked="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.showCreditCard() %>" label="show-credit-card" name="settings--showCreditCard--" type="checkbox" />
 
 			<aui:input checked="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.showStoreName() %>" label="show-store-name" name="settings--showStoreName--" type="checkbox" />
-		</aui:fieldset>
+		</commerce-ui:info-box>
 
-		<aui:fieldset label="security">
+		<commerce-ui:info-box
+			title="security"
+		>
 			<aui:input checked="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.requireCaptcha() %>" label="require-captcha" name="settings--requireCaptcha--" type="checkbox" />
 
 			<aui:input checked="<%= authorizeNetCommercePaymentEngineGroupServiceConfiguration.requireCardCodeVerification() %>" label="require-card-code-verification" name="settings--requireCardCodeVerification--" type="checkbox" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</commerce-ui:info-box>
+	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

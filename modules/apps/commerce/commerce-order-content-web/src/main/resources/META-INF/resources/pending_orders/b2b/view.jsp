@@ -18,18 +18,20 @@
 
 <%
 CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
 %>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
-<commerce-ui:table
-	dataProviderKey="commercePendingOrders"
-	filter="<%= commerceOrderContentDisplayContext.getOrderFilter() %>"
-	itemPerPage="<%= 5 %>"
+<commerce-ui:dataset-display
+	dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
+	id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
+	itemsPerPage="<%= 10 %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	pageNumber="1"
+	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
-	tableName="commercePendingOrders"
+	style="stacked"
 />
 
 <div class="commerce-cta is-visible">
@@ -40,6 +42,7 @@ CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (Commerc
 			<aui:input name="deleteCommerceOrderIds" type="hidden" />
 
 			<clay:button
+				disabled="<%= commerceAccount == null %>"
 				elementClasses="btn-fixed btn-primary"
 				label='<%= LanguageUtil.get(request, "add-order") %>'
 				size="lg"

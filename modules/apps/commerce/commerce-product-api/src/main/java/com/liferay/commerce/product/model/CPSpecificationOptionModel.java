@@ -48,7 +48,7 @@ public interface CPSpecificationOptionModel
 	extends BaseModel<CPSpecificationOption>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp specification option model instance should use the {@link CPSpecificationOption} interface instead.

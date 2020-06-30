@@ -244,11 +244,8 @@ public class UpgradePortalPreferencesTest {
 
 		EntityCacheUtil.clearCache(PortalPreferencesImpl.class);
 
-		portalPreferences =
-			PortalPreferencesLocalServiceUtil.getPortalPreferences(
-				portalPreferences.getPortalPreferencesId());
-
-		return portalPreferences;
+		return PortalPreferencesLocalServiceUtil.getPortalPreferences(
+			portalPreferences.getPortalPreferencesId());
 	}
 
 	protected void setUpUpgradePortalPreferences() {

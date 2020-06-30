@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface DLTrashLocalService extends BaseLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLTrashLocalServiceUtil} to access the dl trash local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

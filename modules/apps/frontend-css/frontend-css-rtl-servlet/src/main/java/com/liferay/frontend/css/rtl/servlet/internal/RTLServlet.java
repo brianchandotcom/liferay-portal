@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.RequestDispatcherUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -178,6 +179,7 @@ public class RTLServlet extends HttpServlet {
 
 		response.setContentLength(urlConnection.getContentLength());
 
+		response.setContentType(ContentTypes.TEXT_CSS);
 		response.setStatus(HttpServletResponse.SC_OK);
 
 		StreamUtil.transfer(url.openStream(), response.getOutputStream());

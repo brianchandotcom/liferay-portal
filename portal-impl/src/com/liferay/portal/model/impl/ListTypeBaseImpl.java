@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 public abstract class ListTypeBaseImpl
 	extends ListTypeModelImpl implements ListType {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a list type model instance should use the <code>ListType</code> interface instead.

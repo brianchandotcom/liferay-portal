@@ -32,11 +32,6 @@ public class DLFolderLocalServiceWrapper
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFolderLocalServiceUtil} to access the document library folder local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addDLFileEntryTypeDLFolder(
 		long fileEntryTypeId,
@@ -774,6 +769,9 @@ public class DLFolderLocalServiceWrapper
 		return _dlFolderLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -1003,8 +1001,8 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	 updateFolderAndFileEntryTypes(long, long, long, String,
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #updateFolderAndFileEntryTypes(long, long, long, String,
 	 String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated

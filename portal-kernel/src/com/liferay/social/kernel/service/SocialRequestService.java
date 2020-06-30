@@ -44,7 +44,7 @@ import com.liferay.social.kernel.model.SocialRequest;
 )
 public interface SocialRequestService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRequestServiceUtil} to access the social request remote service. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialRequestServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

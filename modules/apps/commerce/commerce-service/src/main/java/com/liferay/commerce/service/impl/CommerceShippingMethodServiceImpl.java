@@ -14,16 +14,18 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.base.CommerceShippingMethodServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
@@ -40,32 +42,43 @@ public class CommerceShippingMethodServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
+			long userId, long groupId, long commerceShippingMethodId,
+			long commerceCountryId)
+		throws PortalException {
+
+		_checkCommerceChannelPermissionByGroupId(groupId);
+
+		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
+			userId, groupId, commerceShippingMethodId, commerceCountryId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long commerceShippingMethodId, long commerceCountryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
-
-		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
-			commerceShippingMethodId, commerceCountryId, serviceContext);
+		return commerceShippingMethodService.addCommerceAddressRestriction(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			commerceShippingMethodId, commerceCountryId);
 	}
 
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey, double priority, boolean active,
-			ServiceContext serviceContext)
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, File imageFile,
+			String engineKey, double priority, boolean active)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
-			nameMap, descriptionMap, imageFile, engineKey, priority, active,
-			serviceContext);
+			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+			priority, active);
 	}
 
 	@Override
@@ -78,9 +91,8 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), commerceShippingMethod.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+			_checkCommerceChannelPermissionByGroupId(
+				commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethodLocalService.createCommerceShippingMethod(
@@ -96,12 +108,28 @@ public class CommerceShippingMethodServiceImpl
 			commerceAddressRestrictionLocalService.
 				getCommerceAddressRestriction(commerceAddressRestrictionId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceAddressRestriction.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceAddressRestriction.getGroupId());
 
 		commerceShippingMethodLocalService.deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
+	}
+
+	@Override
+	public void deleteCommerceAddressRestrictions(long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
+
+		commerceAddressRestrictionLocalService.
+			deleteCommerceAddressRestrictions(
+				CommerceShippingMethod.class.getName(),
+				commerceShippingMethodId);
 	}
 
 	@Override
@@ -112,9 +140,8 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingMethod.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
 
 		commerceShippingMethodLocalService.deleteCommerceShippingMethod(
 			commerceShippingMethod);
@@ -130,9 +157,8 @@ public class CommerceShippingMethodServiceImpl
 				groupId, engineKey);
 
 		if (commerceShippingMethod != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), commerceShippingMethod.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+			_checkCommerceChannelPermissionByGroupId(
+				commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethod;
@@ -148,9 +174,8 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingMethod.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.
 			getCommerceAddressRestrictions(
@@ -166,9 +191,8 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingMethod.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.
 			getCommerceAddressRestrictionsCount(commerceShippingMethodId);
@@ -183,9 +207,8 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingMethod.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethod;
 	}
@@ -194,9 +217,7 @@ public class CommerceShippingMethodServiceImpl
 	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId);
@@ -207,9 +228,7 @@ public class CommerceShippingMethodServiceImpl
 			long groupId, boolean active)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId, active);
@@ -220,9 +239,7 @@ public class CommerceShippingMethodServiceImpl
 			long groupId, long commerceCountryId, boolean active)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId, commerceCountryId, active);
@@ -232,9 +249,7 @@ public class CommerceShippingMethodServiceImpl
 	public int getCommerceShippingMethodsCount(long groupId, boolean active)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceShippingMethodLocalService.
 			getCommerceShippingMethodsCount(groupId, active);
@@ -250,9 +265,8 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), commerceShippingMethod.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+			_checkCommerceChannelPermissionByGroupId(
+				commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethodLocalService.setActive(
@@ -270,19 +284,32 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingMethod.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
 			descriptionMap, imageFile, priority, active);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
+	private void _checkCommerceChannelPermissionByGroupId(long groupId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.UPDATE);
+	}
+
+	private static volatile ModelResourcePermission<CommerceChannel>
+		_commerceChannelModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
 				CommerceShippingMethodServiceImpl.class,
-				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
+				"_commerceChannelModelResourcePermission",
+				CommerceChannel.class);
+
+	@ServiceReference(type = CommerceChannelLocalService.class)
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

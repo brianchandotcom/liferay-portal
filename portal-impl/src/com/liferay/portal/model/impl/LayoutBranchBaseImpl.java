@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
 public abstract class LayoutBranchBaseImpl
 	extends LayoutBranchModelImpl implements LayoutBranch {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout branch model instance should use the <code>LayoutBranch</code> interface instead.

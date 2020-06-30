@@ -32,11 +32,6 @@ public class ExpandoColumnServiceWrapper
 		_expandoColumnService = expandoColumnService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnServiceUtil} to access the expando column remote service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
 			long tableId, String name, int type)

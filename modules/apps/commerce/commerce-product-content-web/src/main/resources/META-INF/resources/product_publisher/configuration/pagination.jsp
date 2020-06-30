@@ -24,18 +24,4 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isPaginate() %>" label="paginate" name="preferences--paginate--" type="toggle-switch" />
 
 	<aui:input helpMessage="maximum-number-of-products-to-display-if-pagination-is-disabled-otherwise-number-of-items-to-display-per-page" label="number-of-items-to-display" name="preferences--paginationDelta--" type="number" value="<%= cpPublisherConfigurationDisplayContext.getPaginationDelta() %>" />
-
-	<aui:select label="pagination-type" name="preferences--paginationType--" value="<%= cpPublisherConfigurationDisplayContext.getPaginationType() %>">
-
-		<%
-		for (String paginationType : CPContentConstants.PAGINATION_TYPES) {
-		%>
-
-			<aui:option label="<%= paginationType %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
 </aui:fieldset>

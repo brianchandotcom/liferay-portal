@@ -31,9 +31,7 @@ public class CompoundSessionIdHttpSession extends HttpSessionWrapper {
 	public String getId() {
 		String sessionId = super.getId();
 
-		sessionId = CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
-
-		return sessionId;
+		return CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
 	}
 
 }

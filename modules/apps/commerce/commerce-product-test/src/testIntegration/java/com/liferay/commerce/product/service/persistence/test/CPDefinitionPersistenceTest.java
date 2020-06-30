@@ -194,6 +194,20 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setMaxSubscriptionCycles(RandomTestUtil.nextLong());
 
+		newCPDefinition.setDeliverySubscriptionEnabled(
+			RandomTestUtil.randomBoolean());
+
+		newCPDefinition.setDeliverySubscriptionLength(RandomTestUtil.nextInt());
+
+		newCPDefinition.setDeliverySubscriptionType(
+			RandomTestUtil.randomString());
+
+		newCPDefinition.setDeliverySubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		newCPDefinition.setDeliveryMaxSubscriptionCycles(
+			RandomTestUtil.nextLong());
+
 		newCPDefinition.setAccountGroupFilterEnabled(
 			RandomTestUtil.randomBoolean());
 
@@ -305,6 +319,21 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinition.getMaxSubscriptionCycles(),
 			newCPDefinition.getMaxSubscriptionCycles());
+		Assert.assertEquals(
+			existingCPDefinition.isDeliverySubscriptionEnabled(),
+			newCPDefinition.isDeliverySubscriptionEnabled());
+		Assert.assertEquals(
+			existingCPDefinition.getDeliverySubscriptionLength(),
+			newCPDefinition.getDeliverySubscriptionLength());
+		Assert.assertEquals(
+			existingCPDefinition.getDeliverySubscriptionType(),
+			newCPDefinition.getDeliverySubscriptionType());
+		Assert.assertEquals(
+			existingCPDefinition.getDeliverySubscriptionTypeSettings(),
+			newCPDefinition.getDeliverySubscriptionTypeSettings());
+		Assert.assertEquals(
+			existingCPDefinition.getDeliveryMaxSubscriptionCycles(),
+			newCPDefinition.getDeliveryMaxSubscriptionCycles());
 		Assert.assertEquals(
 			existingCPDefinition.isAccountGroupFilterEnabled(),
 			newCPDefinition.isAccountGroupFilterEnabled());
@@ -443,8 +472,11 @@ public class CPDefinitionPersistenceTest {
 			"published", true, "displayDate", true, "expirationDate", true,
 			"lastPublishDate", true, "subscriptionEnabled", true,
 			"subscriptionLength", true, "subscriptionType", true,
-			"maxSubscriptionCycles", true, "accountGroupFilterEnabled", true,
-			"channelFilterEnabled", true, "version", true, "status", true,
+			"maxSubscriptionCycles", true, "deliverySubscriptionEnabled", true,
+			"deliverySubscriptionLength", true, "deliverySubscriptionType",
+			true, "deliverySubscriptionTypeSettings", true,
+			"deliveryMaxSubscriptionCycles", true, "accountGroupFilterEnabled",
+			true, "channelFilterEnabled", true, "version", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
@@ -752,6 +784,19 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setSubscriptionTypeSettings(RandomTestUtil.randomString());
 
 		cpDefinition.setMaxSubscriptionCycles(RandomTestUtil.nextLong());
+
+		cpDefinition.setDeliverySubscriptionEnabled(
+			RandomTestUtil.randomBoolean());
+
+		cpDefinition.setDeliverySubscriptionLength(RandomTestUtil.nextInt());
+
+		cpDefinition.setDeliverySubscriptionType(RandomTestUtil.randomString());
+
+		cpDefinition.setDeliverySubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		cpDefinition.setDeliveryMaxSubscriptionCycles(
+			RandomTestUtil.nextLong());
 
 		cpDefinition.setAccountGroupFilterEnabled(
 			RandomTestUtil.randomBoolean());

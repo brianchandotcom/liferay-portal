@@ -16,10 +16,10 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
+import com.liferay.commerce.product.internal.search.CPOptionCategoryIndexer;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
-import com.liferay.commerce.product.search.CPOptionCategoryIndexer;
 import com.liferay.commerce.product.service.base.CPOptionCategoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -86,7 +86,7 @@ public class CPOptionCategoryLocalServiceImpl
 		cpOptionCategory.setPriority(priority);
 		cpOptionCategory.setKey(key);
 
-		cpOptionCategoryPersistence.update(cpOptionCategory);
+		cpOptionCategory = cpOptionCategoryPersistence.update(cpOptionCategory);
 
 		// Resources
 
@@ -224,9 +224,7 @@ public class CPOptionCategoryLocalServiceImpl
 		cpOptionCategory.setPriority(priority);
 		cpOptionCategory.setKey(key);
 
-		cpOptionCategoryPersistence.update(cpOptionCategory);
-
-		return cpOptionCategory;
+		return cpOptionCategoryPersistence.update(cpOptionCategory);
 	}
 
 	protected SearchContext buildSearchContext(

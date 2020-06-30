@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface CommerceAddressRestrictionService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressRestrictionServiceUtil} to access the commerce address restriction remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceAddressRestrictionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

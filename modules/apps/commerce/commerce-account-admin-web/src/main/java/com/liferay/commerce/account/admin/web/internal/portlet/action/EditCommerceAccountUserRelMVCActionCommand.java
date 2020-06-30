@@ -149,6 +149,12 @@ public class EditCommerceAccountUserRelMVCActionCommand
 			actionRequest, "commerceAccountUserId");
 
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "roleIds");
+		long[] originalRoleIds = ParamUtil.getLongValues(
+			actionRequest, "originalRoleIds");
+
+		_userGroupRoleService.updateUserGroupRoles(
+			commerceAccountUserId, commerceAccountGroupId, roleIds,
+			originalRoleIds);
 
 		_userGroupRoleService.addUserGroupRoles(
 			commerceAccountUserId, commerceAccountGroupId, roleIds);

@@ -85,7 +85,7 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 
-		commerceChannelPersistence.update(commerceChannel);
+		commerceChannel = commerceChannelPersistence.update(commerceChannel);
 
 		// Group
 
@@ -163,13 +163,21 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	@Override
-	public CommerceChannel getCommerceChannelByOrderGroupId(long orderGroupId)
+	public CommerceChannel getCommerceChannelByGroupId(long groupId)
 		throws PortalException {
 
-		Group group = groupLocalService.getGroup(orderGroupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		return commerceChannelLocalService.getCommerceChannel(
 			group.getClassPK());
+	}
+
+	@Override
+	public CommerceChannel getCommerceChannelByOrderGroupId(long orderGroupId)
+		throws PortalException {
+
+		return commerceChannelLocalService.getCommerceChannelByGroupId(
+			orderGroupId);
 	}
 
 	@Override
@@ -260,9 +268,20 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setTypeSettingsProperties(typeSettingsProperties);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 
-		commerceChannelPersistence.update(commerceChannel);
+		return commerceChannelPersistence.update(commerceChannel);
+	}
 
-		return commerceChannel;
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceChannel updateCommerceChannelExternalReferenceCode(
+			long commerceChannelId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
+
+		commerceChannel.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceChannelPersistence.update(commerceChannel);
 	}
 
 	protected SearchContext buildSearchContext(

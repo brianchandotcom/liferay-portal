@@ -33,7 +33,7 @@ public abstract class CommerceAddressRestrictionBaseImpl
 	extends CommerceAddressRestrictionModelImpl
 	implements CommerceAddressRestriction {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce address restriction model instance should use the <code>CommerceAddressRestriction</code> interface instead.

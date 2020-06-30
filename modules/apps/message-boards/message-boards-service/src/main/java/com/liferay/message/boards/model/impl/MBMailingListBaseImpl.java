@@ -32,7 +32,7 @@ import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
 public abstract class MBMailingListBaseImpl
 	extends MBMailingListModelImpl implements MBMailingList {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards mailing list model instance should use the <code>MBMailingList</code> interface instead.

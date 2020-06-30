@@ -106,6 +106,14 @@ public abstract class BaseMapWrapper<K, V> {
 		}
 	}
 
+	protected void doPutAll(Map<? extends K, ? extends V> inputMap) {
+		if (inputMap != null) {
+			Map<K, V> map = getMap();
+
+			map.putAll(inputMap);
+		}
+	}
+
 	protected abstract Map<K, V> getMap();
 
 	private void _put(K key, V value) {

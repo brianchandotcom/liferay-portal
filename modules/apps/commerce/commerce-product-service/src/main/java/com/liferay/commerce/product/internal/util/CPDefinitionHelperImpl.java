@@ -131,6 +131,17 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return new CPDataSourceResult(cpCatalogEntries, hits.getLength());
 	}
 
+	@Override
+	public long searchCount(
+			long groupId, SearchContext searchContext, CPQuery cpQuery)
+		throws PortalException {
+
+		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
+			groupId, searchContext, cpQuery, 0, 0);
+
+		return cpDefinitionSearcher.searchCount(searchContext);
+	}
+
 	private long _checkChannelGroupId(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -169,7 +180,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		queryConfig.setScoreEnabled(false);
 
-		searchContext.setSorts(_getSorts(cpQuery, searchContext.getLocale()));
+		searchContext.setSorts(_getSorts(cpQuery));
 		searchContext.setStart(start);
 
 		return cpDefinitionSearcher;
@@ -193,6 +204,27 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 					LocaleUtil.toLanguageId(
 						themeDisplay.getSiteDefaultLocale()),
 					true);
+		}
+
+		if (cpFriendlyURLEntry == null) {
+			cpFriendlyURLEntry =
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
+					cProductId,
+					LocaleUtil.toLanguageId(
+						themeDisplay.getSiteDefaultLocale()),
+					true);
+		}
+
+		if (cpFriendlyURLEntry == null) {
+			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
+					cProductId);
+
+			if (!cpFriendlyURLEntries.isEmpty()) {
+				cpFriendlyURLEntry = cpFriendlyURLEntries.get(0);
+			}
 		}
 
 		if (cpFriendlyURLEntry == null) {
@@ -259,7 +291,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return _portal.addPreservedParameters(themeDisplay, productFriendlyURL);
 	}
 
-	private String _getOrderByCol(String sortField, Locale locale) {
+	private String _getOrderByCol(String sortField) {
 		if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;
 		}
@@ -267,19 +299,19 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return sortField;
 	}
 
-	private Sort _getSort(String orderByType, String sortField, Locale locale) {
+	private Sort _getSort(String orderByType, String sortField) {
 		int sortType = _getSortType(sortField);
 
 		return SortFactoryUtil.getSort(
-			CPDefinition.class, sortType, _getOrderByCol(sortField, locale),
+			CPDefinition.class, sortType, _getOrderByCol(sortField),
 			orderByType);
 	}
 
-	private Sort[] _getSorts(CPQuery cpQuery, Locale locale) {
+	private Sort[] _getSorts(CPQuery cpQuery) {
 		Sort sort1 = _getSort(
-			cpQuery.getOrderByType1(), cpQuery.getOrderByCol1(), locale);
+			cpQuery.getOrderByType1(), cpQuery.getOrderByCol1());
 		Sort sort2 = _getSort(
-			cpQuery.getOrderByType2(), cpQuery.getOrderByCol2(), locale);
+			cpQuery.getOrderByType2(), cpQuery.getOrderByCol2());
 
 		return new Sort[] {sort1, sort2};
 	}
@@ -295,7 +327,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			sortType = Sort.LONG_TYPE;
 		}
 		else if (fieldType.equals(Field.PRIORITY) ||
-				 fieldType.equals("basePrice")) {
+				 fieldType.equals(CPField.BASE_PRICE)) {
 
 			sortType = Sort.DOUBLE_TYPE;
 		}

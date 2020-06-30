@@ -14,34 +14,30 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
-import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,24 +45,27 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CPInstanceCommerceTierPriceEntryDisplayContext
-	extends BaseCPDefinitionsSearchContainerDisplayContext
-		<CommerceTierPriceEntry> {
+	extends BaseCPDefinitionsDisplayContext {
 
 	public CPInstanceCommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
 		CommercePriceListActionHelper commercePriceListActionHelper,
-		CommerceTierPriceEntryService commercePriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			actionHelper, httpServletRequest,
-			CommerceTierPriceEntry.class.getSimpleName());
+		super(actionHelper, httpServletRequest);
 
 		_commercePriceListActionHelper = commercePriceListActionHelper;
-		_commerceTierPriceEntryService = commercePriceEntryService;
+	}
 
-		setDefaultOrderByCol("create-date");
-		setDefaultOrderByType("desc");
+	public ClayCreationMenu getClayCreationMenu() throws Exception {
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+
+		clayCreationMenu.addClayCreationMenuActionItem(
+			new ClayCreationMenuActionItem(
+				_getAddCommerceTierPriceEntryURL(), StringPool.BLANK,
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+
+		return clayCreationMenu;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -111,25 +110,18 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return commerceTierPriceEntry.getCommerceTierPriceEntryId();
 	}
 
-	public String getCommerceTierPriceEntryPrice(
-			CommerceTierPriceEntry commerceTierPriceEntry)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
-
-		CommercePriceList commercePriceList =
-			commercePriceEntry.getCommercePriceList();
-
-		CommerceMoney priceCommerceMoney = commerceTierPriceEntry.getPriceMoney(
-			commercePriceList.getCommerceCurrencyId());
-
-		return priceCommerceMoney.format(cpRequestHelper.getLocale());
-	}
-
 	public String getContextTitle() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return LanguageUtil.get(
+				themeDisplay.getRequest(), "add-tier-price-entry");
+		}
 
 		StringBundler sb = new StringBundler(5);
 
@@ -158,18 +150,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			}
 		}
 
-		CommerceTierPriceEntry commerceTierPriceEntry =
-			getCommerceTierPriceEntry();
-
-		String contextTitle = sb.toString();
-
-		if (commerceTierPriceEntry == null) {
-			contextTitle = LanguageUtil.format(
-				themeDisplay.getRequest(), "add-tier-price-entry-to-x",
-				contextTitle);
-		}
-
-		return contextTitle;
+		return sb.toString();
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -195,45 +176,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return cpInstanceId;
 	}
 
-	public PortletURL getInstancePriceListURL() throws PortalException {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpInstanceId", String.valueOf(getCPInstanceId()));
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
-			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
-		portletURL.setParameter(
-			"screenNavigationEntryKey", getScreenNavigationEntryKey());
-
-		return portletURL;
-	}
-
-	public PortletURL getInstanceTierPriceEntriesURL() throws PortalException {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPInstanceCommerceTierPriceEntries");
-		portletURL.setParameter(
-			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpInstanceId", String.valueOf(getCPInstanceId()));
-
-		String instancePriceEntryToolbarItem = ParamUtil.getString(
-			httpServletRequest, "instancePriceEntryToolbarItem",
-			"view-tier-price-entries");
-
-		portletURL.setParameter(
-			"instancePriceEntryToolbarItem", instancePriceEntryToolbarItem);
-
-		return portletURL;
-	}
-
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -248,74 +190,15 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return portletURL;
 	}
 
-	public PortletURL getProductSkusURL() throws PortalException {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinition");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
-
-		return portletURL;
-	}
-
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		return "price-lists";
 	}
 
-	public String getScreenNavigationEntryKey() {
-		return "price-lists";
-	}
-
-	@Override
-	public SearchContainer<CommerceTierPriceEntry> getSearchContainer()
-		throws PortalException {
-
-		if (searchContainer != null) {
-			return searchContainer;
-		}
-
-		searchContainer = new SearchContainer<>(
-			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
-			"there-are-no-tier-price-entries");
-
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator =
-			CommercePriceListPortletUtil.
-				getCommerceTierPriceEntryOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		int total =
-			_commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
-				getCommercePriceEntryId());
-
-		searchContainer.setTotal(total);
-
-		List<CommerceTierPriceEntry> results =
-			_commerceTierPriceEntryService.getCommerceTierPriceEntries(
-				getCommercePriceEntryId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(results);
-
-		return searchContainer;
-	}
-
 	public boolean hasCustomAttributes() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return CustomAttributesUtil.hasCustomAttributes(
-			themeDisplay.getCompanyId(), CommerceTierPriceEntry.class.getName(),
+			cpRequestHelper.getCompanyId(),
+			CommerceTierPriceEntry.class.getName(),
 			getCommerceTierPriceEntryId(), null);
 	}
 
@@ -325,9 +208,25 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 	}
 
+	private String _getAddCommerceTierPriceEntryURL() throws Exception {
+		RenderURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCPInstanceCommerceTierPriceEntry");
+		portletURL.setParameter("redirect", cpRequestHelper.getCurrentURL());
+		portletURL.setParameter(
+			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(getCPInstanceId()));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
+
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
-	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
 	private CPInstance _cpInstance;
 
 }

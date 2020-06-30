@@ -58,7 +58,7 @@ import java.util.List;
 public interface CommerceShipmentItemLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentItemLocalServiceUtil} to access the commerce shipment item local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentItemLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -98,9 +98,15 @@ public interface CommerceShipmentItemLocalService
 	 * @return the commerce shipment item that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceShipmentItem deleteCommerceShipmentItem(
 		CommerceShipmentItem commerceShipmentItem);
+
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceShipmentItem deleteCommerceShipmentItem(
+			CommerceShipmentItem commerceShipmentItem,
+			boolean restoreStockQuantity)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce shipment item with the primary key from the database. Also notifies the appropriate model listeners.
@@ -114,7 +120,13 @@ public interface CommerceShipmentItemLocalService
 			long commerceShipmentItemId)
 		throws PortalException;
 
-	public void deleteCommerceShipmentItems(long commerceShipment);
+	public void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
+		throws PortalException;
+
+	public void deleteCommerceShipmentItems(
+			long commerceShipmentId, boolean restoreStockQuantity)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -194,6 +206,11 @@ public interface CommerceShipmentItemLocalService
 		long commerceShipmentItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShipmentItem fetchCommerceShipmentItem(
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceInventoryWarehouseId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -223,6 +240,10 @@ public interface CommerceShipmentItemLocalService
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
 		int start, int end);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
 		long commerceOrderItemId);
@@ -231,6 +252,15 @@ public interface CommerceShipmentItemLocalService
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
 		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceShipmentId, long commerceOrderItemId, int start, int end,
+		OrderByComparator<CommerceShipmentItem> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipmentItem>
+		getCommerceShipmentItemsByCommerceOrderItemId(long commerceOrderItemId);
 
 	/**
 	 * Returns the number of commerce shipment items.
@@ -244,6 +274,14 @@ public interface CommerceShipmentItemLocalService
 	public int getCommerceShipmentItemsCount(long commerceShipmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentItemsCountByCommerceOrderItemId(
+		long commerceOrderItemId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentOrderItemsQuantity(
+		long commerceShipmentId, long commerceOrderItemId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -253,6 +291,9 @@ public interface CommerceShipmentItemLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -268,9 +309,14 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem updateCommerceShipmentItem(
 		CommerceShipmentItem commerceShipmentItem);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, int quantity)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceShipmentItem updateCommerceShipmentItem(
+			long commerceShipmentItemId, long commerceInventoryWarehouseId,
+			int quantity)
 		throws PortalException;
 
 }

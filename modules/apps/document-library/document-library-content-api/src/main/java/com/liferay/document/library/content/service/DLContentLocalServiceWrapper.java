@@ -32,11 +32,6 @@ public class DLContentLocalServiceWrapper
 		_dlContentLocalService = dlContentLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to <code>com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.document.library.content.model.DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
@@ -356,6 +351,9 @@ public class DLContentLocalServiceWrapper
 		return _dlContentLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

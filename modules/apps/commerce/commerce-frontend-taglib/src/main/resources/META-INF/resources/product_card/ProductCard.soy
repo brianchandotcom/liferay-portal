@@ -34,7 +34,7 @@
 	{@param? _handleCheckboxCompareUpdate: any}
 	{@param? _handleWishListButtonClick: any}
 
-	<div class="minium-card" data-href="{$detailsLink}" data-onkeypress="_handleCardKeypress" id="{$id}" tabindex="0">
+	<div class="minium-card product-card" data-href="{$detailsLink}" data-onkeypress="_handleCardKeypress" id="{$id}" tabindex="0">
 		{let $availabilityDotClasses kind="text"}
 			{switch $availability}
 				{case 'inStock'}
@@ -53,7 +53,7 @@
 			>
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'close' /}
+					{param symbol: 'times' /}
 				{/call}
 			</span>
 		{else}
@@ -87,7 +87,11 @@
 			>
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'favorites' /}
+					{param symbol: 'heart' /}
+				{/call}
+				{call ClayIcon.render}
+					{param spritemap: $spritemap /}
+					{param symbol: 'heart-full' /}
 				{/call}
 			</button>
 		{/if}
@@ -149,7 +153,7 @@
 		{/if}
 
 		{if $addToCartButtonVisible}
-			<div class="minium-card__actions">
+			<div class="minium-card__actions card-actions">
 				{if isNonnull($sku) and isNonnull($skuId)}
 					{call AddToCartButton.render}
 						{param accountId: $accountId /}

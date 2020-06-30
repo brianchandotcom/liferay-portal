@@ -63,6 +63,7 @@ public class CommerceDiscountRuleWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
 		attributes.put("commerceDiscountId", getCommerceDiscountId());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
@@ -107,6 +108,12 @@ public class CommerceDiscountRuleWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long commerceDiscountId = (Long)attributes.get("commerceDiscountId");
@@ -192,6 +199,16 @@ public class CommerceDiscountRuleWrapper
 	@Override
 	public Date getModifiedDate() {
 		return _commerceDiscountRule.getModifiedDate();
+	}
+
+	/**
+	 * Returns the name of this commerce discount rule.
+	 *
+	 * @return the name of this commerce discount rule
+	 */
+	@Override
+	public String getName() {
+		return _commerceDiscountRule.getName();
 	}
 
 	/**
@@ -291,11 +308,6 @@ public class CommerceDiscountRuleWrapper
 		return _commerceDiscountRule.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce discount rule model instance should use the <code>CommerceDiscountRule</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceDiscountRule.persist();
@@ -371,6 +383,16 @@ public class CommerceDiscountRuleWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_commerceDiscountRule.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the name of this commerce discount rule.
+	 *
+	 * @param name the name of this commerce discount rule
+	 */
+	@Override
+	public void setName(String name) {
+		_commerceDiscountRule.setName(name);
 	}
 
 	@Override

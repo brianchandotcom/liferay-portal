@@ -43,7 +43,6 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 				<liferay-ui:search-paginator
 					markupView="lexicon"
 					searchContainer="<%= searchContainer %>"
-					type="<%= cpPublisherDisplayContext.getPaginationType() %>"
 				/>
 			</aui:form>
 		</c:if>
@@ -60,7 +59,6 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 				<liferay-ui:search-paginator
 					markupView="lexicon"
 					searchContainer="<%= searchContainer %>"
-					type="<%= cpPublisherDisplayContext.getPaginationType() %>"
 				/>
 			</aui:form>
 		</c:if>

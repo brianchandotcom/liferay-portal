@@ -665,7 +665,7 @@ public class FedExCommerceShippingOptionHelper {
 		for (int i = 0; i < commerceOrderItems.size(); i++) {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(i);
 
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
+			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
 			Dimensions dimensions = _commerceShippingHelper.getDimensions(
 				cpInstance);

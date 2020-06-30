@@ -40,7 +40,7 @@ import java.util.Set;
 public interface FriendlyURLEntryPersistence
 	extends BasePersistence<FriendlyURLEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryUtil} to access the friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

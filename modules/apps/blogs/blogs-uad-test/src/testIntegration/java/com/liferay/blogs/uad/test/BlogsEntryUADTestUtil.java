@@ -61,12 +61,10 @@ public class BlogsEntryUADTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		blogsEntry = blogsEntryLocalService.updateStatus(
+		return blogsEntryLocalService.updateStatus(
 			statusByUserId, blogsEntry.getEntryId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
-
-		return blogsEntry;
 	}
 
 }

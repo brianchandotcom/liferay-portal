@@ -336,6 +336,22 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	@Override
+	public LiferayPortletURL createRenderURL(long plid) {
+		Portlet portlet = getPortlet();
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		if (portletApp.getSpecMajorVersion() == 3) {
+			return createLiferayPortletURL(
+				plid, portletName, PortletRequest.RENDER_PHASE,
+				MimeResponse.Copy.PUBLIC);
+		}
+
+		return createLiferayPortletURL(
+			plid, portletName, PortletRequest.RENDER_PHASE);
+	}
+
+	@Override
 	public RenderURL createRenderURL(MimeResponse.Copy copy) {
 		return (RenderURL)createRenderURL(portletName, copy);
 	}

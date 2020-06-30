@@ -18,7 +18,9 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelPersistence;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence;
@@ -53,7 +55,7 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 	extends BaseServiceImpl
 	implements CommerceTierPriceEntryService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommerceTierPriceEntryServiceUtil</code>.
@@ -290,6 +292,83 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce price list channel rel local service.
+	 *
+	 * @return the commerce price list channel rel local service
+	 */
+	public com.liferay.commerce.price.list.service.
+		CommercePriceListChannelRelLocalService
+			getCommercePriceListChannelRelLocalService() {
+
+		return commercePriceListChannelRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list channel rel local service.
+	 *
+	 * @param commercePriceListChannelRelLocalService the commerce price list channel rel local service
+	 */
+	public void setCommercePriceListChannelRelLocalService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListChannelRelLocalService
+				commercePriceListChannelRelLocalService) {
+
+		this.commercePriceListChannelRelLocalService =
+			commercePriceListChannelRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list channel rel remote service.
+	 *
+	 * @return the commerce price list channel rel remote service
+	 */
+	public
+		com.liferay.commerce.price.list.service.
+			CommercePriceListChannelRelService
+				getCommercePriceListChannelRelService() {
+
+		return commercePriceListChannelRelService;
+	}
+
+	/**
+	 * Sets the commerce price list channel rel remote service.
+	 *
+	 * @param commercePriceListChannelRelService the commerce price list channel rel remote service
+	 */
+	public void setCommercePriceListChannelRelService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListChannelRelService
+				commercePriceListChannelRelService) {
+
+		this.commercePriceListChannelRelService =
+			commercePriceListChannelRelService;
+	}
+
+	/**
+	 * Returns the commerce price list channel rel persistence.
+	 *
+	 * @return the commerce price list channel rel persistence
+	 */
+	public CommercePriceListChannelRelPersistence
+		getCommercePriceListChannelRelPersistence() {
+
+		return commercePriceListChannelRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list channel rel persistence.
+	 *
+	 * @param commercePriceListChannelRelPersistence the commerce price list channel rel persistence
+	 */
+	public void setCommercePriceListChannelRelPersistence(
+		CommercePriceListChannelRelPersistence
+			commercePriceListChannelRelPersistence) {
+
+		this.commercePriceListChannelRelPersistence =
+			commercePriceListChannelRelPersistence;
+	}
+
+	/**
 	 * Returns the commerce price list commerce account group rel local service.
 	 *
 	 * @return the commerce price list commerce account group rel local service
@@ -363,6 +442,83 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 
 		this.commercePriceListCommerceAccountGroupRelPersistence =
 			commercePriceListCommerceAccountGroupRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce price list discount rel local service.
+	 *
+	 * @return the commerce price list discount rel local service
+	 */
+	public com.liferay.commerce.price.list.service.
+		CommercePriceListDiscountRelLocalService
+			getCommercePriceListDiscountRelLocalService() {
+
+		return commercePriceListDiscountRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list discount rel local service.
+	 *
+	 * @param commercePriceListDiscountRelLocalService the commerce price list discount rel local service
+	 */
+	public void setCommercePriceListDiscountRelLocalService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListDiscountRelLocalService
+				commercePriceListDiscountRelLocalService) {
+
+		this.commercePriceListDiscountRelLocalService =
+			commercePriceListDiscountRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list discount rel remote service.
+	 *
+	 * @return the commerce price list discount rel remote service
+	 */
+	public
+		com.liferay.commerce.price.list.service.
+			CommercePriceListDiscountRelService
+				getCommercePriceListDiscountRelService() {
+
+		return commercePriceListDiscountRelService;
+	}
+
+	/**
+	 * Sets the commerce price list discount rel remote service.
+	 *
+	 * @param commercePriceListDiscountRelService the commerce price list discount rel remote service
+	 */
+	public void setCommercePriceListDiscountRelService(
+		com.liferay.commerce.price.list.service.
+			CommercePriceListDiscountRelService
+				commercePriceListDiscountRelService) {
+
+		this.commercePriceListDiscountRelService =
+			commercePriceListDiscountRelService;
+	}
+
+	/**
+	 * Returns the commerce price list discount rel persistence.
+	 *
+	 * @return the commerce price list discount rel persistence
+	 */
+	public CommercePriceListDiscountRelPersistence
+		getCommercePriceListDiscountRelPersistence() {
+
+		return commercePriceListDiscountRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list discount rel persistence.
+	 *
+	 * @param commercePriceListDiscountRelPersistence the commerce price list discount rel persistence
+	 */
+	public void setCommercePriceListDiscountRelPersistence(
+		CommercePriceListDiscountRelPersistence
+			commercePriceListDiscountRelPersistence) {
+
+		this.commercePriceListDiscountRelPersistence =
+			commercePriceListDiscountRelPersistence;
 	}
 
 	/**
@@ -693,8 +849,8 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -753,6 +909,25 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 		commercePriceListAccountRelPersistence;
 
 	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService.class
+	)
+	protected com.liferay.commerce.price.list.service.
+		CommercePriceListChannelRelLocalService
+			commercePriceListChannelRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListChannelRelService.class
+	)
+	protected
+		com.liferay.commerce.price.list.service.
+			CommercePriceListChannelRelService
+				commercePriceListChannelRelService;
+
+	@BeanReference(type = CommercePriceListChannelRelPersistence.class)
+	protected CommercePriceListChannelRelPersistence
+		commercePriceListChannelRelPersistence;
+
+	@BeanReference(
 		type = com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService.class
 	)
 	protected com.liferay.commerce.price.list.service.
@@ -771,6 +946,25 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 	)
 	protected CommercePriceListCommerceAccountGroupRelPersistence
 		commercePriceListCommerceAccountGroupRelPersistence;
+
+	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalService.class
+	)
+	protected com.liferay.commerce.price.list.service.
+		CommercePriceListDiscountRelLocalService
+			commercePriceListDiscountRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.price.list.service.CommercePriceListDiscountRelService.class
+	)
+	protected
+		com.liferay.commerce.price.list.service.
+			CommercePriceListDiscountRelService
+				commercePriceListDiscountRelService;
+
+	@BeanReference(type = CommercePriceListDiscountRelPersistence.class)
+	protected CommercePriceListDiscountRelPersistence
+		commercePriceListDiscountRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService.class

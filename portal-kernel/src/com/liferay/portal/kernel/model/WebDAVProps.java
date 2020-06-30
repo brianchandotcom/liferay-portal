@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface WebDAVProps extends PersistedModel, WebDAVPropsModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WebDAVPropsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

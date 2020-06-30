@@ -16,6 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<aui:script>
+	var nestedPortlet = document.getElementById(
+		'_<%= portletDisplay.getId() %>__main-content'
+	);
+
+	if (nestedPortlet != null) {
+		nestedPortlet.removeAttribute('role');
+	}
+</aui:script>
+
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
 	<div class="alert alert-info hide" id="<portlet:namespace />nested-portlets-msg">
 		<liferay-ui:message key="drag-applications-below-to-nest-them" />

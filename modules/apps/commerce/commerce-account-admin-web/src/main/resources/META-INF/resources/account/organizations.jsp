@@ -125,14 +125,26 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 
 	<aui:script>
 		function <portlet:namespace />deleteCommerceAccountOrganizationRels() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-organizations" />')) {
+			if (
+				confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-organizations" />'
+				)
+			) {
 				var form = AUI.$(document.<portlet:namespace />fm);
 
 				form.attr('method', 'post');
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommerceAccountOrganizationRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				form.fm('deleteCommerceAccountOrganizationRelIds').val(
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				);
 
-				submitForm(form, '<portlet:actionURL name="editCommerceAccountOrganizationRel" />');
+				submitForm(
+					form,
+					'<portlet:actionURL name="editCommerceAccountOrganizationRel" />'
+				);
 			}
 		}
 	</aui:script>
@@ -143,35 +155,42 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 			function(event) {
 				event.preventDefault();
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: 'organizationsSelectItem',
-						on: {
-							selectedItemChange: function(event) {
-								var <portlet:namespace />addOrganizationIds = [];
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: 'organizationsSelectItem',
+					on: {
+						selectedItemChange: function(event) {
+							var <portlet:namespace />addOrganizationIds = [];
 
-								var selectedItems = event.newVal;
+							var selectedItems = event.newVal;
 
-								if (selectedItems) {
-									A.Array.each(
-										selectedItems,
-										function(item, index, selectedItems) {
-											<portlet:namespace />addOrganizationIds.push(item.id);
-										}
+							if (selectedItems) {
+								A.Array.each(selectedItems, function(
+									item,
+									index,
+									selectedItems
+								) {
+									<portlet:namespace />addOrganizationIds.push(
+										item.id
 									);
+								});
 
-									$('#<portlet:namespace />organizationIds').val(<portlet:namespace />addOrganizationIds.join(','));
+								$('#<portlet:namespace />organizationIds').val(
+									<portlet:namespace />addOrganizationIds.join(',')
+								);
 
-									var addCommerceAccountOrganizationRelFm = $('#<portlet:namespace />addCommerceAccountOrganizationRelFm');
+								var addCommerceAccountOrganizationRelFm = $(
+									'#<portlet:namespace />addCommerceAccountOrganizationRelFm'
+								);
 
-									submitForm(addCommerceAccountOrganizationRelFm);
-								}
+								submitForm(addCommerceAccountOrganizationRelFm);
 							}
-						},
-						title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
-						url: '<%= commerceAccountOrganizationRelAdminDisplayContext.getItemSelectorUrl() %>'
-					}
-				);
+						}
+					},
+					title:
+						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
+					url:
+						'<%= commerceAccountOrganizationRelAdminDisplayContext.getItemSelectorUrl() %>'
+				});
 
 				itemSelectorDialog.open();
 			}

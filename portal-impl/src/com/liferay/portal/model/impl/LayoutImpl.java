@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -30,7 +31,9 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -955,9 +958,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return false;
 		}
 
-		if (GetterUtil.getBoolean(
-				getTypeSettingsProperty(LayoutConstants.CUSTOMIZABLE_LAYOUT))) {
-
+		if (_isCustomizableLayout(this)) {
 			return true;
 		}
 
@@ -1511,6 +1512,33 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return url;
+	}
+
+	private boolean _isCustomizableLayout(Layout layout) {
+		UnicodeProperties typeSettingsProps = null;
+
+		if (LayoutStagingUtil.isBranchingLayout(layout)) {
+			LayoutStagingHandler layoutStagingHandler =
+				new LayoutStagingHandler(layout);
+
+			LayoutRevision layoutRevision =
+				layoutStagingHandler.getLayoutRevision();
+
+			typeSettingsProps = layoutRevision.getTypeSettingsProperties();
+		}
+
+		if (typeSettingsProps == null) {
+			typeSettingsProps = layout.getTypeSettingsProperties();
+		}
+
+		if (GetterUtil.getBoolean(
+				typeSettingsProps.getProperty(
+					LayoutConstants.CUSTOMIZABLE_LAYOUT))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutImpl.class);

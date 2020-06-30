@@ -17,7 +17,6 @@
 	{@param? status: int}
 
 	<div class="commerce-cart__footer">
-
 		{if isNonnull($itemsQuantity) and $itemsQuantity != 0}
 			<dl class="commerce-cart__totals">
 				<dt> {msg desc="Units"}units{/msg}</dt>
@@ -72,7 +71,7 @@
 		</a>
 	{elseif isNonnull($detailsUrl)}
 		<a class="commerce-button commerce-button--block{$submitModifiers}" href="{$detailsUrl}">
-			{msg desc="Review order"}review-order{/msg}
+			{msg desc="Review Order"}review-order{/msg}
 		</a>
 	{/if}
 	</div>

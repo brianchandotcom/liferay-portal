@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageUtil} to access the wiki page persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -44,6 +44,16 @@ public class CommerceDiscountRuleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return commerceDiscountRuleLocalService.addCommerceDiscountRule(
+			commerceDiscountId, type, type, typeSettings, serviceContext);
+	}
+
+	@Override
+	public CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String name, String type,
+			String typeSettings, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Commerce discount rule
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -58,6 +68,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 		commerceDiscountRule.setCompanyId(user.getCompanyId());
 		commerceDiscountRule.setUserId(user.getUserId());
 		commerceDiscountRule.setUserName(user.getFullName());
+		commerceDiscountRule.setName(name);
 		commerceDiscountRule.setCommerceDiscountId(commerceDiscountId);
 		commerceDiscountRule.setType(type);
 
@@ -68,7 +79,8 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		commerceDiscountRule.setSettingsProperties(settingsProperties);
 
-		commerceDiscountRulePersistence.update(commerceDiscountRule);
+		commerceDiscountRule = commerceDiscountRulePersistence.update(
+			commerceDiscountRule);
 
 		// Commerce discount
 
@@ -159,7 +171,42 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		commerceDiscountRule.setSettingsProperties(settingsProperties);
 
-		commerceDiscountRulePersistence.update(commerceDiscountRule);
+		commerceDiscountRule = commerceDiscountRulePersistence.update(
+			commerceDiscountRule);
+
+		// Commerce discount
+
+		reindexCommerceDiscount(commerceDiscountRule.getCommerceDiscountId());
+
+		return commerceDiscountRule;
+	}
+
+	@Override
+	public CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String name, String type,
+			String typeSettings)
+		throws PortalException {
+
+		// Commerce discount rule
+
+		CommerceDiscountRule commerceDiscountRule =
+			commerceDiscountRulePersistence.findByPrimaryKey(
+				commerceDiscountRuleId);
+
+		validate(type);
+
+		commerceDiscountRule.setName(name);
+		commerceDiscountRule.setType(type);
+
+		UnicodeProperties settingsProperties =
+			commerceDiscountRule.getSettingsProperties();
+
+		settingsProperties.put(type, typeSettings);
+
+		commerceDiscountRule.setSettingsProperties(settingsProperties);
+
+		commerceDiscountRule = commerceDiscountRulePersistence.update(
+			commerceDiscountRule);
 
 		// Commerce discount
 

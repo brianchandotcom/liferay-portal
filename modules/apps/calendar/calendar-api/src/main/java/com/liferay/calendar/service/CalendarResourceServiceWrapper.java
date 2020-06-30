@@ -33,11 +33,6 @@ public class CalendarResourceServiceWrapper
 		_calendarResourceService = calendarResourceService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CalendarResourceServiceUtil} to access the calendar resource remote service. Add custom service methods to <code>com.liferay.calendar.service.impl.CalendarResourceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.calendar.model.CalendarResource addCalendarResource(
 			long groupId, long classNameId, long classPK, String classUuid,

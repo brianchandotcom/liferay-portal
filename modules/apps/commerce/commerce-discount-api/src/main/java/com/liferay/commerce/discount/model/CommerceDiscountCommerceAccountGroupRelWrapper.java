@@ -292,11 +292,6 @@ public class CommerceDiscountCommerceAccountGroupRelWrapper
 		return _commerceDiscountCommerceAccountGroupRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce discount commerce account group rel model instance should use the <code>CommerceDiscountCommerceAccountGroupRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceDiscountCommerceAccountGroupRel.persist();

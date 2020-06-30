@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBDiscussionUtil} to access the message boards discussion persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

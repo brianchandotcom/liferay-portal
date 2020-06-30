@@ -32,17 +32,28 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceTaxFixedRateAddressRelServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static
+		com.liferay.commerce.tax.engine.fixed.model.
+			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
+					long userId, long groupId, long commerceTaxMethodId,
+					long cpTaxCategoryId, long commerceCountryId,
+					long commerceRegionId, String zip, double rate)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceTaxFixedRateAddressRel(
+			userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
+			commerceCountryId, commerceRegionId, zip, rate);
+	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateAddressRelServiceUtil} to access the commerce tax fixed rate address rel remote service. Add custom service methods to <code>com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(

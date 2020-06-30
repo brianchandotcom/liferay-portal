@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -60,7 +59,7 @@ import java.util.List;
 public interface CPDefinitionInventoryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionInventoryLocalServiceUtil} to access the cp definition inventory local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -77,41 +76,12 @@ public interface CPDefinitionInventoryLocalService
 		CPDefinitionInventory cpDefinitionInventory);
 
 	public CPDefinitionInventory addCPDefinitionInventory(
-			long cpDefinitionId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
-		throws PortalException;
-
-	/**
-	 * Adds new CP definition inventory.
-	 *
-	 * @param cpDefinitionId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 #addCPDefinitionInventory(long, String, String, boolean,
-	 boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	public CPDefinitionInventory addCPDefinitionInventory(
-			long cpDefinitionId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity,
-			ServiceContext serviceContext)
+			long userId, long cpDefinitionId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
 		throws PortalException;
 
 	public void cloneCPDefinitionInventory(
@@ -338,6 +308,9 @@ public interface CPDefinitionInventoryLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -359,36 +332,6 @@ public interface CPDefinitionInventoryLocalService
 			boolean displayStockQuantity, int minStockQuantity,
 			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
 			String allowedOrderQuantities, int multipleOrderQuantity)
-		throws PortalException;
-
-	/**
-	 * Updates CP definition entry.
-	 *
-	 * @param cpDefinitionInventoryId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), use {@link
-	 #updateCPDefinitionInventory(long, String, String, boolean,
-	 boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	public CPDefinitionInventory updateCPDefinitionInventory(
-			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

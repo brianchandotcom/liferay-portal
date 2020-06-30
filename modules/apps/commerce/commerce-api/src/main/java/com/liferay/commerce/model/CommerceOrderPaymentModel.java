@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceOrderPaymentModel
 	extends BaseModel<CommerceOrderPayment>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce order payment model instance should use the {@link CommerceOrderPayment} interface instead.

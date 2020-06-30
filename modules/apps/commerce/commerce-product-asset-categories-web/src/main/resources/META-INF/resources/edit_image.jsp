@@ -79,14 +79,11 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	A.one('#<portlet:namespace />publishButton').on(
-		'click',
-		function() {
-			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
+	A.one('#<portlet:namespace />publishButton').on('click', function() {
+		var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
 
-			if (workflowActionInput) {
-				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-			}
+		if (workflowActionInput) {
+			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 		}
-	);
+	});
 </aui:script>

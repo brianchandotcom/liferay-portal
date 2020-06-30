@@ -449,11 +449,6 @@ public class OAuth2ApplicationWrapper
 		return _oAuth2Application.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a o auth2 application model instance should use the <code>OAuth2Application</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_oAuth2Application.persist();

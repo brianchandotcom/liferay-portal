@@ -1,15 +1,15 @@
 <div class="commerce-topbar ${speedwell_topbar_css_class}">
 	<div class="speedwell-topbar__menu speedwell-main-menu">
 		<button class="speedwell-topbar__button speedwell-main-menu__open js-toggle-main-menu">
-			<svg class="commerce-icon">
-				<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#icon-menu" />
+			<svg class="lexicon-icon lexicon-icon-bars">
+				<use href="${themeDisplay.getPathThemeImages()}/icons.svg#bars" />
 			</svg>
 		</button>
 
 		<div class="speedwell-main-menu__link-wrapper">
 			<button class="speedwell-topbar__button js-toggle-main-menu">
-				<svg class="commerce-icon">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#close" />
+				<svg class="lexicon-icon lexicon-icon-times">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#times" />
 				</svg>
 			</button>
 
@@ -27,9 +27,7 @@
 			<a
 				class="${logo_css_class}" href="${site_default_url}"
 			   title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-				<svg class="commerce-icon speedwell-logo-icon">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#speedwell-logo" />
-				</svg>
+				<img alt="${site_name}" class="logo" src="${site_logo}" />
 			</a>
 		</div>
 	</div>
@@ -37,23 +35,23 @@
 	<div class="speedwell-topbar__actions">
 		<div class="speedwell-topbar__search speedwell-search">
 			<div class="speedwell-topbar__button js-toggle-search">
-				<svg class="commerce-icon speedwell-topbar__icon">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#search" />
+				<svg class="lexicon-icon lexicon-icon-search">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#search" />
 				</svg>
 			</div>
 
 			<div class="speedwell-search__bar-wrapper">
 				<div class="speedwell-search__bar">
 					<button class="speedwell-topbar__button" disabled>
-						<svg class="commerce-icon speedwell-topbar__icon">
-							<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#search" />
+						<svg class="lexicon-icon lexicon-icon-search">
+							<use href="${themeDisplay.getPathThemeImages()}/icons.svg#search" />
 						</svg>
 					</button>
 					<@liferay_commerce_ui["search-bar"] id="search-bar" />
 
 					<button class="speedwell-topbar__button js-toggle-search">
-						<svg class="commerce-icon speedwell-topbar__icon">
-							<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#close" />
+						<svg class="lexicon-icon lexicon-icon-times">
+							<use href="${themeDisplay.getPathThemeImages()}/icons.svg#times" />
 						</svg>
 					</button>
 				</div>
@@ -66,8 +64,8 @@
 
 		<div class="speedwell-account">
 			<button class="speedwell-topbar__button js-toggle-account">
-				<svg class="commerce-icon">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#icon-account" />
+				<svg class="lexicon-icon lexicon-icon-user">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#user" />
 				</svg>
 			</button>
 

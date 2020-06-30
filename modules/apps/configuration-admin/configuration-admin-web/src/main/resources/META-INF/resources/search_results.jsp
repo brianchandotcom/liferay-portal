@@ -17,17 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = renderRequest.getParameter("redirect");
+String redirect = PortalUtil.escapeRedirect(renderRequest.getParameter("redirect"));
 
 ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (redirect == null) {
-	redirect = portletURL.toString();
+if (Validator.isNull(redirect)) {
+	redirect = String.valueOf(renderResponse.createRenderURL());
 }
+
+PortletURL searchURL = renderResponse.createRenderURL();
+
+searchURL.setParameter("mvcRenderCommandName", "/search");
+searchURL.setParameter("redirect", redirect);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -35,15 +38,10 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 %>
 
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="/search" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-</portlet:renderURL>
-
 <clay:management-toolbar
 	clearResultsURL="<%= redirect %>"
 	itemsTotal="<%= configurationModelIterator.getTotal() %>"
-	searchActionURL="<%= searchURL %>"
+	searchActionURL="<%= searchURL.toString() %>"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
 />
@@ -51,7 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-configurations-were-found"
-		iteratorURL="<%= portletURL %>"
+		iteratorURL="<%= searchURL %>"
 		total="<%= configurationModelIterator.getTotal() %>"
 	>
 		<liferay-ui:search-container-results

@@ -20,7 +20,6 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.web.internal.display.context.util.CommerceAccountRequestHelper;
-import com.liferay.commerce.account.web.internal.frontend.AccountFilterImpl;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
@@ -85,17 +84,6 @@ public class CommerceAccountDisplayContext {
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
-	}
-
-	public AccountFilterImpl getAccountFilter() throws PortalException {
-		AccountFilterImpl accountFilterImpl = new AccountFilterImpl();
-
-		accountFilterImpl.setAccountId(getCurrentCommerceAccountId());
-		accountFilterImpl.setUserId(getSelectedUserId());
-
-		accountFilterImpl.setKeywords(getKeywords());
-
-		return accountFilterImpl;
 	}
 
 	public List<CommerceAddress> getBillingCommerceAddresses()

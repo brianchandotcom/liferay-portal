@@ -186,10 +186,7 @@ public class ServletContextUtil {
 			className = className.substring(rootPath.length() + 1);
 		}
 
-		className = StringUtil.replace(
-			className, CharPool.SLASH, CharPool.PERIOD);
-
-		return className;
+		return StringUtil.replace(className, CharPool.SLASH, CharPool.PERIOD);
 	}
 
 	private static void _getClassNames(

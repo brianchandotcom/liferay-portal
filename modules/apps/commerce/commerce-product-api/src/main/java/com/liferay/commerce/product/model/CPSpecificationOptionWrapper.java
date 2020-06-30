@@ -507,11 +507,6 @@ public class CPSpecificationOptionWrapper
 		return _cpSpecificationOption.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp specification option model instance should use the <code>CPSpecificationOption</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpSpecificationOption.persist();

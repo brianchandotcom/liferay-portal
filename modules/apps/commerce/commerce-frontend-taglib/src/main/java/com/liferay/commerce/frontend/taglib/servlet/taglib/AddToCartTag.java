@@ -44,16 +44,6 @@ public class AddToCartTag extends ComponentRendererTag {
 	@Override
 	public int doStartTag() {
 		try {
-			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
 			Map<String, Object> context = getContext();
 
 			long cpInstanceId = GetterUtil.getLong(context.get("productId"));
@@ -63,17 +53,26 @@ public class AddToCartTag extends ComponentRendererTag {
 
 			setComponentId(componentId);
 
-			putValue(
-				"cartAPI",
-				PortalUtil.getPortalURL(request) + "/o/commerce-ui/cart-item");
+			CommerceContext commerceContext =
+				(CommerceContext)request.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
 
 			if (commerceAccount != null) {
 				putValue("accountId", commerceAccount.getCommerceAccountId());
 			}
 
-			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+			putValue(
+				"cartAPI",
+				PortalUtil.getPortalURL(request) + "/o/commerce-ui/cart-item");
+
+			putValue("editMode", false);
 
 			int productOrderQuantity = 0;
+
+			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 			if (commerceOrder != null) {
 				putValue("orderId", commerceOrder.getCommerceOrderId());
@@ -84,15 +83,15 @@ public class AddToCartTag extends ComponentRendererTag {
 
 			putValue("quantity", productOrderQuantity);
 
-			putValue("editMode", false);
-
 			putValue(
 				"settings",
 				_productHelper.getProductSettingsModel(cpInstanceId));
 
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+				"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 			setTemplateNamespace("AddToCartButton.render");
 		}

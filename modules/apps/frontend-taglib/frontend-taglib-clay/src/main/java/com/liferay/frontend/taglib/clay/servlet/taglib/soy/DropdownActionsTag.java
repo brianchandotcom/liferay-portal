@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -43,6 +44,10 @@ public class DropdownActionsTag extends BaseClayTag {
 			button.put("type", (String)context.get("buttonType"));
 
 			putValue("button", button);
+		}
+
+		if (PortalUtil.isRightToLeft(request)) {
+			putValue("preferredAlign", "BottomRight");
 		}
 
 		return super.doStartTag();

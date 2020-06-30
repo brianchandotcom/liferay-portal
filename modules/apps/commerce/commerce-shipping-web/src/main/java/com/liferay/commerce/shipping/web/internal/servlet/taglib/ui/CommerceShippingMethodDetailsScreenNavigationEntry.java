@@ -14,30 +14,16 @@
 
 package com.liferay.commerce.shipping.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
-import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
-import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -90,55 +76,12 @@ public class CommerceShippingMethodDetailsScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		try {
-			RenderRequest renderRequest =
-				(RenderRequest)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-			RenderResponse renderResponse =
-				(RenderResponse)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-			CommerceShippingMethodsDisplayContext
-				commerceShippingMethodsDisplayContext =
-					new CommerceShippingMethodsDisplayContext(
-						_commerceShippingEngineRegistry,
-						_commerceShippingMethodService,
-						_portletResourcePermission, renderRequest,
-						renderResponse);
-
-			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceShippingMethodsDisplayContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
+			httpServletRequest, httpServletResponse,
 			"/shipping_method/details.jsp");
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceShippingMethodDetailsScreenNavigationEntry.class);
-
-	@Reference
-	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
-
-	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
-
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.web)"
-	)
-	private ServletContext _servletContext;
 
 }

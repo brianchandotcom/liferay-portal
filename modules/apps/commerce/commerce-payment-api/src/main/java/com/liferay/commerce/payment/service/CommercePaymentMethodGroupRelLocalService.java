@@ -61,11 +61,20 @@ import java.util.Map;
 public interface CommercePaymentMethodGroupRelLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelLocalServiceUtil} to access the commerce payment method group rel local service. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceAddressRestriction addCommerceAddressRestriction(
+			long userId, long groupId, long commercePaymentMethodGroupRelId,
+			long commerceCountryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long commercePaymentMethodGroupRelId, long commerceCountryId,
 			ServiceContext serviceContext)
@@ -82,10 +91,9 @@ public interface CommercePaymentMethodGroupRelLocalService
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel);
 
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, File imageFile,
+			String engineKey, double priority, boolean active)
 		throws PortalException;
 
 	/**
@@ -309,6 +317,9 @@ public interface CommercePaymentMethodGroupRelLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -330,9 +341,8 @@ public interface CommercePaymentMethodGroupRelLocalService
 
 	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
 			long commercePaymentMethodGroupRelId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, File imageFile, double priority,
+			boolean active)
 		throws PortalException;
 
 }

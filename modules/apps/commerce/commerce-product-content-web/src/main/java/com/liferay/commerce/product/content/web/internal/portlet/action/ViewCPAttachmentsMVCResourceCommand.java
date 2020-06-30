@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,10 +31,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -75,35 +73,25 @@ public class ViewCPAttachmentsMVCResourceCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			resourceRequest, "cpDefinitionId");
 
+		CommerceContext commerceContext =
+			(CommerceContext)resourceRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		try {
-			JSONArray ddmFormValuesJSONArray = _jsonFactory.createJSONArray(
-				ddmFormValues);
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			long commerceAccountId = 0;
+
+			if (commerceAccount != null) {
+				commerceAccountId = commerceAccount.getCommerceAccountId();
+			}
 
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				_cpInstanceHelper.getCPAttachmentFileEntries(
-					cpDefinitionId, ddmFormValues, type);
-
-			if (cpAttachmentFileEntries.isEmpty() &&
-				(ddmFormValuesJSONArray.length() > 0)) {
-
-				JSONObject jsonObject = ddmFormValuesJSONArray.getJSONObject(0);
-
-				JSONArray valuesJSONArray = _jsonFactory.createJSONArray(
-					jsonObject.getString("value"));
-
-				if (valuesJSONArray.length() == 0) {
-					long cpDefinitionClassNameId =
-						_classNameLocalService.getClassNameId(
-							CPDefinition.class);
-
-					cpAttachmentFileEntries =
-						_cpAttachmentFileEntryService.
-							getCPAttachmentFileEntries(
-								cpDefinitionClassNameId, cpDefinitionId, type,
-								WorkflowConstants.STATUS_APPROVED,
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-				}
-			}
+					commerceAccountId,
+					commerceContext.getCommerceChannelGroupId(), cpDefinitionId,
+					ddmFormValues, type);
 
 			for (CPAttachmentFileEntry cpAttachmentFileEntry :
 					cpAttachmentFileEntries) {
@@ -147,13 +135,7 @@ public class ViewCPAttachmentsMVCResourceCommand
 		ViewCPAttachmentsMVCResourceCommand.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
-
-	@Reference
-	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

@@ -54,7 +54,7 @@ public abstract class CommerceInventoryReplenishmentItemServiceBaseImpl
 	implements CommerceInventoryReplenishmentItemService,
 			   IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceInventoryReplenishmentItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemServiceUtil</code>.
@@ -697,8 +697,8 @@ public abstract class CommerceInventoryReplenishmentItemServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

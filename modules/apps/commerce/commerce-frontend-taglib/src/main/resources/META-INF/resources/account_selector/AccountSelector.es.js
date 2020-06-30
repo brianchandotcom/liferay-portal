@@ -1,16 +1,31 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import template from './AccountSelector.soy';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
+
+import template from './AccountSelector.soy';
 
 import 'clay-icon';
 
 import './OrdersTable.es';
+
 import './AccountsTable.es';
 
 class AccountSelector extends Component {
-
 	created() {
 		this._handleClickOutside = this._handleClickOutside.bind(this);
 		this._refreshOrderState = this._refreshOrderState.bind(this);
@@ -25,18 +40,27 @@ class AccountSelector extends Component {
 	}
 
 	_refreshOrderState({orderId}) {
-		this._getOrders()
-			.then(orders => {
-				this.orders = orders;
-				if (orderId) {
-					this.currentOrder = this.orders.reduce((found, order) => found || (order.id == orderId ? order : null), null);
-					this.currentView = 'orders';
-				}
-			});
+		this._getOrders().then(orders => {
+			this.orders = orders;
+			if (orderId) {
+				this.currentOrder = Array.isArray(this.orders)
+					? this.orders.reduce(
+							(found, order) =>
+								found || (order.id == orderId ? order : null),
+							null
+					  )
+					: orderId;
+				this.currentView = 'orders';
+			}
+		});
 	}
 
 	_handleClickOutside(e) {
-		if (!document.querySelector('#account-manager-curtain').contains(e.target)) {
+		if (
+			!document
+				.querySelector('#account-manager-curtain')
+				.contains(e.target)
+		) {
 			this._closeModal();
 		}
 	}
@@ -61,35 +85,28 @@ class AccountSelector extends Component {
 
 		if (this.currentAccount && !this.orders) {
 			this.currentView = 'orders';
-			this._getOrders()
-				.then(orders => {
-					this.orders = orders;
-				});
+			this._getOrders().then(orders => {
+				this.orders = orders;
+			});
 
 			this._fetchAccounts();
 		}
 
 		this.openingState = 'opening';
 
-		return setTimeout(
-			() => {
-				this.openingState = 'open';
-				window.addEventListener('click', this._handleClickOutside);
-			},
-			200
-		);
+		return setTimeout(() => {
+			this.openingState = 'open';
+			window.addEventListener('click', this._handleClickOutside);
+		}, 200);
 	}
 
 	_closeModal() {
 		this.openingState = 'closing';
 
-		return setTimeout(
-			() => {
-				this.openingState = 'closed';
-				window.removeEventListener('click', this._handleClickOutside);
-			},
-			200
-		);
+		return setTimeout(() => {
+			this.openingState = 'closed';
+			window.removeEventListener('click', this._handleClickOutside);
+		}, 200);
 	}
 
 	_handleChangeSelectedView(view) {
@@ -112,29 +129,31 @@ class AccountSelector extends Component {
 		}
 		this.currentAccount = selectedAccount;
 
-		let formData = new FormData();
+		const formData = new FormData();
 
 		formData.append('accountId', this.currentAccount.accountId);
 
 		fetch(
-			this.accountsAPI + 'set-current-account?groupId=' + themeDisplay.getScopeGroupId() + `&p_auth=${window.Liferay.authToken}`,
+			this.accountsAPI +
+				'set-current-account?groupId=' +
+				themeDisplay.getScopeGroupId() +
+				`&p_auth=${window.Liferay.authToken}`,
 			{
 				body: formData,
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'POST'
 			}
-		).then(
-			() => {
-				this.currentOrder = null;
-				this.emit('accountSelected', this.currentAccount);
-				Liferay.fire('accountSelected', this.currentAccount);
-			}
-		);
+		).then(() => {
+			this.currentOrder = null;
+			this.emit('accountSelected', this.currentAccount);
+			Liferay.fire('accountSelected', this.currentAccount);
+		});
 
 		this.currentView = 'orders';
-		return this._getOrders()
-			.then(orders => {
-				this.orders = orders;
-			});
+		return this._getOrders().then(orders => {
+			this.orders = orders;
+		});
 	}
 
 	_handleGetAccounts(query = '') {
@@ -147,43 +166,46 @@ class AccountSelector extends Component {
 	}
 
 	_handleGetOrders(query = '') {
-		return this._getOrders(query)
-			.then(orders => {
-				this.orders = orders;
-			});
+		return this._getOrders(query).then(orders => {
+			this.orders = orders;
+		});
 	}
 
 	_fetchAccounts(query = '') {
 		return fetch(
-			this.accountsAPI + 'search-accounts?groupId=' + themeDisplay.getScopeGroupId() + `&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
+			this.accountsAPI +
+				'search-accounts?groupId=' +
+				themeDisplay.getScopeGroupId() +
+				`&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
-			.then(
-				response => response.json()
-			)
-			.then(
-				response => {
-					this.accounts = response.accounts;
-					return this.accounts;
-				}
-			);
+			.then(response => response.json())
+			.then(response => {
+				this.accounts = response.accounts;
+				return this.accounts;
+			});
 	}
 
 	_getOrders(query = '') {
 		return fetch(
-			this.accountsAPI + 'search-accounts/' + this.currentAccount.accountId + '/orders?groupId=' + themeDisplay.getScopeGroupId() + `&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
+			this.accountsAPI +
+				'search-accounts/' +
+				this.currentAccount.accountId +
+				'/orders?groupId=' +
+				themeDisplay.getScopeGroupId() +
+				`&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
-			.then(
-				response => response.json()
-			)
-			.then(
-				response => response.orders
-			);
+			.then(response => response.json())
+			.then(response => response.orders);
 	}
 }
 
@@ -191,54 +213,31 @@ Soy.register(AccountSelector, template);
 
 AccountSelector.STATE = {
 	accounts: Config.arrayOf(
-		Config.shapeOf(
-			{
-				accountId: Config.oneOfType(
-					[
-						Config.string(),
-						Config.number()
-					]
-				).required(),
-				name: Config.string(),
-				thumbnail: Config.string()
-			}
-		)
+		Config.shapeOf({
+			accountId: Config.oneOfType([
+				Config.string(),
+				Config.number()
+			]).required(),
+			name: Config.string(),
+			thumbnail: Config.string()
+		})
 	),
 	accountsAPI: Config.string().required(),
 	createNewAccountLink: Config.string(),
 	createNewOrderLink: Config.string(),
 	currentAccount: Config.object(),
 	currentOrder: Config.object(),
-	currentView: Config.oneOf(
-		[
-			'accounts',
-			'orders'
-		]
-	)
-		.value('accounts'),
-	openingState: Config.oneOf(
-		[
-			'closed',
-			'open',
-			'closing',
-			'opening'
-		]
-	)
-		.value('closed'),
+	currentView: Config.oneOf(['accounts', 'orders']).value('accounts'),
+	openingState: Config.oneOf(['closed', 'open', 'closing', 'opening']).value(
+		'closed'
+	),
 	orders: Config.arrayOf(
-		Config.shapeOf(
-			{
-				addOrderLink: Config.string(),
-				id: Config.oneOfType(
-					[
-						Config.string(),
-						Config.number()
-					]
-				).required(),
-				lastEdit: Config.string(),
-				status: Config.string()
-			}
-		)
+		Config.shapeOf({
+			addOrderLink: Config.string(),
+			id: Config.oneOfType([Config.string(), Config.number()]).required(),
+			lastEdit: Config.string(),
+			status: Config.string()
+		})
 	),
 	spritemap: Config.string().required(),
 	viewAllAccountsLink: Config.string().required(),

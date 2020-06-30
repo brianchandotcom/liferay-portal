@@ -324,6 +324,10 @@ public class FileEntryStagedModelDataHandler
 
 		FileEntry existingFileEntry = fetchMissingReference(uuid, groupId);
 
+		if (existingFileEntry == null) {
+			return;
+		}
+
 		Map<Long, Long> dlFileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntry.class);

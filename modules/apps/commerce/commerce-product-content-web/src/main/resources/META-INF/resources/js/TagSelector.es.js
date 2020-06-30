@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -10,7 +24,6 @@ import templates from './TagSelector.soy';
  */
 
 class TagSelector extends Component {
-
 	/**
 	 * Focuses the input field (tagInput ref) used for adding new tags.
 	 * @private
@@ -37,52 +50,32 @@ class TagSelector extends Component {
 	rendered() {
 		this.element.addEventListener('click', this.focusTagInput_.bind(this));
 
-		AUI().use(
-			'liferay-commerce-frontend-asset-tag-selector',
-			function(A) {
-				const config = {
-					allowAddEntry: true,
-					contentBox: this.element,
-					eventName: this.eventName,
-					groupIds: this.groupIds,
-					hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
-					input: `#${this.refs.tagInput.getAttribute('id')}`,
-					portletURL: this.tagSelectorURL,
-					tagNames: this.rule.queryValues || ''
-				};
+		AUI().use('liferay-commerce-frontend-asset-tag-selector', () => {
+			const config = {
+				allowAddEntry: true,
+				contentBox: this.element,
+				eventName: this.eventName,
+				groupIds: this.groupIds,
+				hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
+				input: `#${this.refs.tagInput.getAttribute('id')}`,
+				portletURL: this.tagSelectorURL,
+				tagNames: this.rule.queryValues || ''
+			};
 
-				this.tagsSelector_ = new Liferay.AssetTaglibTagsSelector(
-					config
-				);
+			this.tagsSelector_ = new Liferay.AssetTaglibTagsSelector(config);
 
-				const entries = this.tagsSelector_.entries;
+			const entries = this.tagsSelector_.entries;
 
-				entries.after('add', this.onEntriesChanged_, this);
-				entries.after('remove', this.onEntriesChanged_, this);
+			entries.after('add', this.onEntriesChanged_, this);
+			entries.after('remove', this.onEntriesChanged_, this);
 
-				this.tagsSelector_.render();
-				this.element.parentNode.removeAttribute('tabindex');
-			}.bind(this)
-		);
+			this.tagsSelector_.render();
+			this.element.parentNode.removeAttribute('tabindex');
+		});
 	}
 }
 
 TagSelector.STATE = {
-
-	/**
-	 * Number used for avoiding conflicts between different
-	 * instances of the component/portlet.
-	 */
-
-	index: Config.number().value(0),
-
-	/**
-	 * String used for avoiding conflicts between different
-	 * instances of the component/portlet.
-	 */
-
-	namespace: Config.string().value(''),
-
 	/**
 	 * Name of the event that will be fired when the tag selector dialog
 	 * request being closed
@@ -102,6 +95,20 @@ TagSelector.STATE = {
 	 */
 
 	hiddenInput: Config.string().value(''),
+
+	/**
+	 * Number used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+
+	index: Config.number().value(0),
+
+	/**
+	 * String used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+
+	namespace: Config.string().value(''),
 
 	/**
 	 * Existing information of the form.

@@ -108,19 +108,23 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 </div>
 
 <aui:script use="liferay-search-container">
-	var cpInstanceSelectorWrapper = A.one("#<portlet:namespace />cpInstanceSelectorWrapper");
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />cpInstances');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-				{
-					data: Liferay.Util.listCheckedExcept(cpInstanceSelectorWrapper, '<portlet:namespace />allRowIds')
-				}
-			);
-		}
+	var cpInstanceSelectorWrapper = A.one(
+		'#<portlet:namespace />cpInstanceSelectorWrapper'
 	);
+
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />cpInstances'
+	);
+
+	searchContainer.on('rowToggled', function(event) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+			{
+				data: Liferay.Util.listCheckedExcept(
+					cpInstanceSelectorWrapper,
+					'<portlet:namespace />allRowIds'
+				)
+			}
+		);
+	});
 </aui:script>

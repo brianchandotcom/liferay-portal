@@ -33,11 +33,6 @@ public class CPMeasurementUnitServiceWrapper
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPMeasurementUnitServiceUtil} to access the cp measurement unit remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit
 			addCPMeasurementUnit(

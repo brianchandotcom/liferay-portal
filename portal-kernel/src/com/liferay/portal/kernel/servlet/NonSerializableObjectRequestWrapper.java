@@ -88,9 +88,7 @@ public class NonSerializableObjectRequestWrapper
 			return null;
 		}
 
-		object = NonSerializableObjectHandler.getValue(object);
-
-		return object;
+		return NonSerializableObjectHandler.getValue(object);
 	}
 
 	@Override

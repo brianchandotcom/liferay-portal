@@ -478,11 +478,6 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 		return _message.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a message model instance should use the <code>Message</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_message.persist();

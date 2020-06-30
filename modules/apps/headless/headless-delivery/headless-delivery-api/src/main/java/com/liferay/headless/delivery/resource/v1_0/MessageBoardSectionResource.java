@@ -21,11 +21,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Locale;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,7 +45,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBoardSectionResource {
 
+	public static Builder builder() {
+		return FactoryHolder.factory.create();
+	}
+
 	public void deleteMessageBoardSection(Long messageBoardSectionId)
+		throws Exception;
+
+	public Response deleteMessageBoardSectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public MessageBoardSection getMessageBoardSection(
@@ -55,6 +66,10 @@ public interface MessageBoardSectionResource {
 
 	public MessageBoardSection putMessageBoardSection(
 			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public Response putMessageBoardSectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void putMessageBoardSectionSubscribe(Long messageBoardSectionId)
@@ -83,6 +98,10 @@ public interface MessageBoardSectionResource {
 			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
+	public Response postSiteMessageBoardSectionBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
@@ -103,5 +122,34 @@ public interface MessageBoardSectionResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public static class FactoryHolder {
+
+		public static volatile Factory factory;
+
+	}
+
+	@ProviderType
+	public interface Builder {
+
+		public MessageBoardSectionResource build();
+
+		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
+
+		public Builder preferredLocale(Locale preferredLocale);
+
+		public Builder user(com.liferay.portal.kernel.model.User user);
+
+	}
+
+	@ProviderType
+	public interface Factory {
+
+		public Builder create();
+
+	}
 
 }

@@ -60,7 +60,7 @@ public class CommerceOrderWorkflowedModelPermissionLogic
 		}
 		else if (commerceOrder.isPending()) {
 			return _workflowPermission.hasPermission(
-				permissionChecker, commerceOrder.getScopeGroupId(), name,
+				permissionChecker, commerceOrder.getGroupId(), name,
 				_primKeyToLongFunction.applyAsLong(commerceOrder), actionId);
 		}
 

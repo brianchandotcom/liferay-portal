@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -53,6 +54,12 @@ public class ConcurrentHashMapBuilder<K, V> extends BaseMapBuilder {
 		return new ConcurrentHashMapWrapper<>(keyUnsafeSupplier, value);
 	}
 
+	public static <K, V> ConcurrentHashMapWrapper<K, V> putAll(
+		Map<? extends K, ? extends V> inputMap) {
+
+		return new ConcurrentHashMapWrapper<>(inputMap);
+	}
+
 	public static final class ConcurrentHashMapWrapper<K, V>
 		extends BaseMapWrapper<K, V> {
 
@@ -71,6 +78,12 @@ public class ConcurrentHashMapBuilder<K, V> extends BaseMapBuilder {
 
 		public ConcurrentHashMapWrapper(K key, V value) {
 			_concurrentHashMap.put(key, value);
+		}
+
+		public ConcurrentHashMapWrapper(
+			Map<? extends K, ? extends V> inputMap) {
+
+			doPutAll(inputMap);
 		}
 
 		public ConcurrentHashMapWrapper(
@@ -126,6 +139,14 @@ public class ConcurrentHashMapBuilder<K, V> extends BaseMapBuilder {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
 			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		public ConcurrentHashMapWrapper<K, V> putAll(
+			Map<? extends K, ? extends V> inputMap) {
+
+			doPutAll(inputMap);
 
 			return this;
 		}

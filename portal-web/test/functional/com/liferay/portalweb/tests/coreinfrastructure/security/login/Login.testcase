@@ -18,7 +18,7 @@ definition {
 		User.firstLoginPG();
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.17/bin/cas.log");
+		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.33/bin/cas.log");
 
 		if (contains("${fileContent}", "org.jasig.cas")) {
 			echo("CAS server started.");
@@ -50,6 +50,8 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This will be ignored until LRCI-1050 is fixed."
+	@ignore = "true"
 	@priority = "4"
 	test FacebookSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";

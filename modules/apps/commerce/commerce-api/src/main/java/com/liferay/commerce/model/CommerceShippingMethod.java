@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceShippingMethod
 	extends CommerceShippingMethodModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.model.impl.CommerceShippingMethodImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

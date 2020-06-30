@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 public abstract class LayoutSetBaseImpl
 	extends LayoutSetModelImpl implements LayoutSet {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout set model instance should use the <code>LayoutSet</code> interface instead.

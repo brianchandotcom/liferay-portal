@@ -32,7 +32,7 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 public abstract class CalendarBookingBaseImpl
 	extends CalendarBookingModelImpl implements CalendarBooking {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a calendar booking model instance should use the <code>CalendarBooking</code> interface instead.

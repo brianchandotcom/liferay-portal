@@ -40,7 +40,7 @@ import java.util.Set;
 public interface KaleoConditionPersistence
 	extends BasePersistence<KaleoCondition> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoConditionUtil} to access the kaleo condition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -33,11 +33,6 @@ public class CommerceDiscountRuleServiceWrapper
 		_commerceDiscountRuleService = commerceDiscountRuleService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRuleServiceUtil} to access the commerce discount rule remote service. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountRule
 			addCommerceDiscountRule(
@@ -47,6 +42,18 @@ public class CommerceDiscountRuleServiceWrapper
 
 		return _commerceDiscountRuleService.addCommerceDiscountRule(
 			commerceDiscountId, type, typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscountRule
+			addCommerceDiscountRule(
+				long commerceDiscountId, String name, String type,
+				String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountRuleService.addCommerceDiscountRule(
+			commerceDiscountId, name, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -115,6 +122,17 @@ public class CommerceDiscountRuleServiceWrapper
 
 		return _commerceDiscountRuleService.updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);
+	}
+
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscountRule
+			updateCommerceDiscountRule(
+				long commerceDiscountRuleId, String name, String type,
+				String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountRuleService.updateCommerceDiscountRule(
+			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
 	@Override

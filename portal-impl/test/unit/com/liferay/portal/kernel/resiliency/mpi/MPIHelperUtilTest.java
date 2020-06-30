@@ -234,8 +234,6 @@ public class MPIHelperUtilTest {
 
 			LogRecord logRecord = logRecords.get(0);
 
-			logRecord = logRecords.get(0);
-
 			Assert.assertEquals(
 				"Unable to unexport " + _getMPIImpl(), logRecord.getMessage());
 

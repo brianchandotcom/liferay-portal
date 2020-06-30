@@ -270,22 +270,18 @@ public class ExportImportHelperUtilTest {
 		ThumbnailCapability thumbnailCapability =
 			fileEntry.getRepositoryCapability(ThumbnailCapability.class);
 
-		fileEntry = thumbnailCapability.setLargeImageId(
+		return thumbnailCapability.setLargeImageId(
 			fileEntry, fileEntry.getFileEntryId());
-
-		return fileEntry;
 	}
 
 	protected String replaceParameters(String content, FileEntry fileEntry) {
-		content = StringUtil.replace(
+		return StringUtil.replace(
 			content,
 			new String[] {"[$GROUP_ID$]", "[$LIVE_GROUP_ID$]", "[$UUID$]"},
 			new String[] {
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getGroupId()), fileEntry.getUuid()
 			});
-
-		return content;
 	}
 
 	@DeleteAfterTestRun

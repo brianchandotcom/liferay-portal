@@ -92,9 +92,14 @@ public class CPCompareContentDisplayContext {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		_cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
-			commerceContext.getCommerceChannelGroupId(), commerceAccountId,
-			originalHttpServletRequest.getSession());
+		if (hasCommerceChannel()) {
+			_cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
+				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
+				originalHttpServletRequest.getSession());
+		}
+		else {
+			_cpDefinitionIds = new ArrayList<>();
+		}
 	}
 
 	public Map<String, String> getCPContentListEntryRendererKeys() {

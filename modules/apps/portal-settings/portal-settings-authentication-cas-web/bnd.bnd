@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Settings Authentication CAS Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.cas.web
-Bundle-Version: 2.0.10
+Bundle-Version: 2.0.13
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.settings.lang)";\

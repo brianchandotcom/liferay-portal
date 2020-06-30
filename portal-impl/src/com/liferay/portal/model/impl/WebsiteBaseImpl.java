@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 public abstract class WebsiteBaseImpl
 	extends WebsiteModelImpl implements Website {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a website model instance should use the <code>Website</code> interface instead.

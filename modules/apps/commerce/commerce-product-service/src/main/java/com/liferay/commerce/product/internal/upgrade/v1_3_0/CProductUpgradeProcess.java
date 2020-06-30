@@ -14,13 +14,10 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
+import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -33,7 +30,8 @@ import java.sql.Statement;
  * @author Ethan Bustad
  * @author Alessio Antonio Rendina
  */
-public class CProductUpgradeProcess extends UpgradeProcess {
+public class CProductUpgradeProcess
+	extends BaseCommerceProductServiceUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -41,10 +39,10 @@ public class CProductUpgradeProcess extends UpgradeProcess {
 			runSQL(CProductModelImpl.TABLE_SQL_CREATE);
 		}
 
-		_addColumn(
+		addColumn(
 			CPDefinitionModelImpl.class, CPDefinitionModelImpl.TABLE_NAME,
 			"CProductId", "LONG");
-		_addColumn(
+		addColumn(
 			CPDefinitionModelImpl.class, CPDefinitionModelImpl.TABLE_NAME,
 			"version", "INTEGER");
 
@@ -92,47 +90,17 @@ public class CProductUpgradeProcess extends UpgradeProcess {
 
 				ps1.setLong(9, cpDefinitionId);
 
-				ps1.executeUpdate();
+				ps1.addBatch();
 
 				ps2.setLong(1, cProductId);
 				ps2.setLong(2, cpDefinitionId);
 
-				ps2.executeUpdate();
+				ps2.addBatch();
 			}
 
 			ps1.executeBatch();
 			ps2.executeBatch();
 		}
 	}
-
-	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CProductUpgradeProcess.class);
 
 }

@@ -156,8 +156,6 @@ public class RSSAction extends BaseStrutsAction {
 		else if (themeDisplay.getLayout() != null) {
 			String feedURL = themeDisplay.getPathMain() + "/blogs/rss";
 
-			feedURL = themeDisplay.getPathMain() + "/blogs/rss";
-
 			rss = _blogsEntryService.getGroupEntriesRSS(
 				groupId, new Date(), status, max, type, version, displayStyle,
 				feedURL, feedURL, themeDisplay);
@@ -176,7 +174,8 @@ public class RSSAction extends BaseStrutsAction {
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		if (GroupPermissionUtil.contains(
+		if ((groupId == 0) ||
+			GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), groupId,
 				ActionKeys.VIEW)) {
 

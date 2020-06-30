@@ -21,11 +21,7 @@ CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePri
 
 CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
 
-CPInstance cpInstance = commercePriceEntry.getCPInstance();
-
-CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-CommercePriceList commercePriceList = commercePriceEntryDisplayContext.getCommercePriceList();
+CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 long commercePriceEntryId = commercePriceEntryDisplayContext.getCommercePriceEntryId();
 long commercePriceListId = commercePriceEntryDisplayContext.getCommercePriceListId();
@@ -44,23 +40,11 @@ PortletURL editPriceListURL = renderResponse.createRenderURL();
 editPriceListURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
 editPriceListURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 
-String title = cpDefinition.getName(languageId);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details"), StringPool.BLANK, data);
-
-editPriceListURL.setParameter("screenNavigationCategoryKey", String.valueOf(CommercePriceListScreenNavigationConstants.CATEGORY_KEY_ENTRIES));
+editPriceListURL.setParameter("screenNavigationCategoryKey", CommercePriceListScreenNavigationConstants.CATEGORY_KEY_ENTRIES);
 
 renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
-<%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/price_entry_navbar.jspf" %>
 
 <portlet:actionURL name="editCommercePriceEntry" var="editCommercePriceEntryActionURL" />
@@ -71,12 +55,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 	<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
 	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
 
-	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= editPriceListURL.toString() %>"
-			formModelBean="<%= commercePriceEntry %>"
-			id="<%= CommercePriceEntryFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRICE_ENTRY %>"
-			markupView="lexicon"
-		/>
+	<div class="row">
+		<div class="col-12">
+			<%@ include file="/price_entry/details.jspf" %>
+
+			<%@ include file="/price_entry/custom_fields.jspf" %>
+		</div>
 	</div>
+
+	<aui:button-row cssClass="price-entry-button-row">
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" type="cancel" />
+	</aui:button-row>
 </aui:form>

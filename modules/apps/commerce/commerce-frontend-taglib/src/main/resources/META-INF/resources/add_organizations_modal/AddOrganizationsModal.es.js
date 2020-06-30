@@ -1,20 +1,37 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
+import Component from 'metal-component';
 import {debounce} from 'metal-debounce';
+import Soy, {Config} from 'metal-soy';
 
 import template from './AddOrganizationsModal.soy';
-import Component from 'metal-component';
-import Soy, {Config} from 'metal-soy';
 
 import 'clay-modal';
 
 import './OrganizationInputItem.es';
+
 import './OrganizationListItem.es';
 
 class AddOrganizationModal extends Component {
-
 	created() {
-		this._debouncedFetchOrganizations = debounce(this._fetchOrganizations.bind(this), 300);
+		this._debouncedFetchOrganizations = debounce(
+			this._fetchOrganizations.bind(this),
+			300
+		);
 	}
 
 	attached() {
@@ -22,7 +39,9 @@ class AddOrganizationModal extends Component {
 	}
 
 	syncAddedOrganizations() {
-		const contentWrapper = this.element.querySelector('.autocomplete-input__content');
+		const contentWrapper = this.element.querySelector(
+			'.autocomplete-input__content'
+		);
 		this.element.querySelector('.autocomplete-input__box').focus();
 		if (contentWrapper.scrollTo) {
 			contentWrapper.scrollTo(0, contentWrapper.offsetHeight);
@@ -52,7 +71,10 @@ class AddOrganizationModal extends Component {
 
 	_handleInputBox(e) {
 		if (e.keyCode === 8 && !this.query.length) {
-			this.selectedOrganizations = this.selectedOrganizations.slice(0, -1);
+			this.selectedOrganizations = this.selectedOrganizations.slice(
+				0,
+				-1
+			);
 			return false;
 		}
 		this.query = e.target.value;
@@ -65,45 +87,51 @@ class AddOrganizationModal extends Component {
 		}
 
 		const organizationAlreadyAdded = this.selectedOrganizations.reduce(
-			(alreadyAdded, organization) => alreadyAdded || organization.id === organizationToBeToggled.id,
+			(alreadyAdded, organization) =>
+				alreadyAdded || organization.id === organizationToBeToggled.id,
 			false
 		);
 
-		this.selectedOrganizations = organizationAlreadyAdded ?
-			this.selectedOrganizations.filter((organization) => organization.id !== organizationToBeToggled.id) :
-			[...this.selectedOrganizations, organizationToBeToggled];
+		this.selectedOrganizations = organizationAlreadyAdded
+			? this.selectedOrganizations.filter(
+					organization =>
+						organization.id !== organizationToBeToggled.id
+			  )
+			: [...this.selectedOrganizations, organizationToBeToggled];
 
 		return this.selectedOrganizations;
 	}
 
 	_fetchOrganizations() {
 		return fetch(
-			this.organizationsAPI + '?groupId=' + themeDisplay.getScopeGroupId() + '&p_auth=' + Liferay.authToken + '&q=' + this.query,
+			this.organizationsAPI +
+				'?groupId=' +
+				themeDisplay.getScopeGroupId() +
+				'&p_auth=' +
+				Liferay.authToken +
+				'&q=' +
+				this.query,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
-			.then(
-				response => response.json()
-			)
-			.then(
-				response => {
-					this._loading = false;
-					this.organizations = this.addColorToOrganizations(response.organizations);
-					return this.organizations;
-				}
-			);
+			.then(response => response.json())
+			.then(response => {
+				this._loading = false;
+				this.organizations = this.addColorToOrganizations(
+					response.organizations
+				);
+				return this.organizations;
+			});
 	}
 
 	addColorToOrganizations(organizations) {
-		return organizations.map(
-			organization => Object.assign(
-				{
-					colorId: Math.floor(Math.random() * 6) + 1
-				},
-				organization,
-			)
-		);
+		return organizations.map(organization => ({
+			colorId: Math.floor(Math.random() * 6) + 1,
+			...organization
+		}));
 	}
 
 	_addOrganizations() {
@@ -111,10 +139,7 @@ class AddOrganizationModal extends Component {
 			return false;
 		}
 
-		return this.emit(
-			'addOrganization',
-			this.selectedOrganizations
-		);
+		return this.emit('addOrganization', this.selectedOrganizations);
 	}
 
 	toggle() {
@@ -135,27 +160,24 @@ class AddOrganizationModal extends Component {
 
 Soy.register(AddOrganizationModal, template);
 
-const ORGANIZATION_SCHEMA = Config.shapeOf(
-	{
-		colorId: Config.number(),
-		id: Config.oneOfType(
-			[
-				Config.number(),
-				Config.string()
-			]
-		).required(),
-		name: Config.string().required()
-	}
-);
+const ORGANIZATION_SCHEMA = Config.shapeOf({
+	colorId: Config.number(),
+	id: Config.oneOfType([Config.number(), Config.string()]).required(),
+	name: Config.string().required()
+});
 
 AddOrganizationModal.STATE = {
+	_loading: Config.bool()
+		.internal()
+		.value(false),
+	_modalVisible: Config.bool()
+		.internal()
+		.value(false),
 	organizations: Config.array(ORGANIZATION_SCHEMA).value([]),
 	organizationsAPI: Config.string().value(''),
 	query: Config.string().value(''),
 	selectedOrganizations: Config.array(ORGANIZATION_SCHEMA).value([]),
-	spritemap: Config.string(),
-	_loading: Config.bool().internal().value(false),
-	_modalVisible: Config.bool().internal().value(false)
+	spritemap: Config.string()
 };
 
 export {AddOrganizationModal};

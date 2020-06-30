@@ -19,6 +19,7 @@ import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.commerce.model.impl.CommerceAddressImpl;
 import com.liferay.commerce.model.impl.CommerceAddressModelImpl;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 
@@ -83,15 +84,17 @@ public class CommerceAddressUpgradeProcess
 
 		if (type.equals("defaultBilling")) {
 			ps = connection.prepareStatement(
-				"select commerceAddressId, classPK, defaultBilling, " +
-					"defaultShipping from CommerceAddress where classNameId =" +
-						"? and defaultBilling = 1");
+				SQLTransformer.transform(
+					"select commerceAddressId, classPK, defaultBilling, " +
+						"defaultShipping from CommerceAddress where " +
+							"classNameId = ? and defaultBilling = [$TRUE$]"));
 		}
 		else {
 			ps = connection.prepareStatement(
-				"select commerceAddressId, classPK, defaultBilling, " +
-					"defaultShipping from CommerceAddress where classNameId =" +
-						"? and defaultShipping = 1");
+				SQLTransformer.transform(
+					"select commerceAddressId, classPK, defaultBilling, " +
+						"defaultShipping from CommerceAddress where " +
+							"classNameId = ? and defaultShipping = [$TRUE$]"));
 		}
 
 		ps.setLong(1, commerceAccountClassNameId);
@@ -119,7 +122,7 @@ public class CommerceAddressUpgradeProcess
 		ps.setInt(1, type);
 		ps.setLong(2, commerceAddressId);
 
-		ps.executeUpdate();
+		ps.addBatch();
 	}
 
 	protected void updateCommerceAccountAndSetType(
@@ -137,7 +140,7 @@ public class CommerceAddressUpgradeProcess
 				rs.getBoolean("defaultBilling"),
 				rs.getBoolean("defaultShipping"), commerceAddressId);
 
-			ps.executeUpdate();
+			ps.addBatch();
 		}
 	}
 

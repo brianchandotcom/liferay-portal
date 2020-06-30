@@ -207,6 +207,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	@Test
 	public void testDeleteMessageBoardAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardAttachment messageBoardAttachment =
 			testDeleteMessageBoardAttachment_addMessageBoardAttachment();
 

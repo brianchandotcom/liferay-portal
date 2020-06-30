@@ -48,7 +48,7 @@ public class VirtualHostLocalServiceImpl
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 			hostname);
 
-		if ((virtualHost == null) && hostname.startsWith("xn--")) {
+		if ((virtualHost == null) && hostname.contains("xn--")) {
 			virtualHost = virtualHostPersistence.fetchByHostname(
 				IDN.toUnicode(hostname));
 		}
@@ -69,7 +69,7 @@ public class VirtualHostLocalServiceImpl
 			return virtualHostPersistence.findByHostname(hostname);
 		}
 		catch (NoSuchVirtualHostException nsvhe) {
-			if (hostname.startsWith("xn--")) {
+			if (hostname.contains("xn--")) {
 				return virtualHostPersistence.findByHostname(
 					IDN.toUnicode(hostname));
 			}
@@ -96,7 +96,7 @@ public class VirtualHostLocalServiceImpl
 
 		virtualHost.setHostname(hostname);
 
-		virtualHostPersistence.update(virtualHost);
+		virtualHost = virtualHostPersistence.update(virtualHost);
 
 		final Company company = companyPersistence.fetchByPrimaryKey(companyId);
 

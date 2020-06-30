@@ -122,10 +122,8 @@ public class SummaryBuilderImpl implements SummaryBuilder {
 			text = _html.escape(text);
 		}
 
-		text = StringUtil.replace(
+		return StringUtil.replace(
 			text, _ESCAPE_SAFE_HIGHLIGHTS, HighlightUtil.HIGHLIGHTS);
-
-		return text;
 	}
 
 	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {

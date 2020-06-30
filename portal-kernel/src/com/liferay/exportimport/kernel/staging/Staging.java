@@ -432,6 +432,11 @@ public interface Staging {
 			User user, long layoutSetId, long layoutSetBranchId)
 		throws PortalException;
 
+	public void setRemoteSiteURL(
+			Group stagingGroup, boolean overrideRemoteSiteURL,
+			String remoteSiteURL)
+		throws PortalException;
+
 	public String stripProtocolFromRemoteAddress(String remoteAddress);
 
 	public void transferFileToRemoteLive(

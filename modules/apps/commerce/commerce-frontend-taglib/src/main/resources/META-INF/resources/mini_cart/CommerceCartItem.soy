@@ -99,13 +99,13 @@
 			<button class="{$deleteButtonClasses}" data-onclick="{$_handleDeleteItem}">
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'close' /}
+					{param symbol: 'times' /}
 				{/call}
 			</button>
 		</div>
 
 		<div class="commerce-cart-item__cancel-delete">
-			{msg desc="The Element Has Been Removed"}the-element-has-been-removed{/msg}
+			{msg desc="The element has been removed."}the-element-has-been-removed{/msg}
 			<button class="commerce-button commerce-button--inline" data-onclick="{$_handleCancelDeletion}">
 				{msg desc="Cancel"}cancel{/msg}
 			</button>
@@ -113,9 +113,11 @@
 		{if isNonnull($errorMessages) and length($errorMessages) > 0}
 			<div class="commerce-cart-item__errors">
 				{foreach $error in $errorMessages}
-					<div class="commerce-cart-item__error">
-						- {$error}
-					</div>
+					{if $error != ''}
+						<div class="commerce-cart-item__error">
+							{$error}
+						</div>
+					{/if}
 				{/foreach}
 			</div>
 		{/if}

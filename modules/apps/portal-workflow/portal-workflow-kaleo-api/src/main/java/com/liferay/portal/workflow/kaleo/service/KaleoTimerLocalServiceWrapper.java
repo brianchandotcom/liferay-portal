@@ -291,6 +291,9 @@ public class KaleoTimerLocalServiceWrapper
 		return _kaleoTimerLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

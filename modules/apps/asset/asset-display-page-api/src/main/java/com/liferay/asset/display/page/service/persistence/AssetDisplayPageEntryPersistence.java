@@ -40,7 +40,7 @@ import java.util.Set;
 public interface AssetDisplayPageEntryPersistence
 	extends BasePersistence<AssetDisplayPageEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetDisplayPageEntryUtil} to access the asset display page entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

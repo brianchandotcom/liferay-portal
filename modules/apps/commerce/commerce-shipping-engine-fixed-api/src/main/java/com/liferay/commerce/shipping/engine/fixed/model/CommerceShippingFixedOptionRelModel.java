@@ -46,7 +46,7 @@ public interface CommerceShippingFixedOptionRelModel
 	extends BaseModel<CommerceShippingFixedOptionRel>, GroupedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce shipping fixed option rel model instance should use the {@link CommerceShippingFixedOptionRel} interface instead.

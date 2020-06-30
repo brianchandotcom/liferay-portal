@@ -18,30 +18,20 @@
 
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 %>
 
-<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
+<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderPrintedNoteActionURL" />
 
-<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="printedNote" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>" />
+<commerce-ui:modal-content>
+	<aui:form action="<%= editCommerceOrderPrintedNoteActionURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="printedNote" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
-	<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
+		<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<div class="taglib-discussion">
-			<aui:fieldset cssClass="add-comment">
-				<div class="panel">
-					<div class="panel-body">
-						<aui:input autoFocus="<%= true %>" label="" name="printedNote" placeholder="type-your-note-to-be-printed-here" />
-
-						<aui:button-row>
-							<aui:button cssClass="btn-large btn-primary" type="submit" />
-						</aui:button-row>
-					</div>
-				</div>
-			</aui:fieldset>
-		</div>
-	</aui:fieldset-group>
-</aui:form>
+		<aui:input name="printedNote" wrapperCssClass="form-group-item" />
+	</aui:form>
+</commerce-ui:modal-content>

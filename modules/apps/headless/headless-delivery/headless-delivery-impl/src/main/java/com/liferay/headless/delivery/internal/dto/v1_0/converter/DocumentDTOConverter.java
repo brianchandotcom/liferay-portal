@@ -32,12 +32,11 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -45,6 +44,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
@@ -58,10 +59,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	property = "dto.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = {DocumentDTOConverter.class, DTOConverter.class}
 )
-public class DocumentDTOConverter implements DTOConverter {
+public class DocumentDTOConverter
+	implements DTOConverter<DLFileEntry, Document> {
 
 	@Override
 	public String getContentType() {
@@ -73,7 +75,7 @@ public class DocumentDTOConverter implements DTOConverter {
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -90,6 +92,7 @@ public class DocumentDTOConverter implements DTOConverter {
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					DLFileEntry.class.getName(), fileVersion.getFileVersionId(),
 					fileEntry.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = fileEntry.getCreateDate();
@@ -108,6 +111,7 @@ public class DocumentDTOConverter implements DTOConverter {
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
+					dtoConverterContext.getDTOConverterRegistry(),
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
 					dtoConverterContext.getLocale());
 				sizeInBytes = fileEntry.getSize();
@@ -115,12 +119,9 @@ public class DocumentDTOConverter implements DTOConverter {
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory, dtoConverterContext.getLocale()),
 					TaxonomyCategory.class);
 				title = fileEntry.getTitle();
 			}

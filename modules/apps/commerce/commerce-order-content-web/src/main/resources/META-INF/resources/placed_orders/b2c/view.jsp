@@ -35,14 +35,14 @@ List<CommerceOrder> commerceOrders = commerceOrderContentDisplayContext.getComme
 >
 	<div class="container-fluid-1280" id="<portlet:namespace />ordersContainer">
 		<div class="commerce-orders-container" id="<portlet:namespace />entriesContainer">
-			<commerce-ui:table
-				dataProviderKey="commercePlacedOrders"
-				filter="<%= commerceOrderContentDisplayContext.getOrderFilter() %>"
-				itemPerPage="<%= 5 %>"
+			<commerce-ui:dataset-display
+				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
+				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
+				itemsPerPage="<%= 10 %>"
 				namespace="<%= renderResponse.getNamespace() %>"
-				pageNumber="1"
+				pageNumber="<%= 1 %>"
 				portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
-				tableName="commercePlacedOrders"
+				style="stacked"
 			/>
 		</div>
 	</div>

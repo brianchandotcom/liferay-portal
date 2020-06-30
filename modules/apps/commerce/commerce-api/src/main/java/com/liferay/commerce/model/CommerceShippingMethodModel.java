@@ -48,7 +48,7 @@ public interface CommerceShippingMethodModel
 	extends BaseModel<CommerceShippingMethod>, GroupedModel, LocalizedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce shipping method model instance should use the {@link CommerceShippingMethod} interface instead.

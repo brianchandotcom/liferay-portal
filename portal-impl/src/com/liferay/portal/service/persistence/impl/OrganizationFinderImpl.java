@@ -21,8 +21,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
 import com.liferay.portal.kernel.service.persistence.UserUtil;
@@ -862,8 +867,9 @@ public class OrganizationFinderImpl
 	}
 
 	protected int countO_ByOrganizationId(
-		Session session, long organizationId,
-		LinkedHashMap<String, Object> params) {
+			Session session, long organizationId,
+			LinkedHashMap<String, Object> params)
+		throws PortalException {
 
 		String sql = CustomSQLUtil.get(COUNT_O_BY_ORGANIZATION_ID);
 
@@ -1103,8 +1109,8 @@ public class OrganizationFinderImpl
 		return join;
 	}
 
-	protected void setJoin(
-		QueryPos qPos, LinkedHashMap<String, Object> params) {
+	protected void setJoin(QueryPos qPos, LinkedHashMap<String, Object> params)
+		throws PortalException {
 
 		if (params == null) {
 			return;
@@ -1125,14 +1131,29 @@ public class OrganizationFinderImpl
 				List<Organization> organizationsTree =
 					(List<Organization>)value;
 
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				if (!organizationsTree.isEmpty()) {
 					for (Organization organization : organizationsTree) {
-						StringBundler sb = new StringBundler(4);
+						StringBundler sb = new StringBundler(5);
 
 						sb.append(StringPool.PERCENT);
 						sb.append(StringPool.SLASH);
 						sb.append(organization.getOrganizationId());
 						sb.append(StringPool.SLASH);
+
+						if ((permissionChecker != null) &&
+							(permissionChecker.isOrganizationAdmin(
+								organization.getOrganizationId()) ||
+							 permissionChecker.isOrganizationOwner(
+								 organization.getOrganizationId()) ||
+							 OrganizationPermissionUtil.contains(
+								 permissionChecker, organization,
+								 ActionKeys.MANAGE_SUBORGANIZATIONS))) {
+
+							sb.append(StringPool.PERCENT);
+						}
 
 						qPos.add(sb.toString());
 					}

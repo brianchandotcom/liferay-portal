@@ -14,12 +14,15 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityLocalServiceBaseImpl;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +30,7 @@ import java.util.Map;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommerceInventoryBookedQuantityLocalServiceImpl
 	extends CommerceInventoryBookedQuantityLocalServiceBaseImpl {
@@ -39,27 +43,30 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		long commerceBookedQuantityId = counterLocalService.increment();
+		long commerceInventoryBookedQuantityId =
+			counterLocalService.increment();
 
-		CommerceInventoryBookedQuantity commerceBookedQuantity =
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.create(
-				commerceBookedQuantityId);
+				commerceInventoryBookedQuantityId);
 
-		commerceBookedQuantity.setCompanyId(user.getCompanyId());
-		commerceBookedQuantity.setUserId(user.getUserId());
-		commerceBookedQuantity.setUserName(user.getFullName());
-		commerceBookedQuantity.setSku(sku);
-		commerceBookedQuantity.setQuantity(quantity);
-		commerceBookedQuantity.setExpirationDate(expirationDate);
+		commerceInventoryBookedQuantity.setCompanyId(user.getCompanyId());
+		commerceInventoryBookedQuantity.setUserId(user.getUserId());
+		commerceInventoryBookedQuantity.setUserName(user.getFullName());
+		commerceInventoryBookedQuantity.setSku(sku);
+		commerceInventoryBookedQuantity.setQuantity(quantity);
+		commerceInventoryBookedQuantity.setExpirationDate(expirationDate);
 
-		String description =
-			"Book Quantity " + JSONFactoryUtil.serialize(context);
+		CommerceInventoryAuditType commerceInventoryAuditType =
+			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
+				CommerceInventoryConstants.AUDIT_TYPE_BOOKED_QUANTITY);
 
 		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, quantity, description);
+			userId, sku, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context), quantity);
 
 		return commerceInventoryBookedQuantityPersistence.update(
-			commerceBookedQuantity);
+			commerceInventoryBookedQuantity);
 	}
 
 	@Override
@@ -92,10 +99,11 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceBookedQuantity(String sku) {
+	public int getCommerceBookedQuantity(long companyId, String sku) {
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
-				commerceInventoryBookedQuantityPersistence.findBySku(sku);
+				commerceInventoryBookedQuantityPersistence.findByC_S(
+					companyId, sku);
 
 		int resultQuantity = 0;
 
@@ -107,5 +115,64 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		return resultQuantity;
 	}
+
+	@Override
+	public List<CommerceInventoryBookedQuantity>
+		getCommerceInventoryBookedQuantities(
+			long companyId, String sku, int start, int end) {
+
+		return commerceInventoryBookedQuantityPersistence.findByC_S(
+			companyId, sku, start, end);
+	}
+
+	@Override
+	public int getCommerceInventoryBookedQuantitiesCount(
+		long companyId, String sku) {
+
+		return commerceInventoryBookedQuantityPersistence.countByC_S(
+			companyId, sku);
+	}
+
+	@Override
+	public CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
+			long commerceBookedQuantityId, long userId, String sku,
+			int quantity, Date expirationDate, Map<String, String> context)
+		throws PortalException {
+
+		CommerceInventoryBookedQuantity commerceBookedQuantity =
+			commerceInventoryBookedQuantityPersistence.fetchByPrimaryKey(
+				commerceBookedQuantityId);
+
+		if (commerceBookedQuantity == null) {
+			User user = userLocalService.getUser(userId);
+
+			commerceBookedQuantity =
+				commerceInventoryBookedQuantityPersistence.create(
+					commerceBookedQuantityId);
+
+			commerceBookedQuantity.setCompanyId(user.getCompanyId());
+			commerceBookedQuantity.setUserId(userId);
+			commerceBookedQuantity.setUserName(user.getFullName());
+			commerceBookedQuantity.setSku(sku);
+			commerceBookedQuantity.setExpirationDate(expirationDate);
+		}
+
+		commerceBookedQuantity.setQuantity(quantity);
+
+		CommerceInventoryAuditType commerceInventoryAuditType =
+			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
+				CommerceInventoryConstants.AUDIT_TYPE_RESTORE_QUANTITY);
+
+		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+			userId, sku, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context), quantity);
+
+		return commerceInventoryBookedQuantityPersistence.update(
+			commerceBookedQuantity);
+	}
+
+	@ServiceReference(type = CommerceInventoryAuditTypeRegistry.class)
+	private CommerceInventoryAuditTypeRegistry
+		_commerceInventoryAuditTypeRegistry;
 
 }

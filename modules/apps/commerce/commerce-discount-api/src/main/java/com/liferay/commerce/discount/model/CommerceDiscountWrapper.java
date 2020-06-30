@@ -72,6 +72,7 @@ public class CommerceDiscountWrapper
 		attributes.put("couponCode", getCouponCode());
 		attributes.put("usePercentage", isUsePercentage());
 		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
+		attributes.put("level", getLevel());
 		attributes.put("level1", getLevel1());
 		attributes.put("level2", getLevel2());
 		attributes.put("level3", getLevel3());
@@ -79,6 +80,7 @@ public class CommerceDiscountWrapper
 		attributes.put("limitationType", getLimitationType());
 		attributes.put("limitationTimes", getLimitationTimes());
 		attributes.put("numberOfUse", getNumberOfUse());
+		attributes.put("rulesConjunction", isRulesConjunction());
 		attributes.put("active", isActive());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -179,6 +181,12 @@ public class CommerceDiscountWrapper
 			setMaximumDiscountAmount(maximumDiscountAmount);
 		}
 
+		String level = (String)attributes.get("level");
+
+		if (level != null) {
+			setLevel(level);
+		}
+
 		BigDecimal level1 = (BigDecimal)attributes.get("level1");
 
 		if (level1 != null) {
@@ -219,6 +227,12 @@ public class CommerceDiscountWrapper
 
 		if (numberOfUse != null) {
 			setNumberOfUse(numberOfUse);
+		}
+
+		Boolean rulesConjunction = (Boolean)attributes.get("rulesConjunction");
+
+		if (rulesConjunction != null) {
+			setRulesConjunction(rulesConjunction);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -384,6 +398,16 @@ public class CommerceDiscountWrapper
 	}
 
 	/**
+	 * Returns the level of this commerce discount.
+	 *
+	 * @return the level of this commerce discount
+	 */
+	@Override
+	public String getLevel() {
+		return _commerceDiscount.getLevel();
+	}
+
+	/**
 	 * Returns the level1 of this commerce discount.
 	 *
 	 * @return the level1 of this commerce discount
@@ -486,6 +510,16 @@ public class CommerceDiscountWrapper
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceDiscount.getPrimaryKeyObj();
+	}
+
+	/**
+	 * Returns the rules conjunction of this commerce discount.
+	 *
+	 * @return the rules conjunction of this commerce discount
+	 */
+	@Override
+	public boolean getRulesConjunction() {
+		return _commerceDiscount.getRulesConjunction();
 	}
 
 	/**
@@ -719,6 +753,16 @@ public class CommerceDiscountWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this commerce discount is rules conjunction.
+	 *
+	 * @return <code>true</code> if this commerce discount is rules conjunction; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isRulesConjunction() {
+		return _commerceDiscount.isRulesConjunction();
+	}
+
+	/**
 	 * Returns <code>true</code> if this commerce discount is scheduled.
 	 *
 	 * @return <code>true</code> if this commerce discount is scheduled; <code>false</code> otherwise
@@ -748,11 +792,6 @@ public class CommerceDiscountWrapper
 		return _commerceDiscount.isUsePercentage();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce discount model instance should use the <code>CommerceDiscount</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceDiscount.persist();
@@ -871,6 +910,16 @@ public class CommerceDiscountWrapper
 	}
 
 	/**
+	 * Sets the level of this commerce discount.
+	 *
+	 * @param level the level of this commerce discount
+	 */
+	@Override
+	public void setLevel(String level) {
+		_commerceDiscount.setLevel(level);
+	}
+
+	/**
 	 * Sets the level1 of this commerce discount.
 	 *
 	 * @param level1 the level1 of this commerce discount
@@ -978,6 +1027,16 @@ public class CommerceDiscountWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceDiscount.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	 * Sets whether this commerce discount is rules conjunction.
+	 *
+	 * @param rulesConjunction the rules conjunction of this commerce discount
+	 */
+	@Override
+	public void setRulesConjunction(boolean rulesConjunction) {
+		_commerceDiscount.setRulesConjunction(rulesConjunction);
 	}
 
 	/**

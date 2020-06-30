@@ -32,7 +32,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 public abstract class FriendlyURLEntryBaseImpl
 	extends FriendlyURLEntryModelImpl implements FriendlyURLEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a friendly url entry model instance should use the <code>FriendlyURLEntry</code> interface instead.

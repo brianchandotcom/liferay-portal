@@ -33,11 +33,6 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		_weDeployAuthTokenLocalService = weDeployAuthTokenLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthTokenLocalServiceUtil} to access the we deploy auth token local service. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthTokenLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken
 			addAccessWeDeployAuthToken(
@@ -271,6 +266,9 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		return _weDeployAuthTokenLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

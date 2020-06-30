@@ -19,7 +19,7 @@
 <%
 String loanAmountString = ParamUtil.get(request, "loanAmount", "200000");
 double interestRate = ParamUtil.get(request, "interestRate", 7.00);
-float years = ParamUtil.get(request, "years", 30f);
+float years = ParamUtil.get(request, "years", 30F);
 int paymentsPerYear = ParamUtil.get(request, "paymentsPerYear", 12);
 
 int loanAmount = 0;
@@ -40,7 +40,7 @@ try {
 catch (Exception e) {
 }
 
-double tempValue = Math.pow((1 + (interestRate / 100 / paymentsPerYear)), (years * paymentsPerYear));
+double tempValue = Math.pow(1 + (interestRate / 100 / paymentsPerYear), years * paymentsPerYear);
 
 double amountPerPayment = (loanAmount * tempValue * (interestRate / 100 / paymentsPerYear)) / (tempValue - 1);
 

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
@@ -39,7 +40,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -118,7 +118,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			cpDefinition.getCPDefinitionId(),
 			WorkflowConstants.STATUS_APPROVED);
 
-		return Page.of(_toSKUs(cpInstances), pagination, totalItems);
+		return Page.of(
+			_skuHelper.toSKUs(
+				cpInstances, contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@NestedField(parentClass = Product.class, value = "skus")
@@ -128,25 +131,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			Pagination pagination)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
-
-		if (cpDefinition == null) {
-			return super.getProductIdSkusPage(id, pagination);
-		}
-
-		List<CPInstance> cpInstances =
-			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-
-		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		return Page.of(_toSKUs(cpInstances), pagination, totalItems);
+		return _skuHelper.getSkusPage(
+			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@Override
@@ -244,23 +230,6 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		return _upsertSKU(cpDefinition, sku);
 	}
 
-	private List<Sku> _toSKUs(List<CPInstance> cpInstances) throws Exception {
-		List<Sku> skus = new ArrayList<>();
-
-		DTOConverter skuDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CPInstance.class.getName());
-
-		for (CPInstance cpInstance : cpInstances) {
-			skus.add(
-				(Sku)skuDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						cpInstance.getCPInstanceId())));
-		}
-
-		return skus;
-	}
-
 	private Sku _updateSKU(CPInstance cpInstance, Sku sku) throws Exception {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpInstance.getGroupId());
@@ -338,5 +307,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference
+	private SkuHelper _skuHelper;
 
 }

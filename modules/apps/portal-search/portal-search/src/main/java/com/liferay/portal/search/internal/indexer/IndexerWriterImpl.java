@@ -35,10 +35,10 @@ import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
 import com.liferay.portal.search.indexer.BaseModelRetriever;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
+import com.liferay.portal.search.internal.index.contributor.helper.ModelIndexerWriterDocumentHelperImpl;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.Collection;
@@ -191,15 +191,9 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 				_modelIndexerWriterContributor.customize(
 					batchIndexingActionable,
-					new ModelIndexerWriterDocumentHelper() {
-
-						@Override
-						public Document getDocument(BaseModel baseModel) {
-							return _indexerDocumentBuilder.getDocument(
-								baseModel);
-						}
-
-					});
+					new ModelIndexerWriterDocumentHelperImpl(
+						_modelSearchSettings.getClassName(),
+						_indexerDocumentBuilder));
 
 				try {
 					batchIndexingActionable.performActions();

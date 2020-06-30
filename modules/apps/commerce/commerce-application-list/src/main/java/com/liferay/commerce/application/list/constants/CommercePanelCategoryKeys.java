@@ -22,7 +22,4 @@ public class CommercePanelCategoryKeys {
 	public static final String CONTROL_PANEL_COMMERCE =
 		"control_panel.commerce";
 
-	public static final String SITE_ADMINISTRATION_COMMERCE =
-		"site_administration.commerce";
-
 }

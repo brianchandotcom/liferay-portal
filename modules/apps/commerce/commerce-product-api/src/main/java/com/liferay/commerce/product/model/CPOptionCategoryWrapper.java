@@ -470,11 +470,6 @@ public class CPOptionCategoryWrapper
 		return _cpOptionCategory.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp option category model instance should use the <code>CPOptionCategory</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpOptionCategory.persist();

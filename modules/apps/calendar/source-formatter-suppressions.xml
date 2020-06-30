@@ -2,10 +2,10 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="EnumConstantOrderCheck" files="modules/apps/calendar/calendar-api/src/main/java/com/liferay/calendar/notification/NotificationTemplateType\.java" />
-		<suppress checks="EnumConstantOrderCheck" files="modules/apps/calendar/calendar-api/src/main/java/com/liferay/calendar/recurrence/Weekday\.java" />
+		<suppress checks="EnumConstantOrderCheck" files="calendar-api/src/main/java/com/liferay/calendar/notification/NotificationTemplateType\.java" />
+		<suppress checks="EnumConstantOrderCheck" files="calendar-api/src/main/java/com/liferay/calendar/recurrence/Weekday\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="XMLServiceEntityNameCheck" files="modules/apps/calendar/calendar-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="calendar-service/service\.xml" />
 	</source-check>
 </suppressions>

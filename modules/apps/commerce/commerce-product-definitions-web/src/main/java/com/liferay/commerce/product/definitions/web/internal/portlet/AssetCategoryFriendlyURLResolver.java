@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -68,6 +69,8 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
+
+		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
@@ -165,6 +168,9 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_ASSET_CATEGORY_URL.length());
+
+		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =

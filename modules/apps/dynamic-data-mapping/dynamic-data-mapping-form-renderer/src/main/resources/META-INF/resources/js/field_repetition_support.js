@@ -249,14 +249,8 @@ AUI.add(
 				if (field.get('rendered')) {
 					var repeatedSiblings = instance.getRepeatedSiblings();
 
-					var value = field.getValue();
-
 					field.set('repeatedIndex', repeatedSiblings.indexOf(field));
 					field.set('repetitions', repeatedSiblings);
-
-					field.render();
-
-					field.setValue(value);
 				}
 			},
 

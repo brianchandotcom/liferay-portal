@@ -156,9 +156,39 @@ public class CommercePriceEntryPersistenceTest {
 		newCommercePriceEntry.setPromoPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		newCommercePriceEntry.setDiscountDiscovery(
+			RandomTestUtil.randomBoolean());
+
+		newCommercePriceEntry.setDiscountLevel1(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommercePriceEntry.setDiscountLevel2(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommercePriceEntry.setDiscountLevel3(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommercePriceEntry.setDiscountLevel4(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
 		newCommercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 
+		newCommercePriceEntry.setBulkPricing(RandomTestUtil.randomBoolean());
+
+		newCommercePriceEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		newCommercePriceEntry.setExpirationDate(RandomTestUtil.nextDate());
+
 		newCommercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		newCommercePriceEntry.setStatus(RandomTestUtil.nextInt());
+
+		newCommercePriceEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newCommercePriceEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		newCommercePriceEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_commercePriceEntries.add(_persistence.update(newCommercePriceEntry));
 
@@ -207,12 +237,49 @@ public class CommercePriceEntryPersistenceTest {
 			existingCommercePriceEntry.getPromoPrice(),
 			newCommercePriceEntry.getPromoPrice());
 		Assert.assertEquals(
+			existingCommercePriceEntry.isDiscountDiscovery(),
+			newCommercePriceEntry.isDiscountDiscovery());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getDiscountLevel1(),
+			newCommercePriceEntry.getDiscountLevel1());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getDiscountLevel2(),
+			newCommercePriceEntry.getDiscountLevel2());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getDiscountLevel3(),
+			newCommercePriceEntry.getDiscountLevel3());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getDiscountLevel4(),
+			newCommercePriceEntry.getDiscountLevel4());
+		Assert.assertEquals(
 			existingCommercePriceEntry.isHasTierPrice(),
 			newCommercePriceEntry.isHasTierPrice());
+		Assert.assertEquals(
+			existingCommercePriceEntry.isBulkPricing(),
+			newCommercePriceEntry.isBulkPricing());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingCommercePriceEntry.getDisplayDate()),
+			Time.getShortTimestamp(newCommercePriceEntry.getDisplayDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommercePriceEntry.getExpirationDate()),
+			Time.getShortTimestamp(newCommercePriceEntry.getExpirationDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommercePriceEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newCommercePriceEntry.getLastPublishDate()));
+		Assert.assertEquals(
+			existingCommercePriceEntry.getStatus(),
+			newCommercePriceEntry.getStatus());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getStatusByUserId(),
+			newCommercePriceEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getStatusByUserName(),
+			newCommercePriceEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingCommercePriceEntry.getStatusDate()),
+			Time.getShortTimestamp(newCommercePriceEntry.getStatusDate()));
 	}
 
 	@Test
@@ -266,6 +333,16 @@ public class CommercePriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_S() throws Exception {
+		_persistence.countByC_C_S(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_S(0L, "null", 0);
+
+		_persistence.countByC_C_S(0L, (String)null, 0);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 
@@ -304,8 +381,12 @@ public class CommercePriceEntryPersistenceTest {
 			"commercePriceEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"commercePriceListId", true, "CPInstanceUuid", true, "CProductId",
-			true, "price", true, "promoPrice", true, "hasTierPrice", true,
-			"lastPublishDate", true);
+			true, "price", true, "promoPrice", true, "discountDiscovery", true,
+			"discountLevel1", true, "discountLevel2", true, "discountLevel3",
+			true, "discountLevel4", true, "hasTierPrice", true, "bulkPricing",
+			true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -554,6 +635,23 @@ public class CommercePriceEntryPersistenceTest {
 					new Class<?>[0])));
 
 		Assert.assertEquals(
+			Long.valueOf(existingCommercePriceEntry.getCommercePriceListId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommercePriceEntry, "getOriginalCommercePriceListId",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingCommercePriceEntry.getCPInstanceUuid(),
+				ReflectionTestUtil.invoke(
+					existingCommercePriceEntry, "getOriginalCPInstanceUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Integer.valueOf(existingCommercePriceEntry.getStatus()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingCommercePriceEntry, "getOriginalStatus",
+				new Class<?>[0]));
+
+		Assert.assertEquals(
 			Long.valueOf(existingCommercePriceEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCommercePriceEntry, "getOriginalCompanyId",
@@ -598,9 +696,37 @@ public class CommercePriceEntryPersistenceTest {
 		commercePriceEntry.setPromoPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		commercePriceEntry.setDiscountDiscovery(RandomTestUtil.randomBoolean());
+
+		commercePriceEntry.setDiscountLevel1(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setDiscountLevel2(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setDiscountLevel3(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setDiscountLevel4(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
 		commercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 
+		commercePriceEntry.setBulkPricing(RandomTestUtil.randomBoolean());
+
+		commercePriceEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		commercePriceEntry.setExpirationDate(RandomTestUtil.nextDate());
+
 		commercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		commercePriceEntry.setStatus(RandomTestUtil.nextInt());
+
+		commercePriceEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		commercePriceEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		commercePriceEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_commercePriceEntries.add(_persistence.update(commercePriceEntry));
 

@@ -141,7 +141,7 @@ if (!inTrash) {
 								message = LanguageUtil.get(resourceBundle, "ratings-are-disabled-in-staging");
 							}
 							else if (i == 1) {
-								message = LanguageUtil.format(request, ((formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {formattedAverageScore, numberOfStars}, false);
+								message = LanguageUtil.format(request, (formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x", new Object[] {formattedAverageScore, numberOfStars}, false);
 							}
 						%>
 
@@ -220,10 +220,10 @@ if (!inTrash) {
 								String positiveRatingMessage = null;
 
 								if (type.equals(RatingsType.THUMBS.getValue())) {
-									positiveRatingMessage = (thumbUp) ? "you-have-rated-this-as-good" : "rate-this-as-good";
+									positiveRatingMessage = thumbUp ? "you-have-rated-this-as-good" : "rate-this-as-good";
 								}
 								else {
-									positiveRatingMessage = (thumbUp) ? "unlike-this" : "like-this";
+									positiveRatingMessage = thumbUp ? "unlike-this" : "like-this";
 								}
 								%>
 

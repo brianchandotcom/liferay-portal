@@ -14,21 +14,27 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.util.CommerceTaxFixedRateRequestHelper;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -37,21 +43,50 @@ import javax.portlet.RenderRequest;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
+public class BaseCommerceTaxFixedRateDisplayContext {
 
 	public BaseCommerceTaxFixedRateDisplayContext(
+		CommerceChannelLocalService commerceChannelLocalService,
+		ModelResourcePermission<CommerceChannel>
+			commerceChannelModelResourcePermission,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceTaxMethodService commerceTaxMethodService,
+		CPTaxCategoryService cpTaxCategoryService,
 		RenderRequest renderRequest) {
 
+		this.commerceChannelLocalService = commerceChannelLocalService;
+		this.commerceChannelModelResourcePermission =
+			commerceChannelModelResourcePermission;
 		this.commerceCurrencyLocalService = commerceCurrencyLocalService;
 		this.commerceTaxMethodService = commerceTaxMethodService;
+		this.cpTaxCategoryService = cpTaxCategoryService;
 
 		commerceTaxFixedRateRequestHelper =
 			new CommerceTaxFixedRateRequestHelper(renderRequest);
+	}
 
-		_defaultOrderByCol = "create-date";
-		_defaultOrderByType = "desc";
+	public List<CPTaxCategory> getAvailableCPTaxCategories()
+		throws PortalException {
+
+		return cpTaxCategoryService.getCPTaxCategories(
+			commerceTaxFixedRateRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new CPTaxCategoryCreateDateComparator());
+	}
+
+	public long getCommerceChannelId() throws PortalException {
+		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
+
+		if (commerceTaxMethod != null) {
+			CommerceChannel commerceChannel =
+				commerceChannelLocalService.getCommerceChannelByGroupId(
+					commerceTaxMethod.getGroupId());
+
+			return commerceChannel.getCommerceChannelId();
+		}
+
+		return ParamUtil.getLong(
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			"commerceChannelId");
 	}
 
 	public String getCommerceCurrencyCode() throws PortalException {
@@ -93,27 +128,12 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			"commerceTaxMethodId");
 	}
 
-	public String getOrderByCol() {
-		return ParamUtil.getString(
-			commerceTaxFixedRateRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, _defaultOrderByCol);
-	}
-
-	public String getOrderByType() {
-		return ParamUtil.getString(
-			commerceTaxFixedRateRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, _defaultOrderByType);
-	}
-
 	public PortletURL getPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"commerceAdminModuleKey",
-			CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY);
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editCommerceTaxMethod");
 		portletURL.setParameter(
@@ -149,19 +169,7 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			portletURL.setParameter("delta", delta);
 		}
 
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
-
 		return portletURL;
-	}
-
-	public RowChecker getRowChecker() {
-		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(
-				commerceTaxFixedRateRequestHelper.getLiferayPortletResponse());
-		}
-
-		return _rowChecker;
 	}
 
 	public String getScreenNavigationCategoryKey() {
@@ -169,30 +177,14 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL;
 	}
 
-	public abstract SearchContainer<T> getSearchContainer()
-		throws PortalException;
+	public boolean hasUpdateCommerceChannelPermission() throws PortalException {
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId());
 
-	public String getTaxCategoriesURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceAdminModuleKey",
-			CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY);
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", "tax-categories");
-
-		return portletURL.toString();
-	}
-
-	public void setDefaultOrderByCol(String defaultOrderByCol) {
-		_defaultOrderByCol = defaultOrderByCol;
-	}
-
-	public void setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
+		return commerceChannelModelResourcePermission.contains(
+			commerceTaxFixedRateRequestHelper.getPermissionChecker(),
+			commerceChannel, ActionKeys.UPDATE);
 	}
 
 	protected String getSelectedScreenNavigationCategoryKey() {
@@ -201,15 +193,15 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 	}
 
+	protected final CommerceChannelLocalService commerceChannelLocalService;
+	protected final ModelResourcePermission<CommerceChannel>
+		commerceChannelModelResourcePermission;
 	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
 	protected final CommerceTaxFixedRateRequestHelper
 		commerceTaxFixedRateRequestHelper;
 	protected final CommerceTaxMethodService commerceTaxMethodService;
-	protected SearchContainer<T> searchContainer;
+	protected final CPTaxCategoryService cpTaxCategoryService;
 
 	private CommerceTaxMethod _commerceTaxMethod;
-	private String _defaultOrderByCol;
-	private String _defaultOrderByType;
-	private RowChecker _rowChecker;
 
 }

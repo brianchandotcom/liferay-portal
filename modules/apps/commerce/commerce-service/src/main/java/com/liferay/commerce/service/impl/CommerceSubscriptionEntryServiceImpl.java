@@ -16,6 +16,8 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -23,8 +25,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -58,6 +62,10 @@ public class CommerceSubscriptionEntryServiceImpl
 			fetchCommerceSubscriptionEntry(commerceSubscriptionEntryId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
 			long companyId, long userId, int start, int end,
@@ -92,6 +100,10 @@ public class CommerceSubscriptionEntryServiceImpl
 				companyId, groupId, userId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public int getCommerceSubscriptionEntriesCount(long companyId, long userId)
 		throws PortalException {
@@ -124,24 +136,6 @@ public class CommerceSubscriptionEntryServiceImpl
 	@Override
 	public BaseModelSearchResult<CommerceSubscriptionEntry>
 			searchCommerceSubscriptionEntries(
-				long companyId, long groupId, Long maxSubscriptionCycles,
-				Integer subscriptionStatus, String keywords, int start, int end,
-				Sort sort)
-		throws PortalException {
-
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
-
-		return commerceSubscriptionEntryLocalService.
-			searchCommerceSubscriptionEntries(
-				companyId, groupId, maxSubscriptionCycles, subscriptionStatus,
-				keywords, start, end, sort);
-	}
-
-	@Override
-	public BaseModelSearchResult<CommerceSubscriptionEntry>
-			searchCommerceSubscriptionEntries(
 				long companyId, Long maxSubscriptionCycles,
 				Integer subscriptionStatus, String keywords, int start, int end,
 				Sort sort)
@@ -151,10 +145,41 @@ public class CommerceSubscriptionEntryServiceImpl
 			getPermissionChecker(),
 			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
 
+		List<CommerceChannel> commerceChannels =
+			_commerceChannelService.searchCommerceChannels(companyId);
+
+		Stream<CommerceChannel> stream = commerceChannels.stream();
+
+		long[] commerceChannelGroupIds = stream.mapToLong(
+			CommerceChannel::getGroupId
+		).toArray();
+
 		return commerceSubscriptionEntryLocalService.
 			searchCommerceSubscriptionEntries(
-				companyId, maxSubscriptionCycles, subscriptionStatus, keywords,
-				start, end, sort);
+				companyId, commerceChannelGroupIds, maxSubscriptionCycles,
+				subscriptionStatus, keywords, start, end, sort);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public BaseModelSearchResult<CommerceSubscriptionEntry>
+			searchCommerceSubscriptionEntries(
+				long companyId, long[] groupIds, Long maxSubscriptionCycles,
+				Integer subscriptionStatus, String keywords, int start, int end,
+				Sort sort)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
+
+		return commerceSubscriptionEntryLocalService.
+			searchCommerceSubscriptionEntries(
+				companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
+				keywords, start, end, sort);
 	}
 
 	@Override
@@ -163,10 +188,16 @@ public class CommerceSubscriptionEntryServiceImpl
 			String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute, int nextIterationDateMonth,
-			int nextIterationDateDay, int nextIterationDateYear,
-			int nextIterationDateHour, int nextIterationDateMinute)
+			int nextIterationDateMonth, int nextIterationDateDay,
+			int nextIterationDateYear, int nextIterationDateHour,
+			int nextIterationDateMinute, int deliverySubscriptionLength,
+			String deliverySubscriptionType,
+			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
+			int deliveryNextIterationDateMonth,
+			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,
+			int deliveryNextIterationDateHour,
+			int deliveryNextIterationDateMinute)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -177,13 +208,22 @@ public class CommerceSubscriptionEntryServiceImpl
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
 				subscriptionType, subscriptionTypeSettingsProperties,
-				maxSubscriptionCycles, subscriptionStatus, startDateMonth,
-				startDateDay, startDateYear, startDateHour, startDateMinute,
+				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
-				nextIterationDateMinute);
+				nextIterationDateMinute, deliverySubscriptionLength,
+				deliverySubscriptionType,
+				deliverySubscriptionTypeSettingsProperties,
+				deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
+				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
+				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
+				deliveryNextIterationDateMinute);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CommerceSubscriptionEntry updateSubscriptionStatus(
 			long commerceSubscriptionEntryId, int subscriptionStatus)
@@ -196,5 +236,8 @@ public class CommerceSubscriptionEntryServiceImpl
 		return commerceSubscriptionEntryLocalService.updateSubscriptionStatus(
 			commerceSubscriptionEntryId, subscriptionStatus);
 	}
+
+	@ServiceReference(type = CommerceChannelService.class)
+	private CommerceChannelService _commerceChannelService;
 
 }

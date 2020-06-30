@@ -31,13 +31,12 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long cpTaxCategoryId,
-			long commerceCountryId, long commerceRegionId, String zip,
-			double rate, ServiceContext serviceContext)
+			long userId, long groupId, long commerceTaxMethodId,
+			long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
+			String zip, double rate)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		long commerceTaxFixedRateAddressRelId = counterLocalService.increment();
 
@@ -57,10 +56,34 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		commerceTaxFixedRateAddressRel.setZip(zip);
 		commerceTaxFixedRateAddressRel.setRate(rate);
 
-		commerceTaxFixedRateAddressRelPersistence.update(
+		return commerceTaxFixedRateAddressRelPersistence.update(
 			commerceTaxFixedRateAddressRel);
+	}
 
-		return commerceTaxFixedRateAddressRel;
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
+			long commerceTaxMethodId, long cpTaxCategoryId,
+			long commerceCountryId, long commerceRegionId, String zip,
+			double rate, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceTaxFixedRateAddressRelLocalService.
+			addCommerceTaxFixedRateAddressRel(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
+				commerceRegionId, zip, rate);
+	}
+
+	@Override
+	public void deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
+		long commerceCountryId) {
+
+		commerceTaxFixedRateAddressRelPersistence.removeByCommerceCountryId(
+			commerceCountryId);
 	}
 
 	@Override
@@ -77,6 +100,16 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 		commerceTaxFixedRateAddressRelPersistence.removeByCPTaxCategoryId(
 			cpTaxCategoryId);
+	}
+
+	@Override
+	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, String zip) {
+
+		return commerceTaxFixedRateAddressRelFinder.fetchByC_C_C_C_Z_First(
+			commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
+			commerceRegionId, zip);
 	}
 
 	@Override
@@ -158,10 +191,8 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		commerceTaxFixedRateAddressRel.setZip(zip);
 		commerceTaxFixedRateAddressRel.setRate(rate);
 
-		commerceTaxFixedRateAddressRelPersistence.update(
+		return commerceTaxFixedRateAddressRelPersistence.update(
 			commerceTaxFixedRateAddressRel);
-
-		return commerceTaxFixedRateAddressRel;
 	}
 
 }

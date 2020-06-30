@@ -16,6 +16,7 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,8 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ResourceRequest;
@@ -67,14 +67,11 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
-			_cpOptionService.searchCPOptions(
-				themeDisplay.getCompanyId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, SortFactoryUtil.create("name", true));
+		List<CPOption> cpOptions = _cpOptionService.findCPOptionByCompanyId(
+			themeDisplay.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			CPOptionsPortletUtil.getCPOptionOrderByComparator("name", "asc"));
 
-		for (CPOption cpOption :
-				cpOptionBaseModelSearchResult.getBaseModels()) {
-
+		for (CPOption cpOption : cpOptions) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put("cpOptionId", cpOption.getCPOptionId());

@@ -337,6 +337,21 @@ public class WorkflowTaskDisplayContext {
 		return null;
 	}
 
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			_orderByType = _portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+		}
+
+		return _orderByType;
+	}
+
 	public String getPreviewOfTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -369,20 +384,19 @@ public class WorkflowTaskDisplayContext {
 		return portletURL.toString();
 	}
 
-	public String getSortingURL() throws PortletException {
+	public String getSortingURL() {
 		LiferayPortletResponse response =
 			_workflowTaskRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = response.createRenderURL();
 
+		portletURL.setParameter("navigation", _getNavigation());
 		portletURL.setParameter("tabs1", _getTabs1());
 		portletURL.setParameter("orderByCol", _getOrderByCol());
 
-		String orderByType = ParamUtil.getString(
-			_request, "orderByType", "asc");
-
 		portletURL.setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return portletURL.toString();
 	}
@@ -634,13 +648,17 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public WorkflowTaskSearch getWorkflowTaskSearch() throws PortalException {
+		if (_workflowTaskSearch != null) {
+			return _workflowTaskSearch;
+		}
+
 		boolean searchByUserRoles = _isAssignedToMyRolesTabSelected();
 
-		WorkflowTaskSearch workflowTaskSearch = new WorkflowTaskSearch(
+		_workflowTaskSearch = new WorkflowTaskSearch(
 			_liferayPortletRequest, _getCurParam(searchByUserRoles),
 			_getPortletURL());
 
-		DisplayTerms searchTerms = workflowTaskSearch.getDisplayTerms();
+		DisplayTerms searchTerms = _workflowTaskSearch.getDisplayTerms();
 
 		int total = WorkflowTaskManagerUtil.searchCount(
 			_workflowTaskRequestHelper.getCompanyId(),
@@ -648,22 +666,22 @@ public class WorkflowTaskDisplayContext {
 			_getAssetType(searchTerms.getKeywords()), _getCompleted(),
 			searchByUserRoles);
 
-		workflowTaskSearch.setTotal(total);
+		_workflowTaskSearch.setTotal(total);
 
 		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
 			_getAssetType(searchTerms.getKeywords()), _getCompleted(),
-			searchByUserRoles, workflowTaskSearch.getStart(),
-			workflowTaskSearch.getEnd(),
-			workflowTaskSearch.getOrderByComparator());
+			searchByUserRoles, _workflowTaskSearch.getStart(),
+			_workflowTaskSearch.getEnd(),
+			_workflowTaskSearch.getOrderByComparator());
 
-		workflowTaskSearch.setResults(results);
+		_workflowTaskSearch.setResults(results);
 
 		_setWorkflowTaskSearchEmptyResultsMessage(
-			workflowTaskSearch, searchByUserRoles, _getCompleted());
+			_workflowTaskSearch, searchByUserRoles, _getCompleted());
 
-		return workflowTaskSearch;
+		return _workflowTaskSearch;
 	}
 
 	public String getWorkflowTaskUnassignedUserName() {
@@ -867,14 +885,6 @@ public class WorkflowTaskDisplayContext {
 			_orderByCol = _portalPreferences.getValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
 				"last-activity-date");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
-			}
 		}
 
 		return _orderByCol;
@@ -1108,10 +1118,12 @@ public class WorkflowTaskDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;
+	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;
+	private WorkflowTaskSearch _workflowTaskSearch;
 
 }

@@ -30,11 +30,6 @@ public class KBTemplateServiceWrapper
 		_kbTemplateService = kbTemplateService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link KBTemplateServiceUtil} to access the kb template remote service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.knowledge.base.model.KBTemplate addKBTemplate(
 			String portletId, String title, String content,

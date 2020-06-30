@@ -39,7 +39,7 @@ import java.io.Serializable;
 @ProviderType
 public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a dl sync event model instance should use the {@link DLSyncEvent} interface instead.

@@ -30,6 +30,7 @@ import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShipmentFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -84,7 +86,7 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements CommerceShippingMethodLocalService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceShippingMethodLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil</code>.
@@ -325,6 +327,13 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 			(CommerceShippingMethod)persistedModel);
 	}
 
+	public BasePersistence<CommerceShippingMethod> getBasePersistence() {
+		return commerceShippingMethodPersistence;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
@@ -879,6 +888,26 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce shipment finder.
+	 *
+	 * @return the commerce shipment finder
+	 */
+	public CommerceShipmentFinder getCommerceShipmentFinder() {
+		return commerceShipmentFinder;
+	}
+
+	/**
+	 * Sets the commerce shipment finder.
+	 *
+	 * @param commerceShipmentFinder the commerce shipment finder
+	 */
+	public void setCommerceShipmentFinder(
+		CommerceShipmentFinder commerceShipmentFinder) {
+
+		this.commerceShipmentFinder = commerceShipmentFinder;
+	}
+
+	/**
 	 * Returns the commerce shipment item local service.
 	 *
 	 * @return the commerce shipment item local service
@@ -1372,8 +1401,8 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1479,6 +1508,9 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 
 	@BeanReference(type = CommerceShipmentPersistence.class)
 	protected CommerceShipmentPersistence commerceShipmentPersistence;
+
+	@BeanReference(type = CommerceShipmentFinder.class)
+	protected CommerceShipmentFinder commerceShipmentFinder;
 
 	@BeanReference(
 		type = com.liferay.commerce.service.CommerceShipmentItemLocalService.class

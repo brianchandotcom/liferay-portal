@@ -23,6 +23,13 @@ public class CommercePriceListScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_ENTRIES = "entries";
 
+	public static final String CATEGORY_KEY_TIER_PRICE_ENTRIES =
+		"tier-price-entries";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_INSTANCE_PRICE_ENTRY_GENERAL =
+			"commerce.product.instance.price.entry.general";
+
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_PRICE_LIST_GENERAL =
 			"commerce.price.list.general";

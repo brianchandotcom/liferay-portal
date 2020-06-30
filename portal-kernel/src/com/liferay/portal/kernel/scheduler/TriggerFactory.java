@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.scheduler;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @author Tina Tian
@@ -31,6 +32,10 @@ public interface TriggerFactory {
 	public Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
 		String cronExpression);
+
+	public Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronExpression, TimeZone timeZone);
 
 	public Trigger createTrigger(Trigger trigger, Date startDate, Date endDate);
 

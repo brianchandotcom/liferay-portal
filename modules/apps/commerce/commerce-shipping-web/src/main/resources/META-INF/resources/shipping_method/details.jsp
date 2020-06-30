@@ -17,66 +17,71 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (CommerceShippingMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayContext.getCommerceShippingMethod();
 
-long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
+long commerceShippingMethodId = 0;
+
+if (commerceShippingMethod != null) {
+	commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
+}
+
+String name = BeanParamUtil.getString(commerceShippingMethod, request, "name", commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineName(locale));
+String description = BeanParamUtil.getString(commerceShippingMethod, request, "description", commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineDescription(locale));
 %>
 
 <portlet:actionURL name="editCommerceShippingMethod" var="editCommerceShippingMethodActionURL" />
 
-<aui:form action="<%= editCommerceShippingMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingMethod();" %>'>
+<aui:form action="<%= editCommerceShippingMethodActionURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingMethodId <= 0) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceShippingMethodsDisplayContext.getCommerceChannelId() %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
-	<aui:input name="engineKey" type="hidden" value="<%= commerceShippingMethod.getEngineKey() %>" />
+	<aui:input name="commerceShippingMethodEngineKey" type="hidden" value="<%= commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineKey() %>" />
 
 	<liferay-ui:error exception="<%= CommerceShippingMethodNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:model-context bean="<%= commerceShippingMethod %>" model="<%= CommerceShippingMethod.class %>" />
+	<c:if test="<%= commerceShippingMethodsDisplayContext.getCommerceShippingOptionsCount() <= 0 %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="there-are-no-shipping-options" />
+			<liferay-ui:message key="please-configure-shipping-method" />
+		</div>
+	</c:if>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" name="name" />
+	<commerce-ui:panel>
+		<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" name="nameMapAsXML" type="text" value="<%= name %>">
+			<aui:validator name="required" />
+		</aui:input>
 
-			<aui:input name="description" />
+		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" type="text" value="<%= description %>" />
 
-			<%
-			String thumbnailSrc = StringPool.BLANK;
+		<aui:model-context bean="<%= commerceShippingMethod %>" model="<%= CommerceShippingMethod.class %>" />
 
-			if (commerceShippingMethod != null) {
-				thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
-			}
-			%>
+		<%
+		String thumbnailSrc = StringPool.BLANK;
 
-			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-				<div class="row">
-					<div class="col-md-4">
-						<img class="w-100" src="<%= thumbnailSrc %>" />
-					</div>
+		if (commerceShippingMethod != null) {
+			thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
+		}
+		%>
+
+		<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+			<div class="row">
+				<div class="col-md-4">
+					<img class="w-100" src="<%= thumbnailSrc %>" />
 				</div>
-			</c:if>
+			</div>
+		</c:if>
 
-			<aui:input label="icon" name="imageFile" type="file" />
+		<aui:input label="icon" name="imageFile" type="file" />
 
-			<aui:input name="priority" />
+		<aui:input name="priority" />
 
-			<aui:input checked="<%= (commerceShippingMethod == null) ? false : commerceShippingMethod.isActive() %>" name="active" type="toggle-switch" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		<aui:input checked="<%= (commerceShippingMethod == null) ? false : commerceShippingMethod.isActive() %>" name="active" type="toggle-switch" />
+	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveCommerceShippingMethod() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

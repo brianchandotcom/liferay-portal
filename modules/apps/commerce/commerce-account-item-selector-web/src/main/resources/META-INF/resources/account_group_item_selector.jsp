@@ -99,31 +99,30 @@ PortletURL portletURL = commerceAccountGroupItemSelectorViewDisplayContext.getPo
 </div>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceAccountGroups');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-
-			var allSelectedElements = event.elements.allSelectedElements
-			var arr = [];
-
-			allSelectedElements.each(
-				function() {
-					var row = this.ancestor('tr');
-
-					var data = row.getDOM().dataset;
-
-					arr.push({commerceAccountGroupId : data.commerceAccountGroupId, name : data.name});
-				}
-			);
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-				{
-					data: arr
-				}
-			);
-		}
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commerceAccountGroups'
 	);
+
+	searchContainer.on('rowToggled', function(event) {
+		var allSelectedElements = event.elements.allSelectedElements;
+		var arr = [];
+
+		allSelectedElements.each(function() {
+			var row = this.ancestor('tr');
+
+			var data = row.getDOM().dataset;
+
+			arr.push({
+				commerceAccountGroupId: data.commerceAccountGroupId,
+				name: data.name
+			});
+		});
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+			{
+				data: arr
+			}
+		);
+	});
 </aui:script>

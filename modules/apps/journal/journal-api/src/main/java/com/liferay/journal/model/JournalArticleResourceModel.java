@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface JournalArticleResourceModel
 	extends BaseModel<JournalArticleResource>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a journal article resource model instance should use the {@link JournalArticleResource} interface instead.

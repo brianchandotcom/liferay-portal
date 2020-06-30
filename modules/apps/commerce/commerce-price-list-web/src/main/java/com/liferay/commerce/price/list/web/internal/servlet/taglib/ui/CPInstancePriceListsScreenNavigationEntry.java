@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -47,15 +47,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CPInstancePriceListsScreenNavigationEntry
-	implements ScreenNavigationEntry<CPInstance> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+		return "price-lists";
 	}
 
 	@Override
@@ -97,8 +100,8 @@ public class CPInstancePriceListsScreenNavigationEntry
 				cpInstanceCommercePriceEntryDisplayContext =
 					new CPInstanceCommercePriceEntryDisplayContext(
 						_actionHelper, _commercePriceEntryService,
-						_commercePriceFormatter, _commercePriceListActionHelper,
-						httpServletRequest, _itemSelector);
+						_commercePriceListActionHelper, httpServletRequest,
+						_itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -121,9 +124,6 @@ public class CPInstancePriceListsScreenNavigationEntry
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;

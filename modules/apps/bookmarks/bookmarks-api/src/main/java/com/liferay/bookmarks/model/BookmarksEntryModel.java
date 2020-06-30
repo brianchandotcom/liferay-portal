@@ -47,7 +47,7 @@ public interface BookmarksEntryModel
 	extends BaseModel<BookmarksEntry>, ShardedModel, StagedGroupedModel,
 			TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a bookmarks entry model instance should use the {@link BookmarksEntry} interface instead.

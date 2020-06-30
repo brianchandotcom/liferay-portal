@@ -49,7 +49,7 @@ public interface CalendarResourceModel
 	extends AttachedModel, BaseModel<CalendarResource>, LocalizedModel,
 			ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a calendar resource model instance should use the {@link CalendarResource} interface instead.

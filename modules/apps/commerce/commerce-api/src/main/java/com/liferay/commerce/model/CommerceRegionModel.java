@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceRegionModel
 	extends BaseModel<CommerceRegion>, ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce region model instance should use the {@link CommerceRegion} interface instead.

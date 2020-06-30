@@ -53,7 +53,7 @@ public class CommerceWishListPortletResourcePermissionRegistrar {
 				CommerceWishListConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
-					CommerceWishListPortletKeys.COMMERCE_WISH_LIST)),
+					CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT)),
 			properties);
 	}
 

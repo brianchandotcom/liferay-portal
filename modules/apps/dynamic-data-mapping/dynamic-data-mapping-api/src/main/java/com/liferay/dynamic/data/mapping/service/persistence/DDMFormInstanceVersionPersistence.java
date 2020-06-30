@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMFormInstanceVersionPersistence
 	extends BasePersistence<DDMFormInstanceVersion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceVersionUtil} to access the ddm form instance version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

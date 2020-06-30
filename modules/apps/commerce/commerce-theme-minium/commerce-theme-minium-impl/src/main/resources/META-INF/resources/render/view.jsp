@@ -26,7 +26,6 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
-String galleryId = PortalUtil.generateRandomKey(request, "gallery");
 %>
 
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -55,37 +54,41 @@ String galleryId = PortalUtil.generateRandomKey(request, "gallery");
 				<h4 class="product-header-subtitle" data-text-cp-instance-gtin>
 					<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getGtin()) %>
 				</h4>
-
-				<c:choose>
-					<c:when test="<%= cpSku != null %>">
-						<div class="availability mt-1"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
-						<div class="availability-estimate mt-1"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
-						<div class="mt-1 stock-quantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
-					</c:when>
-					<c:otherwise>
-						<div class="availability mt-1" data-text-cp-instance-availability></div>
-						<div class="availability-estimate mt-1" data-text-cp-instance-availability-estimate></div>
-						<div class="stock-quantity mt-1" data-text-cp-instance-stock-quantity></div>
-					</c:otherwise>
-				</c:choose>
 			</header>
 
 			<p class="mt-3 procuct-description"><%= cpCatalogEntry.getDescription() %></p>
 
-			<h4 class="commerce-subscription-info mt-3 w-100" data-text-cp-instance-subscription-info>
+			<h4 class="commerce-subscription-info mt-3 w-100">
 				<c:if test="<%= cpSku != null %>">
-					<liferay-commerce:subscription-info
+					<commerce-ui:product-subscription-info
 						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 					/>
 				</c:if>
+
+				<span data-text-cp-instance-subscription-info></span>
+				<span data-text-cp-instance-delivery-subscription-info></span>
 			</h4>
 
 			<div class="product-detail-options">
+				<%@ include file="/render/form_handlers/aui.jspf" %>
+
 				<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
 
-				<%@ include file="/render/form_handlers/aui.jspf" %>
 				<%@ include file="/render/form_handlers/metal_js.jspf" %>
 			</div>
+
+			<c:choose>
+				<c:when test="<%= cpSku != null %>">
+					<div class="availability mt-1"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
+					<div class="availability-estimate mt-1"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
+					<div class="mt-1 stock-quantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
+				</c:when>
+				<c:otherwise>
+					<div class="availability mt-1" data-text-cp-instance-availability></div>
+					<div class="availability-estimate mt-1" data-text-cp-instance-availability-estimate></div>
+					<div class="stock-quantity mt-1" data-text-cp-instance-stock-quantity></div>
+				</c:otherwise>
+			</c:choose>
 
 			<h2 class="commerce-price mt-3" data-text-cp-instance-price>
 				<c:if test="<%= cpSku != null %>">

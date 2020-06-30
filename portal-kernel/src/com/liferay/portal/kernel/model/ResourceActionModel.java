@@ -37,7 +37,7 @@ import java.io.Serializable;
 public interface ResourceActionModel
 	extends BaseModel<ResourceAction>, MVCCModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a resource action model instance should use the {@link ResourceAction} interface instead.

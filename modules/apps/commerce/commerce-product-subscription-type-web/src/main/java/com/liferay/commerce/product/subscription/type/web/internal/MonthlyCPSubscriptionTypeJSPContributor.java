@@ -43,9 +43,18 @@ public class MonthlyCPSubscriptionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		render(object, httpServletRequest, httpServletResponse, true);
+	}
+
+	@Override
+	public void render(
+			Object object, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean payment)
+		throws Exception {
+
 		MonthlyCPSubscriptionTypeDisplayContext
 			monthlyCPSubscriptionTypeDisplayContext =
-				new MonthlyCPSubscriptionTypeDisplayContext(object);
+				new MonthlyCPSubscriptionTypeDisplayContext(object, payment);
 
 		httpServletRequest.setAttribute(
 			"view.jsp-monthlyCPSubscriptionTypeDisplayContext",

@@ -138,14 +138,12 @@ public class KBArticleImporter {
 				kbArticleMarkdownConverter.processAttachmentsReferences(
 					userId, kbArticle, zipReader, new HashMap<>());
 
-			kbArticle = _kbArticleLocalService.updateKBArticle(
+			return _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
 				kbArticleMarkdownConverter.getSourceURL(), null, null, null,
 				serviceContext);
-
-			return kbArticle;
 		}
 		catch (Exception e) {
 			StringBundler sb = new StringBundler(4);

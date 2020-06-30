@@ -30,7 +30,8 @@ definition {
 		}
 	}
 
-	@description = "Add a fragment with multiple editable fields in it."
+	@description = "This will be ignored until LPS-85964 is backported on BPR-22041."
+	@ignore = "true"
 	@priority = "4"
 	test ViewDisplayPageWithComplexRichTextFragments {
 		property testray.component.names = "Training";

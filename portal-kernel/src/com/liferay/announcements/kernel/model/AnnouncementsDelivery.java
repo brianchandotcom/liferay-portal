@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface AnnouncementsDelivery
 	extends AnnouncementsDeliveryModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

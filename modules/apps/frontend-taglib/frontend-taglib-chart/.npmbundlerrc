@@ -24,5 +24,7 @@
 		"safer-buffer": [
 			"tests.js"
 		]
-    }
+    },
+	"output": "build/node/packageRunBuild/resources",
+	"preset": "liferay-npm-bundler-preset-standard"
 }

@@ -57,7 +57,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
 				address -> PostalAddressUtil.toPostalAddress(
-					address, contextAcceptLanguage.getPreferredLocale())));
+					contextAcceptLanguage.isAcceptAllLanguages(), address,
+					contextCompany.getCompanyId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Override
@@ -65,7 +67,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		throws Exception {
 
 		return PostalAddressUtil.toPostalAddress(
+			contextAcceptLanguage.isAcceptAllLanguages(),
 			_addressService.getAddress(postalAddressId),
+			contextCompany.getCompanyId(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
@@ -86,7 +90,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					user.getCompanyId(), Contact.class.getName(),
 					user.getContactId()),
 				address -> PostalAddressUtil.toPostalAddress(
-					address, contextAcceptLanguage.getPreferredLocale())));
+					contextAcceptLanguage.isAcceptAllLanguages(), address,
+					contextCompany.getCompanyId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

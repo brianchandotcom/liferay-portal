@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Polls Service
 Bundle-SymbolicName: com.liferay.polls.service
-Bundle-Version: 4.0.34
+Bundle-Version: 4.0.42
 Import-Package:\
 	com.liferay.polls.util.comparator,\
 	\

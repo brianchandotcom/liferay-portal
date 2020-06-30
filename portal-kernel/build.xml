@@ -16,65 +16,72 @@
 		/>
 	</path>
 
-	<target depends="replace-release-info-tokens" name="compile">
-		<if>
-			<equals arg1="${release.info.uptodate}" arg2="false" />
-			<then>
-				<copy
-					file="build/temp/ReleaseInfo.java.new"
-					overwrite="true"
-					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-					verbose="true"
-				/>
-			</then>
-		</if>
-
-		<if>
-			<istrue value="${build.portal.artifacts.enabled}" />
-			<then>
-				<condition property="compile.uptodate">
-					<and>
-						<uptodate
-							targetfile="classes/.touch"
-						>
-							<srcfiles dir="${basedir}" excludes="src/com/liferay/portal/kernel/util/ReleaseInfo.java" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-						</uptodate>
-						<equals arg1="${release.info.uptodate}" arg2="true" />
-					</and>
-				</condition>
-			</then>
-		</if>
+	<target depends="init-compile" name="compile" unless="${compile.uptodate}">
+		<antcall target="replace-release-info-tokens" />
 
 		<antcall target="build-common-java.compile" />
 
+		<copy
+			file="build/release_info/ReleaseInfo.java.original"
+			overwrite="true"
+			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+			verbose="true"
+		/>
+
+		<echo file="classes/.releaseinfo">${release.properties.files}</echo>
+	</target>
+
+	<target if="${build.portal.artifacts.enabled}" name="init-compile">
+		<fileset
+			dir="${project.dir}"
+			id="release.properties.file.set"
+			includes="release.properties,release.*.properties"
+		/>
+
+		<property name="release.properties.files" refid="release.properties.file.set" />
+
 		<if>
-			<equals arg1="${release.info.uptodate}" arg2="false" />
+			<available file="${basedir}/classes/.releaseinfo" />
 			<then>
-				<copy
-					file="build/temp/ReleaseInfo.java.original"
-					overwrite="true"
-					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-					verbose="true"
+				<loadfile
+					property="release.info.content"
+					srcFile="${basedir}/classes/.releaseinfo"
 				/>
 			</then>
 		</if>
+
+		<condition property="release.info.uptodate">
+			<and>
+				<uptodate
+					targetfile="classes/.releaseinfo"
+				>
+					<srcfiles dir="${project.dir}" includes="release.properties,release.*.properties" />
+				</uptodate>
+				<equals arg1="${release.properties.files}" arg2="${release.info.content}" />
+			</and>
+		</condition>
+
+		<condition property="compile.uptodate">
+			<and>
+				<uptodate
+					targetfile="classes/.touch"
+				>
+					<srcfiles dir="${basedir}" excludes="src/com/liferay/portal/kernel/util/ReleaseInfo.java" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				</uptodate>
+				<equals arg1="${release.info.uptodate}" arg2="true" />
+			</and>
+		</condition>
 	</target>
 
 	<target name="replace-release-info-tokens">
 		<copy
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.original"
-		/>
-
-		<copy
-			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.new"
+			tofile="build/release_info/ReleaseInfo.java.original"
 		/>
 
 		<replace
-			file="build/temp/ReleaseInfo.java.new"
+			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 		>
 			<replacefilter
 				token="@release.info.build@"
@@ -97,15 +104,5 @@
 				value="${release.info.version.display.name}"
 			/>
 		</replace>
-
-		<condition else="false" property="release.info.uptodate" value="true">
-			<filesmatch file1="build/temp/ReleaseInfo.java.old" file2="build/temp/ReleaseInfo.java.new" />
-		</condition>
-
-		<copy
-			file="build/temp/ReleaseInfo.java.new"
-			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.old"
-		/>
 	</target>
 </project>

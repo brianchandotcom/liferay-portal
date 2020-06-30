@@ -35,6 +35,26 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 			commerceInventoryBookedQuantityService;
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
+				getCommerceInventoryBookedQuantities(
+					long companyId, String sku, int start, int end)
+			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return _commerceInventoryBookedQuantityService.
+			getCommerceInventoryBookedQuantities(companyId, sku, start, end);
+	}
+
+	@Override
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String sku)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return _commerceInventoryBookedQuantityService.
+			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

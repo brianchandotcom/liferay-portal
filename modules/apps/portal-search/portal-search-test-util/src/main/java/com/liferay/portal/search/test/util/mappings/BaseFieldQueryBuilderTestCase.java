@@ -99,6 +99,28 @@ public abstract class BaseFieldQueryBuilderTestCase
 			});
 	}
 
+	protected void assertSearchCount(final String keywords, final int size)
+		throws Exception {
+
+		assertSearch(
+			indexingTestHelper -> {
+				FieldQueryBuilder fieldQueryBuilder = createFieldQueryBuilder();
+
+				Query query = fieldQueryBuilder.build(getField(), keywords);
+
+				setPreBooleanFilter(
+					new TermFilter(
+						Field.COMPANY_ID, String.valueOf(COMPANY_ID)),
+					query);
+
+				indexingTestHelper.setQuery(query);
+
+				long count = indexingTestHelper.searchCount();
+
+				Assert.assertEquals(keywords, size, count);
+			});
+	}
+
 	protected void assertSearchNoHits(final String keywords) throws Exception {
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,

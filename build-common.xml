@@ -161,6 +161,9 @@
 	<property name="doc.dir" value="${project.dir}/api" />
 	<property name="jacoco.agent.configuration" value="=destfile=${jacoco.dump.file},excludes=${jacoco.excludes},includes=${jacoco.includes},output=file,append=true" />
 
+	<var name="fork.mode" value="false" />
+	<var if:true="${jvm.debug}" name="fork.mode" value="true" />
+
 	<tempfile deleteonexit="true" destdir="${project.dir}" property="app.server.tmp.properties" suffix=".properties" />
 
 	<echoproperties destfile="${app.server.tmp.properties}" regex="app\.server\.${app.server.type}\..*" />
@@ -806,10 +809,11 @@ information.
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute default="true" name="forcedcacheenabled" />
-		<attribute default="${env.ANT_OPTS}" name="gradleopts" />
+		<attribute default="" name="gradlejvmargs" />
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setupbinariescache" />
+		<attribute default="true" name="stacktrace" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -832,6 +836,33 @@ information.
 						src="${build.binaries.gradle.url}"
 					/>
 				</then>
+			</if>
+
+			<local name="task.gradle.jvmargs" />
+
+			<if>
+				<not>
+					<equals arg1="@{gradlejvmargs}" arg2="" />
+				</not>
+				<then>
+					<property name="task.gradle.jvmargs" value="@{gradlejvmargs}" />
+				</then>
+				<elseif>
+					<isset property="env.JENKINS_HOME" />
+					<then>
+						<if>
+							<os family="windows" />
+							<then>
+								<antelope:stringutil property="task.gradle.jvmargs" string="${env.ANT_OPTS}">
+									<antelope:replace regex="&quot;" replacement="" />
+								</antelope:stringutil>
+							</then>
+							<else>
+								<property name="task.gradle.jvmargs" value="${env.ANT_OPTS}" />
+							</else>
+						</if>
+					</then>
+				</elseif>
 			</if>
 
 			<if>
@@ -858,23 +889,21 @@ information.
 
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 						<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
-						<arg value="--no-daemon" />
 						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
 						<arg value="--project-cache-dir=${project.dir}/.gradle" />
 						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-						<arg value="--stacktrace" />
+						<arg if:true="@{stacktrace}" value="--stacktrace" />
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 						<arg value="-Dliferay.home=${liferay.home}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+						<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 						<arg value="tasks" />
 						<arg value="--all" />
-						<env key="GRADLE_OPTS" value="@{gradleopts}" />
 						<redirector errorproperty="tasks.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
@@ -966,27 +995,32 @@ information.
 
 					<trycatch>
 						<try>
-							<echo message="Executing Gradle task: ${gradle.executable.task}" />
+							<if>
+								<not>
+									<equals arg1="${gradle.executable.task}" arg2="" />
+								</not>
+								<then>
+									<echo message="Executing Gradle task: ${gradle.executable.task}" />
+								</then>
+							</if>
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
-								<arg value="--no-daemon" />
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
 								<arg value="--project-cache-dir=${project.dir}/.gradle" />
 								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-								<arg value="--stacktrace" />
+								<arg if:true="@{stacktrace}" value="--stacktrace" />
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+								<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
-								<env key="GRADLE_OPTS" value="@{gradleopts}" />
 								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
@@ -1008,22 +1042,20 @@ information.
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 									<args />
 									<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
-									<arg value="--no-daemon" />
 									<arg if:true="${gradle.profile.enabled}" value="--profile" />
 									<arg if:set="env.JENKINS_HOME" value="--profile" />
 									<arg value="--project-cache-dir=${project.dir}/.gradle" />
 									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-									<arg value="--stacktrace" />
+									<arg if:true="@{stacktrace}" value="--stacktrace" />
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 									<arg value="-Dliferay.home=${liferay.home}" />
-									<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+									<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
-									<env key="GRADLE_OPTS" value="@{gradleopts}" />
 									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 								</exec>
 							</echoxml>
@@ -1057,6 +1089,35 @@ information.
 
 											<echo message="${task.output}" />
 										</then>
+										<elseif>
+											<and>
+												<equals arg1="${systemProp.gradle.build.scan.enabled}" arg2="true" />
+												<equals arg1="${systemProp.gradle.build.scan.server.url}" arg2="" />
+											</and>
+											<then>
+												<local name="task.output" />
+
+												<propertycopy from="${redirector.output.property}" name="task.output" />
+
+												<loadfile
+													property="build.scan.url.output"
+												>
+													<filterchain>
+														<linecontainsregexp>
+															<regexp pattern="^https://gradle.com/s/.*" />
+														</linecontainsregexp>
+													</filterchain>
+													<propertyresource name="task.output" />
+												</loadfile>
+
+												<if>
+													<isset property="build.scan.url.output" />
+													<then>
+														<echo>Publishing build scan: ${build.scan.url.output}.</echo>
+													</then>
+												</if>
+											</then>
+										</elseif>
 									</if>
 								</then>
 							</if>
@@ -1066,6 +1127,29 @@ information.
 				<else>
 					<echo>Skipped unavailable task: @{task}.</echo>
 				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="gradle-stop-daemon">
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="${gradle.stop.daemon.enabled}" arg2="true" />
+					<equals arg1="${org.gradle.daemon}" arg2="true" />
+					<available file="${project.dir}/.gradle/wrapper" type="dir" />
+				</and>
+				<then>
+					<local name="gradle.execute.silent" />
+
+					<property name="gradle.execute.silent" value="false" />
+
+					<echo message="Stopping all running Gradle Daemon processes." />
+
+					<gradle-execute dir="." forcedcacheenabled="false" setupbinariescache="false" task="">
+						<arg value="--stop" />
+					</gradle-execute>
+				</then>
 			</if>
 		</sequential>
 	</macrodef>
@@ -1528,6 +1612,32 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 								<arg value="artifact:ignore ${artifact.name} ${artifact.version} releng" />
 							</exec>
 						</then>
+					</if>
+
+					<if>
+						<os family="windows" />
+						<then>
+							<exec executable="cmd" failonerror="true">
+								<arg value="/c" />
+								<arg value="ant.bat" />
+								<arg value="deploy" />
+							</exec>
+
+							<exec executable="cmd" failonerror="true">
+								<arg value="/c" />
+								<arg value="ant.bat" />
+								<arg value="install-portal-snapshot" />
+							</exec>
+						</then>
+						<else>
+							<exec executable="ant" failonerror="true">
+								<arg value="deploy" />
+							</exec>
+
+							<exec executable="ant" failonerror="true">
+								<arg value="install-portal-snapshot" />
+							</exec>
+						</else>
 					</if>
 
 					<propertyfile file="../.gradle/gradle.properties">
@@ -2046,6 +2156,7 @@ rerun your task.
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />
 					<propertyref name="sdk.dir" />
+					<propertyref name="service.builder.incubation.features" />
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="build.compat.version.com.liferay.portal." />

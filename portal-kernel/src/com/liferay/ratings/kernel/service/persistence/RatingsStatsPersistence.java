@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RatingsStatsUtil} to access the ratings stats persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

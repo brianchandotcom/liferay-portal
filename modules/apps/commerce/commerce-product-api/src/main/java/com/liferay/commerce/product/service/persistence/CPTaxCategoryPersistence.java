@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPTaxCategoryPersistence
 	extends BasePersistence<CPTaxCategory> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPTaxCategoryUtil} to access the cp tax category persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

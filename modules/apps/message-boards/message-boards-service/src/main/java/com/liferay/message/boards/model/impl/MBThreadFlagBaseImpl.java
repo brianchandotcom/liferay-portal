@@ -32,7 +32,7 @@ import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
 public abstract class MBThreadFlagBaseImpl
 	extends MBThreadFlagModelImpl implements MBThreadFlag {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards thread flag model instance should use the <code>MBThreadFlag</code> interface instead.

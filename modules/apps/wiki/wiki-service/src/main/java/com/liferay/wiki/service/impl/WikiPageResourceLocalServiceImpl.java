@@ -38,9 +38,7 @@ public class WikiPageResourceLocalServiceImpl
 		pageResource.setNodeId(nodeId);
 		pageResource.setTitle(title);
 
-		wikiPageResourcePersistence.update(pageResource);
-
-		return pageResource;
+		return wikiPageResourcePersistence.update(pageResource);
 	}
 
 	/**

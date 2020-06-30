@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface SyncDLFileVersionDiff
 	extends PersistedModel, SyncDLFileVersionDiffModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

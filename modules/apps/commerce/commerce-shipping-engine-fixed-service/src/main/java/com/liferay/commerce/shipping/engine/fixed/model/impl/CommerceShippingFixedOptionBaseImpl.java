@@ -33,7 +33,7 @@ public abstract class CommerceShippingFixedOptionBaseImpl
 	extends CommerceShippingFixedOptionModelImpl
 	implements CommerceShippingFixedOption {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce shipping fixed option model instance should use the <code>CommerceShippingFixedOption</code> interface instead.

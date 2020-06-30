@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServ
 public abstract class KaleoTaskInstanceTokenBaseImpl
 	extends KaleoTaskInstanceTokenModelImpl implements KaleoTaskInstanceToken {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo task instance token model instance should use the <code>KaleoTaskInstanceToken</code> interface instead.

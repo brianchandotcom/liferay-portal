@@ -483,11 +483,6 @@ public class FragmentEntryLinkWrapper
 		return _fragmentEntryLink.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a fragment entry link model instance should use the <code>FragmentEntryLink</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_fragmentEntryLink.persist();

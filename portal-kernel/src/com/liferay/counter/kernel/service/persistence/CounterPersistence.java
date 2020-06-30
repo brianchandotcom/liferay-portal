@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface CounterPersistence extends BasePersistence<Counter> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CounterUtil} to access the counter persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

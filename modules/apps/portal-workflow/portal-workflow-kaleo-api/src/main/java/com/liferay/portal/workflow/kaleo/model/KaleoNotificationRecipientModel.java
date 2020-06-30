@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoNotificationRecipientModel
 	extends BaseModel<KaleoNotificationRecipient>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo notification recipient model instance should use the {@link KaleoNotificationRecipient} interface instead.

@@ -92,6 +92,18 @@ public class CommerceShipmentItemLocalServiceWrapper
 			commerceShipmentItem);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			deleteCommerceShipmentItem(
+				com.liferay.commerce.model.CommerceShipmentItem
+					commerceShipmentItem,
+				boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.deleteCommerceShipmentItem(
+			commerceShipmentItem, restoreStockQuantity);
+	}
+
 	/**
 	 * Deletes the commerce shipment item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -109,9 +121,21 @@ public class CommerceShipmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceShipmentItems(long commerceShipment) {
+	public void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceShipmentItemLocalService.deleteCommerceShipmentItem(
+			commerceShipmentItemId, restoreStockQuantity);
+	}
+
+	@Override
+	public void deleteCommerceShipmentItems(
+			long commerceShipmentId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(
-			commerceShipment);
+			commerceShipmentId, restoreStockQuantity);
 	}
 
 	/**
@@ -227,6 +251,17 @@ public class CommerceShipmentItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+		fetchCommerceShipmentItem(
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceInventoryWarehouseId) {
+
+		return _commerceShipmentItemLocalService.fetchCommerceShipmentItem(
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -268,6 +303,10 @@ public class CommerceShipmentItemLocalServiceWrapper
 			start, end);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
 		getCommerceShipmentItems(long commerceOrderItemId) {
@@ -288,6 +327,29 @@ public class CommerceShipmentItemLocalServiceWrapper
 			commerceShipmentId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
+		getCommerceShipmentItems(
+			long commerceShipmentId, long commerceOrderItemId, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceShipmentItem>
+					orderByComparator) {
+
+		return _commerceShipmentItemLocalService.getCommerceShipmentItems(
+			commerceShipmentId, commerceOrderItemId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
+		getCommerceShipmentItemsByCommerceOrderItemId(
+			long commerceOrderItemId) {
+
+		return _commerceShipmentItemLocalService.
+			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
+	}
+
 	/**
 	 * Returns the number of commerce shipment items.
 	 *
@@ -303,6 +365,24 @@ public class CommerceShipmentItemLocalServiceWrapper
 	public int getCommerceShipmentItemsCount(long commerceShipmentId) {
 		return _commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
 			commerceShipmentId);
+	}
+
+	@Override
+	public int getCommerceShipmentItemsCountByCommerceOrderItemId(
+		long commerceOrderItemId) {
+
+		return _commerceShipmentItemLocalService.
+			getCommerceShipmentItemsCountByCommerceOrderItemId(
+				commerceOrderItemId);
+	}
+
+	@Override
+	public int getCommerceShipmentOrderItemsQuantity(
+		long commerceShipmentId, long commerceOrderItemId) {
+
+		return _commerceShipmentItemLocalService.
+			getCommerceShipmentOrderItemsQuantity(
+				commerceShipmentId, commerceOrderItemId);
 	}
 
 	@Override
@@ -323,6 +403,9 @@ public class CommerceShipmentItemLocalServiceWrapper
 		return _commerceShipmentItemLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -356,6 +439,17 @@ public class CommerceShipmentItemLocalServiceWrapper
 
 		return _commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			updateCommerceShipmentItem(
+				long commerceShipmentItemId, long commerceInventoryWarehouseId,
+				int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.updateCommerceShipmentItem(
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	@Override

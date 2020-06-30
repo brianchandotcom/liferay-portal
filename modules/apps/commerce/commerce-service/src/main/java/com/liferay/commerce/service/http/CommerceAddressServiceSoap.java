@@ -86,10 +86,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -112,10 +112,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -138,10 +138,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -151,10 +151,10 @@ public class CommerceAddressServiceSoap {
 		try {
 			CommerceAddressServiceUtil.deleteCommerceAddress(commerceAddressId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -171,10 +171,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -190,10 +190,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -211,10 +211,51 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap[]
+			getBillingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceAddress>
+				returnValue =
+					CommerceAddressServiceUtil.getBillingCommerceAddresses(
+						companyId, className, classPK, keywords, start, end,
+						sort);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getBillingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceAddressServiceUtil.getBillingCommerceAddressesCount(
+					companyId, className, classPK, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -230,10 +271,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -253,10 +294,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -281,10 +322,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -304,10 +345,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -325,10 +366,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -351,10 +392,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -373,10 +414,10 @@ public class CommerceAddressServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -390,10 +431,10 @@ public class CommerceAddressServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -408,10 +449,10 @@ public class CommerceAddressServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -429,10 +470,51 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap[]
+			getShippingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceAddress>
+				returnValue =
+					CommerceAddressServiceUtil.getShippingCommerceAddresses(
+						companyId, className, classPK, keywords, start, end,
+						sort);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getShippingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceAddressServiceUtil.getShippingCommerceAddressesCount(
+					companyId, className, classPK, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -461,10 +543,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -487,10 +569,10 @@ public class CommerceAddressServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

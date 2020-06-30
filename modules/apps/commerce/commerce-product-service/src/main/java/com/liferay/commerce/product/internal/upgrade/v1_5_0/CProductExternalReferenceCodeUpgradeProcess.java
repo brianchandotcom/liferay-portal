@@ -14,26 +14,22 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_5_0;
 
+import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CProductImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CProductExternalReferenceCodeUpgradeProcess
-	extends UpgradeProcess {
+	extends BaseCommerceProductServiceUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn(CProductImpl.TABLE_NAME, "externalReferenceCode")) {
-			_addColumn(
+			addColumn(
 				CProductImpl.class, CProductModelImpl.TABLE_NAME,
 				"externalReferenceCode", "VARCHAR(75)");
 		}
@@ -49,62 +45,8 @@ public class CProductExternalReferenceCodeUpgradeProcess
 
 			runSQLTemplateString(template, false, false);
 
-			_dropColumn(CPDefinitionImpl.TABLE_NAME, "externalReferenceCode");
+			dropColumn(CPDefinitionImpl.TABLE_NAME, "externalReferenceCode");
 		}
 	}
-
-	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
-	}
-
-	private void _dropColumn(String tableName, String columnName)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Dropping column %s from table %s", columnName, tableName));
-		}
-
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CProductExternalReferenceCodeUpgradeProcess.class);
 
 }

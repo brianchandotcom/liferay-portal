@@ -62,13 +62,14 @@ public class PortalCacheConfiguration {
 			_portalCacheListenerPropertiesSet = new HashSet<>(
 				portalCacheListenerPropertiesSet);
 		}
-
-		_portalCacheBootstrapLoaderProperties =
-			portalCacheBootstrapLoaderProperties;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public Properties getPortalCacheBootstrapLoaderProperties() {
-		return _portalCacheBootstrapLoaderProperties;
+		return null;
 	}
 
 	public Set<Properties> getPortalCacheListenerPropertiesSet() {
@@ -83,18 +84,17 @@ public class PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new PortalCacheConfiguration(
-			portalCacheName, _portalCacheListenerPropertiesSet,
-			_portalCacheBootstrapLoaderProperties);
+			portalCacheName, _portalCacheListenerPropertiesSet, null);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPortalCacheBootstrapLoaderProperties(
 		Properties portalCacheBootstrapLoaderProperties) {
-
-		_portalCacheBootstrapLoaderProperties =
-			portalCacheBootstrapLoaderProperties;
 	}
 
-	private Properties _portalCacheBootstrapLoaderProperties;
 	private final Set<Properties> _portalCacheListenerPropertiesSet;
 	private final String _portalCacheName;
 

@@ -33,11 +33,6 @@ public class JournalFolderLocalServiceWrapper
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalFolderLocalServiceUtil} to access the journal folder local service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.journal.model.JournalFolder addFolder(
 			long userId, long groupId, long parentFolderId, String name,
@@ -577,6 +572,9 @@ public class JournalFolderLocalServiceWrapper
 			folderId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

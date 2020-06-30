@@ -32,69 +32,26 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CPDefinitionInventoryServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPDefinitionInventoryServiceUtil} to access the cp definition inventory remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	public static com.liferay.commerce.model.CPDefinitionInventory
 			addCPDefinitionInventory(
-				long cpDefinitionId, String cpDefinitionInventoryEngine,
-				String lowStockActivity, boolean displayAvailability,
-				boolean displayStockQuantity, int minStockQuantity,
-				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-				String allowedOrderQuantities, int multipleOrderQuantity)
+				long userId, long cpDefinitionId,
+				String cpDefinitionInventoryEngine, String lowStockActivity,
+				boolean displayAvailability, boolean displayStockQuantity,
+				int minStockQuantity, boolean backOrders, int minOrderQuantity,
+				int maxOrderQuantity, String allowedOrderQuantities,
+				int multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCPDefinitionInventory(
-			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minOrderQuantity, maxOrderQuantity,
+			userId, cpDefinitionId, cpDefinitionInventoryEngine,
+			lowStockActivity, displayAvailability, displayStockQuantity,
+			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
 			allowedOrderQuantities, multipleOrderQuantity);
-	}
-
-	/**
-	 * Adds new CP definition inventory.
-	 *
-	 * @param cpDefinitionId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 #addCPDefinitionInventory(long, String, String, boolean,
-	 boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			addCPDefinitionInventory(
-				long cpDefinitionId, String cpDefinitionInventoryEngine,
-				String lowStockActivity, boolean displayAvailability,
-				boolean displayStockQuantity, int minStockQuantity,
-				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-				String allowedOrderQuantities, int multipleOrderQuantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addCPDefinitionInventory(
-			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity, serviceContext);
 	}
 
 	public static void deleteCPDefinitionInventory(long cpDefinitionInventoryId)
@@ -120,6 +77,10 @@ public class CPDefinitionInventoryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CPDefinitionInventory
 			updateCPDefinitionInventory(
 				long groupId, long cpDefinitionInventoryId,
@@ -137,27 +98,6 @@ public class CPDefinitionInventoryServiceUtil {
 			allowedOrderQuantities, multipleOrderQuantity);
 	}
 
-	/**
-	 * Updates CP definition inventory
-	 *
-	 * @param cpDefinitionInventoryId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 #updateCPDefinitionInventory(long, long, String, String,
-	 boolean, boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
 	public static com.liferay.commerce.model.CPDefinitionInventory
 			updateCPDefinitionInventory(
 				long cpDefinitionInventoryId,
@@ -165,15 +105,14 @@ public class CPDefinitionInventoryServiceUtil {
 				boolean displayAvailability, boolean displayStockQuantity,
 				int minStockQuantity, boolean backOrders, int minOrderQuantity,
 				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				int multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCPDefinitionInventory(
 			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
 			lowStockActivity, displayAvailability, displayStockQuantity,
 			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity, serviceContext);
+			allowedOrderQuantities, multipleOrderQuantity);
 	}
 
 	public static CPDefinitionInventoryService getService() {

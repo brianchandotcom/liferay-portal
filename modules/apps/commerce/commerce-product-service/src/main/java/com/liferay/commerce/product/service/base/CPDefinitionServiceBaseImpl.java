@@ -30,6 +30,8 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificatio
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
+import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder;
+import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
@@ -74,7 +76,7 @@ public abstract class CPDefinitionServiceBaseImpl
 	extends BaseServiceImpl
 	implements CPDefinitionService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionServiceUtil</code>.
@@ -954,6 +956,100 @@ public abstract class CPDefinitionServiceBaseImpl
 	 */
 	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
 		this.cpInstanceFinder = cpInstanceFinder;
+	}
+
+	/**
+	 * Returns the cp instance option value rel local service.
+	 *
+	 * @return the cp instance option value rel local service
+	 */
+	public
+		com.liferay.commerce.product.service.
+			CPInstanceOptionValueRelLocalService
+				getCPInstanceOptionValueRelLocalService() {
+
+		return cpInstanceOptionValueRelLocalService;
+	}
+
+	/**
+	 * Sets the cp instance option value rel local service.
+	 *
+	 * @param cpInstanceOptionValueRelLocalService the cp instance option value rel local service
+	 */
+	public void setCPInstanceOptionValueRelLocalService(
+		com.liferay.commerce.product.service.
+			CPInstanceOptionValueRelLocalService
+				cpInstanceOptionValueRelLocalService) {
+
+		this.cpInstanceOptionValueRelLocalService =
+			cpInstanceOptionValueRelLocalService;
+	}
+
+	/**
+	 * Returns the cp instance option value rel remote service.
+	 *
+	 * @return the cp instance option value rel remote service
+	 */
+	public com.liferay.commerce.product.service.CPInstanceOptionValueRelService
+		getCPInstanceOptionValueRelService() {
+
+		return cpInstanceOptionValueRelService;
+	}
+
+	/**
+	 * Sets the cp instance option value rel remote service.
+	 *
+	 * @param cpInstanceOptionValueRelService the cp instance option value rel remote service
+	 */
+	public void setCPInstanceOptionValueRelService(
+		com.liferay.commerce.product.service.CPInstanceOptionValueRelService
+			cpInstanceOptionValueRelService) {
+
+		this.cpInstanceOptionValueRelService = cpInstanceOptionValueRelService;
+	}
+
+	/**
+	 * Returns the cp instance option value rel persistence.
+	 *
+	 * @return the cp instance option value rel persistence
+	 */
+	public CPInstanceOptionValueRelPersistence
+		getCPInstanceOptionValueRelPersistence() {
+
+		return cpInstanceOptionValueRelPersistence;
+	}
+
+	/**
+	 * Sets the cp instance option value rel persistence.
+	 *
+	 * @param cpInstanceOptionValueRelPersistence the cp instance option value rel persistence
+	 */
+	public void setCPInstanceOptionValueRelPersistence(
+		CPInstanceOptionValueRelPersistence
+			cpInstanceOptionValueRelPersistence) {
+
+		this.cpInstanceOptionValueRelPersistence =
+			cpInstanceOptionValueRelPersistence;
+	}
+
+	/**
+	 * Returns the cp instance option value rel finder.
+	 *
+	 * @return the cp instance option value rel finder
+	 */
+	public CPInstanceOptionValueRelFinder getCPInstanceOptionValueRelFinder() {
+		return cpInstanceOptionValueRelFinder;
+	}
+
+	/**
+	 * Sets the cp instance option value rel finder.
+	 *
+	 * @param cpInstanceOptionValueRelFinder the cp instance option value rel finder
+	 */
+	public void setCPInstanceOptionValueRelFinder(
+		CPInstanceOptionValueRelFinder cpInstanceOptionValueRelFinder) {
+
+		this.cpInstanceOptionValueRelFinder = cpInstanceOptionValueRelFinder;
 	}
 
 	/**
@@ -1870,8 +1966,8 @@ public abstract class CPDefinitionServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -2069,6 +2165,28 @@ public abstract class CPDefinitionServiceBaseImpl
 
 	@BeanReference(type = CPInstanceFinder.class)
 	protected CPInstanceFinder cpInstanceFinder;
+
+	@BeanReference(
+		type = com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService.class
+	)
+	protected
+		com.liferay.commerce.product.service.
+			CPInstanceOptionValueRelLocalService
+				cpInstanceOptionValueRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.product.service.CPInstanceOptionValueRelService.class
+	)
+	protected
+		com.liferay.commerce.product.service.CPInstanceOptionValueRelService
+			cpInstanceOptionValueRelService;
+
+	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	protected CPInstanceOptionValueRelPersistence
+		cpInstanceOptionValueRelPersistence;
+
+	@BeanReference(type = CPInstanceOptionValueRelFinder.class)
+	protected CPInstanceOptionValueRelFinder cpInstanceOptionValueRelFinder;
 
 	@BeanReference(
 		type = com.liferay.commerce.product.service.CPMeasurementUnitLocalService.class

@@ -49,7 +49,7 @@ public interface CommerceNotificationTemplateModel
 	extends BaseModel<CommerceNotificationTemplate>, GroupedModel,
 			LocalizedModel, ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce notification template model instance should use the {@link CommerceNotificationTemplate} interface instead.

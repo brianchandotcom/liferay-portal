@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommercePendingOrderClayTable.NAME,
-		"commerce.data.provider.key=" + CommercePendingOrderItemClayTable.NAME,
-		"commerce.data.provider.key=" + CommercePlacedOrderClayTable.NAME,
-		"commerce.data.provider.key=" + CommercePlacedOrderItemClayTable.NAME
+		"commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
+		"commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
+		"commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
+		"commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS
 	},
 	service = FilterFactory.class
 )

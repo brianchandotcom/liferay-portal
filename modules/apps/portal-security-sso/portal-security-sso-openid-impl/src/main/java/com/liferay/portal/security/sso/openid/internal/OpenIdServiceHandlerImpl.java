@@ -458,11 +458,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			screenName = screenName.substring(Http.HTTPS_WITH_SLASH.length());
 		}
 
-		screenName = StringUtil.replace(
+		return StringUtil.replace(
 			screenName, new char[] {CharPool.SLASH, CharPool.UNDERLINE},
 			new char[] {CharPool.PERIOD, CharPool.PERIOD});
-
-		return screenName;
 	}
 
 	protected String normalize(String identity) {

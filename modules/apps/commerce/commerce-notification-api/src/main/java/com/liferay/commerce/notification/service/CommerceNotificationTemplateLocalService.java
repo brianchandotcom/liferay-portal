@@ -62,7 +62,7 @@ import java.util.Map;
 public interface CommerceNotificationTemplateLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateLocalServiceUtil} to access the commerce notification template local service. Add custom service methods to <code>com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -78,6 +78,18 @@ public interface CommerceNotificationTemplateLocalService
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
 		CommerceNotificationTemplate commerceNotificationTemplate);
 
+	public CommerceNotificationTemplate addCommerceNotificationTemplate(
+			long userId, long groupId, String name, String description,
+			String from, Map<Locale, String> fromNameMap, String to, String cc,
+			String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
 			String name, String description, String from,
 			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
@@ -327,6 +339,9 @@ public interface CommerceNotificationTemplateLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

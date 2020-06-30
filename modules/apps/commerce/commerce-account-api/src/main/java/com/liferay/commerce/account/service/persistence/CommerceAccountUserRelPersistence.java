@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceAccountUserRelPersistence
 	extends BasePersistence<CommerceAccountUserRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountUserRelUtil} to access the commerce account user rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

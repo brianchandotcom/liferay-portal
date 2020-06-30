@@ -1180,11 +1180,6 @@ public class LayoutRevisionWrapper
 		return _layoutRevision.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a layout revision model instance should use the <code>LayoutRevision</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_layoutRevision.persist();

@@ -104,10 +104,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 					keyInput.value = slugify(nameInput.value);
 				};
 
-				nameInput.addEventListener(
-					'input',
-					debounce(handleOnNameInput, 200)
-				);
+				nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 			</aui:script>
 		</c:if>
 	</div>

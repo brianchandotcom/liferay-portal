@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMStructureLayoutPersistence
 	extends BasePersistence<DDMStructureLayout> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureLayoutUtil} to access the ddm structure layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

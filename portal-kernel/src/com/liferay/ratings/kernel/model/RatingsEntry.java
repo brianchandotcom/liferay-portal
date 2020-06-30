@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface RatingsEntry extends PersistedModel, RatingsEntryModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.ratings.model.impl.RatingsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

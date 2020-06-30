@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-gogo-shell" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="enable-access-to-gogo-shell-command">
+		<antcall inheritAll="false" target="prepare-log4j-ext-xml" />
+
+		<antcall inheritAll="false" target="prepare-portal-ext-properties" />
+
+		<antcall inheritall="false" target="start-app-server" />
+
+		<exec executable="/bin/bash" outputproperty="gogo.shell.content.out">
+			<redirector inputstring="telnet 127.0.0.1 11312" />
+		</exec>
+
+		<echo message="${gogo.shell.content.out}" />
+
+		<if>
+			<contains string="${gogo.shell.content.out}" substring="Connected to 127.0.0.1." />
+			<then>
+				<echo message="PASSED. 'Connected to 127.0.0.1.' is present." />
+			</then>
+			<else>
+				<fail message="FAILED. 'Connected to 127.0.0.1.' is not present." />
+			</else>
+		</if>
+	</target>
+
+	<target name="no-default-access-to-gogo-shell-command">
+		<delete file="${app.server.tomcat.classes.portal.dir}/portal-ext.properties" />
+
+		<antcall inheritall="false" target="start-app-server" />
+
+		<exec executable="/bin/bash" outputproperty="gogo.shell.content.out">
+			<redirector inputstring="telnet 127.0.0.1 11311" />
+		</exec>
+
+		<echo message="${gogo.shell.content.out}" />
+
+		<if>
+			<contains string="${gogo.shell.content.out}" substring="telnet: connect to address 127.0.0.1: Connection refused" />
+			<then>
+				<echo message="PASSED. 'telnet: connect to address 127.0.0.1: Connection refused' is present." />
+			</then>
+			<else>
+				<fail message="FAILED. 'telnet: connect to address 127.0.0.1: Connection refused' is not present." />
+			</else>
+		</if>
+	</target>
+</project>

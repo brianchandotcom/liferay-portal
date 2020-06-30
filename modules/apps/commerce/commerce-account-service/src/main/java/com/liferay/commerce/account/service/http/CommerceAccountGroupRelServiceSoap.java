@@ -78,10 +78,25 @@ public class CommerceAccountGroupRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountGroupRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCommerceAccountGroupRel(
+			long commerceAccountGroupRelId)
+		throws RemoteException {
+
+		try {
+			CommerceAccountGroupRelServiceUtil.deleteCommerceAccountGroupRel(
+				commerceAccountGroupRelId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -93,10 +108,30 @@ public class CommerceAccountGroupRelServiceSoap {
 			CommerceAccountGroupRelServiceUtil.deleteCommerceAccountGroupRels(
 				className, classPK);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.account.model.CommerceAccountGroupRelSoap
+			getCommerceAccountGroupRel(long commerceAccountGroupRelId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.account.model.CommerceAccountGroupRel
+				returnValue =
+					CommerceAccountGroupRelServiceUtil.
+						getCommerceAccountGroupRel(commerceAccountGroupRelId);
+
+			return com.liferay.commerce.account.model.
+				CommerceAccountGroupRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -121,10 +156,10 @@ public class CommerceAccountGroupRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -149,10 +184,10 @@ public class CommerceAccountGroupRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountGroupRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -167,10 +202,10 @@ public class CommerceAccountGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -185,10 +220,10 @@ public class CommerceAccountGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

@@ -345,6 +345,7 @@ definition {
 
 	@priority = "5"
 	test EditFolder {
+		property osgi.app.includes = "bookmarks";
 		property portal.acceptance = "true";
 
 		Navigator.openURL();

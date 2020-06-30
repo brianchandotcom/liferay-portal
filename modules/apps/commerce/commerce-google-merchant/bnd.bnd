@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Commerce Google Merchant
+Bundle-SymbolicName: com.liferay.commerce.google.merchant
+Bundle-Version: 1.0.6
+Import-Package:\
+	!com.mchange.v2.c3p0.*,\
+	\
+	!javax.ejb.*,\
+	\
+	!javax.jms.*,\
+	\
+	!javax.mail.*,\
+	\
+	!javax.transaction.*,\
+	\
+	*

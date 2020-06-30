@@ -73,10 +73,12 @@ public class CProductLocalServiceWrapper
 	 *
 	 * @param cProduct the c product
 	 * @return the c product that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.product.model.CProduct deleteCProduct(
-		com.liferay.commerce.product.model.CProduct cProduct) {
+			com.liferay.commerce.product.model.CProduct cProduct)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cProductLocalService.deleteCProduct(cProduct);
 	}
@@ -374,6 +376,9 @@ public class CProductLocalServiceWrapper
 		return _cProductLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -400,6 +405,16 @@ public class CProductLocalServiceWrapper
 		com.liferay.commerce.product.model.CProduct cProduct) {
 
 		return _cProductLocalService.updateCProduct(cProduct);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CProduct
+			updateCProductExternalReferenceCode(
+				long cProductId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cProductLocalService.updateCProductExternalReferenceCode(
+			cProductId, externalReferenceCode);
 	}
 
 	@Override

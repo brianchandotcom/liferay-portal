@@ -115,30 +115,44 @@ if (assetVocabulary != null) {
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	A.one('#<portlet:namespace />submitButton').on(
-		'click',
-		function() {
-			if (A.one('#<portlet:namespace />preferencesUseRootCategory').attr('checked')) {
-				var preferencesRootAssetCategoryId = A.one('#<portlet:namespace />preferencesRootAssetCategoryId');
-				var assetCategoriesSelectorCategoryId = A.one('#<portlet:namespace />assetCategoriesSelectorCategoryId');
+	A.one('#<portlet:namespace />submitButton').on('click', function() {
+		if (
+			A.one('#<portlet:namespace />preferencesUseRootCategory').attr(
+				'checked'
+			)
+		) {
+			var preferencesRootAssetCategoryId = A.one(
+				'#<portlet:namespace />preferencesRootAssetCategoryId'
+			);
+			var assetCategoriesSelectorCategoryId = A.one(
+				'#<portlet:namespace />assetCategoriesSelectorCategoryId'
+			);
 
-				preferencesRootAssetCategoryId.val(assetCategoriesSelectorCategoryId.val());
-			}
-
-			submitForm(A.one('#<portlet:namespace />fm'));
+			preferencesRootAssetCategoryId.val(
+				assetCategoriesSelectorCategoryId.val()
+			);
 		}
-	);
+
+		submitForm(A.one('#<portlet:namespace />fm'));
+	});
 
 	A.one('#<portlet:namespace />preferencesUseRootCategory').on(
 		'change',
 		function() {
 			if (this.attr('checked')) {
-				A.one('#<portlet:namespace />assetVocabularyContainer').addClass('hide');
-				A.one('#<portlet:namespace />rootAssetCategoryContainer').removeClass('hide');
-			}
-			else {
-				A.one('#<portlet:namespace />rootAssetCategoryContainer').addClass('hide');
-				A.one('#<portlet:namespace />assetVocabularyContainer').removeClass('hide');
+				A.one('#<portlet:namespace />assetVocabularyContainer').addClass(
+					'hide'
+				);
+				A.one(
+					'#<portlet:namespace />rootAssetCategoryContainer'
+				).removeClass('hide');
+			} else {
+				A.one('#<portlet:namespace />rootAssetCategoryContainer').addClass(
+					'hide'
+				);
+				A.one('#<portlet:namespace />assetVocabularyContainer').removeClass(
+					'hide'
+				);
 			}
 		}
 	);
@@ -147,10 +161,13 @@ if (assetVocabulary != null) {
 		'change',
 		function() {
 			if (this.attr('checked')) {
-				A.one('#<portlet:namespace />rootAssetCategoryIdInputContainer').addClass('hide');
-			}
-			else {
-				A.one('#<portlet:namespace />rootAssetCategoryIdInputContainer').removeClass('hide');
+				A.one(
+					'#<portlet:namespace />rootAssetCategoryIdInputContainer'
+				).addClass('hide');
+			} else {
+				A.one(
+					'#<portlet:namespace />rootAssetCategoryIdInputContainer'
+				).removeClass('hide');
 			}
 		}
 	);

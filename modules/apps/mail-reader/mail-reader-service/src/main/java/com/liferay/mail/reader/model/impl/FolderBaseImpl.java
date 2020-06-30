@@ -31,7 +31,7 @@ import com.liferay.mail.reader.service.FolderLocalServiceUtil;
  */
 public abstract class FolderBaseImpl extends FolderModelImpl implements Folder {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a folder model instance should use the <code>Folder</code> interface instead.

@@ -32,11 +32,6 @@ public class MBCategoryLocalServiceWrapper
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link MBCategoryLocalServiceUtil} to access the message boards category local service. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.message.boards.model.MBCategory addCategory(
 			long userId, long parentCategoryId, String name, String description,
@@ -636,6 +631,9 @@ public class MBCategoryLocalServiceWrapper
 		return _mbCategoryLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

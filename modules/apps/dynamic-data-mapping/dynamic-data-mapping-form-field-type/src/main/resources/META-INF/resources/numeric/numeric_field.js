@@ -3,18 +3,6 @@ AUI.add(
 	function(A) {
 		var CSS_SETTINGS_SIDEBAR = A.getClassName('liferay', 'ddm', 'form', 'builder', 'field', 'settings', 'sidebar', 'content');
 
-		new A.TooltipDelegate(
-			{
-				cssClass: 'clay-tooltip',
-				opacity: 1,
-				position: 'right',
-				trigger: '.liferay-ddm-form-field-numeric .trigger-tooltip',
-				triggerHideEvent: ['blur', 'mouseleave'],
-				triggerShowEvent: ['focus', 'mouseover'],
-				visible: false
-			}
-		);
-
 		var NumericField = A.Component.create(
 			{
 				ATTRS: {
@@ -162,6 +150,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-tooltip', 'liferay-ddm-form-renderer-field']
+		requires: ['aui-autosize-deprecated', 'liferay-ddm-form-renderer-field']
 	}
 );

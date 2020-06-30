@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 public abstract class DDMFormInstanceRecordBaseImpl
 	extends DDMFormInstanceRecordModelImpl implements DDMFormInstanceRecord {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm form instance record model instance should use the <code>DDMFormInstanceRecord</code> interface instead.

@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -48,6 +46,7 @@ import java.math.RoundingMode;
 
 import java.net.URLEncoder;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -58,6 +57,7 @@ import net.authorize.api.contract.v1.ArrayOfSetting;
 import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
 import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
+import net.authorize.api.contract.v1.MessagesType;
 import net.authorize.api.contract.v1.SettingType;
 import net.authorize.api.contract.v1.TransactionRequestType;
 import net.authorize.api.contract.v1.TransactionTypeEnum;
@@ -160,12 +160,8 @@ public class AuthorizeNetCommercePaymentMethod
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			authorizeNetCommercePaymentRequest.getCommerceOrderId());
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		AuthorizeNetGroupServiceConfiguration configuration = _getConfiguration(
-			commerceChannel.getSiteGroupId());
+			commerceOrder.getGroupId());
 
 		Environment environment = Environment.valueOf(
 			StringUtil.toUpperCase(configuration.environment()));
@@ -193,8 +189,7 @@ public class AuthorizeNetCommercePaymentMethod
 		ArrayOfSetting arrayOfSetting = _getArrayOfSetting(
 			commerceOrder.getGroupId(),
 			authorizeNetCommercePaymentRequest.getCancelUrl(),
-			authorizeNetCommercePaymentRequest.getReturnUrl(),
-			authorizeNetCommercePaymentRequest.getLocale());
+			authorizeNetCommercePaymentRequest.getReturnUrl());
 
 		getHostedPaymentPageRequest.setHostedPaymentSettings(arrayOfSetting);
 
@@ -225,9 +220,20 @@ public class AuthorizeNetCommercePaymentMethod
 				URLCodec.encodeURL(redirectUrl), StringPool.AMPERSAND, "token=",
 				URLEncoder.encode(token, "UTF-8"));
 
+			List<String> resultMessages = new ArrayList<>();
+
+			MessagesType responseMessages = response.getMessages();
+
+			List<MessagesType.Message> messages = responseMessages.getMessage();
+
+			for (MessagesType.Message message : messages) {
+				resultMessages.add(message.getText());
+			}
+
 			return new CommercePaymentResult(
 				token, authorizeNetCommercePaymentRequest.getCommerceOrderId(),
-				-1, true, url, null, Collections.emptyList(), true);
+				CommerceOrderConstants.PAYMENT_STATUS_PENDING, true, url, null,
+				resultMessages, true);
 		}
 
 		return _emptyResult(
@@ -263,7 +269,7 @@ public class AuthorizeNetCommercePaymentMethod
 	}
 
 	private ArrayOfSetting _getArrayOfSetting(
-			Long groupId, String cancelURL, String returnURL, Locale locale)
+			long groupId, String cancelURL, String returnURL)
 		throws PortalException {
 
 		AuthorizeNetGroupServiceConfiguration configuration = _getConfiguration(
@@ -346,10 +352,11 @@ public class AuthorizeNetCommercePaymentMethod
 		JSONObject hostedPaymentOrderOptionsJSONObject =
 			_jsonFactory.createJSONObject();
 
-		Group group = _groupLocalService.getGroup(groupId);
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 
 		hostedPaymentOrderOptionsJSONObject.put(
-			"merchantName", group.getDescriptiveName(locale));
+			"merchantName", commerceChannel.getName());
 
 		hostedPaymentOrderOptionsJSONObject.put(
 			"show", configuration.showStoreName());
@@ -362,7 +369,7 @@ public class AuthorizeNetCommercePaymentMethod
 	}
 
 	private AuthorizeNetGroupServiceConfiguration _getConfiguration(
-			Long groupId)
+			long groupId)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
@@ -420,9 +427,6 @@ public class AuthorizeNetCommercePaymentMethod
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

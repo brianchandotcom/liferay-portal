@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>LicenseManager</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LicenseManager</td></tr>
+</thead>
+<tbody>
+<!--LICENSE_MANAGER-->
+<tr>
+	<td>LICENSE_IFRAME</td>
+	<td>//iframe[contains(@id,'LicenseManagerPortlet_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LICENSE_FORM</td>
+	<td>//form[contains(@class,'license-form')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LICENSE_FORM_H3</td>
+	<td>//form[contains(@class,'license-form')]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LICENSE_TABLE_TEXT</td>
+	<td>//table[contains(@class,'license-table')]//*[normalize-space(text())='${key_tableText}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LICENSE_ORDER_ID_INPUT</td>
+	<td>//input[contains(@name,'order')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LICENSE_QUERY</td>
+	<td>//input[contains(@value,'Query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

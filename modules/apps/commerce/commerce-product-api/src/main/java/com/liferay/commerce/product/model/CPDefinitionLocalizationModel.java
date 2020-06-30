@@ -41,7 +41,7 @@ import java.io.Serializable;
 public interface CPDefinitionLocalizationModel
 	extends BaseModel<CPDefinitionLocalization>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition localization model instance should use the {@link CPDefinitionLocalization} interface instead.

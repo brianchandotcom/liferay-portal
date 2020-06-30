@@ -56,14 +56,24 @@ import java.util.List;
 )
 public interface CommerceTaxFixedRateService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateServiceUtil} to access the commerce tax fixed rate remote service. Add custom service methods to <code>com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
 			long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceTaxFixedRate addCommerceTaxFixedRate(
+			long userId, long groupId, long commerceTaxMethodId,
+			long cpTaxCategoryId, double rate)
 		throws PortalException;
 
 	public void deleteCommerceTaxFixedRate(long commerceTaxFixedRateId)

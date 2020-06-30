@@ -43,7 +43,7 @@ import java.util.Date;
 public interface TrashEntryModel
 	extends AttachedModel, BaseModel<TrashEntry>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a trash entry model instance should use the {@link TrashEntry} interface instead.

@@ -32,11 +32,6 @@ public class SyncDeviceLocalServiceWrapper
 		_syncDeviceLocalService = syncDeviceLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link SyncDeviceLocalServiceUtil} to access the sync device local service. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDeviceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.sync.model.SyncDevice addSyncDevice(
 			long userId, String type, long buildNumber, String hostname,
@@ -257,6 +252,9 @@ public class SyncDeviceLocalServiceWrapper
 		return _syncDeviceLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

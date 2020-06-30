@@ -24,18 +24,23 @@ import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.TaxCategor
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
-
-import java.util.Collection;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -78,10 +83,13 @@ public class Query {
 			warehouseResourceComponentServiceObjects;
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {availabilityEstimate(id: ___){groupId, id, priority, title}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public AvailabilityEstimate getAvailabilityEstimate(
-			@GraphQLName("id") Long id)
+	public AvailabilityEstimate availabilityEstimate(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -91,10 +99,14 @@ public class Query {
 				availabilityEstimateResource.getAvailabilityEstimate(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupAvailabilityEstimate(groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<AvailabilityEstimate>
-			getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
+	public AvailabilityEstimatePage
+			commerceAdminSettingGroupAvailabilityEstimate(
 				@GraphQLName("groupId") Long groupId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -103,42 +115,41 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_availabilityEstimateResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			availabilityEstimateResource -> {
-				Page paginationPage =
-					availabilityEstimateResource.
-						getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-							groupId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			availabilityEstimateResource -> new AvailabilityEstimatePage(
+				availabilityEstimateResource.
+					getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
+						groupId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupMeasurementUnit(groupId: ___, page: ___, pageSize: ___, type: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<MeasurementUnit>
-			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-				@GraphQLName("groupId") Long groupId,
-				@GraphQLName("type") Integer type,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public MeasurementUnitPage commerceAdminSettingGroupMeasurementUnit(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("type") Integer type,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_measurementUnitResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			measurementUnitResource -> {
-				Page paginationPage =
-					measurementUnitResource.
-						getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-							groupId, type, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			measurementUnitResource -> new MeasurementUnitPage(
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, type, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {measurementUnit(id: ___){groupId, id, key, name, primary, priority, rate, type}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public MeasurementUnit getMeasurementUnit(@GraphQLName("id") Long id)
+	public MeasurementUnit measurementUnit(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -148,31 +159,34 @@ public class Query {
 				measurementUnitResource.getMeasurementUnit(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupTaxCategory(groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<TaxCategory>
-			getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				@GraphQLName("groupId") Long groupId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public TaxCategoryPage commerceAdminSettingGroupTaxCategory(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_taxCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxCategoryResource -> {
-				Page paginationPage =
-					taxCategoryResource.
-						getCommerceAdminSiteSettingGroupTaxCategoryPage(
-							groupId, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			taxCategoryResource -> new TaxCategoryPage(
+				taxCategoryResource.
+					getCommerceAdminSiteSettingGroupTaxCategoryPage(
+						groupId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxCategory(id: ___){description, groupId, id, name}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public TaxCategory getTaxCategory(@GraphQLName("id") Long id)
+	public TaxCategory taxCategory(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -181,9 +195,13 @@ public class Query {
 			taxCategoryResource -> taxCategoryResource.getTaxCategory(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupWarehouse(active: ___, groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Warehouse> getCommerceAdminSiteSettingGroupWarehousePage(
+	public WarehousePage commerceAdminSettingGroupWarehouse(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("active") Boolean active,
 			@GraphQLName("pageSize") int pageSize,
@@ -193,23 +211,150 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			warehouseResource -> {
-				Page paginationPage =
-					warehouseResource.
-						getCommerceAdminSiteSettingGroupWarehousePage(
-							groupId, active, Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
-			});
+			warehouseResource -> new WarehousePage(
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, active, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouse(id: ___){active, city, commerceCountryId, commerceRegionId, description, groupId, id, latitude, longitude, name, primary, street1, street2, street3, zip}}"}' -u 'test@liferay.com:test'
+	 */
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Warehouse getWarehouse(@GraphQLName("id") Long id) throws Exception {
+	public Warehouse warehouse(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.getWarehouse(id));
+	}
+
+	@GraphQLName("AvailabilityEstimatePage")
+	public class AvailabilityEstimatePage {
+
+		public AvailabilityEstimatePage(Page availabilityEstimatePage) {
+			actions = availabilityEstimatePage.getActions();
+			items = availabilityEstimatePage.getItems();
+			lastPage = availabilityEstimatePage.getLastPage();
+			page = availabilityEstimatePage.getPage();
+			pageSize = availabilityEstimatePage.getPageSize();
+			totalCount = availabilityEstimatePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AvailabilityEstimate> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("MeasurementUnitPage")
+	public class MeasurementUnitPage {
+
+		public MeasurementUnitPage(Page measurementUnitPage) {
+			actions = measurementUnitPage.getActions();
+			items = measurementUnitPage.getItems();
+			lastPage = measurementUnitPage.getLastPage();
+			page = measurementUnitPage.getPage();
+			pageSize = measurementUnitPage.getPageSize();
+			totalCount = measurementUnitPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<MeasurementUnit> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TaxCategoryPage")
+	public class TaxCategoryPage {
+
+		public TaxCategoryPage(Page taxCategoryPage) {
+			actions = taxCategoryPage.getActions();
+			items = taxCategoryPage.getItems();
+			lastPage = taxCategoryPage.getLastPage();
+			page = taxCategoryPage.getPage();
+			pageSize = taxCategoryPage.getPageSize();
+			totalCount = taxCategoryPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<TaxCategory> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("WarehousePage")
+	public class WarehousePage {
+
+		public WarehousePage(Page warehousePage) {
+			actions = warehousePage.getActions();
+			items = warehousePage.getItems();
+			lastPage = warehousePage.getLastPage();
+			page = warehousePage.getPage();
+			pageSize = warehousePage.getPageSize();
+			totalCount = warehousePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Warehouse> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -235,35 +380,51 @@ public class Query {
 			AvailabilityEstimateResource availabilityEstimateResource)
 		throws Exception {
 
-		availabilityEstimateResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		availabilityEstimateResource.setContextAcceptLanguage(_acceptLanguage);
+		availabilityEstimateResource.setContextCompany(_company);
+		availabilityEstimateResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		availabilityEstimateResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		availabilityEstimateResource.setContextUriInfo(_uriInfo);
+		availabilityEstimateResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
 			MeasurementUnitResource measurementUnitResource)
 		throws Exception {
 
-		measurementUnitResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		measurementUnitResource.setContextAcceptLanguage(_acceptLanguage);
+		measurementUnitResource.setContextCompany(_company);
+		measurementUnitResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		measurementUnitResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		measurementUnitResource.setContextUriInfo(_uriInfo);
+		measurementUnitResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
 			TaxCategoryResource taxCategoryResource)
 		throws Exception {
 
-		taxCategoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		taxCategoryResource.setContextAcceptLanguage(_acceptLanguage);
+		taxCategoryResource.setContextCompany(_company);
+		taxCategoryResource.setContextHttpServletRequest(_httpServletRequest);
+		taxCategoryResource.setContextHttpServletResponse(_httpServletResponse);
+		taxCategoryResource.setContextUriInfo(_uriInfo);
+		taxCategoryResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(WarehouseResource warehouseResource)
 		throws Exception {
 
-		warehouseResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		warehouseResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseResource.setContextCompany(_company);
+		warehouseResource.setContextHttpServletRequest(_httpServletRequest);
+		warehouseResource.setContextHttpServletResponse(_httpServletResponse);
+		warehouseResource.setContextUriInfo(_uriInfo);
+		warehouseResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<AvailabilityEstimateResource>
@@ -274,5 +435,14 @@ public class Query {
 		_taxCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseResource>
 		_warehouseResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private com.liferay.portal.kernel.model.Company _company;
+	private com.liferay.portal.kernel.model.User _user;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 
 }

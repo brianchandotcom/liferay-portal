@@ -40,7 +40,7 @@ import java.util.Set;
 public interface ExportImportConfigurationPersistence
 	extends BasePersistence<ExportImportConfiguration> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationUtil} to access the export import configuration persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

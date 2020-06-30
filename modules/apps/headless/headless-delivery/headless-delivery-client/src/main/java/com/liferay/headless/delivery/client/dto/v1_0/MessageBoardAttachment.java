@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MessageBoardAttachment {
+public class MessageBoardAttachment implements Cloneable {
 
 	public String getContentUrl() {
 		return contentUrl;
@@ -151,6 +151,11 @@ public class MessageBoardAttachment {
 	}
 
 	protected String title;
+
+	@Override
+	public MessageBoardAttachment clone() throws CloneNotSupportedException {
+		return (MessageBoardAttachment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

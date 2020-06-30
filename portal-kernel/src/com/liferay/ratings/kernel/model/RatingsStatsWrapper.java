@@ -240,11 +240,6 @@ public class RatingsStatsWrapper
 		return _ratingsStats.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ratings stats model instance should use the <code>RatingsStats</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ratingsStats.persist();

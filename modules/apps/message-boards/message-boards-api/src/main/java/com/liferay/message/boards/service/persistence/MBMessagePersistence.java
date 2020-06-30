@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMessageUtil} to access the message-boards message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

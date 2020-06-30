@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUti
 public abstract class CPDefinitionOptionRelBaseImpl
 	extends CPDefinitionOptionRelModelImpl implements CPDefinitionOptionRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp definition option rel model instance should use the <code>CPDefinitionOptionRel</code> interface instead.

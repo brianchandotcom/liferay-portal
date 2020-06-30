@@ -32,7 +32,7 @@ import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
 public abstract class PowwowServerBaseImpl
 	extends PowwowServerModelImpl implements PowwowServer {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a powwow server model instance should use the <code>PowwowServer</code> interface instead.

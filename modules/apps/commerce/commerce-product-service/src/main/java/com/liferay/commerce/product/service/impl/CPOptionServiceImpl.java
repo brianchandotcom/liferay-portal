@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -100,6 +102,16 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
+	public List<CPOption> findCPOptionByCompanyId(
+			long companyId, int start, int end,
+			OrderByComparator<CPOption> orderByComparator)
+		throws PortalException {
+
+		return cpOptionLocalService.findCPOptionByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public CPOption getCPOption(long cpOptionId) throws PortalException {
 		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
@@ -144,8 +156,9 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			serviceContext.getCompanyId(), externalReferenceCode);
 
 		if (cpOption == null) {
-			_cpOptionModelResourcePermission.check(
-				getPermissionChecker(), cpOption, ActionKeys.VIEW);
+			PortalPermissionUtil.check(
+				getPermissionChecker(),
+				CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 		}
 
 		return cpOptionLocalService.upsertCPOption(

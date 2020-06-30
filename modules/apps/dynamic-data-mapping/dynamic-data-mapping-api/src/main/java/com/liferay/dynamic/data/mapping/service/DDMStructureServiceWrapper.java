@@ -30,11 +30,6 @@ public class DDMStructureServiceWrapper
 		_ddmStructureService = ddmStructureService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMStructureServiceUtil} to access the ddm structure remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMStructureServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure addStructure(
 			long userId, long groupId, long classNameId,

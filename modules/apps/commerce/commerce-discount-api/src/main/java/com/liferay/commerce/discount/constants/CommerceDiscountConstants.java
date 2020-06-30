@@ -19,6 +19,14 @@ package com.liferay.commerce.discount.constants;
  */
 public class CommerceDiscountConstants {
 
+	public static final String LEVEL_L1 = "L1";
+
+	public static final String LEVEL_L2 = "L2";
+
+	public static final String LEVEL_L3 = "L3";
+
+	public static final String LEVEL_L4 = "L4";
+
 	public static final String LIMITATION_TYPE_LIMITED = "limited";
 
 	public static final String LIMITATION_TYPE_LIMITED_FOR_USERS =
@@ -32,6 +40,8 @@ public class CommerceDiscountConstants {
 	};
 
 	public static final String TARGET_CATEGORIES = "categories";
+
+	public static final String TARGET_PRICING_CLASS = "pricing-class";
 
 	public static final String TARGET_PRODUCT = "product";
 

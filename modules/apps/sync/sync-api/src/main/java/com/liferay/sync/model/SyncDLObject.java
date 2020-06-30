@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface SyncDLObject
 	extends PersistedModel, SyncDLObjectModel, TreeModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDLObjectImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

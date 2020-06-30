@@ -70,24 +70,28 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 			new DisplayTerms(portletRequest), curParam, DEFAULT_DELTA,
 			iteratorURL, headerNames, null);
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
-
 		PortalPreferences preferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
 
-		if (Validator.isNotNull(orderByCol) &&
-			Validator.isNotNull(orderByType)) {
+		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
 
+		if (Validator.isNotNull(orderByCol)) {
 			preferences.setValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-col", orderByCol);
-			preferences.setValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", orderByType);
 		}
 		else {
 			orderByCol = preferences.getValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
 				"last-activity-date");
+		}
+
+		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			preferences.setValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", orderByType);
+		}
+		else {
 			orderByType = preferences.getValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
 		}

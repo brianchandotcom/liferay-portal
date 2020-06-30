@@ -16,28 +16,31 @@ package com.liferay.commerce.catalog.web.internal.portlet;
 
 import com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.media.CommerceCatalogDefaultImage;
+import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
+	configurationPid = "com.liferay.commerce.product.configuration.AttachmentsConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -68,41 +72,36 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCatalogsPortlet extends MVCPortlet {
 
 	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
-
-			ProxyModeThreadLocal.setForceSync(true);
-
-			super.processAction(actionRequest, actionResponse);
-		}
-	}
-
-	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			CommerceCatalogDisplayContext commerceCatalogDisplayContext =
-				new CommerceCatalogDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_commerceCatalogService,
-					_commerceCatalogModelResourcePermission,
-					_commerceCurrencyService, _portal);
+		CommerceCatalogDisplayContext commerceCatalogDisplayContext =
+			new CommerceCatalogDisplayContext(
+				_attachmentsConfiguration,
+				_portal.getHttpServletRequest(renderRequest),
+				_commerceCatalogDefaultImage, _commerceCatalogService,
+				_commerceCatalogModelResourcePermission,
+				_commerceCurrencyService, _dlAppService, _itemSelector,
+				_portal);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCatalogDisplayContext);
-		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCatalogDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentsConfiguration.class, properties);
+	}
+
+	private volatile AttachmentsConfiguration _attachmentsConfiguration;
+
+	@Reference
+	private CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
@@ -115,6 +114,12 @@ public class CommerceCatalogsPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

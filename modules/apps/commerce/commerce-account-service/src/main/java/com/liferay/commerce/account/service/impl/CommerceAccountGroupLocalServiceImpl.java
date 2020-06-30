@@ -90,7 +90,8 @@ public class CommerceAccountGroupLocalServiceImpl
 		commerceAccountGroup.setExternalReferenceCode(externalReferenceCode);
 		commerceAccountGroup.setExpandoBridgeAttributes(serviceContext);
 
-		commerceAccountGroupPersistence.update(commerceAccountGroup);
+		commerceAccountGroup = commerceAccountGroupPersistence.update(
+			commerceAccountGroup);
 
 		// Resources
 

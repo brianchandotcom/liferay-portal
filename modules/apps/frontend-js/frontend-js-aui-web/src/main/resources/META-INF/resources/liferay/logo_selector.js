@@ -12,6 +12,10 @@ AUI.add(
 		var LogoSelector = A.Component.create(
 			{
 				ATTRS: {
+					defaultLogo: {
+						value: false
+					},
+
 					defaultLogoURL: {
 						value: ''
 					},
@@ -140,6 +144,8 @@ AUI.add(
 
 						var deleteLogo = src == DELETE_LOGO;
 
+						var defaultLogo = instance.get('defaultLogo');
+
 						instance._avatar.attr('src', logoURL);
 
 						if (logoDisplaySelector) {
@@ -153,8 +159,8 @@ AUI.add(
 						instance.get('editLogoFn').apply(instance, [logoURL, deleteLogo]);
 
 						instance._deleteLogoInput.val(deleteLogo);
-						instance._deleteLogoButton.attr('disabled', deleteLogo ? 'disabled' : '');
-						instance._deleteLogoButton.toggleClass('disabled', deleteLogo);
+						instance._deleteLogoButton.attr('disabled', deleteLogo || defaultLogo ? 'disabled' : '');
+						instance._deleteLogoButton.toggleClass('disabled', deleteLogo || defaultLogo);
 
 						if (instance._emptyResultMessage) {
 							instance._emptyResultMessage.hide();

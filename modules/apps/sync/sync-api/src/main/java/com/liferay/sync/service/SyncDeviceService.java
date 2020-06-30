@@ -51,7 +51,7 @@ import com.liferay.sync.model.SyncDevice;
 )
 public interface SyncDeviceService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDeviceServiceUtil} to access the sync device remote service. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDeviceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

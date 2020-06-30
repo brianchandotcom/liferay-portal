@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 import com.liferay.headless.admin.user.client.serdes.v1_0.SiteSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Site {
+public class Site implements Cloneable {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -90,6 +91,28 @@ public class Site {
 	}
 
 	protected String description;
+
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> description_i18n;
 
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
@@ -190,6 +213,28 @@ public class Site {
 
 	protected String name;
 
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_i18n;
+
 	public Site[] getSites() {
 		return sites;
 	}
@@ -210,6 +255,11 @@ public class Site {
 	}
 
 	protected Site[] sites;
+
+	@Override
+	public Site clone() throws CloneNotSupportedException {
+		return (Site)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

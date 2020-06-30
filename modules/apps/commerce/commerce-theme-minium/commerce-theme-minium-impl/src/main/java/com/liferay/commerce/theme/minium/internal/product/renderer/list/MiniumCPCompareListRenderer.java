@@ -175,8 +175,7 @@ public class MiniumCPCompareListRenderer implements CPContentListRenderer {
 			_portal.getPortletNamespace(CPPortletKeys.CP_COMPARE_CONTENT_WEB));
 
 		context.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+			"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		context.put("products", products);
 

@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceChannelRelServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceChannelRelServiceUtil} to access the commerce channel rel remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.product.model.CommerceChannelRel
 			addCommerceChannelRel(
@@ -53,10 +47,23 @@ public class CommerceChannelRelServiceUtil {
 			className, classPK, commerceChannelId, serviceContext);
 	}
 
+	public static void deleteCommerceChannelRel(long commerceChannelRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceChannelRel(commerceChannelRelId);
+	}
+
 	public static void deleteCommerceChannelRels(
 		String className, long classPK) {
 
 		getService().deleteCommerceChannelRels(className, classPK);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannelRel
+			getCommerceChannelRel(long commerceChannelRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceChannelRel(commerceChannelRelId);
 	}
 
 	public static java.util.List

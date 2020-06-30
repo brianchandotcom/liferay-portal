@@ -131,9 +131,7 @@ public class TransactionConfig {
 			}
 		}
 
-		hash = HashUtil.hash(hash, _timeout);
-
-		return hash;
+		return HashUtil.hash(hash, _timeout);
 	}
 
 	public boolean isReadOnly() {

@@ -61,7 +61,7 @@ import java.util.Map;
 public interface CommerceAccountLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountLocalServiceUtil} to access the commerce account local service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -238,7 +238,8 @@ public interface CommerceAccountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount getCommerceAccount(
-		long userId, long commerceAccountId);
+			long userId, long commerceAccountId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Group getCommerceAccountGroup(long commerceAccountId)
@@ -280,6 +281,9 @@ public interface CommerceAccountLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -291,23 +295,27 @@ public interface CommerceAccountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccount> getUserCommerceAccounts(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, Boolean active, int start, int end);
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccount> getUserCommerceAccounts(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, int start, int end);
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords);
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, Boolean active);
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccount> searchCommerceAccounts(

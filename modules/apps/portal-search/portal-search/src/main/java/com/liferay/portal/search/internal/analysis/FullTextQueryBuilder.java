@@ -77,6 +77,10 @@ public class FullTextQueryBuilder {
 		_exactMatchBoost = exactMatchBoost;
 	}
 
+	public void setMaxExpansions(int maxExpansions) {
+		_maxExpansions = maxExpansions;
+	}
+
 	public void setProximitySlop(int proximitySlop) {
 		_proximitySlop = proximitySlop;
 	}
@@ -96,6 +100,8 @@ public class FullTextQueryBuilder {
 
 	protected Query createAutocompleteQuery(String field, String value) {
 		PhraseQueryBuilder builder = new PhraseQueryBuilder();
+
+		builder.setMaxExpansions(_maxExpansions);
 
 		builder.setPrefix(true);
 
@@ -151,6 +157,7 @@ public class FullTextQueryBuilder {
 	private boolean _autocomplete;
 	private float _exactMatchBoost;
 	private final KeywordTokenizer _keywordTokenizer;
+	private Integer _maxExpansions;
 	private Integer _proximitySlop;
 
 }

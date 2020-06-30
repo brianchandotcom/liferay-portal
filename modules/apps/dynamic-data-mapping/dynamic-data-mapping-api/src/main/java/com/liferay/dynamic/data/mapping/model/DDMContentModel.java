@@ -49,7 +49,7 @@ public interface DDMContentModel
 	extends BaseModel<DDMContent>, GroupedModel, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm content model instance should use the {@link DDMContent} interface instead.

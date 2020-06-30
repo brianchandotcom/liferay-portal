@@ -22,6 +22,8 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -35,20 +37,34 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
  */
 public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
 			Class<?> clazz, long classPK, String layoutUuid,
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return cpDisplayLayoutService.addCPDisplayLayout(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), clazz,
+			classPK, layoutUuid);
+	}
+
+	@Override
+	public CPDisplayLayout addCPDisplayLayout(
+			long userId, long groupId, Class<?> clazz, long classPK,
+			String layoutUuid)
+		throws PortalException {
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_LAYOUT);
+			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
 
 		_checkPermissionByC_C(clazz.getName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
-			clazz, classPK, layoutUuid, serviceContext);
+			userId, groupId, clazz, classPK, layoutUuid);
 	}
 
 	@Override
@@ -109,6 +125,19 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		}
 
 		return cpDisplayLayout;
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
+			long companyId, long groupId, String className, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		return cpDisplayLayoutLocalService.searchCPDisplayLayout(
+			companyId, groupId, className, keywords, start, end, sort);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 
-		return Collections.emptyList();
+		return Collections.<Long>emptyList();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		long companyId, long groupId, long userId, String name,
 		String actionId) {
 
-		return Collections.emptyList();
+		return Collections.<Long>emptyList();
 	}
 
 	@Override

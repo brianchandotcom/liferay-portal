@@ -14,25 +14,27 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.frontend.ClayMenuActionItem;
+import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinitionLink;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -49,22 +51,40 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CPDefinitionLinkDisplayContext
-	extends BaseCPDefinitionsSearchContainerDisplayContext<CPDefinitionLink> {
+	extends BaseCPDefinitionsDisplayContext {
 
 	public CPDefinitionLinkDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CPDefinitionLinkService cpDefinitionLinkService,
-		ItemSelector itemSelector, String type) {
+		CPDefinitionLinkTypeSettings cpDefinitionLinkTypeSettings,
+		ItemSelector itemSelector) {
 
-		super(
-			actionHelper, httpServletRequest,
-			CPDefinitionOptionRel.class.getSimpleName());
-
-		setDefaultOrderByCol("priority");
+		super(actionHelper, httpServletRequest);
 
 		_cpDefinitionLinkService = cpDefinitionLinkService;
+		_cpDefinitionLinkTypeSettings = cpDefinitionLinkTypeSettings;
 		_itemSelector = itemSelector;
-		_type = type;
+	}
+
+	public ClayCreationMenu getClayCreationMenu() {
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+
+		for (String type : getCPDefinitionLinkTypes()) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(liferayPortletResponse.getNamespace());
+			sb.append("addCommerceProductDefinitionLink");
+			sb.append(type);
+
+			clayCreationMenu.addClayCreationMenuActionItem(
+				new ClayCreationMenuActionItem(
+					sb.toString(),
+					LanguageUtil.format(
+						httpServletRequest, "add-x-product", type, true),
+					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT));
+		}
+
+		return clayCreationMenu;
 	}
 
 	public CPDefinitionLink getCPDefinitionLink() throws PortalException {
@@ -88,7 +108,11 @@ public class CPDefinitionLinkDisplayContext
 		return cpDefinitionLink.getCPDefinitionLinkId();
 	}
 
-	public String getItemSelectorUrl() throws PortalException {
+	public String[] getCPDefinitionLinkTypes() {
+		return _cpDefinitionLinkTypeSettings.getTypes();
+	}
+
+	public String getItemSelectorUrl(String type) throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
@@ -111,10 +135,10 @@ public class CPDefinitionLinkDisplayContext
 				"cpDefinitionId", String.valueOf(cpDefinitionId));
 
 			String checkedCPDefinitionIds = StringUtil.merge(
-				getCheckedCPDefinitionIds(cpDefinitionId, getType()));
+				getCheckedCPDefinitionIds(cpDefinitionId, type));
 
 			String disabledCPDefinitionIds = StringUtil.merge(
-				getDisabledCPDefinitionIds(cpDefinitionId, getType()));
+				getDisabledCPDefinitionIds(cpDefinitionId, type));
 
 			itemSelectorURL.setParameter(
 				"checkedCPDefinitionIds", checkedCPDefinitionIds);
@@ -135,8 +159,6 @@ public class CPDefinitionLinkDisplayContext
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-		portletURL.setParameter("screenNavigationEntryKey", getType());
-		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
 	}
@@ -145,47 +167,6 @@ public class CPDefinitionLinkDisplayContext
 	public String getScreenNavigationCategoryKey() {
 		return CPDefinitionScreenNavigationConstants.
 			CATEGORY_KEY_PRODUCT_RELATIONS;
-	}
-
-	@Override
-	public SearchContainer<CPDefinitionLink> getSearchContainer()
-		throws PortalException {
-
-		if (searchContainer != null) {
-			return searchContainer;
-		}
-
-		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-products-were-found");
-
-		OrderByComparator<CPDefinitionLink> orderByComparator =
-			CPDefinitionsPortletUtil.getCPDefinitionLinkOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		int total = _cpDefinitionLinkService.getCPDefinitionLinksCount(
-			getCPDefinitionId(), getType());
-
-		searchContainer.setTotal(total);
-
-		List<CPDefinitionLink> results =
-			_cpDefinitionLinkService.getCPDefinitionLinks(
-				getCPDefinitionId(), getType(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-		searchContainer.setResults(results);
-
-		return searchContainer;
-	}
-
-	public String getType() {
-		return _type;
 	}
 
 	public boolean hasCustomAttributesAvailable() throws Exception {
@@ -249,7 +230,7 @@ public class CPDefinitionLinkDisplayContext
 
 	private CPDefinitionLink _cpDefinitionLink;
 	private final CPDefinitionLinkService _cpDefinitionLinkService;
+	private final CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
 	private final ItemSelector _itemSelector;
-	private final String _type;
 
 }

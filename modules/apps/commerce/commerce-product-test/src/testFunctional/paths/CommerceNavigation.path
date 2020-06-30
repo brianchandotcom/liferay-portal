@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME</td>
-	<td>//div[@class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
+	<td>//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,6 +66,11 @@
 <tr>
 	<td>CHOOSE_SITE_BUTTON</td>
 	<td>//tr/td[contains(.,'${key_siteName}')]//..//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_ENTRY_NAME</td>
+	<td>//a[contains(.,'${key_entry}')]</td>
 	<td></td>
 </tr>
 </tbody>

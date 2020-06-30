@@ -40,7 +40,7 @@ import java.util.Set;
 public interface KaleoTimerInstanceTokenPersistence
 	extends BasePersistence<KaleoTimerInstanceToken> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerInstanceTokenUtil} to access the kaleo timer instance token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

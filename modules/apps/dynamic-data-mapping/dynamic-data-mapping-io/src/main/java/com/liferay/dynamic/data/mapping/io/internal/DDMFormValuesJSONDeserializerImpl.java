@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -202,6 +200,14 @@ public class DDMFormValuesJSONDeserializerImpl
 		return new UnlocalizedValue(jsonObject.getString("value"));
 	}
 
+	protected boolean isInvalidLocale(String languageId) {
+		if (LocaleUtil.fromLanguageId(languageId, true, false) == null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isLocalized(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return false;
@@ -212,7 +218,7 @@ public class DDMFormValuesJSONDeserializerImpl
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			if (!ArrayUtil.contains(PropsValues.LOCALES, key)) {
+			if (isInvalidLocale(key)) {
 				return false;
 			}
 		}

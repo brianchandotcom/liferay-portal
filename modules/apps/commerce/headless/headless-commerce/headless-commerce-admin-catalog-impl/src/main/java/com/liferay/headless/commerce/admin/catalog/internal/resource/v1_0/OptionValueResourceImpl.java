@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
@@ -27,6 +28,7 @@ import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverter
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -71,6 +73,7 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 		return Page.of(_toOptionValues(cpOptionValues), pagination, totalItems);
 	}
 
+	@NestedField(parentClass = Option.class, value = "values")
 	@Override
 	public Page<OptionValue> getOptionIdOptionValuesPage(
 			Long id, Pagination pagination)

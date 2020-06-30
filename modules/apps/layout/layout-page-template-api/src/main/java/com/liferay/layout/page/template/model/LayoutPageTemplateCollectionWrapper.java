@@ -322,11 +322,6 @@ public class LayoutPageTemplateCollectionWrapper
 		return _layoutPageTemplateCollection.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a layout page template collection model instance should use the <code>LayoutPageTemplateCollection</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_layoutPageTemplateCollection.persist();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -74,8 +75,37 @@ public abstract class BaseCommerceDiscountUpgradeProcess
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
+						"Column %s does not exist on table %s", columnName,
+						tableName));
+			}
+		}
+	}
+
+	protected void renameColumn(
+			Class<?> tableClass, String tableName, String oldColumnName,
+			String newColumnName)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				String.format(
+					"Renaming column %s to %s for table %s", oldColumnName,
+					newColumnName, tableName));
+		}
+
+		String newColumnSimpleName = StringUtil.extractFirst(
+			newColumnName, StringPool.SPACE);
+
+		if (!hasColumn(tableName, newColumnSimpleName)) {
+			alter(
+				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					String.format(
+						"Column %s already exists on table %s", newColumnName,
+						tableName));
 			}
 		}
 	}

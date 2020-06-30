@@ -67,6 +67,43 @@ public class CommerceShippingFixedOptionServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionSoap addCommerceShippingFixedOption(
+				long userId, long groupId, long commerceShippingMethodId,
+				String[] nameMapLanguageIds, String[] nameMapValues,
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, java.math.BigDecimal amount,
+				double priority)
+			throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.commerce.shipping.engine.fixed.model.
+				CommerceShippingFixedOption returnValue =
+					CommerceShippingFixedOptionServiceUtil.
+						addCommerceShippingFixedOption(
+							userId, groupId, commerceShippingMethodId, nameMap,
+							descriptionMap, amount, priority);
+
+			return com.liferay.commerce.shipping.engine.fixed.model.
+				CommerceShippingFixedOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.shipping.engine.fixed.model.
+		CommerceShippingFixedOptionSoap addCommerceShippingFixedOption(
 				long commerceShippingMethodId, String[] nameMapLanguageIds,
 				String[] nameMapValues, String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, java.math.BigDecimal amount,
@@ -91,10 +128,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -107,10 +144,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 				deleteCommerceShippingFixedOption(
 					commerceShippingFixedOptionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -129,10 +166,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -152,10 +189,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -179,10 +216,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -198,10 +235,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -230,10 +267,10 @@ public class CommerceShippingFixedOptionServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

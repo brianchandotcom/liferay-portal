@@ -32,17 +32,25 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShippingMethodLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceAddressRestriction(
+			userId, groupId, commerceShippingMethodId, commerceCountryId);
+	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodLocalServiceUtil} to access the commerce shipping method local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				long commerceShippingMethodId, long commerceCountryId,
@@ -69,16 +77,16 @@ public class CommerceShippingMethodLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceShippingMethod
 			addCommerceShippingMethod(
+				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.io.File imageFile, String engineKey, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceShippingMethod(
-			nameMap, descriptionMap, imageFile, engineKey, priority, active,
-			serviceContext);
+			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+			priority, active);
 	}
 
 	/**
@@ -360,6 +368,9 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -2,8 +2,8 @@
 	<div class="minium-topbar__start">
 		<#if back_url?has_content>
 			<a class="commerce-topbar-button" href="${back_url}">
-				<svg class="commerce-icon commerce-topbar-button__icon">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#back" />
+				<svg class="commerce-icon commerce-topbar-button__icon lexicon-icon lexicon-icon-arrow-back">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#arrow-back" />
 				</svg>
 
 				<span class="commerce-topbar-button__label">
@@ -13,12 +13,12 @@
 		</#if>
 		<#if show_search_bar>
 			<label class="commerce-topbar-button js-toggle-search" for="commerce-search-input">
-				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--not-active">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#search" />
+				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--not-active lexicon-icon lexicon-icon-search">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#search" />
 				</svg>
 
-				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--active">
-					<use href="${themeDisplay.getPathThemeImages()}/commerce-icons.svg#close" />
+				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--active lexicon-icon lexicon-icon-times">
+					<use href="${themeDisplay.getPathThemeImages()}/icons.svg#times" />
 				</svg>
 			</label>
 		</#if>

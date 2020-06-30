@@ -559,11 +559,6 @@ public class ExportImportConfigurationWrapper
 		return _exportImportConfiguration.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a export import configuration model instance should use the <code>ExportImportConfiguration</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_exportImportConfiguration.persist();

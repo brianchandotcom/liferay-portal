@@ -14,14 +14,18 @@
 
 package com.liferay.commerce.inventory.internal.engine;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
-import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -49,26 +53,20 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		throws PortalException {
 
 		if (bookedQuantityId > 0) {
-			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-				_commerceBookedQuantityLocalService.
-					getCommerceInventoryBookedQuantity(bookedQuantityId);
-
 			_commerceBookedQuantityLocalService.consumeCommerceBookedQuantity(
-				commerceInventoryBookedQuantity.
-					getCommerceInventoryBookedQuantityId(),
-				quantity);
-
-			decreaseStockQuantity(commerceInventoryWarehouseId, sku, quantity);
-		}
-		else {
-			decreaseStockQuantity(commerceInventoryWarehouseId, sku, quantity);
+				bookedQuantityId, quantity);
 		}
 
-		String description =
-			"Consume Quantity: " + _jsonFactory.serialize(context);
+		decreaseStockQuantity(
+			userId, commerceInventoryWarehouseId, sku, quantity);
+
+		CommerceInventoryAuditType commerceInventoryAuditType =
+			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
+				CommerceInventoryConstants.AUDIT_TYPE_CONSUME_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, quantity, description);
+			userId, sku, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context), quantity);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
 	public void decreaseStockQuantity(
-			long commerceInventoryWarehouseId, String sku, int quantity)
+			long userId, long commerceInventoryWarehouseId, String sku,
+			int quantity)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -86,9 +85,11 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
+				userId,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouseItem.getQuantity() - quantity);
+				commerceInventoryWarehouseItem.getQuantity() - quantity,
+				commerceInventoryWarehouseItem.getMvccVersion());
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 				companyId, channelGroupId, sku);
 
 		int commerceBookedQuantity =
-			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(sku);
+			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
+				companyId, sku);
 
 		return stockQuantity - commerceBookedQuantity;
 	}
@@ -128,7 +130,8 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 				companyId, sku);
 
 		int commerceBookedQuantity =
-			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(sku);
+			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
+				companyId, sku);
 
 		return stockQuantity - commerceBookedQuantity;
 	}
@@ -147,15 +150,32 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku);
 
-		_commerceInventoryWarehouseItemLocalService.
-			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouseItem.getQuantity() + quantity);
+		try {
+			_commerceInventoryWarehouseItemLocalService.
+				updateCommerceInventoryWarehouseItem(
+					userId,
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseItemId(),
+					commerceInventoryWarehouseItem.getQuantity() + quantity,
+					commerceInventoryWarehouseItem.getMvccVersion());
+		}
+		catch (MVCCException mvcce) {
+			_log.error(mvcce.getMessage(), mvcce);
+
+			throw mvcce;
+		}
+
+		CommerceInventoryAuditType commerceInventoryAuditType =
+			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
+				CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, quantity, "Increase Quantity");
+			userId, sku, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(null), quantity);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceInventoryEngineImpl.class);
 
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService
@@ -166,10 +186,11 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		_commerceInventoryAuditLocalService;
 
 	@Reference
-	private CommerceInventoryWarehouseItemLocalService
-		_commerceInventoryWarehouseItemLocalService;
+	private CommerceInventoryAuditTypeRegistry
+		_commerceInventoryAuditTypeRegistry;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private CommerceInventoryWarehouseItemLocalService
+		_commerceInventoryWarehouseItemLocalService;
 
 }

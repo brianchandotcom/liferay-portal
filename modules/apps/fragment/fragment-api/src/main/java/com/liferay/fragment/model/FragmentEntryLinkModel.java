@@ -45,7 +45,7 @@ public interface FragmentEntryLinkModel
 	extends AttachedModel, BaseModel<FragmentEntryLink>, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a fragment entry link model instance should use the {@link FragmentEntryLink} interface instead.

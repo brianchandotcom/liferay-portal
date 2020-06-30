@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 public abstract class SystemEventBaseImpl
 	extends SystemEventModelImpl implements SystemEvent {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a system event model instance should use the <code>SystemEvent</code> interface instead.

@@ -51,6 +51,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			addCommerceSubscriptionEntry(commerceSubscriptionEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceSubscriptionEntry
 			addCommerceSubscriptionEntry(
@@ -68,56 +72,27 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				subscriptionTypeSettingsProperties);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass userId and groupId
-	 */
-	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceSubscriptionEntry
 			addCommerceSubscriptionEntry(
-				long cpInstanceId, long commerceOrderItemId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long userId, long groupId, long commerceOrderItemId,
+				int subscriptionLength, String subscriptionType,
+				long maxSubscriptionCycles,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					subscriptionTypeSettingsProperties,
+				int deliverySubscriptionLength, String deliverySubscriptionType,
+				long deliveryMaxSubscriptionCycles,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					deliverySubscriptionTypeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceSubscriptionEntryLocalService.
 			addCommerceSubscriptionEntry(
-				cpInstanceId, commerceOrderItemId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass subscription info instead of
-	 cpInstanceUuid and cProductId
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceSubscriptionEntry
-			addCommerceSubscriptionEntry(
-				long userId, long groupId, String cpInstanceUuid,
-				long cProductId, long commerceOrderItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryLocalService.
-			addCommerceSubscriptionEntry(
-				userId, groupId, cpInstanceUuid, cProductId,
-				commerceOrderItemId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass userId and groupId
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceSubscriptionEntry
-			addCommerceSubscriptionEntry(
-				String cpInstanceUuid, long cProductId,
-				long commerceOrderItemId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryLocalService.
-			addCommerceSubscriptionEntry(
-				cpInstanceUuid, cProductId, commerceOrderItemId,
-				serviceContext);
+				userId, groupId, commerceOrderItemId, subscriptionLength,
+				subscriptionType, maxSubscriptionCycles,
+				subscriptionTypeSettingsProperties, deliverySubscriptionLength,
+				deliverySubscriptionType, deliveryMaxSubscriptionCycles,
+				deliverySubscriptionTypeSettingsProperties);
 	}
 
 	/**
@@ -277,20 +252,6 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			dynamicQuery, projection);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), fetch by commerceOrderItemId instead
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceSubscriptionEntry
-		fetchCommerceSubscriptionEntries(
-			String cpInstanceUuid, long cProductId, long commerceOrderItemId) {
-
-		return _commerceSubscriptionEntryLocalService.
-			fetchCommerceSubscriptionEntries(
-				cpInstanceUuid, cProductId, commerceOrderItemId);
-	}
-
 	@Override
 	public com.liferay.commerce.model.CommerceSubscriptionEntry
 		fetchCommerceSubscriptionEntry(long commerceSubscriptionEntryId) {
@@ -341,6 +302,14 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			getActiveCommerceSubscriptionEntries();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
+		getCommerceDeliverySubscriptionEntriesToRenew() {
+
+		return _commerceSubscriptionEntryLocalService.
+			getCommerceDeliverySubscriptionEntriesToRenew();
+	}
+
 	/**
 	 * Returns a range of all the commerce subscription entries.
 	 *
@@ -360,6 +329,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			getCommerceSubscriptionEntries(start, end);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
 		getCommerceSubscriptionEntries(
@@ -436,6 +409,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			getCommerceSubscriptionEntriesCount();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public int getCommerceSubscriptionEntriesCount(
 		long companyId, long userId) {
@@ -523,6 +500,9 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -530,6 +510,17 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 		return _commerceSubscriptionEntryLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceSubscriptionEntry
+			incrementCommerceDeliverySubscriptionEntryCycle(
+				long commerceSubscriptionEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceSubscriptionEntryLocalService.
+			incrementCommerceDeliverySubscriptionEntryCycle(
+				commerceSubscriptionEntryId);
 	}
 
 	@Override
@@ -543,6 +534,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				commerceSubscriptionEntryId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceSubscriptionEntry>
@@ -562,14 +557,14 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceSubscriptionEntry>
 				searchCommerceSubscriptionEntries(
-					long companyId, long groupId, Long maxSubscriptionCycles,
+					long companyId, long[] groupIds, Long maxSubscriptionCycles,
 					Integer subscriptionStatus, String keywords, int start,
 					int end, com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceSubscriptionEntryLocalService.
 			searchCommerceSubscriptionEntries(
-				companyId, groupId, maxSubscriptionCycles, subscriptionStatus,
+				companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
 				keywords, start, end, sort);
 	}
 
@@ -589,6 +584,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			updateCommerceSubscriptionEntry(commerceSubscriptionEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceSubscriptionEntry
 			updateCommerceSubscriptionEntry(
@@ -597,8 +596,6 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsProperties,
 				long maxSubscriptionCycles, int subscriptionStatus,
-				int startDateMonth, int startDateDay, int startDateYear,
-				int startDateHour, int startDateMinute,
 				int nextIterationDateMonth, int nextIterationDateDay,
 				int nextIterationDateYear, int nextIterationDateHour,
 				int nextIterationDateMinute)
@@ -608,13 +605,55 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
 				subscriptionType, subscriptionTypeSettingsProperties,
-				maxSubscriptionCycles, subscriptionStatus, startDateMonth,
-				startDateDay, startDateYear, startDateHour, startDateMinute,
+				maxSubscriptionCycles, subscriptionStatus,
 				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
 				nextIterationDateMinute);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceSubscriptionEntry
+			updateCommerceSubscriptionEntry(
+				long commerceSubscriptionEntryId, int subscriptionLength,
+				String subscriptionType,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					subscriptionTypeSettingsProperties,
+				long maxSubscriptionCycles, int subscriptionStatus,
+				int nextIterationDateMonth, int nextIterationDateDay,
+				int nextIterationDateYear, int nextIterationDateHour,
+				int nextIterationDateMinute, int deliverySubscriptionLength,
+				String deliverySubscriptionType,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					deliverySubscriptionTypeSettingsProperties,
+				long deliveryMaxSubscriptionCycles,
+				int deliverySubscriptionStatus,
+				int deliveryNextIterationDateMonth,
+				int deliveryNextIterationDateDay,
+				int deliveryNextIterationDateYear,
+				int deliveryNextIterationDateHour,
+				int deliveryNextIterationDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceSubscriptionEntryLocalService.
+			updateCommerceSubscriptionEntry(
+				commerceSubscriptionEntryId, subscriptionLength,
+				subscriptionType, subscriptionTypeSettingsProperties,
+				maxSubscriptionCycles, subscriptionStatus,
+				nextIterationDateMonth, nextIterationDateDay,
+				nextIterationDateYear, nextIterationDateHour,
+				nextIterationDateMinute, deliverySubscriptionLength,
+				deliverySubscriptionType,
+				deliverySubscriptionTypeSettingsProperties,
+				deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
+				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
+				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
+				deliveryNextIterationDateMinute);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceSubscriptionEntry
 			updateCommerceSubscriptionEntryIterationDates(
@@ -625,6 +664,17 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 		return _commerceSubscriptionEntryLocalService.
 			updateCommerceSubscriptionEntryIterationDates(
 				commerceSubscriptionEntryId, lastIterationDate);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceSubscriptionEntry
+			updateDeliverySubscriptionStatus(
+				long commerceSubscriptionEntryId, int subscriptionStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceSubscriptionEntryLocalService.
+			updateDeliverySubscriptionStatus(
+				commerceSubscriptionEntryId, subscriptionStatus);
 	}
 
 	@Override

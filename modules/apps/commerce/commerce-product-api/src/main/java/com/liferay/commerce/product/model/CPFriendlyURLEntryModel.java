@@ -46,7 +46,7 @@ public interface CPFriendlyURLEntryModel
 	extends AttachedModel, BaseModel<CPFriendlyURLEntry>, GroupedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp friendly url entry model instance should use the {@link CPFriendlyURLEntry} interface instead.

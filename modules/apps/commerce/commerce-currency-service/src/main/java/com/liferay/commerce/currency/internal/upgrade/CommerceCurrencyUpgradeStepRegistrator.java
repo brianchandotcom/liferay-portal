@@ -15,6 +15,7 @@
 package com.liferay.commerce.currency.internal.upgrade;
 
 import com.liferay.commerce.currency.internal.upgrade.v1_1_0.CommerceCurrencyUpgradeProcess;
+import com.liferay.commerce.currency.internal.upgrade.v1_2_0.CommerceCurrencySymbolUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -38,6 +39,10 @@ public class CommerceCurrencyUpgradeStepRegistrator
 			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
 			new CommerceCurrencyUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
+			new CommerceCurrencySymbolUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE CURRENCY UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -46,6 +51,8 @@ public class CommerceCurrencyUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
 
 	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
+
+	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCurrencyUpgradeStepRegistrator.class);

@@ -52,7 +52,7 @@ public class PriceTag extends ComponentRendererTag {
 		try {
 			Map<String, Object> context = getContext();
 
-			long cpInstanceId = (Long)context.getOrDefault("CPInstanceId", 0L);
+			long cpInstanceId = (Long)context.getOrDefault("CPInstanceId", 0);
 
 			int quantity = (Integer)context.getOrDefault("quantity", 1);
 

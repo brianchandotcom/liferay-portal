@@ -44,7 +44,7 @@ public interface CommerceTaxFixedRateAddressRelModel
 	extends BaseModel<CommerceTaxFixedRateAddressRel>, GroupedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce tax fixed rate address rel model instance should use the {@link CommerceTaxFixedRateAddressRel} interface instead.

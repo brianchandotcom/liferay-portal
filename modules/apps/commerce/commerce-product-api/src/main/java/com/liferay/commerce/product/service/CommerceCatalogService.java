@@ -56,7 +56,7 @@ import java.util.List;
 )
 public interface CommerceCatalogService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCatalogServiceUtil} to access the commerce catalog remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -110,6 +110,10 @@ public interface CommerceCatalogService extends BaseService {
 	public CommerceCatalog updateCommerceCatalog(
 			long commerceCatalogId, String name, String commerceCurrencyCode,
 			String catalogDefaultLanguageId)
+		throws PortalException;
+
+	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(
+			long commerceCatalogId, String externalReferenceCode)
 		throws PortalException;
 
 }

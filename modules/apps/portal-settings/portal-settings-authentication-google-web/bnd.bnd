@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Settings Authentication Google Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.google.web
-Bundle-Version: 2.0.7
+Bundle-Version: 2.0.9
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.settings.lang)";\

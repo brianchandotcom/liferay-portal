@@ -33,10 +33,12 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -55,6 +57,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CommerceAccountHelper.class)
 public class CommerceAccountHelperImpl implements CommerceAccountHelper {
+
+	@Override
+	public int countUserCommerceAccounts(long userId, long channelGroupId)
+		throws PortalException {
+
+		return _commerceAccountLocalService.getUserCommerceAccountsCount(
+			userId, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+			_getCommerceSiteType(channelGroupId), StringPool.BLANK);
+	}
 
 	@Override
 	public String getAccountManagementPortletURL(
@@ -83,11 +94,21 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_commerceAccountGroupLocalService.
 				getCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
 
+		if (commerceAccountGroups.isEmpty()) {
+			return new long[0];
+		}
+
 		Stream<CommerceAccountGroup> stream = commerceAccountGroups.stream();
 
-		return stream.mapToLong(
+		long[] commerceAccountGroupIds = stream.mapToLong(
 			CommerceAccountGroup::getCommerceAccountGroupId
 		).toArray();
+
+		commerceAccountGroupIds = ArrayUtil.unique(commerceAccountGroupIds);
+
+		Arrays.sort(commerceAccountGroupIds);
+
+		return commerceAccountGroupIds;
 	}
 
 	/**

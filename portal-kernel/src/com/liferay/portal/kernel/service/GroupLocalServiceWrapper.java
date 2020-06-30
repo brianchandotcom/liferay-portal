@@ -1413,6 +1413,9 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.getParentGroups(groupId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

@@ -23,6 +23,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -34,19 +35,16 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderHelper;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderEntityModel;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddressUtil;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUtil;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -59,14 +57,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -125,13 +120,8 @@ public class OrderResourceImpl
 
 	@Override
 	public Order getOrder(Long id) throws Exception {
-		DTOConverter orderDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CommerceOrder.class.getName());
-
-		return (Order)orderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _orderHelper.toOrder(
+			GetterUtil.getLong(id), contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -148,13 +138,9 @@ public class OrderResourceImpl
 					externalReferenceCode);
 		}
 
-		DTOConverter orderDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CommerceOrder.class.getName());
-
-		return (Order)orderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrder.getCommerceOrderId()));
+		return _orderHelper.toOrder(
+			commerceOrder.getCommerceOrderId(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -162,26 +148,12 @@ public class OrderResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceOrder.class, StringPool.BLANK, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-
-				long[] commerceChannelGroupIds = _getCommerceChannelGroupIds();
-
-				if ((commerceChannelGroupIds != null) &&
-					(commerceChannelGroupIds.length > 0)) {
-
-					searchContext.setGroupIds(commerceChannelGroupIds);
-				}
-			},
-			document -> _toOrder(
-				_commerceOrderService.getCommerceOrder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+		return _orderHelper.getOrdersPage(
+			contextCompany.getCompanyId(), filter, pagination, StringPool.BLANK,
+			sorts,
+			document -> _orderHelper.toOrder(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -219,35 +191,9 @@ public class OrderResourceImpl
 	public Order postOrder(Order order) throws Exception {
 		CommerceOrder commerceOrder = _upsertOrder(order);
 
-		DTOConverter orderDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CommerceOrder.class.getName());
-
-		return (Order)orderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrder.getCommerceOrderId()));
-	}
-
-	private long[] _getCommerceChannelGroupIds() throws PortalException {
-		List<CommerceChannel> commerceChannels =
-			_commerceChannelLocalService.searchCommerceChannels(
-				contextCompany.getCompanyId());
-
-		Stream<CommerceChannel> stream = commerceChannels.stream();
-
-		return stream.mapToLong(
-			CommerceChannel::getGroupId
-		).toArray();
-	}
-
-	private Order _toOrder(CommerceOrder commerceOrder) throws Exception {
-		DTOConverter orderDTOConverter = _dtoConverterRegistry.getDTOConverter(
-			CommerceOrder.class.getName());
-
-		return (Order)orderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrder.getCommerceOrderId()));
+		return _orderHelper.toOrder(
+			commerceOrder.getCommerceOrderId(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private CommerceOrder _updateNestedResources(
@@ -257,7 +203,7 @@ public class OrderResourceImpl
 
 		// Order items
 
-		OrderItem[] orderItems = order.getItems();
+		OrderItem[] orderItems = order.getOrderItems();
 
 		if (orderItems != null) {
 			_commerceOrderItemService.deleteCommerceOrderItems(
@@ -302,16 +248,12 @@ public class OrderResourceImpl
 	private CommerceOrder _updateOrder(CommerceOrder commerceOrder, Order order)
 		throws Exception {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		long commerceShippingMethodId =
 			commerceOrder.getCommerceShippingMethodId();
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodService.fetchCommerceShippingMethod(
-				commerceChannel.getSiteGroupId(), order.getShippingMethod());
+				commerceOrder.getGroupId(), order.getShippingMethod());
 
 		if (commerceShippingMethod != null) {
 			commerceShippingMethodId =
@@ -320,37 +262,37 @@ public class OrderResourceImpl
 
 		commerceOrder = _commerceOrderService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
-			GetterUtil.get(
+			GetterUtil.getLong(
 				order.getBillingAddressId(),
 				commerceOrder.getBillingAddressId()),
-			GetterUtil.get(
+			GetterUtil.getLong(
 				order.getShippingAddressId(),
 				commerceOrder.getShippingAddressId()),
-			GetterUtil.get(
+			GetterUtil.getString(
 				order.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
 			commerceShippingMethodId,
-			GetterUtil.get(
+			GetterUtil.getString(
 				order.getShippingOption(),
 				commerceOrder.getShippingOptionName()),
-			GetterUtil.get(
+			GetterUtil.getString(
 				order.getPurchaseOrderNumber(),
 				commerceOrder.getPurchaseOrderNumber()),
-			(BigDecimal)GetterUtil.get(
+			(BigDecimal)GetterUtil.getNumber(
 				order.getSubtotal(), commerceOrder.getSubtotal()),
-			(BigDecimal)GetterUtil.get(
+			(BigDecimal)GetterUtil.getNumber(
 				order.getShippingAmount(), commerceOrder.getShippingAmount()),
-			(BigDecimal)GetterUtil.get(
+			(BigDecimal)GetterUtil.getNumber(
 				order.getTotal(), commerceOrder.getTotal()),
-			GetterUtil.get(
+			GetterUtil.getString(
 				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
-			GetterUtil.get(
+			GetterUtil.getString(
 				order.getExternalReferenceCode(),
 				commerceOrder.getExternalReferenceCode()),
 			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getSiteGroupId(),
-				_user.getUserId(), 0L,
-				GetterUtil.get(
+				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+				_user.getUserId(), 0,
+				GetterUtil.getLong(
 					order.getAccountId(),
 					commerceOrder.getCommerceAccountId())));
 
@@ -372,8 +314,8 @@ public class OrderResourceImpl
 				commerceOrder.getGroupId()));
 
 		if (commerceOrder.getOrderStatus() != order.getOrderStatus()) {
-			commerceOrder = _commerceOrderService.updateOrderStatus(
-				commerceOrder.getCommerceOrderId(), order.getOrderStatus());
+			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+				commerceOrder, order.getOrderStatus(), _user.getUserId());
 		}
 
 		return commerceOrder;
@@ -388,7 +330,7 @@ public class OrderResourceImpl
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodService.fetchCommerceShippingMethod(
-				commerceChannel.getSiteGroupId(), order.getShippingMethod());
+				commerceChannel.getGroupId(), order.getShippingMethod());
 
 		if (commerceShippingMethod != null) {
 			commerceShippingMethodId =
@@ -420,21 +362,21 @@ public class OrderResourceImpl
 			_user.getUserId(), commerceChannel.getGroupId(),
 			commerceAccount.getCommerceAccountId(),
 			commerceCurrency.getCommerceCurrencyId(),
-			GetterUtil.get(order.getBillingAddressId(), 0L),
-			GetterUtil.get(order.getShippingAddressId(), 0L),
+			GetterUtil.getLong(order.getBillingAddressId()),
+			GetterUtil.getLong(order.getShippingAddressId()),
 			order.getPaymentMethod(), commerceShippingMethodId,
 			order.getShippingOption(), order.getPurchaseOrderNumber(),
 			order.getSubtotal(), order.getShippingAmount(), order.getTotal(),
-			GetterUtil.get(
+			GetterUtil.getInteger(
 				order.getPaymentStatus(),
 				CommerceOrderConstants.PAYMENT_STATUS_PENDING),
-			GetterUtil.get(
+			GetterUtil.getInteger(
 				order.getOrderStatus(),
-				CommerceOrderConstants.ORDER_STATUS_AWAITING_FULFILLMENT),
+				CommerceOrderConstants.ORDER_STATUS_PENDING),
 			order.getAdvanceStatus(), order.getExternalReferenceCode(),
 			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getSiteGroupId(),
-				_user.getUserId(), 0L, commerceAccount.getCommerceAccountId()),
+				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+				_user.getUserId(), 0, commerceAccount.getCommerceAccountId()),
 			serviceContext);
 
 		// Order date
@@ -470,10 +412,7 @@ public class OrderResourceImpl
 
 		// Update nested resources
 
-		commerceOrder = _updateNestedResources(
-			order, commerceOrder, serviceContext);
-
-		return commerceOrder;
+		return _updateNestedResources(order, commerceOrder, serviceContext);
 	}
 
 	private static final EntityModel _entityModel = new OrderEntityModel();
@@ -494,6 +433,9 @@ public class OrderResourceImpl
 	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -506,7 +448,7 @@ public class OrderResourceImpl
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private OrderHelper _orderHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

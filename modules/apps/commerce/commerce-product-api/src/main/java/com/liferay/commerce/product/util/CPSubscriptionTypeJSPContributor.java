@@ -30,4 +30,9 @@ public interface CPSubscriptionTypeJSPContributor {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
+	public void render(
+			Object object, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean payment)
+		throws Exception;
+
 }

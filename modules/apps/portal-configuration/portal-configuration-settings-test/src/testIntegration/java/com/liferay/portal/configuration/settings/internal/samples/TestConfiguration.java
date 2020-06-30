@@ -32,4 +32,9 @@ public interface TestConfiguration {
 	)
 	public String settingsLocatorTestKey();
 
+	@Meta.AD(
+		deflt = "variantKey", name = "factory-alternate-key", required = false
+	)
+	public String factoryAlternateKey();
+
 }

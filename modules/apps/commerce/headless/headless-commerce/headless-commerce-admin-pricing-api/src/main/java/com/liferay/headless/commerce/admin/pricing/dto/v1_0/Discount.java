@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -39,6 +38,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,35 +54,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"limitationType", "target", "title"})
 @XmlRootElement(name = "Discount")
 public class Discount {
-
-	@Schema
-	public DiscountAccountGroup[] getAccountGroups() {
-		return accountGroups;
-	}
-
-	public void setAccountGroups(DiscountAccountGroup[] accountGroups) {
-		this.accountGroups = accountGroups;
-	}
-
-	@JsonIgnore
-	public void setAccountGroups(
-		UnsafeSupplier<DiscountAccountGroup[], Exception>
-			accountGroupsUnsafeSupplier) {
-
-		try {
-			accountGroups = accountGroupsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DiscountAccountGroup[] accountGroups;
 
 	@Schema
 	public Boolean getActive() {
@@ -112,35 +84,6 @@ public class Discount {
 	protected Boolean active;
 
 	@Schema
-	public DiscountCategory[] getCategories() {
-		return categories;
-	}
-
-	public void setCategories(DiscountCategory[] categories) {
-		this.categories = categories;
-	}
-
-	@JsonIgnore
-	public void setCategories(
-		UnsafeSupplier<DiscountCategory[], Exception>
-			categoriesUnsafeSupplier) {
-
-		try {
-			categories = categoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DiscountCategory[] categories;
-
-	@Schema
 	public String getCouponCode() {
 		return couponCode;
 	}
@@ -169,6 +112,7 @@ public class Discount {
 	protected String couponCode;
 
 	@Schema
+	@Valid
 	public Map<String, ?> getCustomFields() {
 		return customFields;
 	}
@@ -195,6 +139,127 @@ public class Discount {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
+
+	@Schema
+	@Valid
+	public DiscountAccountGroup[] getDiscountAccountGroups() {
+		return discountAccountGroups;
+	}
+
+	public void setDiscountAccountGroups(
+		DiscountAccountGroup[] discountAccountGroups) {
+
+		this.discountAccountGroups = discountAccountGroups;
+	}
+
+	@JsonIgnore
+	public void setDiscountAccountGroups(
+		UnsafeSupplier<DiscountAccountGroup[], Exception>
+			discountAccountGroupsUnsafeSupplier) {
+
+		try {
+			discountAccountGroups = discountAccountGroupsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DiscountAccountGroup[] discountAccountGroups;
+
+	@Schema
+	@Valid
+	public DiscountCategory[] getDiscountCategories() {
+		return discountCategories;
+	}
+
+	public void setDiscountCategories(DiscountCategory[] discountCategories) {
+		this.discountCategories = discountCategories;
+	}
+
+	@JsonIgnore
+	public void setDiscountCategories(
+		UnsafeSupplier<DiscountCategory[], Exception>
+			discountCategoriesUnsafeSupplier) {
+
+		try {
+			discountCategories = discountCategoriesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DiscountCategory[] discountCategories;
+
+	@Schema
+	@Valid
+	public DiscountProduct[] getDiscountProducts() {
+		return discountProducts;
+	}
+
+	public void setDiscountProducts(DiscountProduct[] discountProducts) {
+		this.discountProducts = discountProducts;
+	}
+
+	@JsonIgnore
+	public void setDiscountProducts(
+		UnsafeSupplier<DiscountProduct[], Exception>
+			discountProductsUnsafeSupplier) {
+
+		try {
+			discountProducts = discountProductsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DiscountProduct[] discountProducts;
+
+	@Schema
+	@Valid
+	public DiscountRule[] getDiscountRules() {
+		return discountRules;
+	}
+
+	public void setDiscountRules(DiscountRule[] discountRules) {
+		this.discountRules = discountRules;
+	}
+
+	@JsonIgnore
+	public void setDiscountRules(
+		UnsafeSupplier<DiscountRule[], Exception> discountRulesUnsafeSupplier) {
+
+		try {
+			discountRules = discountRulesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DiscountRule[] discountRules;
 
 	@Schema
 	public Date getDisplayDate() {
@@ -280,6 +345,7 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -306,6 +372,7 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@DecimalMin("0")
 	@Schema
 	public Integer getLimitationTimes() {
 		return limitationTimes;
@@ -363,7 +430,9 @@ public class Discount {
 	@NotEmpty
 	protected String limitationType;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getMaximumDiscountAmount() {
 		return maximumDiscountAmount;
 	}
@@ -420,6 +489,7 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@DecimalMin("0")
 	@Schema
 	public Integer getNumberOfUse() {
 		return numberOfUse;
@@ -448,7 +518,9 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfUse;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPercentageLevel1() {
 		return percentageLevel1;
 	}
@@ -476,7 +548,9 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal percentageLevel1;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPercentageLevel2() {
 		return percentageLevel2;
 	}
@@ -504,7 +578,9 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal percentageLevel2;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPercentageLevel3() {
 		return percentageLevel3;
 	}
@@ -532,7 +608,9 @@ public class Discount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal percentageLevel3;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPercentageLevel4() {
 		return percentageLevel4;
 	}
@@ -559,62 +637,6 @@ public class Discount {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal percentageLevel4;
-
-	@Schema
-	public DiscountProduct[] getProducts() {
-		return products;
-	}
-
-	public void setProducts(DiscountProduct[] products) {
-		this.products = products;
-	}
-
-	@JsonIgnore
-	public void setProducts(
-		UnsafeSupplier<DiscountProduct[], Exception> productsUnsafeSupplier) {
-
-		try {
-			products = productsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DiscountProduct[] products;
-
-	@Schema
-	public DiscountRule[] getRules() {
-		return rules;
-	}
-
-	public void setRules(DiscountRule[] rules) {
-		this.rules = rules;
-	}
-
-	@JsonIgnore
-	public void setRules(
-		UnsafeSupplier<DiscountRule[], Exception> rulesUnsafeSupplier) {
-
-		try {
-			rules = rulesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DiscountRule[] rules;
 
 	@Schema
 	public String getTarget() {
@@ -760,26 +782,6 @@ public class Discount {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (accountGroups != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountGroups\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < accountGroups.length; i++) {
-				sb.append(String.valueOf(accountGroups[i]));
-
-				if ((i + 1) < accountGroups.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (active != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -788,26 +790,6 @@ public class Discount {
 			sb.append("\"active\": ");
 
 			sb.append(active);
-		}
-
-		if (categories != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"categories\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < categories.length; i++) {
-				sb.append(String.valueOf(categories[i]));
-
-				if ((i + 1) < categories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (couponCode != null) {
@@ -832,6 +814,86 @@ public class Discount {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(customFields));
+		}
+
+		if (discountAccountGroups != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountAccountGroups\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < discountAccountGroups.length; i++) {
+				sb.append(String.valueOf(discountAccountGroups[i]));
+
+				if ((i + 1) < discountAccountGroups.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (discountCategories != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountCategories\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < discountCategories.length; i++) {
+				sb.append(String.valueOf(discountCategories[i]));
+
+				if ((i + 1) < discountCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (discountProducts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < discountProducts.length; i++) {
+				sb.append(String.valueOf(discountProducts[i]));
+
+				if ((i + 1) < discountProducts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (discountRules != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountRules\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < discountRules.length; i++) {
+				sb.append(String.valueOf(discountRules[i]));
+
+				if ((i + 1) < discountRules.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (displayDate != null) {
@@ -980,46 +1042,6 @@ public class Discount {
 			sb.append(percentageLevel4);
 		}
 
-		if (products != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"products\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < products.length; i++) {
-				sb.append(String.valueOf(products[i]));
-
-				if ((i + 1) < products.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (rules != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rules\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < rules.length; i++) {
-				sb.append(String.valueOf(rules[i]));
-
-				if ((i + 1) < rules.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (target != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1072,6 +1094,12 @@ public class Discount {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

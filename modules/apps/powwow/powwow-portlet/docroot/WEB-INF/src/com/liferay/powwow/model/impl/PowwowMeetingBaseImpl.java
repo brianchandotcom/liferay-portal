@@ -32,7 +32,7 @@ import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 public abstract class PowwowMeetingBaseImpl
 	extends PowwowMeetingModelImpl implements PowwowMeeting {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a powwow meeting model instance should use the <code>PowwowMeeting</code> interface instead.

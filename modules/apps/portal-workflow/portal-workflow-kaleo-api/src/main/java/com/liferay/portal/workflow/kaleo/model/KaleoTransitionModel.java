@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoTransitionModel
 	extends BaseModel<KaleoTransition>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo transition model instance should use the {@link KaleoTransition} interface instead.

@@ -38,7 +38,7 @@ import java.util.Date;
 @ProviderType
 public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a image model instance should use the {@link Image} interface instead.

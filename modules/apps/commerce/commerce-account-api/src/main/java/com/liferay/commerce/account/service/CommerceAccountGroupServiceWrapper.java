@@ -33,11 +33,6 @@ public class CommerceAccountGroupServiceWrapper
 		_commerceAccountGroupService = commerceAccountGroupService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceAccountGroupServiceUtil} to access the commerce account group remote service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccountGroup
 			addCommerceAccountGroup(

@@ -250,7 +250,7 @@ create table CommerceShipment (
 	commerceAccountId LONG,
 	commerceAddressId LONG,
 	commerceShippingMethodId LONG,
-	shippingOptionName VARCHAR(75) null,
+	shippingOptionName TEXT null,
 	carrier VARCHAR(75) null,
 	trackingNumber VARCHAR(75) null,
 	shippingDate DATE null,
@@ -308,5 +308,14 @@ create table CommerceSubscriptionEntry (
 	subscriptionStatus INTEGER,
 	lastIterationDate DATE null,
 	nextIterationDate DATE null,
-	startDate DATE null
+	startDate DATE null,
+	deliverySubscriptionLength INTEGER,
+	deliverySubscriptionType VARCHAR(75) null,
+	deliverySubTypeSettings VARCHAR(75) null,
+	deliveryCurrentCycle LONG,
+	deliveryMaxSubscriptionCycles LONG,
+	deliverySubscriptionStatus INTEGER,
+	deliveryLastIterationDate DATE null,
+	deliveryNextIterationDate DATE null,
+	deliveryStartDate DATE null
 );

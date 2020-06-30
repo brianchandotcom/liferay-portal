@@ -15,10 +15,11 @@
 package com.liferay.commerce.shipping.engine.fedex.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.shipping.engine.fedex.internal.FedExCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
-import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -26,12 +27,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -79,13 +78,16 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceShippingScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
+		return "commerce.shipping.method";
 	}
 
 	@Override
 	public boolean isVisible(
 		User user, CommerceShippingMethod commerceShippingMethod) {
+
+		if (commerceShippingMethod == null) {
+			return false;
+		}
 
 		String engineKey = commerceShippingMethod.getEngineKey();
 
@@ -103,9 +105,11 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
 		throws IOException {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			long commerceChannelId = ParamUtil.getLong(
+				httpServletRequest, "commerceChannelId");
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 			FedExCommerceShippingEngineGroupServiceConfiguration
 				fedExCommerceShippingEngineGroupServiceConfiguration =
@@ -115,7 +119,7 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
 						new ParameterMapSettingsLocator(
 							httpServletRequest.getParameterMap(),
 							new GroupServiceSettingsLocator(
-								themeDisplay.getScopeGroupId(),
+								commerceChannel.getGroupId(),
 								FedExCommerceShippingEngineConstants.
 									SERVICE_NAME)));
 
@@ -128,13 +132,16 @@ public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
 				_servletContext, httpServletRequest, httpServletResponse,
 				"/configuration.jsp");
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShippingMethodFedExConfigurationScreenNavigationEntry.class);
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

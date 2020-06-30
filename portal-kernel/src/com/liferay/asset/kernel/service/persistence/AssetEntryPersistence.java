@@ -40,7 +40,7 @@ import java.util.Set;
 @ProviderType
 public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryUtil} to access the asset entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

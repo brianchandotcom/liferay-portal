@@ -34,6 +34,7 @@ public class CommerceInventoryWarehouseSoap implements Serializable {
 		CommerceInventoryWarehouseSoap soapModel =
 			new CommerceInventoryWarehouseSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceInventoryWarehouseId(
 			model.getCommerceInventoryWarehouseId());
@@ -117,6 +118,14 @@ public class CommerceInventoryWarehouseSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceInventoryWarehouseId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getExternalReferenceCode() {
@@ -285,6 +294,7 @@ public class CommerceInventoryWarehouseSoap implements Serializable {
 		_type = type;
 	}
 
+	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _commerceInventoryWarehouseId;
 	private long _companyId;

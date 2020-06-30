@@ -32,7 +32,7 @@ import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 public abstract class TasksEntryBaseImpl
 	extends TasksEntryModelImpl implements TasksEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a tasks entry model instance should use the <code>TasksEntry</code> interface instead.

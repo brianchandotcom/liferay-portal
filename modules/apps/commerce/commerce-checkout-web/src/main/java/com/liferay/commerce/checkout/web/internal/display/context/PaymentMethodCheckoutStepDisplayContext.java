@@ -20,7 +20,6 @@ import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_commercePaymentEngine = commercePaymentEngine;
-		_httpServletRequest = httpServletRequest;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
@@ -49,25 +47,19 @@ public class PaymentMethodCheckoutStepDisplayContext {
 	public List<CommercePaymentMethod> getCommercePaymentMethods()
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _commercePaymentEngine.getEnabledCommercePaymentMethodsForOrder(
-			themeDisplay.getScopeGroupId(),
-			_commerceOrder.getCommerceOrderId());
+			_commerceOrder.getGroupId(), _commerceOrder.getCommerceOrderId());
 	}
 
 	public String getImageURL(
-			ThemeDisplay themeDisplay, String paymentMethodKey)
+			long groupId, String paymentMethodKey, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return _commercePaymentEngine.getPaymentMethodImageURL(
-			themeDisplay, paymentMethodKey);
+			groupId, paymentMethodKey, themeDisplay);
 	}
 
 	private final CommerceOrder _commerceOrder;
 	private final CommercePaymentEngine _commercePaymentEngine;
-	private final HttpServletRequest _httpServletRequest;
 
 }

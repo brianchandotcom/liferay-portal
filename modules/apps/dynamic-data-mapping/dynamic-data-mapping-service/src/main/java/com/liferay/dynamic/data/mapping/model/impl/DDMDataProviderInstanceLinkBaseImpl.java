@@ -33,7 +33,7 @@ public abstract class DDMDataProviderInstanceLinkBaseImpl
 	extends DDMDataProviderInstanceLinkModelImpl
 	implements DDMDataProviderInstanceLink {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm data provider instance link model instance should use the <code>DDMDataProviderInstanceLink</code> interface instead.

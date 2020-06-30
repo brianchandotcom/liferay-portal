@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class EmailAddress {
+public class EmailAddress implements Cloneable {
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -107,6 +107,11 @@ public class EmailAddress {
 	}
 
 	protected String type;
+
+	@Override
+	public EmailAddress clone() throws CloneNotSupportedException {
+		return (EmailAddress)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -60,9 +60,8 @@ public class CommerceAccountGroupRelLocalServiceImpl
 		commerceAccountGroupRel.setCommerceAccountGroupId(
 			commerceAccountGroupId);
 
-		commerceAccountGroupRelPersistence.update(commerceAccountGroupRel);
-
-		return commerceAccountGroupRel;
+		return commerceAccountGroupRelPersistence.update(
+			commerceAccountGroupRel);
 	}
 
 	@Override

@@ -362,11 +362,6 @@ public class CommerceRegionWrapper
 		return _commerceRegion.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce region model instance should use the <code>CommerceRegion</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceRegion.persist();

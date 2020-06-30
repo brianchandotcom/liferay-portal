@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowTaskAssignToMe {
+public class WorkflowTaskAssignToMe implements Cloneable {
 
 	public String getComment() {
 		return comment;
@@ -70,6 +70,11 @@ public class WorkflowTaskAssignToMe {
 	}
 
 	protected Date dueDate;
+
+	@Override
+	public WorkflowTaskAssignToMe clone() throws CloneNotSupportedException {
+		return (WorkflowTaskAssignToMe)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -56,6 +56,22 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		soapModel.setLastIterationDate(model.getLastIterationDate());
 		soapModel.setNextIterationDate(model.getNextIterationDate());
 		soapModel.setStartDate(model.getStartDate());
+		soapModel.setDeliverySubscriptionLength(
+			model.getDeliverySubscriptionLength());
+		soapModel.setDeliverySubscriptionType(
+			model.getDeliverySubscriptionType());
+		soapModel.setDeliverySubscriptionTypeSettings(
+			model.getDeliverySubscriptionTypeSettings());
+		soapModel.setDeliveryCurrentCycle(model.getDeliveryCurrentCycle());
+		soapModel.setDeliveryMaxSubscriptionCycles(
+			model.getDeliveryMaxSubscriptionCycles());
+		soapModel.setDeliverySubscriptionStatus(
+			model.getDeliverySubscriptionStatus());
+		soapModel.setDeliveryLastIterationDate(
+			model.getDeliveryLastIterationDate());
+		soapModel.setDeliveryNextIterationDate(
+			model.getDeliveryNextIterationDate());
+		soapModel.setDeliveryStartDate(model.getDeliveryStartDate());
 
 		return soapModel;
 	}
@@ -281,6 +297,82 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		_startDate = startDate;
 	}
 
+	public int getDeliverySubscriptionLength() {
+		return _deliverySubscriptionLength;
+	}
+
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		_deliverySubscriptionLength = deliverySubscriptionLength;
+	}
+
+	public String getDeliverySubscriptionType() {
+		return _deliverySubscriptionType;
+	}
+
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		_deliverySubscriptionType = deliverySubscriptionType;
+	}
+
+	public String getDeliverySubscriptionTypeSettings() {
+		return _deliverySubscriptionTypeSettings;
+	}
+
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
+	}
+
+	public long getDeliveryCurrentCycle() {
+		return _deliveryCurrentCycle;
+	}
+
+	public void setDeliveryCurrentCycle(long deliveryCurrentCycle) {
+		_deliveryCurrentCycle = deliveryCurrentCycle;
+	}
+
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _deliveryMaxSubscriptionCycles;
+	}
+
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
+	}
+
+	public int getDeliverySubscriptionStatus() {
+		return _deliverySubscriptionStatus;
+	}
+
+	public void setDeliverySubscriptionStatus(int deliverySubscriptionStatus) {
+		_deliverySubscriptionStatus = deliverySubscriptionStatus;
+	}
+
+	public Date getDeliveryLastIterationDate() {
+		return _deliveryLastIterationDate;
+	}
+
+	public void setDeliveryLastIterationDate(Date deliveryLastIterationDate) {
+		_deliveryLastIterationDate = deliveryLastIterationDate;
+	}
+
+	public Date getDeliveryNextIterationDate() {
+		return _deliveryNextIterationDate;
+	}
+
+	public void setDeliveryNextIterationDate(Date deliveryNextIterationDate) {
+		_deliveryNextIterationDate = deliveryNextIterationDate;
+	}
+
+	public Date getDeliveryStartDate() {
+		return _deliveryStartDate;
+	}
+
+	public void setDeliveryStartDate(Date deliveryStartDate) {
+		_deliveryStartDate = deliveryStartDate;
+	}
+
 	private String _uuid;
 	private long _commerceSubscriptionEntryId;
 	private long _groupId;
@@ -301,5 +393,14 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 	private Date _lastIterationDate;
 	private Date _nextIterationDate;
 	private Date _startDate;
+	private int _deliverySubscriptionLength;
+	private String _deliverySubscriptionType;
+	private String _deliverySubscriptionTypeSettings;
+	private long _deliveryCurrentCycle;
+	private long _deliveryMaxSubscriptionCycles;
+	private int _deliverySubscriptionStatus;
+	private Date _deliveryLastIterationDate;
+	private Date _deliveryNextIterationDate;
+	private Date _deliveryStartDate;
 
 }

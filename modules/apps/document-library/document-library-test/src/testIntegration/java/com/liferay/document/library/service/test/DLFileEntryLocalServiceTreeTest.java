@@ -101,7 +101,7 @@ public class DLFileEntryLocalServiceTreeTest {
 			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 				fileEntry.getFileEntryId());
 
-			dlFileEntry.setTreePath(null);
+			dlFileEntry.setTreePath("/0/");
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 		}

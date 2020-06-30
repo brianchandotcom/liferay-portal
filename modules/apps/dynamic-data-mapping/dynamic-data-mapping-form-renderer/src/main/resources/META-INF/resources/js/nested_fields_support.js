@@ -78,11 +78,33 @@ AUI.add(
 
 				return nodes.filter(
 					function(item) {
-						var qualifiedName = item.one('.form-group').getData('fieldname');
+						if (item.one('.form-group')) {
+							var qualifiedName = item.one('.form-group').getData('fieldname');
 
-						return fn.call(instance, qualifiedName, item);
+							return fn.call(instance, qualifiedName, item);
+						}
 					}
 				);
+			},
+
+			findNode: function(fn) {
+				var instance = this;
+
+				var _container = instance.get('container')._node;
+
+				var nodes = _container.querySelectorAll('.lfr-ddm-form-field-container');
+
+				for (var i = 0; i < nodes.length; i++) {
+					if (nodes[i].firstChild) {
+						var qualifiedName = nodes[i].firstChild.dataset.fieldname;
+
+						if (fn.call(instance, qualifiedName, nodes[i])) {
+							return A.one(nodes[i]);
+						}
+					}
+				}
+
+				return null;
 			},
 
 			getField: function(name, instanceId) {
@@ -107,6 +129,16 @@ AUI.add(
 				);
 
 				return field;
+			},
+
+			getFieldContainer: function(name) {
+				var instance = this;
+
+				if (instance._metalComponent) {
+					return instance._metalComponent.refs[name];
+				}
+
+				return null;
 			},
 
 			getImmediateFields: function() {

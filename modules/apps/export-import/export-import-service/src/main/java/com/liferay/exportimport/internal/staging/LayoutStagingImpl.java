@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
@@ -111,6 +112,12 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public boolean isBranchingLayout(Layout layout) {
+		String layoutType = layout.getType();
+
+		if (LayoutConstants.TYPE_CONTROL_PANEL.equals(layoutType)) {
+			return false;
+		}
+
 		return isBranchingLayoutSet(
 			layout.getGroup(), layout.isPrivateLayout());
 	}

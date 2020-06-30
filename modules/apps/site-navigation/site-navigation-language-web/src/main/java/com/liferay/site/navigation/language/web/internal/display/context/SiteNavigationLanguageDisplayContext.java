@@ -79,10 +79,8 @@ public class SiteNavigationLanguageDisplayContext {
 			}
 		}
 
-		availableLanguageIdKVPs = ListUtil.sort(
+		return ListUtil.sort(
 			availableLanguageIdKVPs, new KeyValuePairComparator(false, true));
-
-		return availableLanguageIdKVPs;
 	}
 
 	public String[] getAvailableLanguageIds() {

@@ -350,11 +350,6 @@ public class TrashEntryWrapper implements ModelWrapper<TrashEntry>, TrashEntry {
 		return _trashEntry.isTrashEntry(className, classPK);
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a trash entry model instance should use the <code>TrashEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_trashEntry.persist();

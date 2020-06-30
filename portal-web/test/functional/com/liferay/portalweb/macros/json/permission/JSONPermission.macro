@@ -1,0 +1,47 @@
+definition {
+
+	macro addPermission {
+		Variables.assertDefined(parameterList = "${actionId},${name},${roleTitle}");
+
+		var groupId = JSONPermissionSetter.setGroupId(groupName = "${groupName}");
+
+		var roleType = JSONPermissionSetter.setRoleType(roleType = "${roleType}");
+
+		var primKey = JSONPermissionSetter.setPrimKey(roleType = "${roleType}");
+
+		var roleId = JSONPermissionSetter.setRoleId(roleTitle = "${roleTitle}");
+
+		var scope = JSONPermissionSetter.setScope(roleType = "${roleType}");
+
+		JSONPermissionAPI._addResourcePermission(
+			actionId = "${actionId}",
+			groupId = "${groupId}",
+			name = "${name}",
+			primKey = "${primKey}",
+			roleId = "${roleId}",
+			scope = "${scope}");
+	}
+
+	macro removePermission {
+		Variables.assertDefined(parameterList = "${actionId},${name},${roleTitle}");
+
+		var groupId = JSONPermissionSetter.setGroupId(groupName = "${groupName}");
+
+		var roleType = JSONPermissionSetter.setRoleType(roleType = "${roleType}");
+
+		var primKey = JSONPermissionSetter.setPrimKey(roleType = "${roleType}");
+
+		var roleId = JSONPermissionSetter.setRoleId(roleTitle = "${roleTitle}");
+
+		var scope = JSONPermissionSetter.setScope(roleType = "${roleType}");
+
+		JSONPermissionAPI._removeResourcePermission(
+			actionId = "${actionId}",
+			groupId = "${groupId}",
+			name = "${name}",
+			primKey = "${primKey}",
+			roleId = "${roleId}",
+			scope = "${scope}");
+	}
+
+}

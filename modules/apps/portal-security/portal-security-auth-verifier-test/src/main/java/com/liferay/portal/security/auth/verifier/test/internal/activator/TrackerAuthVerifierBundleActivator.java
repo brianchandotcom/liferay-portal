@@ -49,6 +49,8 @@ public class TrackerAuthVerifierBundleActivator
 
 		properties = new HashMapDictionary<>();
 
+		properties.put("liferay.auth.verifier", false);
+
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-disabled-test", properties);
 

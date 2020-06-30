@@ -48,7 +48,7 @@ public interface CPOptionCategoryModel
 	extends BaseModel<CPOptionCategory>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp option category model instance should use the {@link CPOptionCategory} interface instead.

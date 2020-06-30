@@ -1,0 +1,59 @@
+@import '../../styles/variables';
+
+.commerce-modal .modal-dialog {
+	position: static;
+}
+
+.modal-body-iframe {
+	position: relative;
+
+	.loader-container {
+		align-items: center;
+		background: white;
+		bottom: 0;
+		display: flex;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}
+
+.modal-iframe {
+	&-content {
+		padding: map-get($spacers, 4);
+	}
+
+	&-footer {
+		align-items: center;
+		background-color: white;
+		border-top: 1px solid #e7e7ed;
+		bottom: 0;
+		display: flex;
+		flex-shrink: 0;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		left: 0;
+		padding: map-get($spacers, 3) map-get($spacers, 4);
+		position: fixed;
+		right: 0;
+	}
+
+	&-header {
+		background-color: white;
+		padding: map-get($spacers, 3) map-get($spacers, 4);
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
+	&-wrapper {
+		background: white;
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+}

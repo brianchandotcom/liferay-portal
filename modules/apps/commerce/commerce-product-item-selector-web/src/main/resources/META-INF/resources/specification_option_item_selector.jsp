@@ -92,19 +92,23 @@ PortletURL portletURL = cpSpecificationOptionItemSelectorViewDisplayContext.getP
 </div>
 
 <aui:script use="liferay-search-container">
-	var cpSpecificationOptionSelectorWrapper = A.one("#<portlet:namespace />cpSpecificationOptionSelectorWrapper");
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />cpSpecificationOptions');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-				{
-					data: Liferay.Util.listCheckedExcept(cpSpecificationOptionSelectorWrapper, '<portlet:namespace />allRowIds')
-				}
-			);
-		}
+	var cpSpecificationOptionSelectorWrapper = A.one(
+		'#<portlet:namespace />cpSpecificationOptionSelectorWrapper'
 	);
+
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />cpSpecificationOptions'
+	);
+
+	searchContainer.on('rowToggled', function(event) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+			{
+				data: Liferay.Util.listCheckedExcept(
+					cpSpecificationOptionSelectorWrapper,
+					'<portlet:namespace />allRowIds'
+				)
+			}
+		);
+	});
 </aui:script>

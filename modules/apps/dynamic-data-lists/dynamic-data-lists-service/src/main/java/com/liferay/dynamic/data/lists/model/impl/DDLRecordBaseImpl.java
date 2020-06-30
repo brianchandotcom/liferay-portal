@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 public abstract class DDLRecordBaseImpl
 	extends DDLRecordModelImpl implements DDLRecord {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddl record model instance should use the <code>DDLRecord</code> interface instead.

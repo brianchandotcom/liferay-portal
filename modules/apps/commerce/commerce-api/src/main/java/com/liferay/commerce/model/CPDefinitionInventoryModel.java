@@ -45,7 +45,7 @@ public interface CPDefinitionInventoryModel
 	extends BaseModel<CPDefinitionInventory>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition inventory model instance should use the {@link CPDefinitionInventory} interface instead.

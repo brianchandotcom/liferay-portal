@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -37,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,35 +52,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Schema(requiredProperties = {"currencyCode", "name"})
 @XmlRootElement(name = "PriceList")
 public class PriceList {
-
-	@Schema
-	public PriceListAccountGroup[] getAccountGroups() {
-		return accountGroups;
-	}
-
-	public void setAccountGroups(PriceListAccountGroup[] accountGroups) {
-		this.accountGroups = accountGroups;
-	}
-
-	@JsonIgnore
-	public void setAccountGroups(
-		UnsafeSupplier<PriceListAccountGroup[], Exception>
-			accountGroupsUnsafeSupplier) {
-
-		try {
-			accountGroups = accountGroupsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PriceListAccountGroup[] accountGroups;
 
 	@Schema
 	public Boolean getActive() {
@@ -109,6 +81,7 @@ public class PriceList {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getCatalogId() {
 		return catalogId;
@@ -167,6 +140,7 @@ public class PriceList {
 	protected String currencyCode;
 
 	@Schema
+	@Valid
 	public Map<String, ?> getCustomFields() {
 		return customFields;
 	}
@@ -278,6 +252,7 @@ public class PriceList {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -360,6 +335,7 @@ public class PriceList {
 	protected Boolean neverExpire;
 
 	@Schema
+	@Valid
 	public PriceEntry[] getPriceEntries() {
 		return priceEntries;
 	}
@@ -386,6 +362,38 @@ public class PriceList {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceEntry[] priceEntries;
+
+	@Schema
+	@Valid
+	public PriceListAccountGroup[] getPriceListAccountGroups() {
+		return priceListAccountGroups;
+	}
+
+	public void setPriceListAccountGroups(
+		PriceListAccountGroup[] priceListAccountGroups) {
+
+		this.priceListAccountGroups = priceListAccountGroups;
+	}
+
+	@JsonIgnore
+	public void setPriceListAccountGroups(
+		UnsafeSupplier<PriceListAccountGroup[], Exception>
+			priceListAccountGroupsUnsafeSupplier) {
+
+		try {
+			priceListAccountGroups = priceListAccountGroupsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PriceListAccountGroup[] priceListAccountGroups;
 
 	@Schema
 	public Double getPriority() {
@@ -444,26 +452,6 @@ public class PriceList {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (accountGroups != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountGroups\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < accountGroups.length; i++) {
-				sb.append(String.valueOf(accountGroups[i]));
-
-				if ((i + 1) < accountGroups.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
 
 		if (active != null) {
 			if (sb.length() > 1) {
@@ -605,6 +593,26 @@ public class PriceList {
 			sb.append("]");
 		}
 
+		if (priceListAccountGroups != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListAccountGroups\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < priceListAccountGroups.length; i++) {
+				sb.append(String.valueOf(priceListAccountGroups[i]));
+
+				if ((i + 1) < priceListAccountGroups.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -619,6 +627,12 @@ public class PriceList {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

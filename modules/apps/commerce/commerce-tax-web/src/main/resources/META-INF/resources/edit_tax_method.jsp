@@ -17,37 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext = (CommerceTaxMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTaxMethod commerceTaxMethod = commerceTaxMethodsDisplayContext.getCommerceTaxMethod();
 
-String title = LanguageUtil.format(request, "edit-x", commerceTaxMethod.getName(locale), false);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-String screenNavigationEntryKey = commerceTaxMethodsDisplayContext.getScreenNavigationEntryKey();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationEntryKey), StringPool.BLANK, data);
+if (commerceTaxMethod != null) {
+	currentURLObj.setParameter("commerceTaxMethodId", String.valueOf(commerceTaxMethod.getCommerceTaxMethodId()));
+}
 %>
 
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
-
-<liferay-frontend:screen-navigation
-	containerCssClass="col-md-10"
-	key="<%= CommerceTaxScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_TAX_METHOD %>"
-	modelBean="<%= commerceTaxMethod %>"
-	navCssClass="col-md-2"
-	portletURL="<%= currentURLObj %>"
+<commerce-ui:side-panel-content
+	screenNavigatorKey="<%= CommerceTaxScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_TAX_METHOD %>"
+	screenNavigatorModelBean="<%= commerceTaxMethod %>"
+	screenNavigatorPortletURL="<%= currentURLObj %>"
+	title="<%= commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineName(locale) %>"
 />

@@ -48,7 +48,7 @@ public interface CommerceAvailabilityEstimateModel
 	extends BaseModel<CommerceAvailabilityEstimate>, LocalizedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce availability estimate model instance should use the {@link CommerceAvailabilityEstimate} interface instead.

@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceRegionPersistence
 	extends BasePersistence<CommerceRegion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceRegionUtil} to access the commerce region persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

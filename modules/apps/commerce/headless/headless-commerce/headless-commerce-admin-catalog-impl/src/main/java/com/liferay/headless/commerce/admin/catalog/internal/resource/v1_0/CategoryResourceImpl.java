@@ -22,10 +22,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.CategoryHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -36,7 +34,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -82,7 +79,9 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			cpDefinition.getCPDefinitionId());
 
 		return Page.of(
-			_toProductCategories(assetCategories), pagination, totalItems);
+			_categoryHelper.toProductCategories(
+				assetCategories, contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@NestedField(parentClass = Product.class, value = "categories")
@@ -91,27 +90,8 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
-		}
-
-		List<AssetCategory> assetCategories =
-			_assetCategoryService.getCategories(
-				_classNameLocalService.getClassNameId(
-					cpDefinition.getModelClass()),
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int totalItems = _assetCategoryService.getCategoriesCount(
-			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
-			cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			_toProductCategories(assetCategories), pagination, totalItems);
+		return _categoryHelper.getCategoriesPage(
+			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@Override
@@ -156,27 +136,6 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private List<Category> _toProductCategories(
-			List<AssetCategory> assetCategories)
-		throws Exception {
-
-		List<Category> categories = new ArrayList<>();
-
-		DTOConverter categoryDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				AssetCategory.class.getName());
-
-		for (AssetCategory category : assetCategories) {
-			categories.add(
-				(Category)categoryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						category.getCategoryId())));
-		}
-
-		return categories;
-	}
-
 	private void _updateProductCategories(
 			CPDefinition cpDefinition, Category[] categories)
 		throws PortalException {
@@ -209,13 +168,13 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 	private AssetCategoryService _assetCategoryService;
 
 	@Reference
+	private CategoryHelper _categoryHelper;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

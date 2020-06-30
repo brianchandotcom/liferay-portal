@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentSetElement {
+public class ContentSetElement implements Cloneable {
 
 	public Object getContent() {
 		return content;
@@ -109,6 +109,32 @@ public class ContentSetElement {
 	}
 
 	protected String title;
+
+	public Object getTitle_i18n() {
+		return title_i18n;
+	}
+
+	public void setTitle_i18n(Object title_i18n) {
+		this.title_i18n = title_i18n;
+	}
+
+	public void setTitle_i18n(
+		UnsafeSupplier<Object, Exception> title_i18nUnsafeSupplier) {
+
+		try {
+			title_i18n = title_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object title_i18n;
+
+	@Override
+	public ContentSetElement clone() throws CloneNotSupportedException {
+		return (ContentSetElement)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

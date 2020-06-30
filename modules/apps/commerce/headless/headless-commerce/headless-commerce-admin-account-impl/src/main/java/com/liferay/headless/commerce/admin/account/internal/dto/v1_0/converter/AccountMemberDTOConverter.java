@@ -60,14 +60,15 @@ public class AccountMemberDTOConverter implements DTOConverter {
 		return new AccountMember() {
 			{
 				accountId = commerceAccountUserRel.getCommerceAccountId();
+				accountRoles = _getAccountRoles(
+					commerceAccountUserRel, dtoConverterContext);
 				name = user.getFullName();
-				roles = _getRoles(commerceAccountUserRel, dtoConverterContext);
 				userId = user.getUserId();
 			}
 		};
 	}
 
-	private AccountRole[] _getRoles(
+	private AccountRole[] _getAccountRoles(
 			CommerceAccountUserRel commerceAccountUserRel,
 			DTOConverterContext dtoConverterContext)
 		throws Exception {

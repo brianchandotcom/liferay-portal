@@ -1,23 +1,23 @@
 .breadcrumb-horizontal {
-  background-color: transparent;
-  font-size: 12px;
+	background-color: transparent;
+	font-size: 12px;
 
-  li {
-    a {
-      color: $stroke-variant;
-      text-decoration: none;
+	li {
+		a {
+			color: $stroke-variant;
+			text-decoration: none;
 
-      &:hover {
-        color: $stroke-variant;
-      }
-    }
+			&:hover {
+				color: $stroke-variant;
+			}
+		}
 
-    &.active {
-      font-weight: bold;
+		&.active {
+			font-weight: bold;
 
-      &::before {
-        font-weight: normal;
-      }
-    }
-  }
+			&::before {
+				font-weight: normal;
+			}
+		}
+	}
 }

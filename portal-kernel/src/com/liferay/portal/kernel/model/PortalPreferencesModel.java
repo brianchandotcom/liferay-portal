@@ -37,7 +37,7 @@ import java.io.Serializable;
 public interface PortalPreferencesModel
 	extends BaseModel<PortalPreferences>, MVCCModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a portal preferences model instance should use the {@link PortalPreferences} interface instead.

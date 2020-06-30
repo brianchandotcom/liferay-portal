@@ -370,11 +370,6 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 		return _kbComment.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kb comment model instance should use the <code>KBComment</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kbComment.persist();

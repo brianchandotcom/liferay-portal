@@ -69,7 +69,7 @@ public class PortletLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #clearPortletsMap)}
+	 #clearPortletsMap()}
 	 */
 	@Deprecated
 	@Override
@@ -357,6 +357,9 @@ public class PortletLocalServiceWrapper
 		return _portletLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -510,7 +513,7 @@ public class PortletLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #loadGetPortletsMap(long))}
+	 #loadGetPortletsMap(long)}
 	 */
 	@Deprecated
 	@Override

@@ -39,7 +39,7 @@ import java.util.Set;
 public interface BrowserTrackerPersistence
 	extends BasePersistence<BrowserTracker> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BrowserTrackerUtil} to access the browser tracker persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

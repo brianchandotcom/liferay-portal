@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
+import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,9 +34,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) throws ModelListenerException {
-		_cpDisplayLayoutLocalService.
-			deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
-				layout.getGroupId(), layout.getUuid());
+		List<CPDisplayLayout> cpDisplayLayouts =
+			_cpDisplayLayoutLocalService.
+				fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
+					layout.getGroupId(), layout.getUuid());
+
+		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
+			_cpDisplayLayoutLocalService.deleteCPDisplayLayout(cpDisplayLayout);
+		}
 	}
 
 	@Reference

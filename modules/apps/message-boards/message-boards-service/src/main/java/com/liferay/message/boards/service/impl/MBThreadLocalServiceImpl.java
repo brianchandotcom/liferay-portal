@@ -121,7 +121,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusByUserName(message.getStatusByUserName());
 		thread.setStatusDate(message.getStatusDate());
 
-		mbThreadPersistence.update(thread);
+		thread = mbThreadPersistence.update(thread);
 
 		// Asset
 
@@ -631,7 +631,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setCategoryId(categoryId);
 
-		mbThreadPersistence.update(thread);
+		thread = mbThreadPersistence.update(thread);
 
 		// Messages
 
@@ -759,7 +759,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			thread.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-			mbThreadPersistence.update(thread);
+			thread = mbThreadPersistence.update(thread);
 		}
 
 		thread = updateStatus(
@@ -995,7 +995,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBThread thread = addThread(
 			message.getCategoryId(), message, serviceContext);
 
-		mbThreadPersistence.update(oldThread);
+		oldThread = mbThreadPersistence.update(oldThread);
 
 		// Update messages
 
@@ -1121,7 +1121,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setQuestion(question);
 
-		mbThreadPersistence.update(thread);
+		thread = mbThreadPersistence.update(thread);
 
 		MBMessage message = mbMessageLocalService.getMessage(
 			thread.getRootMessageId());
@@ -1151,7 +1151,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusByUserName(user.getFullName());
 		thread.setStatusDate(new Date());
 
-		mbThreadPersistence.update(thread);
+		thread = mbThreadPersistence.update(thread);
 
 		// Messages
 

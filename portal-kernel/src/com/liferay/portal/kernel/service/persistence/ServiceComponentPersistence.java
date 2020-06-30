@@ -39,7 +39,7 @@ import java.util.Set;
 public interface ServiceComponentPersistence
 	extends BasePersistence<ServiceComponent> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ServiceComponentUtil} to access the service component persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

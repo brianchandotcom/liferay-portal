@@ -228,11 +228,6 @@ public class ServiceComponentWrapper
 		return _serviceComponent.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a service component model instance should use the <code>ServiceComponent</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_serviceComponent.persist();

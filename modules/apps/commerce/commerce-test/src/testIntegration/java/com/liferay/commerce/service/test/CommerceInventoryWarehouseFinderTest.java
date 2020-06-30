@@ -68,8 +68,7 @@ public class CommerceInventoryWarehouseFinderTest {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_group.getGroupId(), name);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(name);
 
 		for (int i = 0; i < quantities.length; i++) {
 			int quantity = quantities[i];

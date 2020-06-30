@@ -1,21 +1,35 @@
-var Speedwell = Speedwell || { features: {} };
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+var Speedwell = Speedwell || {features: {}};
 
 Speedwell.features.context = (function(w) {
-    'use strict';
+	'use strict';
 
-    const SPEEDWELL = 'speedwell';
+	const SPEEDWELL = 'speedwell';
 
-    const speedwellContainer = w.document.getElementById(SPEEDWELL);
+	const speedwellContainer = w.document.getElementById(SPEEDWELL);
 
-    return {
-        getContainer: function() {
-            return speedwellContainer;
-        },
+	return {
+		getContainer() {
+			return speedwellContainer;
+		},
 
-        getThemeName: function() {
-            return SPEEDWELL;
-        },
+		getThemeName() {
+			return SPEEDWELL;
+		},
 
-        isMobile: w.Liferay.Browser.isMobile
-    }
+		isMobile: w.Liferay.Browser.isMobile
+	};
 })(window);

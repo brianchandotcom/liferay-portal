@@ -56,9 +56,13 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 
 		try {
 			CommerceTaxFixedRate commerceTaxFixedRate =
-				_commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
+				_commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRate(
 					commerceTaxCalculateRequest.getTaxCategoryId(),
 					commerceTaxCalculateRequest.getCommerceTaxMethodId());
+
+			if (commerceTaxFixedRate == null) {
+				return new CommerceTaxValue(KEY, KEY, BigDecimal.ZERO);
+			}
 
 			BigDecimal rate = BigDecimal.valueOf(
 				commerceTaxFixedRate.getRate());

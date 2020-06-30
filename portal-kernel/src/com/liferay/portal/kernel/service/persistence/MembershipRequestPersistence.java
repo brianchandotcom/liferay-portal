@@ -39,7 +39,7 @@ import java.util.Set;
 public interface MembershipRequestPersistence
 	extends BasePersistence<MembershipRequest> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestUtil} to access the membership request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

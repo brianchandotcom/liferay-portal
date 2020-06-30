@@ -50,7 +50,7 @@ public class UserTrackerLocalServiceImpl
 			userTracker.setRemoteHost(remoteHost);
 			userTracker.setUserAgent(userAgent);
 
-			userTrackerPersistence.update(userTracker);
+			userTracker = userTrackerPersistence.update(userTracker);
 
 			for (UserTrackerPath userTrackerPath : userTrackerPaths) {
 				long pathId = counterLocalService.increment(

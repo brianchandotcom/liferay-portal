@@ -16,7 +16,11 @@ package com.liferay.commerce.price.list.test.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
@@ -24,8 +28,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +43,202 @@ import java.util.List;
  * @author Luca Pellizzon
  */
 public class CommercePriceListTestUtil {
+
+	public static CommercePriceList addAccountAndChannelPriceList(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			String type)
+		throws Exception {
+
+		CommercePriceList commercePriceList = addCommercePriceList(
+			groupId, false, type, 1.0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListAccountRelLocalServiceUtil.
+			addCommercePriceListAccountRel(
+				commercePriceList.getCommercePriceListId(), commerceAccountId,
+				0, serviceContext);
+
+		CommercePriceListChannelRelLocalServiceUtil.
+			addCommercePriceListChannelRel(
+				commercePriceList.getCommercePriceListId(), commerceChannelId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addAccountGroupAndChannelPriceList(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, String type)
+		throws Exception {
+
+		CommercePriceList commercePriceList = addCommercePriceList(
+			groupId, false, type, 1.0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
+				addCommercePriceListCommerceAccountGroupRel(
+					commercePriceList.getCommercePriceListId(),
+					commerceAccountGroupId, 0, serviceContext);
+		}
+
+		CommercePriceListChannelRelLocalServiceUtil.
+			addCommercePriceListChannelRel(
+				commercePriceList.getCommercePriceListId(), commerceChannelId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addAccountGroupPriceList(
+			long groupId, long[] commerceAccountGroupIds, String type)
+		throws Exception {
+
+		CommercePriceList commercePriceList = addCommercePriceList(
+			groupId, false, type, 1.0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
+				addCommercePriceListCommerceAccountGroupRel(
+					commercePriceList.getCommercePriceListId(),
+					commerceAccountGroupId, 0, serviceContext);
+		}
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addAccountGroupsToPriceList(
+			long groupId, long[] commerceAccountGroupIds,
+			long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
+				addCommercePriceListCommerceAccountGroupRel(
+					commercePriceList.getCommercePriceListId(),
+					commerceAccountGroupId, 0, serviceContext);
+		}
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addAccountPriceList(
+			long groupId, long commerceAccountId, String type)
+		throws Exception {
+
+		CommercePriceList commercePriceList = addCommercePriceList(
+			groupId, false, type, 1.0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListAccountRelLocalServiceUtil.
+			addCommercePriceListAccountRel(
+				commercePriceList.getCommercePriceListId(), commerceAccountId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addAccountToPriceList(
+			long groupId, long commerceAccountId, long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListAccountRelLocalServiceUtil.
+			addCommercePriceListAccountRel(
+				commercePriceList.getCommercePriceListId(), commerceAccountId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addChannelPriceList(
+			long groupId, long commerceChannelId, String type)
+		throws Exception {
+
+		CommercePriceList commercePriceList = addCommercePriceList(
+			groupId, false, type, 1.0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListChannelRelLocalServiceUtil.
+			addCommercePriceListChannelRel(
+				commercePriceList.getCommercePriceListId(), commerceChannelId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addChannelToPriceList(
+			long groupId, long commerceChannelId, long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListChannelRelLocalServiceUtil.
+			addCommercePriceListChannelRel(
+				commercePriceList.getCommercePriceListId(), commerceChannelId,
+				0, serviceContext);
+
+		return commercePriceList;
+	}
+
+	public static CommercePriceList addCommercePriceList(
+			long groupId, boolean catalogBasePriceList, String type,
+			double priority)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(
+				serviceContext.getCompanyId());
+
+		User user = UserLocalServiceUtil.getDefaultUser(
+			serviceContext.getCompanyId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return CommercePriceListLocalServiceUtil.addCommercePriceList(
+			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
+			type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
+			priority, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), "", true, serviceContext);
+	}
 
 	public static CommercePriceList addCommercePriceList(
 			long groupId, String currency, long parentCommercePriceListId,

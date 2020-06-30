@@ -62,7 +62,7 @@ import java.util.List;
 public interface CommerceOrderItemLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemLocalServiceUtil} to access the commerce order item local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderItemLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -85,6 +85,8 @@ public interface CommerceOrderItemLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countSubscriptionCommerceOrderItems(long commerceOrderId);
+
 	/**
 	 * Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	 *
@@ -101,7 +103,6 @@ public interface CommerceOrderItemLocalService
 	 * @return the commerce order item that was removed
 	 * @throws PortalException
 	 */
-	@Deprecated
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderItem deleteCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem)
@@ -210,6 +211,10 @@ public interface CommerceOrderItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
+		long bookedQuantityId);
+
 	/**
 	 * Returns the commerce order item with the matching external reference code and company.
 	 *
@@ -276,6 +281,11 @@ public interface CommerceOrderItemLocalService
 		long commerceOrderId, long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long groupId, long commerceAccountId, int[] orderStatuses, int start,
+		int end);
+
 	/**
 	 * Returns the number of commerce order items.
 	 *
@@ -292,10 +302,11 @@ public interface CommerceOrderItemLocalService
 		long commerceOrderId, long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+	public int getCommerceOrderItemsCount(
+		long groupId, long commerceAccountId, int[] orderStatuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstanceQuantity(long cpInstanceId, int orderStatus);
+	public int getCommerceOrderItemsQuantity(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -307,6 +318,9 @@ public interface CommerceOrderItemLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -362,6 +376,17 @@ public interface CommerceOrderItemLocalService
 			long commerceOrderItemId, String deliveryGroup,
 			long shippingAddressId, String printedNote,
 			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
+			int requestedDeliveryDateYear)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public CommerceOrderItem updateCommerceOrderItemInfo(
+			long commerceOrderItemId, String deliveryGroup,
+			long shippingAddressId, String printedNote,
+			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
 			int requestedDeliveryDateYear, int requestedDeliveryDateHour,
 			int requestedDeliveryDateMinute, ServiceContext serviceContext)
 		throws PortalException;
@@ -382,7 +407,7 @@ public interface CommerceOrderItemLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
@@ -391,6 +416,12 @@ public interface CommerceOrderItemLocalService
 
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
 			long commerceOrderItemId, BigDecimal unitPrice, int quantity)
+		throws PortalException;
+
+	public CommerceOrderItem upsertCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, int quantity,
+			int shippedQuantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem upsertCommerceOrderItem(

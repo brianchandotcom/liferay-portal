@@ -40,7 +40,7 @@ import java.util.Set;
 public interface FriendlyURLEntryMappingPersistence
 	extends BasePersistence<FriendlyURLEntryMapping> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryMappingUtil} to access the friendly url entry mapping persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

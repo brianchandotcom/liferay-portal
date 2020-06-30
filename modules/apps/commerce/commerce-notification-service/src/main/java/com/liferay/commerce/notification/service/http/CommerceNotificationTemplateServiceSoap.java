@@ -68,6 +68,51 @@ public class CommerceNotificationTemplateServiceSoap {
 	public static
 		com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap
 				addCommerceNotificationTemplate(
+					long userId, long groupId, String name, String description,
+					String from, String[] fromNameMapLanguageIds,
+					String[] fromNameMapValues, String to, String cc,
+					String bcc, String type, boolean enabled,
+					String[] subjectMapLanguageIds, String[] subjectMapValues,
+					String[] bodyMapLanguageIds, String[] bodyMapValues,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			Map<Locale, String> fromNameMap =
+				LocalizationUtil.getLocalizationMap(
+					fromNameMapLanguageIds, fromNameMapValues);
+			Map<Locale, String> subjectMap =
+				LocalizationUtil.getLocalizationMap(
+					subjectMapLanguageIds, subjectMapValues);
+			Map<Locale, String> bodyMap = LocalizationUtil.getLocalizationMap(
+				bodyMapLanguageIds, bodyMapValues);
+
+			com.liferay.commerce.notification.model.CommerceNotificationTemplate
+				returnValue =
+					CommerceNotificationTemplateServiceUtil.
+						addCommerceNotificationTemplate(
+							userId, groupId, name, description, from,
+							fromNameMap, to, cc, bcc, type, enabled, subjectMap,
+							bodyMap, serviceContext);
+
+			return com.liferay.commerce.notification.model.
+				CommerceNotificationTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static
+		com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap
+				addCommerceNotificationTemplate(
 					String name, String description, String from,
 					String[] fromNameMapLanguageIds, String[] fromNameMapValues,
 					String to, String cc, String bcc, String type,
@@ -98,10 +143,10 @@ public class CommerceNotificationTemplateServiceSoap {
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -114,10 +159,10 @@ public class CommerceNotificationTemplateServiceSoap {
 				deleteCommerceNotificationTemplate(
 					commerceNotificationTemplateId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -137,10 +182,10 @@ public class CommerceNotificationTemplateServiceSoap {
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -165,10 +210,10 @@ public class CommerceNotificationTemplateServiceSoap {
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -192,10 +237,10 @@ public class CommerceNotificationTemplateServiceSoap {
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -209,10 +254,10 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -227,10 +272,10 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -269,10 +314,10 @@ public class CommerceNotificationTemplateServiceSoap {
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

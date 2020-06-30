@@ -386,11 +386,6 @@ public class WebsiteWrapper implements ModelWrapper<Website>, Website {
 		return _website.isPrimary();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a website model instance should use the <code>Website</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_website.persist();

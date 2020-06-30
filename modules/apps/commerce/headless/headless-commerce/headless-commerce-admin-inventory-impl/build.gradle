@@ -1,7 +1,6 @@
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.odata.api", version: "1.12.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "2.9.0"
 	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
 	compileOnly group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
@@ -15,10 +14,5 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-inventory-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce-core-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-inventory-api")
-}
-
-configurations.all {
-	resolutionStrategy {
-		force group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.22"
-	}
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 }

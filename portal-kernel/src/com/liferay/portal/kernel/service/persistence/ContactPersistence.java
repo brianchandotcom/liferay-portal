@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface ContactPersistence extends BasePersistence<Contact> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactUtil} to access the contact persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

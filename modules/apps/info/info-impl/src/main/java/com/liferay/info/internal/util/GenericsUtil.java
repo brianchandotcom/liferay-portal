@@ -32,10 +32,10 @@ public class GenericsUtil {
 			return (Class<?>)parameterizedType.getActualTypeArguments()[0];
 		}
 
-		Class<?> superclass = clazz.getSuperclass();
+		Class<?> superClass = clazz.getSuperclass();
 
-		if (superclass != null) {
-			return getItemClass(superclass);
+		if (superClass != null) {
+			return getItemClass(superClass);
 		}
 
 		return Object.class;

@@ -30,16 +30,10 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class AssetTagServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetTagServiceUtil} to access the asset tag remote service. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.asset.kernel.model.AssetTag addTag(
 			long groupId, String name,
@@ -161,6 +155,10 @@ public class AssetTagServiceUtil {
 
 	public static int getTagsCount(long groupId, String name) {
 		return getService().getTagsCount(groupId, name);
+	}
+
+	public static int getTagsCount(long[] groupIds, String name) {
+		return getService().getTagsCount(groupIds, name);
 	}
 
 	public static int getVisibleAssetsTagsCount(

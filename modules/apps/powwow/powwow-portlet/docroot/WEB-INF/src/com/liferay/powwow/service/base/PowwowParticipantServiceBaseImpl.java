@@ -49,7 +49,7 @@ public abstract class PowwowParticipantServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, PowwowParticipantService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PowwowParticipantService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.powwow.service.PowwowParticipantServiceUtil</code>.
@@ -461,8 +461,8 @@ public abstract class PowwowParticipantServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

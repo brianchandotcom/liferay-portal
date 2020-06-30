@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface EROrganizationLocalService extends BaseLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EROrganizationLocalServiceUtil} to access the er organization local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.EROrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

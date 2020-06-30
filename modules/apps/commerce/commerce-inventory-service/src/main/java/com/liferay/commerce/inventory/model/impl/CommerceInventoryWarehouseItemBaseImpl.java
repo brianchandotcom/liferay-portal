@@ -33,7 +33,7 @@ public abstract class CommerceInventoryWarehouseItemBaseImpl
 	extends CommerceInventoryWarehouseItemModelImpl
 	implements CommerceInventoryWarehouseItem {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce inventory warehouse item model instance should use the <code>CommerceInventoryWarehouseItem</code> interface instead.

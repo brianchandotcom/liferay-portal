@@ -38,7 +38,7 @@
 			editorName="${editorName}"
 			initMethod=""
 			name="${namespacedFieldName}Editor"
-			onChangeMethod="${namespacedFieldName}OnChangeEditor"
+			onChangeMethod="${namespacedFieldName}onChangeEditor"
 			skipEditorLoading=skipEditorLoading
 			toolbarSet="${toolbarSet}"
 		>
@@ -56,7 +56,7 @@
 		<@liferay_aui.script>
 			Liferay.provide(
 				window,
-				'${portletNamespace}${namespacedFieldName}OnChangeEditor',
+				'${portletNamespace}${namespacedFieldName}onChangeEditor',
 				function() {
 					var A = AUI();
 

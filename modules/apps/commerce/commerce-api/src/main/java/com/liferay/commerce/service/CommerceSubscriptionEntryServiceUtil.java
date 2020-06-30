@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceSubscriptionEntryServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceSubscriptionEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceSubscriptionEntryServiceUtil} to access the commerce subscription entry remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceSubscriptionEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static void deleteCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId)
@@ -59,6 +53,10 @@ public class CommerceSubscriptionEntryServiceUtil {
 			commerceSubscriptionEntryId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.model.CommerceSubscriptionEntry>
 				getCommerceSubscriptionEntries(
@@ -86,6 +84,10 @@ public class CommerceSubscriptionEntryServiceUtil {
 			companyId, groupId, userId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static int getCommerceSubscriptionEntriesCount(
 			long companyId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -124,16 +126,20 @@ public class CommerceSubscriptionEntryServiceUtil {
 			start, end, sort);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceSubscriptionEntry>
 				searchCommerceSubscriptionEntries(
-					long companyId, long groupId, Long maxSubscriptionCycles,
+					long companyId, long[] groupIds, Long maxSubscriptionCycles,
 					Integer subscriptionStatus, String keywords, int start,
 					int end, com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().searchCommerceSubscriptionEntries(
-			companyId, groupId, maxSubscriptionCycles, subscriptionStatus,
+			companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
 			keywords, start, end, sort);
 	}
 
@@ -144,22 +150,39 @@ public class CommerceSubscriptionEntryServiceUtil {
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsProperties,
 				long maxSubscriptionCycles, int subscriptionStatus,
-				int startDateMonth, int startDateDay, int startDateYear,
-				int startDateHour, int startDateMinute,
 				int nextIterationDateMonth, int nextIterationDateDay,
 				int nextIterationDateYear, int nextIterationDateHour,
-				int nextIterationDateMinute)
+				int nextIterationDateMinute, int deliverySubscriptionLength,
+				String deliverySubscriptionType,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					deliverySubscriptionTypeSettingsProperties,
+				long deliveryMaxSubscriptionCycles,
+				int deliverySubscriptionStatus,
+				int deliveryNextIterationDateMonth,
+				int deliveryNextIterationDateDay,
+				int deliveryNextIterationDateYear,
+				int deliveryNextIterationDateHour,
+				int deliveryNextIterationDateMinute)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
-			subscriptionStatus, startDateMonth, startDateDay, startDateYear,
-			startDateHour, startDateMinute, nextIterationDateMonth,
-			nextIterationDateDay, nextIterationDateYear, nextIterationDateHour,
-			nextIterationDateMinute);
+			subscriptionStatus, nextIterationDateMonth, nextIterationDateDay,
+			nextIterationDateYear, nextIterationDateHour,
+			nextIterationDateMinute, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsProperties,
+			deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
+			deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
+			deliveryNextIterationDateYear, deliveryNextIterationDateHour,
+			deliveryNextIterationDateMinute);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceSubscriptionEntry
 			updateSubscriptionStatus(
 				long commerceSubscriptionEntryId, int subscriptionStatus)

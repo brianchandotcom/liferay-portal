@@ -7,14 +7,16 @@
 		box-shadow: $shadow;
 		display: none;
 		height: 530px;
-		max-height: calc(100vh - #{$frame-size * 2 + $liferay-topbar-size + 60px});
+		max-height: calc(
+			100vh - #{$frame-size * 2 + $liferay-topbar-size + 60px}
+		);
 		opacity: 0;
 		position: absolute;
 		right: 0;
 		top: calc(100% + 10px);
-		transform: scale(.4);
+		transform: scale(0.4);
 		transform-origin: 100% 0%;
-		transition: all .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		width: 450px;
 		z-index: 1160;
 
@@ -34,7 +36,7 @@
 			content: '';
 			position: absolute;
 			right: 24px;
-			transition: max-height .2s ease-in, opacity .2s ease-in;
+			transition: max-height 0.2s ease-in, opacity 0.2s ease-in;
 			z-index: 1160;
 
 			@media screen and (max-width: $bp-small) {
@@ -44,7 +46,7 @@
 
 		&.is-closing {
 			display: block;
-			transition: all .1s ease-in;
+			transition: all 0.1s ease-in;
 		}
 
 		&.is-open {

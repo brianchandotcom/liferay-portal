@@ -18,12 +18,16 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
-import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
+import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
+import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
@@ -80,13 +84,15 @@ public class UpgradeStepRegistratorTracker {
 
 	private BundleContext _bundleContext;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
-
-	@Reference
-	private ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
-
 	private ServiceTracker
 		<UpgradeStepRegistrator, Collection<ServiceRegistration<UpgradeStep>>>
 			_serviceTracker;
+
+	@Reference
+	private SwappedLogExecutor _swappedLogExecutor;
+
+	@Reference
+	private UpgradeExecutor _upgradeExecutor;
 
 	private class UpgradeStepRegistratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -171,7 +177,20 @@ public class UpgradeStepRegistratorTracker {
 			}
 
 			if (_releaseManagerConfiguration.autoUpgrade()) {
-				_releaseManagerOSGiCommands.execute(bundleSymbolicName);
+				try {
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeInfos,
+						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+				}
+				catch (Throwable t) {
+					_swappedLogExecutor.execute(
+						bundleSymbolicName,
+						() -> _log.error(
+							"Failed upgrade process for module ".concat(
+								bundleSymbolicName),
+							t),
+						null);
+				}
 			}
 
 			return serviceRegistrations;
@@ -194,6 +213,9 @@ public class UpgradeStepRegistratorTracker {
 				serviceRegistration.unregister();
 			}
 		}
+
+		private final Log _log = LogFactoryUtil.getLog(
+			UpgradeStepRegistratorTracker.class);
 
 	}
 

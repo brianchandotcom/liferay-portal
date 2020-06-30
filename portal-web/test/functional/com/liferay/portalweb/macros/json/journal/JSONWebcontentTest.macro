@@ -1,0 +1,51 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		//folder
+
+		JSONWebcontent.addFolder(
+			folderName = "folder name",
+			groupName = "${groupName}");
+
+		JSONWebcontent.addFolder(
+			folderName = "child folder name",
+			groupName = "${groupName}",
+			parentFolderName = "folder name");
+
+		//webcontent
+
+		JSONWebcontent.addWebContent(
+			content = "test content",
+			groupName = "${groupName}",
+			title = "test title");
+
+		JSONWebcontent.addWebContent(
+			content = "test content 2",
+			folderName = "folder name",
+			groupName = "${groupName}",
+			title = "test title2");
+
+		//localized webcontent
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:content en,es_ES:content es",
+			groupName = "${groupName}",
+			titleMap = "en_US:title en,es_ES:title es");
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:content en2,es_ES:content es2",
+			folderName = "folder name",
+			groupName = "${groupName}",
+			titleMap = "en_US:title en2,es_ES:title es2");
+
+		//getter
+
+		var folderId = JSONWebcontent.getFolderIdByFolderName(
+			folderName = "folder name",
+			groupName = "${groupName}");
+	}
+
+}

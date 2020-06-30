@@ -34,10 +34,9 @@ public class CommerceTaxFixedRateServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateServiceUtil} to access the commerce tax fixed rate remote service. Add custom service methods to <code>com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
 			addCommerceTaxFixedRate(
@@ -47,6 +46,17 @@ public class CommerceTaxFixedRateServiceWrapper
 
 		return _commerceTaxFixedRateService.addCommerceTaxFixedRate(
 			commerceTaxMethodId, cpTaxCategoryId, rate, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
+			addCommerceTaxFixedRate(
+				long userId, long groupId, long commerceTaxMethodId,
+				long cpTaxCategoryId, double rate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTaxFixedRateService.addCommerceTaxFixedRate(
+			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
 	}
 
 	@Override

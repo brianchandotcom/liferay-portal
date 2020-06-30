@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class UserAccount {
+public class UserAccount implements Cloneable {
 
 	public String getAdditionalName() {
 		return additionalName;
@@ -488,6 +488,11 @@ public class UserAccount {
 	}
 
 	protected SiteBrief[] siteBriefs;
+
+	@Override
+	public UserAccount clone() throws CloneNotSupportedException {
+		return (UserAccount)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

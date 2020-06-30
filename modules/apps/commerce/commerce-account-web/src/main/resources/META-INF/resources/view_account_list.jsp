@@ -25,20 +25,20 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 <liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" message="please-enter-a-valid-email-address" />
 
 <div class="commerce-account-container" id="<portlet:namespace />entriesContainer">
-	<commerce-ui:table
-		dataProviderKey="commerceAccounts"
-		filter="<%= commerceAccountDisplayContext.getAccountFilter() %>"
-		itemPerPage="<%= 5 %>"
+	<commerce-ui:dataset-display
+		dataProviderKey="<%= CommerceAccountClayDataSetDataSetDisplayView.NAME %>"
+		id="<%= CommerceAccountClayDataSetDataSetDisplayView.NAME %>"
+		itemsPerPage="<%= 10 %>"
 		namespace="<%= renderResponse.getNamespace() %>"
-		pageNumber="1"
+		pageNumber="<%= 1 %>"
 		portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
-		tableName="commerceAccounts"
+		style="stacked"
 	/>
 </div>
 
 <c:if test="<%= commerceAccountDisplayContext.hasAddAccountPermissions() %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="commerce-button commerce-button--big js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddAccountModal();" %>' value="add-account" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddAccountModal();" %>' value="add-account" />
 	</div>
 
 	<portlet:actionURL name="editCommerceAccount" var="editCommerceAccountActionURL" />
@@ -57,73 +57,67 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 	/>
 
 	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace />openAddAccountModal',
-			function(evt) {
-				const addAccountModal = Liferay.component('addAccountModal');
+		Liferay.provide(window, '<portlet:namespace />openAddAccountModal', function(
+			evt
+		) {
+			const addAccountModal = Liferay.component('addAccountModal');
 
-				addAccountModal.open();
-			}
-		);
+			addAccountModal.open();
+		});
 
-		Liferay.provide(
-			window,
-			'setCurrentAccount',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = 'setCurrentAccount';
-				document.querySelector('#<portlet:namespace />commerceAccountId').value = id;
+		Liferay.provide(window, 'setCurrentAccount', function(id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'setCurrentAccount';
+			document.querySelector(
+				'#<portlet:namespace />commerceAccountId'
+			).value = id;
+
+			submitForm(document.<portlet:namespace />commerceAccountFm);
+		});
+
+		Liferay.provide(window, 'toggleActiveCommerceAccount', function(id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'setActive';
+			document.querySelector(
+				'#<portlet:namespace />commerceAccountId'
+			).value = id;
+
+			submitForm(document.<portlet:namespace />commerceAccountFm);
+		});
+
+		Liferay.componentReady('addAccountModal').then(function(addAccountModal) {
+			addAccountModal.on('AddAccountModalSave', function(event) {
+				let existingUserIds = event.administratorsEmail
+					.filter(function(el) {
+						return el.userId;
+					})
+					.map(function(usr) {
+						return usr.userId;
+					})
+					.join(',');
+
+				let newUserEmails = event.administratorsEmail
+					.filter(function(el) {
+						return !el.userId;
+					})
+					.map(function(usr) {
+						return usr.email;
+					})
+					.join(',');
+
+				document.querySelector(
+					'#<portlet:namespace />emailAddresses'
+				).value = newUserEmails;
+				document.querySelector('#<portlet:namespace />name').value =
+					event.accountName;
+				document.querySelector(
+					'#<portlet:namespace />userIds'
+				).value = existingUserIds;
+
+				addAccountModal.close();
 
 				submitForm(document.<portlet:namespace />commerceAccountFm);
-			}
-		);
-
-		Liferay.provide(
-			window,
-			'toggleActiveCommerceAccount',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = 'setActive';
-				document.querySelector('#<portlet:namespace />commerceAccountId').value = id;
-
-				submitForm(document.<portlet:namespace />commerceAccountFm);
-			}
-		);
-
-		Liferay.componentReady('addAccountModal').then(
-			function(addAccountModal) {
-				addAccountModal.on(
-					'AddAccountModalSave',
-					function(event) {
-						let existingUserIds = event.administratorsEmail.filter(
-							function(el) {
-								return el.userId;
-							}
-						).map(
-							function(usr) {
-								return usr.userId
-							}
-						).join(',');
-
-						let newUserEmails = event.administratorsEmail.filter(
-							function(el) {
-								return !el.userId;
-							}
-						).map(
-							function(usr) {
-								return usr.email
-							}
-						).join(',');
-
-						document.querySelector('#<portlet:namespace />emailAddresses').value = newUserEmails;
-						document.querySelector('#<portlet:namespace />name').value = event.accountName;
-						document.querySelector('#<portlet:namespace />userIds').value = existingUserIds;
-
-						addAccountModal.close();
-
-						submitForm(document.<portlet:namespace />commerceAccountFm);
-					}
-				);
-			}
-		);
+			});
+		});
 	</aui:script>
 </c:if>

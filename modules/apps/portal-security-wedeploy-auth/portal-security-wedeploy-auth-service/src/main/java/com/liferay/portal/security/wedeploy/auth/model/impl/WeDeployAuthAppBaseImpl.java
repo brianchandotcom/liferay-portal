@@ -32,7 +32,7 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalSer
 public abstract class WeDeployAuthAppBaseImpl
 	extends WeDeployAuthAppModelImpl implements WeDeployAuthApp {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a we deploy auth app model instance should use the <code>WeDeployAuthApp</code> interface instead.

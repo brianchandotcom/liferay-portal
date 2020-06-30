@@ -20,6 +20,8 @@ import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -53,14 +55,24 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface CPDisplayLayoutService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutServiceUtil} to access the cp display layout remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CPDisplayLayout addCPDisplayLayout(
 			Class<?> clazz, long classPK, String layoutUuid,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPDisplayLayout addCPDisplayLayout(
+			long userId, long groupId, Class<?> clazz, long classPK,
+			String layoutUuid)
 		throws PortalException;
 
 	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)
@@ -79,6 +91,12 @@ public interface CPDisplayLayoutService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
+			long companyId, long groupId, String className, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException;
 
 	public CPDisplayLayout updateCPDisplayLayout(
 			long cpDisplayLayoutId, String layoutUuid)

@@ -82,6 +82,11 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 
 		jsonObject.put("removePlugins", getRemovePluginsLists());
+
+		jsonObject.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
 
@@ -121,8 +126,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	}
 
 	protected String getRemovePluginsLists() {
-		return "contextmenu,elementspath,image,link,liststyle,magicline," +
-			"resize,tabletools,toolbar,ae_embed";
+		return "contextmenu,elementspath,floatingspace,image,link,liststyle," +
+			"magicline,resize,table,tabletools,toolbar,ae_embed";
 	}
 
 	protected JSONObject getToolbarsJSONObject() {

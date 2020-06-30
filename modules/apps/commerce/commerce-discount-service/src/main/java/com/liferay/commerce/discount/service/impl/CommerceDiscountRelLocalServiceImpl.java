@@ -57,7 +57,8 @@ public class CommerceDiscountRelLocalServiceImpl
 		commerceDiscountRel.setClassName(className);
 		commerceDiscountRel.setClassPK(classPK);
 
-		commerceDiscountRelPersistence.update(commerceDiscountRel);
+		commerceDiscountRel = commerceDiscountRelPersistence.update(
+			commerceDiscountRel);
 
 		// Commerce discount
 

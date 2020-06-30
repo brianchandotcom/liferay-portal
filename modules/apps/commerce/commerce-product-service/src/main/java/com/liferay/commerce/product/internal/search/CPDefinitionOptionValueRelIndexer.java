@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -89,6 +91,7 @@ public class CPDefinitionOptionValueRelIndexer
 		addSearchTerm(searchQuery, searchContext, CPField.KEY, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		addSearchTerm(searchQuery, searchContext, "sku", false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -129,25 +132,17 @@ public class CPDefinitionOptionValueRelIndexer
 			LocalizationUtil.getDefaultLanguageId(
 				cpDefinitionOptionValueRel.getName());
 
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpDefinitionOptionValueRel.getName());
+		Locale locale = LocaleUtil.fromLanguageId(
+			cpDefinitionOptionValueRelDefaultLanguageId);
 
-		for (String languageId : languageIds) {
-			String name = cpDefinitionOptionValueRel.getName(languageId);
+		addLocalizedField(
+			document, Field.TITLE, locale,
+			cpDefinitionOptionValueRel.getNameMap());
 
-			if (languageId.equals(
-					cpDefinitionOptionValueRelDefaultLanguageId)) {
+		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
 
-				document.addText(Field.NAME, name);
-				document.addText("defaultLanguageId", languageId);
-			}
-
-			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
-
-			document.addText(CPField.KEY, cpDefinitionOptionValueRel.getKey());
-			document.addText(Field.CONTENT, name);
+		if (cpInstance != null) {
+			document.addKeyword("sku", cpInstance.getSku());
 		}
 
 		document.addNumber(

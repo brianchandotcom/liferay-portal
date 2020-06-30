@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBFolderUtil} to access the kb folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -75,10 +75,24 @@ public class CommerceChannelRelServiceSoap {
 			return com.liferay.commerce.product.model.CommerceChannelRelSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCommerceChannelRel(long commerceChannelRelId)
+		throws RemoteException {
+
+		try {
+			CommerceChannelRelServiceUtil.deleteCommerceChannelRel(
+				commerceChannelRelId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -89,10 +103,29 @@ public class CommerceChannelRelServiceSoap {
 			CommerceChannelRelServiceUtil.deleteCommerceChannelRels(
 				className, classPK);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannelRelSoap
+			getCommerceChannelRel(long commerceChannelRelId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CommerceChannelRel returnValue =
+				CommerceChannelRelServiceUtil.getCommerceChannelRel(
+					commerceChannelRelId);
+
+			return com.liferay.commerce.product.model.CommerceChannelRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -114,10 +147,10 @@ public class CommerceChannelRelServiceSoap {
 			return com.liferay.commerce.product.model.CommerceChannelRelSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -139,10 +172,10 @@ public class CommerceChannelRelServiceSoap {
 			return com.liferay.commerce.product.model.CommerceChannelRelSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -156,10 +189,10 @@ public class CommerceChannelRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -174,10 +207,10 @@ public class CommerceChannelRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

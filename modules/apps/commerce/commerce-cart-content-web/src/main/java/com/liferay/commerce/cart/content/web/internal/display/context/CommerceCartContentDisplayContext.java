@@ -281,7 +281,8 @@ public class CommerceCartContentDisplayContext {
 
 		return _commerceProductPortletResourcePermission.contains(
 			commerceCartContentRequestHelper.getPermissionChecker(),
-			commerceContext.getSiteGroupId(), CPActionKeys.VIEW_PRICE);
+			commerceCartContentRequestHelper.getScopeGroupId(),
+			CPActionKeys.VIEW_PRICE);
 	}
 
 	public boolean isValidCommerceOrder() throws PortalException {

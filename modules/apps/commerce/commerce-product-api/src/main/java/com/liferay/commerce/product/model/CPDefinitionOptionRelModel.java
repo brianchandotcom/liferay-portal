@@ -49,7 +49,7 @@ public interface CPDefinitionOptionRelModel
 	extends BaseModel<CPDefinitionOptionRel>, GroupedModel, LocalizedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition option rel model instance should use the {@link CPDefinitionOptionRel} interface instead.
@@ -547,6 +547,21 @@ public interface CPDefinitionOptionRelModel
 	 * @param key the key of this cp definition option rel
 	 */
 	public void setKey(String key);
+
+	/**
+	 * Returns the price type of this cp definition option rel.
+	 *
+	 * @return the price type of this cp definition option rel
+	 */
+	@AutoEscape
+	public String getPriceType();
+
+	/**
+	 * Sets the price type of this cp definition option rel.
+	 *
+	 * @param priceType the price type of this cp definition option rel
+	 */
+	public void setPriceType(String priceType);
 
 	@Override
 	public boolean isNew();

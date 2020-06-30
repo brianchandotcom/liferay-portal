@@ -40,7 +40,7 @@ public interface ContactModel
 	extends AttachedModel, AuditedModel, BaseModel<Contact>, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a contact model instance should use the {@link Contact} interface instead.

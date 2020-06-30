@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -33,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TaxCategory {
 
 	@Schema
+	@Valid
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -77,6 +79,7 @@ public class TaxCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getGroupId() {
 		return groupId;
@@ -105,6 +108,7 @@ public class TaxCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -132,6 +136,7 @@ public class TaxCategory {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, String> getName() {
 		return name;
 	}
@@ -231,6 +236,12 @@ public class TaxCategory {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

@@ -32,7 +32,7 @@ import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
 public abstract class CommerceAccountBaseImpl
 	extends CommerceAccountModelImpl implements CommerceAccount {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account model instance should use the <code>CommerceAccount</code> interface instead.

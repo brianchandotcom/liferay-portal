@@ -388,9 +388,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						wikiNode1, entityField.getName(), "Aaa");
+						wikiNode1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						wikiNode2, entityField.getName(), "Bbb");
+						wikiNode2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -582,6 +584,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testDeleteWikiNode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode = testDeleteWikiNode_addWikiNode();
 
 		assertHttpResponseStatusCode(
@@ -956,6 +959,14 @@ public abstract class BaseWikiNodeResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (wikiNode.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (wikiNode.getCreator() == null) {
 					valid = false;
@@ -1062,6 +1073,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiNode1.getActions(), wikiNode2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1278,6 +1299,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

@@ -43,7 +43,7 @@ import java.util.Date;
 public interface AccountModel
 	extends AuditedModel, BaseModel<Account>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a account model instance should use the {@link Account} interface instead.

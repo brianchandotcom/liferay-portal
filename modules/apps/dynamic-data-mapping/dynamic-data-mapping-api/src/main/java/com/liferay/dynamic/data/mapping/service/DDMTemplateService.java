@@ -60,7 +60,7 @@ import java.util.Map;
 )
 public interface DDMTemplateService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateServiceUtil} to access the ddm template remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMTemplateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

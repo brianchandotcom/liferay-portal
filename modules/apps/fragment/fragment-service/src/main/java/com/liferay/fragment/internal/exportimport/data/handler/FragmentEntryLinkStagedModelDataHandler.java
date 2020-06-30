@@ -25,6 +25,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryReg
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,6 +35,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pavel Savinov
@@ -82,6 +85,14 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 		Element fragmentEntryLinkElement =
 			portletDataContext.getExportDataElement(fragmentEntryLink);
+
+		String editableValues =
+			_fragmentEntryLinkExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, fragmentEntryLink,
+					fragmentEntryLink.getEditableValues(), true, false);
+
+		fragmentEntryLink.setEditableValues(editableValues);
 
 		String html =
 			_dlReferencesExportImportContentProcessor.
@@ -138,8 +149,28 @@ public class FragmentEntryLinkStagedModelDataHandler
 				FragmentEntry.class);
 
 		long fragmentEntryId = MapUtil.getLong(
-			fragmentEntryIds, fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getFragmentEntryId());
+			fragmentEntryIds, fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntryId == 0) {
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.fetchFragmentEntry(
+					fragmentEntryLink.getFragmentEntryId());
+
+			if (fragmentEntry != null) {
+				FragmentEntry targetFragmentEntry =
+					_fragmentEntryLocalService.
+						fetchFragmentEntryByUuidAndGroupId(
+							fragmentEntry.getUuid(),
+							portletDataContext.getGroupId());
+
+				if (targetFragmentEntry != null) {
+					fragmentEntryId = targetFragmentEntry.getFragmentEntryId();
+				}
+				else {
+					fragmentEntryId = fragmentEntryLink.getFragmentEntryId();
+				}
+			}
+		}
 
 		Map<Long, Long> referenceClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -158,6 +189,14 @@ public class FragmentEntryLinkStagedModelDataHandler
 			originalFragmentEntryLinkId);
 		importedFragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 		importedFragmentEntryLink.setClassPK(referenceClassPK);
+
+		String editableValues =
+			_fragmentEntryLinkExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, fragmentEntryLink,
+					fragmentEntryLink.getEditableValues());
+
+		importedFragmentEntryLink.setEditableValues(editableValues);
 
 		String html =
 			_dlReferencesExportImportContentProcessor.
@@ -202,8 +241,19 @@ public class FragmentEntryLinkStagedModelDataHandler
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.fragment.model.FragmentEntryLink)"
+	)
+	private volatile ExportImportContentProcessor<String>
+		_fragmentEntryLinkExportImportContentProcessor;
+
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private Portal _portal;

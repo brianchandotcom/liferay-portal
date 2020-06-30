@@ -304,6 +304,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance() {
+		return _commerceOrderItem.fetchCPInstance();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CProduct fetchCProduct() {
+		return _commerceOrderItem.fetchCProduct();
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return _commerceOrderItem.getAvailableLanguageIds();
 	}
@@ -363,12 +373,14 @@ public class CommerceOrderItemWrapper
 	}
 
 	@Override
-	public long getCPDefinitionId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public long getCPDefinitionId() {
 		return _commerceOrderItem.getCPDefinitionId();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -386,6 +398,10 @@ public class CommerceOrderItemWrapper
 		return _commerceOrderItem.getCPInstanceId();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CProduct getCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -825,11 +841,6 @@ public class CommerceOrderItemWrapper
 		return _commerceOrderItem.isSubscription();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce order item model instance should use the <code>CommerceOrderItem</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceOrderItem.persist();

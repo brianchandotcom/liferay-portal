@@ -32,7 +32,7 @@ import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
 public abstract class SocialRequestBaseImpl
 	extends SocialRequestModelImpl implements SocialRequest {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social request model instance should use the <code>SocialRequest</code> interface instead.

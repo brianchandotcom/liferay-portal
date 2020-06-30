@@ -14,15 +14,13 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductSpecificationHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpecificationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
@@ -36,9 +34,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,30 +55,8 @@ public class ProductSpecificationResourceImpl
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
-		}
-
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				_cpDefinitionSpecificationOptionValueService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinition.getCPDefinitionId(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null);
-
-		int totalItems =
-			_cpDefinitionSpecificationOptionValueService.
-				getCPDefinitionSpecificationOptionValuesCount(
-					cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			_toProductSpecifications(cpDefinitionSpecificationOptionValues),
-			pagination, totalItems);
+		return _productSpecificationHelper.getProductSpecificationsPage(
+			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@Override
@@ -92,32 +65,6 @@ public class ProductSpecificationResourceImpl
 		throws Exception {
 
 		return _upsertProductSpecification(id, productSpecification);
-	}
-
-	private List<ProductSpecification> _toProductSpecifications(
-			List<CPDefinitionSpecificationOptionValue>
-				cpDefinitionSpecificationOptionValues)
-		throws Exception {
-
-		List<ProductSpecification> productSpecifications = new ArrayList<>();
-
-		DTOConverter productSpecificationDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CPDefinitionSpecificationOptionValue.class.getName());
-
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			productSpecifications.add(
-				(ProductSpecification)productSpecificationDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						cpDefinitionSpecificationOptionValue.
-							getCPDefinitionSpecificationOptionValueId())));
-		}
-
-		return productSpecifications;
 	}
 
 	private CPDefinitionSpecificationOptionValue _updateProductSpecification(
@@ -140,27 +87,34 @@ public class ProductSpecificationResourceImpl
 			Long id, ProductSpecification productSpecification)
 		throws Exception {
 
-		try {
-			CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue =
-					_updateProductSpecification(
-						productSpecification.getId(), productSpecification);
+		Long productSpecificationId = productSpecification.getId();
 
-			DTOConverter productSpecificationDTOConverter =
-				_dtoConverterRegistry.getDTOConverter(
-					CPDefinitionSpecificationOptionValue.class.getName());
+		if (productSpecificationId != null) {
+			try {
+				CPDefinitionSpecificationOptionValue
+					cpDefinitionSpecificationOptionValue =
+						_updateProductSpecification(
+							productSpecificationId, productSpecification);
 
-			return (ProductSpecification)productSpecificationDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					contextAcceptLanguage.getPreferredLocale(),
-					cpDefinitionSpecificationOptionValue.
-						getCPDefinitionSpecificationOptionValueId()));
-		}
-		catch (NoSuchCPDefinitionSpecificationOptionValueException nscpdsove) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to find productSpecification with ID: " +
-						productSpecification.getId());
+				DTOConverter productSpecificationDTOConverter =
+					_dtoConverterRegistry.getDTOConverter(
+						CPDefinitionSpecificationOptionValue.class.getName());
+
+				return (ProductSpecification)
+					productSpecificationDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							contextAcceptLanguage.getPreferredLocale(),
+							cpDefinitionSpecificationOptionValue.
+								getCPDefinitionSpecificationOptionValueId()));
+			}
+			catch (NoSuchCPDefinitionSpecificationOptionValueException
+						nscpdsove) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find productSpecification with ID: " +
+							productSpecificationId);
+				}
 			}
 		}
 
@@ -187,9 +141,6 @@ public class ProductSpecificationResourceImpl
 		ProductSpecificationResourceImpl.class);
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
 	private CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
 
@@ -198,6 +149,9 @@ public class ProductSpecificationResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ProductSpecificationHelper _productSpecificationHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

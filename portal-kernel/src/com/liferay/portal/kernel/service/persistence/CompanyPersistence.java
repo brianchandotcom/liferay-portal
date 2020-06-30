@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface CompanyPersistence extends BasePersistence<Company> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CompanyUtil} to access the company persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -83,12 +83,8 @@ public abstract class BaseIndexingTestCase {
 			return;
 		}
 
-		try {
-			_indexWriter.deleteEntityDocuments(
-				createSearchContext(), _entryClassName);
-		}
-		catch (SearchException se) {
-		}
+		_indexWriter.deleteEntityDocuments(
+			createSearchContext(), _entryClassName);
 
 		_documentFixture.tearDown();
 
@@ -126,11 +122,7 @@ public abstract class BaseIndexingTestCase {
 			_indexWriter.addDocument(createSearchContext(), document);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
+			_handle(se);
 
 			throw new RuntimeException(se);
 		}
@@ -209,11 +201,7 @@ public abstract class BaseIndexingTestCase {
 			return _indexSearcher.search(searchContext, query);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
+			_handle(se);
 
 			throw new RuntimeException(se);
 		}
@@ -224,11 +212,7 @@ public abstract class BaseIndexingTestCase {
 			return _indexSearcher.searchCount(searchContext, query);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
+			_handle(se);
 
 			throw new RuntimeException(se);
 		}
@@ -348,6 +332,18 @@ public abstract class BaseIndexingTestCase {
 		private QueryContributor _queryContributor;
 		private final SearchContext _searchContext;
 
+	}
+
+	private void _handle(SearchException se) {
+		Throwable t = se.getCause();
+
+		if (t instanceof RuntimeException) {
+			throw (RuntimeException)t;
+		}
+
+		if (t != null) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();

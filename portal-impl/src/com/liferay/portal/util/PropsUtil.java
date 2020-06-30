@@ -360,9 +360,7 @@ public class PropsUtil {
 
 		pos = path.lastIndexOf(CharPool.SLASH, pos);
 
-		path = path.substring(0, pos + 1);
-
-		return path;
+		return path.substring(0, pos + 1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PropsUtil.class);

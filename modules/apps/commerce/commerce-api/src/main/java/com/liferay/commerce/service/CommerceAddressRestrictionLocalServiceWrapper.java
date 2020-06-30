@@ -54,6 +54,22 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
+				long userId, long groupId, String className, long classPK,
+				long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressRestrictionLocalService.
+			addCommerceAddressRestriction(
+				userId, groupId, className, classPK, commerceCountryId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
 				String className, long classPK, long commerceCountryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -340,6 +356,9 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 			getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

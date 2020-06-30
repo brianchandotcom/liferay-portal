@@ -69,7 +69,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
@@ -199,6 +198,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	@Test
 	public void testDeleteKnowledgeBaseFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
@@ -343,7 +343,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				randomPatchKnowledgeBaseFolder);
 
 		KnowledgeBaseFolder expectedPatchKnowledgeBaseFolder =
-			(KnowledgeBaseFolder)BeanUtils.cloneBean(postKnowledgeBaseFolder);
+			postKnowledgeBaseFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchKnowledgeBaseFolder, randomPatchKnowledgeBaseFolder);
@@ -1083,6 +1083,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (knowledgeBaseFolder.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getCreator() == null) {
 					valid = false;
@@ -1236,6 +1244,17 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder1.getActions(),
+						knowledgeBaseFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1517,6 +1536,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

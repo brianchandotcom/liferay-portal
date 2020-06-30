@@ -199,11 +199,6 @@ public class JournalArticleResourceWrapper
 		return _journalArticleResource.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a journal article resource model instance should use the <code>JournalArticleResource</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_journalArticleResource.persist();

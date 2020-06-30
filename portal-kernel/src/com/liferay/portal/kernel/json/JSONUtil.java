@@ -23,7 +23,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -143,6 +142,17 @@ public class JSONUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isValid(String json) {
+		try {
+			_createJSONObject(json);
+
+			return true;
+		}
+		catch (JSONException jsone) {
+			return false;
+		}
 	}
 
 	public static JSONObject merge(
@@ -310,7 +320,7 @@ public class JSONUtil {
 		throws Exception {
 
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<T> values = new ArrayList<>(jsonArray.length());
@@ -352,7 +362,7 @@ public class JSONUtil {
 
 	public static List<Long> toLongList(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<Long> values = new ArrayList<>(jsonArray.length());
@@ -368,7 +378,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<Long> values = new ArrayList<>(jsonArray.length());
@@ -388,7 +398,7 @@ public class JSONUtil {
 
 	public static Set<Long> toLongSet(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<Long> values = new HashSet<>(jsonArray.length());
@@ -404,7 +414,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<Long> values = new HashSet<>(jsonArray.length());
@@ -450,7 +460,7 @@ public class JSONUtil {
 
 	public static List<Object> toObjectList(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<Object> values = new ArrayList<>(jsonArray.length());
@@ -466,7 +476,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<Object> values = new ArrayList<>(jsonArray.length());
@@ -486,7 +496,7 @@ public class JSONUtil {
 
 	public static Set<Object> toObjectSet(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<Object> values = new HashSet<>(jsonArray.length());
@@ -502,7 +512,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<Object> values = new HashSet<>(jsonArray.length());
@@ -548,7 +558,7 @@ public class JSONUtil {
 
 	public static List<String> toStringList(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<String> values = new ArrayList<>(jsonArray.length());
@@ -564,7 +574,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		List<String> values = new ArrayList<>(jsonArray.length());
@@ -584,7 +594,7 @@ public class JSONUtil {
 
 	public static Set<String> toStringSet(JSONArray jsonArray) {
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<String> values = new HashSet<>(jsonArray.length());
@@ -600,7 +610,7 @@ public class JSONUtil {
 		JSONArray jsonArray, String jsonObjectKey) {
 
 		if (jsonArray == null) {
-			return Collections.emptySet();
+			return new HashSet<>();
 		}
 
 		Set<String> values = new HashSet<>(jsonArray.length());

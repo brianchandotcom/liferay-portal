@@ -354,11 +354,6 @@ public class PowwowParticipantWrapper
 		return _powwowParticipant.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a powwow participant model instance should use the <code>PowwowParticipant</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_powwowParticipant.persist();

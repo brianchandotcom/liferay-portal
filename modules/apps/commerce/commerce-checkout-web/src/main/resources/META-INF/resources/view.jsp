@@ -99,7 +99,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 							<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 							<%
-							checkoutDisplayContext.renderCurrentCheckoutStep();
+							checkoutDisplayContext.renderCurrentCheckoutStep(pageContext);
 							%>
 
 							<c:if test="<%= checkoutDisplayContext.showControls() %>">

@@ -65,12 +65,17 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CProduct deleteCProduct(CProduct cProduct) {
+	public CProduct deleteCProduct(CProduct cProduct) throws PortalException {
 
 		// Commerce product definitions
 
 		cpDefinitionLocalService.deleteCPDefinitions(
 			cProduct.getCProductId(), WorkflowConstants.STATUS_ANY);
+
+		// Commerce product definition links
+
+		cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCProductId(
+			cProduct.getCProductId());
 
 		// Commerce product
 
@@ -105,9 +110,25 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		cProduct.setLatestVersion(cProduct.getLatestVersion() + 1);
 
-		cProductPersistence.update(cProduct);
+		cProduct = cProductPersistence.update(cProduct);
 
 		return cProduct.getLatestVersion();
+	}
+
+	@Override
+	public CProduct updateCProductExternalReferenceCode(
+			long cProductId, String externalReferenceCode)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+
+		cProduct.setExternalReferenceCode(externalReferenceCode);
+
+		cProduct = cProductPersistence.update(cProduct);
+
+		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+
+		return cProduct;
 	}
 
 	@Override

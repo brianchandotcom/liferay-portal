@@ -47,6 +47,7 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setCouponCode(model.getCouponCode());
 		soapModel.setUsePercentage(model.isUsePercentage());
 		soapModel.setMaximumDiscountAmount(model.getMaximumDiscountAmount());
+		soapModel.setLevel(model.getLevel());
 		soapModel.setLevel1(model.getLevel1());
 		soapModel.setLevel2(model.getLevel2());
 		soapModel.setLevel3(model.getLevel3());
@@ -54,6 +55,7 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setLimitationType(model.getLimitationType());
 		soapModel.setLimitationTimes(model.getLimitationTimes());
 		soapModel.setNumberOfUse(model.getNumberOfUse());
+		soapModel.setRulesConjunction(model.isRulesConjunction());
 		soapModel.setActive(model.isActive());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -243,6 +245,14 @@ public class CommerceDiscountSoap implements Serializable {
 		_maximumDiscountAmount = maximumDiscountAmount;
 	}
 
+	public String getLevel() {
+		return _level;
+	}
+
+	public void setLevel(String level) {
+		_level = level;
+	}
+
 	public BigDecimal getLevel1() {
 		return _level1;
 	}
@@ -297,6 +307,18 @@ public class CommerceDiscountSoap implements Serializable {
 
 	public void setNumberOfUse(int numberOfUse) {
 		_numberOfUse = numberOfUse;
+	}
+
+	public boolean getRulesConjunction() {
+		return _rulesConjunction;
+	}
+
+	public boolean isRulesConjunction() {
+		return _rulesConjunction;
+	}
+
+	public void setRulesConjunction(boolean rulesConjunction) {
+		_rulesConjunction = rulesConjunction;
 	}
 
 	public boolean getActive() {
@@ -381,6 +403,7 @@ public class CommerceDiscountSoap implements Serializable {
 	private String _couponCode;
 	private boolean _usePercentage;
 	private BigDecimal _maximumDiscountAmount;
+	private String _level;
 	private BigDecimal _level1;
 	private BigDecimal _level2;
 	private BigDecimal _level3;
@@ -388,6 +411,7 @@ public class CommerceDiscountSoap implements Serializable {
 	private String _limitationType;
 	private int _limitationTimes;
 	private int _numberOfUse;
+	private boolean _rulesConjunction;
 	private boolean _active;
 	private Date _displayDate;
 	private Date _expirationDate;

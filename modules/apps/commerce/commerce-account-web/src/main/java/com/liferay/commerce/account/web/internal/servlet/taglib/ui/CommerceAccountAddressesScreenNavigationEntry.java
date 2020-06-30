@@ -95,7 +95,7 @@ public class CommerceAccountAddressesScreenNavigationEntry
 					CommerceAccountActionKeys.VIEW_ADDRESSES) ||
 				_modelResourcePermission.contains(
 					permissionChecker, commerceAccount,
-					CommerceAccountActionKeys.MANAGE_ADDRESS)) {
+					CommerceAccountActionKeys.MANAGE_ADDRESSES)) {
 
 				return true;
 			}

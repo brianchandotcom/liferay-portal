@@ -40,7 +40,7 @@ import java.util.Set;
 public interface KaleoNotificationPersistence
 	extends BasePersistence<KaleoNotification> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationUtil} to access the kaleo notification persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchUtil} to access the layout branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

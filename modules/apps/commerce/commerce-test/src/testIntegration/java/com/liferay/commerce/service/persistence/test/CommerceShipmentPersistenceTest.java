@@ -223,6 +223,21 @@ public class CommerceShipmentPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_CArrayable() throws Exception {
+		_persistence.countByG_C(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong());
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -266,8 +281,8 @@ public class CommerceShipmentPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceAccountId", true,
 			"commerceAddressId", true, "commerceShippingMethodId", true,
-			"shippingOptionName", true, "carrier", true, "trackingNumber", true,
-			"shippingDate", true, "expectedDate", true, "status", true);
+			"carrier", true, "trackingNumber", true, "shippingDate", true,
+			"expectedDate", true, "status", true);
 	}
 
 	@Test

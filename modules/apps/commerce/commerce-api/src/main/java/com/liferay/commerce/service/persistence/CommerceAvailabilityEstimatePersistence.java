@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceAvailabilityEstimatePersistence
 	extends BasePersistence<CommerceAvailabilityEstimate> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAvailabilityEstimateUtil} to access the commerce availability estimate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

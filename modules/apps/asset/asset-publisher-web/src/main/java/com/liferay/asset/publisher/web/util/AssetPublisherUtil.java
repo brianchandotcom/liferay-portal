@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -27,10 +28,10 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
-import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
-import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -131,7 +132,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Component(
-	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	immediate = true, service = AssetPublisherUtil.class
 )
 @Deprecated
@@ -344,7 +345,7 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		return assetCategoryIds;
+		return _filterAssetCategoryIds(assetCategoryIds);
 	}
 
 	public static BaseModelSearchResult<AssetEntry> getAssetEntries(
@@ -357,7 +358,8 @@ public class AssetPublisherUtil {
 
 		if (isSearchWithIndex(portletName, assetEntryQuery)) {
 			return _assetHelper.searchAssetEntries(
-				assetEntryQuery, getAssetCategoryIds(portletPreferences),
+				assetEntryQuery,
+				_filterAssetCategoryIds(assetEntryQuery, portletPreferences),
 				getAssetTagNames(portletPreferences), attributes, companyId,
 				assetEntryQuery.getKeywords(), layout, locale, scopeGroupId,
 				timeZone, userId, start, end);
@@ -428,7 +430,10 @@ public class AssetPublisherUtil {
 		List<String> missingAssetEntryUuids = new ArrayList<>();
 
 		for (String assetEntryXml : assetEntryXmls) {
-			Document document = SAXReaderUtil.read(assetEntryXml);
+			String safeAssetEntryXml = HtmlUtil.fromInputSafe(assetEntryXml);
+
+			Document document = SAXReaderUtil.read(
+				HtmlUtil.unescape(safeAssetEntryXml));
 
 			Element rootElement = document.getRootElement();
 
@@ -1728,6 +1733,18 @@ public class AssetPublisherUtil {
 		return filteredAssetEntries;
 	}
 
+	private static long[] _filterAssetCategoryIds(
+		AssetEntryQuery assetEntryQuery,
+		PortletPreferences portletPreferences) {
+
+		long[] filteredAssetCategoryIds = ArrayUtil.filter(
+			getAssetCategoryIds(portletPreferences),
+			assetCategoryId -> !ArrayUtil.contains(
+				assetEntryQuery.getAllCategoryIds(), assetCategoryId));
+
+		return _filterAssetCategoryIds(filteredAssetCategoryIds);
+	}
+
 	private static long[] _filterAssetCategoryIds(long[] assetCategoryIds) {
 		List<Long> assetCategoryIdsList = new ArrayList<>();
 
@@ -1738,6 +1755,19 @@ public class AssetPublisherUtil {
 			if (category == null) {
 				continue;
 			}
+
+			List<AssetCategory> childAssetCategories =
+				_assetCategoryLocalService.getChildCategories(assetCategoryId);
+
+			long[] childAssetCategoryIds = ListUtil.toLongArray(
+				childAssetCategories, AssetCategoryModel::getCategoryId);
+
+			long[] filteredChildAssetCategoryIds = _filterAssetCategoryIds(
+				childAssetCategoryIds);
+
+			Collections.addAll(
+				assetCategoryIdsList,
+				ArrayUtil.toLongArray(filteredChildAssetCategoryIds));
 
 			assetCategoryIdsList.add(assetCategoryId);
 		}
@@ -1884,6 +1914,8 @@ public class AssetPublisherUtil {
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
 		}
+
+		anyAssetCategoryIds = _filterAssetCategoryIds(anyAssetCategoryIds);
 
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 

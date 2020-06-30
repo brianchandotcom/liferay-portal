@@ -32,11 +32,6 @@ public class MDRActionLocalServiceWrapper
 		_mdrActionLocalService = mdrActionLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link MDRActionLocalServiceUtil} to access the mdr action local service. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRActionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRAction addAction(
 			long ruleGroupInstanceId,
@@ -437,6 +432,9 @@ public class MDRActionLocalServiceWrapper
 		return _mdrActionLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

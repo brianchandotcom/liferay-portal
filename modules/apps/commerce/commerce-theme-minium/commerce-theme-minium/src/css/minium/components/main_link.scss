@@ -3,7 +3,7 @@
 	color: currentColor;
 	display: grid;
 	font-size: 14px;
-	grid-template-areas: "icon label";
+	grid-template-areas: 'icon label';
 	grid-template-columns: $frame-size 1fr;
 	grid-template-rows: $frame-size;
 	position: relative;
@@ -97,10 +97,8 @@
 		overflow: hidden;
 		padding-right: 15px;
 		text-overflow: ellipsis;
-		transition:
-			opacity $transition,
-			transform $transition;
 		transform: translateX(-15px);
+		transition: opacity $transition, transform $transition;
 		white-space: nowrap;
 
 		.minium-sidebar:not(:hover) & {

@@ -23,8 +23,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -36,12 +34,11 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
 	test ViewPortalSmokeArchive713 {
+		property app.server.types = "jboss,resin,tcserver,weblogic,websphere,wildfly";
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.upgrades = "true";
@@ -49,8 +46,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -61,8 +56,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -74,8 +67,6 @@ definition {
 		property test.run.environment = "EE";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -86,8 +77,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -98,8 +87,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 	@priority = "5"
@@ -110,8 +97,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
-
-		Upgrade.searchForAssetsAfterUpgrade();
 	}
 
 }

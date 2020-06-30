@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface RolePersistence extends BasePersistence<Role> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RoleUtil} to access the role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

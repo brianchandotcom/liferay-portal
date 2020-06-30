@@ -40,7 +40,7 @@ import java.util.Set;
 public interface OAuth2AuthorizationPersistence
 	extends BasePersistence<OAuth2Authorization> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2AuthorizationUtil} to access the o auth2 authorization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

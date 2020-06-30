@@ -32,7 +32,7 @@ import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 public abstract class MBCategoryBaseImpl
 	extends MBCategoryModelImpl implements MBCategory {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards category model instance should use the <code>MBCategory</code> interface instead.

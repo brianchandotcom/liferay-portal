@@ -16,7 +16,9 @@ package com.liferay.commerce.discount.service.base;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
@@ -51,7 +53,7 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 	extends BaseServiceImpl
 	implements CommerceDiscountRuleService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceDiscountRuleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.discount.service.CommerceDiscountRuleServiceUtil</code>.
@@ -121,6 +123,102 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 		CommerceDiscountPersistence commerceDiscountPersistence) {
 
 		this.commerceDiscountPersistence = commerceDiscountPersistence;
+	}
+
+	/**
+	 * Returns the commerce discount finder.
+	 *
+	 * @return the commerce discount finder
+	 */
+	public CommerceDiscountFinder getCommerceDiscountFinder() {
+		return commerceDiscountFinder;
+	}
+
+	/**
+	 * Sets the commerce discount finder.
+	 *
+	 * @param commerceDiscountFinder the commerce discount finder
+	 */
+	public void setCommerceDiscountFinder(
+		CommerceDiscountFinder commerceDiscountFinder) {
+
+		this.commerceDiscountFinder = commerceDiscountFinder;
+	}
+
+	/**
+	 * Returns the commerce discount account rel local service.
+	 *
+	 * @return the commerce discount account rel local service
+	 */
+	public
+		com.liferay.commerce.discount.service.
+			CommerceDiscountAccountRelLocalService
+				getCommerceDiscountAccountRelLocalService() {
+
+		return commerceDiscountAccountRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce discount account rel local service.
+	 *
+	 * @param commerceDiscountAccountRelLocalService the commerce discount account rel local service
+	 */
+	public void setCommerceDiscountAccountRelLocalService(
+		com.liferay.commerce.discount.service.
+			CommerceDiscountAccountRelLocalService
+				commerceDiscountAccountRelLocalService) {
+
+		this.commerceDiscountAccountRelLocalService =
+			commerceDiscountAccountRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce discount account rel remote service.
+	 *
+	 * @return the commerce discount account rel remote service
+	 */
+	public
+		com.liferay.commerce.discount.service.CommerceDiscountAccountRelService
+			getCommerceDiscountAccountRelService() {
+
+		return commerceDiscountAccountRelService;
+	}
+
+	/**
+	 * Sets the commerce discount account rel remote service.
+	 *
+	 * @param commerceDiscountAccountRelService the commerce discount account rel remote service
+	 */
+	public void setCommerceDiscountAccountRelService(
+		com.liferay.commerce.discount.service.CommerceDiscountAccountRelService
+			commerceDiscountAccountRelService) {
+
+		this.commerceDiscountAccountRelService =
+			commerceDiscountAccountRelService;
+	}
+
+	/**
+	 * Returns the commerce discount account rel persistence.
+	 *
+	 * @return the commerce discount account rel persistence
+	 */
+	public CommerceDiscountAccountRelPersistence
+		getCommerceDiscountAccountRelPersistence() {
+
+		return commerceDiscountAccountRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce discount account rel persistence.
+	 *
+	 * @param commerceDiscountAccountRelPersistence the commerce discount account rel persistence
+	 */
+	public void setCommerceDiscountAccountRelPersistence(
+		CommerceDiscountAccountRelPersistence
+			commerceDiscountAccountRelPersistence) {
+
+		this.commerceDiscountAccountRelPersistence =
+			commerceDiscountAccountRelPersistence;
 	}
 
 	/**
@@ -598,8 +696,8 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -617,6 +715,28 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 
 	@BeanReference(type = CommerceDiscountPersistence.class)
 	protected CommerceDiscountPersistence commerceDiscountPersistence;
+
+	@BeanReference(type = CommerceDiscountFinder.class)
+	protected CommerceDiscountFinder commerceDiscountFinder;
+
+	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountAccountRelLocalService.class
+	)
+	protected
+		com.liferay.commerce.discount.service.
+			CommerceDiscountAccountRelLocalService
+				commerceDiscountAccountRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountAccountRelService.class
+	)
+	protected
+		com.liferay.commerce.discount.service.CommerceDiscountAccountRelService
+			commerceDiscountAccountRelService;
+
+	@BeanReference(type = CommerceDiscountAccountRelPersistence.class)
+	protected CommerceDiscountAccountRelPersistence
+		commerceDiscountAccountRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService.class

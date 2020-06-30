@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface DDMTemplateLinkModel
 	extends AttachedModel, BaseModel<DDMTemplateLink>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm template link model instance should use the {@link DDMTemplateLink} interface instead.

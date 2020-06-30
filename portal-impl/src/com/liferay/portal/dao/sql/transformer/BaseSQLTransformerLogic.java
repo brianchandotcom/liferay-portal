@@ -158,9 +158,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 				}
 			}
 
-			sql = sb.toString();
-
-			return sql;
+			return sb.toString();
 		};
 	}
 

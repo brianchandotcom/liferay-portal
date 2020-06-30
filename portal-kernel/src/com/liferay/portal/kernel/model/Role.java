@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 @ProviderType
 public interface Role extends PersistedModel, RoleModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

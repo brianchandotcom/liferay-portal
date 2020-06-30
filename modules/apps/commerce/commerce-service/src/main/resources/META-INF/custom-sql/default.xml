@@ -28,11 +28,11 @@
 			ON
 				CommerceChannelRel.classPK = CommerceCountry.commerceCountryId
 			WHERE
-				(CommerceCountry.active_ = true) AND
+				(CommerceCountry.active_ = [$TRUE$]) AND
 				(
-					(CommerceCountry.channelFilterEnabled = false) OR
+					(CommerceCountry.channelFilterEnabled = [$FALSE$]) OR
 					(
-						(CommerceCountry.channelFilterEnabled = true) AND
+						(CommerceCountry.channelFilterEnabled = [$TRUE$]) AND
 						(CommerceChannelRel.classNameId = ?) AND
 						(CommerceChannelRel.commerceChannelId = ?)
 					)
@@ -58,7 +58,7 @@
 				Organization_ Org1 ON
 					Org1.organizationId = Users_Orgs.organizationId
 			LEFT JOIN
-				Organization_  Org2 ON
+				Organization_ Org2 ON
 					(Org1.treePath IS NOT NULL) AND
 					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
 			LEFT JOIN
@@ -75,7 +75,7 @@
 				[$ORDER_STATUS$]
 				[$ACCOUNT_ID$]
 				(CommerceOrder.groupId = ?) AND
-				(User_.userId  = [$USER_ID$]) AND
+				(User_.userId = [$USER_ID$]) AND
 				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
@@ -97,7 +97,7 @@
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_U_C_O">
 		<![CDATA[
 			SELECT
-				DISTINCT CommerceOrder.*
+				DISTINCT {CommerceOrder.*}
 			FROM
 				User_
 			LEFT JOIN
@@ -110,7 +110,7 @@
 				Organization_ Org1 ON
 					Org1.organizationId = Users_Orgs.organizationId
 			LEFT JOIN
-				Organization_  Org2 ON
+				Organization_ Org2 ON
 					(Org1.treePath IS NOT NULL) AND
 					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
 			LEFT JOIN
@@ -127,10 +127,75 @@
 				[$ORDER_STATUS$]
 				[$ACCOUNT_ID$]
 				(CommerceOrder.groupId = ?) AND
-				(User_.userId  = [$USER_ID$]) AND
+				(User_.userId = [$USER_ID$]) AND
 				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				CommerceOrder.modifieddate DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_U_C_O_S">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceOrder.*}
+			FROM
+				CommerceOrder
+			WHERE
+				(CommerceOrder.groupId = ?) AND
+				(CommerceOrder.commerceAccountId = ?) AND
+				(CommerceOrder.orderStatus = ?) AND
+				(
+					(
+						(CommerceOrder.userId = ?) AND
+						(CommerceOrder.status != 0)
+					) OR
+					(CommerceOrder.status = 0)
+				)
+			ORDER BY
+				CommerceOrder.modifieddate DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.getShippedCommerceOrdersByCommerceShipmentId">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceOrder.*}
+			FROM
+				CommerceOrder
+			WHERE
+				CommerceOrder.commerceOrderId IN
+					(
+						SELECT
+							DISTINCT CommerceOrderItem.commerceOrderId
+						FROM
+							CommerceOrderItem
+						JOIN
+							CommerceShipmentItem ON
+								CommerceShipmentItem.commerceOrderItemId = CommerceOrderItem.commerceOrderItemId
+						WHERE
+							CommerceShipmentItem.commerceShipmentId = ?
+						GROUP BY
+							CommerceOrderItem.commerceorderId
+						HAVING
+							SUM(CommerceOrderItem.shippedQuantity) = SUM(CommerceOrderItem.quantity)
+					)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.countByG_A_O">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceOrderItem.commerceOrderItemId) AS COUNT_VALUE
+			FROM
+				CommerceOrderItem
+			JOIN
+				CommerceOrder ON
+					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				(CommerceOrder.commerceAccountId = ?) AND
+				(CommerceOrder.groupId = ?) AND
+				(CommerceOrder.orderStatus IN ([$ORDER_STATUS$])) AND
+				(CommerceOrderItem.shippedQuantity < CommerceOrderItem.quantity)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByAvailableQuantity">
@@ -142,6 +207,28 @@
 			WHERE
 				(CommerceOrderItem.commerceOrderId = ?) AND
 				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByG_A_O">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceOrderItem.*}
+			FROM
+				CommerceOrderItem
+			JOIN
+				CommerceOrder ON
+					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				(commerceAccountId = ?) AND
+				(CommerceOrderItem.groupId = ?) AND
+				(CommerceOrder.orderStatus IN ([$ORDER_STATUS$])) AND
+				(CommerceOrderItem.shippedQuantity < CommerceOrderItem.quantity)
+			ORDER BY
+				 CommerceOrderItem.sku ASC,
+				 CommerceOrderItem.commerceOrderId ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.getCommerceOrderItemsQuantity">
@@ -172,6 +259,54 @@
 				(CommerceOrder.status <> ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentFinder.countByCommerceOrderId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceShipment.commerceShipmentId) AS COUNT_VALUE
+			FROM
+				CommerceShipment
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceShipmentItem.commerceShipmentId = CommerceShipment.commerceShipmentId
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				CommerceOrderItem.commerceOrderId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentFinder.findByCommerceOrderId">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceShipment.*}
+			FROM
+				CommerceShipment
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceShipmentItem.commerceShipmentId = CommerceShipment.commerceShipmentId
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				CommerceOrderItem.commerceOrderId = ?
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentFinder.findCommerceShipmentStatusesByCommerceOrderId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceShipment.status
+			FROM
+				CommerceShipment
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceShipmentItem.commerceShipmentId = CommerceShipment.commerceShipmentId
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				CommerceOrderItem.commerceOrderId = ?
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentItemFinder.findByCommerceOrderItemId">
 		<![CDATA[
 			SELECT
@@ -185,6 +320,30 @@
 				CommerceOrderItem.commerceOrderItemId = ?
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentItemFinder.getCommerceShipmentOrderItemsQuantity">
+		<![CDATA[
+			SELECT
+				SUM(CommerceShipmentItem.quantity) AS SUM_VALUE
+			FROM
+				CommerceShipmentItem
+			WHERE
+				(CommerceShipmentItem.commerceShipmentId = ?) AND
+				(CommerceShipmentItem.commerceOrderItemId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder.findByDeliveryNextIterationDate">
+		<![CDATA[
+			SELECT
+				CommerceSubscriptionEntry.*
+			FROM
+				CommerceSubscriptionEntry
+			WHERE
+				(CommerceSubscriptionEntry.deliveryNextIterationDate < ?) AND
+				(CommerceSubscriptionEntry.deliveryNextIterationDate IS NOT NULL) AND
+				(CommerceSubscriptionEntry.deliverySubscriptionStatus = 0) AND
+				(CommerceSubscriptionEntry.subscriptionStatus = 0)
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder.findByNextIterationDate">
 		<![CDATA[
 			SELECT
@@ -193,6 +352,7 @@
 				CommerceSubscriptionEntry
 			WHERE
 				(CommerceSubscriptionEntry.nextIterationDate < ?) AND
+				(CommerceSubscriptionEntry.nextIterationDate IS NOT NULL) AND
 				(CommerceSubscriptionEntry.subscriptionStatus = 0)
 		]]>
 	</sql>

@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordUtil} to access the ddl record persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

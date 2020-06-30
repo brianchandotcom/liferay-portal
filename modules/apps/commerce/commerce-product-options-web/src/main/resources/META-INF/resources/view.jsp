@@ -62,14 +62,15 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 <aui:script require="<%= cpOptionsEditorRequire %>">
 	var cpOptionsEditor = new CPOptionsEditor.default(
 		{
-			hasEditPermission : <%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION) %>,
-			namespace : '<portlet:namespace />',
-			optionURL : '<%= cpOptionURL %>',
-			optionValueURL : '<%= cpOptionValueURL %>',
-			optionValuesURL : '<%= cpOptionValuesURL %>',
-			optionsURL : '<%= cpOptionsURL %>',
+			hasEditPermission: <%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION) %>,
+			namespace: '<portlet:namespace />',
+			optionURL: '<%= cpOptionURL %>',
+			optionValueURL: '<%= cpOptionValueURL %>',
+			optionValuesURL: '<%= cpOptionValuesURL %>',
+			optionsURL: '<%= cpOptionsURL %>',
 			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>',
-			successMessage: '<liferay-ui:message key="your-request-completed-successfully" />'
+			successMessage:
+				'<liferay-ui:message key="your-request-completed-successfully" />'
 		},
 		'#<portlet:namespace />CPOptionsEditor'
 	);

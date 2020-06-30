@@ -15,6 +15,8 @@ definition {
 
 	@priority = "5"
 	test InstallUninstallApp {
+		property test.name.skip.portal.instance = "AppManagerUsecase#InstallUninstallApp";
+
 		var appName = "test-app-portlet";
 
 		ProductMenu.gotoPortlet(
@@ -39,6 +41,8 @@ definition {
 
 	@priority = "4"
 	test ViewIndependentModulesIsNotNestedWithinItself {
+		property test.name.skip.portal.instance = "AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself";
+
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
@@ -49,6 +53,23 @@ definition {
 		Pause(locator1 = "3000");
 
 		AppManager.viewNoAppCP(appName = "Independent Modules");
+	}
+
+	@description = "This is a use case for LPS-99031."
+	@priority = "5"
+	test ViewLicenseManager {
+		property test.name.skip.portal.instance = "AppManagerUsecase#ViewLicenseManager";
+
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "License Manager");
+
+		Pause(locator1 = "3000");
+
+		LicenseManager.viewDefaultCP(tableTexts = "Server Info,Host Name,IP Addresses,Licenses Registered,Owner,Start Date");
+
+		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");
 	}
 
 }

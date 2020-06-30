@@ -482,7 +482,7 @@ public class UpgradePortletPreferencesTest {
 			assetPublisherWebBundle);
 
 		Class<?> clazz = assetPublisherWebBundle.loadClass(
-			"com.liferay.asset.publisher.web.upgrade.v1_0_0." +
+			"com.liferay.asset.publisher.web.internal.upgrade.v1_0_0." +
 				"UpgradePortletPreferences");
 
 		Constructor<?> constructor = clazz.getConstructor(

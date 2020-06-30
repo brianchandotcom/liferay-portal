@@ -94,7 +94,7 @@ updateYarnBinariesCache {
 wrapperPortal {
 	File wrapperDir = projectDir.parentFile
 
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-2-bin.zip"
 	dependsOn wrapperSubrepo
 
 	doLast {
@@ -226,8 +226,6 @@ private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
 
 private void _createSetUpPortalToolTasks() {
 	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
-
-	XmlSlurper xmlSlurper = new XmlSlurper()
 
 	ivyXmlFileTree.each {
 		File ivyXmlFile ->

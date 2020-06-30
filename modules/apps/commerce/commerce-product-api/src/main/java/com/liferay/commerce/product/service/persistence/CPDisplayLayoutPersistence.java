@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPDisplayLayoutPersistence
 	extends BasePersistence<CPDisplayLayout> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutUtil} to access the cp display layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

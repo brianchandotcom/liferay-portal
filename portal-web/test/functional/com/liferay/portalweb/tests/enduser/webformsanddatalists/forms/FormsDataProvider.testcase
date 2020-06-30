@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
 	}
 
 	tearDown {

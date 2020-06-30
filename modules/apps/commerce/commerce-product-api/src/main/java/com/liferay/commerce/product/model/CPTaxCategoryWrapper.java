@@ -400,11 +400,6 @@ public class CPTaxCategoryWrapper
 		return _cpTaxCategory.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp tax category model instance should use the <code>CPTaxCategory</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpTaxCategory.persist();

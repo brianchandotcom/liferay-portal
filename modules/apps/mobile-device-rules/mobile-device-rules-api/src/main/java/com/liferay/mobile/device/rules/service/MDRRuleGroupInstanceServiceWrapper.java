@@ -33,11 +33,6 @@ public class MDRRuleGroupInstanceServiceWrapper
 		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupInstanceServiceUtil} to access the mdr rule group instance remote service. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance
 			addRuleGroupInstance(

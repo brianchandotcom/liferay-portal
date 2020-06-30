@@ -117,6 +117,26 @@ public class CommerceAddressServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress>
+			getBillingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressService.getBillingCommerceAddresses(
+			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	@Override
+	public int getBillingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressService.getBillingCommerceAddressesCount(
+			companyId, className, classPK, keywords);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceAddress getCommerceAddress(
 			long commerceAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -240,6 +260,26 @@ public class CommerceAddressServiceWrapper
 
 		return _commerceAddressService.getShippingCommerceAddresses(
 			companyId, className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress>
+			getShippingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressService.getShippingCommerceAddresses(
+			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	@Override
+	public int getShippingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAddressService.getShippingCommerceAddressesCount(
+			companyId, className, classPK, keywords);
 	}
 
 	/**

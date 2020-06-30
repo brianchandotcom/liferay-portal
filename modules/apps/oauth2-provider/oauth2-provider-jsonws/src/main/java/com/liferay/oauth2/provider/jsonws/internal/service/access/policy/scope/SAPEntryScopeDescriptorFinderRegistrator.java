@@ -76,11 +76,9 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 						serviceRegistration.unregister();
 					}
 
-					serviceRegistration = _bundleContext.registerService(
+					return _bundleContext.registerService(
 						ScopeDescriptor.class, sapEntryScopeDescriptorFinder,
 						_buildScopeDescriptorProperties(companyId));
-
-					return serviceRegistration;
 				});
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();

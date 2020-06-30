@@ -32,11 +32,6 @@ public class KaleoLogLocalServiceWrapper
 		_kaleoLogLocalService = kaleoLogLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoLogLocalServiceUtil} to access the kaleo log local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog
 			addActionExecutionKaleoLog(
@@ -442,6 +437,9 @@ public class KaleoLogLocalServiceWrapper
 		return _kaleoLogLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

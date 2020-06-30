@@ -57,7 +57,7 @@ import java.util.List;
 public interface DLFileVersionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileVersionLocalServiceUtil} to access the document library file version local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -308,6 +308,9 @@ public interface DLFileVersionLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

@@ -115,7 +115,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
 			%>
 
-				<aui:option label="<%= siteAvailableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(siteAvailableLocale) %>" selected="<%= siteDefaultLocale.getLanguage().equals(siteAvailableLocale.getLanguage()) && siteDefaultLocale.getCountry().equals(siteAvailableLocale.getCountry()) %>" value="<%= LocaleUtil.toLanguageId(siteAvailableLocale) %>" />
+				<aui:option data-value="<%= LocaleUtil.toLanguageId(siteAvailableLocale) %>" label="<%= siteAvailableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(siteAvailableLocale) %>" selected="<%= siteDefaultLocale.getLanguage().equals(siteAvailableLocale.getLanguage()) && siteDefaultLocale.getCountry().equals(siteAvailableLocale.getCountry()) %>" value="<%= LocaleUtil.toLanguageId(siteAvailableLocale) %>" />
 
 			<%
 			}
@@ -125,6 +125,8 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 	</aui:fieldset>
 
 	<div id="<portlet:namespace />languageWarning"></div>
+
+	<div id="<portlet:namespace />defaultLanguageSiteNameWarning"></div>
 
 	<aui:fieldset cssClass="available-languages">
 		<h4 class="text-default"><liferay-ui:message key="available-languages" /></h4>
@@ -187,12 +189,29 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 </aui:script>
 
 <aui:script use="aui-alert,aui-base">
-	var languageSelectInput = A.one('#<portlet:namespace />languageId');
+	const languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {
+		const nameInput = Liferay.component('<portlet:namespace />name');
+
 		languageSelectInput.on(
 			'change',
-			function() {
+			function(event) {
+				const select = event.currentTarget.getDOMNode();
+
+				const selectedOption = select.options[select.selectedIndex];
+
+				Liferay.fire(
+					'inputLocalized:defaultLocaleChanged',
+					{
+						item: selectedOption
+					}
+				);
+
+				const defaultLanguage = languageSelectInput.val();
+
+				const defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
+
 				new A.Alert(
 					{
 						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
@@ -203,6 +222,22 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 						render: true
 					}
 				);
+
+				if (!defaultLanguageSiteName) {
+					new A.Alert(
+						{
+							bodyContent: '<liferay-ui:message key="site-name-will-display-a-generic-text-until-a-translation-is-added" />',
+							boundingBox: '#<portlet:namespace />defaultLanguageSiteNameWarning',
+							closeable: true,
+							cssClass: 'alert-warning',
+							destroyOnHide: false,
+							render: true
+						}
+					);
+
+					nameInput.updateInput('<liferay-ui:message key="unnamed-site" />');
+				}
+
 			}
 		);
 	}

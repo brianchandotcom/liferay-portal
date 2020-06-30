@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CPDefinitionLocalization
 	extends CPDefinitionLocalizationModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

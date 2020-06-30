@@ -237,6 +237,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.net.IDN;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -939,18 +940,28 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
-		url = url.trim();
+		String domain = HttpUtil.getDomain(url);
+		String protocol = HttpUtil.getProtocol(url);
 
-		if ((url.charAt(0) == CharPool.SLASH) &&
-			((url.length() == 1) ||
-			 ((url.length() > 1) && (url.charAt(1) != CharPool.SLASH)))) {
+		if (Validator.isBlank(domain)) {
+			if (Validator.isBlank(HttpUtil.getPath(url))) {
+				return null;
+			}
+
+			// Specs allows URL of protocol followed by path, but we do not.
+
+			if (!Validator.isBlank(protocol)) {
+				return null;
+			}
+
+			// The URL is a relative path
 
 			return url;
 		}
 
-		String domain = HttpUtil.getDomain(url);
+		// Specs regards URL staring with double slashes valid, but we do not.
 
-		if (domain.isEmpty()) {
+		if (Validator.isBlank(protocol)) {
 			return null;
 		}
 
@@ -2822,25 +2833,33 @@ public class PortalImpl implements Portal {
 	public String getLayoutActualURL(Layout layout, String mainPath) {
 		Map<String, String> variables = new HashMap<>();
 
-		layout = getBrowsableLayout(layout);
+		Layout browsableLayout = getBrowsableLayout(layout);
 
-		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
+		String groupIdString = String.valueOf(browsableLayout.getGroupId());
+
+		variables.put("liferay:groupId", groupIdString);
+
+		variables.put(
+			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId()));
 
 		variables.put("liferay:mainPath", mainPath);
-		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
 
-		if (layout instanceof VirtualLayout) {
-			variables.put(
-				"liferay:pvlsgid", String.valueOf(layout.getGroupId()));
+		variables.put(
+			"liferay:plid", String.valueOf(browsableLayout.getPlid()));
+
+		variables.put(
+			"liferay:privateLayout",
+			String.valueOf(browsableLayout.isPrivateLayout()));
+
+		String pvlsgid = "0";
+
+		if (browsableLayout instanceof VirtualLayout) {
+			pvlsgid = groupIdString;
 		}
-		else {
-			variables.put("liferay:pvlsgid", "0");
-		}
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
+		variables.put("liferay:pvlsgid", pvlsgid);
 
-		variables.putAll(typeSettingsProperties);
+		variables.putAll(layout.getTypeSettingsProperties());
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
@@ -3364,18 +3383,14 @@ public class PortalImpl implements Portal {
 		String layoutFriendlyURL = getLayoutFriendlyURL(layout, themeDisplay);
 
 		if (Validator.isNotNull(layoutFriendlyURL)) {
-			layoutFriendlyURL = addPreservedParameters(
+			return addPreservedParameters(
 				themeDisplay, layout, layoutFriendlyURL, doAsUser);
-
-			return layoutFriendlyURL;
 		}
 
 		String layoutURL = getLayoutActualURL(layout);
 
-		layoutURL = addPreservedParameters(
+		return addPreservedParameters(
 			themeDisplay, layout, layoutURL, doAsUser);
-
-		return layoutURL;
 	}
 
 	@Override
@@ -4277,7 +4292,7 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(virtualHostname)) {
 			String domain = themeDisplay.getPortalDomain();
 
-			if (domain.startsWith(virtualHostname)) {
+			if (_isSameHostName(virtualHostname, domain)) {
 				serverName = virtualHostname;
 			}
 		}
@@ -8106,10 +8121,16 @@ public class PortalImpl implements Portal {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			if (layoutTypePortlet.hasPortletId(portletId, true) &&
-				(getScopeGroupId(layout, portletId) == scopeGroupId)) {
+			if (getScopeGroupId(layout, portletId) != scopeGroupId) {
+				continue;
+			}
 
-				return layout.getPlid();
+			for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
+				if (portletId.equals(portlet.getPortletId()) ||
+					portletId.equals(portlet.getRootPortletId())) {
+
+					return layout.getPlid();
+				}
 			}
 		}
 
@@ -9095,10 +9116,17 @@ public class PortalImpl implements Portal {
 		int pos = portalDomain.indexOf(CharPool.COLON);
 
 		if (pos > 0) {
-			return virtualHostName.regionMatches(0, portalDomain, 0, pos);
+			portalDomain = portalDomain.substring(0, pos);
 		}
 
-		return virtualHostName.equals(portalDomain);
+		if (virtualHostName.equals(portalDomain) ||
+			(portalDomain.contains("xn--") &&
+			 virtualHostName.equals(IDN.toUnicode(portalDomain)))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(

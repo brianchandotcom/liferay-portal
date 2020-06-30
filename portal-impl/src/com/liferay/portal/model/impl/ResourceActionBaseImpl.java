@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 public abstract class ResourceActionBaseImpl
 	extends ResourceActionModelImpl implements ResourceAction {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a resource action model instance should use the <code>ResourceAction</code> interface instead.

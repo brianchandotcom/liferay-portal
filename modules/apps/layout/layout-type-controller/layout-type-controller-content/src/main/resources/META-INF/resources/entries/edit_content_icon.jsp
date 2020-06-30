@@ -17,7 +17,9 @@
 <%@ include file="/entries/init.jsp" %>
 
 <%
-PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
+Layout groupControlPanelLayout = GroupControlPanelLayoutUtil.getGroupControlPanelLayout(layout.getGroup());
+
+PortletURL editLayoutURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, groupControlPanelLayout, PortletRequest.RENDER_PHASE);
 
 editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
 editLayoutURL.setParameter("redirect", PortalUtil.getCurrentURL(request));

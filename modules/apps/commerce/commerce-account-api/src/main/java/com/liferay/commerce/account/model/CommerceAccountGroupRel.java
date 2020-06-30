@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceAccountGroupRel
 	extends CommerceAccountGroupRelModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -62,5 +62,8 @@ public interface CommerceAccountGroupRel
 				}
 
 			};
+
+	public CommerceAccountGroup getCommerceAccountGroup()
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface DDMStructureLinkModel
 	extends AttachedModel, BaseModel<DDMStructureLink>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm structure link model instance should use the {@link DDMStructureLink} interface instead.

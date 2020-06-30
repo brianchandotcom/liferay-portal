@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.subscription.web.internal.display.context;
 
-import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
@@ -35,26 +33,14 @@ public class CPDefinitionSubscriptionInfoDisplayContext
 
 	public CPDefinitionSubscriptionInfoDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		CommercePaymentMethodGroupRelLocalService
-			commercePaymentMethodGroupRelLocalService,
-		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		CPSubscriptionTypeJSPContributorRegistry
 			cpSubscriptionTypeJSPContributorRegistry,
 		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry) {
 
 		super(
 			actionHelper, httpServletRequest,
-			commercePaymentMethodGroupRelLocalService,
-			commercePaymentMethodRegistry,
 			cpSubscriptionTypeJSPContributorRegistry,
 			cpSubscriptionTypeRegistry);
-
-		_commercePaymentMethodGroupRelLocalService =
-			commercePaymentMethodGroupRelLocalService;
-		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
-		_cpSubscriptionTypeJSPContributorRegistry =
-			cpSubscriptionTypeJSPContributorRegistry;
-		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
 	}
 
 	@Override
@@ -66,18 +52,13 @@ public class CPDefinitionSubscriptionInfoDisplayContext
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
 			getSelectedScreenNavigationCategoryKey());
-		portletURL.setParameter(
-			"screenNavigationEntryKey",
-			CPDefinitionScreenNavigationConstants.ENTRY_KEY_SUBSCRIPTION);
 
 		return portletURL;
 	}
 
-	private final CommercePaymentMethodGroupRelLocalService
-		_commercePaymentMethodGroupRelLocalService;
-	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-	private final CPSubscriptionTypeJSPContributorRegistry
-		_cpSubscriptionTypeJSPContributorRegistry;
-	private final CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+	@Override
+	public String getSelectedScreenNavigationCategoryKey() {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SUBSCRIPTION;
+	}
 
 }

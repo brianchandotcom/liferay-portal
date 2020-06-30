@@ -51,7 +51,7 @@ public abstract class LayoutPrototypeServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, LayoutPrototypeService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>LayoutPrototypeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil</code>.
@@ -462,8 +462,8 @@ public abstract class LayoutPrototypeServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

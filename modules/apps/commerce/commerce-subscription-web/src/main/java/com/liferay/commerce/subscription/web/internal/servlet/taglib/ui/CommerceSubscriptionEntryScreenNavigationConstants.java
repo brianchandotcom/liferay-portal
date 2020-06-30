@@ -20,10 +20,13 @@ package com.liferay.commerce.subscription.web.internal.servlet.taglib.ui;
 public class CommerceSubscriptionEntryScreenNavigationConstants {
 
 	public static final String
-		CATEGORY_KEY_COMMERCE_SUBSCRIPTION_ENTRY_DETAILS = "details";
+		CATEGORY_KEY_COMMERCE_SUBSCRIPTION_ENTRY_GENERAL = "general";
 
-	public static final String ENTRY_KEY_COMMERCE_SUBSCRIPTION_ENTRY_DETAILS =
-		"details";
+	public static final String
+		CATEGORY_KEY_COMMERCE_SUBSCRIPTION_ENTRY_PAYMENTS = "payments";
+
+	public static final String
+		CATEGORY_KEY_COMMERCE_SUBSCRIPTION_ENTRY_SHIPMENTS = "shipments";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_SUBSCRIPTION_ENTRY =

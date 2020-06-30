@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.WebDAVPropsLocalServiceUtil;
 public abstract class WebDAVPropsBaseImpl
 	extends WebDAVPropsModelImpl implements WebDAVProps {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a web dav props model instance should use the <code>WebDAVProps</code> interface instead.

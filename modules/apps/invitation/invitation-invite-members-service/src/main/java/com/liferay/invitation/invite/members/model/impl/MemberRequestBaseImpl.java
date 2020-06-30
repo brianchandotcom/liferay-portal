@@ -32,7 +32,7 @@ import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUt
 public abstract class MemberRequestBaseImpl
 	extends MemberRequestModelImpl implements MemberRequest {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a member request model instance should use the <code>MemberRequest</code> interface instead.

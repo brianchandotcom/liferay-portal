@@ -48,4 +48,8 @@ public interface CPDefinitionHelper {
 			int start, int end)
 		throws PortalException;
 
+	public long searchCount(
+			long groupId, SearchContext searchContext, CPQuery cpQuery)
+		throws PortalException;
+
 }

@@ -26,7 +26,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -73,7 +72,8 @@ public class CommerceOrderResource {
 		List<Order> orders = getOrders(
 			companyId, groupId, keywords, page, pageSize, httpServletRequest);
 
-		return new OrderList(orders, getOrdersCount(companyId, groupId));
+		return new OrderList(
+			orders, getOrdersCount(companyId, groupId, keywords));
 	}
 
 	protected List<Order> getOrders(
@@ -102,6 +102,7 @@ public class CommerceOrderResource {
 				new Order(
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountId(),
+					commerceOrder.getCommerceAccountName(),
 					commerceOrder.getPurchaseOrderNumber(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago",
@@ -115,11 +116,11 @@ public class CommerceOrderResource {
 		return orders;
 	}
 
-	protected int getOrdersCount(long companyId, long groupId)
+	protected int getOrdersCount(long companyId, long groupId, String keywords)
 		throws PortalException {
 
 		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
-			companyId, groupId, StringPool.BLANK);
+			companyId, groupId, keywords);
 	}
 
 	protected Response getResponse(Object object) {

@@ -154,7 +154,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
 		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
-			null, kaleoTaskInstanceToken, "Assigned initial task.",
+			null, kaleoTaskInstanceToken, "assigned-initial-task",
 			workflowContext, serviceContext);
 
 		return true;

@@ -30,11 +30,6 @@ public class TasksEntryServiceWrapper
 		_tasksEntryService = tasksEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link TasksEntryServiceUtil} to access the tasks entry remote service. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(
 			String title, int priority, long assigneeUserId, int dueDateMonth,

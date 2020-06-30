@@ -79,10 +79,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -96,10 +96,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 				addCommerceAccountOrganizationRels(
 					commerceAccountId, organizationIds, serviceContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -112,10 +112,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 				deleteCommerceAccountOrganizationRel(
 					commerceAccountId, organizationId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -128,10 +128,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 				deleteCommerceAccountOrganizationRels(
 					commerceAccountId, organizationIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -153,10 +153,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -178,10 +178,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -201,10 +201,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -225,10 +225,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -249,10 +249,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 			return com.liferay.commerce.account.model.
 				CommerceAccountOrganizationRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -268,10 +268,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -286,10 +286,10 @@ public class CommerceAccountOrganizationRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

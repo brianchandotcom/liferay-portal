@@ -66,8 +66,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 				commerceOrder.getCommerceOrderItems()) {
 
 			List<CommerceTaxValue> commerceTaxValues = getCommerceTaxValues(
-				commerceContext.getSiteGroupId(),
-				commerceOrderItem.getCPInstanceId(),
+				commerceOrder.getGroupId(), commerceOrderItem.getCPInstanceId(),
 				commerceOrder.getBillingAddressId(),
 				commerceOrder.getShippingAddressId(),
 				commerceOrderItem.getFinalPrice(), commerceContext);
@@ -105,8 +104,12 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 		List<CommerceTaxValue> commerceTaxValues = new ArrayList<>();
 
-		CPInstance cpInstance = _cpCpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
+
+		if (cpInstance == null) {
+			return commerceTaxValues;
+		}
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -124,7 +127,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		commerceTaxCalculateRequest.setCommerceShippingAddressId(
 			commerceShippingAddressId);
 		commerceTaxCalculateRequest.setPrice(amount);
-		commerceTaxCalculateRequest.setSiteGroupId(groupId);
+		commerceTaxCalculateRequest.setChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setTaxCategoryId(
 			cpDefinition.getCPTaxCategoryId());
 
@@ -189,6 +192,6 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
 
 	@Reference
-	private CPInstanceLocalService _cpCpInstanceLocalService;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

@@ -280,11 +280,6 @@ public class AssetCategoryPropertyWrapper
 		return _assetCategoryProperty.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a asset category property model instance should use the <code>AssetCategoryProperty</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_assetCategoryProperty.persist();

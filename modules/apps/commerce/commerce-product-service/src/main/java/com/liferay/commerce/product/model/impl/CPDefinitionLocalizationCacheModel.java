@@ -172,7 +172,9 @@ public class CPDefinitionLocalizationCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		cpDefinitionLocalizationId = objectInput.readLong();
@@ -183,7 +185,7 @@ public class CPDefinitionLocalizationCacheModel
 		languageId = objectInput.readUTF();
 		name = objectInput.readUTF();
 		shortDescription = objectInput.readUTF();
-		description = objectInput.readUTF();
+		description = (String)objectInput.readObject();
 		metaTitle = objectInput.readUTF();
 		metaDescription = objectInput.readUTF();
 		metaKeywords = objectInput.readUTF();
@@ -221,10 +223,10 @@ public class CPDefinitionLocalizationCacheModel
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(description);
+			objectOutput.writeObject(description);
 		}
 
 		if (metaTitle == null) {

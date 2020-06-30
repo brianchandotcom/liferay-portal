@@ -1,38 +1,38 @@
-$color-fg: #5C5E5E;
-$color-fg-alt: #7F848D;
-$color-bg: #FFF;
-$color-bg-medium: #FCFCFC;
-$color-bg-alt: #F7F7F8;
-$color-bg-dark: #34373E;
-$color-border: #ECEEF1;
+$color-fg: #5c5e5e;
+$color-fg-alt: #7f848d;
+$color-bg: #fff;
+$color-bg-medium: #fcfcfc;
+$color-bg-alt: #f7f7f8;
+$color-bg-dark: #34373e;
+$color-border: #eceef1;
 $color-shadow: rgba(92, 94, 94, 0.14);
-$color-disabled: #C9DAFF;
+$color-disabled: #c9daff;
 
-$color-theme: #4C84FF;
-$color-theme-dark: #3260C5;
-$color-theme-light: #C9DAFF;
+$color-theme: #4c84ff;
+$color-theme-dark: #3260c5;
+$color-theme-light: #c9daff;
 $color-theme-transparent: rgba($color-theme, 0.067);
 
-$color-modal-mask: rgba(52,55,62,0.6);
+$color-modal-mask: rgba(52, 55, 62, 0.6);
 
-$color-mood-good: #4BC286;
-$color-mood-neutral: #FEE4B8;
-$color-mood-bad: #EC676A;
-$color-mood-bad-bg: #FEF7F7;
+$color-mood-good: #4bc286;
+$color-mood-neutral: #fee4b8;
+$color-mood-bad: #ec676a;
+$color-mood-bad-bg: #fef7f7;
 
 $placeholder-colors: (
-	#9BE2BD,
-	#B3EFF5,
-	#FEE4B8,
-	#FFB78C,
-	#FF83A3,
-	#F5B3EF,
-	#B48FF7,
-	#639DFF
+	#9be2bd,
+	#b3eff5,
+	#fee4b8,
+	#ffb78c,
+	#ff83a3,
+	#f5b3ef,
+	#b48ff7,
+	#639dff
 );
 
 $shadow: 0 10px 20px $color-shadow;
-$shadow-focus: 0 3px 20px 0 rgba($color-theme, .5);
+$shadow-focus: 0 3px 20px 0 rgba($color-theme, 0.5);
 
 $xs-gutter: 5px;
 $sm-gutter: 10px;

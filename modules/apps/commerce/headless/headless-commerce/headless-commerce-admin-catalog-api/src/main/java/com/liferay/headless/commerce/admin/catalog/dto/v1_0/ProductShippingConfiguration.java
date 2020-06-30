@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -34,6 +33,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -47,7 +49,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ProductShippingConfiguration")
 public class ProductShippingConfiguration {
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getDepth() {
 		return depth;
 	}
@@ -103,7 +107,9 @@ public class ProductShippingConfiguration {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean freeShipping;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getHeight() {
 		return height;
 	}
@@ -159,7 +165,9 @@ public class ProductShippingConfiguration {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippable;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getShippingExtraPrice() {
 		return shippingExtraPrice;
 	}
@@ -216,7 +224,9 @@ public class ProductShippingConfiguration {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippingSeparately;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getWeight() {
 		return weight;
 	}
@@ -244,7 +254,9 @@ public class ProductShippingConfiguration {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal weight;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getWidth() {
 		return width;
 	}
@@ -385,6 +397,12 @@ public class ProductShippingConfiguration {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

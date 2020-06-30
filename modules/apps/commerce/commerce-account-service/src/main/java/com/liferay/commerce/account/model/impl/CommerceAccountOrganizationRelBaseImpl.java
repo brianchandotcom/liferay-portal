@@ -33,7 +33,7 @@ public abstract class CommerceAccountOrganizationRelBaseImpl
 	extends CommerceAccountOrganizationRelModelImpl
 	implements CommerceAccountOrganizationRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account organization rel model instance should use the <code>CommerceAccountOrganizationRel</code> interface instead.

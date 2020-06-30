@@ -43,7 +43,7 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 		for (LayoutRevision rootLayoutRevision : layoutRevisions) {
 			LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
 
-			boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
+			boolean selected = curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId();
 		%>
 
 			<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">

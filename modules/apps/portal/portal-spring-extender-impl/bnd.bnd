@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Spring Extender Implementation
 Bundle-SymbolicName: com.liferay.portal.spring.extender.impl
-Bundle-Version: 1.0.23
+Bundle-Version: 1.0.24
 Import-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\

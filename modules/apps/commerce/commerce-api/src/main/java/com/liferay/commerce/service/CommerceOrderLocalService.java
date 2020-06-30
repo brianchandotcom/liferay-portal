@@ -65,7 +65,7 @@ import java.util.Map;
 public interface CommerceOrderLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderLocalServiceUtil} to access the commerce order local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -114,16 +114,6 @@ public interface CommerceOrderLocalService
 	public CommerceOrder applyCouponCode(
 			long commerceOrderId, String couponCode,
 			CommerceContext commerceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder approveCommerceOrder(long userId, long commerceOrderId)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder checkoutCommerceOrder(
-			long commerceOrderId, CommerceContext commerceContext,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -246,9 +236,17 @@ public interface CommerceOrderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(
 		long commerceAccountId, long groupId, int orderStatus);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder fetchCommerceOrder(
+		long commerceAccountId, long groupId, long userId, int orderStatus);
 
 	/**
 	 * Returns the commerce order with the matching external reference code and company.
@@ -274,10 +272,6 @@ public interface CommerceOrderLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int[] getAvailableOrderStatuses(long commerceOrderId)
-		throws PortalException;
 
 	/**
 	 * Returns the commerce order with the primary key.
@@ -423,10 +417,17 @@ public interface CommerceOrderLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getShippedCommerceOrdersByCommerceShipmentId(
+		long commerceShipmentId, int start, int end);
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)
@@ -473,16 +474,13 @@ public interface CommerceOrderLocalService
 	public long searchCommerceOrdersCount(SearchContext searchContext)
 		throws PortalException;
 
-	public CommerceOrder setCommerceOrderToTransmit(
-			long userId, CommerceOrder commerceOrder)
+	public CommerceOrder updateAccount(
+			long commerceOrderId, long userId, long commerceAccountId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)
-		throws PortalException;
-
-	public CommerceOrder updateAccount(
-			long commerceOrderId, long userId, long commerceAccountId)
+	public CommerceOrder updateBillingAddress(
+			long commerceOrderId, long billingAddressId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -519,6 +517,11 @@ public interface CommerceOrderLocalService
 			BigDecimal subtotal, BigDecimal shippingAmount, BigDecimal total,
 			String advanceStatus, String externalReferenceCode,
 			CommerceContext commerceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateCommerceOrderExternalReferenceCode(
+			long commerceOrderId, String externalReferenceCode)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -589,6 +592,11 @@ public interface CommerceOrderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePurchaseOrderNumber(
 			long commerceOrderId, String purchaseOrderNumber)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateShippingAddress(
+			long commerceOrderId, long shippingAddressId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

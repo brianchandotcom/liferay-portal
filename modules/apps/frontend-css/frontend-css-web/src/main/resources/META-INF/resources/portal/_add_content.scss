@@ -14,10 +14,7 @@
 		}
 
 		.lfr-content-item {
-			.drag-content-item {
-				display: inline-block;
-				width: 100%;
-			}
+			display: flex;
 
 			&:focus, &:hover {
 				.add-content-item {
@@ -33,11 +30,8 @@
 
 			.add-content-item {
 				cursor: pointer;
-				margin-right: 15px;
-				padding: 2px 10px;
-				position: absolute;
-				right: 0;
-				top: -2px;
+				padding: 0 0 0 10px;
+				position: relative;
 
 				@include respond-to(phone, tablet) {
 					clip: auto;
@@ -48,6 +42,14 @@
 					white-space: normal;
 					width: auto;
 				}
+			}
+
+			.drag-content-item {
+				display: inline-block;
+				flex-grow: 1;
+				flex-shrink: 1;
+				overflow: hidden;
+				white-space: nowrap;
 			}
 
 			.lfr-portlet-used {
@@ -63,8 +65,12 @@
 			}
 
 			.taglib-icon-label {
-				display: inline-flex;
-				width: 70%;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				vertical-align: bottom;
+				white-space: nowrap;
+				width: 85%;
 			}
 		}
 

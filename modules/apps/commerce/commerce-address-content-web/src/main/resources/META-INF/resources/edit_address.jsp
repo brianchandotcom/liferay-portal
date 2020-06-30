@@ -120,42 +120,40 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 </aui:form>
 
 <aui:script use="aui-base,liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />commerceCountryId',
-				selectData: function(callback) {
-					Liferay.Service(
-						'/commerce.commercecountry/get-billing-commerce-countries-by-channel-id',
-						{
-							commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
-							start: -1,
-							end: -1
-						},
-						callback
-					);
-				},
-				selectDesc: 'nameCurrentValue',
-				selectId: 'commerceCountryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>'
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />commerceCountryId',
+			selectData: function(callback) {
+				Liferay.Service(
+					'/commerce.commercecountry/get-billing-commerce-countries-by-channel-id',
+					{
+						commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
+						end: -1,
+						start: -1
+					},
+					callback
+				);
 			},
-			{
-				select: '<portlet:namespace />commerceRegionId',
-				selectData: function(callback, selectKey) {
-					Liferay.Service(
+			selectDesc: 'nameCurrentValue',
+			selectId: 'commerceCountryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= commerceCountryId %>'
+		},
+		{
+			select: '<portlet:namespace />commerceRegionId',
+			selectData: function(callback, selectKey) {
+				Liferay.Service(
 					'/commerce.commerceregion/get-commerce-regions',
-						{
-							commerceCountryId: Number(selectKey),
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'name',
-				selectId: 'commerceRegionId',
-				selectVal: '<%= commerceRegionId %>'
-			}
-		]
-	);
+					{
+						active: true,
+						commerceCountryId: Number(selectKey)
+					},
+					callback
+				);
+			},
+			selectDesc: 'name',
+			selectId: 'commerceRegionId',
+			selectVal: '<%= commerceRegionId %>'
+		}
+	]);
 </aui:script>

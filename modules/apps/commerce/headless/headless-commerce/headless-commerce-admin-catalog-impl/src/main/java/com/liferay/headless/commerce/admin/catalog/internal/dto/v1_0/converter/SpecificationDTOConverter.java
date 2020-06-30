@@ -56,22 +56,29 @@ public class SpecificationDTOConverter implements DTOConverter {
 			_dtoConverterRegistry.getDTOConverter(
 				CPOptionCategory.class.getName());
 
-		return new Specification() {
+		Specification specification = new Specification() {
 			{
 				description = LanguageUtils.getLanguageIdMap(
 					cpSpecificationOption.getDescriptionMap());
 				facetable = cpSpecificationOption.isFacetable();
 				id = cpSpecificationOption.getCPSpecificationOptionId();
 				key = cpSpecificationOption.getKey();
-				optionCategory =
-					(OptionCategory)optionCategoryDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							dtoConverterContext.getLocale(),
-							cpOptionCategory.getCPOptionCategoryId()));
 				title = LanguageUtils.getLanguageIdMap(
 					cpSpecificationOption.getTitleMap());
 			}
 		};
+
+		if (cpOptionCategory != null) {
+			OptionCategory optionCategory =
+				(OptionCategory)optionCategoryDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						dtoConverterContext.getLocale(),
+						cpOptionCategory.getCPOptionCategoryId()));
+
+			specification.setOptionCategory(optionCategory);
+		}
+
+		return specification;
 	}
 
 	@Reference

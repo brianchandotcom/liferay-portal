@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -91,6 +92,12 @@ public class BreadcrumbUtil {
 		}
 
 		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_CURRENT_GROUP)) {
+			long groupId = ParamUtil.getLong(request, "groupId");
+
+			if (groupId != 0) {
+				themeDisplay.setScopeGroupId(groupId);
+			}
+
 			BreadcrumbEntry breadcrumbEntry = getScopeGroupBreadcrumbEntry(
 				themeDisplay);
 
@@ -239,8 +246,19 @@ public class BreadcrumbUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		Group group = layoutSet.getGroup();
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (scopeGroupId != group.getGroupId()) {
+			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				scopeGroupId, false);
+		}
+
 		_addGroupsBreadcrumbEntries(
-			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
+			breadcrumbEntries, themeDisplay, layoutSet, false);
 
 		if (breadcrumbEntries.isEmpty()) {
 			return null;

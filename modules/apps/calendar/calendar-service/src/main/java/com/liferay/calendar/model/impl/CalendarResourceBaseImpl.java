@@ -32,7 +32,7 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 public abstract class CalendarResourceBaseImpl
 	extends CalendarResourceModelImpl implements CalendarResource {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a calendar resource model instance should use the <code>CalendarResource</code> interface instead.

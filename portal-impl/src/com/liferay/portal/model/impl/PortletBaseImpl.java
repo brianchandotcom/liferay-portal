@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 public abstract class PortletBaseImpl
 	extends PortletModelImpl implements Portlet {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a portlet model instance should use the <code>Portlet</code> interface instead.

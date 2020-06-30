@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMTemplateLinkPersistence
 	extends BasePersistence<DDMTemplateLink> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkUtil} to access the ddm template link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

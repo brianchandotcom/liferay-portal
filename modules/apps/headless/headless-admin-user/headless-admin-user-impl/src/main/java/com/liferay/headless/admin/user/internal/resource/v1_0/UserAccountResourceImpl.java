@@ -239,14 +239,16 @@ public class UserAccountResourceImpl
 				contactInformation = new ContactInformation() {
 					{
 						emailAddresses = transformToArray(
-							user.getEmailAddresses(), EmailAddressUtil::toEmail,
+							user.getEmailAddresses(),
+							EmailAddressUtil::toEmailAddress,
 							EmailAddress.class);
 						facebook = contact.getFacebookSn();
 						jabber = contact.getJabberSn();
 						postalAddresses = transformToArray(
 							user.getAddresses(),
 							address -> PostalAddressUtil.toPostalAddress(
-								address,
+								contextAcceptLanguage.isAcceptAllLanguages(),
+								address, user.getCompanyId(),
 								contextAcceptLanguage.getPreferredLocale()),
 							PostalAddress.class);
 						skype = contact.getSkypeSn();
@@ -260,6 +262,7 @@ public class UserAccountResourceImpl
 					}
 				};
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					User.class.getName(), user.getUserId(), user.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = user.getCreateDate();

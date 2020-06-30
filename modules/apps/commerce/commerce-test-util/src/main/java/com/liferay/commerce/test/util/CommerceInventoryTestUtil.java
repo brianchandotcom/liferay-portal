@@ -20,7 +20,10 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLoca
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,55 +49,31 @@ public class CommerceInventoryTestUtil {
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
-
-		CommerceRegion commerceRegion = _setUpRegion(
-			commerceCountry, serviceContext);
-
-		return CommerceInventoryWarehouseLocalServiceUtil.
-			addCommerceInventoryWarehouse(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				commerceRegion.getCode(),
-				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(), null,
-				serviceContext);
+		return addCommerceInventoryWarehouse(
+			RandomTestUtil.randomString(), true);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			long groupId)
+			boolean active)
 		throws Exception {
 
 		return addCommerceInventoryWarehouse(
-			groupId, RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomString(), active);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			long groupId, boolean active)
+			String name)
 		throws Exception {
 
-		return addCommerceInventoryWarehouse(
-			groupId, RandomTestUtil.randomString(), active);
+		return addCommerceInventoryWarehouse(name, true);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			long groupId, String name)
-		throws Exception {
-
-		return addCommerceInventoryWarehouse(groupId, name, true);
-	}
-
-	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			long groupId, String name, boolean active)
+			String name, boolean active)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext();
 
 		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
 
@@ -133,7 +112,7 @@ public class CommerceInventoryTestUtil {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			addCommerceInventoryWarehouse(serviceContext.getScopeGroupId());
+			addCommerceInventoryWarehouse();
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -178,6 +157,16 @@ public class CommerceInventoryTestUtil {
 		return CommerceRegionLocalServiceUtil.addCommerceRegion(
 			commerceCountryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), 0, true, serviceContext);
+	}
+
+	public static CPInstance addRandomCPInstanceSku(long groupId)
+		throws Exception {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(groupId);
+
+		cpInstance.setSku(RandomTestUtil.randomString());
+
+		return CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 	}
 
 	private static CommerceCountry _setUpCountry(ServiceContext serviceContext)

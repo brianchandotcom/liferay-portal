@@ -220,6 +220,10 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		}
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			if (Portal.TEMP_OBFUSCATION_VALUE.equals(entry.getValue())) {
+				continue;
+			}
+
 			dictionary.put(entry.getKey(), entry.getValue());
 		}
 

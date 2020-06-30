@@ -17,6 +17,7 @@
 <%@ include file="/custom_attribute_list/init.jsp" %>
 
 <%
+Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-expando:custom-attribute-list:availableLocales");
 String className = (String)request.getAttribute("liferay-expando:custom-attribute-list:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-expando:custom-attribute-list:classPK"));
 boolean editable = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute-list:editable"));
@@ -37,6 +38,7 @@ List<String> attributeNames = ListUtil.remove(Collections.list(expandoBridge.get
 	%>
 
 		<liferay-expando:custom-attribute
+			availableLocales="<%= availableLocales %>"
 			className="<%= className %>"
 			classPK="<%= classPK %>"
 			editable="<%= editable %>"

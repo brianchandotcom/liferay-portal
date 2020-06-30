@@ -32,7 +32,7 @@ import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 public abstract class CommerceOrderBaseImpl
 	extends CommerceOrderModelImpl implements CommerceOrder {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce order model instance should use the <code>CommerceOrder</code> interface instead.

@@ -251,11 +251,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		return _image.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a image model instance should use the <code>Image</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_image.persist();

@@ -123,6 +123,11 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="maxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionEnabled" type="boolean" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
 		<field name="accountGroupFilterEnabled" type="boolean" />
 		<field name="channelFilterEnabled" type="boolean" />
 		<field name="version" type="int" />
@@ -196,7 +201,10 @@
 		<field name="facetable" type="boolean" />
 		<field name="required" type="boolean" />
 		<field name="skuContributor" type="boolean" />
-		<field name="key" type="String" />
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priceType" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionValueRel">
 		<field name="uuid" type="String" />
@@ -217,6 +225,10 @@
 		<field name="key" type="String">
 			<validator name="required" />
 		</field>
+		<field name="CPInstanceUuid" type="String" />
+		<field name="CProductId" type="long" />
+		<field name="quantity" type="int" />
+		<field name="price" type="BigDecimal" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
 		<field name="uuid" type="String" />
@@ -290,9 +302,6 @@
 		<field name="purchasable" type="boolean">
 			<hint name="default-value">true</hint>
 		</field>
-		<field name="json" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>
@@ -328,10 +337,28 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="maxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionEnabled" type="boolean" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPInstanceOptionValueRel">
+		<field name="uuid" type="String" />
+		<field name="CPInstanceOptionValueRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionOptionRelId" type="long" />
+		<field name="CPDefinitionOptionValueRelId" type="long" />
+		<field name="CPInstanceId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPMeasurementUnit">
 		<field name="uuid" type="String" />

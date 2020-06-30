@@ -66,7 +66,7 @@ import java.util.Map;
 public interface CPOptionValueLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionValueLocalServiceUtil} to access the cp option value local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -309,6 +309,9 @@ public interface CPOptionValueLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

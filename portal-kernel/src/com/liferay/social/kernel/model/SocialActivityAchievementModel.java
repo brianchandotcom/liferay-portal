@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface SocialActivityAchievementModel
 	extends BaseModel<SocialActivityAchievement>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a social activity achievement model instance should use the {@link SocialActivityAchievement} interface instead.

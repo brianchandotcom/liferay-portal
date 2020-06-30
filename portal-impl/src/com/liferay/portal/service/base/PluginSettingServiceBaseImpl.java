@@ -49,7 +49,7 @@ public abstract class PluginSettingServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, PluginSettingService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PluginSettingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PluginSettingServiceUtil</code>.
@@ -423,8 +423,8 @@ public abstract class PluginSettingServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

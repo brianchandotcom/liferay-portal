@@ -192,7 +192,9 @@ public class LayoutSiteNavigationMenuItemType
 
 		String label = getName(siteNavigationMenuItem.getTypeSettings());
 
-		if (Validator.isNotNull(label)) {
+		boolean useLayoutName = _isUseLayoutName(siteNavigationMenuItem);
+
+		if (Validator.isNotNull(label) && !useLayoutName) {
 			return label;
 		}
 
@@ -386,6 +388,9 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		request.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME,
+			_isUseLayoutName(siteNavigationMenuItem));
+		request.setAttribute(
 			WebKeys.SEL_LAYOUT, _fetchLayout(siteNavigationMenuItem));
 		request.setAttribute(
 			WebKeys.TITLE,
@@ -431,6 +436,19 @@ public class LayoutSiteNavigationMenuItemType
 		}
 
 		return layout;
+	}
+
+	private boolean _isUseLayoutName(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		return GetterUtil.getBoolean(
+			typeSettingsProperties.get("useLayoutName"),
+			Validator.isNull(typeSettingsProperties.get("name")));
 	}
 
 	@Reference

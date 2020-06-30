@@ -42,6 +42,8 @@ public class CommerceMessagingConfigurator {
 			bundleContext, CommerceDestinationNames.ORDER_STATUS);
 		_paymentStatusServiceRegistration = _registerDestination(
 			bundleContext, CommerceDestinationNames.PAYMENT_STATUS);
+		_shipmentStatusServiceRegistration = _registerDestination(
+			bundleContext, CommerceDestinationNames.SHIPMENT_STATUS);
 		_stockQuantityServiceRegistration = _registerDestination(
 			bundleContext, CommerceDestinationNames.STOCK_QUANTITY);
 	}
@@ -54,6 +56,10 @@ public class CommerceMessagingConfigurator {
 
 		if (_paymentStatusServiceRegistration != null) {
 			_paymentStatusServiceRegistration.unregister();
+		}
+
+		if (_shipmentStatusServiceRegistration != null) {
+			_shipmentStatusServiceRegistration.unregister();
 		}
 
 		if (_stockQuantityServiceRegistration != null) {
@@ -86,6 +92,8 @@ public class CommerceMessagingConfigurator {
 		_orderStatusServiceRegistration;
 	private volatile ServiceRegistration<Destination>
 		_paymentStatusServiceRegistration;
+	private volatile ServiceRegistration<Destination>
+		_shipmentStatusServiceRegistration;
 	private volatile ServiceRegistration<Destination>
 		_stockQuantityServiceRegistration;
 

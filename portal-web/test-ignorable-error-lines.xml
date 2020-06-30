@@ -240,10 +240,6 @@
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-34199, temporarily ignore SAMLBootstrap error">
-			<contains>The activate method has thrown an exception</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LRQA-50674, tests pass regardless of this URL loading or not, never reproduced locally">
 			<contains>Impossible to load https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml</contains>
 			<matches></matches>

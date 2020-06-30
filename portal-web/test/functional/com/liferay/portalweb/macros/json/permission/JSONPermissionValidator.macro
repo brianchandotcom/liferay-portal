@@ -1,0 +1,12 @@
+definition {
+
+	@summary = "Validate roleType is set to a valid roleType"
+	macro validateRoleType {
+		Variables.assertDefined(parameterList = "${roleType}");
+
+		if (!(contains("regular,site,organization", "${roleType}"))) {
+			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+		}
+	}
+
+}

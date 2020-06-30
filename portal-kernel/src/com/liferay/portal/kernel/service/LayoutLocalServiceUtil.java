@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class LayoutLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -1251,6 +1251,13 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static int getLayoutsCount(
+		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
+		String[] types) {
+
+		return getService().getLayoutsCount(group, privateLayout, types);
+	}
+
+	public static int getLayoutsCount(
 			com.liferay.portal.kernel.model.User user, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1320,6 +1327,9 @@ public class LayoutLocalServiceUtil {
 		return getService().getParentLayout(layout);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -22,18 +22,9 @@ public class CommerceTaxScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL =
 		"detail";
 
-	public static final String CATEGORY_KEY_COMMERCE_TAXES_TAX_METHODS =
-		"tax-methods";
-
 	public static final String ENTRY_KEY_COMMERCE_TAX_METHOD_DETAIL = "detail";
-
-	public static final String ENTRY_KEY_COMMERCE_TAXES_TAX_METHODS =
-		"tax-methods";
 
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_TAX_METHOD =
 		"commerce.tax.method";
-
-	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_TAXES =
-		"commerce.taxes";
 
 }

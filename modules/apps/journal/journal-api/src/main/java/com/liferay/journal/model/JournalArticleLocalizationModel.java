@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface JournalArticleLocalizationModel
 	extends BaseModel<JournalArticleLocalization>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a journal article localization model instance should use the {@link JournalArticleLocalization} interface instead.

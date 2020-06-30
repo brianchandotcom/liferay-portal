@@ -38,9 +38,7 @@ public class AddOrganizationsModalTag extends ComponentRendererTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		putValue(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		setTemplateNamespace("AddOrganizationsModal.render");
 

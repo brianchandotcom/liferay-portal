@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -49,7 +51,7 @@ public interface CPDefinitionOptionValueRelModel
 	extends BaseModel<CPDefinitionOptionValueRel>, GroupedModel, LocalizedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition option value rel model instance should use the {@link CPDefinitionOptionValueRel} interface instead.
@@ -355,6 +357,63 @@ public interface CPDefinitionOptionValueRelModel
 	 * @param key the key of this cp definition option value rel
 	 */
 	public void setKey(String key);
+
+	/**
+	 * Returns the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @return the cp instance uuid of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getCPInstanceUuid();
+
+	/**
+	 * Sets the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @param CPInstanceUuid the cp instance uuid of this cp definition option value rel
+	 */
+	public void setCPInstanceUuid(String CPInstanceUuid);
+
+	/**
+	 * Returns the c product ID of this cp definition option value rel.
+	 *
+	 * @return the c product ID of this cp definition option value rel
+	 */
+	public long getCProductId();
+
+	/**
+	 * Sets the c product ID of this cp definition option value rel.
+	 *
+	 * @param CProductId the c product ID of this cp definition option value rel
+	 */
+	public void setCProductId(long CProductId);
+
+	/**
+	 * Returns the quantity of this cp definition option value rel.
+	 *
+	 * @return the quantity of this cp definition option value rel
+	 */
+	public int getQuantity();
+
+	/**
+	 * Sets the quantity of this cp definition option value rel.
+	 *
+	 * @param quantity the quantity of this cp definition option value rel
+	 */
+	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the price of this cp definition option value rel.
+	 *
+	 * @return the price of this cp definition option value rel
+	 */
+	public BigDecimal getPrice();
+
+	/**
+	 * Sets the price of this cp definition option value rel.
+	 *
+	 * @param price the price of this cp definition option value rel
+	 */
+	public void setPrice(BigDecimal price);
 
 	@Override
 	public boolean isNew();

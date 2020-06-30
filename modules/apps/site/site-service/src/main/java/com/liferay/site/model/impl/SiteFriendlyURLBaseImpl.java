@@ -32,7 +32,7 @@ import com.liferay.site.service.SiteFriendlyURLLocalServiceUtil;
 public abstract class SiteFriendlyURLBaseImpl
 	extends SiteFriendlyURLModelImpl implements SiteFriendlyURL {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a site friendly url model instance should use the <code>SiteFriendlyURL</code> interface instead.

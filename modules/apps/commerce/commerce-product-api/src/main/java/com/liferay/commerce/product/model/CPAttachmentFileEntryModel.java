@@ -50,7 +50,7 @@ public interface CPAttachmentFileEntryModel
 	extends AttachedModel, BaseModel<CPAttachmentFileEntry>, LocalizedModel,
 			ShardedModel, StagedGroupedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp attachment file entry model instance should use the {@link CPAttachmentFileEntry} interface instead.

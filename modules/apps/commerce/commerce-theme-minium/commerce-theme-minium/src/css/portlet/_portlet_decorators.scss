@@ -98,8 +98,12 @@
 		}
 	}
 
-	&.portlet-search, .portlet-search, &.portlet-search-bar, .portlet-search-bar {
-		.form-group, .lfr-ddm-field-group {
+	&.portlet-search,
+	.portlet-search,
+	&.portlet-search-bar,
+	.portlet-search-bar {
+		.form-group,
+		.lfr-ddm-field-group {
 			margin-bottom: 0;
 		}
 	}
@@ -125,7 +129,8 @@
 }
 
 .user-personal-bar {
-	.sign-in, .user-avatar-link {
+	.sign-in,
+	.user-avatar-link {
 		a {
 			color: inherit;
 			display: block;
@@ -137,7 +142,8 @@
 		}
 	}
 
-	.user-avatar-image, .user-full-name {
+	.user-avatar-image,
+	.user-full-name {
 		display: inline-flex;
 		vertical-align: middle;
 	}

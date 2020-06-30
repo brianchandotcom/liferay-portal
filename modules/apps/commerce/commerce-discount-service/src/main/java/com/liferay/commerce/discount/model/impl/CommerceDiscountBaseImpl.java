@@ -32,7 +32,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
 public abstract class CommerceDiscountBaseImpl
 	extends CommerceDiscountModelImpl implements CommerceDiscount {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce discount model instance should use the <code>CommerceDiscount</code> interface instead.

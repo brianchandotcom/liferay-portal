@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceOrderPaymentLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderPaymentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -262,6 +262,18 @@ public class CommerceOrderPaymentLocalServiceUtil {
 		return getService().getCommerceOrderPayments(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.model.CommerceOrderPayment>
+			getCommerceOrderPayments(
+				long commerceOrderId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.model.CommerceOrderPayment>
+						orderByComparator) {
+
+		return getService().getCommerceOrderPayments(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce order payments.
 	 *
@@ -269,6 +281,10 @@ public class CommerceOrderPaymentLocalServiceUtil {
 	 */
 	public static int getCommerceOrderPaymentsCount() {
 		return getService().getCommerceOrderPaymentsCount();
+	}
+
+	public static int getCommerceOrderPaymentsCount(long commerceOrderId) {
+		return getService().getCommerceOrderPaymentsCount(commerceOrderId);
 	}
 
 	public static
@@ -287,6 +303,9 @@ public class CommerceOrderPaymentLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -18,9 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionSpecificationOptionValueDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
-import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -60,7 +58,6 @@ public class EditCPDefinitionSpecificationOptionValueMVCRenderCommand
 					new CPDefinitionSpecificationOptionValueDisplayContext(
 						_actionHelper,
 						_portal.getHttpServletRequest(renderRequest),
-						_cpDefinitionSpecificationOptionValueService,
 						_cpOptionCategoryService, _itemSelector);
 
 			renderRequest.setAttribute(
@@ -87,14 +84,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CPDefinitionSpecificationOptionValueService
-		_cpDefinitionSpecificationOptionValueService;
-
-	@Reference
 	private CPOptionCategoryService _cpOptionCategoryService;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

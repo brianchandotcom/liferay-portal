@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
 public abstract class BrowserTrackerBaseImpl
 	extends BrowserTrackerModelImpl implements BrowserTracker {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a browser tracker model instance should use the <code>BrowserTracker</code> interface instead.

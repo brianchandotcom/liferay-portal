@@ -51,10 +51,8 @@ public class BookmarksFolderUADTestUtil {
 		BookmarksFolder bookmarksFolder = addBookmarksFolder(
 			bookmarksFolderLocalService, userId);
 
-		bookmarksFolder = bookmarksFolderLocalService.updateStatus(
+		return bookmarksFolderLocalService.updateStatus(
 			statusByUserId, bookmarksFolder, WorkflowConstants.STATUS_APPROVED);
-
-		return bookmarksFolder;
 	}
 
 }

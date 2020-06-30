@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow API
 Bundle-SymbolicName: com.liferay.portal.workflow.api
-Bundle-Version: 4.0.4
+Bundle-Version: 4.0.6
 Export-Package:\
 	com.liferay.portal.workflow.configuration,\
 	com.liferay.portal.workflow.constants,\

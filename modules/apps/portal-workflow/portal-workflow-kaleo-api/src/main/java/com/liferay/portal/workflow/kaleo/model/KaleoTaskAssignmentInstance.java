@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface KaleoTaskAssignmentInstance
 	extends KaleoTaskAssignmentInstanceModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

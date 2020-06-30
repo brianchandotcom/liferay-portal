@@ -190,12 +190,21 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 	<aui:script>
 		function <portlet:namespace />deleteCommercePriceEntries() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+			if (
+				confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
+				)
+			) {
 				var form = AUI.$(document.<portlet:namespace />fm);
 
 				form.attr('method', 'post');
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommercePriceEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				form.fm('deleteCommercePriceEntryIds').val(
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				);
 
 				submitForm(form, '<portlet:actionURL name="editCommercePriceEntry" />');
 			}
@@ -203,34 +212,32 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommercePriceEntry').on(
-			'click',
-			function(event) {
-				event.preventDefault();
+		$('#<portlet:namespace />addCommercePriceEntry').on('click', function(event) {
+			event.preventDefault();
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: 'productInstancesSelectItem',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'productInstancesSelectItem',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItems = event.newVal;
 
-								if (selectedItems) {
-									$('#<portlet:namespace />cpInstanceIds').val(selectedItems);
+						if (selectedItems) {
+							$('#<portlet:namespace />cpInstanceIds').val(selectedItems);
 
-									var addCommercePriceEntryFm = $('#<portlet:namespace />addCommercePriceEntryFm');
+							var addCommercePriceEntryFm = $(
+								'#<portlet:namespace />addCommercePriceEntryFm'
+							);
 
-									submitForm(addCommercePriceEntryFm);
-								}
-							}
-						},
-						title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(commercePriceList.getName()) %>" key="add-new-entry-to-x" />',
-						url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>'
+							submitForm(addCommercePriceEntryFm);
+						}
 					}
-				);
+				},
+				title:
+					'<liferay-ui:message arguments="<%= HtmlUtil.escape(commercePriceList.getName()) %>" key="add-new-entry-to-x" />',
+				url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>'
+			});
 
-				itemSelectorDialog.open();
-			}
-		);
+			itemSelectorDialog.open();
+		});
 	</aui:script>
 </c:if>

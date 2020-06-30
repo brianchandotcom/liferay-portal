@@ -20,21 +20,19 @@ import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 
 import java.io.OutputStream;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=100",
-	service = OutputStreamContainerFactory.class
-)
 public class ConsoleOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
 
 	@Override
 	public OutputStreamContainer create(String hint) {
-		return new OutputStreamContainer() {
+		return _OUTPUT_STREAM_CONTAINER;
+	}
+
+	private static final OutputStreamContainer _OUTPUT_STREAM_CONTAINER =
+		new OutputStreamContainer() {
 
 			@Override
 			public String getDescription() {
@@ -47,6 +45,5 @@ public class ConsoleOutputStreamContainerFactory
 			}
 
 		};
-	}
 
 }

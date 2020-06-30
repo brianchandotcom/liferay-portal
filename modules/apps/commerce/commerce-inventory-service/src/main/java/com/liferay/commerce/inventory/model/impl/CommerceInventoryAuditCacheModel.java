@@ -64,7 +64,7 @@ public class CommerceInventoryAuditCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{commerceInventoryAuditId=");
 		sb.append(commerceInventoryAuditId);
@@ -80,8 +80,10 @@ public class CommerceInventoryAuditCacheModel
 		sb.append(modifiedDate);
 		sb.append(", sku=");
 		sb.append(sku);
-		sb.append(", description=");
-		sb.append(description);
+		sb.append(", logType=");
+		sb.append(logType);
+		sb.append(", logTypeSettings=");
+		sb.append(logTypeSettings);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append("}");
@@ -127,11 +129,18 @@ public class CommerceInventoryAuditCacheModel
 			commerceInventoryAuditImpl.setSku(sku);
 		}
 
-		if (description == null) {
-			commerceInventoryAuditImpl.setDescription("");
+		if (logType == null) {
+			commerceInventoryAuditImpl.setLogType("");
 		}
 		else {
-			commerceInventoryAuditImpl.setDescription(description);
+			commerceInventoryAuditImpl.setLogType(logType);
+		}
+
+		if (logTypeSettings == null) {
+			commerceInventoryAuditImpl.setLogTypeSettings("");
+		}
+		else {
+			commerceInventoryAuditImpl.setLogTypeSettings(logTypeSettings);
 		}
 
 		commerceInventoryAuditImpl.setQuantity(quantity);
@@ -142,7 +151,9 @@ public class CommerceInventoryAuditCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		commerceInventoryAuditId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -152,7 +163,8 @@ public class CommerceInventoryAuditCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		sku = objectInput.readUTF();
-		description = objectInput.readUTF();
+		logType = objectInput.readUTF();
+		logTypeSettings = (String)objectInput.readObject();
 
 		quantity = objectInput.readInt();
 	}
@@ -182,11 +194,18 @@ public class CommerceInventoryAuditCacheModel
 			objectOutput.writeUTF(sku);
 		}
 
-		if (description == null) {
+		if (logType == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(description);
+			objectOutput.writeUTF(logType);
+		}
+
+		if (logTypeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(logTypeSettings);
 		}
 
 		objectOutput.writeInt(quantity);
@@ -199,7 +218,8 @@ public class CommerceInventoryAuditCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String sku;
-	public String description;
+	public String logType;
+	public String logTypeSettings;
 	public int quantity;
 
 }

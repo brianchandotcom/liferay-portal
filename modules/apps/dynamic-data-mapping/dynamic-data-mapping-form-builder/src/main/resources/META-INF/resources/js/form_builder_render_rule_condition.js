@@ -219,13 +219,9 @@ AUI.add(
 			_disableOperatorField: function(index, value) {
 				var instance = this;
 
-				if (value.length == 0) {
-					var operator = instance._getOperator(index);
-					var operatorContainer = operator.get('container');
-					var operatorTrigger = operatorContainer.one('.select-field-trigger');
+				var operator = instance._getOperator(index);
 
-					operatorTrigger.attr('disabled', true);
-				}
+				operator.set('readOnly', value.length == 0);
 			},
 
 			_getConditions: function() {
@@ -1057,6 +1053,7 @@ AUI.add(
 							}
 						];
 					}
+
 					secondOperandType.set('options', options);
 				}
 			},

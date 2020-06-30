@@ -17,176 +17,77 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDisplayContext = (CommerceTaxFixedRateAddressRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxFixedRateAddressRel();
 
 long commerceCountryId = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCountryId();
 long commerceRegionId = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceRegionId();
-long commerceTaxMethodId = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId();
-
-long commerceTaxFixedRateAddressRelId = 0;
-
-if (commerceTaxFixedRateAddressRel != null) {
-	commerceTaxFixedRateAddressRelId = commerceTaxFixedRateAddressRel.getCommerceTaxFixedRateAddressRelId();
-}
-
-PortletURL taxMethodsURL = renderResponse.createRenderURL();
-
-taxMethodsURL.setParameter("commerceAdminModuleKey", commerceAdminModuleKey);
-
-String localizedKey = (commerceTaxFixedRateAddressRel == null) ? "add-tax-rate-setting" : "edit-tax-rate-setting";
-
-String title = LanguageUtil.get(resourceBundle, localizedKey);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-String screenNavigationCategoryKey = commerceTaxFixedRateAddressRelsDisplayContext.getScreenNavigationCategoryKey();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), taxMethodsURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceTaxFixedRateAddressRel" var="editCommerceTaxFixedRateAddressRelActionURL" />
 
-<aui:form action="<%= editCommerceTaxFixedRateAddressRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceTaxFixedRateAddressRel == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceTaxFixedRateAddressRelId" type="hidden" value="<%= commerceTaxFixedRateAddressRelId %>" />
-	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
+<c:choose>
+	<c:when test="<%= commerceTaxFixedRateAddressRel == null %>">
+		<commerce-ui:modal-content
+			title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>'
+		>
+			<aui:form action="<%= editCommerceTaxFixedRateAddressRelActionURL %>" method="post" name="fm">
+				<%@ include file="/edit_address_tax_fixed_rate.jspf" %>
+			</aui:form>
+		</commerce-ui:modal-content>
+	</c:when>
+	<c:otherwise>
+		<commerce-ui:side-panel-content
+			title='<%= LanguageUtil.get(resourceBundle, "edit-tax-rate-setting") %>'
+		>
+			<aui:form action="<%= editCommerceTaxFixedRateAddressRelActionURL %>" method="post" name="fm">
+				<commerce-ui:panel>
+					<%@ include file="/edit_address_tax_fixed_rate.jspf" %>
+				</commerce-ui:panel>
 
-	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceTaxFixedRateAddressRel %>" model="<%= CommerceTaxFixedRateAddressRel.class %>" />
-
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="row">
-					<div class="col-md-6">
-						<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="CPTaxCategoryId">
-
-							<%
-							List<CPTaxCategory> cpTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCPTaxCategories();
-
-							for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
-							%>
-
-								<aui:option label="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-
-						<a data-senna-off target="_parent" href="<%= commerceTaxFixedRateAddressRelsDisplayContext.getTaxCategoriesURL() %>"><liferay-ui:message key="manage-tax-categories" /></a>
-					</div>
-
-					<div class="col-md-6">
-						<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-4">
-						<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
-
-							<%
-							List<CommerceCountry> commerceCountries = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCountries();
-
-							for (CommerceCountry commerceCountry : commerceCountries) {
-							%>
-
-								<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
-
-					<div class="col-md-4">
-						<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
-
-							<%
-							List<CommerceRegion> commerceRegions = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceRegions();
-
-							for (CommerceRegion commerceRegion : commerceRegions) {
-							%>
-
-								<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
-
-					<div class="col-md-4">
-						<aui:input name="zip" />
-					</div>
-				</div>
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</div>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+				<aui:button-row>
+					<aui:button cssClass="btn-lg" type="submit" />
+				</aui:button-row>
+			</aui:form>
+		</commerce-ui:side-panel-content>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="aui-base,liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />commerceCountryId',
-				selectData: function(callback) {
-					Liferay.Service(
-						'/commerce.commercecountry/get-commerce-countries',
-						{
-							companyId: <%= company.getCompanyId() %>,
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'nameCurrentValue',
-				selectId: 'commerceCountryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>'
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />commerceCountryId',
+			selectData: function(callback) {
+				Liferay.Service(
+					'/commerce.commercecountry/get-commerce-countries',
+					{
+						companyId: <%= company.getCompanyId() %>,
+						active: true
+					},
+					callback
+				);
 			},
-			{
-				select: '<portlet:namespace />commerceRegionId',
-				selectData: function(callback, selectKey) {
-					Liferay.Service(
-						'/commerce.commerceregion/get-commerce-regions',
-						{
-							commerceCountryId: Number(selectKey),
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'name',
-				selectId: 'commerceRegionId',
-				selectVal: '<%= commerceRegionId %>'
-			}
-		]
-	);
+			selectDesc: 'nameCurrentValue',
+			selectId: 'commerceCountryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= commerceCountryId %>'
+		},
+		{
+			select: '<portlet:namespace />commerceRegionId',
+			selectData: function(callback, selectKey) {
+				Liferay.Service(
+					'/commerce.commerceregion/get-commerce-regions',
+					{
+						commerceCountryId: Number(selectKey),
+						active: true
+					},
+					callback
+				);
+			},
+			selectDesc: 'name',
+			selectId: 'commerceRegionId',
+			selectVal: '<%= commerceRegionId %>'
+		}
+	]);
 </aui:script>

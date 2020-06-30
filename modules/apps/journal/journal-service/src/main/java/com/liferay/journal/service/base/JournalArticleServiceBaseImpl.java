@@ -66,7 +66,7 @@ public abstract class JournalArticleServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, JournalArticleService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>JournalArticleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalArticleServiceUtil</code>.
@@ -1321,8 +1321,8 @@ public abstract class JournalArticleServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

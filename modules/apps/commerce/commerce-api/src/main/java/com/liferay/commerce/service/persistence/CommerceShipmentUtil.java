@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShipmentUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
@@ -375,6 +375,289 @@ public class CommerceShipmentUtil {
 	 */
 	public static int countByGroupIds(long[] groupIds) {
 		return getPersistence().countByGroupIds(groupIds);
+	}
+
+	/**
+	 * Returns all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @return the matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long groupId, long commerceAddressId) {
+
+		return getPersistence().findByG_C(groupId, commerceAddressId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @return the range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long groupId, long commerceAddressId, int start, int end) {
+
+		return getPersistence().findByG_C(
+			groupId, commerceAddressId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long groupId, long commerceAddressId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return getPersistence().findByG_C(
+			groupId, commerceAddressId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long groupId, long commerceAddressId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_C(
+			groupId, commerceAddressId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipment
+	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment findByG_C_First(
+			long groupId, long commerceAddressId,
+			OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+
+		return getPersistence().findByG_C_First(
+			groupId, commerceAddressId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment fetchByG_C_First(
+		long groupId, long commerceAddressId,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return getPersistence().fetchByG_C_First(
+			groupId, commerceAddressId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipment
+	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment findByG_C_Last(
+			long groupId, long commerceAddressId,
+			OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+
+		return getPersistence().findByG_C_Last(
+			groupId, commerceAddressId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment fetchByG_C_Last(
+		long groupId, long commerceAddressId,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return getPersistence().fetchByG_C_Last(
+			groupId, commerceAddressId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param commerceShipmentId the primary key of the current commerce shipment
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce shipment
+	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
+	 */
+	public static CommerceShipment[] findByG_C_PrevAndNext(
+			long commerceShipmentId, long groupId, long commerceAddressId,
+			OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+
+		return getPersistence().findByG_C_PrevAndNext(
+			commerceShipmentId, groupId, commerceAddressId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce shipments where groupId = any &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param commerceAddressId the commerce address ID
+	 * @return the matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long[] groupIds, long commerceAddressId) {
+
+		return getPersistence().findByG_C(groupIds, commerceAddressId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipments where groupId = any &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @return the range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long[] groupIds, long commerceAddressId, int start, int end) {
+
+		return getPersistence().findByG_C(
+			groupIds, commerceAddressId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipments where groupId = any &#63; and commerceAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long[] groupIds, long commerceAddressId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return getPersistence().findByG_C(
+			groupIds, commerceAddressId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShipmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce shipments
+	 */
+	public static List<CommerceShipment> findByG_C(
+		long[] groupIds, long commerceAddressId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_C(
+			groupIds, commerceAddressId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes all the commerce shipments where groupId = &#63; and commerceAddressId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 */
+	public static void removeByG_C(long groupId, long commerceAddressId) {
+		getPersistence().removeByG_C(groupId, commerceAddressId);
+	}
+
+	/**
+	 * Returns the number of commerce shipments where groupId = &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param commerceAddressId the commerce address ID
+	 * @return the number of matching commerce shipments
+	 */
+	public static int countByG_C(long groupId, long commerceAddressId) {
+		return getPersistence().countByG_C(groupId, commerceAddressId);
+	}
+
+	/**
+	 * Returns the number of commerce shipments where groupId = any &#63; and commerceAddressId = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param commerceAddressId the commerce address ID
+	 * @return the number of matching commerce shipments
+	 */
+	public static int countByG_C(long[] groupIds, long commerceAddressId) {
+		return getPersistence().countByG_C(groupIds, commerceAddressId);
 	}
 
 	/**

@@ -20,6 +20,7 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.Resource;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -71,6 +74,8 @@ public class MembershipRequestLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		validateSiteMembershipPolicy(userId, groupId);
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		validate(comments);
@@ -88,7 +93,8 @@ public class MembershipRequestLocalServiceImpl
 		membershipRequest.setStatusId(
 			MembershipRequestConstants.STATUS_PENDING);
 
-		membershipRequestPersistence.update(membershipRequest);
+		membershipRequest = membershipRequestPersistence.update(
+			membershipRequest);
 
 		notifyGroupAdministrators(membershipRequest, serviceContext);
 
@@ -196,7 +202,8 @@ public class MembershipRequestLocalServiceImpl
 
 		membershipRequest.setStatusId(statusId);
 
-		membershipRequestPersistence.update(membershipRequest);
+		membershipRequest = membershipRequestPersistence.update(
+			membershipRequest);
 
 		if ((statusId == MembershipRequestConstants.STATUS_APPROVED) &&
 			addUserToGroup) {
@@ -413,6 +420,31 @@ public class MembershipRequestLocalServiceImpl
 	protected void validate(String comments) throws PortalException {
 		if (Validator.isNull(comments) || Validator.isNumber(comments)) {
 			throw new MembershipRequestCommentsException();
+		}
+	}
+
+	protected void validateSiteMembershipPolicy(long userId, long groupId)
+		throws PortalException {
+
+		if (hasMembershipRequest(
+				userId, groupId, MembershipRequestConstants.STATUS_PENDING)) {
+
+			throw new PortalException(
+				StringBundler.concat(
+					"Pending membership request already exists for group ",
+					groupId, " and user ", userId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		if (!group.isManualMembership() ||
+			(group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) ||
+			!SiteMembershipPolicyUtil.isMembershipAllowed(userId, groupId)) {
+
+			throw new PortalException(
+				StringBundler.concat(
+					"Membership request not allowed for group ", groupId,
+					" and user ", userId));
 		}
 	}
 

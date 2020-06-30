@@ -35,7 +35,6 @@ page import="com.liferay.commerce.context.CommerceContext" %><%@
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.commerce.product.catalog.CPSku" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
-page import="com.liferay.commerce.product.content.constants.CPContentConstants" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
 page import="com.liferay.commerce.product.content.render.CPContentRenderer" %><%@
 page import="com.liferay.commerce.product.content.render.list.CPContentListRenderer" %><%@

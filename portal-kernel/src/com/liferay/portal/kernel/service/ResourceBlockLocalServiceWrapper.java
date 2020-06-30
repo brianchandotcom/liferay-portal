@@ -33,11 +33,6 @@ public class ResourceBlockLocalServiceWrapper
 		_resourceBlockLocalService = resourceBlockLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ResourceBlockLocalServiceUtil} to access the resource block local service. Add custom service methods to <code>com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addCompanyScopePermission(
 			long companyId, java.lang.String name, long roleId,
@@ -385,6 +380,9 @@ public class ResourceBlockLocalServiceWrapper
 		return _resourceBlockLocalService.getPermissions(resourceBlock, roleId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

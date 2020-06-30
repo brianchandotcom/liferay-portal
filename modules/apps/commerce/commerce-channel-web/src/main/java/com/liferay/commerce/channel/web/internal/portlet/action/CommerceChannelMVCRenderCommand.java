@@ -14,24 +14,14 @@
 
 package com.liferay.commerce.channel.web.internal.portlet.action;
 
-import com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.product.channel.CommerceChannelTypeJSPContributorRegistry;
-import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alec Sloan
@@ -48,40 +38,7 @@ public class CommerceChannelMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		CommerceChannelDisplayContext commerceChannelDisplayContext =
-			new CommerceChannelDisplayContext(
-				_commerceChannelModelResourcePermission,
-				_commerceChannelService, _commerceChannelTypeRegistry,
-				_commerceChannelTypeJSPContributorRegistry,
-				_commerceCurrencyService,
-				_portal.getHttpServletRequest(renderRequest), _portal);
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceChannelDisplayContext);
-
 		return "/view.jsp";
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
-	)
-	private ModelResourcePermission<CommerceChannel>
-		_commerceChannelModelResourcePermission;
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceChannelTypeJSPContributorRegistry
-		_commerceChannelTypeJSPContributorRegistry;
-
-	@Reference
-	private CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
-
-	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private Portal _portal;
 
 }

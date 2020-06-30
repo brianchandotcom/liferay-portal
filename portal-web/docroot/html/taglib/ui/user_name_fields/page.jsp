@@ -42,9 +42,9 @@
 	select.on(
 		'change',
 		function(event) {
-			_.forEach(
-				$('#<portlet:namespace />fm').formToArray(),
-				function(item, index) {
+			var formToArray = $('#<portlet:namespace />fm').formToArray();
+			if (Array.isArray(formToArray)) {
+				formToArray.forEach(function(item, index) {
 					var oldField = userNameFields.find('#' + item.name);
 
 					if (oldField.length) {
@@ -60,8 +60,8 @@
 
 						formData[item.name] = data;
 					}
-				}
-			);
+				});
+			}
 
 			userDetailsURL.setParameter('languageId', select.val());
 
@@ -77,10 +77,8 @@
 						$('#<portlet:namespace />loadingUserNameFields').remove();
 
 						userNameFields.show();
-
-						_.forEach(
-							formData,
-							function(item, index) {
+						if (Array.isArray(formData)) {
+							formData.forEach(function(item, index) {
 								var newField = userNameFields.find('#' + index);
 
 								if (newField) {
@@ -90,8 +88,8 @@
 										newField.attr('maxLength', item.maxLength);
 									}
 								}
-							}
-						);
+							});
+						}
 					},
 					success: function(responseData) {
 						var responseUserNameFields = $(responseData).find('#<portlet:namespace />userNameFields').html();

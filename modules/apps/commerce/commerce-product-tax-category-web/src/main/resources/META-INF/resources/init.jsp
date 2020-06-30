@@ -25,9 +25,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceConstants" %><%@
 page import="com.liferay.commerce.product.exception.CPTaxCategoryNameException" %><%@
 page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
+page import="com.liferay.commerce.product.tax.category.web.internal.admin.TaxCategoriesCommerceAdminModule" %><%@
 page import="com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -50,7 +50,7 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-String commerceAdminModuleKey = CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY;
+String commerceAdminModuleKey = TaxCategoriesCommerceAdminModule.KEY;
 
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

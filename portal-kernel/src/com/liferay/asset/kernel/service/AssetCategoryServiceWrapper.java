@@ -32,11 +32,6 @@ public class AssetCategoryServiceWrapper
 		_assetCategoryService = assetCategoryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetCategoryServiceUtil} to access the asset category remote service. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategory addCategory(
 			long groupId, long parentCategoryId,

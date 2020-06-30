@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -80,7 +82,7 @@ public class PortalImplActualURLTest {
 		String actualURL = PortalUtil.getActualURL(
 			_group.getGroupId(), true, Portal.PATH_MAIN,
 			"/~/" + userGroup.getUserGroupId() + "/child-layout",
-			new HashMap<String, String[]>(), getRequestContext());
+			new HashMap<>(), getRequestContext());
 
 		Assert.assertNotNull(actualURL);
 
@@ -89,12 +91,67 @@ public class PortalImplActualURLTest {
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() +
 					"/nonexistent-child-layout",
-				new HashMap<String, String[]>(), getRequestContext());
+				new HashMap<>(), getRequestContext());
 
 			Assert.fail();
 		}
 		catch (NoSuchLayoutException nsle) {
 		}
+	}
+
+	@Test
+	public void testNodeLayoutActualURL() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
+			serviceContext);
+
+		_group = userGroup.getGroup();
+
+		Layout homeLayout = LayoutLocalServiceUtil.addLayout(
+			serviceContext.getUserId(), _group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
+			StringPool.BLANK, serviceContext);
+
+		Layout nodeLayout = LayoutLocalServiceUtil.addLayout(
+			serviceContext.getUserId(), _group.getGroupId(), true,
+			homeLayout.getLayoutId(), "Node", StringPool.BLANK,
+			StringPool.BLANK, "node", false, StringPool.BLANK, serviceContext);
+
+		Layout childLayout = LayoutLocalServiceUtil.addLayout(
+			serviceContext.getUserId(), _group.getGroupId(), true,
+			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
+			StringPool.BLANK, serviceContext);
+
+		String actualURL = PortalUtil.getActualURL(
+			_group.getGroupId(), true, Portal.PATH_MAIN,
+			"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
+			getRequestContext());
+
+		String queryString = HttpUtil.getQueryString(actualURL);
+
+		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			queryString);
+
+		Assert.assertNull(parameterMap.get("p_l_id"));
+
+		long groupId = MapUtil.getLong(parameterMap, "groupId");
+
+		Assert.assertEquals(childLayout.getGroupId(), groupId);
+
+		boolean privateLayout = MapUtil.getBoolean(
+			parameterMap, "privateLayout");
+
+		Assert.assertEquals(childLayout.isPrivateLayout(), privateLayout);
+
+		long layoutId = MapUtil.getLong(parameterMap, "layoutId");
+
+		Assert.assertEquals(childLayout.getLayoutId(), layoutId);
 	}
 
 	protected Map<String, Object> getRequestContext() {

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface UserIdMapper extends PersistedModel, UserIdMapperModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserIdMapperImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

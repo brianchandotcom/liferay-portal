@@ -20,9 +20,11 @@
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
 if (assetCategoryId > 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
+	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
 
-	PortalUtil.setPageKeywords(HtmlUtil.escape(assetCategory.getTitle(locale)), request);
+	if (assetCategory != null) {
+		PortalUtil.setPageKeywords(HtmlUtil.escape(assetCategory.getTitle(locale)), request);
+	}
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");
@@ -45,7 +47,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					icon="start"
+					icon="star"
 					label="<%= true %>"
 					markupView="lexicon"
 					message="unsubscribe"
@@ -58,7 +60,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					icon="start-o"
+					icon="star-o"
 					label="<%= true %>"
 					markupView="lexicon"
 					message="subscribe"

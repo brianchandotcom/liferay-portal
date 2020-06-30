@@ -33,7 +33,7 @@ public abstract class OAuth2ApplicationScopeAliasesBaseImpl
 	extends OAuth2ApplicationScopeAliasesModelImpl
 	implements OAuth2ApplicationScopeAliases {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth2 application scope aliases model instance should use the <code>OAuth2ApplicationScopeAliases</code> interface instead.

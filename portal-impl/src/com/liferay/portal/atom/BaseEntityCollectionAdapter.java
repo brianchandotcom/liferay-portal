@@ -65,9 +65,7 @@ public abstract class BaseEntityCollectionAdapter<T>
 	public String getId(RequestContext requestContext) {
 		String id = AtomUtil.createIdTagPrefix(collectionName);
 
-		id = id.concat("feed");
-
-		return id;
+		return id.concat("feed");
 	}
 
 	@Override

@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface ListTypePersistence extends BasePersistence<ListType> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeUtil} to access the list type persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

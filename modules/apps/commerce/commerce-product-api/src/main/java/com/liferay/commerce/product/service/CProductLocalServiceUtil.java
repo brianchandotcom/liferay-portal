@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CProductLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CProductLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -76,9 +76,11 @@ public class CProductLocalServiceUtil {
 	 *
 	 * @param cProduct the c product
 	 * @return the c product that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.commerce.product.model.CProduct deleteCProduct(
-		com.liferay.commerce.product.model.CProduct cProduct) {
+			com.liferay.commerce.product.model.CProduct cProduct)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteCProduct(cProduct);
 	}
@@ -353,6 +355,9 @@ public class CProductLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -376,6 +381,15 @@ public class CProductLocalServiceUtil {
 		com.liferay.commerce.product.model.CProduct cProduct) {
 
 		return getService().updateCProduct(cProduct);
+	}
+
+	public static com.liferay.commerce.product.model.CProduct
+			updateCProductExternalReferenceCode(
+				long cProductId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCProductExternalReferenceCode(
+			cProductId, externalReferenceCode);
 	}
 
 	public static com.liferay.commerce.product.model.CProduct

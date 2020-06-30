@@ -39,7 +39,7 @@ import java.io.Serializable;
 @ProviderType
 public interface ModuleModel extends BaseModel<Module>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a module model instance should use the {@link Module} interface instead.

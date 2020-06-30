@@ -61,7 +61,7 @@ import java.util.Map;
 public interface ResourceBlockLocalService
 	extends BaseLocalService, PermissionedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockLocalServiceUtil} to access the resource block local service. Add custom service methods to <code>com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -272,6 +272,9 @@ public interface ResourceBlockLocalService
 	public List<String> getPermissions(
 		ResourceBlock resourceBlock, long roleId);
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

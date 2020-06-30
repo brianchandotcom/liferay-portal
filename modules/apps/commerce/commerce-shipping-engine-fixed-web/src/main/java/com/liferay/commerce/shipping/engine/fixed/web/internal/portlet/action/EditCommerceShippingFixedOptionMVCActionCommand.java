@@ -14,20 +14,24 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -37,6 +41,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
 		"mvc.command.name=editCommerceShippingFixedOption"
 	},
 	service = MVCActionCommand.class
@@ -94,7 +100,13 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceShippingFixedOption(actionRequest);
+				CommerceShippingFixedOption commerceShippingFixedOption =
+					updateCommerceShippingFixedOption(actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, commerceShippingFixedOption);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceShippingFixedOptions(actionRequest);
@@ -112,7 +124,32 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceShippingFixedOption(
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest,
+			CommerceShippingFixedOption commerceShippingFixedOption)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, portletConfig.getPortletName(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommerceShippingFixedOption");
+		portletURL.setParameter(
+			"commerceShippingFixedOptionId",
+			String.valueOf(
+				commerceShippingFixedOption.
+					getCommerceShippingFixedOptionId()));
+
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
+	protected CommerceShippingFixedOption updateCommerceShippingFixedOption(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -130,24 +167,40 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			actionRequest, "amount", BigDecimal.ZERO);
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceShippingFixedOption.class.getName(), actionRequest);
+		CommerceShippingFixedOption commerceShippingFixedOption = null;
 
 		if (commerceShippingFixedOptionId > 0) {
-			_commerceShippingFixedOptionService.
-				updateCommerceShippingFixedOption(
-					commerceShippingFixedOptionId, nameMap, descriptionMap,
-					amount, priority);
+			commerceShippingFixedOption =
+				_commerceShippingFixedOptionService.
+					updateCommerceShippingFixedOption(
+						commerceShippingFixedOptionId, nameMap, descriptionMap,
+						amount, priority);
 		}
 		else {
-			_commerceShippingFixedOptionService.addCommerceShippingFixedOption(
-				commerceShippingMethodId, nameMap, descriptionMap, amount,
-				priority, serviceContext);
+			CommerceShippingMethod commerceShippingMethod =
+				_commerceShippingMethodService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			commerceShippingFixedOption =
+				_commerceShippingFixedOptionService.
+					addCommerceShippingFixedOption(
+						_portal.getUserId(actionRequest),
+						commerceShippingMethod.getGroupId(),
+						commerceShippingMethod.getCommerceShippingMethodId(),
+						nameMap, descriptionMap, amount, priority);
 		}
+
+		return commerceShippingFixedOption;
 	}
 
 	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
+
+	@Reference
+	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private Portal _portal;
 
 }

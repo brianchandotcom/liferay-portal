@@ -129,9 +129,8 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 		cpDefinitionGroupedEntry.setPriority(priority);
 		cpDefinitionGroupedEntry.setQuantity(quantity);
 
-		cpDefinitionGroupedEntryPersistence.update(cpDefinitionGroupedEntry);
-
-		return cpDefinitionGroupedEntry;
+		return cpDefinitionGroupedEntryPersistence.update(
+			cpDefinitionGroupedEntry);
 	}
 
 	@Override

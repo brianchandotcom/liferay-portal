@@ -2,7 +2,8 @@
 @import 'mixins';
 @import 'speedwell_mixins';
 
-@import "./overrides/button.scss";
+@import './overrides/button.scss';
+@import './overrides/dataset-display';
 
 @import 'components/commerce_button';
 @import 'components/commerce_compare_table';

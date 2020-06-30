@@ -32,11 +32,6 @@ public class AssetVocabularyServiceWrapper
 		_assetVocabularyService = assetVocabularyService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link AssetVocabularyServiceUtil} to access the asset vocabulary remote service. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
 			long groupId, String title,

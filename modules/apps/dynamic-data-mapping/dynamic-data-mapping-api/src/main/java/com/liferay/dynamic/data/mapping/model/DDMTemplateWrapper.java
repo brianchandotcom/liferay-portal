@@ -797,11 +797,6 @@ public class DDMTemplateWrapper
 		return _ddmTemplate.isSmallImage();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm template model instance should use the <code>DDMTemplate</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmTemplate.persist();

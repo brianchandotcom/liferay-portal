@@ -57,7 +57,7 @@ public abstract class MBThreadServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, MBThreadService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>MBThreadService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBThreadServiceUtil</code>.
@@ -780,8 +780,8 @@ public abstract class MBThreadServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

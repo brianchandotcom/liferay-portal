@@ -32,7 +32,7 @@ import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 public abstract class WikiPageResourceBaseImpl
 	extends WikiPageResourceModelImpl implements WikiPageResource {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki page resource model instance should use the <code>WikiPageResource</code> interface instead.

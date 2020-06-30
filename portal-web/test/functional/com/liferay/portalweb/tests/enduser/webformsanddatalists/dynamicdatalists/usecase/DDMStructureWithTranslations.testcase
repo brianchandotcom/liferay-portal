@@ -65,7 +65,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-69325."
+	@description = "This will be ignored until LPS-104047 is fixed and backported on BPR-47065. This is a use case for LPS-69325."
+	@ignore = "true"
 	@priority = "4"
 	test ViewFieldInputWhenSwitchingTranslations {
 		property test.name.skip.portal.instance = "DDMStructureWithTranslations#ViewFieldInputWhenSwitchingTranslations";

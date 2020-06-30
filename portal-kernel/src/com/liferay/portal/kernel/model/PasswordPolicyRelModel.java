@@ -37,7 +37,7 @@ public interface PasswordPolicyRelModel
 	extends AttachedModel, BaseModel<PasswordPolicyRel>, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a password policy rel model instance should use the {@link PasswordPolicyRel} interface instead.

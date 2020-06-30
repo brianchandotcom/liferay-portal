@@ -105,7 +105,7 @@ public class CalendarResourceLocalServiceImpl
 		calendarResource.setDescriptionMap(descriptionMap);
 		calendarResource.setActive(active);
 
-		calendarResourcePersistence.update(calendarResource);
+		calendarResource = calendarResourcePersistence.update(calendarResource);
 
 		// Resources
 
@@ -298,7 +298,7 @@ public class CalendarResourceLocalServiceImpl
 		calendarResource.setDescriptionMap(descriptionMap);
 		calendarResource.setActive(active);
 
-		calendarResourcePersistence.update(calendarResource);
+		calendarResource = calendarResourcePersistence.update(calendarResource);
 
 		// Calendar
 

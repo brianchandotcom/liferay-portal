@@ -1367,6 +1367,20 @@ definition {
 			roleTitle = "Web Content Comment Reviewer",
 			userScreenName = "usersn");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Members",
+			panel = "Site Administration",
+			portlet = "Site Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
 		User.logoutPG();
 
 		User.loginPG(

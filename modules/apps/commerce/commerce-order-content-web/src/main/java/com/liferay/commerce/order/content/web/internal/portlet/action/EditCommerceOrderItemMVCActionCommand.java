@@ -93,11 +93,7 @@ public class EditCommerceOrderItemMVCActionCommand
 			actionRequest, "commerceOrderItemId");
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				_commerceOrderItemService.deleteCommerceOrderItem(
-					commerceOrderItemId, commerceContext);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.UPDATE)) {
 				int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 
 				CommerceOrderItem commerceOrderItem =

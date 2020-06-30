@@ -35,11 +35,6 @@ public class CommerceAccountGroupCommerceAccountRelServiceWrapper
 			commerceAccountGroupCommerceAccountRelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceAccountGroupCommerceAccountRelServiceUtil} to access the commerce account group commerce account rel remote service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public
 		com.liferay.commerce.account.model.

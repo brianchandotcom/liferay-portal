@@ -1870,7 +1870,8 @@ definition {
 		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "DDL Definition");
 	}
 
-	@description = "This is a use case for LPS-59154 and LPS-62523."
+	@description = "This will be ignored until LPS-104047 is fixed and backported on BPR-47065. This is a use case for LPS-59154 and LPS-62523."
+	@ignore = "true"
 	@priority = "3"
 	test EditDefaultLanguageAndPublishRecord {
 		property test.name.skip.portal.instance = "DynamicdatalistUsecase#EditDefaultLanguageAndPublishRecord";

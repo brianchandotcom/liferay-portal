@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface LayoutPageTemplateCollection
 	extends LayoutPageTemplateCollectionModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

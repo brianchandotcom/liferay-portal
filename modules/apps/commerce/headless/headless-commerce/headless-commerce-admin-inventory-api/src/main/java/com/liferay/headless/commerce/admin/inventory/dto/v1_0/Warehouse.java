@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -32,6 +31,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -183,6 +185,7 @@ public class Warehouse {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -208,34 +211,6 @@ public class Warehouse {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
-
-	@Schema
-	public WarehouseItem[] getItems() {
-		return items;
-	}
-
-	public void setItems(WarehouseItem[] items) {
-		this.items = items;
-	}
-
-	@JsonIgnore
-	public void setItems(
-		UnsafeSupplier<WarehouseItem[], Exception> itemsUnsafeSupplier) {
-
-		try {
-			items = itemsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected WarehouseItem[] items;
 
 	@Schema
 	public Double getLatitude() {
@@ -292,6 +267,35 @@ public class Warehouse {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
+
+	@Schema
+	@Valid
+	public Number getMvccVersion() {
+		return mvccVersion;
+	}
+
+	public void setMvccVersion(Number mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
+	@JsonIgnore
+	public void setMvccVersion(
+		UnsafeSupplier<Number, Exception> mvccVersionUnsafeSupplier) {
+
+		try {
+			mvccVersion = mvccVersionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number mvccVersion;
 
 	@Schema
 	public String getName() {
@@ -458,6 +462,36 @@ public class Warehouse {
 	protected String type;
 
 	@Schema
+	@Valid
+	public WarehouseItem[] getWarehouseItems() {
+		return warehouseItems;
+	}
+
+	public void setWarehouseItems(WarehouseItem[] warehouseItems) {
+		this.warehouseItems = warehouseItems;
+	}
+
+	@JsonIgnore
+	public void setWarehouseItems(
+		UnsafeSupplier<WarehouseItem[], Exception>
+			warehouseItemsUnsafeSupplier) {
+
+		try {
+			warehouseItems = warehouseItemsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected WarehouseItem[] warehouseItems;
+
+	@Schema
 	public String getZip() {
 		return zip;
 	}
@@ -586,26 +620,6 @@ public class Warehouse {
 			sb.append(id);
 		}
 
-		if (items != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"items\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < items.length; i++) {
-				sb.append(String.valueOf(items[i]));
-
-				if ((i + 1) < items.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (latitude != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -624,6 +638,16 @@ public class Warehouse {
 			sb.append("\"longitude\": ");
 
 			sb.append(longitude);
+		}
+
+		if (mvccVersion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mvccVersion\": ");
+
+			sb.append(mvccVersion);
 		}
 
 		if (name != null) {
@@ -710,6 +734,26 @@ public class Warehouse {
 			sb.append("\"");
 		}
 
+		if (warehouseItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"warehouseItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < warehouseItems.length; i++) {
+				sb.append(String.valueOf(warehouseItems[i]));
+
+				if ((i + 1) < warehouseItems.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (zip != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -728,6 +772,12 @@ public class Warehouse {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

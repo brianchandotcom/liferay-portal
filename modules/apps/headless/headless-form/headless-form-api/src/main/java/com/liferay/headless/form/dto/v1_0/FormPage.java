@@ -104,6 +104,36 @@ public class FormPage {
 	protected String headline;
 
 	@Schema
+	@Valid
+	public Map<String, String> getHeadline_i18n() {
+		return headline_i18n;
+	}
+
+	public void setHeadline_i18n(Map<String, String> headline_i18n) {
+		this.headline_i18n = headline_i18n;
+	}
+
+	@JsonIgnore
+	public void setHeadline_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			headline_i18nUnsafeSupplier) {
+
+		try {
+			headline_i18n = headline_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> headline_i18n;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -154,6 +184,36 @@ public class FormPage {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
+
+	@Schema
+	@Valid
+	public Map<String, String> getText_i18n() {
+		return text_i18n;
+	}
+
+	public void setText_i18n(Map<String, String> text_i18n) {
+		this.text_i18n = text_i18n;
+	}
+
+	@JsonIgnore
+	public void setText_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			text_i18nUnsafeSupplier) {
+
+		try {
+			text_i18n = text_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> text_i18n;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,6 +276,16 @@ public class FormPage {
 			sb.append("\"");
 		}
 
+		if (headline_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"headline_i18n\": ");
+
+			sb.append(_toJSON(headline_i18n));
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -238,6 +308,16 @@ public class FormPage {
 			sb.append(_escape(text));
 
 			sb.append("\"");
+		}
+
+		if (text_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text_i18n\": ");
+
+			sb.append(_toJSON(text_i18n));
 		}
 
 		sb.append("}");

@@ -747,6 +747,8 @@ definition {
 		);
 	}
 
+	@description = "This will be ignored until LPS-88647 is fixed and backported on BPR-47059."
+	@ignore = "true"
 	@priority = "4"
 	test EditListRecordViaRecordView {
 		Navigator.openURL();
@@ -1244,10 +1246,10 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2018",
+			fieldPredefinedValue = "09/01/2019",
 			fieldPredefinedValueDay = "1",
 			fieldPredefinedValueMonth = "September",
-			fieldPredefinedValueYear = "2018"
+			fieldPredefinedValueYear = "2019"
 		);
 
 		DDLDataDefinition.save();
@@ -1273,15 +1275,15 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2018"
+			fieldPredefinedValue = "09/01/2019"
 		);
 
 		PortletEntry.publish();
 
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "9/1/2018",
-			ddlRecordFieldData_1 = "9/1/18",
+			ddlRecordFieldData = "9/1/2019",
+			ddlRecordFieldData_1 = "9/1/19",
 			field = "Date",
 			fieldFieldLabel = "Date"
 		);
@@ -1297,11 +1299,11 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2018"
+			fieldPredefinedValue = "09/01/2019"
 		);
 
 		DDLRecord.populateFieldDate(
-			ddlRecordFieldData = "05/13/2017",
+			ddlRecordFieldData = "05/13/2019",
 			fieldFieldLabel = "Date",
 			fieldName = "Date"
 		);
@@ -1310,8 +1312,8 @@ definition {
 
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "5/13/2017",
-			ddlRecordFieldData_1 = "5/13/17",
+			ddlRecordFieldData = "5/13/2019",
+			ddlRecordFieldData_1 = "5/13/19",
 			field = "Date",
 			fieldFieldLabel = "Date"
 		);

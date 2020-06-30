@@ -1,12 +1,24 @@
-import 'clay-icon';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
+import 'clay-icon';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
+
 import template from './SearchBar.soy';
 
-
 class SearchBar extends Component {
-
 	created() {
 		this._handleDocumentKeypress = this._handleDocumentKeypress.bind(this);
 		this._handleClickOutside = this._handleClickOutside.bind(this);
@@ -20,21 +32,19 @@ class SearchBar extends Component {
 	}
 
 	_addOpenButtonListener() {
-		return Array.from(document.querySelectorAll('.js-toggle-search'))
-			.map(
-				el => {
-					return el.addEventListener('click', this.toggle);
-				}
-			);
+		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
+			el => {
+				return el.addEventListener('click', this.toggle);
+			}
+		);
 	}
 
 	_removeOpenButtonListener() {
-		return Array.from(document.querySelectorAll('.js-toggle-search'))
-			.map(
-				el => {
-					return el.removeEventListener('click', this.toggle);
-				}
-			);
+		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
+			el => {
+				return el.removeEventListener('click', this.toggle);
+			}
+		);
 	}
 
 	_handleClickOutside(e) {
@@ -54,7 +64,9 @@ class SearchBar extends Component {
 			this.close();
 		}
 
-		const noModalsActive = !Array.from(document.querySelectorAll('.modal.show')).length;
+		const noModalsActive = !Array.from(
+			document.querySelectorAll('.modal.show')
+		).length;
 
 		if (
 			!this.active &&
@@ -67,7 +79,7 @@ class SearchBar extends Component {
 		}
 	}
 
-	_handleResetQuery(evt) {
+	_handleResetQuery(_evt) {
 		this._updateQuery('');
 	}
 
@@ -84,12 +96,9 @@ class SearchBar extends Component {
 	_handleSubmit(evt) {
 		evt.preventDefault();
 
-		window.Liferay.fire(
-			'search-term-submit',
-			{
-				term: this.query
-			}
-		);
+		window.Liferay.fire('search-term-submit', {
+			term: this.query
+		});
 	}
 
 	_updateQuery(query) {
@@ -98,34 +107,25 @@ class SearchBar extends Component {
 
 			this.query = query;
 
-			window.Liferay.fire(
-				'search-term-update',
-				{
-					term: query
-				}
-			);
+			window.Liferay.fire('search-term-update', {
+				term: query
+			});
 		}
 	}
 
 	syncActive() {
 		if (this.active) {
 			window.addEventListener('click', this._handleClickOutside);
-			setTimeout(
-				() => {
-					this._removeOpenButtonListener();
-					this.refs.searchInput.focus();
-				},
-				0);
-		}
-		else {
+			setTimeout(() => {
+				this._removeOpenButtonListener();
+				this.refs.searchInput.focus();
+			}, 0);
+		} else {
 			window.removeEventListener('click', this._handleClickOutside);
-			setTimeout(
-				() => {
-					this._addOpenButtonListener();
-					this.refs.searchInput.blur();
-				},
-				0
-			);
+			setTimeout(() => {
+				this._addOpenButtonListener();
+				this.refs.searchInput.blur();
+			}, 0);
 		}
 		this.emit('toggled', this.active);
 	}

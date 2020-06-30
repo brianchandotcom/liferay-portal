@@ -18,21 +18,28 @@
 
 <%
 CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
+
+Map<String, String> contextParams = new HashMap<>();
+
+contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
 %>
 
-<commerce-ui:table
-	dataProviderKey="<%= CommerceAccountOrganizationClayTable.NAME %>"
-	filter="<%= commerceAccountDisplayContext.getAccountFilter() %>"
-	itemPerPage="<%= 5 %>"
+<commerce-ui:dataset-display
+	contextParams="<%= contextParams %>"
+	dataProviderKey="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"
+	id="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"
+	itemsPerPage="<%= 10 %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	pageNumber="1"
+	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
-	tableName="<%= CommerceAccountOrganizationClayTable.NAME %>"
+	style="stacked"
 />
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(CommerceAccountActionKeys.MANAGE_ORGANIZATIONS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="commerce-button commerce-button--big js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
 	</div>
 
 	<commerce-ui:add-organizations-modal
@@ -54,43 +61,42 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 			window,
 			'<portlet:namespace />openAddOrganizationsModal',
 			function(evt) {
-				const addOrganizationsModal = Liferay.component('addOrganizationsModal');
+				const addOrganizationsModal = Liferay.component(
+					'addOrganizationsModal'
+				);
 
 				addOrganizationsModal.open();
 			}
 		);
 
-		Liferay.provide(
-			window,
-			'deleteCommerceAccountOrganization',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.REMOVE %>';
-				document.querySelector('#<portlet:namespace />organizationId').value = id;
+		Liferay.provide(window, 'deleteCommerceAccountOrganization', function(id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'<%= Constants.REMOVE %>';
+			document.querySelector('#<portlet:namespace />organizationId').value = id;
 
-				submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
-			}
-		);
+			submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
+		});
 
-		Liferay.componentReady('addOrganizationsModal').then(
-			function(addOrganizationsModal) {
-				addOrganizationsModal.on(
-					'addOrganization',
-					function(event) {
-						let orgIds = event.map(
-							function(org) {
-								return org.id
-							}
-						).join(',');
+		Liferay.componentReady('addOrganizationsModal').then(function(
+			addOrganizationsModal
+		) {
+			addOrganizationsModal.on('addOrganization', function(event) {
+				let orgIds = event
+					.map(function(org) {
+						return org.id;
+					})
+					.join(',');
 
-						document.querySelector('#<portlet:namespace />addOrganizationIds').value = orgIds;
+				document.querySelector(
+					'#<portlet:namespace />addOrganizationIds'
+				).value = orgIds;
 
-						addOrganizationsModal.close();
+				addOrganizationsModal.close();
 
-						submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
-					}
+				submitForm(
+					document.<portlet:namespace />commerceAccountOrganizationRelFm
 				);
-			}
-		);
-
+			});
+		});
 	</aui:script>
 </c:if>

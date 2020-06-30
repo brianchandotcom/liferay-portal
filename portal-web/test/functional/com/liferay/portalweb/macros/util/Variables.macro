@@ -1,0 +1,23 @@
+definition {
+
+	@summary = "Asserts that all specified variables have defined values, otherwise fail"
+	macro assertDefined {
+		if (contains("${parameterList}","{parameterList}")) {
+			fail("Please define a parameter list in 'parameterList'");
+		}
+
+		for (var parameter : list "${parameterList}") {
+
+			//regex will find an unset varable, we cannot use isSet
+
+			var isSet = StringUtil.regexReplaceFirst("${parameter}","\$\{[^\$\{\s]*\}","false");
+
+			//only fail if match found and parameter was not set to false
+
+			if (("${isSet}" == "false") && ("${parameter}" != "false")) {
+				fail("Please set '${parameter}'");
+			}
+		}
+	}
+
+}

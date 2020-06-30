@@ -43,7 +43,7 @@ import java.util.Date;
 public interface JournalFeedModel
 	extends BaseModel<JournalFeed>, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a journal feed model instance should use the {@link JournalFeed} interface instead.

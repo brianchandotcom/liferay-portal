@@ -64,7 +64,7 @@ import java.util.Map;
 public interface CPOptionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionLocalServiceUtil} to access the cp option local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -226,6 +226,10 @@ public interface CPOptionLocalService
 	public CPOption fetchCPOptionByUuidAndCompanyId(
 		String uuid, long companyId);
 
+	public List<CPOption> findCPOptionByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CPOption> orderByComparator);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -294,6 +298,9 @@ public interface CPOptionLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

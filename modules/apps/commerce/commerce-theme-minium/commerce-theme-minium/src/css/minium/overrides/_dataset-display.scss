@@ -1,0 +1,62 @@
+.dataset-display {
+	&-stacked .dataset-display-management-bar-wrapper {
+		border: none !important;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.table {
+		td:first-child,
+		th:first-child,
+		.table-cell-start {
+			border-bottom-left-radius: 8px;
+			border-top-left-radius: 8px;
+		}
+
+		td:last-child,
+		th:last-child,
+		.table-cell-end {
+			border-bottom-right-radius: 8px;
+			border-top-right-radius: 8px;
+		}
+	}
+
+	.table-list-title {
+		color: $color-fg-alt;
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 1.2px;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.filter-resume {
+		border-color: $border-color;
+		border-radius: 8px;
+		border-width: 2px;
+		overflow: hidden;
+		padding: 0.35rem;
+		transition: border 0.1s ease-in;
+
+		&-content .lexicon-icon {
+			font-size: 14px;
+		}
+
+		&.active {
+			border-color: $color-theme-light;
+		}
+
+		.label-item-after {
+			background: $border-color;
+			height: calc(100% + 12px);
+			margin-right: -6px;
+			margin-top: -6px;
+			width: 25px;
+		}
+	}
+
+	.table-style-fluid,
+	.table-style-stacked {
+		border: none;
+	}
+}

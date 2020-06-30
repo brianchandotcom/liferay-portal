@@ -54,9 +54,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		content.setDescription(description);
 		content.setData(data);
 
-		ddmContentPersistence.update(content);
-
-		return content;
+		return ddmContentPersistence.update(content);
 	}
 
 	@Override
@@ -113,9 +111,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		content.setDescription(description);
 		content.setData(data);
 
-		ddmContentPersistence.update(content);
-
-		return content;
+		return ddmContentPersistence.update(content);
 	}
 
 	protected void validate(long contentId, String name, String data)

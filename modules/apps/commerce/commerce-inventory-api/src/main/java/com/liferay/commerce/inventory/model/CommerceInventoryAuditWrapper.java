@@ -65,7 +65,8 @@ public class CommerceInventoryAuditWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("sku", getSku());
-		attributes.put("description", getDescription());
+		attributes.put("logType", getLogType());
+		attributes.put("logTypeSettings", getLogTypeSettings());
 		attributes.put("quantity", getQuantity());
 
 		return attributes;
@@ -116,10 +117,16 @@ public class CommerceInventoryAuditWrapper
 			setSku(sku);
 		}
 
-		String description = (String)attributes.get("description");
+		String logType = (String)attributes.get("logType");
 
-		if (description != null) {
-			setDescription(description);
+		if (logType != null) {
+			setLogType(logType);
+		}
+
+		String logTypeSettings = (String)attributes.get("logTypeSettings");
+
+		if (logTypeSettings != null) {
+			setLogTypeSettings(logTypeSettings);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");
@@ -170,19 +177,29 @@ public class CommerceInventoryAuditWrapper
 		return _commerceInventoryAudit.getCreateDate();
 	}
 
-	/**
-	 * Returns the description of this commerce inventory audit.
-	 *
-	 * @return the description of this commerce inventory audit
-	 */
-	@Override
-	public String getDescription() {
-		return _commerceInventoryAudit.getDescription();
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceInventoryAudit.getExpandoBridge();
+	}
+
+	/**
+	 * Returns the log type of this commerce inventory audit.
+	 *
+	 * @return the log type of this commerce inventory audit
+	 */
+	@Override
+	public String getLogType() {
+		return _commerceInventoryAudit.getLogType();
+	}
+
+	/**
+	 * Returns the log type settings of this commerce inventory audit.
+	 *
+	 * @return the log type settings of this commerce inventory audit
+	 */
+	@Override
+	public String getLogTypeSettings() {
+		return _commerceInventoryAudit.getLogTypeSettings();
 	}
 
 	/**
@@ -280,11 +297,6 @@ public class CommerceInventoryAuditWrapper
 		return _commerceInventoryAudit.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce inventory audit model instance should use the <code>CommerceInventoryAudit</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceInventoryAudit.persist();
@@ -326,16 +338,6 @@ public class CommerceInventoryAuditWrapper
 		_commerceInventoryAudit.setCreateDate(createDate);
 	}
 
-	/**
-	 * Sets the description of this commerce inventory audit.
-	 *
-	 * @param description the description of this commerce inventory audit
-	 */
-	@Override
-	public void setDescription(String description) {
-		_commerceInventoryAudit.setDescription(description);
-	}
-
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -351,6 +353,26 @@ public class CommerceInventoryAuditWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commerceInventoryAudit.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	 * Sets the log type of this commerce inventory audit.
+	 *
+	 * @param logType the log type of this commerce inventory audit
+	 */
+	@Override
+	public void setLogType(String logType) {
+		_commerceInventoryAudit.setLogType(logType);
+	}
+
+	/**
+	 * Sets the log type settings of this commerce inventory audit.
+	 *
+	 * @param logTypeSettings the log type settings of this commerce inventory audit
+	 */
+	@Override
+	public void setLogTypeSettings(String logTypeSettings) {
+		_commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
 	}
 
 	/**

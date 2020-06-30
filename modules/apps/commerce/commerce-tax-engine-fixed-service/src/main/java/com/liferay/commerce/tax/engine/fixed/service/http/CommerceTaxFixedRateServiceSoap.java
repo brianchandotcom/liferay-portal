@@ -61,6 +61,10 @@ import java.rmi.RemoteException;
  */
 public class CommerceTaxFixedRateServiceSoap {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap
 				addCommerceTaxFixedRate(
@@ -79,10 +83,34 @@ public class CommerceTaxFixedRateServiceSoap {
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap
+				addCommerceTaxFixedRate(
+					long userId, long groupId, long commerceTaxMethodId,
+					long cpTaxCategoryId, double rate)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
+				returnValue =
+					CommerceTaxFixedRateServiceUtil.addCommerceTaxFixedRate(
+						userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
+						rate);
+
+			return com.liferay.commerce.tax.engine.fixed.model.
+				CommerceTaxFixedRateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -93,10 +121,10 @@ public class CommerceTaxFixedRateServiceSoap {
 			CommerceTaxFixedRateServiceUtil.deleteCommerceTaxFixedRate(
 				commerceTaxFixedRateId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -114,10 +142,10 @@ public class CommerceTaxFixedRateServiceSoap {
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -136,10 +164,10 @@ public class CommerceTaxFixedRateServiceSoap {
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -164,10 +192,10 @@ public class CommerceTaxFixedRateServiceSoap {
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -182,10 +210,10 @@ public class CommerceTaxFixedRateServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -204,10 +232,10 @@ public class CommerceTaxFixedRateServiceSoap {
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

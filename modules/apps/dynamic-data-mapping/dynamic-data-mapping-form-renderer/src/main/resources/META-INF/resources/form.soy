@@ -15,7 +15,7 @@
 	{foreach $field in $fields}
 		{let $variant: $field.type /}
 
-		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
+		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container" ref="{$field.name}">
 			{delcall ddm.field variant="$variant" data="$field" /}
 		</div>
 	{/foreach}
@@ -47,7 +47,7 @@
 				else {lb}
 					Liferay.onceAfter(
 						'DMMFieldTypesReady',
-						function ()  {lb}
+						function () {lb}
 							renderForm();
 						{rb}
 					);
@@ -179,24 +179,23 @@
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="ddm-user-view-content lfr-ddm-form-content">
 			{if length($pages) > 1}
-					<div class="lfr-ddm-form-wizard">
-						<input class="field form-control" id="{$portletNamespace}currentPage"
-							name="{$portletNamespace}currentPage" type="hidden">
-						<ul class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
-							{foreach $page in $pages}
-								<li {if isFirst($page)}class="active"{/if}>
-									<div class="multi-step-divider"></div>
+				<div class="lfr-ddm-form-wizard liferay-ddm-form-renderer-wizard yui3-widget">
+					<input class="field form-control" id="{$portletNamespace}currentPage" name="{$portletNamespace}currentPage" type="hidden">
 
+					<ul class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm liferay-ddm-form-renderer-wizard-content">
+						{foreach $page in $pages}
+							<li class="{if isFirst($page)}active{/if} multi-step-item {if not isLast($page)}multi-step-item-expand{/if}">
+								<div class="multi-step-divider"></div>
 									<div class="multi-step-indicator">
 										<div class="multi-step-indicator-label">{$page.title}</div>
-									</div>
 
 									<a class="multi-step-icon" data-multi-step-icon="{index($page) + 1}" href="#1"></a>
-								</li>
-							{/foreach}
-						</ul>
-					</div>
-				{/if}
+								</div>
+							</li>
+						{/foreach}
+					</ul>
+				</div>
+			{/if}
 
 			<div class="lfr-ddm-form-pages">
 				{foreach $page in $pages}

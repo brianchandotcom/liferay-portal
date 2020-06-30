@@ -45,7 +45,7 @@ public interface CommerceAccountGroupRelModel
 	extends AttachedModel, AuditedModel, BaseModel<CommerceAccountGroupRel>,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce account group rel model instance should use the {@link CommerceAccountGroupRel} interface instead.

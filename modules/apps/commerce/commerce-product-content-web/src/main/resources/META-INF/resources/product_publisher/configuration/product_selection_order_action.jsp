@@ -23,7 +23,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 int productEntryOrder = searchContainer.getStart() + row.getPos();
 
-boolean last = (productEntryOrder == (searchContainer.getTotal() - 1));
+boolean last = productEntryOrder == (searchContainer.getTotal() - 1);
 %>
 
 <c:choose>

@@ -18,9 +18,8 @@
 
 <%
 CommerceAdminModuleRegistry commerceAdminModuleRegistry = (CommerceAdminModuleRegistry)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_MODULE_REGISTRY);
-int commerceAdminType = (int)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_TYPE);
 
-NavigableMap<String, CommerceAdminModule> commerceAdminModules = commerceAdminModuleRegistry.getCommerceAdminModules(company.getCompanyId(), themeDisplay.getScopeGroupId(), commerceAdminType);
+NavigableMap<String, CommerceAdminModule> commerceAdminModules = commerceAdminModuleRegistry.getCommerceAdminModules(company.getCompanyId(), themeDisplay.getScopeGroupId());
 
 String selectedCommerceAdminModuleKey = ParamUtil.getString(request, "commerceAdminModuleKey", commerceAdminModules.firstKey());
 

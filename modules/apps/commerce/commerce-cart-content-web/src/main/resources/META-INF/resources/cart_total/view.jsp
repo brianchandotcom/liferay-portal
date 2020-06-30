@@ -128,11 +128,8 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 	</aui:button-row>
 
 	<aui:script>
-		Liferay.after(
-			'commerce:productAddedToCart',
-			function(event) {
-				Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-			}
-		);
+		Liferay.after('commerce:productAddedToCart', function(event) {
+			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
+		});
 	</aui:script>
 </liferay-ddm:template-renderer>

@@ -17,12 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
-
-PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
-
-String catalogURL = catalogURLObj.toString();
-
 CPDefinitionSubscriptionInfoDisplayContext cpDefinitionSubscriptionInfoDisplayContext = (CPDefinitionSubscriptionInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionSubscriptionInfoDisplayContext.getCPDefinition();
@@ -42,20 +36,37 @@ int subscriptionLength = BeanParamUtil.getInteger(cpDefinition, request, "subscr
 String subscriptionType = BeanParamUtil.getString(cpDefinition, request, "subscriptionType", defaultCPSubscriptionType);
 long maxSubscriptionCycles = BeanParamUtil.getLong(cpDefinition, request, "maxSubscriptionCycles");
 
+boolean deliverySubscriptionEnabled = BeanParamUtil.getBoolean(cpDefinition, request, "deliverySubscriptionEnabled", false);
+int deliverySubscriptionLength = BeanParamUtil.getInteger(cpDefinition, request, "deliverySubscriptionLength", 1);
+String deliverySubscriptionType = BeanParamUtil.getString(cpDefinition, request, "deliverySubscriptionType", defaultCPSubscriptionType);
+long deliveryMaxSubscriptionCycles = BeanParamUtil.getLong(cpDefinition, request, "deliveryMaxSubscriptionCycles");
+
 String defaultCPSubscriptionTypeLabel = StringPool.BLANK;
+String defaultDeliveryCPSubscriptionTypeLabel = StringPool.BLANK;
 
 CPSubscriptionType cpSubscriptionType = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionType(subscriptionType);
+CPSubscriptionType deliveryCPSubscriptionType = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionType(deliverySubscriptionType);
 
 if (cpSubscriptionType != null) {
 	defaultCPSubscriptionTypeLabel = cpSubscriptionType.getLabel(locale);
 }
 
+if (deliveryCPSubscriptionType != null) {
+	defaultDeliveryCPSubscriptionTypeLabel = deliveryCPSubscriptionType.getLabel(locale);
+}
+
 CPSubscriptionTypeJSPContributor cpSubscriptionTypeJSPContributor = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(subscriptionType);
+CPSubscriptionTypeJSPContributor deliveryCPSubscriptionTypeJSPContributor = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(deliverySubscriptionType);
 
 boolean ending = false;
+boolean deliveryEnding = false;
 
 if (maxSubscriptionCycles > 0) {
 	ending = true;
+}
+
+if (deliveryMaxSubscriptionCycles > 0) {
+	deliveryEnding = true;
 }
 %>
 
@@ -65,97 +76,165 @@ if (maxSubscriptionCycles > 0) {
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionSubscriptionInfoActionURL" />
 
-<aui:form action="<%= editProductDefinitionSubscriptionInfoActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductDefinitionSubscriptionInfoActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateSubscriptionInfo" />
 	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(cpDefinitionSubscriptionInfoDisplayContext.getPortletURL()) %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 
 	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input checked="<%= subscriptionEnabled %>" label="enable-subscription" name="subscriptionEnabled" type="toggle-switch" value="<%= subscriptionEnabled %>" />
+	<commerce-ui:panel
+		collapsed="<%= !subscriptionEnabled %>"
+		collapseLabel='<%= LanguageUtil.get(request, "enable") %>'
+		collapseSwitchName='<%= renderResponse.getNamespace() + "subscriptionEnabled" %>'
+		title='<%= LanguageUtil.get(request, "payment-subscription") %>'
+	>
+		<aui:select name="subscriptionType" onChange='<%= renderResponse.getNamespace() + "selectSubscriptionType();" %>'>
 
-			<div class="<%= subscriptionEnabled ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />subscriptionOptions">
-				<aui:select name="subscriptionType" onChange='<%= renderResponse.getNamespace() + "selectSubscriptionType();" %>'>
+			<%
+			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
+			%>
 
-					<%
-					for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
-					%>
+				<aui:option data-label="<%= curCPSubscriptionType.getLabel(locale) %>" label="<%= curCPSubscriptionType.getLabel(locale) %>" selected="<%= subscriptionType.equals(curCPSubscriptionType.getName()) %>" value="<%= curCPSubscriptionType.getName() %>" />
 
-						<aui:option data-label="<%= curCPSubscriptionType.getLabel(locale) %>" label="<%= curCPSubscriptionType.getLabel(locale) %>" selected="<%= subscriptionType.equals(curCPSubscriptionType.getName()) %>" value="<%= curCPSubscriptionType.getName() %>" />
+			<%
+			}
+			%>
 
-					<%
-					}
-					%>
+		</aui:select>
 
-				</aui:select>
+		<%
+		if (cpSubscriptionTypeJSPContributor != null) {
+			cpSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponse.createPipingServletResponse(pageContext));
+		}
+		%>
 
-				<%
-				if (cpSubscriptionTypeJSPContributor != null) {
-					cpSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponse.createPipingServletResponse(pageContext));
-				}
-				%>
+		<div id="<portlet:namespace />cycleLengthContainer">
+			<aui:input name="subscriptionLength" suffix="<%= defaultCPSubscriptionTypeLabel %>" value="<%= String.valueOf(subscriptionLength) %>">
+				<aui:validator name="digits" />
+				<aui:validator name="min">1</aui:validator>
+			</aui:input>
+		</div>
 
-				<div id="<portlet:namespace />cycleLengthContainer">
-					<aui:input name="subscriptionLength" suffix="<%= defaultCPSubscriptionTypeLabel %>" value="<%= String.valueOf(subscriptionLength) %>">
-						<aui:validator name="digits" />
-						<aui:validator name="min">1</aui:validator>
-					</aui:input>
-				</div>
-
-				<div id="<portlet:namespace />neverEndsContainer">
-					<div class="never-ends-header">
-						<aui:input checked="<%= ending ? false : true %>" name="neverEnds" type="toggle-switch" />
-					</div>
-
-					<div class="never-ends-content">
-						<aui:input disabled="<%= ending ? false : true %>" helpMessage="max-subscription-cycles-help" label="end-after" name="maxSubscriptionCycles" suffix='<%= LanguageUtil.get(request, "cycles") %>' value="<%= String.valueOf(maxSubscriptionCycles) %>">
-							<aui:validator name="digits" />
-
-							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
-								function(val, fieldNode, ruleValue) {
-									if (AUI.$('#<portlet:namespace />neverEnds')[0].checked) {
-										return true;
-									}
-
-									if (parseInt(val, 10) > 0) {
-										return true;
-									}
-
-									return false;
-								}
-							</aui:validator>
-						</aui:input>
-					</div>
-				</div>
+		<div id="<portlet:namespace />neverEndsContainer">
+			<div class="never-ends-header">
+				<aui:input checked="<%= ending ? false : true %>" name="neverEnds" type="toggle-switch" />
 			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+			<div class="never-ends-content">
+				<aui:input disabled="<%= ending ? false : true %>" helpMessage="max-subscription-cycles-help" label="end-after" name="maxSubscriptionCycles" suffix='<%= LanguageUtil.get(request, "cycles") %>' value="<%= String.valueOf(maxSubscriptionCycles) %>">
+					<aui:validator name="digits" />
 
-		<aui:button cssClass="btn-lg" href="<%= catalogURL %>" type="cancel" />
-	</aui:button-row>
+					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
+						function(val, fieldNode, ruleValue) {
+							if (AUI.$('#<portlet:namespace />neverEnds')[0].checked) {
+								return true;
+							}
+
+							if (parseInt(val, 10) > 0) {
+								return true;
+							}
+
+							return false;
+						}
+					</aui:validator>
+				</aui:input>
+			</div>
+		</div>
+	</commerce-ui:panel>
+
+	<commerce-ui:panel
+		collapsed="<%= !deliverySubscriptionEnabled %>"
+		collapseLabel='<%= LanguageUtil.get(request, "enable") %>'
+		collapseSwitchName='<%= renderResponse.getNamespace() + "deliverySubscriptionEnabled" %>'
+		title='<%= LanguageUtil.get(request, "delivery-subscription") %>'
+	>
+		<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= renderResponse.getNamespace() + "selectDeliverySubscriptionType();" %>'>
+
+			<%
+			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
+			%>
+
+				<aui:option data-label="<%= curCPSubscriptionType.getLabel(locale) %>" label="<%= curCPSubscriptionType.getLabel(locale) %>" selected="<%= deliverySubscriptionType.equals(curCPSubscriptionType.getName()) %>" value="<%= curCPSubscriptionType.getName() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<%
+		if (deliveryCPSubscriptionTypeJSPContributor != null) {
+			deliveryCPSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponse.createPipingServletResponse(pageContext), false);
+		}
+		%>
+
+		<div id="<portlet:namespace />deliveryCycleLengthContainer">
+			<aui:input label="subscription-length" name="deliverySubscriptionLength" suffix="<%= defaultDeliveryCPSubscriptionTypeLabel %>" value="<%= String.valueOf(deliverySubscriptionLength) %>">
+				<aui:validator name="digits" />
+				<aui:validator name="min">1</aui:validator>
+			</aui:input>
+		</div>
+
+		<div id="<portlet:namespace />deliveryNeverEndsContainer">
+			<div class="never-ends-header">
+				<aui:input checked="<%= deliveryEnding ? false : true %>" label="never-ends" name="deliveryNeverEnds" type="toggle-switch" />
+			</div>
+
+			<div class="never-ends-content">
+				<aui:input disabled="<%= deliveryEnding ? false : true %>" helpMessage="max-subscription-cycles-help" label="end-after" name="deliveryMaxSubscriptionCycles" suffix='<%= LanguageUtil.get(request, "cycles") %>' value="<%= String.valueOf(deliveryMaxSubscriptionCycles) %>">
+					<aui:validator name="digits" />
+
+					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
+						function(val, fieldNode, ruleValue) {
+							if (AUI.$('#<portlet:namespace />deliveryNeverEnds')[0].checked) {
+								return true;
+							}
+
+							if (parseInt(val, 10) > 0) {
+								return true;
+							}
+
+							return false;
+						}
+					</aui:validator>
+				</aui:input>
+			</div>
+		</div>
+	</commerce-ui:panel>
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />subscriptionEnabled', '<portlet:namespace />subscriptionOptions');
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectSubscriptionType',
 		function() {
 			var A = AUI();
 
-			var subscriptionEnabled = A.one('#<portlet:namespace />subscriptionEnabled').attr('checked');
-			var subscriptionLength = A.one('#<portlet:namespace />subscriptionLength').val();
-			var subscriptionType = A.one('#<portlet:namespace />subscriptionType').val();
-			var maxSubscriptionCycles = A.one('#<portlet:namespace />maxSubscriptionCycles').val();
+			var deliverySubscriptionEnabled = A.one(
+				'#<portlet:namespace />deliverySubscriptionEnabled'
+			).attr('checked');
+			var subscriptionEnabled = A.one(
+				'#<portlet:namespace />subscriptionEnabled'
+			).attr('checked');
+			var subscriptionLength = A.one(
+				'#<portlet:namespace />subscriptionLength'
+			).val();
+			var subscriptionType = A.one(
+				'#<portlet:namespace />subscriptionType'
+			).val();
+			var maxSubscriptionCycles = A.one(
+				'#<portlet:namespace />maxSubscriptionCycles'
+			).val();
 
-			var portletURL = new Liferay.PortletURL.createURL('<%= currentURLObj %>');
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
 
+			portletURL.setParameter(
+				'deliverySubscriptionEnabled',
+				deliverySubscriptionEnabled
+			);
 			portletURL.setParameter('subscriptionEnabled', subscriptionEnabled);
 			portletURL.setParameter('subscriptionLength', subscriptionLength);
 			portletURL.setParameter('subscriptionType', subscriptionType);
@@ -165,38 +244,121 @@ if (maxSubscriptionCycles > 0) {
 		},
 		['liferay-portlet-url']
 	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectDeliverySubscriptionType',
+		function() {
+			var A = AUI();
+
+			var subscriptionEnabled = A.one(
+				'#<portlet:namespace />subscriptionEnabled'
+			).attr('checked');
+			var deliverySubscriptionEnabled = A.one(
+				'#<portlet:namespace />deliverySubscriptionEnabled'
+			).attr('checked');
+			var deliverySubscriptionLength = A.one(
+				'#<portlet:namespace />deliverySubscriptionLength'
+			).val();
+			var deliverySubscriptionType = A.one(
+				'#<portlet:namespace />deliverySubscriptionType'
+			).val();
+			var deliveryMaxSubscriptionCycles = A.one(
+				'#<portlet:namespace />deliveryMaxSubscriptionCycles'
+			).val();
+
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
+
+			portletURL.setParameter('subscriptionEnabled', subscriptionEnabled);
+			portletURL.setParameter(
+				'deliverySubscriptionEnabled',
+				deliverySubscriptionEnabled
+			);
+			portletURL.setParameter(
+				'deliverySubscriptionLength',
+				deliverySubscriptionLength
+			);
+			portletURL.setParameter(
+				'deliverySubscriptionType',
+				deliverySubscriptionType
+			);
+			portletURL.setParameter(
+				'deliveryMaxSubscriptionCycles',
+				deliveryMaxSubscriptionCycles
+			);
+
+			window.location.replace(portletURL.toString());
+		},
+		['liferay-portlet-url']
+	);
 </aui:script>
 
 <aui:script use="liferay-form">
-	A.one('#<portlet:namespace />neverEnds').on(
-	'change',
-		function(event) {
-			var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+	A.one('#<portlet:namespace />neverEnds').on('change', function(event) {
+		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
+			.formValidator;
 
-			formValidator.validateField('<portlet:namespace />maxSubscriptionCycles');
-		}
-	);
+		formValidator.validateField('<portlet:namespace />maxSubscriptionCycles');
+	});
+
+	A.one('#<portlet:namespace />deliveryNeverEnds').on('change', function(event) {
+		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
+			.formValidator;
+
+		formValidator.validateField(
+			'<portlet:namespace />deliveryMaxSubscriptionCycles'
+		);
+	});
 </aui:script>
 
 <aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />neverEndsContainer .never-ends-content',
-			expanded: <%= ending %>,
-			header: '#<portlet:namespace />neverEndsContainer .never-ends-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
+	new A.Toggler({
+		animated: true,
+		content: '#<portlet:namespace />neverEndsContainer .never-ends-content',
+		expanded: <%= ending %>,
+		header: '#<portlet:namespace />neverEndsContainer .never-ends-header',
+		on: {
+			animatingChange: function(event) {
+				var instance = this;
 
-					if (!instance.get('expanded')) {
-						A.one('#<portlet:namespace />maxSubscriptionCycles').attr('disabled', false);
-					}
-					else {
-						A.one('#<portlet:namespace />maxSubscriptionCycles').attr('disabled', true);
-					}
+				if (!instance.get('expanded')) {
+					A.one('#<portlet:namespace />maxSubscriptionCycles').attr(
+						'disabled',
+						false
+					);
+				} else {
+					A.one('#<portlet:namespace />maxSubscriptionCycles').attr(
+						'disabled',
+						true
+					);
 				}
 			}
 		}
-	);
+	});
+
+	new A.Toggler({
+		animated: true,
+		content:
+			'#<portlet:namespace />deliveryNeverEndsContainer .never-ends-content',
+		expanded: <%= deliveryEnding %>,
+		header:
+			'#<portlet:namespace />deliveryNeverEndsContainer .never-ends-header',
+		on: {
+			animatingChange: function(event) {
+				var instance = this;
+
+				if (!instance.get('expanded')) {
+					A.one(
+						'#<portlet:namespace />deliveryMaxSubscriptionCycles'
+					).attr('disabled', false);
+				} else {
+					A.one(
+						'#<portlet:namespace />deliveryMaxSubscriptionCycles'
+					).attr('disabled', true);
+				}
+			}
+		}
+	});
 </aui:script>

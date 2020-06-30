@@ -289,9 +289,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 
 		double popularity = maxCount - (maxCount - (frequency - minCount));
 
-		popularity = 1 + (popularity * multiplier);
-
-		return popularity;
+		return 1 + (popularity * multiplier);
 	}
 
 	protected boolean isCloud() {

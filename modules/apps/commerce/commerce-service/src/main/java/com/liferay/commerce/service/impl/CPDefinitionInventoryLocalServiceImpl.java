@@ -17,14 +17,11 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.service.base.CPDefinitionInventoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -38,21 +35,15 @@ public class CPDefinitionInventoryLocalServiceImpl
 
 	@Override
 	public CPDefinitionInventory addCPDefinitionInventory(
-			long cpDefinitionId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			long userId, long cpDefinitionId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			throw new PortalException("Unable to obtain valid service context");
-		}
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		long cpDefinitionInventoryId = counterLocalService.increment();
 
@@ -88,47 +79,7 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
-		cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
-
-		return cpDefinitionInventory;
-	}
-
-	/**
-	 * Adds new CP definition inventory.
-	 *
-	 * @param      cpDefinitionId
-	 * @param      cpDefinitionInventoryEngine
-	 * @param      lowStockActivity
-	 * @param      displayAvailability
-	 * @param      displayStockQuantity
-	 * @param      minStockQuantity
-	 * @param      backOrders
-	 * @param      minOrderQuantity
-	 * @param      maxOrderQuantity
-	 * @param      allowedOrderQuantities
-	 * @param      multipleOrderQuantity
-	 * @param      serviceContext
-	 * @throws     PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 *             #addCPDefinitionInventory(long, String, String, boolean,
-	 *             boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionInventory addCPDefinitionInventory(
-			long cpDefinitionId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDefinitionInventoryLocalService.addCPDefinitionInventory(
-			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity);
+		return cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
 	}
 
 	@Override
@@ -251,53 +202,10 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
-		cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
-
-		return cpDefinitionInventory;
-	}
-
-	/**
-	 * Updates CP definition entry.
-	 *
-	 * @param      cpDefinitionInventoryId
-	 * @param      cpDefinitionInventoryEngine
-	 * @param      lowStockActivity
-	 * @param      displayAvailability
-	 * @param      displayStockQuantity
-	 * @param      minStockQuantity
-	 * @param      backOrders
-	 * @param      minOrderQuantity
-	 * @param      maxOrderQuantity
-	 * @param      allowedOrderQuantities
-	 * @param      multipleOrderQuantity
-	 * @param      serviceContext
-	 * @throws     PortalException
-	 * @deprecated As of Mueller (7.2.x), use {@link
-	 *             #updateCPDefinitionInventory(long, String, String, boolean,
-	 *             boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionInventory updateCPDefinitionInventory(
-			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
-			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
-			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
-			lowStockActivity, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity);
+		return cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
 	}
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@ServiceReference(type = CProductLocalService.class)
-	private CProductLocalService _cProductLocalService;
 
 }

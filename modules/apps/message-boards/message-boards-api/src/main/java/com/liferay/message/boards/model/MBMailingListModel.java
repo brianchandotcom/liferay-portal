@@ -45,7 +45,7 @@ public interface MBMailingListModel
 	extends BaseModel<MBMailingList>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message boards mailing list model instance should use the {@link MBMailingList} interface instead.

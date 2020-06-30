@@ -195,11 +195,6 @@ public class VirtualHostWrapper
 		return _virtualHost.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a virtual host model instance should use the <code>VirtualHost</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_virtualHost.persist();

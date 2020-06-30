@@ -40,7 +40,7 @@ import java.util.Set;
 public interface JournalArticleResourcePersistence
 	extends BasePersistence<JournalArticleResource> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleResourceUtil} to access the journal article resource persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

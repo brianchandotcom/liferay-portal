@@ -178,7 +178,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 							<c:choose>
 								<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 									<dl class="commerce-list">
-										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" wrappedField="<%= false %>">
+										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
 
 											<%
 											for (CommerceAddress commerceAddress : billingAddresses) {
@@ -215,7 +215,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 							<c:choose>
 								<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 									<dl class="commerce-list">
-										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" wrappedField="<%= false %>">
+										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
 
 											<%
 											for (CommerceAddress commerceAddress : shippingAddresses) {
@@ -250,7 +250,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 		markupView="lexicon"
 		message="<%= StringPool.BLANK %>"
 		showWhenSingleIcon="<%= true %>"
-		triggerCssClass="btn btn-lg btn-monospaced btn-primary thumb-menu"
+		triggerCssClass="btn btn-lg btn-monospaced btn-primary position-fixed thumb-menu"
 	>
 		<liferay-ui:icon
 			message="print"
@@ -272,13 +272,15 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 	</liferay-ui:icon-menu>
 
 	<div class="commerce-cta is-visible">
-		<clay:button
-			elementClasses="btn-fixed btn-secondary"
-			label='<%= LanguageUtil.get(request, "save") %>'
-			size="lg"
-			style="secondary"
-			type="submit"
-		/>
+		<c:if test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
+			<clay:button
+				elementClasses="btn-fixed btn-secondary"
+				label='<%= LanguageUtil.get(request, "save") %>'
+				size="lg"
+				style="secondary"
+				type="submit"
+			/>
+		</c:if>
 
 		<liferay-commerce:order-transitions
 			commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
@@ -289,14 +291,22 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 
 <div class="row">
 	<div class="col-md-9">
-		<commerce-ui:table
-			dataProviderKey="commercePendingOrderItems"
-			filter="<%= commerceOrderContentDisplayContext.getOrderFilter() %>"
-			itemPerPage="<%= 5 %>"
+
+		<%
+		java.util.Map<String, String> contextParams = new java.util.HashMap<>();
+
+		contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+		%>
+
+		<commerce-ui:dataset-display
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"
+			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"
+			itemsPerPage="<%= 10 %>"
 			namespace="<%= renderResponse.getNamespace() %>"
-			pageNumber="1"
+			pageNumber="<%= 1 %>"
 			portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
-			tableName="commercePendingOrderItems"
+			style="stacked"
 		/>
 	</div>
 

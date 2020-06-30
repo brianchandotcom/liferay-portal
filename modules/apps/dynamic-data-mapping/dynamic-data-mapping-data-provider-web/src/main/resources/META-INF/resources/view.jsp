@@ -60,9 +60,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-image
-							src="<%= ddmDataProviderDisplayContext.getUserPortraitURL(dataProviderInstance.getUserId()) %>"
-							toggleRowChecker="<%= true %>"
+						<liferay-ui:search-container-column-icon
+							cssClass="asset-icon"
+							icon="repository"
 						/>
 
 						<liferay-ui:search-container-column-jsp

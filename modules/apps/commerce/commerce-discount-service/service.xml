@@ -26,6 +26,7 @@
 		<column name="couponCode" type="String" />
 		<column name="usePercentage" type="boolean" />
 		<column name="maximumDiscountAmount" type="BigDecimal" />
+		<column db-name="levelType" name="level" type="String" />
 		<column name="level1" type="BigDecimal" />
 		<column name="level2" type="BigDecimal" />
 		<column name="level3" type="BigDecimal" />
@@ -33,6 +34,7 @@
 		<column name="limitationType" type="String" />
 		<column name="limitationTimes" type="int" />
 		<column name="numberOfUse" type="int" />
+		<column name="rulesConjunction" type="boolean" />
 		<column name="active" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -70,6 +72,46 @@
 
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommerceDiscountAccountRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountAccountRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="commerceDiscountId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceAccountId" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+		</finder>
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceDiscountCommerceAccountGroupRel" remote-service="true" table="CDiscountCAccountGroupRel">
 
@@ -165,6 +207,7 @@
 
 		<!-- Other fields -->
 
+		<column name="name" type="String" />
 		<column name="commerceDiscountId" type="long" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />

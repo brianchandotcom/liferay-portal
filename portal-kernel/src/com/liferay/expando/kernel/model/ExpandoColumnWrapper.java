@@ -246,11 +246,6 @@ public class ExpandoColumnWrapper
 		return _expandoColumn.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a expando column model instance should use the <code>ExpandoColumn</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_expandoColumn.persist();

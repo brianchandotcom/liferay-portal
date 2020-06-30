@@ -3,7 +3,7 @@
 	color: currentColor;
 	cursor: pointer;
 	display: flex;
-	font-size: 14px;
+	font-size: 1rem;
 	height: $frame-size;
 	justify-content: center;
 	margin: 0;
@@ -31,7 +31,6 @@
 	svg,
 	&__icon {
 		display: inline-block;
-		font-size: 21px;
 		margin: 10px;
 	}
 

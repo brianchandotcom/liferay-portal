@@ -35,9 +35,48 @@ public class CommerceSubscriptionEntryFinderImpl
 	extends CommerceSubscriptionEntryFinderBaseImpl
 	implements CommerceSubscriptionEntryFinder {
 
+	public static final String FIND_BY_DELIVERY_NEXT_ITERATION_DATE =
+		CommerceSubscriptionEntryFinder.class.getName() +
+			".findByDeliveryNextIterationDate";
+
 	public static final String FIND_BY_NEXT_ITERATION_DATE =
 		CommerceSubscriptionEntryFinder.class.getName() +
 			".findByNextIterationDate";
+
+	@Override
+	public List<CommerceSubscriptionEntry> findByDeliveryNextIterationDate(
+		Date nextIterationDate) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_DELIVERY_NEXT_ITERATION_DATE);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (nextIterationDate != null) {
+				qPos.add(nextIterationDate);
+			}
+
+			return (List<CommerceSubscriptionEntry>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<CommerceSubscriptionEntry> findByNextIterationDate(

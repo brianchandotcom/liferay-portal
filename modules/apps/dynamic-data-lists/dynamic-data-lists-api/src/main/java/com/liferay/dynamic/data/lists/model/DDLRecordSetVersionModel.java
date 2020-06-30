@@ -48,7 +48,7 @@ public interface DDLRecordSetVersionModel
 	extends BaseModel<DDLRecordSetVersion>, LocalizedModel, ShardedModel,
 			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddl record set version model instance should use the {@link DDLRecordSetVersion} interface instead.

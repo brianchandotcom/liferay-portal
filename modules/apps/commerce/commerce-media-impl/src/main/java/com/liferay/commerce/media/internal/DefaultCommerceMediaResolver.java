@@ -32,9 +32,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -337,7 +339,13 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 				commerceMediaDefaultImageConfiguration.defaultFileEntryId());
 
 			if (fileEntry == null) {
-				httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+				Company company = _portal.getCompany(httpServletRequest);
+
+				Image image = ImageToolUtil.getDefaultCompanyLogo();
+
+				ServletResponseUtil.sendFile(
+					httpServletRequest, httpServletResponse, company.getName(),
+					image.getTextObj(), image.getType(), contentDisposition);
 
 				return;
 			}

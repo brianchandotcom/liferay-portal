@@ -43,7 +43,7 @@ import java.util.Date;
 public interface MessageModel
 	extends AuditedModel, BaseModel<Message>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message model instance should use the {@link Message} interface instead.

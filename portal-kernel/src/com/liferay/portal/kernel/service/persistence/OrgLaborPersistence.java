@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrgLaborUtil} to access the org labor persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

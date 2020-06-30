@@ -59,9 +59,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		auditEvent.setAdditionalInfo(
 			String.valueOf(auditMessage.getAdditionalInfo()));
 
-		auditEventPersistence.update(auditEvent);
-
-		return auditEvent;
+		return auditEventPersistence.update(auditEvent);
 	}
 
 	@Override

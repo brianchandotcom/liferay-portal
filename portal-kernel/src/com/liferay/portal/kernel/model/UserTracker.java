@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface UserTracker extends PersistedModel, UserTrackerModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

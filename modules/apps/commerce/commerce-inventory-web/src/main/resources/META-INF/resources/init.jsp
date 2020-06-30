@@ -14,41 +14,38 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.inventory.CPDefinitionInventoryEngine" %><%@
-page import="com.liferay.commerce.inventory.web.internal.display.context.CPDefinitionInventoryDisplayContext" %><%@
-page import="com.liferay.commerce.model.CPDAvailabilityEstimate" %><%@
-page import="com.liferay.commerce.model.CPDefinitionInventory" %><%@
-page import="com.liferay.commerce.model.CommerceAvailabilityEstimate" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
-page import="com.liferay.commerce.stock.activity.CommerceLowStockActivity" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException" %><%@
+page import="com.liferay.commerce.inventory.exception.MVCCException" %><%@
+page import="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem" %><%@
+page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" %><%@
+page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem" %><%@
+page import="com.liferay.commerce.inventory.web.internal.display.context.CommerceInventoryDisplayContext" %><%@
+page import="com.liferay.commerce.inventory.web.internal.frontend.CommerceInventoryDataSetConstants" %><%@
+page import="com.liferay.commerce.inventory.web.internal.servlet.taglib.ui.CommerceInventoryScreenNavigationConstants" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
+page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.List" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="java.util.Calendar" %><%@
+page import="java.util.Date" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
-<%
-String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
-
-PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
-
-String catalogURL = catalogURLObj.toString();
-
-String languageId = LanguageUtil.getLanguageId(locale);
-%>
+<portlet:defineObjects />

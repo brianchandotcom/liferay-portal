@@ -2,7 +2,7 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MissingDeprecatedCheck" files="modules/apps/export-import/export-import-service/src/main/java/com/liferay/exportimport/internal/configuration/ExportImportConfigurationParameterMapFactoryImpl\.java" />
-		<suppress checks="StaticVariableNameCheck" files="modules/apps/export-import/export-import-web/src/main/java/com/liferay/exportimport/web/internal/configuration/ExportImportWebConfigurationValues\.java" />
+		<suppress checks="MissingDeprecatedCheck" files="export-import-service/src/main/java/com/liferay/exportimport/internal/configuration/ExportImportConfigurationParameterMapFactoryImpl\.java" />
+		<suppress checks="StaticVariableNameCheck" files="export-import-web/src/main/java/com/liferay/exportimport/web/internal/configuration/ExportImportWebConfigurationValues\.java" />
 	</checkstyle>
 </suppressions>

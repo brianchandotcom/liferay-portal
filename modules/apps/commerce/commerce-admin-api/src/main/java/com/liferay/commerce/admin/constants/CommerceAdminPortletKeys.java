@@ -20,12 +20,7 @@ package com.liferay.commerce.admin.constants;
  */
 public class CommerceAdminPortletKeys {
 
-	public static final String COMMERCE_ADMIN_GROUP_INSTANCE =
-		"com_liferay_commerce_admin_web_internal_portlet_" +
-			"CommerceAdminGroupInstancePortlet";
-
-	public static final String COMMERCE_ADMIN_VIRTUAL_INSTANCE =
-		"com_liferay_commerce_admin_web_internal_portlet_" +
-			"CommerceAdminVirtualInstancePortlet";
+	public static final String COMMERCE_ADMIN =
+		"com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet";
 
 }

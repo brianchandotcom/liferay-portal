@@ -276,11 +276,6 @@ public class WeDeployAuthTokenWrapper
 		return _weDeployAuthToken.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a we deploy auth token model instance should use the <code>WeDeployAuthToken</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_weDeployAuthToken.persist();

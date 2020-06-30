@@ -15,23 +15,16 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
@@ -120,8 +113,6 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		try {
 			if (cmd.equals(Constants.ADD) ||
 				cmd.equals(Constants.ADD_MULTIPLE)) {
@@ -129,40 +120,23 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 				addCPDefinitionOptionRels(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				_cpDefinitionOptionRelService.deleteCPDefinitionOptionRel(
-					cpDefinitionOptionRelId);
+				deleteCPDefinitionOptionRels(
+					cpDefinitionOptionRelId, actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				CPDefinitionOptionRel cpDefinitionOptionRel =
-					updateCPDefinitionOptionRel(
-						cpDefinitionOptionRelId, actionRequest);
-
-				jsonObject.put(
-					"cpDefinitionOptionRelId",
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+				updateCPDefinitionOptionRel(
+					cpDefinitionOptionRelId, actionRequest);
 			}
-
-			CPDefinition cpDefinition = _actionHelper.getCPDefinition(
-				actionRequest);
-
-			jsonObject.put("cpDefinitionId", cpDefinition.getCPDefinitionId());
-
-			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			hideDefaultErrorMessage(actionRequest);
 
-			jsonObject.put(
-				"message",
-				LanguageUtil.get(
-					actionRequest.getLocale(),
-					"your-request-failed-to-complete"));
-			jsonObject.put("success", false);
+			SessionErrors.add(actionRequest, e.getClass(), e);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		_actionHelper.writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected CPDefinitionOptionRel updateCPDefinitionOptionRel(
@@ -181,6 +155,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		boolean required = ParamUtil.getBoolean(actionRequest, "required");
 		boolean skuContributor = ParamUtil.getBoolean(
 			actionRequest, "skuContributor");
+		String priceType = ParamUtil.getString(actionRequest, "priceType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
@@ -188,22 +163,10 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			serviceContext);
+			priceType, serviceContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditCPDefinitionOptionRelMVCActionCommand.class);
-
-	@Reference
-	private ActionHelper _actionHelper;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

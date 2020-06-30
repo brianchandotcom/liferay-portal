@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -39,6 +38,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,7 +55,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Sku")
 public class Sku {
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getCost() {
 		return cost;
 	}
@@ -82,6 +85,7 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal cost;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getDepth() {
 		return depth;
@@ -220,6 +224,7 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String gtin;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getHeight() {
 		return height;
@@ -248,6 +253,7 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double height;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -360,6 +366,7 @@ public class Sku {
 	protected Boolean neverExpire;
 
 	@Schema
+	@Valid
 	public Map<String, String> getOptions() {
 		return options;
 	}
@@ -387,7 +394,9 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> options;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -415,6 +424,7 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal price;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getProductId() {
 		return productId;
@@ -443,7 +453,9 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@DecimalMin("0")
 	@Schema
+	@Valid
 	public BigDecimal getPromoPrice() {
 		return promoPrice;
 	}
@@ -554,6 +566,7 @@ public class Sku {
 	@NotEmpty
 	protected String sku;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getWeight() {
 		return weight;
@@ -582,6 +595,7 @@ public class Sku {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double weight;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getWidth() {
 		return width;
@@ -868,6 +882,12 @@ public class Sku {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

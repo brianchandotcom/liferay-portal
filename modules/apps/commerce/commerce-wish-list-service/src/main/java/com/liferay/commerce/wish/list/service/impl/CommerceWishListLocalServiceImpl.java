@@ -68,9 +68,7 @@ public class CommerceWishListLocalServiceImpl
 		commerceWishList.setName(name);
 		commerceWishList.setDefaultWishList(defaultWishList);
 
-		commerceWishListPersistence.update(commerceWishList);
-
-		return commerceWishList;
+		return commerceWishListPersistence.update(commerceWishList);
 	}
 
 	@Override
@@ -212,7 +210,8 @@ public class CommerceWishListLocalServiceImpl
 			if (commerceWishList != null) {
 				commerceWishList.setDefaultWishList(true);
 
-				commerceWishListPersistence.update(commerceWishList);
+				commerceWishList = commerceWishListPersistence.update(
+					commerceWishList);
 			}
 		}
 
@@ -246,9 +245,7 @@ public class CommerceWishListLocalServiceImpl
 		commerceWishList.setName(name);
 		commerceWishList.setDefaultWishList(defaultWishList);
 
-		commerceWishListPersistence.update(commerceWishList);
-
-		return commerceWishList;
+		return commerceWishListPersistence.update(commerceWishList);
 	}
 
 	protected String getCookieName(long groupId) {

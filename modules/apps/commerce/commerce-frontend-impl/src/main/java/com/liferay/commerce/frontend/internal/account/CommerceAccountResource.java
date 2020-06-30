@@ -138,11 +138,13 @@ public class CommerceAccountResource {
 
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			_portal.getCompanyId(httpServletRequest), groupId,
-			_portal.getUserId(httpServletRequest), 0, 0);
-
 		try {
+			CommerceContext commerceContext = _commerceContextFactory.create(
+				_portal.getCompanyId(httpServletRequest),
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
+				_portal.getUserId(httpServletRequest), 0, 0);
+
 			accountList = getAccountList(
 				themeDisplay.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
@@ -345,6 +347,7 @@ public class CommerceAccountResource {
 				new Order(
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountId(),
+					commerceOrder.getCommerceAccountName(),
 					commerceOrder.getPurchaseOrderNumber(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago",

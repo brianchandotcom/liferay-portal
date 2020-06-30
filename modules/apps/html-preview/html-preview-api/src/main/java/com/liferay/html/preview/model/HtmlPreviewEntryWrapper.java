@@ -310,11 +310,6 @@ public class HtmlPreviewEntryWrapper
 		return _htmlPreviewEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a html preview entry model instance should use the <code>HtmlPreviewEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_htmlPreviewEntry.persist();

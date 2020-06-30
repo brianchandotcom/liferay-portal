@@ -13,12 +13,22 @@
 		<field name="commercePriceListId" type="long" />
 		<field name="CPInstanceUuid" type="String" />
 		<field name="CProductId" type="long" />
-		<field name="price" type="BigDecimal">
-			<validator name="number" />
-		</field>
+		<field name="price" type="BigDecimal" />
 		<field name="promoPrice" type="BigDecimal" />
+		<field name="discountDiscovery" type="boolean" />
+		<field name="discountLevel1" type="BigDecimal" />
+		<field name="discountLevel2" type="BigDecimal" />
+		<field name="discountLevel3" type="BigDecimal" />
+		<field name="discountLevel4" type="BigDecimal" />
 		<field name="hasTierPrice" type="boolean" />
+		<field name="bulkPricing" type="boolean" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.price.list.model.CommercePriceList">
 		<field name="uuid" type="String" />
@@ -30,13 +40,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceCurrencyId" type="long">
-			<validator name="required" />
-		</field>
+		<field name="commerceCurrencyId" type="long" />
 		<field name="parentCommercePriceListId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
+		<field name="catalogBasePriceList" type="boolean" />
+		<field name="type" type="String" />
+		<field name="name" type="String" />
 		<field name="priority" type="double" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
@@ -59,6 +67,19 @@
 		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.price.list.model.CommercePriceListChannelRel">
+		<field name="uuid" type="String" />
+		<field name="CommercePriceListChannelRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceChannelId" type="long" />
+		<field name="commercePriceListId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel">
 		<field name="uuid" type="String" />
 		<field name="commercePriceListCommerceAccountGroupRelId" type="long" />
@@ -69,6 +90,19 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceListId" type="long" />
 		<field name="commerceAccountGroupId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.price.list.model.CommercePriceListDiscountRel">
+		<field name="uuid" type="String" />
+		<field name="commercePriceListDiscountRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="commercePriceListId" type="long" />
 		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -84,7 +118,18 @@
 		<field name="commercePriceEntryId" type="long" />
 		<field name="price" type="BigDecimal" />
 		<field name="promoPrice" type="BigDecimal" />
+		<field name="discountDiscovery" type="boolean" />
+		<field name="discountLevel1" type="BigDecimal" />
+		<field name="discountLevel2" type="BigDecimal" />
+		<field name="discountLevel3" type="BigDecimal" />
+		<field name="discountLevel4" type="BigDecimal" />
 		<field name="minQuantity" type="int" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

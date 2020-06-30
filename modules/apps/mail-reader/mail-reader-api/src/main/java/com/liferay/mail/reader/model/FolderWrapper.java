@@ -292,11 +292,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a folder model instance should use the <code>Folder</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_folder.persist();

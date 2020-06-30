@@ -84,6 +84,20 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceChannel getCommerceChannelByOrderGroupId(long groupId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				groupId);
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.VIEW);
+
+		return commerceChannel;
+	}
+
+	@Override
 	public List<CommerceChannel> getCommerceChannels(int start, int end)
 		throws PortalException {
 
@@ -149,6 +163,19 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 		return commerceChannelLocalService.updateCommerceChannel(
 			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
 			commerceCurrencyCode);
+	}
+
+	@Override
+	public CommerceChannel updateCommerceChannelExternalReferenceCode(
+			long commerceChannelId, String externalReferenceCode)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
+
+		return commerceChannelLocalService.
+			updateCommerceChannelExternalReferenceCode(
+				commerceChannelId, externalReferenceCode);
 	}
 
 	private static volatile ModelResourcePermission<CommerceChannel>

@@ -32,7 +32,7 @@ import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 public abstract class OAuth2AuthorizationBaseImpl
 	extends OAuth2AuthorizationModelImpl implements OAuth2Authorization {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth2 authorization model instance should use the <code>OAuth2Authorization</code> interface instead.

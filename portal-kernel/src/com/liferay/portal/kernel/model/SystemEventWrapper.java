@@ -391,11 +391,6 @@ public class SystemEventWrapper
 		return _systemEvent.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a system event model instance should use the <code>SystemEvent</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_systemEvent.persist();

@@ -131,6 +131,8 @@ public class CommerceInventoryWarehousePersistenceTest {
 		CommerceInventoryWarehouse newCommerceInventoryWarehouse =
 			_persistence.create(pk);
 
+		newCommerceInventoryWarehouse.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCommerceInventoryWarehouse.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -182,6 +184,9 @@ public class CommerceInventoryWarehousePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceInventoryWarehouse.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouse.getMvccVersion(),
+			newCommerceInventoryWarehouse.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouse.getExternalReferenceCode(),
 			newCommerceInventoryWarehouse.getExternalReferenceCode());
@@ -323,7 +328,7 @@ public class CommerceInventoryWarehousePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CIWarehouse", "externalReferenceCode", true,
+			"CIWarehouse", "mvccVersion", true, "externalReferenceCode", true,
 			"commerceInventoryWarehouseId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"name", true, "description", true, "active", true, "street1", true,
@@ -608,6 +613,8 @@ public class CommerceInventoryWarehousePersistenceTest {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_persistence.create(pk);
+
+		commerceInventoryWarehouse.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceInventoryWarehouse.setExternalReferenceCode(
 			RandomTestUtil.randomString());

@@ -646,11 +646,6 @@ public class JournalFolderWrapper
 		return _journalFolder.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a journal folder model instance should use the <code>JournalFolder</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_journalFolder.persist();

@@ -180,6 +180,26 @@ else {
 				</c:otherwise>
 			</c:choose>
 		</c:if>
+
+		<%
+		String[] availableLanguageIds = article.getAvailableLanguageIds();
+		%>
+
+		<c:if test="<%= availableLanguageIds.length > 1 %>">
+			<portlet:renderURL var="selectArticleTranslationsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_article_translations.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon
+				message="delete-translations"
+				method="get"
+				url="<%= selectArticleTranslationsURL %>"
+				useDialog="<%= true %>"
+			/>
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) && article.hasApprovedVersion() %>">

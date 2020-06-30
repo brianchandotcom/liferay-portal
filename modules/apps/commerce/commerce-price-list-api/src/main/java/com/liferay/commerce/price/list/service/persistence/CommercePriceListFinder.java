@@ -25,8 +25,57 @@ public interface CommercePriceListFinder {
 
 	public java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByCommerceAccountAndChannelId(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
 			findByExpirationDate(
 				java.util.Date expirationDate,
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByCommerceAccountId(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByCommerceAccountGroupIds(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByCommerceAccountGroupsAndChannelId(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByCommerceChannelId(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			findByUnqualified(
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.commerce.price.list.model.CommercePriceList>
+						queryDefinition);
+
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceEntry>
+			findByLowestPrice(
 				com.liferay.portal.kernel.dao.orm.QueryDefinition
 					<com.liferay.commerce.price.list.model.CommercePriceList>
 						queryDefinition);

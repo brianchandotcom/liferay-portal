@@ -181,7 +181,6 @@
 							},
 							path: 'numeric_field.js',
 							requires: [
-								'aui-tooltip',
 								'liferay-ddm-form-renderer-field'
 							]
 						}
@@ -269,8 +268,8 @@
 							},
 							path: 'select_field.js',
 							requires: [
-								'aui-tooltip',
 								'liferay-ddm-form-field-select-search-support',
+								'liferay-ddm-form-field-select-virtual-scroller',
 								'liferay-ddm-form-renderer-field',
 								'liferay-ddm-soy-template-util'
 							]
@@ -281,7 +280,13 @@
 								'highlight',
 								'liferay-ddm-soy-template-util'
 							]
-						}
+						},
+						'liferay-ddm-form-field-select-virtual-scroller': {
+							path: 'virtual_scroller.js',
+							requires: [
+								'aui-base'
+							]
+						},
 					},
 					root: MODULE_PATH + '/select/'
 				},
@@ -296,7 +301,6 @@
 							},
 							path: 'text_field.js',
 							requires: [
-								'aui-tooltip',
 								'autocomplete',
 								'autocomplete-highlighters',
 								'autocomplete-highlighters-accentfold',

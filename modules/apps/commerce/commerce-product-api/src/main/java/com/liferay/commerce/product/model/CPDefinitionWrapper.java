@@ -92,6 +92,18 @@ public class CPDefinitionWrapper
 			"subscriptionTypeSettings", getSubscriptionTypeSettings());
 		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
 		attributes.put(
+			"deliverySubscriptionEnabled", isDeliverySubscriptionEnabled());
+		attributes.put(
+			"deliverySubscriptionLength", getDeliverySubscriptionLength());
+		attributes.put(
+			"deliverySubscriptionType", getDeliverySubscriptionType());
+		attributes.put(
+			"deliverySubscriptionTypeSettings",
+			getDeliverySubscriptionTypeSettings());
+		attributes.put(
+			"deliveryMaxSubscriptionCycles",
+			getDeliveryMaxSubscriptionCycles());
+		attributes.put(
 			"accountGroupFilterEnabled", isAccountGroupFilterEnabled());
 		attributes.put("channelFilterEnabled", isChannelFilterEnabled());
 		attributes.put("version", getVersion());
@@ -317,6 +329,42 @@ public class CPDefinitionWrapper
 			setMaxSubscriptionCycles(maxSubscriptionCycles);
 		}
 
+		Boolean deliverySubscriptionEnabled = (Boolean)attributes.get(
+			"deliverySubscriptionEnabled");
+
+		if (deliverySubscriptionEnabled != null) {
+			setDeliverySubscriptionEnabled(deliverySubscriptionEnabled);
+		}
+
+		Integer deliverySubscriptionLength = (Integer)attributes.get(
+			"deliverySubscriptionLength");
+
+		if (deliverySubscriptionLength != null) {
+			setDeliverySubscriptionLength(deliverySubscriptionLength);
+		}
+
+		String deliverySubscriptionType = (String)attributes.get(
+			"deliverySubscriptionType");
+
+		if (deliverySubscriptionType != null) {
+			setDeliverySubscriptionType(deliverySubscriptionType);
+		}
+
+		String deliverySubscriptionTypeSettings = (String)attributes.get(
+			"deliverySubscriptionTypeSettings");
+
+		if (deliverySubscriptionTypeSettings != null) {
+			setDeliverySubscriptionTypeSettings(
+				deliverySubscriptionTypeSettings);
+		}
+
+		Long deliveryMaxSubscriptionCycles = (Long)attributes.get(
+			"deliveryMaxSubscriptionCycles");
+
+		if (deliveryMaxSubscriptionCycles != null) {
+			setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
+		}
+
 		Boolean accountGroupFilterEnabled = (Boolean)attributes.get(
 			"accountGroupFilterEnabled");
 
@@ -531,6 +579,63 @@ public class CPDefinitionWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return _cpDefinition.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the delivery max subscription cycles of this cp definition.
+	 *
+	 * @return the delivery max subscription cycles of this cp definition
+	 */
+	@Override
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _cpDefinition.getDeliveryMaxSubscriptionCycles();
+	}
+
+	/**
+	 * Returns the delivery subscription enabled of this cp definition.
+	 *
+	 * @return the delivery subscription enabled of this cp definition
+	 */
+	@Override
+	public boolean getDeliverySubscriptionEnabled() {
+		return _cpDefinition.getDeliverySubscriptionEnabled();
+	}
+
+	/**
+	 * Returns the delivery subscription length of this cp definition.
+	 *
+	 * @return the delivery subscription length of this cp definition
+	 */
+	@Override
+	public int getDeliverySubscriptionLength() {
+		return _cpDefinition.getDeliverySubscriptionLength();
+	}
+
+	/**
+	 * Returns the delivery subscription type of this cp definition.
+	 *
+	 * @return the delivery subscription type of this cp definition
+	 */
+	@Override
+	public String getDeliverySubscriptionType() {
+		return _cpDefinition.getDeliverySubscriptionType();
+	}
+
+	/**
+	 * Returns the delivery subscription type settings of this cp definition.
+	 *
+	 * @return the delivery subscription type settings of this cp definition
+	 */
+	@Override
+	public String getDeliverySubscriptionTypeSettings() {
+		return _cpDefinition.getDeliverySubscriptionTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getDeliverySubscriptionTypeSettingsProperties() {
+
+		return _cpDefinition.getDeliverySubscriptionTypeSettingsProperties();
 	}
 
 	/**
@@ -1141,6 +1246,16 @@ public class CPDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this cp definition is delivery subscription enabled.
+	 *
+	 * @return <code>true</code> if this cp definition is delivery subscription enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDeliverySubscriptionEnabled() {
+		return _cpDefinition.isDeliverySubscriptionEnabled();
+	}
+
+	/**
 	 * Returns <code>true</code> if this cp definition is denied.
 	 *
 	 * @return <code>true</code> if this cp definition is denied; <code>false</code> otherwise
@@ -1300,11 +1415,6 @@ public class CPDefinitionWrapper
 		return _cpDefinition.isTelcoOrElectronics();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition model instance should use the <code>CPDefinition</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinition.persist();
@@ -1415,6 +1525,74 @@ public class CPDefinitionWrapper
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		_cpDefinition.setDefaultLanguageId(defaultLanguageId);
+	}
+
+	/**
+	 * Sets the delivery max subscription cycles of this cp definition.
+	 *
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this cp definition
+	 */
+	@Override
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		_cpDefinition.setDeliveryMaxSubscriptionCycles(
+			deliveryMaxSubscriptionCycles);
+	}
+
+	/**
+	 * Sets whether this cp definition is delivery subscription enabled.
+	 *
+	 * @param deliverySubscriptionEnabled the delivery subscription enabled of this cp definition
+	 */
+	@Override
+	public void setDeliverySubscriptionEnabled(
+		boolean deliverySubscriptionEnabled) {
+
+		_cpDefinition.setDeliverySubscriptionEnabled(
+			deliverySubscriptionEnabled);
+	}
+
+	/**
+	 * Sets the delivery subscription length of this cp definition.
+	 *
+	 * @param deliverySubscriptionLength the delivery subscription length of this cp definition
+	 */
+	@Override
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		_cpDefinition.setDeliverySubscriptionLength(deliverySubscriptionLength);
+	}
+
+	/**
+	 * Sets the delivery subscription type of this cp definition.
+	 *
+	 * @param deliverySubscriptionType the delivery subscription type of this cp definition
+	 */
+	@Override
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		_cpDefinition.setDeliverySubscriptionType(deliverySubscriptionType);
+	}
+
+	/**
+	 * Sets the delivery subscription type settings of this cp definition.
+	 *
+	 * @param deliverySubscriptionTypeSettings the delivery subscription type settings of this cp definition
+	 */
+	@Override
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		_cpDefinition.setDeliverySubscriptionTypeSettings(
+			deliverySubscriptionTypeSettings);
+	}
+
+	@Override
+	public void setDeliverySubscriptionTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			deliverySubscriptionTypeSettingsProperties) {
+
+		_cpDefinition.setDeliverySubscriptionTypeSettingsProperties(
+			deliverySubscriptionTypeSettingsProperties);
 	}
 
 	/**

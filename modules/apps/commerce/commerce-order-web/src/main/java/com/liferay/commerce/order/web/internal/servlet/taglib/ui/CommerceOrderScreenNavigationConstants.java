@@ -20,23 +20,26 @@ package com.liferay.commerce.order.web.internal.servlet.taglib.ui;
  */
 public class CommerceOrderScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_ORDER_BILLING = "billing";
-
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_CUSTOM_FIELDS =
 		"custom-fields";
+
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_EMAILS = "emails";
+
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_GENERAL = "general";
 
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_ITEM_DETAIL =
 		"detail";
 
-	public static final String CATEGORY_KEY_COMMERCE_ORDER_ITEMS = "items";
-
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_NOTES = "notes";
 
-	public static final String CATEGORY_KEY_COMMERCE_ORDER_OVERVIEW =
-		"overview";
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_PAYMENTS =
+		"payments";
 
-	public static final String CATEGORY_KEY_COMMERCE_ORDER_SHIPPING =
-		"shipping";
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_SHIPMENTS =
+		"shipments";
+
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_SHIPPING_SUMMARY =
+		"shipping-summary";
 
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_GENERAL =
 		"commerce.order.general";
@@ -44,5 +47,9 @@ public class CommerceOrderScreenNavigationConstants {
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL =
 			"commerce.order.item.general";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_SHIPMENT_GENERAL =
+			"commerce.order.shipment.general";
 
 }

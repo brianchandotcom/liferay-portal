@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CProductLocalServiceUtil;
 public abstract class CProductBaseImpl
 	extends CProductModelImpl implements CProduct {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a c product model instance should use the <code>CProduct</code> interface instead.

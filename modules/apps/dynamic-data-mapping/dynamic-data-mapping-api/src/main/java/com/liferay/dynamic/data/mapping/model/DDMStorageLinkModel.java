@@ -41,7 +41,7 @@ import java.io.Serializable;
 public interface DDMStorageLinkModel
 	extends AttachedModel, BaseModel<DDMStorageLink>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm storage link model instance should use the {@link DDMStorageLink} interface instead.

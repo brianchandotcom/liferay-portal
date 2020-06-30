@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -76,6 +76,10 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 		return getService().addCommerceInventoryWarehouseItem(
 			userId, commerceInventoryWarehouseId, externalReferenceCode, sku,
 			quantity);
+	}
+
+	public static int countItemsByCompanyId(long companyId, String sku) {
+		return getService().countItemsByCompanyId(companyId, sku);
 	}
 
 	/**
@@ -134,6 +138,19 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
+	public static void deleteCommerceInventoryWarehouseItems(
+		long companyId, String sku) {
+
+		getService().deleteCommerceInventoryWarehouseItems(companyId, sku);
+	}
+
+	public static void deleteCommerceInventoryWarehouseItemsByCompanyId(
+		long companyId) {
+
+		getService().deleteCommerceInventoryWarehouseItemsByCompanyId(
+			companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -167,7 +184,7 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -186,7 +203,7 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -301,7 +318,7 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 	 * Returns a range of all the commerce inventory warehouse items.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of commerce inventory warehouse items
@@ -326,11 +343,29 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
+			getCommerceInventoryWarehouseItems(
+				long companyId, String sku, int start, int end) {
+
+		return getService().getCommerceInventoryWarehouseItems(
+			companyId, sku, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
 			getCommerceInventoryWarehouseItemsByCompanyId(
 				long companyId, int start, int end) {
 
 		return getService().getCommerceInventoryWarehouseItemsByCompanyId(
 			companyId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
+			getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+				long companyId, String sku, int start, int end) {
+
+		return getService().getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+			companyId, sku, start, end);
 	}
 
 	public static java.util.List
@@ -359,6 +394,13 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
+	public static int getCommerceInventoryWarehouseItemsCount(
+		long companyId, String sku) {
+
+		return getService().getCommerceInventoryWarehouseItemsCount(
+			companyId, sku);
+	}
+
 	public static int getCommerceInventoryWarehouseItemsCountByCompanyId(
 		long companyId) {
 
@@ -381,6 +423,14 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CIWarehouseItem>
+			getItemsByCompanyId(
+				long companyId, String sku, int start, int end) {
+
+		return getService().getItemsByCompanyId(companyId, sku, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -390,6 +440,9 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -405,6 +458,27 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 	public static int getStockQuantity(long companyId, String sku) {
 		return getService().getStockQuantity(companyId, sku);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				increaseCommerceInventoryWarehouseItemQuantity(
+					long userId, long commerceInventoryWarehouseItemId,
+					int quantity)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().increaseCommerceInventoryWarehouseItemQuantity(
+			userId, commerceInventoryWarehouseItemId, quantity);
+	}
+
+	public static void moveQuantitiesBetweenWarehouses(
+			long userId, long fromCommerceInventoryWarehouseId,
+			long toCommerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().moveQuantitiesBetweenWarehouses(
+			userId, fromCommerceInventoryWarehouseId,
+			toCommerceInventoryWarehouseId, sku, quantity);
 	}
 
 	/**
@@ -427,11 +501,24 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				updateCommerceInventoryWarehouseItem(
-					long commerceInventoryWarehouseItemId, int quantity)
+					long userId, long commerceInventoryWarehouseItemId,
+					int quantity, int reservedQuantity, long mvccVersion)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommerceInventoryWarehouseItem(
-			commerceInventoryWarehouseItemId, quantity);
+			userId, commerceInventoryWarehouseItemId, quantity,
+			reservedQuantity, mvccVersion);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				updateCommerceInventoryWarehouseItem(
+					long userId, long commerceInventoryWarehouseItemId,
+					int quantity, long mvccVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceInventoryWarehouseItem(
+			userId, commerceInventoryWarehouseItemId, quantity, mvccVersion);
 	}
 
 	public static

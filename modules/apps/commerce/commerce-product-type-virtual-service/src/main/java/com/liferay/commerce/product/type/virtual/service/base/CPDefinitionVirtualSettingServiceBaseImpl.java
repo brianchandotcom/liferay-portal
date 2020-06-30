@@ -48,7 +48,7 @@ public abstract class CPDefinitionVirtualSettingServiceBaseImpl
 	extends BaseServiceImpl
 	implements CPDefinitionVirtualSettingService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPDefinitionVirtualSettingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingServiceUtil</code>.
@@ -453,8 +453,8 @@ public abstract class CPDefinitionVirtualSettingServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

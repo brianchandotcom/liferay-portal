@@ -637,7 +637,7 @@ public class DDMDataProviderDisplayContext {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
+			scopeGroupId = scopeGroup.getGroupId();
 		}
 
 		return new long[] {scopeGroupId};

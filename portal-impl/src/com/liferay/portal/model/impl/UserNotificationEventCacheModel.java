@@ -156,7 +156,9 @@ public class UserNotificationEventCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -174,7 +176,7 @@ public class UserNotificationEventCacheModel
 		deliverBy = objectInput.readLong();
 
 		delivered = objectInput.readBoolean();
-		payload = objectInput.readUTF();
+		payload = (String)objectInput.readObject();
 
 		actionRequired = objectInput.readBoolean();
 
@@ -214,10 +216,10 @@ public class UserNotificationEventCacheModel
 		objectOutput.writeBoolean(delivered);
 
 		if (payload == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(payload);
+			objectOutput.writeObject(payload);
 		}
 
 		objectOutput.writeBoolean(actionRequired);

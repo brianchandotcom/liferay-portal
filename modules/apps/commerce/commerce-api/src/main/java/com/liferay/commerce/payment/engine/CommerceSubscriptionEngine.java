@@ -26,7 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommerceSubscriptionEngine {
 
+	public boolean activateRecurringDelivery(long commerceSubscriptionEntryId)
+		throws Exception;
+
 	public boolean activateRecurringPayment(long commerceSubscriptionEntryId)
+		throws Exception;
+
+	public boolean cancelRecurringDelivery(long commerceSubscriptionEntryId)
 		throws Exception;
 
 	public boolean cancelRecurringPayment(long commerceSubscriptionEntryId)
@@ -43,6 +49,9 @@ public interface CommerceSubscriptionEngine {
 	public CommercePaymentResult processRecurringPayment(
 			long commerceOrderId, String checkoutStepUrl,
 			HttpServletRequest httpServletRequest)
+		throws Exception;
+
+	public boolean suspendRecurringDelivery(long commerceSubscriptionEntryId)
 		throws Exception;
 
 	public boolean suspendRecurringPayment(long commerceSubscriptionEntryId)

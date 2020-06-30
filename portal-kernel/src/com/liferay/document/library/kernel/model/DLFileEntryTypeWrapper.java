@@ -492,11 +492,6 @@ public class DLFileEntryTypeWrapper
 		return _dlFileEntryType.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a document library file entry type model instance should use the <code>DLFileEntryType</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_dlFileEntryType.persist();

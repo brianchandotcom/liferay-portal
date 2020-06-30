@@ -26,6 +26,7 @@ import com.liferay.commerce.frontend.internal.wishlist.model.WishListItemUpdated
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
@@ -72,7 +73,9 @@ public class CommerceWishListResource {
 
 		try {
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest), groupId,
+				_portal.getCompanyId(httpServletRequest),
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				_portal.getUserId(httpServletRequest), 0, commerceAccountId);
 
 			httpServletRequest.setAttribute(
@@ -166,6 +169,9 @@ public class CommerceWishListResource {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceWishListResource.class);
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;

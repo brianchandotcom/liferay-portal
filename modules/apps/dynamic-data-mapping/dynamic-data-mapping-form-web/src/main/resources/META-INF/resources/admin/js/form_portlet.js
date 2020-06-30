@@ -569,7 +569,7 @@ AUI.add(
 					_autosave: function(saveAsDraft, callback) {
 						var instance = this;
 
-						callback = callback || EMPTY_FN;
+						callback = A.Lang.isFunction(callback) ? callback : EMPTY_FN;
 
 						instance.syncInputValues();
 

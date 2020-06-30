@@ -28,7 +28,7 @@ definition {
 	test AddCategorywithLocalization {
 		property testray.component.names = "Categories,Localization";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
@@ -223,11 +223,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -241,6 +241,10 @@ definition {
 	test AddPageWithRequiredVocabulary {
 		property testray.component.names = "Categories";
 
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
@@ -248,14 +252,10 @@ definition {
 			required = "true",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -290,15 +290,15 @@ definition {
 
 		SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Topic");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -318,19 +318,19 @@ definition {
 	test AddSubcategoryProperty {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -385,7 +385,7 @@ definition {
 			assetType = "Web Content Article",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -434,7 +434,7 @@ definition {
 
 		Button.clickSave();
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -478,7 +478,7 @@ definition {
 			required = "true",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -517,7 +517,7 @@ definition {
 			assetType = "Web Content Article",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -552,11 +552,11 @@ definition {
 	test DeletePartialCategory {
 		property testray.component.names = "Categories,Permissions,Roles";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -645,7 +645,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name 2",
 			vocabularyName = "Vocabulary Name");
@@ -736,11 +736,11 @@ definition {
 	test DuplicateCategoriesViaWebContentCopy {
 		property testray.component.names = "Categories,Web Content Administration";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -784,19 +784,19 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -913,7 +913,7 @@ definition {
 	test MoveSubcategory {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
@@ -954,7 +954,7 @@ definition {
 	test SearchCategory {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
@@ -1007,11 +1007,11 @@ definition {
 	test SearchCategoryWithNullResult {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -1075,11 +1075,11 @@ definition {
 	test SearchSubcategory {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -1138,19 +1138,19 @@ definition {
 	test SearchSubcategoryWithNullResult {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1227,11 +1227,11 @@ definition {
 
 		var parentSiteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
@@ -1265,19 +1265,19 @@ definition {
 	test ViewCannotAddDuplicateSubCategory {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1334,19 +1334,19 @@ definition {
 	test ViewNavigation {
 		property testray.component.names = "Categories";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		JSONCategory.addSubcategoryByGroupName(
-			categoryName = "Category Name",
+		JSONCategory.addSubcategory(
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name",
+			parentCategoryName = "Category Name",
+			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");

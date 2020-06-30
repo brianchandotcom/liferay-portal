@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPFriendlyURLEntryPersistence
 	extends BasePersistence<CPFriendlyURLEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryUtil} to access the cp friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

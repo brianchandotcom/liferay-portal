@@ -35,7 +35,7 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRel
 	extends CommerceNotificationTemplateCommerceAccountGroupRelModel,
 			PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

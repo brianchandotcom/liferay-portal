@@ -109,7 +109,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			_indexNameBuilder);
 
 		_indexWriter = createIndexWriter(
-			searchEngineAdapter, _indexNameBuilder);
+			_elasticsearchFixture, searchEngineAdapter, _indexNameBuilder);
 	}
 
 	@Override
@@ -186,8 +186,9 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected IndexWriter createIndexWriter(
-		final SearchEngineAdapter searchEngineAdapter1,
-		final IndexNameBuilder indexNameBuilder1) {
+		ElasticsearchFixture elasticsearchFixture,
+		SearchEngineAdapter searchEngineAdapter1,
+		IndexNameBuilder indexNameBuilder1) {
 
 		return new ElasticsearchIndexWriter() {
 			{
@@ -197,6 +198,10 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				setSpellCheckIndexWriter(
 					createElasticsearchSpellCheckIndexWriter(
 						searchEngineAdapter1, indexNameBuilder1));
+
+				activate(
+					elasticsearchFixture.
+						getElasticsearchConfigurationProperties());
 			}
 		};
 	}
@@ -205,7 +210,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
-			"20"
+			"65"
 		).when(
 			props
 		).get(

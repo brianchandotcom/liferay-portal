@@ -1,15 +1,15 @@
 {
 	"availableLanguageIds": [
-		"en_US"
+		"[£LOCALE£]"
 	],
-	"defaultLanguageId": "en_US",
+	"defaultLanguageId": "[£LOCALE£]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"en_US": "Image"
+				"[£LOCALE£]": "Image"
 			},
 			"localizable": true,
 			"name": "backgroundImage",
@@ -18,7 +18,7 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Call to action text"
+						"[£LOCALE£]": "Call to action text"
 					},
 					"localizable": true,
 					"name": "CallToActionText",
@@ -27,38 +27,38 @@
 							"dataType": "string",
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Call to action secondary text"
+								"[£LOCALE£]": "Call to action secondary text"
 							},
 							"localizable": true,
 							"name": "CallToActionSecondaryText",
 							"predefinedValue": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"showLabel": true,
 							"style": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"tip": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"type": "text"
 						}
 					],
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "text"
 				},
@@ -66,7 +66,7 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Form action"
+						"[£LOCALE£]": "Form action"
 					},
 					"localizable": true,
 					"name": "FormAction",
@@ -75,54 +75,54 @@
 							"dataType": "string",
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Input placeholder"
+								"[£LOCALE£]": "Input placeholder"
 							},
 							"localizable": true,
 							"name": "InputPlaceholder",
 							"predefinedValue": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
 							"showLabel": true,
 							"style": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"tip": {
-								"en_US": ""
+								"[£LOCALE£]": ""
 							},
 							"type": "text"
 						}
 					],
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": true,
 			"showLabel": true,
 			"style": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"tip": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"type": "ddm-image"
 		}

@@ -52,12 +52,14 @@ public class MoneyOrderCheckoutStepDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		CommerceOrder commerceOrder = getCommerceOrder();
+
 		MoneyOrderGroupServiceConfiguration
 			moneyOrderGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
 					MoneyOrderGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
-						themeDisplay.getScopeGroupId(),
+						commerceOrder.getGroupId(),
 						MoneyOrderCommercePaymentEngineMethodConstants.
 							SERVICE_NAME));
 

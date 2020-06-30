@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
+import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +29,12 @@ import java.sql.Statement;
 /**
  * @author Ethan Bustad
  */
-public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
+public class CPDefinitionLinkUpgradeProcess
+	extends BaseCommerceProductServiceUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
+		addColumn(
 			CPDefinitionLinkModelImpl.class,
 			CPDefinitionLinkModelImpl.TABLE_NAME, "CProductId", "LONG");
 
@@ -72,58 +73,7 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 			DataAccess.cleanUp(s, rs);
 		}
 
-		_dropColumn(CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2");
-	}
-
-	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
-	}
-
-	private void _dropColumn(String tableName, String columnName)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Dropping column %s from table %s", columnName, tableName));
-		}
-
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
-			}
-		}
+		dropColumn(CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2");
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {
@@ -160,7 +110,10 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 					newColumnName, tableName));
 		}
 
-		if (!hasColumn(tableName, newColumnName)) {
+		String newColumnSimpleName = StringUtil.extractFirst(
+			newColumnName, StringPool.SPACE);
+
+		if (!hasColumn(tableName, newColumnSimpleName)) {
 			alter(
 				tableClass, new AlterColumnName(oldColumnName, newColumnName));
 		}

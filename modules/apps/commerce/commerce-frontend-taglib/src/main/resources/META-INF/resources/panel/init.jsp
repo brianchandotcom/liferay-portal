@@ -21,22 +21,26 @@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="liferay-ui" %>
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
 <%
-String title = (String)request.getAttribute("liferay-commerce:panel:title");
-String actionUrl = (String)request.getAttribute("liferay-commerce:panel:actionUrl");
-String actionLabel = (String)request.getAttribute("liferay-commerce:panel:actionLabel");
 String actionIcon = (String)request.getAttribute("liferay-commerce:panel:actionIcon");
+String actionLabel = (String)request.getAttribute("liferay-commerce:panel:actionLabel");
 String actionTargetId = (String)request.getAttribute("liferay-commerce:panel:actionTargetId");
+String actionUrl = (String)request.getAttribute("liferay-commerce:panel:actionUrl");
+String bodyClasses = (String)request.getAttribute("liferay-commerce:panel:bodyClasses");
+boolean collapsed = (boolean)request.getAttribute("liferay-commerce:panel:collapsed");
+String collapseLabel = (String)request.getAttribute("liferay-commerce:panel:collapseLabel");
+String collapseSwitchName = (String)request.getAttribute("liferay-commerce:panel:collapseSwitchName");
+boolean collapsible = (boolean)request.getAttribute("liferay-commerce:panel:collapsible");
+String elementClasses = (String)request.getAttribute("liferay-commerce:panel:elementClasses");
+String randomNamespace = (String)request.getAttribute("liferay-commerce:panel:randomNamespace");
 String showMoreId = (String)request.getAttribute("liferay-commerce:panel:showMoreId");
 String showMoreUrl = (String)request.getAttribute("liferay-commerce:panel:showMoreUrl");
-
-String elementClasses = (String)request.getAttribute("liferay-commerce:panel:elementClasses");
-String bodyClasses = (String)request.getAttribute("liferay-commerce:panel:bodyClasses");
-String randomNamespace = (String)request.getAttribute("liferay-commerce:panel:randomNamespace");
+String title = (String)request.getAttribute("liferay-commerce:panel:title");
 
 String linkId = Validator.isNotNull(actionTargetId) ? actionTargetId : (randomNamespace + "header-link");
 String showMoreButtonId = Validator.isNotNull(showMoreId) ? showMoreId : (randomNamespace + "show-more-button");

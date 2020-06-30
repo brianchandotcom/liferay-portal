@@ -429,7 +429,7 @@ names is below:
 - `liferay-ui:asset-add-button` &rarr; `liferay-asset:asset-add-button`
 - `liferay-ui:asset-addon-entry-display` &rarr; `liferay-asset:asset-addon-entry-display`
 - `liferay-ui:asset-addon-entry-selector` &rarr; `liferay-asset:asset-addon-entry-selector`
-- `liferay-ui:asset-categories-available`  &rarr; `liferay-asset:asset-categories-available`
+- `liferay-ui:asset-categories-available` &rarr; `liferay-asset:asset-categories-available`
 - `liferay-ui:asset-categories-error` &rarr; `liferay-asset:asset-categories-error`
 - `liferay-ui:asset-display` &rarr; `liferay-asset:asset-display`
 - `liferay-ui:asset-links` &rarr; `liferay-asset:asset-links`
@@ -1092,5 +1092,93 @@ the permissions.
 #### Why was this change made?
 
 This change removes old logic that is no longer used in Liferay Portal.
+
+---------------------------------------
+
+### Removed cache bootstrap feature
+- **Date:** 2020-Jan-8
+- **JIRA Ticket:** [LPS-96563](https://issues.liferay.com/browse/LPS-96563)
+
+#### What changed?
+
+The cache bootstrap feature has been removed, which means you can not use the
+following properties to enable/configure cache bootstrap:
+`ehcache.bootstrap.cache.loader.enabled`,
+`ehcache.bootstrap.cache.loader.properties.default`,
+`ehcache.bootstrap.cache.loader.properties.${specific.cache.name}`.
+
+#### Who is affected?
+
+This affects who is using the properties listed above.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed feature. If you have code that
+depends on it, you would need to implement it by yourself.
+
+#### Why was this change made?
+
+This change was made to avoid security issues.
+
+---------------------------------------
+### Liferay `AssetEntries_AssetCategories` is not longer used
+- **Date:** 2019-Sep-11
+- **JIRA Tickets:** [LPS-99973](https://issues.liferay.com/browse/LPS-99973),
+[LPS-76488](https://issues.liferay.com/browse/LPS-76488)
+
+#### What changed?
+
+Previously, Liferay used a mapping table and a corresponding interface for the
+relationship between AssetEntry and AssetCategory in `AssetEntryLocalService`
+and `AssetCategoryLocalService`. This mapping table and the corresponding
+interface have been replaced by the table `AssetEntryAssetCategoryRel` and the
+service `AssetEntryAssetCategoryRelLocalService`.
+
+#### Who is affected?
+
+This affects any content or code that relies on calling the old interfaces for
+the `AssetEntries_AssetCategories` relationship, through the
+`AssetEntryLocalService` and `AssetCategoryLocalService`.
+
+#### How should I update my code?
+
+Use the new methods in `AssetEntryAssetCategoryRelLocalService` to retrieve the
+same data as before. Note, the new method signatures are the same as before, but
+are just located in a different service.
+
+**Example**
+
+Old way:
+
+  List<AssetEntry> entries = AssetEntryLocalServiceUtil.getAssetCategoryAssetEntries(categoryId);
+
+  for (AssetEntry entry: entries) {
+    ...
+  }
+
+New way:
+
+  long[] assetEntryPKs = _assetEntryAssetCategoryRelLocalService.getAssetEntryPrimaryKeys(assetCategoryId);
+
+  for (long assetEntryPK: assetEntryPKs) {
+    AssetEntry = _assetEntryLocalService.getEntry(assetEntryPK);
+    ...
+  }
+
+  ...
+
+  @Reference
+  private AssetEntryAssetCategoryRelLocalService _assetEntryAssetCategoryRelLocalService;
+
+  @Reference
+  private AssetEntryLocalService _assetEntryLocalService;
+
+#### Why was this change made?
+
+This change was made due to changes resulting from
+[LPS-76488](https://issues.liferay.com/browse/LPS-76488), which was introduced
+so that developers would be able to specify a priority when assigning Assets to
+AssetCategory in order to make it possible to control the order of a list of
+assets with a given category.
 
 ---------------------------------------

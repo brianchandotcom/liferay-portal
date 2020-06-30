@@ -25,6 +25,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderItemHelper;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
@@ -42,7 +43,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -136,7 +136,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			commerceOrder.getCommerceOrderId());
 
 		return Page.of(
-			_toOrderItems(commerceOrderItems), pagination, totalItems);
+			_orderItemHelper.toOrderItems(
+				commerceOrderItems, contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@NestedField(parentClass = Order.class, value = "items")
@@ -145,34 +147,13 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			Long id, Pagination pagination)
 		throws Exception {
 
-		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
-			id);
-
-		if (commerceOrder == null) {
-			return super.getOrderIdOrderItemsPage(id, pagination);
-		}
-
-		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
-				id, pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems = _commerceOrderItemService.getCommerceOrderItemsCount(
-			id);
-
-		return Page.of(
-			_toOrderItems(commerceOrderItems), pagination, totalItems);
+		return _orderItemHelper.getOrderItemsPage(
+			id, contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@Override
 	public OrderItem getOrderItem(Long id) throws Exception {
-		DTOConverter orderItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceOrderItem.class.getName());
-
-		return (OrderItem)orderItemDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getLong(id)));
+		return _toOrderItem(GetterUtil.getLong(id));
 	}
 
 	@Override
@@ -190,14 +171,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 					externalReferenceCode);
 		}
 
-		DTOConverter orderItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceOrderItem.class.getName());
-
-		return (OrderItem)orderItemDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrderItem.getCommerceOrderItemId()));
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	@Override
@@ -260,25 +234,15 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			_commerceOrderService.getCommerceOrder(id), orderItem);
 	}
 
-	private List<OrderItem> _toOrderItems(
-			List<CommerceOrderItem> commerceOrderItems)
-		throws Exception {
-
-		List<OrderItem> orderItems = new ArrayList<>();
-
+	private OrderItem _toOrderItem(long commerceOrderItemId) throws Exception {
 		DTOConverter orderItemDTOConverter =
 			_dtoConverterRegistry.getDTOConverter(
 				CommerceOrderItem.class.getName());
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderItems.add(
-				(OrderItem)orderItemDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.getPreferredLocale(),
-						commerceOrderItem.getCommerceOrderItemId())));
-		}
-
-		return orderItems;
+		return (OrderItem)orderItemDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				commerceOrderItemId));
 	}
 
 	private OrderItem _updateOrderItem(
@@ -344,14 +308,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 				commerceOrderItem.getPrimaryKey(), customFields);
 		}
 
-		DTOConverter orderItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceOrderItem.class.getName());
-
-		return (OrderItem)orderItemDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrderItem.getCommerceOrderItemId()));
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	private OrderItem _upsertOrderItem(
@@ -414,14 +371,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 				commerceOrderItem.getPrimaryKey(), customFields);
 		}
 
-		DTOConverter orderItemDTOConverter =
-			_dtoConverterRegistry.getDTOConverter(
-				CommerceOrderItem.class.getName());
-
-		return (OrderItem)orderItemDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				commerceOrderItem.getCommerceOrderItemId()));
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	@Reference
@@ -438,6 +388,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private OrderItemHelper _orderItemHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

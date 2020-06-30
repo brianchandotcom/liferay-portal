@@ -286,10 +286,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				backgroundTaskExecutor, _lockManager);
 		}
 
-		backgroundTaskExecutor = new ThreadLocalAwareBackgroundTaskExecutor(
+		return new ThreadLocalAwareBackgroundTaskExecutor(
 			backgroundTaskExecutor, _backgroundTaskThreadLocalManager);
-
-		return backgroundTaskExecutor;
 	}
 
 	private ClassLoader _getAggregatePluginsClassLoader(

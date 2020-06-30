@@ -49,7 +49,7 @@ public abstract class EmailAddressServiceBaseImpl
 	extends BaseServiceImpl
 	implements EmailAddressService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>EmailAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.EmailAddressServiceUtil</code>.
@@ -410,8 +410,8 @@ public abstract class EmailAddressServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

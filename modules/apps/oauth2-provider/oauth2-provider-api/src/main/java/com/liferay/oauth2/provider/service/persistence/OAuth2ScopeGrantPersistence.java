@@ -40,7 +40,7 @@ import java.util.Set;
 public interface OAuth2ScopeGrantPersistence
 	extends BasePersistence<OAuth2ScopeGrant> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ScopeGrantUtil} to access the o auth2 scope grant persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

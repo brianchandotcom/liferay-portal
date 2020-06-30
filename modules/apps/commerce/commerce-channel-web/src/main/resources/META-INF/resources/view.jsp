@@ -20,54 +20,25 @@
 CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 PortletURL portletURL = commerceChannelDisplayContext.getPortletURL();
-
-SearchContainer commerceCatalogChannelsSearchContainer = commerceChannelDisplayContext.getSearchContainer();
 %>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="commerceChannels" />
-</liferay-util:include>
+<div class="row">
+	<div class="col-12">
 
-<portlet:actionURL name="editCommerceChannel" var="editCommerceChannelURL" />
+		<%
+		Map<String, String> contextParams = new HashMap<>();
+		%>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<div class="sidenav-content">
-		<aui:form action="<%= editCommerceChannelURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="commerceChannelIds" type="hidden" />
-
-			<div class="products-container" id="<portlet:namespace />commerceCatalogsContainer">
-				<liferay-ui:search-container
-					emptyResultsMessage="no-channels-were-found"
-					id="commerceChannels"
-					searchContainer="<%= commerceCatalogChannelsSearchContainer %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.commerce.product.model.CommerceChannel"
-						cssClass="entry-display-style"
-						keyProperty="commerceChannelId"
-						modelVar="commerceChannel"
-					>
-						<liferay-ui:search-container-column-text
-							cssClass="important table-cell-content"
-							href="<%= commerceChannelDisplayContext.getChannelURL(commerceChannel) %>"
-							name="name"
-							value="<%= HtmlUtil.escape(commerceChannel.getName()) %>"
-						/>
-
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action-column"
-							path="/channel_action.jsp"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						displayStyle="list"
-						markupView="lexicon"
-					/>
-				</liferay-ui:search-container>
-			</div>
-		</aui:form>
+		<commerce-ui:dataset-display
+			clayCreationMenu="<%= commerceChannelDisplayContext.getClayCreationMenu() %>"
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceChannelClayTable.NAME %>"
+			id="<%= CommerceChannelClayTable.NAME %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletURL %>"
+			style="fluid"
+		/>
 	</div>
 </div>

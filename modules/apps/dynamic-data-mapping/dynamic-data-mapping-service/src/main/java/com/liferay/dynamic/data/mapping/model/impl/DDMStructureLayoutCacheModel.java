@@ -163,7 +163,7 @@ public class DDMStructureLayoutCacheModel
 		modifiedDate = objectInput.readLong();
 
 		structureVersionId = objectInput.readLong();
-		definition = objectInput.readUTF();
+		definition = (String)objectInput.readObject();
 
 		_ddmFormLayout =
 			(com.liferay.dynamic.data.mapping.model.DDMFormLayout)
@@ -200,10 +200,10 @@ public class DDMStructureLayoutCacheModel
 		objectOutput.writeLong(structureVersionId);
 
 		if (definition == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(definition);
+			objectOutput.writeObject(definition);
 		}
 
 		objectOutput.writeObject(_ddmFormLayout);

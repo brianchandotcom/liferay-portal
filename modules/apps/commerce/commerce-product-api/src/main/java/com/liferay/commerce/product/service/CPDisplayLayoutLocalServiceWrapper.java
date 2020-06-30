@@ -34,10 +34,9 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutLocalServiceUtil} to access the cp display layout local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout
 			addCPDisplayLayout(
@@ -62,6 +61,17 @@ public class CPDisplayLayoutLocalServiceWrapper
 				cpDisplayLayout) {
 
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(cpDisplayLayout);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout
+			addCPDisplayLayout(
+				long userId, long groupId, Class<?> clazz, long classPK,
+				String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
+			userId, groupId, clazz, classPK, layoutUuid);
 	}
 
 	/**
@@ -118,6 +128,10 @@ public class CPDisplayLayoutLocalServiceWrapper
 			CPDisplayLayoutId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
 		long groupId, String layoutUuid) {
@@ -243,6 +257,15 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(
 			CPDisplayLayoutId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDisplayLayout>
+		fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
+			long groupId, String layoutUuid) {
+
+		return _cpDisplayLayoutLocalService.
+			fetchCPDisplayLayoutByGroupIdAndLayoutUuid(groupId, layoutUuid);
 	}
 
 	@Override
@@ -404,12 +427,28 @@ public class CPDisplayLayoutLocalServiceWrapper
 		return _cpDisplayLayoutLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDisplayLayout>
+				searchCPDisplayLayout(
+					long companyId, long groupId, String className,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutLocalService.searchCPDisplayLayout(
+			companyId, groupId, className, keywords, start, end, sort);
 	}
 
 	/**

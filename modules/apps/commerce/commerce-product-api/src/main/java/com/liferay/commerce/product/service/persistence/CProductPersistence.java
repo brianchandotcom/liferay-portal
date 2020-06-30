@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface CProductPersistence extends BasePersistence<CProduct> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CProductUtil} to access the c product persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

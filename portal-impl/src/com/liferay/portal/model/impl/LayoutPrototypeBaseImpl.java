@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 public abstract class LayoutPrototypeBaseImpl
 	extends LayoutPrototypeModelImpl implements LayoutPrototype {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout prototype model instance should use the <code>LayoutPrototype</code> interface instead.

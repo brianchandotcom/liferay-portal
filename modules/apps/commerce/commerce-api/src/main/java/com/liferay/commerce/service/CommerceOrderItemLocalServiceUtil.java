@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceOrderItemLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderItemLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -64,6 +64,13 @@ public class CommerceOrderItemLocalServiceUtil {
 			commerceContext, serviceContext);
 	}
 
+	public static int countSubscriptionCommerceOrderItems(
+		long commerceOrderId) {
+
+		return getService().countSubscriptionCommerceOrderItems(
+			commerceOrderId);
+	}
+
 	/**
 	 * Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	 *
@@ -83,7 +90,6 @@ public class CommerceOrderItemLocalServiceUtil {
 	 * @return the commerce order item that was removed
 	 * @throws PortalException
 	 */
-	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderItem
 			deleteCommerceOrderItem(
 				com.liferay.commerce.model.CommerceOrderItem commerceOrderItem)
@@ -238,6 +244,13 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().fetchCommerceOrderItem(commerceOrderItemId);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderItem
+		fetchCommerceOrderItemByBookedQuantityId(long bookedQuantityId) {
+
+		return getService().fetchCommerceOrderItemByBookedQuantityId(
+			bookedQuantityId);
+	}
+
 	/**
 	 * Returns the commerce order item with the matching external reference code and company.
 	 *
@@ -341,6 +354,15 @@ public class CommerceOrderItemLocalServiceUtil {
 			commerceOrderId, cpInstanceId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+		getCommerceOrderItems(
+			long groupId, long commerceAccountId, int[] orderStatuses,
+			int start, int end) {
+
+		return getService().getCommerceOrderItems(
+			groupId, commerceAccountId, orderStatuses, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce order items.
 	 *
@@ -361,14 +383,15 @@ public class CommerceOrderItemLocalServiceUtil {
 			commerceOrderId, cpInstanceId);
 	}
 
-	public static int getCommerceOrderItemsQuantity(long commerceOrderId) {
-		return getService().getCommerceOrderItemsQuantity(commerceOrderId);
+	public static int getCommerceOrderItemsCount(
+		long groupId, long commerceAccountId, int[] orderStatuses) {
+
+		return getService().getCommerceOrderItemsCount(
+			groupId, commerceAccountId, orderStatuses);
 	}
 
-	public static int getCPInstanceQuantity(
-		long cpInstanceId, int orderStatus) {
-
-		return getService().getCPInstanceQuantity(cpInstanceId, orderStatus);
+	public static int getCommerceOrderItemsQuantity(long commerceOrderId) {
+		return getService().getCommerceOrderItemsQuantity(commerceOrderId);
 	}
 
 	public static
@@ -387,6 +410,9 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -479,6 +505,24 @@ public class CommerceOrderItemLocalServiceUtil {
 				long commerceOrderItemId, String deliveryGroup,
 				long shippingAddressId, String printedNote,
 				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
+				int requestedDeliveryDateYear)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceOrderItemInfo(
+			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote,
+			requestedDeliveryDateMonth, requestedDeliveryDateDay,
+			requestedDeliveryDateYear);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemInfo(
+				long commerceOrderItemId, String deliveryGroup,
+				long shippingAddressId, String printedNote,
+				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
 				int requestedDeliveryDateYear, int requestedDeliveryDateHour,
 				int requestedDeliveryDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -520,7 +564,7 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderItem
@@ -540,6 +584,19 @@ public class CommerceOrderItemLocalServiceUtil {
 
 		return getService().updateCommerceOrderItemUnitPrice(
 			commerceOrderItemId, unitPrice, quantity);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem
+			upsertCommerceOrderItem(
+				long commerceOrderId, long cpInstanceId, int quantity,
+				int shippedQuantity,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommerceOrderItem(
+			commerceOrderId, cpInstanceId, quantity, shippedQuantity,
+			commerceContext, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem

@@ -32,7 +32,7 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 public abstract class PollsQuestionBaseImpl
 	extends PollsQuestionModelImpl implements PollsQuestion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a polls question model instance should use the <code>PollsQuestion</code> interface instead.

@@ -48,7 +48,7 @@ public interface MBMessageModel
 	extends AttachedModel, BaseModel<MBMessage>, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message-boards message model instance should use the {@link MBMessage} interface instead.

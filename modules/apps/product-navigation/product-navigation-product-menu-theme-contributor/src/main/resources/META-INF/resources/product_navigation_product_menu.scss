@@ -270,7 +270,12 @@ body {
 		padding-left: 24px;
 	}
 
-	.list-group-item {
+	.list-group-item-field {
+		width: auto;
+	}
+
+	.list-group-item,
+	.list-group .list-group-item {
 		border-width: $product-menu-list-group-item-border-width;
 		color: $product-menu-nav-link-color;
 		padding: 8px 8px 8px 24px;

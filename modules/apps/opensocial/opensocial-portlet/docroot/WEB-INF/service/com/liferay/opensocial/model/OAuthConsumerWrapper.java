@@ -270,11 +270,6 @@ public class OAuthConsumerWrapper
 		return _oAuthConsumer.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a o auth consumer model instance should use the <code>OAuthConsumer</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_oAuthConsumer.persist();

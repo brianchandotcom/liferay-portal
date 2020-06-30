@@ -60,12 +60,12 @@ String commercePaymentMethodKey = BeanParamUtil.getString(commerceOrder, request
 						</div>
 
 						<%
-						String thumbnailSrc = paymentMethodCheckoutStepDisplayContext.getImageURL(themeDisplay, commercePaymentMethod.getKey());
+						String thumbnailSrc = paymentMethodCheckoutStepDisplayContext.getImageURL(commerceOrder.getGroupId(), commercePaymentMethod.getKey(), themeDisplay);
 						%>
 
 						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 							<div class="autofit-col">
-								<img alt="<%= commercePaymentMethod.getName(locale) %>" class="payment-icon" src="<%= thumbnailSrc %>" style="height: 45px; width: auto" />
+								<img alt="<%= commercePaymentMethod.getName(locale) %>" class="payment-icon" src="<%= thumbnailSrc %>" style="height: 45px; width: auto;" />
 							</div>
 						</c:if>
 					</li>
@@ -81,10 +81,10 @@ String commercePaymentMethodKey = BeanParamUtil.getString(commerceOrder, request
 
 <c:if test="<%= commercePaymentMethods.isEmpty() %>">
 	<aui:script use="aui-base">
-		var continue = A.one('#<portlet:namespace />continue');
+		var value = A.one('#<portlet:namespace />continue');
 
-		if (continue) {
-			Liferay.Util.toggleDisabled(continue, true);
+		if (value) {
+			Liferay.Util.toggleDisabled(value, true);
 		}
 	</aui:script>
 </c:if>

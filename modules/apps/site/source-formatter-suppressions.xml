@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="PersistenceCallCheck" files="/modules/apps/site/site-test/src/testIntegration/java/com/liferay/site/service/persistence/test/GroupFinderTest\.java" />
+		<suppress checks="PersistenceCallCheck" files="site-test/src/testIntegration/java/com/liferay/site/service/persistence/test/GroupFinderTest\.java" />
 	</checkstyle>
 </suppressions>

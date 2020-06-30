@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -36,6 +36,8 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,8 +67,7 @@ public class CommerceCartResourceUtil {
 		}
 
 		return new Cart(
-			detailsUrl, commerceOrderId,
-			getProducts(commerceOrder, locale, commerceContext),
+			detailsUrl, commerceOrderId, product,
 			getSummary(commerceOrder, locale, commerceContext), valid);
 	}
 
@@ -101,9 +102,8 @@ public class CommerceCartResourceUtil {
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			PriceModel prices = _productHelper.getPrice(
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), commerceContext, locale);
+			PriceModel prices = _getCommerceOrderItemPriceModel(
+				commerceOrderItem, locale);
 
 			ProductSettingsModel settings =
 				_productHelper.getProductSettingsModel(
@@ -163,6 +163,45 @@ public class CommerceCartResourceUtil {
 		}
 
 		return summary;
+	}
+
+	private PriceModel _getCommerceOrderItemPriceModel(
+			CommerceOrderItem commerceOrderItem, Locale locale)
+		throws PortalException {
+
+		CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
+		CommerceMoney promoPriceMoney = commerceOrderItem.getPromoPriceMoney();
+
+		CommerceMoney discountAmountMoney =
+			commerceOrderItem.getDiscountAmountMoney();
+
+		BigDecimal level1 = commerceOrderItem.getDiscountPercentageLevel1();
+		BigDecimal level2 = commerceOrderItem.getDiscountPercentageLevel2();
+		BigDecimal level3 = commerceOrderItem.getDiscountPercentageLevel3();
+		BigDecimal level4 = commerceOrderItem.getDiscountPercentageLevel4();
+
+		String[] discountPercentages = {
+			level1.toString(), level2.toString(), level3.toString(),
+			level4.toString()
+		};
+
+		PriceModel prices = new PriceModel(unitPriceMoney.format(locale));
+
+		BigDecimal promoPrice = promoPriceMoney.getPrice();
+
+		if ((promoPriceMoney != null) &&
+			(promoPrice.compareTo(BigDecimal.ZERO) > 0)) {
+
+			prices.setPromoPrice(promoPriceMoney.format(locale));
+		}
+
+		if (discountAmountMoney != null) {
+			prices.setDiscount(discountAmountMoney.format(locale));
+		}
+
+		prices.setDiscountPercentages(discountPercentages);
+
+		return prices;
 	}
 
 	@Reference

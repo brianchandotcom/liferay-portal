@@ -14,11 +14,10 @@
 
 package com.liferay.commerce.frontend.internal.clay.table;
 
-import com.liferay.commerce.frontend.ClayTableSchema;
-import com.liferay.commerce.frontend.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.ClayTableSchemaField;
+import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
+import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
+import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,8 +29,6 @@ public class ClayTableSchemaBuilderImpl implements ClayTableSchemaBuilder {
 	public ClayTableSchemaBuilderImpl() {
 		_clayTableSchema = new ClayTableSchema();
 		_fields = new LinkedHashMap<>();
-		_properties = new HashMap<>();
-		_inputNamesMap = new HashMap<>();
 	}
 
 	@Override
@@ -60,20 +57,8 @@ public class ClayTableSchemaBuilderImpl implements ClayTableSchemaBuilder {
 	}
 
 	@Override
-	public void addInputNamesMap(String inputName, Object object) {
-		_inputNamesMap.put(inputName, object);
-	}
-
-	@Override
-	public void addProperties(String name, Object value) {
-		_properties.put(name, value);
-	}
-
-	@Override
 	public ClayTableSchema build() {
 		_clayTableSchema.setFields(_fields);
-		_clayTableSchema.setInputNamesMap(_inputNamesMap);
-		_clayTableSchema.setProperties(_properties);
 
 		return _clayTableSchema;
 	}
@@ -88,19 +73,7 @@ public class ClayTableSchemaBuilderImpl implements ClayTableSchemaBuilder {
 		_clayTableSchema = clayTableSchema;
 	}
 
-	@Override
-	public void setInputNameField(String inputNameField) {
-		_clayTableSchema.setInputNameField(inputNameField);
-	}
-
-	@Override
-	public void setInputValueField(String inputValueField) {
-		_clayTableSchema.setInputValueField(inputValueField);
-	}
-
 	private ClayTableSchema _clayTableSchema;
 	private final Map<String, ClayTableSchemaField> _fields;
-	private final Map<String, Object> _inputNamesMap;
-	private final Map<String, Object> _properties;
 
 }

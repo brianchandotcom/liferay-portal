@@ -39,7 +39,7 @@ import java.util.Set;
 public interface UserNotificationDeliveryPersistence
 	extends BasePersistence<UserNotificationDelivery> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationDeliveryUtil} to access the user notification delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

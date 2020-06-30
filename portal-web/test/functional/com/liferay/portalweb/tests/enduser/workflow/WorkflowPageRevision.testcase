@@ -265,7 +265,8 @@ definition {
 		SitePages.deletePage(pageName = "${pageName}");
 	}
 
-	@description = "This is a use case for LPS-58754"
+	@description = "This will be ignored until LPS-84356 is fixed and backported on BPR-47127. This is a use case for LPS-58754"
+	@ignore = "true"
 	@priority = "2"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
 		ProductMenu.gotoPortlet(

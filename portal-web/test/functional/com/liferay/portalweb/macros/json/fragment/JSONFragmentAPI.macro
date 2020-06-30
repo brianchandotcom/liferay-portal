@@ -1,0 +1,109 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a fragment collection"
+	macro _addFragmentCollection {
+		Variables.assertDefined(parameterList = "${groupId},${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${name} \
+			-d description=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a fragment (default type is section)"
+	macro _addSection {
+		Variables.assertDefined(parameterList = "${groupId},${collectionId},${name},${html},${configuration},${type},${status}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d fragmentCollectionId=${collectionId} \
+			-d fragmentEntryKey= \
+			-d name=${name} \
+			-d css= \
+			-d html=${html} \
+			-d js= \
+			-d configuration=${configuration} \
+			-d previewFileEntryId=0 \
+			-d type=${type} \
+			-d status=${status}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Get the collectionId from a collection by using collectionName and groupId"
+	macro _getCollectionIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${collectionName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${collectionName} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA> \
+			-d -orderByComparator=
+		''';
+
+		var collectionId = JSONCurlUtil.post("${curl}", "$..fragmentCollectionId");
+		var collectionId = StringUtil.replace("${collectionId}", "[&quot;", "");
+		var collectionId = StringUtil.replace("${collectionId}", "&quot;]", "");
+
+		if ("${collectionId}" == "[]") {
+			fail("FAIL. Cannot find collection.");
+		}
+
+		return "${collectionId}";
+	}
+
+	@summary = "Get the collectionName by using collectionName"
+	macro _getCollectionName {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${collectionName} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA> \
+			-d -orderByComparator=
+		''';
+
+		var collectionNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${collectionName}')]");
+
+		return "${collectionNameResult}";
+	}
+
+	@summary = "Get the fragmentName from a fragmentCollection by using fragmentName "
+	macro _getFragmentName {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d fragmentCollectionId=${fragmentCollectionId} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA>
+		''';
+
+		var fragmentNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${fragmentName}')]");
+
+		return "${fragmentNameResult}";
+	}
+
+}

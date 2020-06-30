@@ -24,13 +24,13 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -39,7 +39,6 @@ import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
-import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -106,7 +105,7 @@ public class CommerceOrderTest {
 		_user = UserTestUtil.addUser(true);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getGroupId());
+			_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -163,11 +162,9 @@ public class CommerceOrderTest {
 				new long[] {_user.getUserId()},
 				new String[] {_user.getEmailAddress()}, _serviceContext);
 
-		long commerceChannelGroupId = _commerceChannel.getGroupId();
-
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
-				_user.getUserId(), commerceChannelGroupId,
+				_user.getUserId(), _commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
 				_commerceCurrency.getCommerceCurrencyId());
 
@@ -180,12 +177,12 @@ public class CommerceOrderTest {
 
 		CommerceOrder secondCommerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
-				secondUser.getUserId(), commerceChannelGroupId,
+				secondUser.getUserId(), _commerceChannel.getGroupId(),
 				secondCommerceAccount.getCommerceAccountId(),
 				_commerceCurrency.getCommerceCurrencyId());
 
 		List<CommerceOrder> commerceOrders = _getUserOrders(
-			commerceChannelGroupId, false);
+			_commerceChannel.getGroupId(), false);
 
 		Assert.assertEquals(
 			commerceOrders.toString(), 1, commerceOrders.size());
@@ -206,7 +203,7 @@ public class CommerceOrderTest {
 			new long[] {_user.getUserId()},
 			new String[] {_user.getEmailAddress()}, null, _serviceContext);
 
-		commerceOrders = _getUserOrders(commerceChannelGroupId, false);
+		commerceOrders = _getUserOrders(_commerceChannel.getGroupId(), false);
 
 		Assert.assertEquals(
 			commerceOrders.toString(), 2, commerceOrders.size());
@@ -214,7 +211,8 @@ public class CommerceOrderTest {
 		Assert.assertEquals(commerceOrder, commerceOrders.get(0));
 		Assert.assertEquals(secondCommerceOrder, commerceOrders.get(1));
 
-		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
+		_commerceOrderLocalService.deleteCommerceOrders(
+			_commerceChannel.getGroupId());
 		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
 		_commerceAccountLocalService.deleteCommerceAccount(
 			secondCommerceAccount);
@@ -385,9 +383,6 @@ public class CommerceOrderTest {
 
 		// Checkout a random number of orders
 
-		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, null, null);
-
 		List<CommerceOrder> placedCommerceOrders = new ArrayList<>();
 
 		for (CommerceOrder commerceOrder : randomOrders) {
@@ -404,9 +399,8 @@ public class CommerceOrderTest {
 					commerceOrder);
 
 				placedCommerceOrders.add(
-					_commerceOrderLocalService.checkoutCommerceOrder(
-						commerceOrder.getCommerceOrderId(), commerceContext,
-						_serviceContext));
+					_commerceOrderEngine.checkoutCommerceOrder(
+						commerceOrder, _user.getUserId()));
 			}
 		}
 
@@ -593,13 +587,8 @@ public class CommerceOrderTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, commerceAccount,
-			commerceOrder);
-
-		commerceOrder = _commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commerceContext,
-			_serviceContext);
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
 
 		ordersCountByUser = _getUserOrdersCount(commerceChannelGroupId, true);
 
@@ -628,13 +617,8 @@ public class CommerceOrderTest {
 		secondCommerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			secondCommerceOrder);
 
-		CommerceContext secondCommerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, secondCommerceAccount,
-			secondCommerceOrder);
-
-		secondCommerceOrder = _commerceOrderLocalService.checkoutCommerceOrder(
-			secondCommerceOrder.getCommerceOrderId(), secondCommerceContext,
-			_serviceContext);
+		secondCommerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			secondCommerceOrder, _user.getUserId());
 
 		ordersCountByUser = _getUserOrdersCount(commerceChannelGroupId, true);
 
@@ -820,13 +804,8 @@ public class CommerceOrderTest {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, commerceAccount,
-			commerceOrder);
-
-		commerceOrder = _commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commerceContext,
-			_serviceContext);
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
 
 		int ordersCountByAccountId =
 			_commerceOrderService.getPlacedCommerceOrdersCount(
@@ -986,6 +965,9 @@ public class CommerceOrderTest {
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

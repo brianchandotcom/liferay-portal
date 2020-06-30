@@ -232,11 +232,6 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		return _entry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a entry model instance should use the <code>Entry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_entry.persist();

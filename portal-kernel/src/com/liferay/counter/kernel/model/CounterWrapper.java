@@ -144,11 +144,6 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		return _counter.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a counter model instance should use the <code>Counter</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_counter.persist();

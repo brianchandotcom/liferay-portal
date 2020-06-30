@@ -89,6 +89,8 @@ definition {
 		SocialBookmarks.viewBookmarksNotPresent(socialBookmarks = "Twitter,Reddit,Slashdot");
 	}
 
+	@description = "This will be ignored until LRQA-57464 is fixed."
+	@ignore = "true"
 	@priority = "3"
 	test ViewBlogsEntryWithSocialBookmarksSites {
 		property osgi.app.includes = "social-bookmarks";

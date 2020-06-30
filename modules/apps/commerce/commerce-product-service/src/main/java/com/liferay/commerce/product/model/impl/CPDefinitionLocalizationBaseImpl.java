@@ -32,7 +32,7 @@ public abstract class CPDefinitionLocalizationBaseImpl
 	extends CPDefinitionLocalizationModelImpl
 	implements CPDefinitionLocalization {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp definition localization model instance should use the <code>CPDefinitionLocalization</code> interface instead.

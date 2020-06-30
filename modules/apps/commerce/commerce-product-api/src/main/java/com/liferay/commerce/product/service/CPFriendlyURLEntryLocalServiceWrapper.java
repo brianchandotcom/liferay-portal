@@ -33,11 +33,6 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryLocalServiceUtil} to access the cp friendly url entry local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addCPFriendlyURLEntries(
 			long groupId, long companyId, Class<?> clazz, long classPK,
@@ -433,6 +428,9 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 		return _cpFriendlyURLEntryLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

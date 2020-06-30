@@ -66,10 +66,10 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency addCommerceCurrency(
 			long userId, String code, Map<Locale, String> nameMap,
-			BigDecimal rate, Map<Locale, String> formatPatternMap,
-			int maxFractionDigits, int minFractionDigits, String roundingMode,
-			boolean primary, double priority, boolean active,
-			ServiceContext serviceContext)
+			String symbol, BigDecimal rate,
+			Map<Locale, String> formatPatternMap, int maxFractionDigits,
+			int minFractionDigits, String roundingMode, boolean primary,
+			double priority, boolean active)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -78,7 +78,7 @@ public class CommerceCurrencyLocalServiceImpl
 			rate = BigDecimal.ONE;
 		}
 
-		validate(0, serviceContext.getCompanyId(), code, nameMap, primary);
+		validate(0, user.getCompanyId(), code, nameMap, primary);
 
 		RoundingTypeConfiguration roundingTypeConfiguration =
 			_configurationProvider.getConfiguration(
@@ -87,7 +87,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 		if (formatPatternMap.isEmpty()) {
 			formatPatternMap.put(
-				serviceContext.getLocale(),
+				user.getLocale(),
 				CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN);
 		}
 
@@ -108,6 +108,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setUserName(user.getFullName());
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
+		commerceCurrency.setSymbol(symbol);
 		commerceCurrency.setRate(rate);
 		commerceCurrency.setFormatPatternMap(formatPatternMap);
 		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
@@ -117,9 +118,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setPriority(priority);
 		commerceCurrency.setActive(active);
 
-		commerceCurrencyPersistence.update(commerceCurrency);
-
-		return commerceCurrency;
+		return commerceCurrencyPersistence.update(commerceCurrency);
 	}
 
 	@Override
@@ -242,12 +241,11 @@ public class CommerceCurrencyLocalServiceImpl
 					roundingTypeConfiguration.roundingMode();
 
 				commerceCurrencyLocalService.addCommerceCurrency(
-					serviceContext.getUserId(), code, nameMap, BigDecimal.ONE,
-					formatPatternMap,
+					serviceContext.getUserId(), code, nameMap, symbol,
+					BigDecimal.ONE, formatPatternMap,
 					roundingTypeConfiguration.maximumFractionDigits(),
 					roundingTypeConfiguration.minimumFractionDigits(),
-					roundingMode.name(), primary, priority, true,
-					serviceContext);
+					roundingMode.name(), primary, priority, true);
 			}
 		}
 
@@ -270,9 +268,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 		commerceCurrency.setActive(active);
 
-		commerceCurrencyPersistence.update(commerceCurrency);
-
-		return commerceCurrency;
+		return commerceCurrencyPersistence.update(commerceCurrency);
 	}
 
 	@Override
@@ -288,18 +284,16 @@ public class CommerceCurrencyLocalServiceImpl
 
 		commerceCurrency.setPrimary(primary);
 
-		commerceCurrencyPersistence.update(commerceCurrency);
-
-		return commerceCurrency;
+		return commerceCurrencyPersistence.update(commerceCurrency);
 	}
 
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			BigDecimal rate, Map<Locale, String> formatPatternMap,
-			int maxFractionDigits, int minFractionDigits, String roundingMode,
-			boolean primary, double priority, boolean active,
-			ServiceContext serviceContext)
+			String symbol, BigDecimal rate,
+			Map<Locale, String> formatPatternMap, int maxFractionDigits,
+			int minFractionDigits, String roundingMode, boolean primary,
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -333,6 +327,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
+		commerceCurrency.setSymbol(symbol);
 		commerceCurrency.setRate(rate);
 		commerceCurrency.setFormatPatternMap(formatPatternMap);
 		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
@@ -342,9 +337,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setPriority(priority);
 		commerceCurrency.setActive(active);
 
-		commerceCurrencyPersistence.update(commerceCurrency);
-
-		return commerceCurrency;
+		return commerceCurrencyPersistence.update(commerceCurrency);
 	}
 
 	@Override

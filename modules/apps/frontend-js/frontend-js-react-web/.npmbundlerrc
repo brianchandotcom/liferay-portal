@@ -1,4 +1,11 @@
 {
+	"config": {
+		"imports": {
+			"frontend-taglib-clay": {
+					"@clayui/icon": ">=3.0.0"
+			}
+		}
+	},
 	"exclude": {
 		"babel-runtime": true,
 		"core-js": true,

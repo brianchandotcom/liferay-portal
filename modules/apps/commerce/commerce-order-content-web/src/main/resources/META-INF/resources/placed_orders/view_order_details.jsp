@@ -189,13 +189,22 @@ if (commerceOrder != null) {
 
 <div class="row">
 	<div class="col-md-12">
-		<commerce-ui:table
-			dataProviderKey="commercePlacedOrderItems"
-			itemPerPage="<%= 5 %>"
+
+		<%
+		java.util.Map<String, String> contextParams = new java.util.HashMap<>();
+
+		contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+		%>
+
+		<commerce-ui:dataset-display
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS %>"
+			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS %>"
+			itemsPerPage="<%= 10 %>"
 			namespace="<%= renderResponse.getNamespace() %>"
-			pageNumber="1"
+			pageNumber="<%= 1 %>"
 			portletURL="<%= commerceOrderContentDisplayContext.getPortletURL() %>"
-			tableName="commercePlacedOrderItems"
+			style="stacked"
 		/>
 	</div>
 </div>
@@ -267,25 +276,24 @@ if (commerceOrder != null) {
 
 <aui:script>
 	function <portlet:namespace/>viewCommerceOrderShipments(uri) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					centered: true,
-					destroyOnClose: true,
-					modal: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog'
-				},
-				id: 'viewCommerceOrderShipmentsDialog',
-				title: '',
-				uri: uri
-			}
-		);
+		Liferay.Util.openWindow({
+			dialog: {
+				centered: true,
+				destroyOnClose: true,
+				modal: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog'
+			},
+			id: 'viewCommerceOrderShipmentsDialog',
+			title: '',
+			uri: uri
+		});
 	}
 
 	function <portlet:namespace />reorderCommerceOrder() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'reorder';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
+			'reorder';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

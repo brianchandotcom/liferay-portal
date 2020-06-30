@@ -27,6 +27,7 @@ AUI.add(
 			},
 
 			fields: {
+				lazyAdd: false,
 				valueFn: '_valueFields'
 			},
 
@@ -92,8 +93,8 @@ AUI.add(
 					context.localizedValue = {};
 
 					context.locale = editingLanguageId;
-					context.localizable = false;
 					context.localizedValue[editingLanguageId] = context.value;
+					context.viewMode = true;
 				}
 
 				var config = A.merge(

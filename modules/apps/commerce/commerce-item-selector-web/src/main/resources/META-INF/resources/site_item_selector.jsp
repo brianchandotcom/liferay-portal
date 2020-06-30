@@ -113,7 +113,7 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 			var popupWindow = Liferay.Util.getWindow();
 
 			if (popupWindow !== null) {
-				Liferay.Util.getWindow().hide()
+				Liferay.Util.getWindow().hide();
 			}
 		},
 		'.selector-button'

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch 6 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.impl
-Bundle-Version: 2.0.57
+Bundle-Version: 2.0.62
 Import-Package:\
 	!com.barchart.udt.*,\
 	\
@@ -24,6 +24,8 @@ Import-Package:\
 	\
 	!com.ning.compress.*,\
 	\
+	!com.oracle.svm.*,\
+	\
 	!com.puppycrawl.tools.checkstyle.*,\
 	\
 	!com.sun.jna.*,\
@@ -39,6 +41,8 @@ Import-Package:\
 	!gnu.io.*,\
 	\
 	!groovy.*,\
+	\
+	!io.netty.internal.*,\
 	\
 	!javassist.*,\
 	\

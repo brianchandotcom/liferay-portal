@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -43,9 +44,10 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommercePriceEntryModel
-	extends BaseModel<CommercePriceEntry>, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CommercePriceEntry>, ShardedModel, StagedAuditedModel,
+			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce price entry model instance should use the {@link CommercePriceEntry} interface instead.
@@ -280,6 +282,83 @@ public interface CommercePriceEntryModel
 	public void setPromoPrice(BigDecimal promoPrice);
 
 	/**
+	 * Returns the discount discovery of this commerce price entry.
+	 *
+	 * @return the discount discovery of this commerce price entry
+	 */
+	public boolean getDiscountDiscovery();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is discount discovery.
+	 *
+	 * @return <code>true</code> if this commerce price entry is discount discovery; <code>false</code> otherwise
+	 */
+	public boolean isDiscountDiscovery();
+
+	/**
+	 * Sets whether this commerce price entry is discount discovery.
+	 *
+	 * @param discountDiscovery the discount discovery of this commerce price entry
+	 */
+	public void setDiscountDiscovery(boolean discountDiscovery);
+
+	/**
+	 * Returns the discount level1 of this commerce price entry.
+	 *
+	 * @return the discount level1 of this commerce price entry
+	 */
+	public BigDecimal getDiscountLevel1();
+
+	/**
+	 * Sets the discount level1 of this commerce price entry.
+	 *
+	 * @param discountLevel1 the discount level1 of this commerce price entry
+	 */
+	public void setDiscountLevel1(BigDecimal discountLevel1);
+
+	/**
+	 * Returns the discount level2 of this commerce price entry.
+	 *
+	 * @return the discount level2 of this commerce price entry
+	 */
+	public BigDecimal getDiscountLevel2();
+
+	/**
+	 * Sets the discount level2 of this commerce price entry.
+	 *
+	 * @param discountLevel2 the discount level2 of this commerce price entry
+	 */
+	public void setDiscountLevel2(BigDecimal discountLevel2);
+
+	/**
+	 * Returns the discount level3 of this commerce price entry.
+	 *
+	 * @return the discount level3 of this commerce price entry
+	 */
+	public BigDecimal getDiscountLevel3();
+
+	/**
+	 * Sets the discount level3 of this commerce price entry.
+	 *
+	 * @param discountLevel3 the discount level3 of this commerce price entry
+	 */
+	public void setDiscountLevel3(BigDecimal discountLevel3);
+
+	/**
+	 * Returns the discount level4 of this commerce price entry.
+	 *
+	 * @return the discount level4 of this commerce price entry
+	 */
+	public BigDecimal getDiscountLevel4();
+
+	/**
+	 * Sets the discount level4 of this commerce price entry.
+	 *
+	 * @param discountLevel4 the discount level4 of this commerce price entry
+	 */
+	public void setDiscountLevel4(BigDecimal discountLevel4);
+
+	/**
 	 * Returns the has tier price of this commerce price entry.
 	 *
 	 * @return the has tier price of this commerce price entry
@@ -301,6 +380,55 @@ public interface CommercePriceEntryModel
 	public void setHasTierPrice(boolean hasTierPrice);
 
 	/**
+	 * Returns the bulk pricing of this commerce price entry.
+	 *
+	 * @return the bulk pricing of this commerce price entry
+	 */
+	public boolean getBulkPricing();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is bulk pricing.
+	 *
+	 * @return <code>true</code> if this commerce price entry is bulk pricing; <code>false</code> otherwise
+	 */
+	public boolean isBulkPricing();
+
+	/**
+	 * Sets whether this commerce price entry is bulk pricing.
+	 *
+	 * @param bulkPricing the bulk pricing of this commerce price entry
+	 */
+	public void setBulkPricing(boolean bulkPricing);
+
+	/**
+	 * Returns the display date of this commerce price entry.
+	 *
+	 * @return the display date of this commerce price entry
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this commerce price entry.
+	 *
+	 * @param displayDate the display date of this commerce price entry
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
+	 * Returns the expiration date of this commerce price entry.
+	 *
+	 * @return the expiration date of this commerce price entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this commerce price entry.
+	 *
+	 * @param expirationDate the expiration date of this commerce price entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
 	 * Returns the last publish date of this commerce price entry.
 	 *
 	 * @return the last publish date of this commerce price entry
@@ -313,6 +441,151 @@ public interface CommercePriceEntryModel
 	 * @param lastPublishDate the last publish date of this commerce price entry
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the status of this commerce price entry.
+	 *
+	 * @return the status of this commerce price entry
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this commerce price entry.
+	 *
+	 * @param status the status of this commerce price entry
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this commerce price entry.
+	 *
+	 * @return the status by user ID of this commerce price entry
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this commerce price entry.
+	 *
+	 * @param statusByUserId the status by user ID of this commerce price entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this commerce price entry.
+	 *
+	 * @return the status by user uuid of this commerce price entry
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this commerce price entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this commerce price entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this commerce price entry.
+	 *
+	 * @return the status by user name of this commerce price entry
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this commerce price entry.
+	 *
+	 * @param statusByUserName the status by user name of this commerce price entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this commerce price entry.
+	 *
+	 * @return the status date of this commerce price entry
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this commerce price entry.
+	 *
+	 * @param statusDate the status date of this commerce price entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is approved.
+	 *
+	 * @return <code>true</code> if this commerce price entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is denied.
+	 *
+	 * @return <code>true</code> if this commerce price entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is a draft.
+	 *
+	 * @return <code>true</code> if this commerce price entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is expired.
+	 *
+	 * @return <code>true</code> if this commerce price entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is inactive.
+	 *
+	 * @return <code>true</code> if this commerce price entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is incomplete.
+	 *
+	 * @return <code>true</code> if this commerce price entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is pending.
+	 *
+	 * @return <code>true</code> if this commerce price entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is scheduled.
+	 *
+	 * @return <code>true</code> if this commerce price entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public boolean isNew();

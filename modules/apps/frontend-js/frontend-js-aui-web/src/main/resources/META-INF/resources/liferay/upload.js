@@ -1008,6 +1008,34 @@ AUI.add(
 
 						instance._fileListTPL = new A.Template(TPL_FILE_LIST, templateConfig);
 
+						// LPS-102399
+
+						if (A.UA.ie) {
+							instance._fileListTPL.tpls = instance._fileListTPL.tpls.map(
+								function(item, index) {
+									var tpl = item;
+
+									if (tpl.tplFn) {
+										var tplBodyRegex = /function anonymous\(values,parent\s*\) \{\s*(.*)\s*\}/;
+										var tplFn = tpl.tplFn.toString();
+
+										if (tplBodyRegex.test(tplFn)) {
+											var tplBody = tplBodyRegex
+												.exec(tplFn)[1]
+												.replace(/values/g, 'parts');
+
+											tpl.tplFn = new Function(
+												'parts, parent',
+												tplBody
+											);
+										}
+									}
+
+									return tpl;
+								}
+							);
+						}
+
 						instance._selectUploadedFileCheckboxId = instance.ns('selectUploadedFile');
 
 						var NS = instance.NS;

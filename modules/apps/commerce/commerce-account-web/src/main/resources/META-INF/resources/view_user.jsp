@@ -23,6 +23,11 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 User selectedUser = commerceAccountDisplayContext.getSelectedUser();
 PortletURL portletURL = commerceAccountDisplayContext.getPortletURL();
 
+Map<String, String> contextParams = new HashMap<>();
+
+contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+contextParams.put("userId", String.valueOf(selectedUser.getUserId()));
+
 portletURL.setParameter("mvcRenderCommandName", "viewCommerceAccountUser");
 portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 %>
@@ -54,7 +59,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 				<div class="align-items-center col-auto d-flex">
 					<div class="account-management__action">
 						<c:if test="<%= (selectedUser.getUserId() == user.getUserId()) || commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount.getCommerceAccountId(), CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
-							<aui:button cssClass="commerce-button commerce-button--big commerce-button--outline" href="<%= editCommerceAccountURL %>" value='<%= LanguageUtil.get(request, "edit-user") %>' />
+							<aui:button cssClass="btn btn-lg btn-secondary" href="<%= editCommerceAccountURL %>" value='<%= LanguageUtil.get(request, "edit-user") %>' />
 						</c:if>
 					</div>
 				</div>
@@ -66,19 +71,20 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 <c:if test="<%= commerceAccount != null %>">
 	<div class="commerce-cta is-visible">
 		<c:if test="<%= (selectedUser.getUserId() != user.getUserId()) && commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount.getCommerceAccountId(), CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
-			<aui:button cssClass="commerce-button commerce-button--big js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserRolesModal();" %>' value="roles" />
+			<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserRolesModal();" %>' value="roles" />
 		</c:if>
 	</div>
 
 	<div class="commerce-account-container">
-		<commerce-ui:table
-			dataProviderKey="commerceAccountUserRoles"
-			filter="<%= commerceAccountDisplayContext.getAccountFilter() %>"
-			itemPerPage="<%= 5 %>"
+		<commerce-ui:dataset-display
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"
+			id="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"
+			itemsPerPage="<%= 10 %>"
 			namespace="<%= renderResponse.getNamespace() %>"
-			pageNumber="1"
+			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
-			tableName="commerceAccountUserRoles"
+			style="stacked"
 		/>
 	</div>
 
@@ -100,37 +106,30 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 		/>
 
 		<aui:script>
+			Liferay.provide(window, '<portlet:namespace />openUserRolesModal', function(
+				evt
+			) {
+				const userRolesModal = Liferay.component('userRolesModal');
+				userRolesModal.open();
+			});
 
-			Liferay.provide(
-				window,
-				'<portlet:namespace />openUserRolesModal',
-				function(evt) {
-					const userRolesModal = Liferay.component('userRolesModal');
-					userRolesModal.open();
-				}
-			);
+			Liferay.componentReady('userRolesModal').then(function(userRolesModal) {
+				userRolesModal.on('updateRoles', function(selectedRoles) {
+					let selectedRoleIds = selectedRoles
+						.map(function(role) {
+							return role.id;
+						})
+						.join(',');
 
-			Liferay.componentReady('userRolesModal').then(
-				function(userRolesModal) {
-					userRolesModal.on(
-						'updateRoles',
-						function(selectedRoles) {
-							let selectedRoleIds = selectedRoles.map(
-								function(role) {
-									return role.id
-								}
-							).join(',');
+					document.querySelector(
+						'#<portlet:namespace />selectedRoleIds'
+					).value = selectedRoleIds;
 
-							document.querySelector('#<portlet:namespace />selectedRoleIds').value = selectedRoleIds;
+					userRolesModal.close();
 
-							userRolesModal.close();
-
-							submitForm(document.<portlet:namespace />editCommerceAccountUserFm);
-						}
-					);
-				}
-			);
-
+					submitForm(document.<portlet:namespace />editCommerceAccountUserFm);
+				});
+			});
 		</aui:script>
 	</c:if>
 </c:if>

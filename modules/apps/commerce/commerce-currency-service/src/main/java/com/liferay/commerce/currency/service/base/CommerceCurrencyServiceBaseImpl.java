@@ -48,7 +48,7 @@ public abstract class CommerceCurrencyServiceBaseImpl
 	extends BaseServiceImpl
 	implements CommerceCurrencyService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceCurrencyService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil</code>.
@@ -351,8 +351,8 @@ public abstract class CommerceCurrencyServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceCatalogServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceCatalogServiceUtil} to access the commerce catalog remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.product.model.CommerceCatalog
 			addCommerceCatalog(
@@ -135,6 +129,15 @@ public class CommerceCatalogServiceUtil {
 		return getService().updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceCatalog
+			updateCommerceCatalogExternalReferenceCode(
+				long commerceCatalogId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceCatalogExternalReferenceCode(
+			commerceCatalogId, externalReferenceCode);
 	}
 
 	public static CommerceCatalogService getService() {

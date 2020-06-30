@@ -80,10 +80,10 @@ public class CommercePriceListAccountRelServiceSoap {
 			return com.liferay.commerce.price.list.model.
 				CommercePriceListAccountRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -96,10 +96,10 @@ public class CommercePriceListAccountRelServiceSoap {
 				deleteCommercePriceListAccountRel(
 					commercePriceListAccountRelId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -119,10 +119,10 @@ public class CommercePriceListAccountRelServiceSoap {
 			return com.liferay.commerce.price.list.model.
 				CommercePriceListAccountRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -142,10 +142,10 @@ public class CommercePriceListAccountRelServiceSoap {
 			return com.liferay.commerce.price.list.model.
 				CommercePriceListAccountRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

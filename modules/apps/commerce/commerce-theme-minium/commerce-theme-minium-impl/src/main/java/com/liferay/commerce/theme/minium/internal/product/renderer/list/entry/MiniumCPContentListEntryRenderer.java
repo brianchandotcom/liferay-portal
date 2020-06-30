@@ -249,7 +249,7 @@ public class MiniumCPContentListEntryRenderer
 
 				String status = "inStock";
 
-				if (stockQuantity == 0) {
+				if (stockQuantity <= 0) {
 					status = "notAvailable";
 				}
 				else if (stockQuantity <=
@@ -301,8 +301,7 @@ public class MiniumCPContentListEntryRenderer
 		}
 
 		context.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+			"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		Set<String> dependencies = new HashSet<>();
 

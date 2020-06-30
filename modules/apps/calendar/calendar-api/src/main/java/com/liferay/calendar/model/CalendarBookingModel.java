@@ -51,7 +51,7 @@ public interface CalendarBookingModel
 	extends BaseModel<CalendarBooking>, LocalizedModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a calendar booking model instance should use the {@link CalendarBooking} interface instead.

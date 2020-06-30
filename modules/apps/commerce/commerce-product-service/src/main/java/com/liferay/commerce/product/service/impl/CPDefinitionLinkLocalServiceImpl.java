@@ -90,7 +90,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setType(type);
 		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+		cpDefinitionLink = cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
 		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
 
@@ -269,7 +269,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setPriority(priority);
 		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+		cpDefinitionLink = cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
 		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId());
 

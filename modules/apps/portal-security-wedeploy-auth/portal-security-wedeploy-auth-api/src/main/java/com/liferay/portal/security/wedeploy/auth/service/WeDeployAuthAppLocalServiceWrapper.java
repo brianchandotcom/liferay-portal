@@ -33,11 +33,6 @@ public class WeDeployAuthAppLocalServiceWrapper
 		_weDeployAuthAppLocalService = weDeployAuthAppLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppLocalServiceUtil} to access the we deploy auth app local service. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp
 			addWeDeployAuthApp(
@@ -254,6 +249,9 @@ public class WeDeployAuthAppLocalServiceWrapper
 		return _weDeployAuthAppLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

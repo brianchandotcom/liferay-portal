@@ -385,11 +385,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		return _commerceTaxFixedRateAddressRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce tax fixed rate address rel model instance should use the <code>CommerceTaxFixedRateAddressRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceTaxFixedRateAddressRel.persist();

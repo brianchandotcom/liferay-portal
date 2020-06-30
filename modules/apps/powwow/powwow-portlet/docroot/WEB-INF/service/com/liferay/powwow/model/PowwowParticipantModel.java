@@ -43,7 +43,7 @@ import java.util.Date;
 public interface PowwowParticipantModel
 	extends BaseModel<PowwowParticipant>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a powwow participant model instance should use the {@link PowwowParticipant} interface instead.

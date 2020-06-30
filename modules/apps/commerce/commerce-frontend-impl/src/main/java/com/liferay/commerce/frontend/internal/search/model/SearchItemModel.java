@@ -24,12 +24,20 @@ public class SearchItemModel {
 		_title = title;
 	}
 
+	public String getIcon() {
+		return _icon;
+	}
+
 	public String getImage() {
 		return _image;
 	}
 
 	public String getSubtitle() {
 		return _subtitle;
+	}
+
+	public String getThumbnailUrl() {
+		return _thumbnailUrl;
 	}
 
 	public String getTitle() {
@@ -44,6 +52,10 @@ public class SearchItemModel {
 		return _url;
 	}
 
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
 	public void setImage(String image) {
 		_image = image;
 	}
@@ -52,12 +64,18 @@ public class SearchItemModel {
 		_subtitle = subtitle;
 	}
 
+	public void setThumbnailUrl(String thumbnailUrl) {
+		_thumbnailUrl = thumbnailUrl;
+	}
+
 	public void setUrl(String url) {
 		_url = url;
 	}
 
+	private String _icon;
 	private String _image;
 	private String _subtitle;
+	private String _thumbnailUrl;
 	private final String _title;
 	private final String _type;
 	private String _url;

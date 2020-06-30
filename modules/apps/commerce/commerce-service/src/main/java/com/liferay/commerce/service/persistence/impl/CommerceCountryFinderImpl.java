@@ -132,17 +132,17 @@ public class CommerceCountryFinderImpl
 	}
 
 	private static final String _ACTIVE_SQL =
-		"AND (CIWarehouse.active_ = true)";
+		"AND (CIWarehouse.active_ = [$TRUE$])";
 
 	private static final String _ALL_SQL = "[$ALL$]";
 
 	private static final String _BILLING_ALLOWED_SQL =
-		"AND (CommerceCountry.billingAllowed = true)";
+		"AND (CommerceCountry.billingAllowed = [$TRUE$])";
 
 	private static final String _BILLING_SQL = "[$BILLING$]";
 
 	private static final String _SHIPPING_ALLOWED_SQL =
-		"AND (CommerceCountry.shippingAllowed = true)";
+		"AND (CommerceCountry.shippingAllowed = [$TRUE$])";
 
 	private static final String _SHIPPING_SQL = "[$SHIPPING$]";
 

@@ -518,11 +518,6 @@ public class PollsQuestionWrapper
 		return _pollsQuestion.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a polls question model instance should use the <code>PollsQuestion</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_pollsQuestion.persist();

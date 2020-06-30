@@ -35,11 +35,6 @@ public class CommercePriceListCommerceAccountGroupRelServiceWrapper
 			commercePriceListCommerceAccountGroupRelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommercePriceListCommerceAccountGroupRelServiceUtil} to access the commerce price list commerce account group rel remote service. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListCommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.price.list.model.
 		CommercePriceListCommerceAccountGroupRel

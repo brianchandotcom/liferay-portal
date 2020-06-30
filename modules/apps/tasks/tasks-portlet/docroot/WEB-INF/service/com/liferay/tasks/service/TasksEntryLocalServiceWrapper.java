@@ -32,11 +32,6 @@ public class TasksEntryLocalServiceWrapper
 		_tasksEntryLocalService = tasksEntryLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link TasksEntryLocalServiceUtil} to access the tasks entry local service. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(
 			long userId, String title, int priority, long assigneeUserId,
@@ -302,6 +297,9 @@ public class TasksEntryLocalServiceWrapper
 		return _tasksEntryLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

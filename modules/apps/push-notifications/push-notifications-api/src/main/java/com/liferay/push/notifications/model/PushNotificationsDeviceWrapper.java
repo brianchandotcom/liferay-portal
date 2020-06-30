@@ -229,11 +229,6 @@ public class PushNotificationsDeviceWrapper
 		return _pushNotificationsDevice.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a push notifications device model instance should use the <code>PushNotificationsDevice</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_pushNotificationsDevice.persist();

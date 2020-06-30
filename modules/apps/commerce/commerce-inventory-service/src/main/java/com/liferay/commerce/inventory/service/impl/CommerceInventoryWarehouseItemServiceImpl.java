@@ -77,6 +77,19 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceInventoryWarehouseItems(
+			long companyId, String sku)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		commerceInventoryWarehouseItemLocalService.
+			deleteCommerceInventoryWarehouseItems(companyId, sku);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseItem fetchCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
@@ -151,6 +164,20 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public List<CommerceInventoryWarehouseItem>
+			getCommerceInventoryWarehouseItems(
+				long companyId, String sku, int start, int end)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItems(companyId, sku, start, end);
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseItem>
 			getCommerceInventoryWarehouseItemsByCompanyId(
 				long companyId, int start, int end)
 		throws PortalException {
@@ -165,6 +192,21 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseItem>
+			getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+				long companyId, String sku, int start, int end)
+		throws PrincipalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+				companyId, sku, start, end);
+	}
+
+	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
 			long commerceInventoryWarehouseId)
 		throws PortalException {
@@ -176,6 +218,19 @@ public class CommerceInventoryWarehouseItemServiceImpl
 		return commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCount(
 				commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseItemsCount(
+			long companyId, String sku)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItemsCount(companyId, sku);
 	}
 
 	@Override
@@ -220,8 +275,40 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public CommerceInventoryWarehouseItem
+			increaseCommerceInventoryWarehouseItemQuantity(
+				long commerceInventoryWarehouseItemId, int quantity)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			increaseCommerceInventoryWarehouseItemQuantity(
+				getUserId(), commerceInventoryWarehouseItemId, quantity);
+	}
+
+	@Override
+	public void moveQuantitiesBetweenWarehouses(
+			long fromCommerceInventoryWarehouseId,
+			long toCommerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		commerceInventoryWarehouseItemLocalService.
+			moveQuantitiesBetweenWarehouses(
+				getUserId(), fromCommerceInventoryWarehouseId,
+				toCommerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, int quantity)
+			long commerceInventoryWarehouseItemId, int quantity,
+			int reservedQuantity, long mvccVersion)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -230,7 +317,24 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, quantity);
+				getUserId(), commerceInventoryWarehouseItemId, quantity,
+				reservedQuantity, mvccVersion);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseItemId, int quantity,
+			long mvccVersion)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			updateCommerceInventoryWarehouseItem(
+				getUserId(), commerceInventoryWarehouseItemId, quantity,
+				mvccVersion);
 	}
 
 	@Override

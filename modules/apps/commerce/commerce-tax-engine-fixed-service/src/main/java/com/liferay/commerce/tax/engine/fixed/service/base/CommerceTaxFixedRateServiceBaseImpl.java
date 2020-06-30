@@ -49,7 +49,7 @@ public abstract class CommerceTaxFixedRateServiceBaseImpl
 	extends BaseServiceImpl
 	implements CommerceTaxFixedRateService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateServiceUtil</code>.
@@ -436,8 +436,8 @@ public abstract class CommerceTaxFixedRateServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay External Reference Service
 Bundle-SymbolicName: com.liferay.external.reference.service
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.13
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

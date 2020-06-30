@@ -132,10 +132,15 @@ public class CPOptionFacetsPortlet
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long commerceChannelGroupId =
-				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(
-						themeDisplay.getScopeGroupId());
+			long commerceChannelGroupId = 0;
+
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+					themeDisplay.getScopeGroupId());
+
+			if (commerceChannel != null) {
+				commerceChannelGroupId = commerceChannel.getGroupId();
+			}
 
 			if (commerceChannelGroupId > 0) {
 				searchContext.setAttribute(
@@ -146,9 +151,13 @@ public class CPOptionFacetsPortlet
 					_commerceAccountHelper.getCurrentCommerceAccount(
 						commerceChannelGroupId, themeDisplay.getRequest());
 
-				long[] commerceAccountGroupIds =
-					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
+				long[] commerceAccountGroupIds = null;
+
+				if (commerceAccount != null) {
+					commerceAccountGroupIds =
+						_commerceAccountHelper.getCommerceAccountGroupIds(
+							commerceAccount.getCommerceAccountId());
+				}
 
 				searchContext.setAttribute(
 					"commerceAccountGroupIds", commerceAccountGroupIds);

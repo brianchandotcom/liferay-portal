@@ -214,11 +214,6 @@ public class DDMTemplateLinkWrapper
 		return _ddmTemplateLink.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm template link model instance should use the <code>DDMTemplateLink</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmTemplateLink.persist();

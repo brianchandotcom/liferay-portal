@@ -43,7 +43,7 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after(instance._renderFormBuilderField, instance, 'render')
+					instance.after('render', instance._renderFormBuilderField)
 				);
 			},
 
@@ -265,7 +265,9 @@ AUI.add(
 
 				var wrapper = container.one('.' + CSS_FORM_GROUP);
 
-				wrapper.append('<div class="' + CSS_FIELD_CONTENT_TARGET + '"></div>');
+				if (!container.one('.' + CSS_FIELD_CONTENT_TARGET)) {
+					wrapper.append('<div class="' + CSS_FIELD_CONTENT_TARGET + '"></div>');
+				}
 
 				if (!container.one('.' + FIELD_ACTIONS)) {
 					container.append(instance.get('builder')._getFieldActionsLayout());

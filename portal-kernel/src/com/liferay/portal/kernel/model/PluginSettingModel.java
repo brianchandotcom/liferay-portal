@@ -37,7 +37,7 @@ import java.io.Serializable;
 public interface PluginSettingModel
 	extends BaseModel<PluginSetting>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a plugin setting model instance should use the {@link PluginSetting} interface instead.

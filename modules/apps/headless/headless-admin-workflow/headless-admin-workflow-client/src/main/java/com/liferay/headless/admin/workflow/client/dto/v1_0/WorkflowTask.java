@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowTask {
+public class WorkflowTask implements Cloneable {
 
 	public Boolean getCompleted() {
 		return completed;
@@ -235,6 +235,11 @@ public class WorkflowTask {
 	}
 
 	protected String[] transitions;
+
+	@Override
+	public WorkflowTask clone() throws CloneNotSupportedException {
+		return (WorkflowTask)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

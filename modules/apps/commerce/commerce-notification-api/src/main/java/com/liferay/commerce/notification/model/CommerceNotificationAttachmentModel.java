@@ -45,7 +45,7 @@ public interface CommerceNotificationAttachmentModel
 	extends BaseModel<CommerceNotificationAttachment>, GroupedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce notification attachment model instance should use the {@link CommerceNotificationAttachment} interface instead.

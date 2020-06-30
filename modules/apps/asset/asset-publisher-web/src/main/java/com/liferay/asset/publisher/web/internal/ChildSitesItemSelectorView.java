@@ -15,7 +15,8 @@
 package com.liferay.asset.publisher.web.internal;
 
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.display.context.ChildSitesItemSelectorViewDisplayContext;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.display.context.ChildSitesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
@@ -105,8 +106,9 @@ public class ChildSitesItemSelectorView
 		ChildSitesItemSelectorViewDisplayContext
 			childSitesItemSelectorViewDisplayContext =
 				new ChildSitesItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL);
+					(HttpServletRequest)request, _assetPublisherHelper,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT,
@@ -132,6 +134,9 @@ public class ChildSitesItemSelectorView
 				new ItemSelectorReturnType[] {
 					new SiteItemSelectorReturnType()
 				}));
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference(unbind = "-")
 	private GroupLocalService _groupLocalService;

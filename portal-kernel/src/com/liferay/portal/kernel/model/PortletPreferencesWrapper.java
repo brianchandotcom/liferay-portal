@@ -248,11 +248,6 @@ public class PortletPreferencesWrapper
 		return _portletPreferences.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a portlet preferences model instance should use the <code>PortletPreferences</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_portletPreferences.persist();

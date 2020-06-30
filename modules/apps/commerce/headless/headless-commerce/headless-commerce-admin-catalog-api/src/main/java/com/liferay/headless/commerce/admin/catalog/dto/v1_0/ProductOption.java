@@ -22,9 +22,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -35,6 +34,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -51,6 +52,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ProductOption")
 public class ProductOption {
 
+	@GraphQLName("FieldType")
 	public static enum FieldType {
 
 		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
@@ -114,6 +116,7 @@ public class ProductOption {
 	protected Long catalogId;
 
 	@Schema
+	@Valid
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -171,6 +174,7 @@ public class ProductOption {
 	protected Boolean facetable;
 
 	@Schema
+	@Valid
 	public FieldType getFieldType() {
 		return fieldType;
 	}
@@ -208,6 +212,7 @@ public class ProductOption {
 	@NotNull
 	protected FieldType fieldType;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -262,6 +267,7 @@ public class ProductOption {
 	protected String key;
 
 	@Schema
+	@Valid
 	public Map<String, String> getName() {
 		return name;
 	}
@@ -290,6 +296,7 @@ public class ProductOption {
 	@NotNull
 	protected Map<String, String> name;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getOptionId() {
 		return optionId;
@@ -348,6 +355,38 @@ public class ProductOption {
 	protected Double priority;
 
 	@Schema
+	@Valid
+	public ProductOptionValue[] getProductOptionValues() {
+		return productOptionValues;
+	}
+
+	public void setProductOptionValues(
+		ProductOptionValue[] productOptionValues) {
+
+		this.productOptionValues = productOptionValues;
+	}
+
+	@JsonIgnore
+	public void setProductOptionValues(
+		UnsafeSupplier<ProductOptionValue[], Exception>
+			productOptionValuesUnsafeSupplier) {
+
+		try {
+			productOptionValues = productOptionValuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProductOptionValue[] productOptionValues;
+
+	@Schema
 	public Boolean getRequired() {
 		return required;
 	}
@@ -402,34 +441,6 @@ public class ProductOption {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
-
-	@Schema
-	public ProductOptionValue[] getValues() {
-		return values;
-	}
-
-	public void setValues(ProductOptionValue[] values) {
-		this.values = values;
-	}
-
-	@JsonIgnore
-	public void setValues(
-		UnsafeSupplier<ProductOptionValue[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ProductOptionValue[] values;
 
 	@Override
 	public boolean equals(Object object) {
@@ -556,6 +567,26 @@ public class ProductOption {
 			sb.append(priority);
 		}
 
+		if (productOptionValues != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productOptionValues\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productOptionValues.length; i++) {
+				sb.append(String.valueOf(productOptionValues[i]));
+
+				if ((i + 1) < productOptionValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (required != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -576,30 +607,16 @@ public class ProductOption {
 			sb.append(skuContributor);
 		}
 
-		if (values != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"values\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < values.length; i++) {
-				sb.append(String.valueOf(values[i]));
-
-				if ((i + 1) < values.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

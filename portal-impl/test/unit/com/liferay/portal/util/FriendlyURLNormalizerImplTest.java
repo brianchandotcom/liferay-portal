@@ -53,6 +53,19 @@ public class FriendlyURLNormalizerImplTest {
 	}
 
 	@Test
+	public void testNormalizePercentageWithEncoding() throws Exception {
+		Assert.assertEquals(
+			StringPool.DASH,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("%"));
+		Assert.assertEquals(
+			"0-", _friendlyURLNormalizerImpl.normalizeWithEncoding("0%"));
+		Assert.assertEquals(
+			"company-grew-100-last-year",
+			_friendlyURLNormalizerImpl.normalizeWithEncoding(
+				"Company grew 100% last year"));
+	}
+
+	@Test
 	public void testNormalizeSentenceWithBlanks() {
 		Assert.assertEquals(
 			"sentence-with-blanks",

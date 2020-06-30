@@ -39,6 +39,8 @@ definition {
 		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
 		var portalURL = PropsUtil.get("portal.url");
 
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -143,6 +145,8 @@ definition {
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
 			selectOption = "Option");
+
+		Refresh();
 
 		FormFields.editText(
 			fieldName = "TextField",
@@ -451,6 +455,13 @@ definition {
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
 		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",

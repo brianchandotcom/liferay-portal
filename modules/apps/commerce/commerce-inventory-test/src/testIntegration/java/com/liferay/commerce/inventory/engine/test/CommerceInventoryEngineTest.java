@@ -32,7 +32,6 @@ import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
-import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -101,8 +100,10 @@ public class CommerceInventoryEngineTest {
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			StringPool.BLANK, _serviceContext);
 
-		_cpInstance1 = _randomCPInstanceSku();
-		_cpInstance2 = _randomCPInstanceSku();
+		_cpInstance1 = CommerceInventoryTestUtil.addRandomCPInstanceSku(
+			_group.getGroupId());
+		_cpInstance2 = CommerceInventoryTestUtil.addRandomCPInstanceSku(
+			_group.getGroupId());
 	}
 
 	@Test(expected = DuplicateCommerceInventoryWarehouseItemException.class)
@@ -118,8 +119,7 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
 
 		_commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
@@ -154,12 +154,10 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -218,12 +216,10 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -367,12 +363,10 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -469,14 +463,15 @@ public class CommerceInventoryEngineTest {
 		String name = RandomTestUtil.randomString();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), name);
+			CommerceInventoryTestUtil.
+				addCommerceInventoryWarehouseWithExternalReferenceCode(
+					_user.getGroupId(), name);
 
 		Assert.assertEquals(name, commerceInventoryWarehouse.getName());
 
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
-				getCommerceInventoryWarehouses(_company.getCompanyId());
+				getCommerceInventoryWarehouses(_user.getCompanyId());
 
 		CommerceInventoryWarehouse retrievedCommerceInventoryWarehouse =
 			commerceInventoryWarehouses.get(0);
@@ -508,12 +503,10 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse inactiveCommerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		CommerceInventoryWarehouse activeCommerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -616,8 +609,7 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		int quantity = 10;
 
@@ -650,8 +642,7 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -690,8 +681,7 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CPDefinition.class.getName(), _cpInstance1.getCPDefinitionId(),
@@ -751,12 +741,10 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseInactive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -769,16 +757,19 @@ public class CommerceInventoryEngineTest {
 				getCommerceInventoryWarehouseId(),
 			_commerceChannel.getCommerceChannelId(), _serviceContext);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		List<CommerceInventoryWarehouse> activeWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
-					_company.getCompanyId(), _commerceChannel.getGroupId(),
-					true);
+					serviceContext.getCompanyId(),
+					_commerceChannel.getGroupId(), true);
 		List<CommerceInventoryWarehouse> inactiveWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
-					_company.getCompanyId(), _commerceChannel.getGroupId(),
-					false);
+					serviceContext.getCompanyId(),
+					_commerceChannel.getGroupId(), false);
 
 		Assert.assertEquals(
 			activeWarehouses.toString(), 1, activeWarehouses.size());
@@ -805,8 +796,7 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -833,8 +823,7 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -860,8 +849,7 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_user.getGroupId(), true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -936,14 +924,6 @@ public class CommerceInventoryEngineTest {
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
-
-	private CPInstance _randomCPInstanceSku() throws Exception {
-		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
-
-		cpInstance.setSku(RandomTestUtil.randomString());
-
-		return _cpInstanceLocalService.updateCPInstance(cpInstance);
-	}
 
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService

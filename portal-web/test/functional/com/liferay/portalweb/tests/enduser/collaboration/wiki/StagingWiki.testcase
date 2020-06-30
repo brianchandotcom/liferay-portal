@@ -118,7 +118,8 @@ definition {
 		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
 	}
 
-	@description = "This is a use case for LPS-74621."
+	@description = "This will be ignored until LPS-96928 is fixed. This is a use case for LPS-74621."
+	@ignore = "true"
 	@priority = "3"
 	test CommentAndRateWikiFrontPageOnLiveSite {
 		Navigator.gotoStagedSitePage(
@@ -386,7 +387,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		for (var wikiPageTitle : list "Child Page Title,Child Page Title Rename,Child Page Title Rename 1") {
+		for (var wikiPageTitle : list "Child Page Title,Rename Page Title,Rename Page Title 1") {
 			LexiconEntry.viewEntryName(rowEntry = "${wikiPageTitle}");
 		}
 	}

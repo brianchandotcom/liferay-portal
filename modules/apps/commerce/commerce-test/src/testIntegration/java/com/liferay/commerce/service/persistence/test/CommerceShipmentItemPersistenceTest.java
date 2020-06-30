@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -204,6 +205,30 @@ public class CommerceShipmentItemPersistenceTest {
 		_persistence.countByCommerceShipment(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceShipment(0L);
+	}
+
+	@Test
+	public void testCountByCommerceOrderItemId() throws Exception {
+		_persistence.countByCommerceOrderItemId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceOrderItemId(0L);
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_C_C() throws Exception {
+		_persistence.countByC_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -473,6 +498,35 @@ public class CommerceShipmentItemPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceShipmentItem newCommerceShipmentItem =
+			addCommerceShipmentItem();
+
+		_persistence.clearCache();
+
+		CommerceShipmentItem existingCommerceShipmentItem =
+			_persistence.findByPrimaryKey(
+				newCommerceShipmentItem.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingCommerceShipmentItem.getCommerceShipmentId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommerceShipmentItem, "getOriginalCommerceShipmentId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingCommerceShipmentItem.getCommerceOrderItemId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommerceShipmentItem, "getOriginalCommerceOrderItemId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(
+				existingCommerceShipmentItem.getCommerceInventoryWarehouseId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommerceShipmentItem,
+				"getOriginalCommerceInventoryWarehouseId", new Class<?>[0]));
 	}
 
 	protected CommerceShipmentItem addCommerceShipmentItem() throws Exception {

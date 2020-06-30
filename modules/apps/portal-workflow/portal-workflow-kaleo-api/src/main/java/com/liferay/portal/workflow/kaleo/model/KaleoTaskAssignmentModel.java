@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoTaskAssignmentModel
 	extends BaseModel<KaleoTaskAssignment>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo task assignment model instance should use the {@link KaleoTaskAssignment} interface instead.

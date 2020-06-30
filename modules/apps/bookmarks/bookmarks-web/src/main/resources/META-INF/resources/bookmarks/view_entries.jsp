@@ -54,12 +54,10 @@ if (portletTitleBasedNavigation && (folderId != BookmarksFolderConstants.DEFAULT
 
 	renderResponse.setTitle(folder.getName());
 }
-
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-ui:search-container
-	id="<%= searchContainerId %>"
+	id='<%= ParamUtil.getString(request, "searchContainerId") %>'
 	searchContainer="<%= bookmarksSearchContainer %>"
 	totalVar="bookmarksSearchContainerTotal"
 >

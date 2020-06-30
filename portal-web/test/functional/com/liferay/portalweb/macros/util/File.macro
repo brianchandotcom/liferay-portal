@@ -1,0 +1,13 @@
+definition {
+
+	macro getFileExtension {
+		if (!(isSet(fileName))) {
+			fail("Please set 'fileName'");
+		}
+
+		var extension = StringUtil.extractLast("${fileName}",".");
+
+		return "${extension}";
+	}
+
+}

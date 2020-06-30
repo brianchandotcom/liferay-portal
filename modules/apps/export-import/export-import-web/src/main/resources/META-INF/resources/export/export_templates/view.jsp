@@ -17,8 +17,6 @@
 <%@ include file="/export/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 portletDisplay.setShowBackIcon(true);
 
 PortletURL exportProcessesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE);

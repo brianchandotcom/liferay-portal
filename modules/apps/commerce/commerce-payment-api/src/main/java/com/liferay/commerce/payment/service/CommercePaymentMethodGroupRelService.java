@@ -61,28 +61,35 @@ import java.util.Map;
 )
 public interface CommercePaymentMethodGroupRelService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelServiceUtil} to access the commerce payment method group rel remote service. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
+			long userId, long groupId, long classPK, long commerceCountryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long classPK, long commerceCountryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePaymentMethodGroupRel createCommercePaymentMethodGroupRel(
-			long groupId)
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, File imageFile,
+			String engineKey, double priority, boolean active)
 		throws PortalException;
 
 	public void deleteCommerceAddressRestriction(
 			long commerceAddressRestrictionId)
+		throws PortalException;
+
+	public void deleteCommerceAddressRestrictions(
+			long commercePaymentMethodGroupRelId)
 		throws PortalException;
 
 	public void deleteCommercePaymentMethodGroupRel(
@@ -174,9 +181,8 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 
 	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
 			long commercePaymentMethodGroupRelId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, File imageFile, double priority,
+			boolean active)
 		throws PortalException;
 
 }

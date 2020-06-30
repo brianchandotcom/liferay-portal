@@ -33,11 +33,21 @@ public class CommerceShippingMethodServiceWrapper
 		_commerceShippingMethodService = commerceShippingMethodService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.addCommerceAddressRestriction(
+			userId, groupId, commerceShippingMethodId, commerceCountryId);
+	}
+
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodServiceUtil} to access the commerce shipping method remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
@@ -52,16 +62,16 @@ public class CommerceShippingMethodServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod
 			addCommerceShippingMethod(
+				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.io.File imageFile, String engineKey, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingMethodService.addCommerceShippingMethod(
-			nameMap, descriptionMap, imageFile, engineKey, priority, active,
-			serviceContext);
+			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+			priority, active);
 	}
 
 	@Override
@@ -80,6 +90,14 @@ public class CommerceShippingMethodServiceWrapper
 
 		_commerceShippingMethodService.deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
+	}
+
+	@Override
+	public void deleteCommerceAddressRestrictions(long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceShippingMethodService.deleteCommerceAddressRestrictions(
+			commerceShippingMethodId);
 	}
 
 	@Override

@@ -31,13 +31,28 @@ import java.util.List;
 public class CommerceTaxFixedRateLocalServiceImpl
 	extends CommerceTaxFixedRateLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
 			long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		return commerceTaxFixedRateLocalService.addCommerceTaxFixedRate(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			commerceTaxMethodId, cpTaxCategoryId, rate);
+	}
+
+	@Override
+	public CommerceTaxFixedRate addCommerceTaxFixedRate(
+			long userId, long groupId, long commerceTaxMethodId,
+			long cpTaxCategoryId, double rate)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
 
 		validate(cpTaxCategoryId, commerceTaxMethodId);
 
@@ -46,7 +61,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		CommerceTaxFixedRate commerceTaxFixedRate =
 			commerceTaxFixedRatePersistence.create(commerceTaxFixedRateId);
 
-		commerceTaxFixedRate.setGroupId(serviceContext.getScopeGroupId());
+		commerceTaxFixedRate.setGroupId(groupId);
 		commerceTaxFixedRate.setCompanyId(user.getCompanyId());
 		commerceTaxFixedRate.setUserId(user.getUserId());
 		commerceTaxFixedRate.setUserName(user.getFullName());
@@ -54,9 +69,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		commerceTaxFixedRate.setCPTaxCategoryId(cpTaxCategoryId);
 		commerceTaxFixedRate.setRate(rate);
 
-		commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
-
-		return commerceTaxFixedRate;
+		return commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
 	}
 
 	@Override
@@ -89,7 +102,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		return commerceTaxFixedRatePersistence.fetchByC_C(
+		return commerceTaxFixedRatePersistence.findByC_C(
 			cpTaxCategoryId, commerceTaxMethodId);
 	}
 
@@ -119,9 +132,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 
 		commerceTaxFixedRate.setRate(rate);
 
-		commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
-
-		return commerceTaxFixedRate;
+		return commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
 	}
 
 	protected void validate(long cpTaxCategoryId, long commerceTaxMethodId)

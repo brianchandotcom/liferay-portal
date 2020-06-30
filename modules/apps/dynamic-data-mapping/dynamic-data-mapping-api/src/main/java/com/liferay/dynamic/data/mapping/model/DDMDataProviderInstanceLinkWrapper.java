@@ -189,11 +189,6 @@ public class DDMDataProviderInstanceLinkWrapper
 		return _ddmDataProviderInstanceLink.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm data provider instance link model instance should use the <code>DDMDataProviderInstanceLink</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmDataProviderInstanceLink.persist();

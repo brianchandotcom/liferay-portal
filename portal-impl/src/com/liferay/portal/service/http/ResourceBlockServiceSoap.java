@@ -72,10 +72,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.addCompanyScopePermission(
 				scopeGroupId, companyId, name, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -88,10 +88,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.addGroupScopePermission(
 				scopeGroupId, companyId, groupId, name, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -104,10 +104,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.addIndividualScopePermission(
 				companyId, groupId, name, primKey, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -120,10 +120,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.removeAllGroupScopePermissions(
 				scopeGroupId, companyId, name, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -136,10 +136,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.removeCompanyScopePermission(
 				scopeGroupId, companyId, name, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -152,10 +152,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.removeGroupScopePermission(
 				scopeGroupId, companyId, groupId, name, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -168,10 +168,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.removeIndividualScopePermission(
 				companyId, groupId, name, primKey, roleId, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -184,10 +184,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.setCompanyScopePermissions(
 				scopeGroupId, companyId, name, roleId, actionIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -200,10 +200,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.setGroupScopePermissions(
 				scopeGroupId, companyId, groupId, name, roleId, actionIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -216,10 +216,10 @@ public class ResourceBlockServiceSoap {
 			ResourceBlockServiceUtil.setIndividualScopePermissions(
 				companyId, groupId, name, primKey, roleId, actionIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

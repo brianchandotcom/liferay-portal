@@ -35,13 +35,12 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, BigDecimal amount,
-			double priority, ServiceContext serviceContext)
+			long userId, long groupId, long commerceShippingMethodId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			BigDecimal amount, double priority)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		long commerceShippingFixedOptionId = counterLocalService.increment();
 
@@ -60,10 +59,26 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		commerceShippingFixedOption.setAmount(amount);
 		commerceShippingFixedOption.setPriority(priority);
 
-		commerceShippingFixedOptionPersistence.update(
+		return commerceShippingFixedOptionPersistence.update(
 			commerceShippingFixedOption);
+	}
 
-		return commerceShippingFixedOption;
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceShippingFixedOption addCommerceShippingFixedOption(
+			long commerceShippingMethodId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, BigDecimal amount,
+			double priority, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceShippingFixedOptionLocalService.
+			addCommerceShippingFixedOption(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				commerceShippingMethodId, nameMap, descriptionMap, amount,
+				priority);
 	}
 
 	@Override
@@ -135,10 +150,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		commerceShippingFixedOption.setAmount(amount);
 		commerceShippingFixedOption.setPriority(priority);
 
-		commerceShippingFixedOptionPersistence.update(
+		return commerceShippingFixedOptionPersistence.update(
 			commerceShippingFixedOption);
-
-		return commerceShippingFixedOption;
 	}
 
 }

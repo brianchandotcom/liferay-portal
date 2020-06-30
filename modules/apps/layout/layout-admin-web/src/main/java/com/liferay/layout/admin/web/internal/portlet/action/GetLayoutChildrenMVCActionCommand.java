@@ -17,11 +17,10 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,7 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
+public class GetLayoutChildrenMVCActionCommand
+	extends BaseAddLayoutMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -53,17 +53,49 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
+		writeChildLayoutsAsJSON(actionRequest, actionResponse, plid);
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	protected void writeChildLayoutsAsJSON(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long plid)
+		throws Exception {
+
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
-		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
-			new LayoutsAdminDisplayContext(
-				_portal.getLiferayPortletRequest(actionRequest),
-				_portal.getLiferayPortletResponse(actionResponse));
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONArray jsonArray = null;
 
-		JSONArray jsonArray = layoutsAdminDisplayContext.getLayoutsJSONArray(
-			layout.getLayoutId(), layout.isPrivateLayout());
+		if (layout != null) {
+			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+				new LayoutsAdminDisplayContext(
+					_portal.getLiferayPortletRequest(actionRequest),
+					_portal.getLiferayPortletResponse(actionResponse));
+
+			jsonArray = layoutsAdminDisplayContext.getLayoutsJSONArray(
+				layout.getLayoutId(), layout.isPrivateLayout());
+		}
+		else {
+			jsonArray = _jsonFactory.createJSONArray();
+		}
 
 		jsonObject.put("children", jsonArray);
 
@@ -71,10 +103,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	@Reference
+	private JSONFactory _jsonFactory;
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
 	private Portal _portal;
 
 }

@@ -105,7 +105,7 @@ public class DLFileVersionLocalServiceTreeTest {
 					fileEntry.getFileEntryId(),
 					DLFileEntryConstants.VERSION_DEFAULT);
 
-			dlFileVersion.setTreePath(null);
+			dlFileVersion.setTreePath("/0/");
 
 			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 		}

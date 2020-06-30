@@ -19,40 +19,27 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceConstants" %><%@
-page import="com.liferay.commerce.model.CommerceCountry" %><%@
+<%@ page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceRegion" %><%@
-page import="com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException" %><%@
 page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
-page import="com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException" %><%@
-page import="com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRatesDisplayContext" %><%@
-page import="com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxedAddressDisplayContext" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.commerce.tax.engine.fixed.web.internal.frontend.CommerceTaxRateClayTable" %><%@
+page import="com.liferay.commerce.tax.engine.fixed.web.internal.frontend.CommerceTaxRateSettingClayTable" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 
@@ -61,7 +48,5 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-String commerceAdminModuleKey = CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY;
-
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

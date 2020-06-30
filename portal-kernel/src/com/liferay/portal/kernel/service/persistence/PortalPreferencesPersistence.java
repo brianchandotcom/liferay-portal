@@ -39,7 +39,7 @@ import java.util.Set;
 public interface PortalPreferencesPersistence
 	extends BasePersistence<PortalPreferences> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferencesUtil} to access the portal preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

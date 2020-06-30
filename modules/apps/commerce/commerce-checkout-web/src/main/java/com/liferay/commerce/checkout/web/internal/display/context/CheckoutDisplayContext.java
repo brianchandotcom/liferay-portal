@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
@@ -141,8 +143,12 @@ public class CheckoutDisplayContext {
 		return _commerceCheckoutStep.isSennaDisabled();
 	}
 
-	public void renderCurrentCheckoutStep() throws Exception {
-		_commerceCheckoutStep.render(_httpServletRequest, _httpServletResponse);
+	public void renderCurrentCheckoutStep(PageContext pageContext)
+		throws Exception {
+
+		_commerceCheckoutStep.render(
+			_httpServletRequest,
+			PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 
 	public boolean showControls() {

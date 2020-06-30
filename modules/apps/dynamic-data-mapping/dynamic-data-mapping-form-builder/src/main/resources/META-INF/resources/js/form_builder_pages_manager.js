@@ -127,7 +127,7 @@ AUI.add(
 						'</div>',
 
 					TPL_PAGE_HEADER: '<div class="' + CSS_PAGE_HEADER + ' form-inline">' +
-						'<textarea rows="1" placeholder="{untitledPage}" class="' + CSS_PAGE_HEADER_TITLE + ' ' +
+						'<textarea rows="1" placeholder="" class="' + CSS_PAGE_HEADER_TITLE + ' ' +
 						CSS_PAGE_HEADER_TITLE_HIDE_BORDER + ' form-control"></textarea>' +
 						'<textarea rows="1" placeholder="{aditionalInfo}" class="' + CSS_PAGE_HEADER_DESCRIPTION + ' ' +
 						CSS_PAGE_HEADER_DESCRIPTION_HIDE_BORDER + ' form-control"></textarea>' +
@@ -187,6 +187,8 @@ AUI.add(
 						}
 
 						instance._createTitleForEditingLanguageId();
+
+						instance._uiSetActivePageNumber(1);
 					},
 
 					destructor: function() {
@@ -942,12 +944,6 @@ AUI.add(
 
 						var title = event.newVal.trim();
 
-						if (!title) {
-							var pagesQuantity = instance.get('pagesQuantity');
-
-							title = instance._createUntitledPageLabel(activePageNumber, pagesQuantity);
-						}
-
 						titles[activePageNumber - 1] = title;
 						localizedTitles[activePageNumber - 1][editingLanguageId] = title;
 
@@ -1276,10 +1272,24 @@ AUI.add(
 						instance._getWizard().set('disabled', disabled);
 					},
 
-					_uiSetActivePageNumber: function(event) {
+					_uiSetActivePageNumber: function(activePageNumber) {
 						var instance = this;
 
 						FormBuilderPagesManager.superclass._uiSetActivePageNumber.apply(instance, arguments);
+
+						var title = instance.get('titles')[activePageNumber - 1];
+
+						if (title) {
+							var pagesQuantity = instance.get('pagesQuantity');
+
+							var untitledPageLabel = instance._createUntitledPageLabel(activePageNumber, pagesQuantity);
+
+							var pageHeader = instance.get('pageHeader');
+
+							var titleNode = pageHeader.one('.' + CSS_PAGE_HEADER_TITLE);
+
+							titleNode.attr('placeholder', untitledPageLabel);
+						}
 
 						instance._syncPageInformationHeight();
 					},

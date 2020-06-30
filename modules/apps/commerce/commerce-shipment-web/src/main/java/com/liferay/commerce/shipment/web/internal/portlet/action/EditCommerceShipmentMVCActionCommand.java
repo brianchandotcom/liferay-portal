@@ -16,41 +16,35 @@ package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
+import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Alec Sloan
  */
 @Component(
 	immediate = true,
@@ -62,35 +56,44 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addCommerceShipmentItems(
-			ActionRequest actionRequest, long commerceShipmentId)
+	protected CommerceShipment addCommerceShipment(ActionRequest actionRequest)
 		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipment.class.getName(), actionRequest);
+
+		long groupId = ParamUtil.getLong(
+			actionRequest, "commerceChannelGroupId");
+		long commerceAccountId = ParamUtil.getLong(
+			actionRequest, "commerceAccountId");
+		long commerceAddressId = ParamUtil.getLong(
+			actionRequest, "commerceAddressId");
+		long commerceShippingMethodId = ParamUtil.getLong(
+			actionRequest, "commerceShippingMethodId");
+		String commerceShippingOptionName = ParamUtil.getString(
+			actionRequest, "commerceShippingOptionName");
+
+		return _commerceShipmentService.addCommerceShipment(
+			groupId, commerceAccountId, commerceAddressId,
+			commerceShippingMethodId, commerceShippingOptionName,
+			serviceContext);
+	}
+
+	protected void addCommerceShipmentItems(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceShipmentItem.class.getName(), actionRequest);
 
 		long[] commerceOrderItemIds = ParamUtil.getLongValues(
-			actionRequest, "commerceOrderItemId");
+			actionRequest, "orderItemId");
 
 		for (long commerceOrderItemId : commerceOrderItemIds) {
-			long[] commerceInventoryWarehouseIds = ParamUtil.getLongValues(
-				actionRequest, commerceOrderItemId + "_warehouse");
-
-			for (long commerceInventoryWarehouseId :
-					commerceInventoryWarehouseIds) {
-
-				int quantity = ParamUtil.getInteger(
-					actionRequest,
-					StringBundler.concat(
-						commerceOrderItemId, StringPool.UNDERLINE,
-						commerceInventoryWarehouseId, "_quantity"));
-
-				if (quantity > 0) {
-					_commerceShipmentItemService.addCommerceShipmentItem(
-						commerceShipmentId, commerceOrderItemId,
-						commerceInventoryWarehouseId, quantity, serviceContext);
-				}
-			}
+			_commerceShipmentItemService.addCommerceShipmentItem(
+				commerceShipmentId, commerceOrderItemId, 0, 0, serviceContext);
 		}
 	}
 
@@ -111,9 +114,12 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 				0L);
 		}
 
+		boolean restoreStockQuantity = ParamUtil.getBoolean(
+			actionRequest, "restoreStockQuantity");
+
 		for (long deleteCommerceShipmentId : deleteCommerceShipmentIds) {
 			_commerceShipmentService.deleteCommerceShipment(
-				deleteCommerceShipmentId);
+				deleteCommerceShipmentId, restoreStockQuantity);
 		}
 	}
 
@@ -126,11 +132,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				hideDefaultSuccessMessage(actionRequest);
-
-				String redirect = getSaveAndRedirectRedirect(actionRequest);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				addCommerceShipment(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceShipments(actionRequest);
@@ -138,33 +140,38 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateCommerceShipment(actionRequest);
 			}
-			else if (cmd.equals("selectCommerceShipmentItems")) {
-				selectCommerceShipmentItems(actionRequest, actionResponse);
+			else if (cmd.equals("addShipmentItems")) {
+				addCommerceShipmentItems(actionRequest);
+			}
+			else if (cmd.equals("carrierDetails")) {
+				updateCarrierDetails(actionRequest);
+			}
+			else if (cmd.equals("expectedDate")) {
+				updateExpectedDate(actionRequest);
+			}
+			else if (cmd.equals("shippingDate")) {
+				updateShippingDate(actionRequest);
+			}
+			else if (cmd.equals("transition")) {
+				updateStatus(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceShipmentItemQuantityException) {
+			if (e instanceof CommerceShipmentItemQuantityException ||
+				e instanceof CommerceShipmentShippingDateException ||
+				e instanceof CommerceShipmentStatusException ||
+				e instanceof NoSuchShipmentException ||
+				e instanceof PrincipalException) {
+
 				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "selectCommerceShipmentItems");
-			}
-			else if (e instanceof CommerceShipmentStatusException) {
-				hideDefaultErrorMessage(actionRequest);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "viewCommerceShipmentDetail");
-			}
-			else if (e instanceof NoSuchShipmentException ||
-					 e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;
@@ -172,78 +179,42 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected String getSaveAndRedirectRedirect(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CommerceShipment.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "selectCommerceShipmentItems");
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-		}
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
+	protected CommerceShipment updateAddress(ActionRequest actionRequest)
+		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		portletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		String street1 = ParamUtil.getString(actionRequest, "street1");
+		String street2 = ParamUtil.getString(actionRequest, "street2");
+		String street3 = ParamUtil.getString(actionRequest, "street3");
+		String city = ParamUtil.getString(actionRequest, "city");
+		String zip = ParamUtil.getString(actionRequest, "zip");
+		long commerceCountryId = ParamUtil.getLong(
+			actionRequest, "commerceCountryId");
+		long commerceRegionId = ParamUtil.getLong(
+			actionRequest, "commerceRegionId");
+		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
-		return portletURL.toString();
+		return _commerceShipmentService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
 	}
 
-	protected void selectCommerceShipmentItems(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		CommerceShipment commerceShipment = null;
+	protected CommerceShipment updateCarrierDetails(ActionRequest actionRequest)
+		throws PortalException {
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
 
-		if (commerceShipmentId > 0) {
-			commerceShipment = _commerceShipmentService.getCommerceShipment(
-				commerceShipmentId);
-		}
-		else {
-			commerceShipment = updateCommerceShipment(actionRequest);
-		}
+		String carrier = ParamUtil.getString(actionRequest, "carrier");
+		String trackingNumber = ParamUtil.getString(
+			actionRequest, "trackingNumber");
 
-		if (commerceShipment != null) {
-			addCommerceShipmentItems(
-				actionRequest, commerceShipment.getCommerceShipmentId());
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CommerceShipment.class.getName(), PortletProvider.Action.VIEW);
-
-		if (commerceShipment != null) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "viewCommerceShipmentDetail");
-			portletURL.setParameter(
-				"commerceShipmentId",
-				String.valueOf(commerceShipment.getCommerceShipmentId()));
-		}
-
-		sendRedirect(actionRequest, actionResponse, portletURL.toString());
+		return _commerceShipmentService.updateCarrierDetails(
+			commerceShipmentId, carrier, trackingNumber);
 	}
 
 	protected CommerceShipment updateCommerceShipment(
@@ -330,6 +301,74 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return commerceShipment;
+	}
+
+	protected CommerceShipment updateExpectedDate(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		int expectedDateMonth = ParamUtil.getInteger(
+			actionRequest, "expectedDateMonth");
+		int expectedDateDay = ParamUtil.getInteger(
+			actionRequest, "expectedDateDay");
+		int expectedDateYear = ParamUtil.getInteger(
+			actionRequest, "expectedDateYear");
+		int expectedDateHour = ParamUtil.getInteger(
+			actionRequest, "expectedDateHour");
+		int expectedDateMinute = ParamUtil.getInteger(
+			actionRequest, "expectedDateMinute");
+		int expectedDateAmPm = ParamUtil.getInteger(
+			actionRequest, "expectedDateAmPm");
+
+		if (expectedDateAmPm == Calendar.PM) {
+			expectedDateHour += 12;
+		}
+
+		return _commerceShipmentService.updateExpectedDate(
+			commerceShipmentId, expectedDateMonth, expectedDateDay,
+			expectedDateYear, expectedDateHour, expectedDateMinute);
+	}
+
+	protected CommerceShipment updateShippingDate(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		int shippingDateMonth = ParamUtil.getInteger(
+			actionRequest, "shippingDateMonth");
+		int shippingDateDay = ParamUtil.getInteger(
+			actionRequest, "shippingDateDay");
+		int shippingDateYear = ParamUtil.getInteger(
+			actionRequest, "shippingDateYear");
+		int shippingDateHour = ParamUtil.getInteger(
+			actionRequest, "shippingDateHour");
+		int shippingDateMinute = ParamUtil.getInteger(
+			actionRequest, "shippingDateMinute");
+		int shippingDateAmPm = ParamUtil.getInteger(
+			actionRequest, "shippingDateAmPm");
+
+		if (shippingDateAmPm == Calendar.PM) {
+			shippingDateHour += 12;
+		}
+
+		return _commerceShipmentService.updateShippingDate(
+			commerceShipmentId, shippingDateMonth, shippingDateDay,
+			shippingDateYear, shippingDateHour, shippingDateMinute);
+	}
+
+	protected CommerceShipment updateStatus(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		int status = ParamUtil.getInteger(actionRequest, "transitionName");
+
+		return _commerceShipmentService.updateStatus(
+			commerceShipmentId, status);
 	}
 
 	@Reference

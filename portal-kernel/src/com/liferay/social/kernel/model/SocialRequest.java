@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface SocialRequest extends PersistedModel, SocialRequestModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

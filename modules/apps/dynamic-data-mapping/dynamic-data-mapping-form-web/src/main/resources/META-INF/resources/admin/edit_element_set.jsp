@@ -133,10 +133,6 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			showPagination="<%= false %>"
 		/>
 
-		<div class="hide">
-			<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
-		</div>
-
 		<aui:script use="aui-promise,liferay-ddm-form-portlet">
 			Liferay.namespace('DDM').FormSettings = {
 				portletNamespace: '<portlet:namespace />'
@@ -242,4 +238,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			Liferay.on('destroyPortlet', clearPortletHandlers);
 		</aui:script>
 	</aui:form>
+
+	<div class="hide">
+		<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
+	</div>
 </div>

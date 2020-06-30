@@ -82,10 +82,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -98,10 +98,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				deleteCommercePriceListCommerceAccountGroupRel(
 					commercePriceListCommerceAccountGroupRelId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -122,10 +122,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -146,10 +146,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -171,10 +171,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModels(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -201,10 +201,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModels(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -220,10 +220,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -247,10 +247,10 @@ public class CommercePriceListCommerceAccountGroupRelServiceSoap {
 				CommercePriceListCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

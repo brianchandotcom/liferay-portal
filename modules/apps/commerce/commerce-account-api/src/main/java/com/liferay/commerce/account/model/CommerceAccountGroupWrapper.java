@@ -307,11 +307,6 @@ public class CommerceAccountGroupWrapper
 		return _commerceAccountGroup.isSystem();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce account group model instance should use the <code>CommerceAccountGroup</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceAccountGroup.persist();

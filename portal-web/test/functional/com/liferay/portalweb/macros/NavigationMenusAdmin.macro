@@ -60,6 +60,8 @@ definition {
 	macro addItem {
 		LexiconEntry.gotoAddMenuItem(menuItem = "${item}");
 
+		Pause(locator1 = "1000");
+
 		IFrame.selectConfigurationFrame();
 
 		if ("${item}" == "Page") {

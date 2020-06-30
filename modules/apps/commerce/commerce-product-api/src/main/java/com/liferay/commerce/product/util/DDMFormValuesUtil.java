@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 public class DDMFormValuesUtil {
 
@@ -41,6 +43,35 @@ public class DDMFormValuesUtil {
 		Map<String, String> map2 = _toMap(jsonArray2);
 
 		return map1.equals(map2);
+	}
+
+	public static JSONArray toJSONArray(Map<String, List<String>> keyValues) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<String, List<String>> keyValuesEntry :
+				keyValues.entrySet()) {
+
+			String key = keyValuesEntry.getKey();
+
+			JSONObject arrayEntryJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			arrayEntryJSONObject.put("key", key);
+
+			List<String> values = keyValuesEntry.getValue();
+
+			JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (String value : values) {
+				valuesJSONArray.put(value);
+			}
+
+			arrayEntryJSONObject.put("value", valuesJSONArray);
+
+			jsonArray.put(arrayEntryJSONObject);
+		}
+
+		return jsonArray;
 	}
 
 	private static Map<String, String> _toMap(JSONArray jsonArray) {

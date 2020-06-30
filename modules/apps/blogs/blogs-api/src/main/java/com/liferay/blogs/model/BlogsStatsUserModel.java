@@ -41,7 +41,7 @@ import java.util.Date;
 public interface BlogsStatsUserModel
 	extends BaseModel<BlogsStatsUser>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a blogs stats user model instance should use the {@link BlogsStatsUser} interface instead.

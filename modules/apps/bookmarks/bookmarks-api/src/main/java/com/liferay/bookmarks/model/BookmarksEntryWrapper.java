@@ -632,11 +632,6 @@ public class BookmarksEntryWrapper
 		return _bookmarksEntry.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a bookmarks entry model instance should use the <code>BookmarksEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_bookmarksEntry.persist();

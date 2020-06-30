@@ -43,7 +43,7 @@ import java.util.Date;
 public interface MicroblogsEntryModel
 	extends AuditedModel, BaseModel<MicroblogsEntry>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a microblogs entry model instance should use the {@link MicroblogsEntry} interface instead.

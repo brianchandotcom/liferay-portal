@@ -57,9 +57,7 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
-		cpTaxCategoryPersistence.update(cpTaxCategory);
-
-		return cpTaxCategory;
+		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
 
 	@Override
@@ -127,9 +125,7 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
-		cpTaxCategoryPersistence.update(cpTaxCategory);
-
-		return cpTaxCategory;
+		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
 
 	protected void validate(Map<Locale, String> nameMap)

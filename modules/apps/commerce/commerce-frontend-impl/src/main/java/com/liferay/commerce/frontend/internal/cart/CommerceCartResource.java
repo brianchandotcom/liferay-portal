@@ -95,7 +95,7 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getSiteGroupId(),
+				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
 				_portal.getUserId(httpServletRequest),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId());
@@ -159,7 +159,7 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getSiteGroupId(),
+				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
 				_portal.getUserId(httpServletRequest),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId());
@@ -227,7 +227,7 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getSiteGroupId(),
+				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
 				_portal.getUserId(httpServletRequest),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId());
@@ -269,7 +269,7 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getSiteGroupId(),
+				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
 				_portal.getUserId(httpServletRequest),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId());
@@ -328,7 +328,9 @@ public class CommerceCartResource {
 
 		try {
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest), groupId,
+				_portal.getCompanyId(httpServletRequest),
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				_portal.getUserId(httpServletRequest), orderId,
 				commerceAccountId);
 
@@ -357,7 +359,8 @@ public class CommerceCartResource {
 			}
 
 			commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest), groupId,
+				_portal.getCompanyId(httpServletRequest),
+				commerceOrder.getGroupId(),
 				_portal.getUserId(httpServletRequest),
 				commerceOrder.getCommerceOrderId(), commerceAccountId);
 
@@ -426,7 +429,7 @@ public class CommerceCartResource {
 				commerceOrder.getGroupId());
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			commerceOrder.getCompanyId(), commerceChannel.getSiteGroupId(),
+			commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
 			_portal.getUserId(httpServletRequest),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceAccountId());

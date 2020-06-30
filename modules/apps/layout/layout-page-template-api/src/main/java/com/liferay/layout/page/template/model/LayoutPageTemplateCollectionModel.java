@@ -44,7 +44,7 @@ public interface LayoutPageTemplateCollectionModel
 	extends BaseModel<LayoutPageTemplateCollection>, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a layout page template collection model instance should use the {@link LayoutPageTemplateCollection} interface instead.

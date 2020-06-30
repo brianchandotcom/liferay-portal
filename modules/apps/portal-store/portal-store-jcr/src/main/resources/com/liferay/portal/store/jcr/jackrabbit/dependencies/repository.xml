@@ -42,7 +42,7 @@
 		Database File System and Persistence (Cluster Configuration)
 
 		This is sample configuration for mysql persistence that can be used for
-		clustering Jackrabbit. For other databases, change the  connection,
+		clustering Jackrabbit. For other databases, change the connection,
 		credentials, and schema settings.
 		-->
 
@@ -101,7 +101,7 @@
 	Cluster Configuration
 
 	This is sample configuration for mysql persistence that can be used for
-	clustering Jackrabbit. For other databases, change the  connection,
+	clustering Jackrabbit. For other databases, change the connection,
 	credentials, and schema settings.
 	-->
 

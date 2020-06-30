@@ -44,7 +44,7 @@ public interface CPDAvailabilityEstimateModel
 	extends BaseModel<CPDAvailabilityEstimate>, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cpd availability estimate model instance should use the {@link CPDAvailabilityEstimate} interface instead.

@@ -46,8 +46,12 @@ public class CommerceStockQuantityMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		long cpInstanceId = message.getLong("cpInstanceId");
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
+
+		if (cpInstance == null) {
+			return;
+		}
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.

@@ -61,6 +61,9 @@ public class PortletDataHandlerKeys {
 
 	public static final String LAYOUTS_IMPORT_MODE_ADD_AS_NEW = "ADD_AS_NEW";
 
+	public static final String LAYOUTS_IMPORT_MODE_ADD_AS_NEW_PROTOTYPE =
+		"ADD_AS_NEW_PROTOTYPE";
+
 	public static final String LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE =
 		"CREATED_FROM_PROTOTYPE";
 

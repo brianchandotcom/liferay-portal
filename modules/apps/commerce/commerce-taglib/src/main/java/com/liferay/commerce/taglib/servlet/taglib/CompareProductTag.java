@@ -51,10 +51,12 @@ public class CompareProductTag extends IncludeTag {
 			HttpServletRequest originalHttpServletRequest =
 				PortalUtil.getOriginalServletRequest(request);
 
-			_cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
-				commerceContext.getCommerceChannelGroupId(),
-				commerceAccount.getCommerceAccountId(),
-				originalHttpServletRequest.getSession());
+			if (commerceAccount != null) {
+				_cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
+					commerceContext.getCommerceChannelGroupId(),
+					commerceAccount.getCommerceAccountId(),
+					originalHttpServletRequest.getSession());
+			}
 
 			if (_cpDefinitionIds == null) {
 				_cpDefinitionIds = new ArrayList<>();

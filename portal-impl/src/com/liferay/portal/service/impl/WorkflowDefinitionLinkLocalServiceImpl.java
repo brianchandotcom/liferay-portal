@@ -71,9 +71,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		workflowDefinitionLink.setWorkflowDefinitionVersion(
 			workflowDefinitionVersion);
 
-		workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
-
-		return workflowDefinitionLink;
+		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
 	}
 
 	@Override
@@ -121,9 +119,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return null;
 		}
 
-		WorkflowDefinitionLink workflowDefinitionLink = null;
-
-		workflowDefinitionLink =
+		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
 				StagingUtil.getLiveGroupId(groupId), companyId,
 				classNameLocalService.getClassNameId(className), classPK,
@@ -399,9 +395,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		workflowDefinitionLink.setWorkflowDefinitionVersion(
 			workflowDefinitionVersion);
 
-		workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
-
-		return workflowDefinitionLink;
+		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
 	}
 
 	@Override

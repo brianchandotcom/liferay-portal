@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -54,7 +55,7 @@ public class OrderItemDTOConverter implements DTOConverter {
 				dtoConverterContext.getResourcePrimKey());
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-		CPInstance cpInstance = commerceOrderItem.getCPInstance();
+		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
 
 		return new OrderItem() {
@@ -91,9 +92,9 @@ public class OrderItemDTOConverter implements DTOConverter {
 					commerceOrderItem.getShippingAddressId());
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
-				skuExternalReferenceCode =
-					cpInstance.getExternalReferenceCode();
-				skuId = cpInstance.getCPInstanceId();
+				skuExternalReferenceCode = _getSkuExternalReferenceCode(
+					cpInstance);
+				skuId = _getSkuId(cpInstance);
 				subscription = commerceOrderItem.isSubscription();
 				unitPrice = commerceOrderItem.getUnitPrice();
 			}
@@ -113,6 +114,22 @@ public class OrderItemDTOConverter implements DTOConverter {
 
 		return (ShippingAddress)shippingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(locale, shippingAddressId));
+	}
+
+	private String _getSkuExternalReferenceCode(CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpInstance.getExternalReferenceCode();
+	}
+
+	private Long _getSkuId(CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return 0L;
+		}
+
+		return cpInstance.getCPInstanceId();
 	}
 
 	@Reference

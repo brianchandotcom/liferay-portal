@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Scripting Python
 Bundle-SymbolicName: com.liferay.portal.scripting.python
-Bundle-Version: 3.0.4
+Bundle-Version: 3.0.5
 Import-Package:\
 	!com.informix.*,\
 	\

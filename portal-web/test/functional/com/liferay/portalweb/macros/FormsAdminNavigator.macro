@@ -3,6 +3,30 @@ definition {
 	var formName = "Created Form Name";
 	var rowIndexNumber = "1";
 
+	macro enableLocalNetworkDataProvider {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Data Providers",
+			configurationName = "Data Providers",
+			configurationScope = "Site Scope");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Button.clickUpdate();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(
+				key_checkboxOption = "Access Local Network",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.clickSave();
+		}
+	}
+
 	macro gotoAddDataProvider {
 		LexiconEntry.gotoAdd();
 	}

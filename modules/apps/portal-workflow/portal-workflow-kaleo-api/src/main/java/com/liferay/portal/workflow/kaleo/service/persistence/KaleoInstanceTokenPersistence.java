@@ -41,7 +41,7 @@ import java.util.Set;
 public interface KaleoInstanceTokenPersistence
 	extends BasePersistence<KaleoInstanceToken> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoInstanceTokenUtil} to access the kaleo instance token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

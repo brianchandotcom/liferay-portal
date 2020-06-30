@@ -14,16 +14,14 @@
 
 package com.liferay.commerce.subscription.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.subscription.web.internal.display.context.CPInstanceSubscriptionInfoDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,23 +50,28 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=60",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CPInstanceSubscriptionInfoScreenNavigationEntry
-	implements ScreenNavigationEntry<CPInstance> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+		return CPInstanceScreenNavigationConstants.
+			CATEGORY_KEY_SUBSCRIPTION_OVERRIDE;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return CPInstanceScreenNavigationConstants.
-			ENTRY_KEY_SUBSCRIPTION_OVERRIDE;
+			CATEGORY_KEY_SUBSCRIPTION_OVERRIDE;
 	}
 
 	@Override
@@ -76,10 +79,7 @@ public class CPInstanceSubscriptionInfoScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
-			resourceBundle,
-			CPInstanceScreenNavigationConstants.
-				ENTRY_KEY_SUBSCRIPTION_OVERRIDE);
+		return LanguageUtil.get(resourceBundle, "subscriptions");
 	}
 
 	@Override
@@ -120,9 +120,6 @@ public class CPInstanceSubscriptionInfoScreenNavigationEntry
 				cpInstanceSubscriptionInfoDisplayContext =
 					new CPInstanceSubscriptionInfoDisplayContext(
 						_actionHelper, httpServletRequest,
-						_commerceChannelRelLocalService,
-						_commercePaymentMethodGroupRelLocalService,
-						_commercePaymentMethodRegistry,
 						_cpSubscriptionTypeJSPContributorRegistry,
 						_cpSubscriptionTypeRegistry);
 
@@ -150,16 +147,6 @@ public class CPInstanceSubscriptionInfoScreenNavigationEntry
 	)
 	private ModelResourcePermission<CommerceCatalog>
 		_commerceCatalogModelResourcePermission;
-
-	@Reference
-	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
-
-	@Reference
-	private CommercePaymentMethodGroupRelLocalService
-		_commercePaymentMethodGroupRelLocalService;
-
-	@Reference
-	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private CPSubscriptionTypeJSPContributorRegistry

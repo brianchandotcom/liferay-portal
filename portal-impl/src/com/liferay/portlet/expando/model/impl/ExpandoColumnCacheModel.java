@@ -118,7 +118,9 @@ public class ExpandoColumnCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		columnId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -127,8 +129,8 @@ public class ExpandoColumnCacheModel
 		name = objectInput.readUTF();
 
 		type = objectInput.readInt();
-		defaultData = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		defaultData = (String)objectInput.readObject();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -149,17 +151,17 @@ public class ExpandoColumnCacheModel
 		objectOutput.writeInt(type);
 
 		if (defaultData == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(defaultData);
+			objectOutput.writeObject(defaultData);
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 	}
 

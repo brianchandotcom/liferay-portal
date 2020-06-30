@@ -91,15 +91,16 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 		long commerceChannelId = 0;
 
 		String sql =
-			"select * from CommerceChannel where siteGroupId = " + groupId +
-				" limit 1";
+			"select * from CommerceChannel where siteGroupId = " + groupId;
 
-		try (Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery(sql)) {
+		try (Statement s = connection.createStatement()) {
+			s.setMaxRows(1);
 
-			if (rs.next()) {
-				companyId = rs.getLong("companyId");
-				commerceChannelId = rs.getLong("commerceChannelId");
+			try (ResultSet rs = s.executeQuery(sql)) {
+				if (rs.next()) {
+					companyId = rs.getLong("companyId");
+					commerceChannelId = rs.getLong("commerceChannelId");
+				}
 			}
 		}
 

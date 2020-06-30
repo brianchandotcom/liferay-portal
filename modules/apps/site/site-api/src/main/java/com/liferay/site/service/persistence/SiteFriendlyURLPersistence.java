@@ -40,7 +40,7 @@ import java.util.Set;
 public interface SiteFriendlyURLPersistence
 	extends BasePersistence<SiteFriendlyURL> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLUtil} to access the site friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

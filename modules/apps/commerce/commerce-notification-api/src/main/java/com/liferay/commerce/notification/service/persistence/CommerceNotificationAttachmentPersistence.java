@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceNotificationAttachmentPersistence
 	extends BasePersistence<CommerceNotificationAttachment> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationAttachmentUtil} to access the commerce notification attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

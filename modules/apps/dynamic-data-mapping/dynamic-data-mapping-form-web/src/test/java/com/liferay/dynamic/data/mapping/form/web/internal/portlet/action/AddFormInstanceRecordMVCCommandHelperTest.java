@@ -76,6 +76,8 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		setUpAddRecordMVCCommandHelper();
 		setUpLanguageUtil();
 		setUpResourceBundleUtil();
+
+		mockGetDDMFormLayout();
 	}
 
 	@Test
@@ -115,8 +117,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		ddmFormFieldEvaluationResult.setVisible(false);
 
-		mockGetDDMFormLayout();
-
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
@@ -129,8 +129,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			setUpDDMFormFieldEvaluation();
 
 		ddmFormFieldEvaluationResult.setVisible(true);
-
-		mockGetDDMFormLayout();
 
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);

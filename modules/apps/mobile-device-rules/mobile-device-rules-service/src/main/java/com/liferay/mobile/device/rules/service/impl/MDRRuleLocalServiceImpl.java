@@ -187,7 +187,7 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		rule.setType(type);
 		rule.setTypeSettings(typeSettings);
 
-		mdrRulePersistence.update(rule);
+		rule = mdrRulePersistence.update(rule);
 
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			rule.getRuleGroupId());

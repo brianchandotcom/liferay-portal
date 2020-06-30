@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EmailAddressUtil} to access the email address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

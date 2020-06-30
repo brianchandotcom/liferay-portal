@@ -15,7 +15,6 @@
 package com.liferay.commerce.currency.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.admin.constants.CommerceAdminConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,11 +66,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return null;
-	}
-
-	@Override
-	public int getType() {
-		return CommerceAdminConstants.COMMERCE_ADMIN_TYPE_VIRTUAL_INSTANCE;
 	}
 
 	@Override

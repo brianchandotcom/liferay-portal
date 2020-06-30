@@ -205,8 +205,10 @@ class Layout extends Component {
 				this._draggingItemPosition === DRAG_POSITIONS.inside &&
 				this._currentPathItemPlid !== targetId
 			) {
+				const draggingItem = this._draggingItem;
+
 				this._updatePathTimeout = setTimeout(() => {
-					this._updatePath(targetId);
+					this._updatePath(targetId, draggingItem);
 				}, UPDATE_PATH_TIMEOUT);
 			}
 		}
@@ -299,40 +301,39 @@ class Layout extends Component {
 
 			layoutColumns = setHomePage(layoutColumns);
 
+			const droppedItemParentPlid = this._draggingItemParentPlid;
+
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,
 				sourceItemPlid,
-				priority
+				priority,
+				droppedItemParentPlid
 			)
 				.then(response => {
-					let nextPromise = response;
-
-					if (this._draggingItemParentPlid !== '0') {
-						nextPromise = this._getItemChildren(
-							this._draggingItemParentPlid
-						).then(response => {
-							if (
-								response.children &&
-								response.children.length === 0
-							) {
-								layoutColumns = this._removeHasChildArrow(
-									layoutColumns,
-									this._draggingItemParentPlid
-								);
-							}
-						});
+					if (
+						droppedItemParentPlid &&
+						droppedItemParentPlid !== '0' &&
+						response.children &&
+						response.children.length === 0
+					) {
+						layoutColumns = this._removeHasChildArrow(
+							layoutColumns,
+							droppedItemParentPlid
+						);
 					}
 
-					return nextPromise;
+					return response;
 				})
 				.then(() => {
 					this.layoutColumns = layoutColumns;
 
 					clearTimeout(this._updatePathTimeout);
 
-					requestAnimationFrame(() => {
-						this._initializeLayoutDragDrop();
-					});
+					if (this._draggingItem == null) {
+						requestAnimationFrame(() => {
+							this._initializeLayoutDragDrop();
+						});
+					}
 				});
 		}
 
@@ -458,6 +459,25 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {!object} event
+	 * @private
+	 * @review
+	 */
+	_handleTooltipHovered(event) {
+		const element = event.delegateTarget;
+		const tooltip = element.dataset.tooltip;
+
+		if (tooltip && element.offsetWidth < element.scrollWidth) {
+			element.setAttribute('title', tooltip);
+			element.classList.add('lfr-portal-tooltip');
+		}
+		else {
+			element.removeAttribute('title');
+			element.classList.remove('lfr-portal-tooltip');
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -495,16 +515,18 @@ class Layout extends Component {
 	 * @param {string} parentPlid
 	 * @param {string} plid
 	 * @param {string} priority
+	 * @param {string} checkPlid
 	 * @private
 	 * @return {Promise<object>}
 	 * @review
 	 */
 
-	_moveLayoutColumnItemOnServer(parentPlid, plid, priority) {
+	_moveLayoutColumnItemOnServer(parentPlid, plid, priority, checkPlid) {
 		const formData = new FormData();
 
 		formData.append(`${this.portletNamespace}plid`, plid);
 		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
+		formData.append(`${this.portletNamespace}checkPlid`, checkPlid);
 
 		if (priority) {
 			formData.append(`${this.portletNamespace}priority`, priority);
@@ -514,9 +536,11 @@ class Layout extends Component {
 			body: formData,
 			credentials: 'include',
 			method: 'POST'
-		}).catch(() => {
-			this._resetHoveredData();
-		});
+		})
+			.then(response => response.json())
+			.catch(() => {
+				this._resetHoveredData();
+			});
 	}
 
 	/**
@@ -671,7 +695,7 @@ class Layout extends Component {
 	 * @review
 	 */
 
-	_updatePath(targetItemPlid) {
+	_updatePath(targetItemPlid, draggingItem) {
 		let nextLayoutColumns = this.layoutColumns;
 
 		const targetColumn = getItemColumn(nextLayoutColumns, targetItemPlid);
@@ -684,7 +708,7 @@ class Layout extends Component {
 
 		nextLayoutColumns = setActiveItem(nextLayoutColumns, targetItemPlid);
 
-		this._draggingItem.active = false;
+		draggingItem.active = false;
 
 		this._currentPathItemPlid = targetItemPlid;
 

@@ -1123,6 +1123,7 @@ definition {
 	@description = "This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar"
 	@priority = "4"
 	test SearchDifferentScopesViaSearchWidget {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
@@ -2230,16 +2231,20 @@ definition {
 		property osgi.app.includes = "bookmarks";
 		var searchPage = "Search Page";
 
-		JSONCategory.addVocabularyByGroupName(
+		JSONCategory.addVocabulary(
 			groupName = "Guest",
-			title = "Fruit Vocabulary"
-		);
+			title = "Fruit Vocabulary");
 
-		JSONCategory.addCategoryByGroupName(
+		JSONCategory.addCategory(
 			groupName = "Guest",
 			title = "organic",
-			vocabularyName = "Fruit Vocabulary"
-		);
+			vocabularyName = "Fruit Vocabulary");
+
+		var webContentFolderName1 = "WC Folder Name 1";
+
+		JSONWebcontent.addFolder(
+			folderName = "${webContentFolderName1}",
+			groupName = "Guest");
 
 		var organicCategoryId = JSONCategory.getCategoryId(
 			categoryName = "organic",
@@ -2247,74 +2252,43 @@ definition {
 			vocabularyName = "Fruit Vocabulary"
 		);
 
-		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
-		var portalURL = PropsUtil.get("portal.url");
-		var webContentFolderName1 = "WC Folder Name 1";
-
-		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName1} \
-				-d description=''
-		''';
-		var webContentFolderId1 = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${webContentFolderName1}')]['folderId']");
-		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "[&quot;", "");
-		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "&quot;]", "");
-
 		var webContentserviceContext1 = '''{"assetTagNames": ["ripe"], "assetCategoryIds": ["${organicCategoryId}"]}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 1",
-			folderId = "${webContentFolderId1}",
+			folderName = "${webContentFolderName1}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
-			title = "apple"
-		);
+			title = "apple");
 
-		var portalURL = PropsUtil.get("portal.url");
 		var webContentFolderName2 = "WC Folder Name 2";
 
-		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName2} \
-				-d description=''
-		''';
-		var webContentFolderId2 = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${webContentFolderName2}')]['folderId']");
-		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "[&quot;", "");
-		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "&quot;]", "");
+		JSONWebcontent.addFolder(
+			folderName = "${webContentFolderName2}",
+			groupName = "Guest");
 
 		var webContentserviceContext1 = '''{"assetTagNames": ["fresh"]}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 2",
-			folderId = "${webContentFolderId2}",
+			folderName = "${webContentFolderName2}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
-			title = "orange"
-		);
+			title = "orange");
 
 		JSONGroup.addGroup(groupName = "New Site");
-
-		var newSiteId = JSONGroup._getSiteIdByGroupName(groupName = "New Site");
 
 		SitePages.openPagesAdmin(siteURLKey = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		Blogs.addEntryWithTag(
 			entryContent = "Apple Blog Entry Content",
 			entryTitle = "apple",
-			tagName = "sweet"
-		);
+			tagName = "sweet");
 
 		Navigator.openURL();
 
@@ -2322,28 +2296,26 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -2374,39 +2346,34 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "${searchPage}");
 
 		Navigator.gotoPage(pageName = "${searchPage}");
 
-		SearchPortlets.addWidgets(
-			searchPortletList = "Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar"
-		);
+		SearchPortlets.addWidgets(searchPortletList = "Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureWidgetScope(searchScope = "Everything");
 
 		SearchPortlets.configureSearchOptions(
 			allowEmptySearches = "true",
-			basicFacetSelection = "true"
-		);
+			basicFacetSelection = "true");
 
 		SearchPortlets.searchWidget(searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -2417,12 +2384,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -2432,12 +2396,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "type",
@@ -2447,12 +2408,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry",
-			searchTerm = "apple"
-		);
+			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article,banana/Bookmarks,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Bookmarks,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -2467,8 +2425,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "category",
@@ -2479,12 +2436,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "user",
@@ -2494,12 +2448,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "user",
@@ -2509,12 +2460,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -2539,12 +2487,11 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
+
+		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
 
 		var siteName = TestCase.getSiteName();
 
@@ -2555,6 +2502,8 @@ definition {
 			searchURL = "${testSearchURL}"
 		);
 
+		var newSiteId = JSONGroupAPI._getGroupIdByName(groupName = "New Site", site = "true");
+
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",
 			facetValue = "${newSiteId}",
@@ -2564,12 +2513,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "site",
@@ -2580,28 +2526,26 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "banana/Bookmarks,orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
+
+		var webContentFolderId2 = JSONWebcontent.getFolderIdByFolderName(
+			folderName = "${webContentFolderName2}",
+			groupName = "Guest");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
-			facetValueName = "WC Folder Name 2",
+			facetValueName = "${webContentFolderName2}",
 			searchURL = "${testSearchURL}"
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
@@ -2611,17 +2555,14 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "orange/Web Content Article",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
-			facetValueName = "WC Folder Name 2",
+			facetValueName = "${webContentFolderName2}",
 			searchURL = "${testSearchURL}"
 		);
 
@@ -2633,12 +2574,9 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Bookmarks",
-			searchTerm = "test"
-		);
+			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(
-			noResultsList = "apple/Blogs Entry,orange/Web Content Article"
-		);
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -2656,10 +2594,14 @@ definition {
 			searchURL = "${testSearchURL}"
 		);
 
+		var webContentFolderId1 = JSONWebcontent.getFolderIdByFolderName(
+			folderName = "${webContentFolderName1}",
+			groupName = "Guest");
+
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId1}",
-			facetValueName = "WC Folder Name 1",
+			facetValueName = "${webContentFolderName1}",
 			searchURL = "${testSearchURL}"
 		);
 
@@ -2690,14 +2632,22 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
-			searchTerm = "organic"
-		);
+			searchTerm = "organic");
 	}
 
 	@priority = "5"
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Test");
 

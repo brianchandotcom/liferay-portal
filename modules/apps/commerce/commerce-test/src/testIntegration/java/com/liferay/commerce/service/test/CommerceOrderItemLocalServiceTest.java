@@ -94,6 +94,9 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
 	}
 
 	@Test
@@ -124,10 +127,7 @@ public class CommerceOrderItemLocalServiceTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			2);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency();
-
-		Assert.assertNotNull(commerceCurrency);
+		Assert.assertNotNull(_commerceCurrency);
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.addPersonalCommerceAccount(
@@ -137,7 +137,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertNotNull(commerceAccount);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			commerceCurrency.getCode());
+			_commerceCurrency.getCode());
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -147,10 +147,10 @@ public class CommerceOrderItemLocalServiceTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
-				commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, null, null, _group, null, null);
+			_commerceCurrency, null, null, _group, null, null);
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
@@ -206,13 +206,10 @@ public class CommerceOrderItemLocalServiceTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			2);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency();
-
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			commerceCurrency.getCode());
+			_commerceCurrency.getCode());
 
-		Assert.assertNotNull(commerceCurrency);
+		Assert.assertNotNull(_commerceCurrency);
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.addPersonalCommerceAccount(
@@ -229,10 +226,10 @@ public class CommerceOrderItemLocalServiceTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
-				commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, null, null, _group, null, null);
+			_commerceCurrency, null, null, _group, null, null);
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
@@ -271,13 +268,10 @@ public class CommerceOrderItemLocalServiceTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			2);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency();
-
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			commerceCurrency.getCode());
+			_commerceCurrency.getCode());
 
-		Assert.assertNotNull(commerceCurrency);
+		Assert.assertNotNull(_commerceCurrency);
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.addPersonalCommerceAccount(
@@ -294,10 +288,10 @@ public class CommerceOrderItemLocalServiceTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
-				commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, null, null, _group, null, null);
+			_commerceCurrency, null, null, _group, null, null);
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
@@ -313,6 +307,9 @@ public class CommerceOrderItemLocalServiceTest {
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceBookedQuantityLocalService;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

@@ -37,15 +37,15 @@ AssetEntry assetEntry = null;
 AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
 AssetRenderer<?> assetRenderer = null;
 
-if (Validator.isNotNull(urlTitle)) {
-	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
-
-	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
-}
-else {
+if (assetEntryId > 0) {
 	assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
 
 	assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+}
+else if (Validator.isNotNull(urlTitle)) {
+	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
+
+	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }
 %>
 

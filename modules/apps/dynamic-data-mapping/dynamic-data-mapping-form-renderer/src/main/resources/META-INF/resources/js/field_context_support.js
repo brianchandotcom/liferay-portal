@@ -176,11 +176,11 @@ AUI.add(
 				
 				var context = instance.get('context');
 
-				var localizable = context.localizable;
+				var viewMode = context.viewMode;
 				
 				instance.set('context.value', value);
 				
-				if (localizable === false) {
+				if (viewMode && viewMode === true) {
 					var localizedValue = {};
 
 					var locale = context.locale;

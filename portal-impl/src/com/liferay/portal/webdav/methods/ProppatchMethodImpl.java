@@ -85,8 +85,6 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 		Resource resource = storage.getResource(webDAVRequest);
 
-		WebDAVProps webDAVProps = null;
-
 		if (resource.getPrimaryKey() <= 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("There is no primary key set for resource");
@@ -108,11 +106,9 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 			}
 		}
 
-		webDAVProps = WebDAVPropsLocalServiceUtil.getWebDAVProps(
+		return WebDAVPropsLocalServiceUtil.getWebDAVProps(
 			webDAVRequest.getCompanyId(), resource.getClassName(),
 			resource.getPrimaryKey());
-
-		return webDAVProps;
 	}
 
 	protected Set<QName> processInstructions(WebDAVRequest webDAVRequest)

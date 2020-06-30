@@ -332,6 +332,7 @@ boolean choiceField = checkboxField || radioField;
 					onChange="<%= onChange %>"
 					onClick="<%= onClick %>"
 					placeholder="<%= placeholder %>"
+					selectedLanguageId="<%= selectedLanguageId %>"
 					type='<%= type.equals("text") ? "input" : type %>'
 					xml="<%= valueString %>"
 				/>

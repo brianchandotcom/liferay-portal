@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
@@ -39,6 +40,7 @@ import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Igor Beslic
  */
 public class CommerceOrderItemServiceImpl
 	extends CommerceOrderItemServiceBaseImpl {
@@ -56,6 +58,17 @@ public class CommerceOrderItemServiceImpl
 		return commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
 			commerceContext, serviceContext);
+	}
+
+	@Override
+	public int countSubscriptionCommerceOrderItems(long commerceOrderId)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.
+			countSubscriptionCommerceOrderItems(commerceOrderId);
 	}
 
 	@Override
@@ -194,6 +207,19 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+			long groupId, long commerceAccountId, int[] orderStatuses,
+			int start, int end)
+		throws PortalException {
+
+		commerceAccountPermission.check(
+			getPermissionChecker(), commerceAccountId, ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.getCommerceOrderItems(
+			groupId, commerceAccountId, orderStatuses, start, end);
+	}
+
+	@Override
 	public int getCommerceOrderItemsCount(long commerceOrderId)
 		throws PortalException {
 
@@ -214,6 +240,18 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.getCommerceOrderItemsCount(
 			commerceOrderId, cpInstanceId);
+	}
+
+	@Override
+	public int getCommerceOrderItemsCount(
+			long groupId, long commerceAccountId, int[] orderStatuses)
+		throws PortalException {
+
+		commerceAccountPermission.check(
+			getPermissionChecker(), commerceAccountId, ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.getCommerceOrderItemsCount(
+			groupId, commerceAccountId, orderStatuses);
 	}
 
 	@Override
@@ -295,8 +333,7 @@ public class CommerceOrderItemServiceImpl
 			long commerceOrderItemId, String deliveryGroup,
 			long shippingAddressId, String printedNote,
 			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
-			int requestedDeliveryDateYear, int requestedDeliveryDateHour,
-			int requestedDeliveryDateMinute, ServiceContext serviceContext)
+			int requestedDeliveryDateYear)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -310,8 +347,26 @@ public class CommerceOrderItemServiceImpl
 		return commerceOrderItemLocalService.updateCommerceOrderItemInfo(
 			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote,
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
-			requestedDeliveryDateYear, requestedDeliveryDateHour,
-			requestedDeliveryDateMinute, serviceContext);
+			requestedDeliveryDateYear);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceOrderItem updateCommerceOrderItemInfo(
+			long commerceOrderItemId, String deliveryGroup,
+			long shippingAddressId, String printedNote,
+			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
+			int requestedDeliveryDateYear, int requestedDeliveryDateHour,
+			int requestedDeliveryDateMinute, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceOrderItemService.updateCommerceOrderItemInfo(
+			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote,
+			requestedDeliveryDateMonth, requestedDeliveryDateDay,
+			requestedDeliveryDateYear);
 	}
 
 	@Override
@@ -414,6 +469,9 @@ public class CommerceOrderItemServiceImpl
 			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
 			commerceContext, serviceContext);
 	}
+
+	@ServiceReference(type = CommerceAccountPermission.class)
+	protected CommerceAccountPermission commerceAccountPermission;
 
 	@ServiceReference(type = CommerceProductViewPermission.class)
 	protected CommerceProductViewPermission commerceProductViewPermission;

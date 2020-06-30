@@ -20,15 +20,17 @@ package com.liferay.commerce.order.content.web.internal.model;
 public class OrderItem {
 
 	public OrderItem(
-		long orderItemId, long orderId, String sku, String name, String price,
-		String promoPrice, String discount, int quantity, String total,
-		String thumbnail, String viewShipmentsURL, int shippedQuantity,
-		String[] errorMessages, String formattedSubscriptionPeriod) {
+		long orderItemId, long orderId, String sku, String name, String options,
+		String price, String promoPrice, String discount, int quantity,
+		String total, String thumbnail, String viewShipmentsURL,
+		int shippedQuantity, String[] errorMessages,
+		String formattedSubscriptionPeriod) {
 
 		_orderItemId = orderItemId;
 		_orderId = orderId;
 		_sku = sku;
 		_name = name;
+		_options = options;
 		_price = price;
 		_promoPrice = promoPrice;
 		_discount = discount;
@@ -55,6 +57,10 @@ public class OrderItem {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getOptions() {
+		return _options;
 	}
 
 	public long getOrderId() {
@@ -101,6 +107,7 @@ public class OrderItem {
 	private final String[] _errorMessages;
 	private final String _formattedSubscriptionPeriod;
 	private final String _name;
+	private final String _options;
 	private final long _orderId;
 	private final long _orderItemId;
 	private final String _price;

@@ -106,7 +106,9 @@ public class TrashVersionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		versionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -116,7 +118,7 @@ public class TrashVersionCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 
 		status = objectInput.readInt();
 	}
@@ -134,10 +136,10 @@ public class TrashVersionCacheModel
 		objectOutput.writeLong(classPK);
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 
 		objectOutput.writeInt(status);

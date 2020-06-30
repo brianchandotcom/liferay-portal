@@ -14,75 +14,96 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.frontend.model.StepModel;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderNote;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.order.status.CommerceOrderStatus;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
-import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearch;
-import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearchTerms;
 import com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderScreenNavigationConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
-import com.liferay.commerce.price.CommerceProductPrice;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
-import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.petra.string.CharPool;
+import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.DateFormat;
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderURL;
 
 /**
  * @author Andrea Di Giorgi
  * @author Luca Pellizzon
+ * @author Fabio Diego Mastrorilli
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderEditDisplayContext {
 
 	public CommerceOrderEditDisplayContext(
+			CommerceNotificationTemplateService
+				commerceNotificationTemplateService,
+			CommerceNotificationQueueEntryLocalService
+				commerceNotificationQueueEntryLocalService,
+			CommerceOrderEngine commerceOrderEngine,
 			CommerceOrderService commerceOrderService,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
+			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
 			CommercePaymentMethodGroupRelService
 				commercePaymentMethodGroupRelService,
-			CommerceProductPriceCalculation commerceProductPriceCalculation,
-			ItemSelector itemSelector, RenderRequest renderRequest)
+			CommerceShipmentService commerceShipmentService,
+			RenderRequest renderRequest)
 		throws PortalException {
 
+		_commerceNotificationTemplateService =
+			commerceNotificationTemplateService;
+		_commerceNotificationQueueEntryLocalService =
+			commerceNotificationQueueEntryLocalService;
+		_commerceOrderEngine = commerceOrderEngine;
 		_commerceOrderService = commerceOrderService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
+		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
-		_itemSelector = itemSelector;
+		_commerceShipmentService = commerceShipmentService;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -107,22 +128,107 @@ public class CommerceOrderEditDisplayContext {
 				themeDisplay.getTimeZone());
 	}
 
-	public int[] getAvailableOrderStatuses() throws PortalException {
-		return _commerceOrderService.getAvailableOrderStatuses(
-			getCommerceOrderId());
+	public String getCommerceAccountThumbnailURL() throws PortalException {
+		if (_commerceOrder == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
+
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPathImage());
+		sb.append("/organization_logo?img_id=");
+		sb.append(commerceAccount.getLogoId());
+
+		if (commerceAccount.getLogoId() > 0) {
+			sb.append("&t=");
+			sb.append(
+				WebServerServletTokenUtil.getToken(
+					commerceAccount.getLogoId()));
+		}
+
+		return sb.toString();
+	}
+
+	public ClayCreationMenu getCommerceAddressClayCreationMenu(
+			String mvcRenderCommandName)
+		throws Exception {
+
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		RenderURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(getCommerceOrderId()));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		clayCreationMenu.addClayCreationMenuActionItem(
+			portletURL.toString(),
+			LanguageUtil.get(
+				_commerceOrderRequestHelper.getRequest(), "add-new-address"));
+
+		return clayCreationMenu;
+	}
+
+	public PortletURL getCommerceNotificationQueueEntriesPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(getCommerceOrderId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceOrderScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_ORDER_EMAILS);
+
+		String redirect = ParamUtil.getString(
+			_commerceOrderRequestHelper.getRequest(), "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		return portletURL;
+	}
+
+	public CommerceNotificationQueueEntry getCommerceNotificationQueueEntry()
+		throws PortalException {
+
+		long commerceNotificationQueueEntryId = ParamUtil.getLong(
+			_commerceOrderRequestHelper.getRequest(),
+			"commerceNotificationQueueEntryId");
+
+		if (commerceNotificationQueueEntryId > 0) {
+			return _commerceNotificationQueueEntryLocalService.
+				getCommerceNotificationQueueEntry(
+					commerceNotificationQueueEntryId);
+		}
+
+		return null;
 	}
 
 	public CommerceOrder getCommerceOrder() {
 		return _commerceOrder;
 	}
 
-	public String getCommerceOrderDateTime() {
-		if (_commerceOrder == null) {
+	public String getCommerceOrderDateTime(Date date) {
+		if ((_commerceOrder == null) || (date == null)) {
 			return StringPool.BLANK;
 		}
 
-		return _commerceOrderDateFormatDateTime.format(
-			_commerceOrder.getCreateDate());
+		return _commerceOrderDateFormatDateTime.format(date);
 	}
 
 	public long getCommerceOrderId() {
@@ -149,7 +255,7 @@ public class CommerceOrderEditDisplayContext {
 		return _commerceOrderItem;
 	}
 
-	public PortletURL getCommerceOrderItemsPortletURL() throws PortalException {
+	public PortletURL getCommerceOrderItemsPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
@@ -161,7 +267,7 @@ public class CommerceOrderEditDisplayContext {
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
 			CommerceOrderScreenNavigationConstants.
-				CATEGORY_KEY_COMMERCE_ORDER_ITEMS);
+				CATEGORY_KEY_COMMERCE_ORDER_GENERAL);
 
 		String redirect = ParamUtil.getString(
 			_commerceOrderRequestHelper.getRequest(), "redirect");
@@ -171,53 +277,6 @@ public class CommerceOrderEditDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public SearchContainer<CommerceOrderItem>
-			getCommerceOrderItemsSearchContainer()
-		throws PortalException {
-
-		if (_itemSearchContainer != null) {
-			return _itemSearchContainer;
-		}
-
-		_itemSearchContainer = new CommerceOrderItemSearch(
-			_commerceOrderRequestHelper.getLiferayPortletRequest(),
-			getCommerceOrderItemsPortletURL());
-
-		_itemSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(
-				_commerceOrderRequestHelper.getLiferayPortletResponse()));
-
-		CommerceOrderItemSearchTerms commerceOrderItemSearchTerms =
-			(CommerceOrderItemSearchTerms)_itemSearchContainer.getSearchTerms();
-
-		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult = null;
-
-		Sort sort = SortFactoryUtil.getSort(
-			CommerceOrderItem.class, _itemSearchContainer.getOrderByCol(),
-			_itemSearchContainer.getOrderByType());
-
-		if (commerceOrderItemSearchTerms.isAdvancedSearch()) {
-			baseModelSearchResult = _commerceOrderItemService.search(
-				getCommerceOrderId(), commerceOrderItemSearchTerms.getSku(),
-				commerceOrderItemSearchTerms.getName(),
-				commerceOrderItemSearchTerms.isAndOperator(),
-				_itemSearchContainer.getStart(), _itemSearchContainer.getEnd(),
-				sort);
-		}
-		else {
-			baseModelSearchResult = _commerceOrderItemService.search(
-				getCommerceOrderId(),
-				commerceOrderItemSearchTerms.getKeywords(),
-				_itemSearchContainer.getStart(), _itemSearchContainer.getEnd(),
-				sort);
-		}
-
-		_itemSearchContainer.setTotal(baseModelSearchResult.getLength());
-		_itemSearchContainer.setResults(baseModelSearchResult.getBaseModels());
-
-		return _itemSearchContainer;
 	}
 
 	public List<CommerceOrderNote> getCommerceOrderNotes()
@@ -233,77 +292,379 @@ public class CommerceOrderEditDisplayContext {
 			commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public String getCommercePaymentMethodLabel(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
+	public String getCommerceOrderPaymentMethodDescription()
+		throws PortalException {
 
-		String label = commercePaymentMethodGroupRel.getName(
-			_commerceOrderRequestHelper.getLocale());
+		if ((_commerceOrder == null) ||
+			Validator.isNull(_commerceOrder.getCommercePaymentMethodKey())) {
 
-		if (!commercePaymentMethodGroupRel.isActive()) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(label);
-			sb.append(" (");
-			sb.append(
-				LanguageUtil.get(
-					_commerceOrderRequestHelper.getRequest(), "inactive"));
-			sb.append(CharPool.CLOSE_PARENTHESIS);
-
-			label = sb.toString();
+			return StringPool.BLANK;
 		}
 
-		return label;
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			getCommercePaymentMethodGroupRel();
+
+		return commercePaymentMethodGroupRel.getDescription(
+			_commerceOrderRequestHelper.getLocale());
 	}
 
-	public List<CommercePaymentMethodGroupRel> getCommercePaymentMethods()
+	public String getCommerceOrderPaymentMethodName() throws PortalException {
+		if ((_commerceOrder == null) ||
+			Validator.isNull(_commerceOrder.getCommercePaymentMethodKey())) {
+
+			return StringPool.BLANK;
+		}
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			getCommercePaymentMethodGroupRel();
+
+		return commercePaymentMethodGroupRel.getName(
+			_commerceOrderRequestHelper.getLocale());
+	}
+
+	public PortletURL getCommerceOrderPaymentsPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(getCommerceOrderId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceOrderScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_ORDER_PAYMENTS);
+
+		String redirect = ParamUtil.getString(
+			_commerceOrderRequestHelper.getRequest(), "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		return portletURL;
+	}
+
+	public CommercePaymentMethodGroupRel getCommercePaymentMethodGroupRel()
 		throws PortalException {
 
 		return _commercePaymentMethodGroupRelService.
-			getCommercePaymentMethodGroupRels(
-				_commerceOrderRequestHelper.getScopeGroupId());
+			getCommercePaymentMethodGroupRel(
+				_commerceOrder.getGroupId(),
+				_commerceOrder.getCommercePaymentMethodKey());
 	}
 
-	public CommerceProductPrice getCommerceProductPrice(
-			CommerceOrderItem commerceOrderItem)
+	public CommerceShipment getCommerceShipment() throws PortalException {
+		if (_commerceShipment != null) {
+			return _commerceShipment;
+		}
+
+		long commerceShipmentId = ParamUtil.getLong(
+			_commerceOrderRequestHelper.getRequest(), "commerceShipmentId");
+
+		if (commerceShipmentId > 0) {
+			_commerceShipment = _commerceShipmentService.getCommerceShipment(
+				commerceShipmentId);
+		}
+
+		return _commerceShipment;
+	}
+
+	public PortletURL getCommerceShipmentsPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(getCommerceOrderId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceOrderScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_ORDER_SHIPMENTS);
+
+		String redirect = ParamUtil.getString(
+			_commerceOrderRequestHelper.getRequest(), "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		return portletURL;
+	}
+
+	public String getDescriptiveCommerceAddress(CommerceAddress commerceAddress)
 		throws PortalException {
 
-		return _commerceProductPriceCalculation.getCommerceProductPrice(
-			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity(),
-			_commerceOrderRequestHelper.getCommerceContext());
+		if (commerceAddress == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+
+		StringBundler sb = new StringBundler((commerceRegion == null) ? 5 : 7);
+
+		sb.append(commerceAddress.getStreet1());
+		sb.append(StringPool.SPACE);
+		sb.append(commerceAddress.getCity());
+		sb.append(StringPool.NEW_LINE);
+
+		if (commerceRegion != null) {
+			sb.append(commerceRegion.getCode());
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(commerceAddress.getZip());
+
+		return sb.toString();
 	}
 
-	public String getItemSelectorUrl() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(
-				_commerceOrderRequestHelper.getRequest());
+	public List<HeaderActionModel> getHeaderActionModels()
+		throws PortalException {
 
-		CPInstanceItemSelectorCriterion cpInstanceItemSelectorCriterion =
-			new CPInstanceItemSelectorCriterion();
+		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
-		cpInstanceItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new UUIDItemSelectorReturnType()));
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderEngine.getCurrentCommerceOrderStatus(_commerceOrder);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "productInstancesSelectItem",
-			cpInstanceItemSelectorCriterion);
+		if ((_commerceOrder == null) || (currentCommerceOrderStatus == null) ||
+			!currentCommerceOrderStatus.isComplete(_commerceOrder) ||
+			(currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED)) {
 
-		return itemSelectorURL.toString();
+			return headerActionModels;
+		}
+
+		List<CommerceOrderStatus> commerceOrderStatuses =
+			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
+
+		if ((currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS) &&
+			(_commerceOrder.getPaymentStatus() !=
+				CommerceOrderConstants.PAYMENT_STATUS_PENDING) &&
+			_commerceOrder.isApproved() && commerceOrderStatuses.isEmpty() &&
+			currentCommerceOrderStatus.isTransitionCriteriaMet(
+				_commerceOrder)) {
+
+			commerceOrderStatuses.add(currentCommerceOrderStatus);
+		}
+
+		PortletURL portletURL = getTransitionOrderPortletURL();
+
+		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
+			if (commerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_SHIPPED) {
+
+				continue;
+			}
+
+			String label = CommerceOrderConstants.getOrderStatusLabel(
+				commerceOrderStatus.getKey());
+
+			if (commerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) {
+
+				label = "create-shipment";
+			}
+			else if (commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS) {
+
+				label = "check-out";
+
+				if (!_commerceOrder.isApproved()) {
+					label = "submit";
+				}
+			}
+			else if ((commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_PROCESSING) ||
+					 ((commerceOrderStatus.getKey() ==
+						 CommerceOrderConstants.ORDER_STATUS_PENDING) &&
+					  (_commerceOrder.getPaymentStatus() ==
+						  CommerceOrderConstants.PAYMENT_STATUS_PENDING))) {
+
+				label = "accept-order";
+			}
+			else if (commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_CANCELLED) {
+
+				label = "cancel";
+			}
+			else if (commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_ON_HOLD) {
+
+				if (currentCommerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_ON_HOLD) {
+
+					label = "release-hold";
+				}
+				else {
+					label = "hold";
+				}
+			}
+
+			String buttonCssClass = "btn-primary";
+
+			if (commerceOrderStatus.getPriority() ==
+					CommerceOrderConstants.ORDER_STATUS_ANY) {
+
+				buttonCssClass = "btn-secondary";
+			}
+
+			portletURL.setParameter(
+				"transitionName", String.valueOf(commerceOrderStatus.getKey()));
+
+			headerActionModels.add(
+				new HeaderActionModel(
+					buttonCssClass, null, portletURL.toString(), null, label));
+		}
+
+		return headerActionModels;
 	}
 
+	public List<StepModel> getOrderSteps() throws PortalException {
+		List<StepModel> steps = new ArrayList<>();
+
+		CommerceOrderStatus currentCommerceOrderStatus =
+			_commerceOrderEngine.getCurrentCommerceOrderStatus(_commerceOrder);
+
+		if ((_commerceOrder == null) || (currentCommerceOrderStatus == null) ||
+			(currentCommerceOrderStatus.getPriority() == -1)) {
+
+			return steps;
+		}
+
+		List<CommerceOrderStatus> commerceOrderStatuses =
+			_commerceOrderStatusRegistry.getCommerceOrderStatuses();
+
+		if ((currentCommerceOrderStatus != null) &&
+			currentCommerceOrderStatus.isWorkflowEnabled(_commerceOrder)) {
+
+			return _getWorkflowSteps();
+		}
+
+		if (ArrayUtil.contains(
+				CommerceOrderConstants.ORDER_STATUSES_OPEN,
+				_commerceOrder.getOrderStatus())) {
+
+			return steps;
+		}
+
+		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
+			if (((commerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) &&
+				 (_commerceOrder.getOrderStatus() !=
+					 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) ||
+				ArrayUtil.contains(
+					CommerceOrderConstants.ORDER_STATUSES_OPEN,
+					commerceOrderStatus.getKey()) ||
+				(commerceOrderStatus.getPriority() == -1)) {
+
+				continue;
+			}
+
+			StepModel step = new StepModel();
+
+			step.setId(
+				CommerceOrderConstants.getOrderStatusLabel(
+					commerceOrderStatus.getKey()));
+			step.setLabel(
+				commerceOrderStatus.getLabel(
+					_commerceOrderRequestHelper.getLocale()));
+
+			if (commerceOrderStatus.equals(currentCommerceOrderStatus) &&
+				(commerceOrderStatus.getKey() !=
+					CommerceOrderConstants.ORDER_STATUS_COMPLETED)) {
+
+				step.setState("active");
+			}
+			else if ((currentCommerceOrderStatus != null) &&
+					 (commerceOrderStatus.getPriority() <=
+						 currentCommerceOrderStatus.getPriority()) &&
+					 commerceOrderStatus.isComplete(_commerceOrder)) {
+
+				step.setState("completed");
+			}
+			else {
+				step.setState("inactive");
+			}
+
+			steps.add(step);
+		}
+
+		return steps;
+	}
+
+	public PortletURL getTransitionOrderPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL();
+
+		portletURL.setParameter(ActionRequest.ACTION_NAME, "editCommerceOrder");
+		portletURL.setParameter(Constants.CMD, "transition");
+		portletURL.setParameter(
+			"commerceOrderId",
+			String.valueOf(_commerceOrder.getCommerceOrderId()));
+		portletURL.setParameter(
+			"redirect", _commerceOrderRequestHelper.getCurrentURL());
+
+		return portletURL;
+	}
+
+	private List<StepModel> _getWorkflowSteps() {
+		List<StepModel> steps = new ArrayList<>();
+
+		int[] workflowStatuses = {
+			WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_APPROVED
+		};
+
+		for (int workflowStatus : workflowStatuses) {
+			StepModel step = new StepModel();
+
+			String workflowStatusLabel = WorkflowConstants.getStatusLabel(
+				workflowStatus);
+
+			step.setId(workflowStatusLabel);
+			step.setLabel(
+				LanguageUtil.get(
+					_commerceOrderRequestHelper.getLocale(),
+					workflowStatusLabel));
+
+			if (_commerceOrder.getStatus() == workflowStatus) {
+				step.setState("active");
+			}
+			else if (_commerceOrder.getStatus() < workflowStatus) {
+				step.setState("completed");
+			}
+			else {
+				step.setState("inactive");
+			}
+
+			steps.add(step);
+		}
+
+		return steps;
+	}
+
+	private final CommerceNotificationQueueEntryLocalService
+		_commerceNotificationQueueEntryLocalService;
+	private final CommerceNotificationTemplateService
+		_commerceNotificationTemplateService;
 	private final CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDateTime;
+	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrderService _commerceOrderService;
+	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 	private final CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
-	private final CommerceProductPriceCalculation
-		_commerceProductPriceCalculation;
-	private SearchContainer<CommerceOrderItem> _itemSearchContainer;
-	private final ItemSelector _itemSelector;
+	private CommerceShipment _commerceShipment;
+	private final CommerceShipmentService _commerceShipmentService;
 
 }

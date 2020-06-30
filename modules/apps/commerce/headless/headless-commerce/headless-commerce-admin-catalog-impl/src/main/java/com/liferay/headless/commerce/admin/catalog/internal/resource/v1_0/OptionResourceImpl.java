@@ -18,17 +18,19 @@ import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.OptionEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -121,12 +123,12 @@ public class OptionResourceImpl
 
 	@Override
 	public Page<Option> getOptionsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CPOption.class, StringPool.BLANK, pagination,
+			CPOption.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
@@ -219,6 +221,8 @@ public class OptionResourceImpl
 			option.getExternalReferenceCode(),
 			_serviceContextHelper.getServiceContext());
 
+		_upsertOptionValues(cpOption, option.getOptionValues());
+
 		DTOConverter optionDTOConverter = _dtoConverterRegistry.getDTOConverter(
 			CPOption.class.getName());
 
@@ -228,6 +232,22 @@ public class OptionResourceImpl
 				cpOption.getCPOptionId()));
 	}
 
+	private void _upsertOptionValues(
+			CPOption cpOption, OptionValue[] optionValues)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(optionValues)) {
+			return;
+		}
+
+		_optionValueResource.setContextAcceptLanguage(contextAcceptLanguage);
+
+		for (OptionValue optionValue : optionValues) {
+			_optionValueResource.postOptionIdOptionValue(
+				cpOption.getCPOptionId(), optionValue);
+		}
+	}
+
 	private static final EntityModel _entityModel = new OptionEntityModel();
 
 	@Reference
@@ -235,6 +255,9 @@ public class OptionResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private OptionValueResource _optionValueResource;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

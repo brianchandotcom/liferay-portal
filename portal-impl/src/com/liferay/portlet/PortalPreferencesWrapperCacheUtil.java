@@ -53,9 +53,7 @@ public class PortalPreferencesWrapperCacheUtil {
 	private static String _getCacheKey(long ownerId, int ownerType) {
 		String cacheKey = StringUtil.toHexString(ownerId);
 
-		cacheKey = cacheKey.concat(StringUtil.toHexString(ownerType));
-
-		return cacheKey;
+		return cacheKey.concat(StringUtil.toHexString(ownerType));
 	}
 
 	private static final PortalCache<String, PortalPreferencesWrapper>

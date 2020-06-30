@@ -49,12 +49,16 @@ public class MBCommentManagerImplTest extends Mockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpMBCommentManagerImpl();
-		setUpPortalUtil();
-		setUpServiceContext();
+		ReflectionTestUtil.setFieldValue(
+			_mbCommentManagerImpl, "_mbMessageLocalService",
+			_mbMessageLocalService);
 
 		ReflectionTestUtil.setFieldValue(
 			_mbCommentManagerImpl, "_portal", _portal);
+
+		setUpMBCommentManagerImpl();
+		setUpPortalUtil();
+		setUpServiceContext();
 	}
 
 	@Test
@@ -171,7 +175,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
-	public void testFetchComment() throws Exception {
+	public void testFetchComment() {
 		long commentId = RandomTestUtil.randomLong();
 
 		_mbCommentManagerImpl.fetchComment(commentId);
@@ -184,7 +188,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
-	public void testGetCommentsCount() throws Exception {
+	public void testGetCommentsCount() {
 		long classPK = RandomTestUtil.randomLong();
 		long classNameId = RandomTestUtil.randomLong();
 		int commentsCount = RandomTestUtil.randomInt();
@@ -225,8 +229,6 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	protected void setUpMBCommentManagerImpl() throws Exception {
-		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
-
 		when(
 			_mbMessageDisplay.getThread()
 		).thenReturn(
@@ -238,7 +240,7 @@ public class MBCommentManagerImplTest extends Mockito {
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
 				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
-				Matchers.<ServiceContext>any())
+				Matchers.any())
 		).thenReturn(
 			_mbMessage
 		);

@@ -283,10 +283,10 @@ boolean canEditUser = (selectedUser.getUserId() == user.getUserId()) || commerce
 		<c:if test="<%= canEditUser %>">
 			<div class="commerce-cta is-visible">
 				<c:if test="<%= Validator.isNotNull(backURL) %>">
-					<aui:button cssClass="commerce-button commerce-button--big commerce-button--outline" href="<%= backURL %>" value="cancel" />
+					<aui:button cssClass="btn-lg btn-secondary" href="<%= backURL %>" value="cancel" />
 				</c:if>
 
-				<aui:button cssClass="commerce-button commerce-button--big" type="submit" />
+				<aui:button cssClass="btn-lg btn-primary" type="submit" />
 			</div>
 		</c:if>
 	</aui:form>

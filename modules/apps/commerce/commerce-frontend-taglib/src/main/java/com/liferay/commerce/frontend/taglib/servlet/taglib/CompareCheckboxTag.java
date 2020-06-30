@@ -56,14 +56,14 @@ public class CompareCheckboxTag extends ComponentRendererTag {
 
 			putValue("pictureUrl", cpDefinition.getDefaultImageThumbnailSrc());
 
+			long commerceAccountId = 0;
+
 			CommerceContext commerceContext =
 				(CommerceContext)request.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
-
-			long commerceAccountId = 0;
 
 			if (commerceAccount != null) {
 				commerceAccountId = commerceAccount.getCommerceAccountId();

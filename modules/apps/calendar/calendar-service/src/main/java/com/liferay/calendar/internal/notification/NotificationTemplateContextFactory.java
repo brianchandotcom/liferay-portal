@@ -98,6 +98,9 @@ public class NotificationTemplateContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
+		attributes.put(
+			"calendarName", calendar.getName(user.getLocale(), true));
+
 		Format userDateTimeFormat = _getUserDateTimeFormat(
 			calendarBooking, user);
 
@@ -128,13 +131,22 @@ public class NotificationTemplateContextFactory {
 				resourceBundle,
 				"javax.portlet.title.".concat(CalendarPortletKeys.CALENDAR)));
 
+		Group calendarGroup = _groupLocalService.getGroup(
+			calendar.getGroupId());
+
+		if (calendarGroup.isSite()) {
+			attributes.put(
+				"siteName", calendarGroup.getName(user.getLocale(), true));
+		}
+
 		String startTime =
 			userDateTimeFormat.format(calendarBooking.getStartTime()) +
 				StringPool.SPACE + userTimezoneDisplayName;
 
 		attributes.put("startTime", startTime);
 
-		attributes.put("title", calendarBooking.getTitle(user.getLocale()));
+		attributes.put(
+			"title", calendarBooking.getTitle(user.getLocale(), true));
 
 		String calendarBookingURL = _getCalendarBookingURL(
 			user, calendarBooking.getCalendarBookingId());

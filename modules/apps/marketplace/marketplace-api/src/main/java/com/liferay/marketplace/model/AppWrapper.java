@@ -407,11 +407,6 @@ public class AppWrapper implements App, ModelWrapper<App> {
 		return _app.isRequired();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a app model instance should use the <code>App</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_app.persist();

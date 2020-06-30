@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CPOptionServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPOptionServiceUtil} to access the cp option remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -83,6 +77,18 @@ public class CPOptionServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchCPOption(companyId, key);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPOption>
+			findCPOptionByCompanyId(
+				long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.product.model.CPOption>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().findCPOptionByCompanyId(
+			companyId, start, end, orderByComparator);
 	}
 
 	public static com.liferay.commerce.product.model.CPOption getCPOption(

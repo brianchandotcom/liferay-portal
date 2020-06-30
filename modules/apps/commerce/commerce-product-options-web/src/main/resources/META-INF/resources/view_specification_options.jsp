@@ -192,14 +192,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 <aui:script>
 	function <portlet:namespace />deleteCPSpecificationOptions() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-labels" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-labels" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCPSpecificationOptionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCPSpecificationOptionIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editProductSpecificationOption" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="editProductSpecificationOption" />'
+			);
 		}
 	}
 </aui:script>

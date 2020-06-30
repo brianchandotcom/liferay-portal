@@ -40,6 +40,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.util.GroupControlPanelLayoutUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -100,12 +101,14 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
@@ -177,6 +180,31 @@ public class LayoutStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(Layout layout) {
+		try {
+			List<Layout> ancestorFolders = layout.getAncestors();
+
+			StringBundler sb = new StringBundler(
+				4 * ancestorFolders.size() + 1);
+
+			Collections.reverse(ancestorFolders);
+
+			for (Layout ancestorFolder : ancestorFolders) {
+				sb.append(ancestorFolder.getNameCurrentValue());
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(layout.getNameCurrentValue());
+
+			return sb.toString();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
 		return layout.getNameCurrentValue();
 	}
 
@@ -422,6 +450,7 @@ public class LayoutStagedModelDataHandler
 
 		Layout existingLayout = null;
 
+		String uuid = layout.getUuid();
 		String friendlyURL = layout.getFriendlyURL();
 
 		String layoutsImportMode = MapUtil.getString(
@@ -436,6 +465,15 @@ public class LayoutStagedModelDataHandler
 				groupId, privateLayout);
 
 			friendlyURL = StringPool.SLASH + layoutId;
+		}
+		else if (layoutsImportMode.equals(
+					PortletDataHandlerKeys.
+						LAYOUTS_IMPORT_MODE_ADD_AS_NEW_PROTOTYPE)) {
+
+			layoutId = _layoutLocalService.getNextLayoutId(
+				groupId, privateLayout);
+
+			uuid = PortalUUIDUtil.generate();
 		}
 		else if (layoutsImportMode.equals(
 					PortletDataHandlerKeys.
@@ -468,7 +506,7 @@ public class LayoutStagedModelDataHandler
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
 			existingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), groupId, privateLayout);
+				uuid, groupId, privateLayout);
 
 			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
 				layouts.put(oldLayoutId, existingLayout);
@@ -511,7 +549,7 @@ public class LayoutStagedModelDataHandler
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
 			existingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), groupId, privateLayout);
+				uuid, groupId, privateLayout);
 
 			if (existingLayout == null) {
 				existingLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
@@ -557,7 +595,7 @@ public class LayoutStagedModelDataHandler
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-				importedLayout.setSourcePrototypeLayoutUuid(layout.getUuid());
+				importedLayout.setSourcePrototypeLayoutUuid(uuid);
 
 				layoutId = _layoutLocalService.getNextLayoutId(
 					groupId, privateLayout);
@@ -573,7 +611,7 @@ public class LayoutStagedModelDataHandler
 					layout.getSourcePrototypeLayoutUuid());
 			}
 
-			importedLayout.setUuid(layout.getUuid());
+			importedLayout.setUuid(uuid);
 			importedLayout.setGroupId(groupId);
 			importedLayout.setUserId(userId);
 			importedLayout.setPrivateLayout(privateLayout);
@@ -680,6 +718,14 @@ public class LayoutStagedModelDataHandler
 		}
 		else {
 			updateTypeSettings(importedLayout, layout);
+		}
+
+		if (layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID) &&
+			(layout.getLayoutPrototypeUuid() != null)) {
+
+			resetLastMergeTime(importedLayout, layout);
 		}
 
 		importedLayout.setHidden(layout.isHidden());
@@ -1142,9 +1188,7 @@ public class LayoutStagedModelDataHandler
 						layout.getCompanyId());
 				}
 				else if (scopeType.equals("layout")) {
-					Layout scopeLayout = null;
-
-					scopeLayout =
+					Layout scopeLayout =
 						_layoutLocalService.fetchLayoutByUuidAndGroupId(
 							scopeLayoutUuid, portletDataContext.getGroupId(),
 							portletDataContext.isPrivateLayout());
@@ -1515,18 +1559,22 @@ public class LayoutStagedModelDataHandler
 					portletDataContext, portletPreferencesGroupId);
 			}
 
-			long defaultPlid = _portal.getControlPanelPlid(
-				layout.getCompanyId());
-
-			PortletPreferences portletPreferences =
+			PortletPreferences importedPortletPreferences =
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 					portletId);
 
-			if (portletPreferences == null) {
+			if (importedPortletPreferences == null) {
 				continue;
 			}
+
+			String importedPortletPreferencesXml =
+				importedPortletPreferences.getPreferences();
+
+			long groupControlPanelPlid =
+				GroupControlPanelLayoutUtil.getGroupControlPanelPlid(
+					layout.getGroup());
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				FragmentEntryLink oldFragmentEntryLink =
@@ -1534,26 +1582,53 @@ public class LayoutStagedModelDataHandler
 						portletDataContext,
 						fragmentEntryLink.getFragmentEntryLinkId());
 
-				if (oldFragmentEntryLink == null) {
-					continue;
+				String newPortletId = portletId;
+
+				if (oldFragmentEntryLink != null) {
+					List<String> portletIds =
+						_portletRegistry.getFragmentEntryLinkPortletIds(
+							oldFragmentEntryLink);
+
+					if (portletIds.contains(portletId)) {
+						newPortletId = StringUtil.replace(
+							portletId, oldFragmentEntryLink.getNamespace(),
+							fragmentEntryLink.getNamespace());
+					}
+					else {
+						continue;
+					}
+				}
+				else {
+					List<String> portletIds =
+						_portletRegistry.getFragmentEntryLinkPortletIds(
+							fragmentEntryLink);
+
+					if (!portletIds.contains(portletId)) {
+						continue;
+					}
 				}
 
-				List<String> portletIds =
-					_portletRegistry.getFragmentEntryLinkPortletIds(
-						oldFragmentEntryLink);
+				PortletPreferences existingPortletPreferences =
+					_portletPreferencesLocalService.fetchPortletPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						groupControlPanelPlid, newPortletId);
 
-				if (!portletIds.contains(portletId)) {
-					continue;
+				if (existingPortletPreferences == null) {
+					_portletPreferencesLocalService.addPortletPreferences(
+						layout.getCompanyId(),
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						groupControlPanelPlid, newPortletId, portlet,
+						importedPortletPreferencesXml);
 				}
+				else {
+					existingPortletPreferences.setPreferences(
+						importedPortletPreferencesXml);
 
-				String newPortletId = StringUtil.replace(
-					portletId, oldFragmentEntryLink.getNamespace(),
-					fragmentEntryLink.getNamespace());
-
-				_portletPreferencesLocalService.addPortletPreferences(
-					layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
-					newPortletId, portlet, portletPreferences.getPreferences());
+					_portletPreferencesLocalService.updatePortletPreferences(
+						existingPortletPreferences);
+				}
 			}
 		}
 
@@ -1817,6 +1892,24 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	protected void resetLastMergeTime(Layout importedLayout, Layout layout)
+		throws PortalException {
+
+		UnicodeProperties typeSettings =
+			importedLayout.getTypeSettingsProperties();
+
+		long lastMergeTime = GetterUtil.getLong(
+			typeSettings.getProperty(Sites.LAST_MERGE_TIME));
+
+		Date existingLayoutModifiedDate = layout.getModifiedDate();
+
+		if ((lastMergeTime != 0) && (existingLayoutModifiedDate != null) &&
+			(existingLayoutModifiedDate.getTime() <= lastMergeTime)) {
+
+			typeSettings.remove(Sites.LAST_MERGE_TIME);
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setCounterLocalService(
 		CounterLocalService counterLocalService) {
@@ -1977,8 +2070,13 @@ public class LayoutStagedModelDataHandler
 
 		for (Map.Entry<Long, Long> entry : fragmentEntryLinkIds.entrySet()) {
 			if (newFragmentEntryLinkId == entry.getValue()) {
-				return _fragmentEntryLinkLocalService.getFragmentEntryLink(
-					entry.getKey());
+				FragmentEntryLink fragmentEntryLink =
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						entry.getKey());
+
+				if (fragmentEntryLink != null) {
+					return fragmentEntryLink;
+				}
 			}
 		}
 

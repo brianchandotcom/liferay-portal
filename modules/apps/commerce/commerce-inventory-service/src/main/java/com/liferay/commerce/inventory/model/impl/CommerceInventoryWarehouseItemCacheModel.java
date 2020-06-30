@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.model.impl;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceInventoryWarehouseItemCacheModel
-	implements CacheModel<CommerceInventoryWarehouseItem>, Externalizable {
+	implements CacheModel<CommerceInventoryWarehouseItem>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class CommerceInventoryWarehouseItemCacheModel
 			commerceInventoryWarehouseItemCacheModel =
 				(CommerceInventoryWarehouseItemCacheModel)obj;
 
-		if (commerceInventoryWarehouseItemId ==
+		if ((commerceInventoryWarehouseItemId ==
 				commerceInventoryWarehouseItemCacheModel.
-					commerceInventoryWarehouseItemId) {
+					commerceInventoryWarehouseItemId) &&
+			(mvccVersion ==
+				commerceInventoryWarehouseItemCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommerceInventoryWarehouseItemCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceInventoryWarehouseItemId);
+		int hashCode = HashUtil.hash(0, commerceInventoryWarehouseItemId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{externalReferenceCode=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceInventoryWarehouseItemId=");
 		sb.append(commerceInventoryWarehouseItemId);
@@ -99,6 +117,8 @@ public class CommerceInventoryWarehouseItemCacheModel
 	public CommerceInventoryWarehouseItem toEntityModel() {
 		CommerceInventoryWarehouseItemImpl commerceInventoryWarehouseItemImpl =
 			new CommerceInventoryWarehouseItemImpl();
+
+		commerceInventoryWarehouseItemImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			commerceInventoryWarehouseItemImpl.setExternalReferenceCode("");
@@ -157,6 +177,7 @@ public class CommerceInventoryWarehouseItemCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceInventoryWarehouseItemId = objectInput.readLong();
@@ -178,6 +199,8 @@ public class CommerceInventoryWarehouseItemCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -215,6 +238,7 @@ public class CommerceInventoryWarehouseItemCacheModel
 		objectOutput.writeInt(reservedQuantity);
 	}
 
+	public long mvccVersion;
 	public String externalReferenceCode;
 	public long commerceInventoryWarehouseItemId;
 	public long companyId;

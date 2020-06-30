@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
@@ -171,7 +172,7 @@ public class CommercePaymentServlet extends HttpServlet {
 				_commercePaymentEngine.updateOrderPaymentStatus(
 					_commerceOrderId,
 					CommerceOrderPaymentConstants.STATUS_FAILED,
-					StringPool.BLANK);
+					StringPool.BLANK, StringPool.BLANK);
 
 				httpServletResponse.sendRedirect(_nextUrl);
 			}
@@ -200,7 +201,15 @@ public class CommercePaymentServlet extends HttpServlet {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return _commercePaymentEngine.startPayment(
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			_commerceOrderId);
+
+		if (commerceOrder.isSubscriptionOrder()) {
+			return _commerceSubscriptionEngine.processRecurringPayment(
+				_commerceOrderId, _nextUrl, httpServletRequest);
+		}
+
+		return _commercePaymentEngine.processPayment(
 			_commerceOrderId, _nextUrl, httpServletRequest);
 	}
 
@@ -214,6 +223,9 @@ public class CommercePaymentServlet extends HttpServlet {
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
 
 	private String _nextUrl;
 

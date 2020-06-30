@@ -14,13 +14,19 @@
 
 package com.liferay.portal.security.auth.verifier.internal.portal.session;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Properties;
@@ -47,12 +53,38 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 		try {
 			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-			HttpServletRequest request = accessControlContext.getRequest();
+			HttpServletRequest httpServletRequest =
+				accessControlContext.getRequest();
 
-			User user = PortalUtil.getUser(request);
+			User user = PortalUtil.getUser(httpServletRequest);
 
 			if ((user == null) || user.isDefaultUser()) {
 				return authVerifierResult;
+			}
+
+			boolean checkCSRFToken = GetterUtil.getBoolean(
+				properties.get("check.csrf.token"), true);
+
+			if (checkCSRFToken) {
+				HttpServletRequest originalHttpServletRequest =
+					PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+				String requestURI = originalHttpServletRequest.getRequestURI();
+
+				try {
+					AuthTokenUtil.checkCSRFToken(
+						originalHttpServletRequest, requestURI);
+				}
+				catch (PrincipalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to verify CSRF token for ", requestURI,
+								": ", pe.getMessage()));
+					}
+
+					return authVerifierResult;
+				}
 			}
 
 			authVerifierResult.setPasswordBasedAuthentication(true);
@@ -68,5 +100,8 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 			throw new AuthException(se);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSessionAuthVerifier.class);
 
 }

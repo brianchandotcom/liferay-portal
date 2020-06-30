@@ -176,6 +176,8 @@ function main {
 
 	local commerce_lpkg_url=http://mirrors.lax.liferay.com/${1}
 
+	local commerce_portal_variant=${commerce_lpkg_url: -10:-5}
+
 	local commerce_version=${commerce_lpkg_url%/*}
 
 	commerce_version=${commerce_version##*/}
@@ -184,9 +186,9 @@ function main {
 
 	if [[ ${portal_bundle_name} == *-dxp-* ]]
 	then
-		commerce_bundle_name=liferay-commerce-enterprise-${commerce_version}
+		commerce_bundle_name=liferay-commerce-enterprise-${commerce_version}-${commerce_portal_variant}
 	else
-		commerce_bundle_name=liferay-commerce-${commerce_version}
+		commerce_bundle_name=liferay-commerce-${commerce_version}-${commerce_portal_variant}
 	fi
 
 	mv ${timestamp}/liferay-* ${timestamp}/${commerce_bundle_name}
@@ -231,7 +233,7 @@ function start_tomcat {
 
 	rm -fr ${timestamp}/liferay-commerce-*/data/elasticsearch**
 
-	fix_tomcat_setenv ${timestamp}/${commerce_bundle_name}/tomcat-$(get_tomcat_version ${timestamp}/${commerce_bundle_name})
+	#fix_tomcat_setenv ${timestamp}/${commerce_bundle_name}/tomcat-$(get_tomcat_version ${timestamp}/${commerce_bundle_name})
 
 	cp ${timestamp}/liferay-commerce-*/tomcat-*/bin/setenv.sh setenv.sh.bak
 

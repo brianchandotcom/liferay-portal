@@ -32,17 +32,25 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShippingMethodServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceAddressRestriction(
+			userId, groupId, commerceShippingMethodId, commerceCountryId);
+	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodServiceUtil} to access the commerce shipping method remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				long commerceShippingMethodId, long commerceCountryId,
@@ -55,16 +63,16 @@ public class CommerceShippingMethodServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceShippingMethod
 			addCommerceShippingMethod(
+				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.io.File imageFile, String engineKey, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceShippingMethod(
-			nameMap, descriptionMap, imageFile, engineKey, priority, active,
-			serviceContext);
+			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+			priority, active);
 	}
 
 	public static com.liferay.commerce.model.CommerceShippingMethod
@@ -81,6 +89,14 @@ public class CommerceShippingMethodServiceUtil {
 
 		getService().deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
+	}
+
+	public static void deleteCommerceAddressRestrictions(
+			long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceAddressRestrictions(
+			commerceShippingMethodId);
 	}
 
 	public static void deleteCommerceShippingMethod(

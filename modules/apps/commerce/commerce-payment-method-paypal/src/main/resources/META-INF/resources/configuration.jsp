@@ -18,16 +18,21 @@
 
 <%
 PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupServiceConfiguration)request.getAttribute(PayPalGroupServiceConfiguration.class.getName());
+
+long commerceChannelId = ParamUtil.getLong(request, "commerceChannelId");
 %>
 
 <portlet:actionURL name="editPayPalCommercePaymentMethodConfiguration" var="editCommercePaymentMethodActionURL" />
 
-<aui:form action="<%= editCommercePaymentMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommercePaymentMethodActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset label="authentication">
+	<commerce-ui:panel>
+		<commerce-ui:info-box
+			title="authentication"
+		>
 			<div class="alert alert-info">
 				<%= LanguageUtil.format(resourceBundle, "paypal-configuration-help", new Object[] {"<a href=\"https://developer.paypal.com/developer/applications/create\" target=\"_blank\">", "</a>"}, false) %>
 			</div>
@@ -49,12 +54,14 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 				%>
 
 			</aui:select>
-		</aui:fieldset>
+		</commerce-ui:info-box>
 
-		<aui:fieldset label="options">
+		<commerce-ui:info-box
+			title="options"
+		>
 			<aui:input id="paypal-payment-attempts-max-count" label="payment-attempts-max-count" name="settings--paymentAttempts--" value="<%= payPalGroupServiceConfiguration.paymentAttemptsMaxCount() %>" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</commerce-ui:info-box>
+	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

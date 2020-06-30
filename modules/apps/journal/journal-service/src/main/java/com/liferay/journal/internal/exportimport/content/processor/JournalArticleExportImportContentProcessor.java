@@ -182,12 +182,9 @@ public class JournalArticleExportImportContentProcessor
 			content = imageImportDDMFormFieldValueTransformer.getContent();
 		}
 
-		content =
-			_defaultTextExportImportContentProcessor.
-				replaceImportContentReferences(
-					portletDataContext, stagedModel, content);
-
-		return content;
+		return _defaultTextExportImportContentProcessor.
+			replaceImportContentReferences(
+				portletDataContext, stagedModel, content);
 	}
 
 	@Override
@@ -457,7 +454,12 @@ public class JournalArticleExportImportContentProcessor
 				for (Element dynamicContentElement : dynamicContentElements) {
 					String json = dynamicContentElement.getStringValue();
 
-					if (Validator.isNull(json)) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+					long classPK = GetterUtil.getLong(
+						jsonObject.get("classPK"));
+
+					if (classPK <= 0) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								"No journal article reference is specified");
@@ -465,11 +467,6 @@ public class JournalArticleExportImportContentProcessor
 
 						continue;
 					}
-
-					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-					long classPK = GetterUtil.getLong(
-						jsonObject.get("classPK"));
 
 					JournalArticle journalArticle =
 						_journalArticleLocalService.fetchLatestArticle(classPK);

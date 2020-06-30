@@ -1435,7 +1435,8 @@ definition {
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "${dmDocumentURL}",
-			navTab = "${navTab}");
+			navTab = "${navTab}",
+			type = "Audio");
 
 		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1449,7 +1450,8 @@ definition {
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "${dmDocumentURL}",
-			navTab = "${navTab}");
+			navTab = "${navTab}",
+			type = "Video");
 
 		SelectFrame(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -2045,32 +2047,6 @@ definition {
 				locator1 = "WC#ENTRY_LIST_TITLE",
 				value1 = "${webContentTitle}");
 		}
-	}
-
-	macro viewUnlocalizableTextBox {
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
-
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "${webContentTextBox}");
-
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${localizedTitle}");
-
-		FormFields.viewTextValue(
-			fieldName = "Text",
-			fieldValue = "${localizedText}");
-
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "${localizedTextBox}");
 	}
 
 	macro viewUserEditCP {

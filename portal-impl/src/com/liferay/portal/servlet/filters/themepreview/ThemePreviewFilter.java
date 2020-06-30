@@ -60,9 +60,7 @@ public class ThemePreviewFilter extends BasePortalFilter {
 
 		Matcher imageMatcher = imagePattern.matcher(content);
 
-		content = imageMatcher.replaceAll("images");
-
-		return content;
+		return imageMatcher.replaceAll("images");
 	}
 
 	protected boolean isThemePreview(HttpServletRequest request) {

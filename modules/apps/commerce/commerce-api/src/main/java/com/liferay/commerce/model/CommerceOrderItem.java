@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceOrderItem
 	extends CommerceOrderItemModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.model.impl.CommerceOrderItemImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -60,18 +60,29 @@ public interface CommerceOrderItem
 
 			};
 
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance();
+
+	public com.liferay.commerce.product.model.CProduct fetchCProduct();
+
 	public CommerceOrder getCommerceOrder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public long getCPDefinitionId()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public long getCPDefinitionId();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public com.liferay.commerce.product.model.CProduct getCProduct()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

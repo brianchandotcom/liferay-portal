@@ -19,13 +19,16 @@ import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExce
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.util.GroupControlPanelLayoutUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -106,13 +109,21 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	protected String getRedirectURL(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
 
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		Group group = _groupLocalService.getGroup(
+			layoutPageTemplateEntry.getGroupId());
+
+		long groupControlPanelPlid =
+			GroupControlPanelLayoutUtil.getGroupControlPanelPlid(group);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL(
+			groupControlPanelPlid);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
@@ -132,6 +143,9 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		return portletURL.toString();
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryExceptionRequestHandler

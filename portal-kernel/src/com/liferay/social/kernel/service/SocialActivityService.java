@@ -46,7 +46,7 @@ import java.util.List;
 )
 public interface SocialActivityService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityServiceUtil} to access the social activity remote service. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialActivityServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

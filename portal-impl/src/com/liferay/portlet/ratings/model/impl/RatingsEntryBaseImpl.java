@@ -32,7 +32,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 public abstract class RatingsEntryBaseImpl
 	extends RatingsEntryModelImpl implements RatingsEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ratings entry model instance should use the <code>RatingsEntry</code> interface instead.

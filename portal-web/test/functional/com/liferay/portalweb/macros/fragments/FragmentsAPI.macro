@@ -1,0 +1,11 @@
+definition {
+
+	macro getFragmentFileContent {
+		var baseDir = PropsUtil.get("test.base.dir.name");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/fragment/${fileName}");
+
+		return "${fileContent}";
+	}
+
+}

@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface PortalCapabilityLocator {
 
 	public BulkOperationCapability getBulkOperationCapability(
@@ -30,6 +33,16 @@ public interface PortalCapabilityLocator {
 
 	public ConfigurationCapability getConfigurationCapability(
 		DocumentRepository documentRepository);
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public default ProcessorCapability getProcessorCapability(
+		DocumentRepository documentRepository) {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public ProcessorCapability getProcessorCapability(
 		DocumentRepository documentRepository,

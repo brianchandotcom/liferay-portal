@@ -32,7 +32,7 @@ import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 public abstract class KBFolderBaseImpl
 	extends KBFolderModelImpl implements KBFolder {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kb folder model instance should use the <code>KBFolder</code> interface instead.

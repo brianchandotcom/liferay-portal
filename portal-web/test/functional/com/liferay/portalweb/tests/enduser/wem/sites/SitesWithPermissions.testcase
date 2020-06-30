@@ -26,6 +26,8 @@ definition {
 		}
 	}
 
+	@description = "This will be ignored until LPS-88600 is fixed and backported on BPR-47070."
+	@ignore = "true"
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
 		property testray.component.names = "Permissions,Site Administration";

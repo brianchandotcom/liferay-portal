@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.subscription.web.internal.display.context;
 
-import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,28 +34,14 @@ public class CPInstanceSubscriptionInfoDisplayContext
 
 	public CPInstanceSubscriptionInfoDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		CommerceChannelRelLocalService commerceChannelRelLocalService,
-		CommercePaymentMethodGroupRelLocalService
-			commercePaymentMethodGroupRelLocalService,
-		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		CPSubscriptionTypeJSPContributorRegistry
 			cpSubscriptionTypeJSPContributorRegistry,
 		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry) {
 
 		super(
 			actionHelper, httpServletRequest,
-			commercePaymentMethodGroupRelLocalService,
-			commercePaymentMethodRegistry,
 			cpSubscriptionTypeJSPContributorRegistry,
 			cpSubscriptionTypeRegistry);
-
-		_commerceChannelRelLocalService = commerceChannelRelLocalService;
-		_commercePaymentMethodGroupRelLocalService =
-			commercePaymentMethodGroupRelLocalService;
-		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
-		_cpSubscriptionTypeJSPContributorRegistry =
-			cpSubscriptionTypeJSPContributorRegistry;
-		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -86,22 +69,14 @@ public class CPInstanceSubscriptionInfoDisplayContext
 			"cpInstanceId", String.valueOf(getCPInstanceId()));
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
-			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			CPInstanceScreenNavigationConstants.
+				CATEGORY_KEY_SUBSCRIPTION_OVERRIDE);
 		portletURL.setParameter(
 			"screenNavigationEntryKey",
 			CPInstanceScreenNavigationConstants.
-				ENTRY_KEY_SUBSCRIPTION_OVERRIDE);
+				CATEGORY_KEY_SUBSCRIPTION_OVERRIDE);
 
 		return portletURL;
 	}
-
-	private final CommerceChannelRelLocalService
-		_commerceChannelRelLocalService;
-	private final CommercePaymentMethodGroupRelLocalService
-		_commercePaymentMethodGroupRelLocalService;
-	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-	private final CPSubscriptionTypeJSPContributorRegistry
-		_cpSubscriptionTypeJSPContributorRegistry;
-	private final CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
 
 }

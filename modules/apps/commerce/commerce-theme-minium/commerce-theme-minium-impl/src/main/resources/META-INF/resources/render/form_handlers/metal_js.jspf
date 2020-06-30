@@ -27,7 +27,7 @@
 	function initialiseOrderDetails() {
 		const addToCartButton = Liferay.component('<%= addToCartId %>');
 
-		if(addToCartButton) {
+		if (addToCartButton) {
 			addToCartButton.disabled = true
 		}
 	}
@@ -46,6 +46,7 @@
 			{
 				body: requestBody,
 				credentials: 'include',
+				headers: new Headers({ 'x-csrf-token': Liferay.authToken }),
 				method: 'post'
 			}
 		)
@@ -63,7 +64,7 @@
 	function getFormData() {
 		const form = Liferay.component('ProductOptions' + cpDefinitionId);
 
-		if(!form) {
+		if (!form) {
 			return []
 		}
 
@@ -112,6 +113,7 @@
 			{
 				body: formData,
 				credentials: 'include',
+				headers: new Headers({ 'x-csrf-token': Liferay.authToken }),
 				method: 'post'
 			}
 		).then(
@@ -151,6 +153,7 @@
 		}
 
 		document.querySelector('[data-text-cp-instance-subscription-info]').innerHTML = productData.subscriptionInfo || '';
+		document.querySelector('[data-text-cp-instance-delivery-subscription-info]').innerHTML = productData.deliverySubscriptionInfo || '';
 
 		var priceElement = document.querySelector('[data-text-cp-instance-price]');
 

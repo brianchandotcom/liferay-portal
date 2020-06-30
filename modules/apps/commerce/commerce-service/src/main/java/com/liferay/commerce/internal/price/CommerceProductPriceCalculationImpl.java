@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.price;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
@@ -27,13 +26,13 @@ import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
-import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -41,8 +40,6 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -59,7 +56,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(service = CommerceProductPriceCalculation.class)
+@Component(
+	property = "commerce.price.calculation.key=v1.0",
+	service = CommerceProductPriceCalculation.class
+)
 public class CommerceProductPriceCalculationImpl
 	implements CommerceProductPriceCalculation {
 
@@ -68,10 +68,6 @@ public class CommerceProductPriceCalculationImpl
 			long cpInstanceId, int quantity, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException {
-
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
 
 		CommerceMoney unitPriceMoney = getUnitPrice(
 			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
@@ -136,10 +132,6 @@ public class CommerceProductPriceCalculationImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
-
 		CommerceProductPrice commerceProductPrice = getCommerceProductPrice(
 			cpInstanceId, quantity, commerceContext);
 
@@ -163,10 +155,6 @@ public class CommerceProductPriceCalculationImpl
 			long cpInstanceId, int quantity, CommerceCurrency commerceCurrency,
 			boolean secure, CommerceContext commerceContext)
 		throws PortalException {
-
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
@@ -216,10 +204,6 @@ public class CommerceProductPriceCalculationImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
-
 		CommerceMoney commerceMoney = null;
 		BigDecimal maxPrice = BigDecimal.ZERO;
 
@@ -256,10 +240,6 @@ public class CommerceProductPriceCalculationImpl
 			long cpDefinitionId, int quantity, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException {
-
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
 
 		CommerceMoney commerceMoney = null;
 		BigDecimal minPrice = BigDecimal.ZERO;
@@ -300,10 +280,6 @@ public class CommerceProductPriceCalculationImpl
 			boolean secure, CommerceContext commerceContext)
 		throws PortalException {
 
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
-
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
@@ -312,7 +288,7 @@ public class CommerceProductPriceCalculationImpl
 
 		if (commercePriceList.isPresent()) {
 			BigDecimal priceListPrice = _getPriceListPrice(
-				cpInstanceId, quantity, commercePriceList.get(),
+				cpInstance.getCPInstanceId(), quantity, commercePriceList.get(),
 				commerceContext.getCommerceCurrency(), false);
 
 			if (priceListPrice != null) {
@@ -427,28 +403,6 @@ public class CommerceProductPriceCalculationImpl
 		return price;
 	}
 
-	private boolean _hasViewPricePermission(CommerceContext commerceContext)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if ((commerceAccount != null) &&
-			(commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS)) {
-
-			return _portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroupId(),
-				CPActionKeys.VIEW_PRICE);
-		}
-
-		return _portletResourcePermission.contains(
-			permissionChecker, commerceContext.getSiteGroupId(),
-			CPActionKeys.VIEW_PRICE);
-	}
-
 	@Reference
 	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
 
@@ -458,7 +412,7 @@ public class CommerceProductPriceCalculationImpl
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	@Reference
+	@Reference(target = "(commerce.discount.calculation.key=v1.0)")
 	private CommerceDiscountCalculation _commerceDiscountCalculation;
 
 	@Reference

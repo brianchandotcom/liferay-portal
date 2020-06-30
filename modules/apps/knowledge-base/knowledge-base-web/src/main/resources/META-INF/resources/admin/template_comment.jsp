@@ -59,13 +59,9 @@ KBComment kbComment = (KBComment)request.getAttribute("template_comment.jsp-kb_c
 				<c:if test="<%= KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
 					<br />
 
-					<%
-					String deleteURL = "javascript:" + renderResponse.getNamespace() + "deleteKBComment(" + kbComment.getKbCommentId() + ");";
-					%>
-
 					<liferay-ui:icon-delete
 						label="<%= true %>"
-						url="<%= deleteURL %>"
+						url='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBComment(" + kbComment.getKbCommentId() + ");" %>'
 					/>
 				</c:if>
 			</td>

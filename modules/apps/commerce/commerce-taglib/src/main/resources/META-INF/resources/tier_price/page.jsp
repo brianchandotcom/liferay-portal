@@ -75,16 +75,12 @@ String tierPriceId = randomNamespace + "tierPrice";
 	</div>
 
 	<aui:script use="aui-base">
-		Liferay.provide(
-			window,
-			'<%= randomNamespace %>setQuantity',
-			function(qt) {
-				var quantityNode = document.querySelector('#<%= taglibQuantityInputId %>');
+		Liferay.provide(window, '<%= randomNamespace %>setQuantity', function(qt) {
+			var quantityNode = document.querySelector('#<%= taglibQuantityInputId %>');
 
-				if (quantityNode) {
-					quantityNode.value = qt;
-				}
+			if (quantityNode) {
+				quantityNode.value = qt;
 			}
-		);
+		});
 	</aui:script>
 </c:if>

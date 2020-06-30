@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sync Service
 Bundle-SymbolicName: com.liferay.sync.service
-Bundle-Version: 2.0.39
+Bundle-Version: 2.0.48
 Import-Package:\
 	!junit.framework,\
 	\

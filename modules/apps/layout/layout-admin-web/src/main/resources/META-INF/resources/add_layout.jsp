@@ -32,6 +32,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 			<c:choose>
 				<c:when test="<%= autoSiteNavigationMenus.size() > 1 %>">
+					<div class="h3 sheet-subtitle"><liferay-ui:message key="navigation-menus" /></div>
+
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
 					<div class="auto-site-navigation-menus container my-3">
@@ -65,6 +67,27 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					</div>
 				</c:when>
 			</c:choose>
+
+			<c:if test="<%= layoutsAdminDisplayContext.hasRequiredVocabularies() %>">
+				<aui:fieldset cssClass="mb-4">
+					<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>
+
+					<c:choose>
+						<c:when test="<%= layoutsAdminDisplayContext.isShowCategorization() %>">
+							<liferay-asset:asset-categories-selector
+								className="<%= Layout.class.getName() %>"
+								classPK="<%= 0 %>"
+								showOnlyRequiredVocabularies="<%= true %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-warning text-justify">
+								<liferay-ui:message key="pages-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-page" />
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</aui:fieldset>
+			</c:if>
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>
@@ -74,10 +97,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 	</liferay-frontend:edit-form>
 </div>
 
-<aui:script require="metal-uri/src/Uri">
+<aui:script use="liferay-alert">
 	var form = document.getElementById('<portlet:namespace />fm');
-
-	var Uri = metalUriSrcUri.default;
 
 	$(form).on(
 		'submit',
@@ -112,9 +133,9 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			).then(
 				function(response) {
 					if (response.redirectURL) {
-						var redirectURL = new Uri(response.redirectURL);
+						var redirectURL = new URL(response.redirectURL, window.location.origin);
 
-						redirectURL.setParameterValue('p_p_state', 'normal');
+						redirectURL.searchParams.set('p_p_state', 'normal');
 
 						Liferay.fire(
 							'closeWindow',

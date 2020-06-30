@@ -336,11 +336,6 @@ public class CPDisplayLayoutWrapper
 		return _cpDisplayLayout.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp display layout model instance should use the <code>CPDisplayLayout</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDisplayLayout.persist();

@@ -298,6 +298,9 @@ public class FolderLocalServiceWrapper
 		return _folderLocalService.getPercentDownloaded(folderId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

@@ -46,9 +46,6 @@ public interface CPSearchResultsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "15", name = "pagination-delta", required = false)
 	public int paginationDelta();
 
-	@Meta.AD(deflt = "more", name = "pagination-type", required = false)
-	public String paginationType();
-
 	@Meta.AD(deflt = "custom", name = "selection-style", required = false)
 	public String selectionStyle();
 

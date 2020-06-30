@@ -33,11 +33,6 @@ public class AnnouncementsFlagServiceWrapper
 		_announcementsFlagService = announcementsFlagService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link AnnouncementsFlagServiceUtil} to access the announcements flag remote service. Add custom service methods to <code>com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addFlag(long entryId, int value)
 		throws com.liferay.portal.kernel.exception.PortalException {

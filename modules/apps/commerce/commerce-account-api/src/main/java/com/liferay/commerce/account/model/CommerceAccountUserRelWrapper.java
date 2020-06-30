@@ -273,11 +273,6 @@ public class CommerceAccountUserRelWrapper
 		return _commerceAccountUserRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce account user rel model instance should use the <code>CommerceAccountUserRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceAccountUserRel.persist();

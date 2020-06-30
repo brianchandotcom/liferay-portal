@@ -278,6 +278,15 @@ public class CommerceChannelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannelByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.getCommerceChannelByGroupId(
+			groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
 			getCommerceChannelByOrderGroupId(long orderGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -355,6 +364,9 @@ public class CommerceChannelLocalServiceWrapper
 		return _commerceChannelLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -419,6 +431,17 @@ public class CommerceChannelLocalServiceWrapper
 		return _commerceChannelLocalService.updateCommerceChannel(
 			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
 			commerceCurrencyCode);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
+			updateCommerceChannelExternalReferenceCode(
+				long commerceChannelId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.
+			updateCommerceChannelExternalReferenceCode(
+				commerceChannelId, externalReferenceCode);
 	}
 
 	@Override

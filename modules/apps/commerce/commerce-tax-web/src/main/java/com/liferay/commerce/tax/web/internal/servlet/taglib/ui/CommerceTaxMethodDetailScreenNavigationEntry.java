@@ -14,28 +14,16 @@
 
 package com.liferay.commerce.tax.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.commerce.tax.service.CommerceTaxMethodService;
-import com.liferay.commerce.tax.web.internal.display.context.CommerceTaxMethodsDisplayContext;
-import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -90,48 +78,13 @@ public class CommerceTaxMethodDetailScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		try {
-			RenderRequest renderRequest =
-				(RenderRequest)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-			RenderResponse renderResponse =
-				(RenderResponse)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-			CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext =
-				new CommerceTaxMethodsDisplayContext(
-					_commerceTaxEngineRegistry, _commerceTaxMethodService,
-					_portletResourcePermission, renderRequest, renderResponse);
-
-			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTaxMethodsDisplayContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/tax_method/detail.jsp");
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceTaxMethodDetailScreenNavigationEntry.class);
-
-	@Reference
-	private CommerceTaxEngineRegistry _commerceTaxEngineRegistry;
-
-	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
-
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.tax.web)")
 	private ServletContext _servletContext;

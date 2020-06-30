@@ -171,9 +171,6 @@ public class AlloyControllerInvokerManager {
 		String alloyControllerInvokerClassName =
 			getAlloyControllerInvokerClassName(controllerClass);
 
-		Class<? extends AlloyControllerInvoker> alloyControllerInvokerClass =
-			null;
-
 		synchronized (classLoader) {
 			try {
 				Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
@@ -213,13 +210,10 @@ public class AlloyControllerInvokerManager {
 
 				};
 
-				alloyControllerInvokerClass =
-					(Class<? extends AlloyControllerInvoker>)
-						defineClassMethod.invoke(
-							customClassLoader, alloyControllerInvokerClassName,
-							classData, 0, classData.length);
-
-				return alloyControllerInvokerClass;
+				return (Class<? extends AlloyControllerInvoker>)
+					defineClassMethod.invoke(
+						customClassLoader, alloyControllerInvokerClassName,
+						classData, 0, classData.length);
 			}
 			catch (NoClassNecessaryException ncne) {
 				throw ncne;

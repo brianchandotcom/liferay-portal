@@ -136,6 +136,10 @@ public class PollsQuestionStagedModelDataHandler
 
 		PollsQuestion existingQuestion = fetchMissingReference(uuid, groupId);
 
+		if (existingQuestion == null) {
+			return;
+		}
+
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);

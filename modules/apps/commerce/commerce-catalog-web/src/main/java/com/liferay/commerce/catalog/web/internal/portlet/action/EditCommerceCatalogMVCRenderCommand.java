@@ -14,24 +14,14 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
-import com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alec Sloan
@@ -51,42 +41,7 @@ public class EditCommerceCatalogMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			CommerceCatalogDisplayContext commerceCatalogDisplayContext =
-				new CommerceCatalogDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_commerceCatalogService,
-					_commerceCatalogModelResourcePermission,
-					_commerceCurrencyService, _portal);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCatalogDisplayContext);
-		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
-
-			return "/error.jsp";
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
-		return "/details.jsp";
+		return "/edit_catalog.jsp";
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
-	)
-	private ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission;
-
-	@Reference
-	private CommerceCatalogService _commerceCatalogService;
-
-	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private Portal _portal;
 
 }

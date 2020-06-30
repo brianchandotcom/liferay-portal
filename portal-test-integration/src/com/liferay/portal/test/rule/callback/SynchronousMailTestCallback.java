@@ -15,7 +15,12 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.runner.Description;
 
@@ -32,6 +37,9 @@ public class SynchronousMailTestCallback
 	public void afterClass(Description description, SyncHandler syncHandler)
 		throws Exception {
 
+		_setCompanyAdminEmailFromAddress(
+			TestPropsValues.getCompanyId(), _adminEmailFromAddress);
+
 		MailServiceTestUtil.stop();
 	}
 
@@ -46,10 +54,31 @@ public class SynchronousMailTestCallback
 	public SyncHandler beforeClass(Description description) throws Throwable {
 		MailServiceTestUtil.start();
 
+		_adminEmailFromAddress = PrefsPropsUtil.getString(
+			TestPropsValues.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		_setCompanyAdminEmailFromAddress(
+			TestPropsValues.getCompanyId(), "integration-test@liferay.com");
+
 		return null;
 	}
 
 	private SynchronousMailTestCallback() {
 	}
+
+	private void _setCompanyAdminEmailFromAddress(
+			long companyId, String adminEmailFromAddress)
+		throws Exception {
+
+		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+			companyId);
+
+		preferences.setValue(
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, adminEmailFromAddress);
+
+		preferences.store();
+	}
+
+	private String _adminEmailFromAddress;
 
 }

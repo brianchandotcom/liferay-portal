@@ -61,6 +61,39 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 				label="use-a-secure-network-connection"
 				name="secureConnection"
 			/>
+
+			<%
+			boolean overrideRemoteSiteURL = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("overrideRemoteSiteURL"));
+			%>
+
+			<liferay-staging:checkbox
+				checked="<%= overrideRemoteSiteURL %>"
+				label="manually-define-remote-site-url"
+				name="overrideRemoteSiteURL"
+			/>
+		</div>
+
+		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
+			<aui:input helpMessage="remote-site-url-help-message" label="remote-site-url" name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 		</div>
 	</div>
 </div>
+
+<aui:script>
+	var overrideRemoteSiteURLCheckbox = document.getElementById(
+		'<portlet:namespace />overrideRemoteSiteURL'
+	);
+	var remoteSiteURLContainer = document.getElementById(
+		'<portlet:namespace />remoteSiteURLContainer'
+	);
+
+	overrideRemoteSiteURLCheckbox.addEventListener('click', function() {
+		var checked = overrideRemoteSiteURLCheckbox.checked;
+
+		if (checked) {
+			remoteSiteURLContainer.classList.remove('hide');
+		} else {
+			remoteSiteURLContainer.classList.add('hide');
+		}
+	});
+</aui:script>

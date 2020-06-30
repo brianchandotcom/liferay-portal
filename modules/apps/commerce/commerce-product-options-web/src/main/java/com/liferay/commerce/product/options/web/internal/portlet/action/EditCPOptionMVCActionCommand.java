@@ -16,6 +16,7 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPOptionKeyException;
+import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -114,6 +115,11 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 			if (e instanceof CPOptionKeyException) {
 				key = "that-key-is-already-being-used";
+			}
+			else if (e instanceof CPOptionSKUContributorException) {
+				key =
+					"sku-contributor-cannot-be-set-as-true-for-the-selected-" +
+						"field-type";
 			}
 
 			jsonObject.put(

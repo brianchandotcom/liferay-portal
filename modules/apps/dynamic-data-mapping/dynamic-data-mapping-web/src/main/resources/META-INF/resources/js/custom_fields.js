@@ -1110,6 +1110,14 @@ AUI.add(
 			var fieldOptions = [];
 
 			if (options) {
+				var builder = instance.get('builder');
+
+				var translationManager = builder.translationManager;
+
+				var availableLocales = translationManager.get(
+					'availableLocales'
+				);
+
 				options.forEach(
 					function(option) {
 						var fieldOption = {};
@@ -1119,10 +1127,17 @@ AUI.add(
 						fieldOption.value = option.value;
 						fieldOption.label = {};
 
-						A.each(
-							localizationMap,
-							function(item, index, collection) {
-								fieldOption.label[index] = LiferayFormBuilderUtil.normalizeValue(item.label);
+						availableLocales.forEach(
+							function(locale) {
+								var label = instance._getValue(
+									'label',
+									locale,
+									localizationMap
+								);
+
+								fieldOption.label[
+									locale
+								] = LiferayFormBuilderUtil.normalizeValue(label);
 							}
 						);
 
@@ -1163,35 +1178,58 @@ AUI.add(
 
 			var translationManager = builder.translationManager;
 
-			var defaultLocale = translationManager.get('defaultLocale');
-
 			translationManager.get('availableLocales').forEach(
 				function(locale) {
-					var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
-					if (!isValue(value)) {
-						value = A.Object.getValue(localizationMap, [defaultLocale, attribute]);
-
-						if (!isValue(value)) {
-							for (var localizationMapLocale in localizationMap) {
-								value = A.Object.getValue(localizationMap, [localizationMapLocale, attribute]);
-
-								if (isValue(value)) {
-									break;
-								}
-							}
-						}
-
-						if (!isValue(value)) {
-							value = STR_BLANK;
-						}
-					}
-
-					localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(value);
+					localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(
+						instance._getValue(attribute, locale, localizationMap)
+					);
 				}
 			);
 
 			return localizedValue;
+		};
+
+		SerializableFieldSupport.prototype._getValue = function(
+			attribute,
+			locale,
+			localizationMap
+		) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var translationManager = builder.translationManager;
+
+			var defaultLocale = translationManager.get('defaultLocale');
+
+			var value = A.Object.getValue(localizationMap, [locale, attribute]);
+
+			if (isValue(value)) {
+				return value;
+			}
+
+			value = A.Object.getValue(localizationMap, [
+				defaultLocale,
+				attribute
+			]);
+
+			if (isValue(value)) {
+				return value;
+			}
+
+			for (var localizationMapLocale in localizationMap) {
+				value = A.Object.getValue(localizationMap, [
+					localizationMapLocale,
+					attribute
+				]);
+
+				if (isValue(value)) {
+					return value;
+				}
+			}
+
+			return STR_BLANK;
 		};
 
 		SerializableFieldSupport.prototype.serialize = function() {

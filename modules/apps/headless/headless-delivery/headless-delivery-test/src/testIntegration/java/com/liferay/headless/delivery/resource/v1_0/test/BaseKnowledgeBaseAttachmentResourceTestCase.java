@@ -328,6 +328,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 	@Test
 	public void testDeleteKnowledgeBaseAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseAttachment knowledgeBaseAttachment =
 			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 

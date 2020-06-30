@@ -28,11 +28,6 @@ public class LayoutBranchServiceWrapper
 		_layoutBranchService = layoutBranchService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutBranchServiceUtil} to access the layout branch remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutBranchServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
 			long layoutRevisionId, java.lang.String name,

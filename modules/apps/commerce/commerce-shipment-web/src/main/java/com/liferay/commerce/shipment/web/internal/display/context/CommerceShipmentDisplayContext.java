@@ -14,124 +14,148 @@
 
 package com.liferay.commerce.shipment.web.internal.display.context;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountServiceUtil;
+import com.liferay.commerce.address.CommerceAddressFormatter;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
-import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
+import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.frontend.ClayMenuActionItem;
+import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.frontend.model.StepModel;
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
-import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.service.CommerceShipmentItemLocalServiceUtil;
-import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.shipment.web.internal.util.CommerceShipmentPortletUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Alec Sloan
  */
 public class CommerceShipmentDisplayContext
 	extends BaseCommerceShipmentDisplayContext<CommerceShipment> {
 
 	public CommerceShipmentDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		CommerceAddressFormatter commerceAddressFormatter,
+		CommerceAddressService commerceAddressService,
 		CommerceChannelService commerceChannelService,
+		CommerceCountryService commerceCountryService,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
-		CommerceShipmentService commerceShipmentService,
-		CommerceInventoryWarehouseService commerceInventoryWarehouseService) {
+		CommerceRegionService commerceRegionService) {
 
-		super(
-			actionHelper, httpServletRequest,
-			CommerceShipment.class.getSimpleName());
+		super(actionHelper, httpServletRequest);
 
+		_commerceAddressFormatter = commerceAddressFormatter;
+		_commerceAddressService = commerceAddressService;
 		_commerceChannelService = commerceChannelService;
+		_commerceCountryService = commerceCountryService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
-		_commerceShipmentService = commerceShipmentService;
-		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
+		_commerceRegionService = commerceRegionService;
 	}
 
-	public int getCommerceInventoryWarehouseItemQuantity(
-			long commerceOrderItemId, long commerceInventoryWarehouseId)
+	public List<CommerceAccount> getCommerceAccountsWithShippableOrders()
 		throws PortalException {
 
-		return _commerceOrderItemService.
-			getCommerceInventoryWarehouseItemQuantity(
-				commerceOrderItemId, commerceInventoryWarehouseId);
-	}
+		List<CommerceOrder> commerceOrders = getCommerceOrders();
 
-	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()
-		throws PortalException {
+		Stream<CommerceOrder> stream = commerceOrders.stream();
 
-		if (_commerceInventoryWarehouses != null) {
-			return _commerceInventoryWarehouses;
+		long[] commerceAccountIds = stream.mapToLong(
+			CommerceOrder::getCommerceAccountId
+		).toArray();
+
+		commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
+
+		List<CommerceAccount> commerceAccounts = new ArrayList<>();
+
+		for (long commerceAccountId : commerceAccountIds) {
+			commerceAccounts.add(
+				CommerceAccountServiceUtil.getCommerceAccount(
+					commerceAccountId));
 		}
 
-		_commerceInventoryWarehouses =
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
-				cpRequestHelper.getCompanyId(),
-				cpRequestHelper.getChannelGroupId(), true);
-
-		return _commerceInventoryWarehouses;
+		return commerceAccounts;
 	}
 
-	public long getCommerceOrderId(long commerceShipmentId)
-		throws PortalException {
+	public String getCommerceAccountThumbnailURL(
+		CommerceAccount commerceAccount, String pathImage) {
 
-		List<CommerceShipmentItem> commerceShipmentItems =
-			CommerceShipmentItemLocalServiceUtil.getCommerceShipmentItems(
-				commerceShipmentId, 0, 1, null);
+		StringBundler sb = new StringBundler(5);
 
-		if (commerceShipmentItems.isEmpty()) {
-			return 0;
+		sb.append(pathImage);
+		sb.append("/organization_logo?img_id=");
+		sb.append(commerceAccount.getLogoId());
+
+		if (commerceAccount.getLogoId() > 0) {
+			sb.append("&t=");
+			sb.append(
+				WebServerServletTokenUtil.getToken(
+					commerceAccount.getLogoId()));
 		}
 
-		CommerceShipmentItem commerceShipmentItem = commerceShipmentItems.get(
-			0);
-
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.getCommerceOrderItem(
-				commerceShipmentItem.getCommerceOrderItemId());
-
-		return commerceOrderItem.getCommerceOrderId();
+		return sb.toString();
 	}
 
-	public List<CommerceOrderItem> getCommerceOrderItems(long commerceOrderId)
-		throws PortalException {
+	public String getCommerceChannelName() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
 
-		if (commerceOrderId <= 0) {
-			return Collections.emptyList();
-		}
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannelByOrderGroupId(
+				commerceShipment.getGroupId());
 
-		return _commerceOrderItemService.
-			getAvailableForShipmentCommerceOrderItems(commerceOrderId);
+		return commerceChannel.getName();
+	}
+
+	public List<CommerceChannel> getCommerceChannels() throws PortalException {
+		return _commerceChannelService.searchCommerceChannels(
+			cpRequestHelper.getCompanyId());
+	}
+
+	public List<CommerceCountry> getCommerceCountries() {
+		return _commerceCountryService.getCommerceCountries(
+			cpRequestHelper.getCompanyId(), true);
 	}
 
 	public List<CommerceOrder> getCommerceOrders() throws PortalException {
@@ -143,53 +167,115 @@ public class CommerceShipmentDisplayContext
 		return baseModelSearchResult.getBaseModels();
 	}
 
-	public String getCommerceOrderUrl(long commerceOrderId)
-		throws PortalException {
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, CommercePortletKeys.COMMERCE_ORDER,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
-
-		return portletURL.toString();
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId) {
+		return _commerceRegionService.getCommerceRegions(
+			commerceCountryId, true);
 	}
 
-	public String getCommerceShipmentStatusLabel(int status) {
-		return LanguageUtil.get(
-			cpRequestHelper.getLocale(),
-			CommerceShipmentConstants.getShipmentStatusLabel(status));
+	public String getDatasetView() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (commerceShipment.getStatus() >
+				CommerceShipmentConstants.SHIPMENT_STATUS_READY_TO_BE_SHIPPED) {
+
+			return CommerceShipmentDataSetConstants.
+				COMMERCE_DATA_SET_KEY_SHIPPED_SHIPMENT_ITEMS;
+		}
+
+		return CommerceShipmentDataSetConstants.
+			COMMERCE_DATA_SET_KEY_PROCESSING_SHIPMENT_ITEMS;
+	}
+
+	public String getDescriptiveShippingAddress() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (commerceShipment.getCommerceAddressId() == 0) {
+			return StringPool.BLANK;
+		}
+
+		CommerceAddress commerceAddress = getShippingAddress();
+
+		if (commerceAddress == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commerceAddressFormatter.getDescriptiveAddress(
+			commerceAddress, true);
+	}
+
+	public List<HeaderActionModel> getHeaderActionModels()
+		throws PortalException {
+
+		List<HeaderActionModel> headerActionModels = new ArrayList<>();
+
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		int[] shipmentStatuses = CommerceShipmentConstants.SHIPMENT_STATUSES;
+
+		int currentShipmentStatus = commerceShipment.getStatus();
+
+		if (currentShipmentStatus !=
+				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED) {
+
+			int[] availableShipmentStatuses = new int[0];
+
+			if (currentShipmentStatus ==
+					CommerceShipmentConstants.
+						SHIPMENT_STATUS_READY_TO_BE_SHIPPED) {
+
+				availableShipmentStatuses = ArrayUtil.append(
+					availableShipmentStatuses,
+					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
+			}
+
+			availableShipmentStatuses = ArrayUtil.append(
+				availableShipmentStatuses,
+				shipmentStatuses[currentShipmentStatus + 1]);
+
+			for (int shipmentStatus : availableShipmentStatuses) {
+				String label =
+					CommerceShipmentConstants.getShipmentTransitionLabel(
+						shipmentStatus);
+
+				PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+					httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+					PortletRequest.ACTION_PHASE);
+
+				portletURL.setParameter(
+					ActionRequest.ACTION_NAME, "editCommerceShipment");
+				portletURL.setParameter(Constants.CMD, "transition");
+				portletURL.setParameter(
+					"redirect", PortalUtil.getCurrentURL(httpServletRequest));
+				portletURL.setParameter(
+					"commerceShipmentId",
+					String.valueOf(getCommerceShipmentId()));
+				portletURL.setParameter(
+					"transitionName", String.valueOf(shipmentStatus));
+
+				String buttonClass = "btn-primary";
+
+				int availableStatusesLength = availableShipmentStatuses.length;
+
+				if ((availableStatusesLength > 1) &&
+					(shipmentStatus !=
+						availableShipmentStatuses
+							[availableStatusesLength - 1])) {
+
+					buttonClass = "btn-secondary";
+				}
+
+				headerActionModels.add(
+					new HeaderActionModel(
+						buttonClass, null, portletURL.toString(), null, label));
+			}
+		}
+
+		return headerActionModels;
 	}
 
 	public String getNavigation() {
 		return ParamUtil.getString(
 			cpRequestHelper.getRequest(), "navigation", "all");
-	}
-
-	public String[] getNavigationKeys() {
-		int[] shipmentStatuses = CommerceShipmentConstants.SHIPMENT_STATUSES;
-
-		String[] navigationKeys = new String[0];
-
-		navigationKeys = ArrayUtil.append(navigationKeys, "all");
-
-		for (int shipmentStatus : shipmentStatuses) {
-			navigationKeys = ArrayUtil.append(
-				navigationKeys,
-				CommerceShipmentConstants.getShipmentStatusLabel(
-					shipmentStatus));
-		}
-
-		return navigationKeys;
-	}
-
-	public int getNumberOfItemsShipped(long commerceShipmentId)
-		throws PortalException {
-
-		return CommerceShipmentItemLocalServiceUtil.
-			getCommerceShipmentItemsCount(commerceShipmentId);
 	}
 
 	@Override
@@ -201,69 +287,110 @@ public class CommerceShipmentDisplayContext
 		return portletURL;
 	}
 
-	@Override
-	public SearchContainer<CommerceShipment> getSearchContainer()
+	public List<ClayMenuActionItem> getShipmentItemBulkActions()
 		throws PortalException {
 
-		if (searchContainer != null) {
-			return searchContainer;
+		List<ClayMenuActionItem> bulkActions = new ArrayList<>();
+
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (hasManageCommerceShipmentsPermission() &&
+			(commerceShipment.getStatus() ==
+				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
+
+			bulkActions.add(new ClayMenuActionItem(null, null, null, null));
 		}
 
-		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
+		return bulkActions;
+	}
 
-		OrderByComparator<CommerceShipment> orderByComparator =
-			CommerceShipmentPortletUtil.getCommerceShipmentOrderByComparator(
-				getOrderByCol(), getOrderByType());
+	public ClayCreationMenu getShipmentItemClayCreationMenu()
+		throws PortalException, WindowStateException {
 
-		String emptyResultsMessage = "no-shipments-were-found";
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
 
-		String navigation = getNavigation();
+		CommerceShipment commerceShipment = getCommerceShipment();
 
-		if (!navigation.equals("all")) {
-			emptyResultsMessage = LanguageUtil.format(
-				cpRequestHelper.getRequest(), "no-x-shipments-were-found",
-				navigation, true);
+		if (hasManageCommerceShipmentsPermission() &&
+			(commerceShipment.getStatus() ==
+				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
+
+			PortletURL portletURL = getPortletURL();
+
+			portletURL.setParameter(
+				"redirect", PortalUtil.getCurrentURL(httpServletRequest));
+			portletURL.setParameter(
+				"commerceShipmentId",
+				String.valueOf(commerceShipment.getCommerceShipmentId()));
+			portletURL.setParameter(
+				"mvcRenderCommandName", "addCommerceShipmentItems");
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			clayCreationMenu.addClayCreationMenuActionItem(
+				new ClayCreationMenuActionItem(
+					portletURL.toString(),
+					LanguageUtil.get(
+						httpServletRequest, "add-products-to-this-shipment"),
+					ClayMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
 		}
 
-		searchContainer.setEmptyResultsMessage(emptyResultsMessage);
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
+		return clayCreationMenu;
+	}
 
-		int total;
-		List<CommerceShipment> results;
+	public List<StepModel> getShipmentSteps() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
 
-		Integer shipmentStatus = CommerceShipmentConstants.getShipmentStatus(
-			navigation);
+		List<StepModel> steps = new ArrayList<>();
 
-		if (!navigation.equals("all") && (shipmentStatus != null)) {
-			total = _commerceShipmentService.getCommerceShipmentsCount(
-				cpRequestHelper.getCompanyId(), shipmentStatus);
-			results = _commerceShipmentService.getCommerceShipments(
-				cpRequestHelper.getCompanyId(), shipmentStatus,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+		for (int shipmentStatus : CommerceShipmentConstants.SHIPMENT_STATUSES) {
+			StepModel step = new StepModel();
+
+			step.setId(String.valueOf(shipmentStatus));
+			step.setLabel(
+				LanguageUtil.get(
+					httpServletRequest,
+					CommerceShipmentConstants.getShipmentStatusLabel(
+						shipmentStatus)));
+
+			if ((commerceShipment.getStatus() == shipmentStatus) &&
+				(shipmentStatus !=
+					CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
+
+				step.setState("active");
+			}
+			else if ((commerceShipment.getStatus() > shipmentStatus) ||
+					 (commerceShipment.getStatus() ==
+						 CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
+
+				step.setState("completed");
+			}
+			else {
+				step.setState("inactive");
+			}
+
+			steps.add(step);
 		}
-		else {
-			total = _commerceShipmentService.getCommerceShipmentsCount(
-				cpRequestHelper.getCompanyId());
-			results = _commerceShipmentService.getCommerceShipments(
-				cpRequestHelper.getCompanyId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-		}
 
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
+		return steps;
+	}
 
-		return searchContainer;
+	public CommerceAddress getShippingAddress() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		return _commerceAddressService.fetchCommerceAddress(
+			commerceShipment.getCommerceAddressId());
 	}
 
 	private SearchContext _buildSearchContext() throws PortalException {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttribute(
-			"orderStatuses", CommerceShipmentConstants.ALLOWED_ORDER_STATUSES);
+		int[] orderStatuses = {
+			CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED
+		};
+
+		searchContext.setAttribute("orderStatuses", orderStatuses);
 
 		searchContext.setAttribute(
 			"useSearchResultPermissionFilter", Boolean.FALSE);
@@ -292,9 +419,7 @@ public class CommerceShipmentDisplayContext
 	}
 
 	private long[] _getCommerceChannelGroupIds() throws PortalException {
-		List<CommerceChannel> commerceChannels =
-			_commerceChannelService.searchCommerceChannels(
-				cpRequestHelper.getCompanyId());
+		List<CommerceChannel> commerceChannels = getCommerceChannels();
 
 		Stream<CommerceChannel> stream = commerceChannels.stream();
 
@@ -303,12 +428,12 @@ public class CommerceShipmentDisplayContext
 		).toArray();
 	}
 
+	private final CommerceAddressFormatter _commerceAddressFormatter;
+	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelService _commerceChannelService;
-	private List<CommerceInventoryWarehouse> _commerceInventoryWarehouses;
-	private final CommerceInventoryWarehouseService
-		_commerceInventoryWarehouseService;
+	private final CommerceCountryService _commerceCountryService;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
-	private final CommerceShipmentService _commerceShipmentService;
+	private final CommerceRegionService _commerceRegionService;
 
 }

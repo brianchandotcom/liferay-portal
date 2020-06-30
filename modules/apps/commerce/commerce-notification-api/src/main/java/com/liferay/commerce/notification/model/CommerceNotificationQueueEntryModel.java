@@ -45,7 +45,7 @@ public interface CommerceNotificationQueueEntryModel
 	extends AttachedModel, BaseModel<CommerceNotificationQueueEntry>,
 			GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce notification queue entry model instance should use the {@link CommerceNotificationQueueEntry} interface instead.

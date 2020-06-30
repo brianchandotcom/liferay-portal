@@ -48,7 +48,7 @@ public interface CommercePaymentMethodGroupRelModel
 	extends BaseModel<CommercePaymentMethodGroupRel>, GroupedModel,
 			LocalizedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce payment method group rel model instance should use the {@link CommercePaymentMethodGroupRel} interface instead.

@@ -48,7 +48,7 @@ public interface CommerceCountryModel
 	extends BaseModel<CommerceCountry>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce country model instance should use the {@link CommerceCountry} interface instead.

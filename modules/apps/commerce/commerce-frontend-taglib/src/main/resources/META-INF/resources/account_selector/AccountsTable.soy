@@ -28,7 +28,7 @@
 				<div class="commerce-search__input">
 					<input
 						type="text"
-						placeholder="Search Accounts…"
+						placeholder="{msg desc="Search Accounts..."}search-accounts{/msg}"
 						data-onkeyup="_handleFilterChange"
 					>
 				</div>
@@ -67,7 +67,7 @@
 					href="{$viewAllAccountsLink}"
 					class="commerce-account-switcher__button commerce-button commerce-button--block commerce-button--link"
 				>
-					{msg desc="View all accounts"}view-all-accounts{/msg}
+					{msg desc="View All Accounts"}view-all-accounts{/msg}
 				</a>
 			{/if}
 			{if isNonnull($createNewAccountLink)}
@@ -75,7 +75,7 @@
 					href="{$createNewAccountLink}"
 					class="commerce-account-switcher__button commerce-button commerce-button--block"
 				>
-					{msg desc="Create new account"}create-new-account{/msg}
+					{msg desc="Create New Account"}create-new-account{/msg}
 				</a>
 			{/if}
 		</div>

@@ -32,11 +32,70 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceInventoryReplenishmentItemServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryReplenishmentItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
+				addCommerceInventoryReplenishmentItem(
+					long userId, long commerceInventoryWarehouseId, String sku,
+					java.util.Date availabilityDate, int quantity)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceInventoryReplenishmentItem(
+			userId, commerceInventoryWarehouseId, sku, availabilityDate,
+			quantity);
+	}
+
+	public static void deleteCommerceInventoryReplenishmentItem(
+			long commerceInventoryReplenishmentItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceInventoryReplenishmentItem(
+			commerceInventoryReplenishmentItemId);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
+				getCommerceInventoryReplenishmentItem(
+					long commerceInventoryReplenishmentItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceInventoryReplenishmentItem(
+			commerceInventoryReplenishmentItemId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.
+			CommerceInventoryReplenishmentItem>
+					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+						long companyId, String sku, int start, int end)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+				companyId, sku, start, end);
+	}
+
+	public static long getCommerceInventoryReplenishmentItemsCount(
+			long commerceInventoryWarehouseId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceInventoryReplenishmentItemsCount(
+			commerceInventoryWarehouseId, sku);
+	}
+
+	public static int
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
+				long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
+				companyId, sku);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,6 +104,19 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
+				updateCommerceInventoryReplenishmentItem(
+					long commerceInventoryReplenishmentItemId,
+					java.util.Date availabilityDate, int quantity,
+					long mvccVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceInventoryReplenishmentItem(
+			commerceInventoryReplenishmentItemId, availabilityDate, quantity,
+			mvccVersion);
 	}
 
 	public static CommerceInventoryReplenishmentItemService getService() {

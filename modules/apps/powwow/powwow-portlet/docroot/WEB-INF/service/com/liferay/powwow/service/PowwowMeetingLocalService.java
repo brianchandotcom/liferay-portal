@@ -58,7 +58,7 @@ import java.util.Map;
 public interface PowwowMeetingLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingLocalServiceUtil} to access the powwow meeting local service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -212,6 +212,9 @@ public interface PowwowMeetingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getParticipantPowwowMeetingsCount(long userId, int[] statuses);
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

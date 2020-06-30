@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
+import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -56,9 +57,7 @@ public class MBDiscussionLocalServiceImpl
 		discussion.setClassPK(classPK);
 		discussion.setThreadId(threadId);
 
-		mbDiscussionPersistence.update(discussion);
-
-		return discussion;
+		return mbDiscussionPersistence.update(discussion);
 	}
 
 	@Override
@@ -119,7 +118,8 @@ public class MBDiscussionLocalServiceImpl
 		throws PortalException {
 
 		subscriptionLocalService.addSubscription(
-			userId, groupId, className, classPK);
+			userId, groupId, MBUtil.getSubscriptionClassName(className),
+			classPK);
 	}
 
 	@Override
@@ -127,7 +127,8 @@ public class MBDiscussionLocalServiceImpl
 			long userId, String className, long classPK)
 		throws PortalException {
 
-		subscriptionLocalService.deleteSubscription(userId, className, classPK);
+		subscriptionLocalService.deleteSubscription(
+			userId, MBUtil.getSubscriptionClassName(className), classPK);
 	}
 
 	@ServiceReference(type = SubscriptionLocalService.class)

@@ -2,7 +2,7 @@
 	margin: auto;
 
 	@media screen and (max-width: $bp-xsmall) {
-		margin-top: -.5em;
+		margin-top: -0.5em;
 	}
 
 	&__topbar {
@@ -21,7 +21,6 @@
 
 		&--wide {
 			max-width: 100%;
-			padding: $liferay-topbar-height 0 0 0;
 		}
 	}
 }

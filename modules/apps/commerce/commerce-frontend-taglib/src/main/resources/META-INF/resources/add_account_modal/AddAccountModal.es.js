@@ -1,20 +1,34 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
+import Component from 'metal-component';
 import {debounce} from 'metal-debounce';
+import Soy, {Config} from 'metal-soy';
 
 import template from './AddAccountModal.soy';
-import Component from 'metal-component';
-import Soy, {Config} from 'metal-soy';
 
 import 'clay-modal';
 
 import '../user_utils/UserListItem.es';
+
 import '../user_utils/UserInputItem.es';
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class AddAccountModal extends Component {
-
 	created() {
 		this._debouncedFetchUser = debounce(this._fetchUsers.bind(this), 300);
 	}
@@ -24,7 +38,9 @@ class AddAccountModal extends Component {
 	}
 
 	syncAddedUsers() {
-		const contentWrapper = this.element.querySelector('.autocomplete-input__content');
+		const contentWrapper = this.element.querySelector(
+			'.autocomplete-input__content'
+		);
 		this.element.querySelector('.autocomplete-input__box').focus();
 		if (contentWrapper.scrollTo) {
 			contentWrapper.scrollTo(0, contentWrapper.offsetHeight);
@@ -61,8 +77,7 @@ class AddAccountModal extends Component {
 	_handleInputBox(evt) {
 		if (evt.keyCode === 8 && !this.query.length) {
 			this.addedUsers = this.addedUsers.slice(0, -1);
-		}
-		else {
+		} else {
 			this.query = evt.target.value;
 		}
 		return evt;
@@ -79,34 +94,41 @@ class AddAccountModal extends Component {
 		}
 
 		const userAlreadyAdded = this.addedUsers.reduce(
-			(alreadyAdded, user) => alreadyAdded || user.email === userToBeToggled.email,
+			(alreadyAdded, user) =>
+				alreadyAdded || user.email === userToBeToggled.email,
 			false
 		);
 
-		this.addedUsers = userAlreadyAdded ?
-			this.addedUsers.filter((user) => user.email !== userToBeToggled.email) :
-			[...this.addedUsers, userToBeToggled];
+		this.addedUsers = userAlreadyAdded
+			? this.addedUsers.filter(
+					user => user.email !== userToBeToggled.email
+			  )
+			: [...this.addedUsers, userToBeToggled];
 
 		return this.addedUsers;
 	}
 
 	_fetchUsers() {
 		return fetch(
-			this.usersAPI + '?groupId=' + themeDisplay.getScopeGroupId() + '&p_auth=' + Liferay.authToken + '&q=' + this.query,
+			this.usersAPI +
+				'?groupId=' +
+				themeDisplay.getScopeGroupId() +
+				'&p_auth=' +
+				Liferay.authToken +
+				'&q=' +
+				this.query,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
-			.then(
-				response => response.json()
-			)
-			.then(
-				response => {
-					this._loading = false;
-					this.users = response.users;
-					return this.users;
-				}
-			);
+			.then(response => response.json())
+			.then(response => {
+				this._loading = false;
+				this.users = response.users;
+				return this.users;
+			});
 	}
 
 	_handleCreateAccount() {
@@ -119,10 +141,7 @@ class AddAccountModal extends Component {
 			administratorsEmail: this.addedUsers
 		};
 
-		return this.emit(
-			'AddAccountModalSave',
-			data
-		);
+		return this.emit('AddAccountModalSave', data);
 	}
 
 	toggle() {
@@ -143,29 +162,26 @@ class AddAccountModal extends Component {
 
 Soy.register(AddAccountModal, template);
 
-const USER_SCHEMA = Config.shapeOf(
-	{
-		email: Config.string().required(),
-		name: Config.string().required(),
-		thumbnail: Config.string().required(),
-		userId: Config.oneOfType(
-			[
-				Config.string(),
-				Config.number()
-			]
-		).required()
-	}
-);
+const USER_SCHEMA = Config.shapeOf({
+	email: Config.string().required(),
+	name: Config.string().required(),
+	thumbnail: Config.string().required(),
+	userId: Config.oneOfType([Config.string(), Config.number()]).required()
+});
 
 AddAccountModal.STATE = {
+	_loading: Config.bool()
+		.internal()
+		.value(false),
+	_modalVisible: Config.bool()
+		.internal()
+		.value(false),
 	accountName: Config.string().value(''),
 	addedUsers: Config.array(USER_SCHEMA).value([]),
 	query: Config.string().value(''),
 	spritemap: Config.string(),
 	users: Config.array(USER_SCHEMA).value([]),
-	usersAPI: Config.string().value(''),
-	_loading: Config.bool().internal().value(false),
-	_modalVisible: Config.bool().internal().value(false)
+	usersAPI: Config.string().value('')
 };
 
 export {AddAccountModal};

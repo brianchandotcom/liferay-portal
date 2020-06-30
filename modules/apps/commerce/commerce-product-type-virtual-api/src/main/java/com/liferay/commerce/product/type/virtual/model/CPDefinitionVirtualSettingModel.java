@@ -49,7 +49,7 @@ public interface CPDefinitionVirtualSettingModel
 	extends AttachedModel, BaseModel<CPDefinitionVirtualSetting>,
 			LocalizedModel, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition virtual setting model instance should use the {@link CPDefinitionVirtualSetting} interface instead.

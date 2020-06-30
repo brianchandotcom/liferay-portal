@@ -19,15 +19,11 @@ package com.liferay.commerce.product.definitions.web.servlet.taglib.ui;
  */
 public class CPDefinitionScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_ATTACHMENTS = "attachments";
-
-	public static final String CATEGORY_KEY_CATEGORIZATION = "categorization";
-
 	public static final String CATEGORY_KEY_CONFIGURATION = "configuration";
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String CATEGORY_KEY_IMAGES = "images";
+	public static final String CATEGORY_KEY_MEDIA = "media";
 
 	public static final String CATEGORY_KEY_OPTIONS = "options";
 
@@ -36,20 +32,9 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_SKUS = "skus";
 
-	public static final String CATEGORY_KEY_SPECIFICATION_OPTIONS =
-		"specifications";
+	public static final String CATEGORY_KEY_SUBSCRIPTION = "subscription";
 
-	public static final String ENTRY_KEY_ACCOUNT_GROUPS = "account-groups";
-
-	public static final String ENTRY_KEY_CHANNELS = "channels";
-
-	public static final String ENTRY_KEY_DISPLAY_PAGE = "display-page";
-
-	public static final String ENTRY_KEY_SHIPPING = "shipping";
-
-	public static final String ENTRY_KEY_SUBSCRIPTION = "subscription";
-
-	public static final String ENTRY_KEY_TAX_CATEGORY = "tax-category";
+	public static final String CATEGORY_KEY_VISIBILITY = "visibility";
 
 	public static final String SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL =
 		"cp.definition.general";

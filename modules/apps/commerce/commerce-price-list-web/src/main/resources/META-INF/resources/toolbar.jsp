@@ -95,12 +95,21 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceLists() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-price-lists" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-price-lists" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCommercePriceListIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommercePriceListIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
 			submitForm(form, '<portlet:actionURL name="editCommercePriceList" />');
 		}

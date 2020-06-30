@@ -58,7 +58,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(service = CommerceDiscountCalculation.class)
+@Component(
+	property = "commerce.discount.calculation.key=v1.0",
+	service = CommerceDiscountCalculation.class
+)
 public class CommerceDiscountCalculationImpl
 	implements CommerceDiscountCalculation {
 
@@ -149,6 +152,16 @@ public class CommerceDiscountCalculationImpl
 
 		return _getCommerceDiscountValue(
 			productUnitPrice, quantity, commerceContext, searchContext);
+	}
+
+	@Override
+	public CommerceDiscountValue getProductCommerceDiscountValue(
+			long cpInstanceId, long commercePriceListId, int quantity,
+			BigDecimal productUnitPrice, CommerceContext commerceContext)
+		throws PortalException {
+
+		return getProductCommerceDiscountValue(
+			cpInstanceId, quantity, productUnitPrice, commerceContext);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -293,10 +306,16 @@ public class CommerceDiscountCalculationImpl
 
 				currentDiscountAmount =
 					commerceDiscount.getMaximumDiscountAmount();
+
+				discountedAmount = amount.subtract(currentDiscountAmount);
 			}
 		}
 		else {
 			currentDiscountAmount = commerceDiscount.getLevel1();
+
+			if (currentDiscountAmount.compareTo(discountedAmount) > 0) {
+				currentDiscountAmount = discountedAmount;
+			}
 
 			discountedAmount = discountedAmount.subtract(currentDiscountAmount);
 		}
@@ -361,14 +380,23 @@ public class CommerceDiscountCalculationImpl
 				_commerceDiscountRuleTypeRegistry.getCommerceDiscountRuleType(
 					commerceDiscountRule.getType());
 
-			if (!commerceDiscountRuleType.evaluate(
-					commerceDiscountRule, commerceContext)) {
+			boolean commerceDiscountRuleTypeEvaluation =
+				commerceDiscountRuleType.evaluate(
+					commerceDiscountRule, commerceContext);
+
+			if (!commerceDiscountRuleTypeEvaluation &&
+				commerceDiscount.isRulesConjunction()) {
 
 				return false;
 			}
+			else if (commerceDiscountRuleTypeEvaluation &&
+					 !commerceDiscount.isRulesConjunction()) {
+
+				return true;
+			}
 		}
 
-		return true;
+		return commerceDiscount.isRulesConjunction();
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);

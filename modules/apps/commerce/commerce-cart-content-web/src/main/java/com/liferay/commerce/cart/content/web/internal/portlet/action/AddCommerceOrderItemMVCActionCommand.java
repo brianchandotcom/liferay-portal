@@ -90,7 +90,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
 		if (cpInstanceId == 0) {
-			CPInstance cpInstance = _cpInstanceHelper.getCPInstance(
+			CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
 				cpDefinitionId, ddmFormValues);
 
 			if (cpInstance != null) {

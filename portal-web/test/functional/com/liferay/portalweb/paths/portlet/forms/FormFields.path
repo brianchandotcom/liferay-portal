@@ -365,7 +365,7 @@
 <!--UPLOAD-->
 <tr>
 	<td>UPLOAD_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@id='inputFile']</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[@class='input-group']//input[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

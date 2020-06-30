@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceCatalogUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
@@ -858,6 +858,10 @@ public class CommerceCatalogUtil {
 	 */
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	public static Set<String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
 	}
 
 	public static CommerceCatalogPersistence getPersistence() {

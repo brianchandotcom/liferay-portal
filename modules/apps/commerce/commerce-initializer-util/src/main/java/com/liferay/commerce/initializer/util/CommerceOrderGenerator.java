@@ -34,6 +34,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -146,7 +147,7 @@ public class CommerceOrderGenerator {
 		// Commerce order items
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			commerceOrder.getCompanyId(), groupId,
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
 			commerceAccountUserRel.getCommerceAccountUserId(),
 			commerceOrder.getCommerceOrderId(),
 			commerceAccountUserRel.getCommerceAccountId());
@@ -211,9 +212,9 @@ public class CommerceOrderGenerator {
 
 		// Checkout commerce order
 
-		_commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commerceContext,
-			serviceContext);
+		_commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
+			serviceContext.getUserId());
 
 		// Update payment status
 
@@ -263,8 +264,8 @@ public class CommerceOrderGenerator {
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
-					cpInstance.getCPInstanceId(), quantity, 0,
-					cpInstance.getJson(), commerceContext, serviceContext);
+					cpInstance.getCPInstanceId(), quantity, 0, null,
+					commerceContext, serviceContext);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -378,10 +379,13 @@ public class CommerceOrderGenerator {
 			commerceShippingMethod.getEngineKey());
 	}
 
-	private long _getCommerceShippingMethodId(long groupId) {
+	private long _getCommerceShippingMethodId(long groupId)
+		throws PortalException {
+
 		List<CommerceShippingMethod> commerceShippingMethods =
 			_commerceShippingMethodLocalService.getCommerceShippingMethods(
-				groupId);
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(groupId));
 
 		if (commerceShippingMethods.isEmpty()) {
 			return 0;
@@ -460,7 +464,7 @@ public class CommerceOrderGenerator {
 			return value;
 		}
 
-		return (value % range) + min;
+		return Math.floorMod(value, range) + min;
 	}
 
 	private void _setPermissionChecker(Group group) throws Exception {
@@ -510,6 +514,9 @@ public class CommerceOrderGenerator {
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

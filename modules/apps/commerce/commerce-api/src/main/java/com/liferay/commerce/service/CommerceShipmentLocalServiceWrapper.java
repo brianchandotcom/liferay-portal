@@ -33,6 +33,22 @@ public class CommerceShipmentLocalServiceWrapper
 		_commerceShipmentLocalService = commerceShipmentLocalService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+			addCommerceDeliverySubscriptionShipment(
+				long userId, long commerceOrderId, String name,
+				String description, String street1, String street2,
+				String street3, String city, String zip, long commerceRegionId,
+				long commerceCountryId, String phoneNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.
+			addCommerceDeliverySubscriptionShipment(
+				userId, commerceOrderId, name, description, street1, street2,
+				street3, city, zip, commerceRegionId, commerceCountryId,
+				phoneNumber);
+	}
+
 	/**
 	 * Adds the commerce shipment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -45,6 +61,19 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.addCommerceShipment(
 			commerceShipment);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment addCommerceShipment(
+			long groupId, long commerceAccountId, long commerceAddressId,
+			long commerceShippingMethodId, String commerceShippingOptionName,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.addCommerceShipment(
+			groupId, commerceAccountId, commerceAddressId,
+			commerceShippingMethodId, commerceShippingOptionName,
+			serviceContext);
 	}
 
 	@Override
@@ -83,6 +112,16 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.deleteCommerceShipment(
 			commerceShipment);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment deleteCommerceShipment(
+			com.liferay.commerce.model.CommerceShipment commerceShipment,
+			boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.deleteCommerceShipment(
+			commerceShipment, restoreStockQuantity);
 	}
 
 	/**
@@ -255,6 +294,27 @@ public class CommerceShipmentLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+		getCommerceShipments(long commerceOrderId, int start, int end) {
+
+		return _commerceShipmentLocalService.getCommerceShipments(
+			commerceOrderId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+			getCommerceShipments(
+				long companyId, long[] groupIds, long[] commerceAccountIds,
+				String keywords, int[] shipmentStatuses,
+				boolean excludeShipmentStatus, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.getCommerceShipments(
+			companyId, groupIds, commerceAccountIds, keywords, shipmentStatuses,
+			excludeShipmentStatus, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
 		getCommerceShipments(
 			long[] groupIds, int status, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -277,6 +337,18 @@ public class CommerceShipmentLocalServiceWrapper
 			groupIds, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+		getCommerceShipments(
+			long[] groupIds, long commerceAddressId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceShipment>
+					orderByComparator) {
+
+		return _commerceShipmentLocalService.getCommerceShipments(
+			groupIds, commerceAddressId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce shipments.
 	 *
@@ -285,6 +357,24 @@ public class CommerceShipmentLocalServiceWrapper
 	@Override
 	public int getCommerceShipmentsCount() {
 		return _commerceShipmentLocalService.getCommerceShipmentsCount();
+	}
+
+	@Override
+	public int getCommerceShipmentsCount(long commerceOrderId) {
+		return _commerceShipmentLocalService.getCommerceShipmentsCount(
+			commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceShipmentsCount(
+			long companyId, long[] groupIds, long[] commerceAccountIds,
+			String keywords, int[] shipmentStatuses,
+			boolean excludeShipmentStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.getCommerceShipmentsCount(
+			companyId, groupIds, commerceAccountIds, keywords, shipmentStatuses,
+			excludeShipmentStatus);
 	}
 
 	@Override
@@ -297,6 +387,22 @@ public class CommerceShipmentLocalServiceWrapper
 	public int getCommerceShipmentsCount(long[] groupIds, int status) {
 		return _commerceShipmentLocalService.getCommerceShipmentsCount(
 			groupIds, status);
+	}
+
+	@Override
+	public int getCommerceShipmentsCount(
+		long[] groupIds, long commerceAddressId) {
+
+		return _commerceShipmentLocalService.getCommerceShipmentsCount(
+			groupIds, commerceAddressId);
+	}
+
+	@Override
+	public int[] getCommerceShipmentStatusesByCommerceOrderId(
+		long commerceOrderId) {
+
+		return _commerceShipmentLocalService.
+			getCommerceShipmentStatusesByCommerceOrderId(commerceOrderId);
 	}
 
 	@Override
@@ -317,12 +423,56 @@ public class CommerceShipmentLocalServiceWrapper
 		return _commerceShipmentLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.model.CommerceShipment> searchCommerceShipments(
+				com.liferay.portal.kernel.search.SearchContext searchContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.searchCommerceShipments(
+			searchContext);
+	}
+
+	@Override
+	public long searchCommerceShipmentsCount(
+			com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.searchCommerceShipmentsCount(
+			searchContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateCarrierDetails(
+			long commerceShipmentId, String carrier, String trackingNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateCarrierDetails(
+			commerceShipmentId, carrier, trackingNumber);
 	}
 
 	/**
@@ -375,6 +525,37 @@ public class CommerceShipmentLocalServiceWrapper
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
 			expectedDateHour, expectedDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateExpectedDate(
+			long commerceShipmentId, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateExpectedDate(
+			commerceShipmentId, expectedDateMonth, expectedDateDay,
+			expectedDateYear, expectedDateHour, expectedDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateShippingDate(
+			long commerceShipmentId, int shippingDateMonth, int shippingDateDay,
+			int shippingDateYear, int shippingDateHour, int shippingDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateShippingDate(
+			commerceShipmentId, shippingDateMonth, shippingDateDay,
+			shippingDateYear, shippingDateHour, shippingDateMinute);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateStatus(
+			long commerceShipmentId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateStatus(
+			commerceShipmentId, status);
 	}
 
 	@Override

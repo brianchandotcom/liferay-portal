@@ -49,7 +49,7 @@ public abstract class ExportImportLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ExportImportLocalService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ExportImportLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil</code>.
@@ -370,8 +370,8 @@ public abstract class ExportImportLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

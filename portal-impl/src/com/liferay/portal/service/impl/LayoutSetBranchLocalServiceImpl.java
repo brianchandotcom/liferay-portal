@@ -50,6 +50,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Raymond Augé
@@ -135,7 +136,7 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setCss(css);
 		layoutSetBranch.setSettings(settings);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
+		layoutSetBranch = layoutSetBranchPersistence.update(layoutSetBranch);
 
 		// Resources
 
@@ -156,6 +157,12 @@ public class LayoutSetBranchLocalServiceImpl
 				layoutSetBranch.isPrivateLayout());
 
 			for (Layout layout : layouts) {
+				if (Objects.equals(
+						layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL)) {
+
+					continue;
+				}
+
 				LayoutBranch layoutBranch =
 					layoutBranchLocalService.addLayoutBranch(
 						layoutSetBranchId, layout.getPlid(),
@@ -470,9 +477,7 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
-
-		return layoutSetBranch;
+		return layoutSetBranchPersistence.update(layoutSetBranch);
 	}
 
 	protected String getLayoutBranchName(

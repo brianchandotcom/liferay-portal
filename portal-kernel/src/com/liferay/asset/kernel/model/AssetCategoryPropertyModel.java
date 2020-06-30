@@ -45,7 +45,7 @@ import java.util.Date;
 public interface AssetCategoryPropertyModel
 	extends AuditedModel, BaseModel<AssetCategoryProperty>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a asset category property model instance should use the {@link AssetCategoryProperty} interface instead.

@@ -51,7 +51,11 @@ public class ActionRequestSummaryStatistics
 			}
 		}
 
-		return averageTime / count;
+		if (count > 0) {
+			return averageTime / count;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -90,7 +94,11 @@ public class ActionRequestSummaryStatistics
 			averageTime += requestStatistics.getAverageTime();
 		}
 
-		return averageTime / companyStatisticsSet.size();
+		if (!companyStatisticsSet.isEmpty()) {
+			return averageTime / companyStatisticsSet.size();
+		}
+
+		return averageTime;
 	}
 
 	@Override
@@ -554,7 +562,11 @@ public class ActionRequestSummaryStatistics
 			averageTime += requestStatistics.getAverageTime();
 		}
 
-		return averageTime / requestStatisticsSet.size();
+		if (!requestStatisticsSet.isEmpty()) {
+			return averageTime / requestStatisticsSet.size();
+		}
+
+		return averageTime;
 	}
 
 	protected long getErrorCountByCompany(CompanyStatistics companyStatistics) {

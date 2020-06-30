@@ -39,6 +39,8 @@ public class CPInstanceFinderBaseImpl extends BasePersistenceImpl<CPInstance> {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put(
+			"deliverySubscriptionTypeSettings", "deliverySubTypeSettings");
 
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
@@ -48,9 +50,9 @@ public class CPInstanceFinderBaseImpl extends BasePersistenceImpl<CPInstance> {
 
 			field.set(this, dbColumnNames);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}

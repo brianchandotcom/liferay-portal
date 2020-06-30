@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceChannelServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceChannelServiceUtil} to access the commerce channel remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.product.model.CommerceChannel
 			addCommerceChannel(
@@ -76,6 +70,13 @@ public class CommerceChannelServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommerceChannel(commerceChannelId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannelByOrderGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceChannelByOrderGroupId(groupId);
 	}
 
 	public static java.util.List
@@ -141,6 +142,15 @@ public class CommerceChannelServiceUtil {
 		return getService().updateCommerceChannel(
 			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
 			commerceCurrencyCode);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
+			updateCommerceChannelExternalReferenceCode(
+				long commerceChannelId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceChannelExternalReferenceCode(
+			commerceChannelId, externalReferenceCode);
 	}
 
 	public static CommerceChannelService getService() {

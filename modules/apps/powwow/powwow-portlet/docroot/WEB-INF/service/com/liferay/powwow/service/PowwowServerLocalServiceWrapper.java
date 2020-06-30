@@ -33,11 +33,6 @@ public class PowwowServerLocalServiceWrapper
 		_powwowServerLocalService = powwowServerLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PowwowServerLocalServiceUtil} to access the powwow server local service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.powwow.model.PowwowServer addPowwowServer(
 			long userId, String name, String providerType, String url,
@@ -240,6 +235,9 @@ public class PowwowServerLocalServiceWrapper
 		return _powwowServerLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

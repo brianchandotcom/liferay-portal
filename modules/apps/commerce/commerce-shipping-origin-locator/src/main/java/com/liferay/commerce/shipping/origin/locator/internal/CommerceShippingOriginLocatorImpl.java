@@ -66,7 +66,11 @@ public class CommerceShippingOriginLocatorImpl
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
+			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+			if (cpInstance == null) {
+				continue;
+			}
 
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				_getClosestCommerceInventoryWarehouse(
@@ -100,7 +104,7 @@ public class CommerceShippingOriginLocatorImpl
 
 			originAddress.put(
 				_getCommerceAddress(
-					commerceInventoryWarehouse, commerceOrder.getGroupId()),
+					commerceInventoryWarehouse, commerceOrder.getCompanyId()),
 				entry.getValue());
 		}
 

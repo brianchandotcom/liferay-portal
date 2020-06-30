@@ -16,6 +16,7 @@ package com.liferay.commerce.payment.method.paypal.internal.servlet;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.log.Log;
@@ -93,7 +94,7 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 				String token = ParamUtil.getString(httpServletRequest, "token");
 
 				if (paymentId.isEmpty() && !token.isEmpty()) {
-					_commercePaymentEngine.completeRecurringPayment(
+					_commerceSubscriptionEngine.completeRecurringPayment(
 						commerceOrder.getCommerceOrderId(), token,
 						httpServletRequest);
 				}
@@ -122,6 +123,9 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
 
 	@Reference
 	private Portal _portal;

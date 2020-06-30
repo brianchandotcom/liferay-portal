@@ -123,14 +123,26 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 
 	<aui:script>
 		function <portlet:namespace />deleteCommerceAccountGroupCommerceAccountRels() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-accounts" />')) {
+			if (
+				confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-accounts" />'
+				)
+			) {
 				var form = AUI.$(document.<portlet:namespace />fm);
 
 				form.attr('method', 'post');
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommerceAccountGroupCommerceAccountRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				form.fm('deleteCommerceAccountGroupCommerceAccountRelIds').val(
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				);
 
-				submitForm(form, '<portlet:actionURL name="editCommerceAccountGroupCommerceAccountRel" />');
+				submitForm(
+					form,
+					'<portlet:actionURL name="editCommerceAccountGroupCommerceAccountRel" />'
+				);
 			}
 		}
 	</aui:script>
@@ -141,35 +153,42 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 			function(event) {
 				event.preventDefault();
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: 'commerceAccountsSelectItem',
-						on: {
-							selectedItemChange: function(event) {
-								var <portlet:namespace />addCommerceAccountIds = [];
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: 'commerceAccountsSelectItem',
+					on: {
+						selectedItemChange: function(event) {
+							var <portlet:namespace />addCommerceAccountIds = [];
 
-								var selectedItems = event.newVal;
+							var selectedItems = event.newVal;
 
-								if (selectedItems) {
-									A.Array.each(
-										selectedItems,
-										function(item, index, selectedItems) {
-											<portlet:namespace />addCommerceAccountIds.push(item.commerceAccountId);
-										}
+							if (selectedItems) {
+								A.Array.each(selectedItems, function(
+									item,
+									index,
+									selectedItems
+								) {
+									<portlet:namespace />addCommerceAccountIds.push(
+										item.commerceAccountId
 									);
+								});
 
-									$('#<portlet:namespace />commerceAccountIds').val(<portlet:namespace />addCommerceAccountIds.join(','));
+								$('#<portlet:namespace />commerceAccountIds').val(
+									<portlet:namespace />addCommerceAccountIds.join(',')
+								);
 
-									var addCommerceAccountGroupCommerceAccountRelFm = $('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm');
+								var addCommerceAccountGroupCommerceAccountRelFm = $(
+									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'
+								);
 
-									submitForm(addCommerceAccountGroupCommerceAccountRelFm);
-								}
+								submitForm(addCommerceAccountGroupCommerceAccountRelFm);
 							}
-						},
-						title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccountGroup.getName()) %>" key="add-new-entry-to-x" />',
-						url: '<%= commerceAccountGroupAdminDisplayContext.getItemSelectorUrl() %>'
-					}
-				);
+						}
+					},
+					title:
+						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccountGroup.getName()) %>" key="add-new-entry-to-x" />',
+					url:
+						'<%= commerceAccountGroupAdminDisplayContext.getItemSelectorUrl() %>'
+				});
 
 				itemSelectorDialog.open();
 			}

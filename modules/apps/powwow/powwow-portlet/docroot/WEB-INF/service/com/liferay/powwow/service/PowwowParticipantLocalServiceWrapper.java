@@ -33,11 +33,6 @@ public class PowwowParticipantLocalServiceWrapper
 		_powwowParticipantLocalService = powwowParticipantLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PowwowParticipantLocalServiceUtil} to access the powwow participant local service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowParticipantLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
 			long userId, long groupId, long powwowMeetingId, String name,
@@ -260,6 +255,9 @@ public class PowwowParticipantLocalServiceWrapper
 		return _powwowParticipantLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

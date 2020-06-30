@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,7 +24,11 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceInventoryReplenishmentItem. Methods of this
@@ -50,11 +55,42 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface CommerceInventoryReplenishmentItemService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryReplenishmentItemServiceUtil} to access the commerce inventory replenishment item remote service. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryReplenishmentItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceInventoryReplenishmentItem
+			addCommerceInventoryReplenishmentItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				Date availabilityDate, int quantity)
+		throws PortalException;
+
+	public void deleteCommerceInventoryReplenishmentItem(
+			long commerceInventoryReplenishmentItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItem(
+				long commerceInventoryReplenishmentItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryReplenishmentItem>
+			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+				long companyId, String sku, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCommerceInventoryReplenishmentItemsCount(
+			long commerceInventoryWarehouseId, String sku)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
+			long companyId, String sku)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -62,5 +98,11 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public CommerceInventoryReplenishmentItem
+			updateCommerceInventoryReplenishmentItem(
+				long commerceInventoryReplenishmentItemId,
+				Date availabilityDate, int quantity, long mvccVersion)
+		throws PortalException;
 
 }

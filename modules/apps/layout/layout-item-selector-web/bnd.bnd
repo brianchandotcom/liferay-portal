@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Item Selector Web
 Bundle-SymbolicName: com.liferay.layout.item.selector.web
-Bundle-Version: 2.0.9
+Bundle-Version: 2.0.10
 Provide-Capability:\
 	soy;\
 		type="layout-item-selector-web";\

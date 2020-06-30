@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.model.impl;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceInventoryReplenishmentItemCacheModel
-	implements CacheModel<CommerceInventoryReplenishmentItem>, Externalizable {
+	implements CacheModel<CommerceInventoryReplenishmentItem>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class CommerceInventoryReplenishmentItemCacheModel
 			commerceInventoryReplenishmentItemCacheModel =
 				(CommerceInventoryReplenishmentItemCacheModel)obj;
 
-		if (commerceInventoryReplenishmentItemId ==
+		if ((commerceInventoryReplenishmentItemId ==
 				commerceInventoryReplenishmentItemCacheModel.
-					commerceInventoryReplenishmentItemId) {
+					commerceInventoryReplenishmentItemId) &&
+			(mvccVersion ==
+				commerceInventoryReplenishmentItemCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceInventoryReplenishmentItemId);
+		int hashCode = HashUtil.hash(0, commerceInventoryReplenishmentItemId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceInventoryReplenishmentItemId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceInventoryReplenishmentItemId=");
 		sb.append(commerceInventoryReplenishmentItemId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -99,6 +117,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 			commerceInventoryReplenishmentItemImpl =
 				new CommerceInventoryReplenishmentItemImpl();
 
+		commerceInventoryReplenishmentItemImpl.setMvccVersion(mvccVersion);
 		commerceInventoryReplenishmentItemImpl.
 			setCommerceInventoryReplenishmentItemId(
 				commerceInventoryReplenishmentItemId);
@@ -155,6 +174,8 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceInventoryReplenishmentItemId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -173,6 +194,8 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceInventoryReplenishmentItemId);
 
 		objectOutput.writeLong(companyId);
@@ -203,6 +226,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		objectOutput.writeInt(quantity);
 	}
 
+	public long mvccVersion;
 	public long commerceInventoryReplenishmentItemId;
 	public long companyId;
 	public long userId;

@@ -166,7 +166,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 
 		WorkflowInstanceLink workflowInstanceLink =
 			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-				commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
+				commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
 				CommerceOrder.class.getName(),
 				commerceOrder.getCommerceOrderId());
 

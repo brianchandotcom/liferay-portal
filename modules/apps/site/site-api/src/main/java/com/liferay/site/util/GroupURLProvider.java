@@ -18,11 +18,16 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -41,6 +46,38 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = GroupURLProvider.class)
 public class GroupURLProvider {
+
+	public String getDisplayURL(
+		Group group, ThemeDisplay themeDisplay, boolean privateLayout,
+		int layoutsCount) {
+
+		try {
+			if ((layoutsCount > 0) ||
+				(group.isUser() &&
+				 (_layoutLocalService.getLayoutsCount(group, privateLayout) >
+					 0))) {
+
+				LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+					group.getGroupId(), privateLayout);
+
+				String groupFriendlyURL = _portal.getGroupFriendlyURL(
+					layoutSet, themeDisplay);
+
+				if (group.isUser()) {
+					return _portal.addPreservedParameters(
+						themeDisplay, groupFriendlyURL, false, true);
+				}
+
+				return _portal.addPreservedParameters(
+					themeDisplay, groupFriendlyURL);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public String getGroupAdministrationURL(
 		Group group, PortletRequest portletRequest) {
@@ -89,6 +126,34 @@ public class GroupURLProvider {
 		return getGroupURL(group, portletRequest, true);
 	}
 
+	public int getLayoutsCount(Group group) {
+		int layoutsCount = 0;
+
+		try {
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), false);
+
+			layoutsCount = layoutSet.getPageCount();
+
+			if (layoutsCount != 0) {
+				layoutsCount = _layoutLocalService.getLayoutsCount(
+					group, false,
+					new String[] {
+						StringPool.CONTENT, LayoutConstants.TYPE_EMBEDDED,
+						LayoutConstants.TYPE_LINK_TO_LAYOUT,
+						LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+						LayoutConstants.TYPE_PANEL,
+						LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
+					});
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return layoutsCount;
+	}
+
 	public String getLiveGroupURL(Group group, PortletRequest portletRequest) {
 		return getGroupURL(group, portletRequest, false);
 	}
@@ -100,7 +165,10 @@ public class GroupURLProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String groupDisplayURL = group.getDisplayURL(themeDisplay, false);
+		int layoutsCount = getLayoutsCount(group);
+
+		String groupDisplayURL = getDisplayURL(
+			group, themeDisplay, false, layoutsCount);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
 			return _http.removeParameter(groupDisplayURL, "p_p_id");
@@ -148,6 +216,12 @@ public class GroupURLProvider {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;

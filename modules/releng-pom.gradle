@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
 import com.liferay.project.templates.ProjectTemplates
 
 import groovy.io.FileType
@@ -38,6 +39,9 @@ task testPomCompileOnly
 task testPomRelease
 task testPomThirdParty
 
+List<String> compileOnlyAllIdentifiers = []
+List<String> thirdPartyCheckedIdentifiers = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
+
 String pomCompileOnlyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only"
 String pomReleaseArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom"
 String pomThirdPartyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.third.party"
@@ -47,7 +51,7 @@ configurations {
 }
 
 dependencies {
-	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "4.5.6"
+	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "5.0.18"
 }
 
 generatePom {
@@ -87,6 +91,9 @@ generatePomCompileOnly {
 			else if (it.equals("service-wrapper")) {
 				mainArgs += ["--service", "com.liferay.portal.kernel.service.UserLocalServiceWrapper"]
 			}
+			else if (it.equals("theme-contributor")) {
+				mainArgs += ["--contributor-type", "sample"]
+			}
 			else if (it.equals("social-bookmark") && project.property("gradle.releng.pom.project.templates.version").startsWith("7.0")) {
 				return
 			}
@@ -94,15 +101,15 @@ generatePomCompileOnly {
 				return
 			}
 			else if (project.property("gradle.releng.pom.project.templates.version").startsWith("7.2") &&
-				(it.equals("content-targeting-report") ||
-					 it.equals("content-targeting-rule") ||
-					 it.equals("content-targeting-tracking-action") ||
-					 it.equals("form-field") ||
-					 it.equals("npm-angular-portlet") ||
-					 it.equals("npm-react-portlet") ||
-					 it.equals("npm-vuejs-portlet") ||
-					 it.equals("social-bookmark") ||
-					 it.equals("spring-mvc-portlet"))) {
+					 (it.equals("content-targeting-report") ||
+					  it.equals("content-targeting-rule") ||
+					  it.equals("content-targeting-tracking-action") ||
+					  it.equals("form-field") ||
+					  it.equals("npm-angular-portlet") ||
+					  it.equals("npm-react-portlet") ||
+					  it.equals("npm-vuejs-portlet") ||
+					  it.equals("social-bookmark") ||
+					  it.equals("spring-mvc-portlet"))) {
 
 				return
 			}
@@ -158,6 +165,12 @@ generatePomCompileOnly {
 		model.setDependencyManagement(dependencyManagement)
 
 		_write(model)
+
+		model.dependencyManagement.dependencies.each {
+			dependency ->
+
+			compileOnlyAllIdentifiers.add dependency.groupId + ":" + dependency.artifactId
+		}
 	}
 }
 
@@ -257,6 +270,8 @@ generatePomRelease {
 }
 
 generatePomThirdParty {
+	dependsOn generatePomCompileOnly
+
 	doLast {
 		Model model = _getModel(pomThirdPartyArtifactId)
 
@@ -282,20 +297,35 @@ generatePomThirdParty {
 			dependenciesProperties.load(it)
 		}
 
+		List<String> duplicateIdentifiers = []
+
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
 
-			Dependency dependency = new Dependency()
+			String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
 
-			dependency.setArtifactId(dependencyInfo[1])
-			dependency.setGroupId(dependencyInfo[0])
-			dependency.setVersion(dependencyInfo[2])
-
-			if (dependencyInfo.length == 4) {
-				dependency.setClassifier(dependencyInfo[3])
+			if (compileOnlyAllIdentifiers.contains(identifier)) {
+				if (!thirdPartyCheckedIdentifiers.contains(identifier)) {
+					duplicateIdentifiers.add identifier
+				}
 			}
+			else {
+				Dependency dependency = new Dependency()
 
-			dependencyManagement.addDependency(dependency)
+				dependency.setArtifactId(dependencyInfo[1])
+				dependency.setGroupId(dependencyInfo[0])
+				dependency.setVersion(dependencyInfo[2])
+
+				if (dependencyInfo.length == 4) {
+					dependency.setClassifier(dependencyInfo[3])
+				}
+
+				dependencyManagement.addDependency(dependency)
+			}
+		}
+
+		if (duplicateIdentifiers.size > 0) {
+			throw new GradleException("Duplicate dependencies:\n" + StringUtil.merge(duplicateIdentifiers as String[], "\n"))
 		}
 
 		model.setDependencyManagement(dependencyManagement)

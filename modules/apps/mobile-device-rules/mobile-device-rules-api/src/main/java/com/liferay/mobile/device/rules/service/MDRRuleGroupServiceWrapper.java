@@ -30,11 +30,6 @@ public class MDRRuleGroupServiceWrapper
 		_mdrRuleGroupService = mdrRuleGroupService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupServiceUtil} to access the mdr rule group remote service. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
 			long groupId, java.util.Map<java.util.Locale, String> nameMap,

@@ -142,6 +142,8 @@ definition {
 			workflowTask = "Review");
 	}
 
+	@description = "This will be ignored until LPS-83472 is backported on BPR-24599."
+	@ignore = "true"
 	@priority = "3"
 	test AssertEditFormNotUsedAsCreateForm {
 		Navigator.openURL();

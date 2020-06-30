@@ -69,7 +69,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 </style>
 
 <p class="search-total-label text-default">
-	<%= searchContainer1.getTotal() %> results for <strong><%= HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) %></strong>
+	<liferay-ui:message arguments='<%= new String[] {String.valueOf(searchContainer1.getTotal()), "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"} %>' key="x-results-for-x" />
 </p>
 
 <liferay-ui:search-container
@@ -188,7 +188,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 									%>
 
 										<tr>
-											<td style="word-break:break-all;" width="25%">
+											<td style="word-break: break-all;" width="25%">
 												<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
 											</td>
 											<td>

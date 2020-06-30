@@ -16,14 +16,11 @@ package com.liferay.portal.search.elasticsearch6.internal.document;
 
 import com.liferay.portal.kernel.search.Document;
 
-import java.io.IOException;
-
 /**
  * @author Michael C. Han
  */
 public interface ElasticsearchDocumentFactory {
 
-	public String getElasticsearchDocument(Document document)
-		throws IOException;
+	public String getElasticsearchDocument(Document document);
 
 }

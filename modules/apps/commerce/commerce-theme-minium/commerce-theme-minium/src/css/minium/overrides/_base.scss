@@ -1,14 +1,14 @@
 #minium {
 	font-family: 'Roboto', sans-serif;
 
-	button{
+	button {
 		&:focus {
 			outline: none;
 		}
 	}
 
 	svg {
-		vertical-align: middle
+		vertical-align: middle;
 	}
 }
 

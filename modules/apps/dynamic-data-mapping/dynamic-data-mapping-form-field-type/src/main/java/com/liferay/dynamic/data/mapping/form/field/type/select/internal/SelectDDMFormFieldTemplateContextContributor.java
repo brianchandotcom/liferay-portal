@@ -163,7 +163,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 			_getSelectValue(ddmFormFieldRenderingContext));
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			if (values.contains(optionValue)) {
+			boolean optionSelected = values.contains(optionValue);
+
+			if (optionSelected) {
 				values.remove(optionValue);
 			}
 
@@ -176,11 +178,11 @@ public class SelectDDMFormFieldTemplateContextContributor
 				optionLabelString = HtmlUtil.extractText(optionLabelString);
 			}
 
-			_putOption(options, optionLabelString, optionValue);
+			_putOption(options, optionSelected, optionLabelString, optionValue);
 		}
 
 		if (ddmFormFieldRenderingContext.isReadOnly()) {
-			values.forEach(value -> _putOption(options, value, value));
+			values.forEach(value -> _putOption(options, false, value, value));
 		}
 
 		return options;
@@ -252,11 +254,13 @@ public class SelectDDMFormFieldTemplateContextContributor
 	}
 
 	private void _putOption(
-		List<Object> options, String optionLabel, String optionValue) {
+		List<Object> options, boolean optionSelected, String optionLabel,
+		String optionValue) {
 
 		Map<String, String> optionMap = new HashMap<>();
 
 		optionMap.put("label", optionLabel);
+		optionMap.put("selected", optionSelected ? "true" : "false");
 		optionMap.put("value", optionValue);
 
 		options.add(optionMap);

@@ -44,7 +44,7 @@ import javax.sql.DataSource;
 public abstract class ThemeServiceBaseImpl
 	extends BaseServiceImpl implements IdentifiableOSGiService, ThemeService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ThemeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.ThemeServiceUtil</code>.
@@ -255,8 +255,8 @@ public abstract class ThemeServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

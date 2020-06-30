@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class KnowledgeBaseAttachment {
+public class KnowledgeBaseAttachment implements Cloneable {
 
 	public String getContentUrl() {
 		return contentUrl;
@@ -151,6 +151,11 @@ public class KnowledgeBaseAttachment {
 	}
 
 	protected String title;
+
+	@Override
+	public KnowledgeBaseAttachment clone() throws CloneNotSupportedException {
+		return (KnowledgeBaseAttachment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

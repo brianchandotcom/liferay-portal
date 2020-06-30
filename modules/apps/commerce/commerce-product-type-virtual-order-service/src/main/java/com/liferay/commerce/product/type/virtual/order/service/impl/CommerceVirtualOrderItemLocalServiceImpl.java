@@ -114,9 +114,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 				commerceVirtualOrderItem);
 		}
 
-		commerceVirtualOrderItemPersistence.update(commerceVirtualOrderItem);
-
-		return commerceVirtualOrderItem;
+		return commerceVirtualOrderItemPersistence.update(
+			commerceVirtualOrderItem);
 	}
 
 	@Override
@@ -272,9 +271,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		commerceVirtualOrderItem.setUsages(
 			commerceVirtualOrderItem.getUsages() + 1);
 
-		commerceVirtualOrderItemPersistence.update(commerceVirtualOrderItem);
-
-		return commerceVirtualOrderItem;
+		return commerceVirtualOrderItemPersistence.update(
+			commerceVirtualOrderItem);
 	}
 
 	@Override
@@ -340,9 +338,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 				commerceVirtualOrderItem);
 		}
 
-		commerceVirtualOrderItemPersistence.update(commerceVirtualOrderItem);
-
-		return commerceVirtualOrderItem;
+		return commerceVirtualOrderItemPersistence.update(
+			commerceVirtualOrderItem);
 	}
 
 	@Override
@@ -356,9 +353,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 		commerceVirtualOrderItem = setDurationDates(commerceVirtualOrderItem);
 
-		commerceVirtualOrderItemPersistence.update(commerceVirtualOrderItem);
-
-		return commerceVirtualOrderItem;
+		return commerceVirtualOrderItemPersistence.update(
+			commerceVirtualOrderItem);
 	}
 
 	protected Date calculateCommerceVirtualOrderItemEndDate(
@@ -383,8 +379,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	protected CommerceSubscriptionEntry getCommerceSubscriptionEntry(
-			long commerceOrderItemId)
-		throws PortalException {
+		long commerceOrderItemId) {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.fetchCommerceOrderItem(
@@ -394,12 +389,9 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			return null;
 		}
 
-		CPInstance cpInstance = commerceOrderItem.getCPInstance();
-
 		return _commerceSubscriptionEntryLocalService.
-			fetchCommerceSubscriptionEntries(
-				cpInstance.getCPInstanceUuid(),
-				commerceOrderItem.getCProductId(), commerceOrderItemId);
+			fetchCommerceSubscriptionEntryByCommerceOrderItemId(
+				commerceOrderItemId);
 	}
 
 	protected CommerceVirtualOrderItem setDurationDates(

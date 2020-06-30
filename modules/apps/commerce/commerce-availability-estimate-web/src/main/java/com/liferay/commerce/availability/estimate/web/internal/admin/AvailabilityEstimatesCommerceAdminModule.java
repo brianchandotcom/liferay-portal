@@ -15,7 +15,6 @@
 package com.liferay.commerce.availability.estimate.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.admin.constants.CommerceAdminConstants;
 import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
@@ -71,11 +70,6 @@ public class AvailabilityEstimatesCommerceAdminModule
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return null;
-	}
-
-	@Override
-	public int getType() {
-		return CommerceAdminConstants.COMMERCE_ADMIN_TYPE_VIRTUAL_INSTANCE;
 	}
 
 	@Override

@@ -20,16 +20,20 @@ import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItem
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
+import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -56,7 +60,7 @@ public class Mutation {
 			warehouseItemResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteWarehousByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -69,7 +73,7 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response patchWarehousByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("warehouse") Warehouse warehouse)
@@ -83,7 +87,7 @@ public class Mutation {
 					externalReferenceCode, warehouse));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteWarehousId(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -93,7 +97,7 @@ public class Mutation {
 			warehouseResource -> warehouseResource.deleteWarehousId(id));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response patchWarehousId(
 			@GraphQLName("id") Long id,
 			@GraphQLName("warehouse") Warehouse warehouse)
@@ -107,8 +111,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Warehouse postWarehous(@GraphQLName("warehouse") Warehouse warehouse)
+	public Warehouse createWarehous(
+			@GraphQLName("warehouse") Warehouse warehouse)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -117,7 +121,7 @@ public class Mutation {
 			warehouseResource -> warehouseResource.postWarehous(warehouse));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteWarehouseItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -131,7 +135,7 @@ public class Mutation {
 						externalReferenceCode));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response patchWarehouseItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
@@ -146,8 +150,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public WarehouseItem postWarehouseItemByExternalReferenceCode(
+	public WarehouseItem createWarehouseItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
 		throws Exception {
@@ -160,7 +163,7 @@ public class Mutation {
 					externalReferenceCode, warehouseItem));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteWarehouseItem(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -171,7 +174,22 @@ public class Mutation {
 				id));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
+	public Response deleteWarehouseItemBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseItemResource ->
+				warehouseItemResource.deleteWarehouseItemBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response patchWarehouseItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
@@ -185,8 +203,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public WarehouseItem postWarehousByExternalReferenceCodeWarehouseItem(
+	public WarehouseItem createWarehousByExternalReferenceCodeWarehouseItem(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
 		throws Exception {
@@ -201,8 +218,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public WarehouseItem postWarehousIdWarehouseItem(
+	public WarehouseItem createWarehousIdWarehouseItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
 		throws Exception {
@@ -256,23 +272,38 @@ public class Mutation {
 	private void _populateResourceContext(WarehouseResource warehouseResource)
 		throws Exception {
 
-		warehouseResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		warehouseResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseResource.setContextCompany(_company);
+		warehouseResource.setContextHttpServletRequest(_httpServletRequest);
+		warehouseResource.setContextHttpServletResponse(_httpServletResponse);
+		warehouseResource.setContextUriInfo(_uriInfo);
+		warehouseResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
 			WarehouseItemResource warehouseItemResource)
 		throws Exception {
 
-		warehouseItemResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		warehouseItemResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseItemResource.setContextCompany(_company);
+		warehouseItemResource.setContextHttpServletRequest(_httpServletRequest);
+		warehouseItemResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		warehouseItemResource.setContextUriInfo(_uriInfo);
+		warehouseItemResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<WarehouseResource>
 		_warehouseResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseItemResource>
 		_warehouseItemResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private com.liferay.portal.kernel.model.User _user;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 
 }

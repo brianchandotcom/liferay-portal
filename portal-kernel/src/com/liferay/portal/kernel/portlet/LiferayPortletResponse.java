@@ -77,6 +77,10 @@ public interface LiferayPortletResponse extends PortletResponse {
 
 	public <T extends PortletURL & RenderURL> T createRenderURL();
 
+	public default LiferayPortletURL createRenderURL(long plid) {
+		return createRenderURL();
+	}
+
 	public RenderURL createRenderURL(MimeResponse.Copy copy);
 
 	public LiferayPortletURL createRenderURL(String portletName);

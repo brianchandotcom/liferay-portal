@@ -74,14 +74,14 @@ public class CPAttachmentFileEntryGroupUpgradeProcess extends UpgradeProcess {
 						groupId = _getGroupIdFromCPDefinition(classPK);
 					}
 					else {
-						throw new NoSuchClassNameException();
+						continue;
 					}
 
 					ps.setLong(1, groupId);
 					ps.setLong(2, classNameId);
 					ps.setLong(3, classPK);
 
-					ps.executeUpdate();
+					ps.addBatch();
 				}
 
 				ps.executeBatch();

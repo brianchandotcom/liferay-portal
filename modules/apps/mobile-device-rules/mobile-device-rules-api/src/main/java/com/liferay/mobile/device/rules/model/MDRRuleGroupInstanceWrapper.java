@@ -369,11 +369,6 @@ public class MDRRuleGroupInstanceWrapper
 		return _mdrRuleGroupInstance.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a mdr rule group instance model instance should use the <code>MDRRuleGroupInstance</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_mdrRuleGroupInstance.persist();

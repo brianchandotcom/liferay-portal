@@ -27,9 +27,9 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
-String title = (String)request.getAttribute("liferay-commerce:info-box:title");
-String actionTargetId = (String)request.getAttribute("liferay-commerce:info-box:actionTargetId");
 String actionLabel = (String)request.getAttribute("liferay-commerce:info-box:actionLabel");
+String actionTargetId = (String)request.getAttribute("liferay-commerce:info-box:actionTargetId");
 String actionUrl = (String)request.getAttribute("liferay-commerce:info-box:actionUrl");
 String elementClasses = (String)request.getAttribute("liferay-commerce:info-box:elementClasses");
+String title = (String)request.getAttribute("liferay-commerce:info-box:title");
 %>

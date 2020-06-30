@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceAccountOrganizationRelPersistence
 	extends BasePersistence<CommerceAccountOrganizationRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAccountOrganizationRelUtil} to access the commerce account organization rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

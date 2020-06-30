@@ -76,7 +76,14 @@ public class CommerceSubscriptionEntryTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
 		_user = UserTestUtil.addUser();
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_user.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_commerceCurrency.getCode());
 	}
 
 	@Test
@@ -95,20 +102,15 @@ public class CommerceSubscriptionEntryTest {
 			"The product subscription entry is created"
 		);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency();
-
-		CommerceTestUtil.addCommerceChannel(
-			_group.getGroupId(), commerceCurrency.getCode());
-
 		CommerceSubscriptionEntryTestUtil.setUpCommerceSubscriptionEntry(
-			_group.getGroupId(), _user.getUserId(), 1,
+			_user.getUserId(), _commerceChannel.getGroupId(), 1,
+			_commerceCurrency.getCommerceCurrencyId(),
 			_commerceSubscriptionEntryHelper);
 
 		int commerceSubscriptionEntriesCount =
 			_commerceSubscriptionEntryLocalService.
 				getCommerceSubscriptionEntriesCount(
-					_group.getCompanyId(), _user.getUserId());
+					_user.getCompanyId(), _user.getUserId());
 
 		Assert.assertEquals(1, commerceSubscriptionEntriesCount);
 	}
@@ -203,7 +205,7 @@ public class CommerceSubscriptionEntryTest {
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			groupId, SimpleCPTypeConstants.NAME, false, false);
 
-		CommerceTestUtil.addBackOrderCPDefinitionInventory(cpDefinition);
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
 		CPOption cpOption = CPTestUtil.addCPOption(groupId, true);
 
@@ -235,21 +237,15 @@ public class CommerceSubscriptionEntryTest {
 
 		CPTestUtil.buildCPInstances(cpDefinition);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency();
-
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			commerceCurrency.getCode());
-
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-			commerceChannel.getCommerceChannelId(),
+			_commerceChannel.getCommerceChannelId(),
 			ServiceContextTestUtil.getServiceContext(
-				commerceChannel.getGroupId()));
+				_commerceChannel.getGroupId()));
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), commerceChannel.getSiteGroupId(),
-			commerceCurrency);
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
 		List<CPInstance> cpInstances =
 			_cpInstanceLocalService.getCPDefinitionInstances(
@@ -360,6 +356,12 @@ public class CommerceSubscriptionEntryTest {
 			}
 		}
 	}
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceSubscriptionEntryHelper _commerceSubscriptionEntryHelper;

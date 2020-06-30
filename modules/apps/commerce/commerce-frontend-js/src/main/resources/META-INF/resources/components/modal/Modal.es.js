@@ -1,225 +1,172 @@
-import ClayButton from '@clayui/button';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {OPEN} from '../../utilities/eventsDefinitions.es';
+import {
+	CLOSE_MODAL,
+	IS_LOADING_MODAL,
+	OPEN_MODAL
+} from '../../utilities/eventsDefinitions.es';
+import {isPageInIframe} from '../../utilities/iframes.es';
+import {liferayNavigate} from '../../utilities/index.es';
+import {INITIAL_MODAL_SIZE} from '../../utilities/modals/constants';
+import {resolveModalHeight} from '../../utilities/modals/index';
 
-const Modal = props => {
-	const [visible, setVisible] = useState(props.visible || false);
+function Modal(props) {
+	const [visible, setVisible] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [onClose, setOnClose] = useState(null);
+	const [title, setTitle] = useState(props.title);
+	const [url, setUrl] = useState(props.url);
+	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
 
-	function reset() {
-		if (props.onClose) {
-			props.onClose();
+	function doClose(successNotification) {
+		if (onClose) {
+			onClose(successNotification);
+		} else if (props.onClose) {
+			props.onClose(successNotification);
 		}
-		if (typeof props.visible === 'undefined') {
-			setVisible(false);
-		}
-		setIframeLoadingCounter(0);
-		setSubmitActive(
-			typeof props.submitActiveAtLoading === 'boolean'
-				? props.submitActiveAtLoading
-				: true
-		);
+
+		setLoading(false);
+		setVisible(false);
 	}
 
-	const [iframeLoadingCounter, setIframeLoadingCounter] = useState(0);
-	const [submitActive, setSubmitActive] = useState(
-		typeof props.submitActiveAtLoading === 'boolean'
-			? props.submitActiveAtLoading
-			: true
-	);
-	const iframeRef = useRef(null);
-	const {observer, onClose} = useModal({onClose: reset});
+	const {observer, onClose: closeOnIframeRefresh} = useModal({
+		onClose: doClose
+	});
 
 	useEffect(() => {
-		setVisible(props.visible);
-	}, [props.visible]);
+		function handleOpenEvent(data) {
+			if (props.id !== data.id || visible || isPageInIframe()) {
+				return;
+			}
 
-	useEffect(() => {
-		if (!props.id) {
-			return;
+			setLoading(true);
+			setVisible(true);
+
+			if (data.url) {
+				setUrl(data.url);
+			}
+
+			if (data.onClose) {
+				setOnClose(() => data.onClose);
+			}
+
+			if (data.title) {
+				setTitle(data.title);
+			}
+
+			/**
+			 * Based on ClayModal specs, the default size of a modal is 'null'.
+			 * Our initial modal size is 'lg'. If the input size is undefined,
+			 * the initial size won't be altered.
+			 */
+			if (data.size !== INITIAL_MODAL_SIZE && data.size !== undefined) {
+				setSize(data.size);
+			}
 		}
 
-		function handleOpenEvent(data) {
-			if (props.id === data.id) {
-				setVisible(true);
+		function handleCloseModal({
+			redirectURL = '',
+			successNotification = {},
+			willIframeRefresh = true
+		}) {
+			if (!visible) return;
+
+			if (redirectURL) {
+				liferayNavigate(redirectURL);
+			} else if (willIframeRefresh) {
+				closeOnIframeRefresh(successNotification);
+			} else {
+				doClose(successNotification);
 			}
+		}
+
+		function handleSetLoading(data) {
+			const {isLoading} = data;
+
+			setLoading(isLoading || false);
 		}
 
 		function cleanUpListeners(e) {
 			if (e.portletId === props.portletId) {
-				Liferay.detach(OPEN, handleOpenEvent);
+				Liferay.detach(OPEN_MODAL, handleOpenEvent);
+				Liferay.detach(CLOSE_MODAL, handleCloseModal);
+				Liferay.detach(IS_LOADING_MODAL, handleSetLoading);
 				Liferay.detach('destroyPortlet', cleanUpListeners);
 			}
 		}
 
 		if (Liferay.on) {
-			Liferay.on(OPEN, handleOpenEvent);
+			Liferay.on(OPEN_MODAL, handleOpenEvent);
+			Liferay.on(CLOSE_MODAL, handleCloseModal);
+			Liferay.on(IS_LOADING_MODAL, handleSetLoading);
 			Liferay.on('destroyPortlet', cleanUpListeners);
 		}
-	}, [props.id, props.portletId]);
 
-	function _handleIframeLoad() {
-		setIframeLoadingCounter(iframeLoadingCounter + 1);
-	}
+		return () => cleanUpListeners({portletId: props.portletId});
+	}, [props.id, props.portletId, closeOnIframeRefresh, visible, doClose]);
 
 	useEffect(() => {
-		switch (true) {
-			case iframeLoadingCounter > 1:
-				return _handleFormSubmit();
-			case iframeLoadingCounter === 1:
-				return _handleIframeFirstLoad();
-			default:
-				break;
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [iframeLoadingCounter]);
+		setOnClose(() => props.onClose);
+	}, [props.onClose]);
 
-	function _handleFormSubmit() {
-		setSubmitActive(false);
-
-		if (props.closeOnSubmit) {
-			setTimeout(() => {
-				onClose();
-			}, 1000);
-		}
-	}
-
-	function _handleIframeFirstLoad() {
-		const iframeDocument = iframeRef.current.contentDocument;
-		const iframeWindow = iframeRef.current.contentWindow;
-
-		if (iframeDocument) {
-			iframeDocument
-				.querySelector('body')
-				.classList.add('within-commerce-iframe');
-		}
-
-		if ((props.showSubmit || props.submitLabel) && iframeDocument) {
-			const iframeForm = iframeDocument.querySelector('form');
-
-			iframeForm.addEventListener('submitAvailable', () =>
-				enableSubmit()
-			);
-			iframeForm.addEventListener('submitUnavailable', () =>
-				disableSubmit()
-			);
-
-			if (iframeWindow.Liferay && iframeWindow.Liferay.on) {
-				iframeWindow.Liferay.on('endNavigate', e => {
-					e.preventDefault();
-					_handleIframeLoad();
-				});
-			}
-		}
-	}
-
-	function setSubmitAvailability(state) {
-		setSubmitActive(state);
-	}
-
-	function enableSubmit() {
-		setSubmitAvailability(true);
-	}
-
-	function disableSubmit() {
-		setSubmitAvailability(false);
-	}
-
-	function _submit(e) {
-		e.preventDefault();
-		try {
-			const iframeForm = iframeRef.current.contentDocument.querySelector(
-				'form'
-			);
-			const iframeSubmitButton = iframeForm.querySelector(
-				'[type="submit"]'
-			);
-
-			if (iframeSubmitButton) {
-				iframeSubmitButton.click();
-			} else {
-				iframeForm.submit();
-			}
-		} catch (error) {
-			throw new Error('Form not available');
-		}
-	}
-
-	return visible ? (
-		<ClayModal
-			observer={observer}
-			size={props.size}
-			spritemap={props.spritemap}
-			status={props.status}
-		>
-			{props.title && <ClayModal.Header>{props.title}</ClayModal.Header>}
-			<div
-				className="modal-body modal-body-iframe"
-				style={{height: '450px', maxHeight: '100%'}}
-			>
-				<iframe
-					onLoad={_handleIframeLoad}
-					ref={iframeRef}
-					src={props.url}
-					title={props.title}
-				/>
-			</div>
-			{(props.showSubmit ||
-				props.submitLabel ||
-				props.showCancel ||
-				props.cancelLabel) && (
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							{(props.showCancel || props.cancelLabel) && (
-								<ClayButton
-									displayType="secondary"
-									onClick={onClose}
-								>
-									{props.cancelLabel ||
-										Liferay.Language.get('cancel')}
-								</ClayButton>
-							)}
-							{(props.showSubmit || props.submitLabel) && (
-								<ClayButton
-									disabled={!submitActive}
-									displayType="primary"
-									onClick={_submit}
-								>
-									{props.submitLabel ||
-										Liferay.Language.get('submit')}
-								</ClayButton>
-							)}
-						</ClayButton.Group>
-					}
-				/>
+	return (
+		<>
+			{visible && (
+				<ClayModal
+					className="commerce-modal"
+					observer={observer}
+					size={size}
+					spritemap={props.spritemap}
+					status={props.status}
+				>
+					{title && <ClayModal.Header>{title}</ClayModal.Header>}
+					<div
+						className="modal-body modal-body-iframe"
+						style={{
+							height: resolveModalHeight(size),
+							maxHeight: '100%'
+						}}
+					>
+						<iframe src={url} title={title} />
+						{loading && (
+							<div className="loader-container">
+								<ClayLoadingIndicator />
+							</div>
+						)}
+					</div>
+				</ClayModal>
 			)}
-		</ClayModal>
-	) : null;
-};
+		</>
+	);
+}
 
 Modal.propTypes = {
-	cancelLabel: PropTypes.string,
 	closeOnSubmit: PropTypes.bool,
-	id: PropTypes.string,
+	id: PropTypes.string.isRequired,
 	onClose: PropTypes.func,
 	portletId: PropTypes.string,
-	showCancel: PropTypes.bool,
-	showSubmit: PropTypes.bool,
 	size: PropTypes.string,
 	spritemap: PropTypes.string,
 	status: PropTypes.string,
-	submitActiveAtLoading: PropTypes.bool,
-	submitLabel: PropTypes.string,
 	title: PropTypes.string,
 	url: PropTypes.string
-};
-
-Modal.defaultProps = {
-	showCancel: false,
-	showSubmit: false
 };
 
 export default Modal;

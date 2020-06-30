@@ -15,6 +15,7 @@
 package com.liferay.layout.type.controller.node.internal.controller;
 
 import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
@@ -99,9 +100,10 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	private static final String _EDIT_PAGE = "/layout/edit/node.jsp";
 
-	private static final String _URL =
-		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
-			"&p_v_l_s_g_id=${liferay:pvlsgid}";
+	private static final String _URL = StringBundler.concat(
+		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&",
+		"groupId=${liferay:groupId}&privateLayout=${liferay:privateLayout}&",
+		"layoutId=${liferay:layoutId}");
 
 	private static final String _VIEW_PAGE = "/layout/view/node.jsp";
 

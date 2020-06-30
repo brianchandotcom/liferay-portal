@@ -35,11 +35,6 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 			ddmFormInstanceRecordVersionService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordVersionServiceUtil} to access the ddm form instance record version remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
 			fetchLatestFormInstanceRecordVersion(

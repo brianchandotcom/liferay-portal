@@ -14,8 +14,8 @@
 
 package com.liferay.sync.web.internal.application;
 
-import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.UserMenuPanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.sync.constants.SyncPortletKeys;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class SyncDevicesPanelApp extends BasePanelApp {
+public class SyncDevicesPanelApp extends UserMenuPanelApp {
 
 	@Override
 	public String getPortletId() {

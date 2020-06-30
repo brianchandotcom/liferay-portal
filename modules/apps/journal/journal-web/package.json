@@ -11,8 +11,8 @@
 		}
 	},
 	"dependencies": {
-		"clay-dropdown": "2.14.2",
-		"clay-label": "2.14.2",
+		"clay-dropdown": "2.20.2",
+		"clay-label": "2.20.2",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-soy": "2.16.8",
@@ -24,5 +24,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.76"
+	"version": "2.0.85"
 }

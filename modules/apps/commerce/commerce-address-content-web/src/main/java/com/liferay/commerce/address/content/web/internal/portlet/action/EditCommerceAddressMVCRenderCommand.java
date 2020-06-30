@@ -87,9 +87,8 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceAddress commerceAddress = null;
-
-		commerceAddress = _actionHelper.getCommerceAddress(renderRequest);
+		CommerceAddress commerceAddress = _actionHelper.getCommerceAddress(
+			renderRequest);
 
 		renderRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_ADDRESS, commerceAddress);

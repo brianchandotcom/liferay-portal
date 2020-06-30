@@ -45,7 +45,7 @@ public interface CommerceChannelRelModel
 	extends AttachedModel, AuditedModel, BaseModel<CommerceChannelRel>,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce channel rel model instance should use the {@link CommerceChannelRel} interface instead.

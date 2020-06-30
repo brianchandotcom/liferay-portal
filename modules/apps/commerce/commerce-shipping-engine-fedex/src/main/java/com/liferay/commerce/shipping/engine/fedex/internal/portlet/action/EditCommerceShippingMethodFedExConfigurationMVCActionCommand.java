@@ -14,19 +14,19 @@
 
 package com.liferay.commerce.shipping.engine.fedex.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
 		"mvc.command.name=editCommerceShippingMethodFedExConfiguration"
 	},
 	service = MVCActionCommand.class
@@ -58,15 +58,18 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 		throws Exception {
 
 		try {
+			long commerceChannelId = ParamUtil.getLong(
+				actionRequest, "commerceChannelId");
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannel(commerceChannelId);
+
 			UnicodeProperties engineParameterMap =
 				PropertiesParamUtil.getProperties(actionRequest, "settings--");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceShippingMethod.class.getName(), actionRequest);
-
 			Settings settings = _settingsFactory.getSettings(
 				new GroupServiceSettingsLocator(
-					serviceContext.getScopeGroupId(),
+					commerceChannel.getGroupId(),
 					FedExCommerceShippingEngineConstants.SERVICE_NAME));
 
 			ModifiableSettings modifiableSettings =
@@ -91,6 +94,9 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 			}
 		}
 	}
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

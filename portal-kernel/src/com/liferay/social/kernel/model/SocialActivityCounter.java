@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface SocialActivityCounter
 	extends PersistedModel, SocialActivityCounterModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityCounterImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDisplayContext = (CommerceShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptionRel();
@@ -34,195 +30,171 @@ long commerceShippingFixedOptionRelId = 0;
 if (commerceShippingFixedOptionRel != null) {
 	commerceShippingFixedOptionRelId = commerceShippingFixedOptionRel.getCommerceShippingFixedOptionRelId();
 }
-
-PortletURL shippingMethodsURL = renderResponse.createRenderURL();
-
-shippingMethodsURL.setParameter("commerceAdminModuleKey", ShippingMethodsCommerceAdminModule.KEY);
-
-String localizedKey = (commerceShippingFixedOptionRel == null) ? "add-shipping-option-setting" : "edit-shipping-option-setting";
-
-String title = LanguageUtil.get(resourceBundle, localizedKey);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-String screenNavigationCategoryKey = commerceShippingFixedOptionRelsDisplayContext.getScreenNavigationCategoryKey();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), shippingMethodsURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
+<commerce-ui:side-panel-content
+	title='<%= LanguageUtil.get(resourceBundle, "edit-shipping-option-setting") %>'
+>
+	<portlet:actionURL name="editCommerceShippingFixedOptionRel" var="editCommerceShippingFixedOptionRelActionURL" />
 
-<%@ include file="/breadcrumb.jspf" %>
+	<aui:form action="<%= editCommerceShippingFixedOptionRelActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOptionRel == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
+		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
-<portlet:actionURL name="editCommerceShippingFixedOptionRel" var="editCommerceShippingFixedOptionRelActionURL" />
+		<div class="alert alert-info">
+			<liferay-ui:message key="commerce-shipping-fixed-option-rel-info" />
+		</div>
 
-<aui:form action="<%= editCommerceShippingFixedOptionRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOptionRel == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
-	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "details") %>'
+		>
+			<div class="row">
+				<div class="col-md-6">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="shipping-option" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceShippingFixedOptionId" required="<%= true %>">
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="commerce-shipping-fixed-option-rel-info" />
-	</div>
+						<%
+						List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
 
-	<div class="lfr-form-content">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="row">
-					<div class="col-md-6">
-						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="shipping-option" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceShippingFixedOptionId" required="<%= true %>">
+						for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
+						%>
 
-							<%
-							List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
+							<aui:option label="<%= commerceShippingFixedOption.getName(languageId) %>" value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>" />
 
-							for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
-							%>
+						<%
+						}
+						%>
 
-								<aui:option label="<%= commerceShippingFixedOption.getName(languageId) %>" value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
-
-					<div class="col-md-6">
-						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="warehouse" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceInventoryWarehouseId" showEmptyOption="<%= true %>">
-
-							<%
-							List<CommerceInventoryWarehouse> commerceInventoryWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceInventoryWarehouses();
-
-							for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryWarehouses) {
-							%>
-
-								<aui:option label="<%= commerceInventoryWarehouse.getName() %>" value="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
+					</aui:select>
 				</div>
 
-				<div class="row">
-					<div class="col-md-4">
-						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceCountryId" showEmptyOption="<%= true %>">
+				<div class="col-md-6">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="warehouse" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceInventoryWarehouseId" showEmptyOption="<%= true %>">
 
-							<%
-							List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
+						<%
+						List<CommerceInventoryWarehouse> commerceInventoryWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceInventoryWarehouses();
 
-							for (CommerceCountry commerceCountry : commerceCountries) {
-							%>
+						for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryWarehouses) {
+						%>
 
-								<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
+							<aui:option label="<%= commerceInventoryWarehouse.getName() %>" value="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" />
 
-							<%
-							}
-							%>
+						<%
+						}
+						%>
 
-						</aui:select>
-					</div>
-
-					<div class="col-md-4">
-						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceRegionId" showEmptyOption="<%= true %>">
-
-							<%
-							List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
-
-							for (CommerceRegion commerceRegion : commerceRegions) {
-							%>
-
-								<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
-
-					<div class="col-md-4">
-						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="zip" />
-					</div>
+					</aui:select>
 				</div>
-			</aui:fieldset>
+			</div>
 
-			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="settings">
-				<div class="row">
-					<div class="col-md-6">
-						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightFrom" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
-					</div>
+			<div class="row">
+				<div class="col-md-4">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceCountryId" showEmptyOption="<%= true %>">
 
-					<div class="col-md-6">
-						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightTo" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
-					</div>
+						<%
+						List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
+
+						for (CommerceCountry commerceCountry : commerceCountries) {
+						%>
+
+							<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
 				</div>
 
-				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getFixedPrice()) %>">
-					<aui:validator name="number" />
-				</aui:input>
+				<div class="col-md-4">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceRegionId" showEmptyOption="<%= true %>">
 
-				<aui:input label="price-per-unit-of-weight" name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getRateUnitWeightPrice()) %>">
-					<aui:validator name="number" />
-				</aui:input>
+						<%
+						List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
 
-				<aui:input bean="<%= commerceShippingFixedOptionRel %>" label="subtotal-percentage-price" model="<%= CommerceShippingFixedOptionRel.class %>" name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</div>
+						for (CommerceRegion commerceRegion : commerceRegions) {
+						%>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+							<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+						<%
+						}
+						%>
+
+					</aui:select>
+				</div>
+
+				<div class="col-md-4">
+					<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="zip" />
+				</div>
+			</div>
+		</commerce-ui:panel>
+
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "settings") %>'
+		>
+			<div class="row">
+				<div class="col-md-6">
+					<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightFrom" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+				</div>
+
+				<div class="col-md-6">
+					<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightTo" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+				</div>
+			</div>
+
+			<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getFixedPrice()) %>">
+				<aui:validator name="number" />
+			</aui:input>
+
+			<aui:input label="price-per-unit-of-weight" name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getRateUnitWeightPrice()) %>">
+				<aui:validator name="number" />
+			</aui:input>
+
+			<aui:input bean="<%= commerceShippingFixedOptionRel %>" label="subtotal-percentage-price" model="<%= CommerceShippingFixedOptionRel.class %>" name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
+		</commerce-ui:panel>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+		</aui:button-row>
+	</aui:form>
+</commerce-ui:side-panel-content>
 
 <aui:script use="aui-base,liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />commerceCountryId',
-				selectData: function(callback) {
-					Liferay.Service(
-						'/commerce.commercecountry/get-commerce-countries',
-						{
-							companyId: <%= company.getCompanyId() %>,
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'nameCurrentValue',
-				selectId: 'commerceCountryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>'
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />commerceCountryId',
+			selectData: function(callback) {
+				Liferay.Service(
+					'/commerce.commercecountry/get-commerce-countries',
+					{
+						companyId: <%= company.getCompanyId() %>,
+						active: true
+					},
+					callback
+				);
 			},
-			{
-				select: '<portlet:namespace />commerceRegionId',
-				selectData: function(callback, selectKey) {
-					Liferay.Service(
-						'/commerce.commerceregion/get-commerce-regions',
-						{
-							commerceCountryId: Number(selectKey),
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'name',
-				selectId: 'commerceRegionId',
-				selectVal: '<%= commerceRegionId %>'
-			}
-		]
-	);
+			selectDesc: 'nameCurrentValue',
+			selectId: 'commerceCountryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= commerceCountryId %>'
+		},
+		{
+			select: '<portlet:namespace />commerceRegionId',
+			selectData: function(callback, selectKey) {
+				Liferay.Service(
+					'/commerce.commerceregion/get-commerce-regions',
+					{
+						commerceCountryId: Number(selectKey),
+						active: true
+					},
+					callback
+				);
+			},
+			selectDesc: 'name',
+			selectId: 'commerceRegionId',
+			selectVal: '<%= commerceRegionId %>'
+		}
+	]);
 </aui:script>

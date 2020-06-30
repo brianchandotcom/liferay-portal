@@ -26,13 +26,35 @@ ext {
 		"com.liferay.css.builder.version": "3.0.2",
 		"com.liferay.gradle.plugins.css.builder.version": "3.0.3",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.7",
-		"com.liferay.gradle.plugins.version": "4.4.83",
-		"com.liferay.gradle.plugins.workspace.version": "2.1.13",
-		"com.liferay.portal.tools.bundle.support.version": "3.5.1",
-		"com.liferay.portal.tools.service.builder.version": "1.0.316",
+		"com.liferay.gradle.plugins.version": "5.0.13",
+		"com.liferay.gradle.plugins.workspace.version": "2.2.11",
+		"com.liferay.portal.tools.bundle.support.version": "3.5.4",
+		"com.liferay.portal.tools.service.builder.version": "1.0.337",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
-		"com.liferay.portal.tools.theme.builder.version": "1.1.7"
+		"com.liferay.portal.tools.theme.builder.version": "1.1.8"
 	]
+}
+
+if (Boolean.getBoolean("gradle.build.scan.enabled")) {
+	apply plugin: "com.gradle.build-scan"
+
+	buildScan {
+		allowUntrustedServer = true
+		captureTaskInputFiles = true
+		server = System.getProperty("gradle.build.scan.server.url") ?: null
+
+		publishAlwaysIf true
+		tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
+
+		if (System.getProperty("gradle.build.scan.tag")) {
+			tag System.getProperty("gradle.build.scan.tag")
+		}
+
+		if (!System.getProperty("gradle.build.scan.server.url")) {
+			termsOfServiceAgree = "yes"
+			termsOfServiceUrl = "https://gradle.com/terms-of-service"
+		}
+	}
 }
 
 Set<File> bndPrintJarFiles = null
@@ -57,7 +79,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 
 buildDir = new File(rootDir.parentFile, "build")
 
-for (String gradleVersion in ["2.5", "2.14", "4.10.2", "5.6.4"]) {
+for (String gradleVersion in ["5.6.4"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 	String suffix = gradleVersion.replace(".", "")
 
@@ -281,10 +303,6 @@ gradle.beforeProject {
 			}
 
 			if (System.getenv("JENKINS_HOME")) {
-				buildCSS {
-					jvmArgs "-Xss4m"
-				}
-
 				startTestableTomcat {
 					deleteLiferayHome = false
 				}
@@ -315,6 +333,14 @@ gradle.beforeProject {
 					ProjectDependency projectDependency ->
 
 					"${projectDependency.dependencyProject.path}:eclipse"
+				}
+			}
+		}
+
+		pluginManager.withPlugin("java") {
+			compileJava {
+				outputs.cacheIf {
+					false
 				}
 			}
 		}

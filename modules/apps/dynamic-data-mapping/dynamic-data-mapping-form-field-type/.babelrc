@@ -2,6 +2,7 @@
     "ignore": [
 		"**/config.js",
         "**/*_field*.js",
-        "**/select_search_support.js"
+        "**/select_search_support.js",
+        "**/virtual_scroller.js"
     ]
 }

@@ -2,12 +2,12 @@
 	background-color: transparent;
 	border-collapse: initial;
 	border-spacing: 0 5px;
-	color: #5C5E5E;
+	color: #5c5e5e;
 	margin-top: -5px;
 
 	th,
 	th button {
-		color: #9D9E9E;
+		color: #9d9e9e;
 		font-size: 11px;
 		font-weight: normal;
 		line-height: 1;
@@ -29,6 +29,7 @@
 
 	th,
 	td {
+		border: none !important;
 		box-shadow: none !important;
 		padding: 10px;
 
@@ -41,7 +42,7 @@
 		}
 
 		small {
-			color: #9D9E9E;
+			color: #9d9e9e;
 			display: block;
 			font-size: 11px;
 		}
@@ -77,7 +78,7 @@
 
 .image-name-cell-label {
 	align-items: center;
-	color: #5C5E5E;
+	color: #5c5e5e;
 	display: flex;
 	font-weight: normal;
 
@@ -92,11 +93,12 @@
 }
 
 .table-list.table-hover tbody tr:hover td {
-	background-color: #FFF;
+	background-color: #fff;
 }
 
 .table-list {
-	th,td {
+	th,
+	td {
 		&:first-child {
 			border-bottom-left-radius: 8px !important;
 			border-top-left-radius: 8px !important;

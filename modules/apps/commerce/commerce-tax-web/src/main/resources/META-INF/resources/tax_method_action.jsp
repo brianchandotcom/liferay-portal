@@ -31,7 +31,7 @@ CommerceTaxMethod commerceTaxMethod = (CommerceTaxMethod)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commerceTaxMethodsDisplayContext.hasManageCommerceTaxMethodPermission() %>">
+	<c:if test="<%= commerceTaxMethodsDisplayContext.hasUpdateCommerceChannelPermission() %>">
 		<portlet:actionURL name="editCommerceTaxMethod" var="editURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

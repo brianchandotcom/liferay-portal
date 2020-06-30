@@ -88,6 +88,9 @@
 		<finder name="CPTaxCategoryId" return-type="Collection">
 			<finder-column name="CPTaxCategoryId" />
 		</finder>
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateCommerceTaxFixedRate</exception>

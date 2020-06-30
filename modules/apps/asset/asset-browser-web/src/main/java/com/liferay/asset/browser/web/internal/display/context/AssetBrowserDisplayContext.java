@@ -79,6 +79,8 @@ public class AssetBrowserDisplayContext {
 
 		_assetHelper = (AssetHelper)renderRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			renderRequest);
 	}
 
 	public String getAddButtonURL() {
@@ -303,7 +305,19 @@ public class AssetBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		String orderByType = ParamUtil.getString(_request, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type",
+				orderByType);
+		}
+		else {
+			orderByType = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type", "asc");
+		}
+
+		_orderByType = orderByType;
 
 		return _orderByType;
 	}
@@ -488,8 +502,20 @@ public class AssetBrowserDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
+		String orderByCol = ParamUtil.getString(_request, "orderByCol");
+
+		if (Validator.isNotNull(orderByCol)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				orderByCol);
+		}
+		else {
+			orderByCol = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				"modified-date");
+		}
+
+		_orderByCol = orderByCol;
 
 		return _orderByCol;
 	}
@@ -667,6 +693,7 @@ public class AssetBrowserDisplayContext {
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

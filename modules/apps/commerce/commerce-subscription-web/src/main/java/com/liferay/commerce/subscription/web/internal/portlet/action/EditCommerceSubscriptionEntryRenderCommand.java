@@ -14,26 +14,18 @@
 
 package com.liferay.commerce.subscription.web.internal.portlet.action;
 
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
-import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
-import com.liferay.commerce.service.CommerceSubscriptionEntryService;
-import com.liferay.commerce.subscription.web.internal.display.context.CommerceSubscriptionEntryDisplayContext;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -51,40 +43,7 @@ public class EditCommerceSubscriptionEntryRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		CommerceSubscriptionEntryDisplayContext
-			commerceSubscriptionEntryDisplayContext =
-				new CommerceSubscriptionEntryDisplayContext(
-					_commercePaymentMethodGroupRelLocalService,
-					_commerceSubscriptionEntryService, _configurationProvider,
-					_cpSubscriptionTypeJSPContributorRegistry,
-					_cpSubscriptionTypeRegistry,
-					_portal.getHttpServletRequest(renderRequest));
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceSubscriptionEntryDisplayContext);
-
 		return "/edit_subscription_entry.jsp";
 	}
-
-	@Reference
-	private CommercePaymentMethodGroupRelLocalService
-		_commercePaymentMethodGroupRelLocalService;
-
-	@Reference
-	private CommerceSubscriptionEntryService _commerceSubscriptionEntryService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CPSubscriptionTypeJSPContributorRegistry
-		_cpSubscriptionTypeJSPContributorRegistry;
-
-	@Reference
-	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
-
-	@Reference
-	private Portal _portal;
 
 }

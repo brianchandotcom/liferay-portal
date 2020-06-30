@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
  */
 public class GadgetLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -340,6 +340,9 @@ public class GadgetLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

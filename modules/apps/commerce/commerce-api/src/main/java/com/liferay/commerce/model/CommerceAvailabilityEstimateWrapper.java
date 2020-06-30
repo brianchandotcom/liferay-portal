@@ -381,11 +381,6 @@ public class CommerceAvailabilityEstimateWrapper
 		return _commerceAvailabilityEstimate.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce availability estimate model instance should use the <code>CommerceAvailabilityEstimate</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceAvailabilityEstimate.persist();

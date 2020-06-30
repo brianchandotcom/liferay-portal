@@ -43,7 +43,7 @@ import java.util.Date;
 public interface SyncDeviceModel
 	extends BaseModel<SyncDevice>, ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a sync device model instance should use the {@link SyncDevice} interface instead.

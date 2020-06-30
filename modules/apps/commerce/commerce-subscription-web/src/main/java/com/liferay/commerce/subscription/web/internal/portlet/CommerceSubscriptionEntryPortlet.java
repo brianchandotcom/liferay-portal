@@ -18,9 +18,9 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalSe
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
-import com.liferay.commerce.service.CommerceSubscriptionEntryService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.web.internal.display.context.CommerceSubscriptionEntryDisplayContext;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -71,7 +72,8 @@ public class CommerceSubscriptionEntryPortlet extends MVCPortlet {
 			commerceSubscriptionEntryDisplayContext =
 				new CommerceSubscriptionEntryDisplayContext(
 					_commercePaymentMethodGroupRelLocalService,
-					_commerceSubscriptionEntryService, _configurationProvider,
+					_commerceSubscriptionEntryLocalService,
+					_commerceOrderItemLocalService,
 					_cpSubscriptionTypeJSPContributorRegistry,
 					_cpSubscriptionTypeRegistry,
 					_portal.getHttpServletRequest(renderRequest));
@@ -84,14 +86,15 @@ public class CommerceSubscriptionEntryPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
 	private CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
-	private CommerceSubscriptionEntryService _commerceSubscriptionEntryService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private CommerceSubscriptionEntryLocalService
+		_commerceSubscriptionEntryLocalService;
 
 	@Reference
 	private CPSubscriptionTypeJSPContributorRegistry

@@ -37,7 +37,7 @@ import java.util.List;
 public abstract class BookmarksFolderBaseImpl
 	extends BookmarksFolderModelImpl implements BookmarksFolder {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a bookmarks folder model instance should use the <code>BookmarksFolder</code> interface instead.

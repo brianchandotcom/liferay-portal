@@ -313,11 +313,6 @@ public class ReleaseWrapper implements ModelWrapper<Release>, Release {
 		return _release.isVerified();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a release model instance should use the <code>Release</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_release.persist();

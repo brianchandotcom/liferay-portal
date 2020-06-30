@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -62,7 +61,7 @@ import java.util.List;
 public interface CommerceSubscriptionEntryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceSubscriptionEntryLocalServiceUtil} to access the commerce subscription entry local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceSubscriptionEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -78,7 +77,10 @@ public interface CommerceSubscriptionEntryLocalService
 	public CommerceSubscriptionEntry addCommerceSubscriptionEntry(
 		CommerceSubscriptionEntry commerceSubscriptionEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceSubscriptionEntry addCommerceSubscriptionEntry(
 			long userId, long groupId, long commerceOrderItemId,
 			int subscriptionLength, String subscriptionType,
@@ -86,32 +88,15 @@ public interface CommerceSubscriptionEntryLocalService
 			UnicodeProperties subscriptionTypeSettingsProperties)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass userId and groupId
-	 */
-	@Deprecated
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceSubscriptionEntry addCommerceSubscriptionEntry(
-			long cpInstanceId, long commerceOrderItemId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass subscription info instead of
-	 cpInstanceUuid and cProductId
-	 */
-	@Deprecated
-	public CommerceSubscriptionEntry addCommerceSubscriptionEntry(
-			long userId, long groupId, String cpInstanceUuid, long cProductId,
-			long commerceOrderItemId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass userId and groupId
-	 */
-	@Deprecated
-	public CommerceSubscriptionEntry addCommerceSubscriptionEntry(
-			String cpInstanceUuid, long cProductId, long commerceOrderItemId,
-			ServiceContext serviceContext)
+			long userId, long groupId, long commerceOrderItemId,
+			int subscriptionLength, String subscriptionType,
+			long maxSubscriptionCycles,
+			UnicodeProperties subscriptionTypeSettingsProperties,
+			int deliverySubscriptionLength, String deliverySubscriptionType,
+			long deliveryMaxSubscriptionCycles,
+			UnicodeProperties deliverySubscriptionTypeSettingsProperties)
 		throws PortalException;
 
 	/**
@@ -221,14 +206,6 @@ public interface CommerceSubscriptionEntryLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), fetch by commerceOrderItemId instead
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceSubscriptionEntry fetchCommerceSubscriptionEntries(
-		String cpInstanceUuid, long cProductId, long commerceOrderItemId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceSubscriptionEntry fetchCommerceSubscriptionEntry(
 		long commerceSubscriptionEntryId);
@@ -257,6 +234,10 @@ public interface CommerceSubscriptionEntryLocalService
 	public List<CommerceSubscriptionEntry>
 		getActiveCommerceSubscriptionEntries();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceSubscriptionEntry>
+		getCommerceDeliverySubscriptionEntriesToRenew();
+
 	/**
 	 * Returns a range of all the commerce subscription entries.
 	 *
@@ -272,6 +253,10 @@ public interface CommerceSubscriptionEntryLocalService
 	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
 		int start, int end);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
 		long companyId, long userId, int start, int end,
@@ -318,6 +303,10 @@ public interface CommerceSubscriptionEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceSubscriptionEntriesCount();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceSubscriptionEntriesCount(long companyId, long userId);
 
@@ -369,15 +358,27 @@ public interface CommerceSubscriptionEntryLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public CommerceSubscriptionEntry
+			incrementCommerceDeliverySubscriptionEntryCycle(
+				long commerceSubscriptionEntryId)
 		throws PortalException;
 
 	public CommerceSubscriptionEntry incrementCommerceSubscriptionEntryCycle(
 			long commerceSubscriptionEntryId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceSubscriptionEntry>
 			searchCommerceSubscriptionEntries(
@@ -389,7 +390,7 @@ public interface CommerceSubscriptionEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceSubscriptionEntry>
 			searchCommerceSubscriptionEntries(
-				long companyId, long groupId, Long maxSubscriptionCycles,
+				long companyId, long[] groupIds, Long maxSubscriptionCycles,
 				Integer subscriptionStatus, String keywords, int start, int end,
 				Sort sort)
 		throws PortalException;
@@ -404,21 +405,50 @@ public interface CommerceSubscriptionEntryLocalService
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 		CommerceSubscriptionEntry commerceSubscriptionEntry);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
+			long commerceSubscriptionEntryId, int subscriptionLength,
+			String subscriptionType,
+			UnicodeProperties subscriptionTypeSettingsProperties,
+			long maxSubscriptionCycles, int subscriptionStatus,
+			int nextIterationDateMonth, int nextIterationDateDay,
+			int nextIterationDateYear, int nextIterationDateHour,
+			int nextIterationDateMinute)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsProperties,
 			long maxSubscriptionCycles, int subscriptionStatus,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute, int nextIterationDateMonth,
-			int nextIterationDateDay, int nextIterationDateYear,
-			int nextIterationDateHour, int nextIterationDateMinute)
+			int nextIterationDateMonth, int nextIterationDateDay,
+			int nextIterationDateYear, int nextIterationDateHour,
+			int nextIterationDateMinute, int deliverySubscriptionLength,
+			String deliverySubscriptionType,
+			UnicodeProperties deliverySubscriptionTypeSettingsProperties,
+			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
+			int deliveryNextIterationDateMonth,
+			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,
+			int deliveryNextIterationDateHour,
+			int deliveryNextIterationDateMinute)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceSubscriptionEntry
 			updateCommerceSubscriptionEntryIterationDates(
 				long commerceSubscriptionEntryId, Date lastIterationDate)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceSubscriptionEntry updateDeliverySubscriptionStatus(
+			long commerceSubscriptionEntryId, int subscriptionStatus)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

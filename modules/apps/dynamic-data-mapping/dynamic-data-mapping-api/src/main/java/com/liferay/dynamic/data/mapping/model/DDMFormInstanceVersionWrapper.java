@@ -644,11 +644,6 @@ public class DDMFormInstanceVersionWrapper
 		return _ddmFormInstanceVersion.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm form instance version model instance should use the <code>DDMFormInstanceVersion</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmFormInstanceVersion.persist();

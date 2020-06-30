@@ -571,11 +571,6 @@ public class FragmentEntryWrapper
 		return _fragmentEntry.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a fragment entry model instance should use the <code>FragmentEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_fragmentEntry.persist();

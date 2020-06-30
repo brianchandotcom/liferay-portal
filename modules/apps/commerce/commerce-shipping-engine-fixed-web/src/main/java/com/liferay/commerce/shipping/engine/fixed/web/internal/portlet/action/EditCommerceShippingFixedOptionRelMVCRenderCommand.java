@@ -14,12 +14,11 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -51,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
 		"mvc.command.name=editCommerceShippingFixedOptionRel"
 	},
 	service = MVCRenderCommand.class
@@ -72,14 +71,13 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 			CommerceShippingFixedOptionRelsDisplayContext
 				commerceShippingFixedOptionRelsDisplayContext =
 					new CommerceShippingFixedOptionRelsDisplayContext(
-						_commerceChannelLocalService, _commerceCountryService,
-						_commerceCurrencyLocalService, _commerceRegionService,
-						_commerceShippingMethodService,
+						_commerceCountryService, _commerceCurrencyLocalService,
+						_commerceRegionService, _commerceShippingMethodService,
 						_commerceShippingFixedOptionService,
 						_commerceInventoryWarehouseService,
 						_commerceShippingFixedOptionRelService,
 						_cpMeasurementUnitLocalService,
-						_portletResourcePermission, renderRequest,
+						_portletResourcePermission, _portal, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
@@ -105,9 +103,6 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;

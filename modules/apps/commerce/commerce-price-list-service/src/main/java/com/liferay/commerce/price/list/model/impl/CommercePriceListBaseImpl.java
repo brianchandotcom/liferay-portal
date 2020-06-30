@@ -32,7 +32,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil
 public abstract class CommercePriceListBaseImpl
 	extends CommercePriceListModelImpl implements CommercePriceList {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce price list model instance should use the <code>CommercePriceList</code> interface instead.

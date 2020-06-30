@@ -95,14 +95,11 @@ long parentCommercePriceListId = commercePriceListDisplayContext.getParentCommer
 <aui:script use="aui-base,event-input">
 	var publishButton = A.one('#<portlet:namespace />publishButton');
 
-	publishButton.on(
-		'click',
-		function() {
-			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
+	publishButton.on('click', function() {
+		var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
 
-			if (workflowActionInput) {
-				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-			}
+		if (workflowActionInput) {
+			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 		}
-	);
+	});
 </aui:script>

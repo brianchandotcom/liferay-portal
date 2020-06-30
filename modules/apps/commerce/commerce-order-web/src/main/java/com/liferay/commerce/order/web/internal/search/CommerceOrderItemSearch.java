@@ -101,14 +101,14 @@ public class CommerceOrderItemSearch
 		CommerceOrderItemSearch.class);
 
 	private static final List<String> _headerNames = Arrays.asList(
-		"sku", "name", "quantity", "price");
+		"sku", "name", "quantity", "js/price");
 	private static final Map<String, String> _orderableHeaders =
 		new LinkedHashMap<String, String>() {
 			{
 				put("sku", "sku");
 				put("name", "name");
 				put("quantity", "quantity");
-				put("price", "price");
+				put("js/price", "js/price");
 			}
 		};
 

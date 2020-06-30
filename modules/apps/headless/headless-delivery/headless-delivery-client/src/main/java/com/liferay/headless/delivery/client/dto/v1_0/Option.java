@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.OptionSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Option {
+public class Option implements Cloneable {
 
 	public String getLabel() {
 		return label;
@@ -49,6 +50,28 @@ public class Option {
 
 	protected String label;
 
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label_i18n;
+
 	public String getValue() {
 		return value;
 	}
@@ -69,6 +92,11 @@ public class Option {
 	}
 
 	protected String value;
+
+	@Override
+	public Option clone() throws CloneNotSupportedException {
+		return (Option)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

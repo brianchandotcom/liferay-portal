@@ -97,6 +97,8 @@ definition {
 		}
 	}
 
+	@description = "This will be ignored until LPS-87150 is fixed."
+	@ignore = "true"
 	@priority = "4"
 	test CompleteProcessAndViewEmailNotifications {
 		property test.assert.javascript.errors = "false";

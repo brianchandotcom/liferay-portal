@@ -397,6 +397,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			if (commerceOrder == null) {
 				commerceOrder = _commerceOrderService.fetchCommerceOrder(
 					commerceAccountId, commerceChannel.getGroupId(),
+					themeDisplay.getUserId(),
 					CommerceOrderConstants.ORDER_STATUS_OPEN);
 			}
 

@@ -121,7 +121,11 @@ public class DefaultCommerceOrderValidatorImpl
 			Locale locale, CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CPInstance cpInstance = commerceOrderItem.getCPInstance();
+		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+		if (cpInstance == null) {
+			return new CommerceOrderValidatorResult(false);
+		}
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
@@ -179,6 +183,10 @@ public class DefaultCommerceOrderValidatorImpl
 
 	private String _getLocalizedMessage(
 		Locale locale, String key, Object[] arguments) {
+
+		if (locale == null) {
+			return key;
+		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

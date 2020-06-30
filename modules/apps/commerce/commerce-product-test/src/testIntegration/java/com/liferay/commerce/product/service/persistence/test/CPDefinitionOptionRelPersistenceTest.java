@@ -165,6 +165,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		newCPDefinitionOptionRel.setKey(RandomTestUtil.randomString());
 
+		newCPDefinitionOptionRel.setPriceType(RandomTestUtil.randomString());
+
 		_cpDefinitionOptionRels.add(
 			_persistence.update(newCPDefinitionOptionRel));
 
@@ -228,6 +230,9 @@ public class CPDefinitionOptionRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionOptionRel.getKey(),
 			newCPDefinitionOptionRel.getKey());
+		Assert.assertEquals(
+			existingCPDefinitionOptionRel.getPriceType(),
+			newCPDefinitionOptionRel.getPriceType());
 	}
 
 	@Test
@@ -337,7 +342,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 			"CPDefinitionId", true, "CPOptionId", true, "name", true,
 			"description", true, "DDMFormFieldTypeName", true, "priority", true,
 			"facetable", true, "required", true, "skuContributor", true, "key",
-			true);
+			true, "priceType", true);
 	}
 
 	@Test
@@ -664,6 +669,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 		cpDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
 
 		cpDefinitionOptionRel.setKey(RandomTestUtil.randomString());
+
+		cpDefinitionOptionRel.setPriceType(RandomTestUtil.randomString());
 
 		_cpDefinitionOptionRels.add(_persistence.update(cpDefinitionOptionRel));
 

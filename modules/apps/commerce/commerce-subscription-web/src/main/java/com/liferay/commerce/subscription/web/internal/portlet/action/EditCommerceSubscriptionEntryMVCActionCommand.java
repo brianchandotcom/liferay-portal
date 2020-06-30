@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.subscription.web.internal.portlet.action;
 
+import com.liferay.commerce.exception.CommerceSubscriptionEntryNextIterationDateException;
 import com.liferay.commerce.exception.CommerceSubscriptionEntrySubscriptionStatusException;
 import com.liferay.commerce.exception.CommerceSubscriptionTypeException;
 import com.liferay.commerce.exception.NoSuchSubscriptionEntryException;
@@ -114,6 +115,8 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 		}
 		catch (Exception e) {
 			if (e instanceof
+					CommerceSubscriptionEntryNextIterationDateException ||
+				e instanceof
 					CommerceSubscriptionEntrySubscriptionStatusException ||
 				e instanceof CommerceSubscriptionTypeException) {
 
@@ -150,22 +153,8 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 				actionRequest, "subscriptionTypeSettings--");
 		long maxSubscriptionCycles = ParamUtil.getLong(
 			actionRequest, "maxSubscriptionCycles");
-
-		int startDateMonth = ParamUtil.getInteger(
-			actionRequest, "startDateMonth");
-		int startDateDay = ParamUtil.getInteger(actionRequest, "startDateDay");
-		int startDateYear = ParamUtil.getInteger(
-			actionRequest, "startDateYear");
-		int startDateHour = ParamUtil.getInteger(
-			actionRequest, "startDateHour");
-		int startDateMinute = ParamUtil.getInteger(
-			actionRequest, "startDateMinute");
-		int startDateAmPm = ParamUtil.getInteger(
-			actionRequest, "startDateAmPm");
-
-		if (startDateAmPm == Calendar.PM) {
-			startDateHour += 12;
-		}
+		int subscriptionStatus = ParamUtil.getInteger(
+			actionRequest, "subscriptionStatus");
 
 		int nextIterationDateMonth = ParamUtil.getInteger(
 			actionRequest, "nextIterationDateMonth");
@@ -184,20 +173,49 @@ public class EditCommerceSubscriptionEntryMVCActionCommand
 			nextIterationDateHour += 12;
 		}
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			_commerceSubscriptionEntryService.fetchCommerceSubscriptionEntry(
-				commerceSubscriptionEntryId);
+		int deliverySubscriptionLength = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionLength");
+		String deliverySubscriptionType = ParamUtil.getString(
+			actionRequest, "deliverySubscriptionType");
+		UnicodeProperties deliverySubscriptionTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "deliverySubscriptionTypeSettings--");
+		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "deliveryMaxSubscriptionCycles");
+		int deliverySubscriptionStatus = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionStatus");
+
+		int deliveryNextIterationDateMonth = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateMonth");
+		int deliveryNextIterationDateDay = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateDay");
+		int deliveryNextIterationDateYear = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateYear");
+		int deliveryNextIterationDateHour = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateHour");
+		int deliveryNextIterationDateMinute = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateMinute");
+		int deliveryNextIterationDateAmPm = ParamUtil.getInteger(
+			actionRequest, "deliveryNextIterationDateAmPm");
+
+		if (deliveryNextIterationDateAmPm == Calendar.PM) {
+			deliveryNextIterationDateHour += 12;
+		}
 
 		return _commerceSubscriptionEntryService.
 			updateCommerceSubscriptionEntry(
 				commerceSubscriptionEntryId, subscriptionLength,
 				subscriptionType, subscriptionTypeSettingsProperties,
-				maxSubscriptionCycles,
-				commerceSubscriptionEntry.getSubscriptionStatus(),
-				startDateMonth, startDateDay, startDateYear, startDateHour,
-				startDateMinute, nextIterationDateMonth, nextIterationDateDay,
+				maxSubscriptionCycles, subscriptionStatus,
+				nextIterationDateMonth, nextIterationDateDay,
 				nextIterationDateYear, nextIterationDateHour,
-				nextIterationDateMinute);
+				nextIterationDateMinute, deliverySubscriptionLength,
+				deliverySubscriptionType,
+				deliverySubscriptionTypeSettingsProperties,
+				deliveryMaxSubscriptionCycles, deliverySubscriptionStatus,
+				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
+				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
+				deliveryNextIterationDateMinute);
 	}
 
 	@Reference

@@ -459,11 +459,6 @@ public class CommerceVirtualOrderItemWrapper
 		return _commerceVirtualOrderItem.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce virtual order item model instance should use the <code>CommerceVirtualOrderItem</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceVirtualOrderItem.persist();

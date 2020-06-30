@@ -63,6 +63,41 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionRelSoap addCommerceShippingFixedOptionRel(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceShippingFixedOptionId,
+				long commerceInventoryWarehouseId, long commerceCountryId,
+				long commerceRegionId, String zip, double weightFrom,
+				double weightTo, java.math.BigDecimal fixedPrice,
+				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shipping.engine.fixed.model.
+				CommerceShippingFixedOptionRel returnValue =
+					CommerceShippingFixedOptionRelServiceUtil.
+						addCommerceShippingFixedOptionRel(
+							userId, groupId, commerceShippingMethodId,
+							commerceShippingFixedOptionId,
+							commerceInventoryWarehouseId, commerceCountryId,
+							commerceRegionId, zip, weightFrom, weightTo,
+							fixedPrice, rateUnitWeightPrice, ratePercentage);
+
+			return com.liferay.commerce.shipping.engine.fixed.model.
+				CommerceShippingFixedOptionRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.shipping.engine.fixed.model.
+		CommerceShippingFixedOptionRelSoap addCommerceShippingFixedOptionRel(
 				long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
 				long commerceInventoryWarehouseId, long commerceCountryId,
@@ -87,10 +122,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -103,10 +138,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 				deleteCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -125,10 +160,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -153,10 +188,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -172,10 +207,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -201,10 +236,10 @@ public class CommerceShippingFixedOptionRelServiceSoap {
 			return com.liferay.commerce.shipping.engine.fixed.model.
 				CommerceShippingFixedOptionRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

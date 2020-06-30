@@ -73,6 +73,36 @@ public class CustomValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object data;
 
+	@Schema
+	@Valid
+	public Map<String, String> getData_i18n() {
+		return data_i18n;
+	}
+
+	public void setData_i18n(Map<String, String> data_i18n) {
+		this.data_i18n = data_i18n;
+	}
+
+	@JsonIgnore
+	public void setData_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			data_i18nUnsafeSupplier) {
+
+		try {
+			data_i18n = data_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> data_i18n;
+
 	@Schema(description = "A point determined by latitude and longitude.")
 	@Valid
 	public Geo getGeo() {
@@ -134,11 +164,17 @@ public class CustomValue {
 
 			sb.append("\"data\": ");
 
-			sb.append("\"");
+			sb.append(String.valueOf(data));
+		}
 
-			sb.append(_escape(data));
+		if (data_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-			sb.append("\"");
+			sb.append("\"data_i18n\": ");
+
+			sb.append(_toJSON(data_i18n));
 		}
 
 		if (geo != null) {

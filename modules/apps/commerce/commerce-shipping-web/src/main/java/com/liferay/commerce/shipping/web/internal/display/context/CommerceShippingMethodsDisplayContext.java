@@ -14,51 +14,63 @@
 
 package com.liferay.commerce.shipping.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule;
-import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.commerce.shipping.web.internal.display.context.util.CommerceShippingMethodRequestHelper;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
-import com.liferay.commerce.util.comparator.CommerceShippingMethodNameComparator;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceShippingMethodsDisplayContext {
 
 	public CommerceShippingMethodsDisplayContext(
+		CommerceChannelLocalService commerceChannelLocalService,
+		CommerceCountryService commerceCountryService,
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
+		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceShippingMethodService commerceShippingMethodService,
-		PortletResourcePermission portletResourcePermission,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest) {
 
+		_commerceChannelLocalService = commerceChannelLocalService;
+		_commerceCountryService = commerceCountryService;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
+		_commerceShippingFixedOptionService =
+			commerceShippingFixedOptionService;
 		_commerceShippingMethodService = commerceShippingMethodService;
-		_portletResourcePermission = portletResourcePermission;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_commerceShippingMethodRequestHelper =
+			new CommerceShippingMethodRequestHelper(httpServletRequest);
+	}
+
+	public long getCommerceChannelId() throws PortalException {
+		if (_commerceShippingMethod != null) {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByGroupId(
+					_commerceShippingMethod.getGroupId());
+
+			return commerceChannel.getCommerceChannelId();
+		}
+
+		return ParamUtil.getLong(
+			_commerceShippingMethodRequestHelper.getRequest(),
+			"commerceChannelId");
+	}
+
+	public int getCommerceCountriesCount() throws PortalException {
+		return _commerceCountryService.getCommerceCountriesCount(
+			_commerceShippingMethodRequestHelper.getCompanyId());
 	}
 
 	public CommerceShippingMethod getCommerceShippingMethod()
@@ -69,174 +81,74 @@ public class CommerceShippingMethodsDisplayContext {
 		}
 
 		long commerceShippingMethodId = ParamUtil.getLong(
-			_renderRequest, "commerceShippingMethodId");
-		String engineKey = ParamUtil.getString(_renderRequest, "engineKey");
+			_commerceShippingMethodRequestHelper.getRequest(),
+			"commerceShippingMethodId");
 
-		if (commerceShippingMethodId > 0) {
-			_commerceShippingMethod =
-				_commerceShippingMethodService.getCommerceShippingMethod(
-					commerceShippingMethodId);
+		if (commerceShippingMethodId != 0) {
+			return _commerceShippingMethodService.getCommerceShippingMethod(
+				commerceShippingMethodId);
 		}
-		else if (Validator.isNotNull(engineKey)) {
-			_commerceShippingMethod = getDefaultCommerceShippingMethod(
-				engineKey);
-		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId());
+
+		_commerceShippingMethod =
+			_commerceShippingMethodService.fetchCommerceShippingMethod(
+				commerceChannel.getGroupId(),
+				getCommerceShippingMethodEngineKey());
 
 		return _commerceShippingMethod;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceAdminModuleKey", ShippingMethodsCommerceAdminModule.KEY);
-
-		String delta = ParamUtil.getString(_renderRequest, "delta");
-
-		if (Validator.isNotNull(delta)) {
-			portletURL.setParameter("delta", delta);
-		}
-
-		portletURL.setParameter("navigation", getNavigation());
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-
-		return portletURL;
-	}
-
-	public String getScreenNavigationCategoryKey() {
-		return CommerceShippingScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
-	}
-
-	public SearchContainer<CommerceShippingMethod> getSearchContainer()
-		throws PortalException {
-
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Boolean active = null;
-		String emptyResultsMessage = "there-are-no-shipping-methods";
-
-		String navigation = getNavigation();
-
-		if (navigation.equals("active")) {
-			active = Boolean.TRUE;
-			emptyResultsMessage = "there-are-no-active-shipping-methods";
-		}
-		else if (navigation.equals("inactive")) {
-			active = Boolean.FALSE;
-			emptyResultsMessage = "there-are-no-inactive-shipping-methods";
-		}
-
-		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, emptyResultsMessage);
-
-		List<CommerceShippingMethod> results;
-
-		if (active != null) {
-			results = _commerceShippingMethodService.getCommerceShippingMethods(
-				themeDisplay.getScopeGroupId(), active);
-		}
-		else {
-			results = _commerceShippingMethodService.getCommerceShippingMethods(
-				themeDisplay.getScopeGroupId());
-		}
-
-		if ((active == null) || !active) {
-			results = addDefaultCommerceShippingMethods(results);
-		}
-
-		results.sort(
-			new CommerceShippingMethodNameComparator(themeDisplay.getLocale()));
-
-		_searchContainer.setTotal(results.size());
-		_searchContainer.setResults(results);
-
-		return _searchContainer;
-	}
-
-	public String getSelectedScreenNavigationCategoryKey() {
-		return ParamUtil.getString(
-			_renderRequest, "screenNavigationCategoryKey",
-			getScreenNavigationCategoryKey());
-	}
-
-	public boolean hasManageCommerceShippingMethodsPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
-	}
-
-	protected List<CommerceShippingMethod> addDefaultCommerceShippingMethods(
-			List<CommerceShippingMethod> commerceShippingMethods)
-		throws PortalException {
-
-		commerceShippingMethods = ListUtil.copy(commerceShippingMethods);
-
-		Map<String, CommerceShippingEngine> commerceShippingEngines =
-			_commerceShippingEngineRegistry.getCommerceShippingEngines();
-
-		Set<String> commerceEngineKeys = new TreeSet<>(
-			commerceShippingEngines.keySet());
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			commerceEngineKeys.remove(commerceShippingMethod.getEngineKey());
-		}
-
-		for (String name : commerceEngineKeys) {
-			CommerceShippingMethod commerceShippingMethod =
-				getDefaultCommerceShippingMethod(name);
-
-			commerceShippingMethods.add(commerceShippingMethod);
-		}
-
-		return commerceShippingMethods;
-	}
-
-	protected CommerceShippingMethod getDefaultCommerceShippingMethod(
-			String engineKey)
-		throws PortalException {
-
+	public String getCommerceShippingMethodEngineDescription(Locale locale) {
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
-				engineKey);
+				getCommerceShippingMethodEngineKey());
 
+		return commerceShippingEngine.getDescription(locale);
+	}
+
+	public String getCommerceShippingMethodEngineKey() {
+		if (_commerceShippingMethod != null) {
+			return _commerceShippingMethod.getEngineKey();
+		}
+
+		return ParamUtil.getString(
+			_commerceShippingMethodRequestHelper.getRequest(),
+			"commerceShippingMethodEngineKey");
+	}
+
+	public String getCommerceShippingMethodEngineName(Locale locale) {
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				getCommerceShippingMethodEngineKey());
+
+		return commerceShippingEngine.getName(locale);
+	}
+
+	public int getCommerceShippingOptionsCount() throws PortalException {
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.createCommerceShippingMethod(0);
+			getCommerceShippingMethod();
 
-		Locale locale = LocaleUtil.getSiteDefault();
+		if (commerceShippingMethod == null) {
+			return 0;
+		}
 
-		commerceShippingMethod.setName(
-			commerceShippingEngine.getName(locale), locale);
-		commerceShippingMethod.setDescription(
-			commerceShippingEngine.getDescription(locale), locale);
-
-		commerceShippingMethod.setEngineKey(engineKey);
-
-		return commerceShippingMethod;
+		return _commerceShippingFixedOptionService.
+			getCommerceShippingFixedOptionsCount(
+				commerceShippingMethod.getCommerceShippingMethodId());
 	}
 
-	protected String getNavigation() {
-		return ParamUtil.getString(_renderRequest, "navigation");
-	}
-
+	private final CommerceChannelLocalService _commerceChannelLocalService;
+	private final CommerceCountryService _commerceCountryService;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
+	private final CommerceShippingFixedOptionService
+		_commerceShippingFixedOptionService;
 	private CommerceShippingMethod _commerceShippingMethod;
+	private final CommerceShippingMethodRequestHelper
+		_commerceShippingMethodRequestHelper;
 	private final CommerceShippingMethodService _commerceShippingMethodService;
-	private final PortletResourcePermission _portletResourcePermission;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private SearchContainer<CommerceShippingMethod> _searchContainer;
 
 }

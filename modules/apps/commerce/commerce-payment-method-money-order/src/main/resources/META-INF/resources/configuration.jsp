@@ -26,40 +26,42 @@ LocalizedValuesMap messageLocalizedValuesMap = moneyOrderGroupServiceConfigurati
 if (messageLocalizedValuesMap != null) {
 	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
 }
+
+long commerceChannelId = ParamUtil.getLong(request, "commerceChannelId");
 %>
 
 <portlet:actionURL name="editMoneyOrderCommercePaymentMethodConfiguration" var="editCommercePaymentMethodActionURL" />
 
-<aui:form action="<%= editCommercePaymentMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommercePaymentMethodActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input helpMessage="this-toggles-whether-the-money-order-message-page-is-shown-as-a-checkout-step-or-not" label="show-message-page" labelOff="no" labelOn="yes" name="settings--showMessagePage--" type="toggle-switch" value="<%= moneyOrderGroupServiceConfiguration.showMessagePage() %>" />
+	<commerce-ui:panel>
+		<aui:input helpMessage="this-toggles-whether-the-money-order-message-page-is-shown-as-a-checkout-step-or-not" label="show-message-page" labelOff="no" labelOn="yes" name="settings--showMessagePage--" type="toggle-switch" value="<%= moneyOrderGroupServiceConfiguration.showMessagePage() %>" />
 
-			<div id="<portlet:namespace />message">
-				<aui:field-wrapper label="message">
-					<liferay-ui:input-localized
-						editorName="alloyeditor"
-						fieldPrefix="settings"
-						fieldPrefixSeparator="--"
-						name="message"
-						type="editor"
-						xml="<%= messageXml %>"
-					/>
-				</aui:field-wrapper>
-			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		<div id="<portlet:namespace />message">
+			<aui:field-wrapper label="message">
+				<liferay-ui:input-localized
+					editorName="alloyeditor"
+					fieldPrefix="settings"
+					fieldPrefixSeparator="--"
+					name="message"
+					type="editor"
+					xml="<%= messageXml %>"
+				/>
+			</aui:field-wrapper>
+		</div>
+	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />showMessagePage', '<portlet:namespace />message');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />showMessagePage',
+		'<portlet:namespace />message'
+	);
 </aui:script>

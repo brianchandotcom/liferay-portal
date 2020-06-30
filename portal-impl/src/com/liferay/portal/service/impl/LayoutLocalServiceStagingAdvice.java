@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
@@ -527,7 +528,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 		Layout wrappedFirstLayout = wrapLayout(firstLayout);
 
-		if (wrappedFirstLayout == firstLayout) {
+		if ((wrappedFirstLayout == firstLayout) &&
+			!LayoutConstants.TYPE_CONTROL_PANEL.equals(firstLayout.getType())) {
+
 			return layouts;
 		}
 
@@ -560,8 +563,11 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		for (Layout layout : layouts) {
 			Layout wrappedLayout = wrapLayout(layout);
 
+			String layoutType = wrappedLayout.getType();
+
 			if (showIncomplete ||
-				!StagingUtil.isIncomplete(wrappedLayout, layoutSetBranchId)) {
+				!StagingUtil.isIncomplete(wrappedLayout, layoutSetBranchId) ||
+				LayoutConstants.TYPE_CONTROL_PANEL.equals(layoutType)) {
 
 				wrappedLayouts.add(wrappedLayout);
 			}
@@ -739,9 +745,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				}
 			}
 
-			returnValue = wrapReturnValue(returnValue, false);
-
-			return returnValue;
+			return wrapReturnValue(returnValue, false);
 		}
 
 		private LayoutLocalServiceStagingInvocationHandler(

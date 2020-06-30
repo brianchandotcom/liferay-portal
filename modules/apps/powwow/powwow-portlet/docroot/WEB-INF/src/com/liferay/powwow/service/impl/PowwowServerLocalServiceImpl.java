@@ -59,9 +59,7 @@ public class PowwowServerLocalServiceImpl
 		powwowServer.setActive(
 			PowwowServiceProviderUtil.isServerActive(powwowServer));
 
-		powwowServerPersistence.update(powwowServer);
-
-		return powwowServer;
+		return powwowServerPersistence.update(powwowServer);
 	}
 
 	@Override

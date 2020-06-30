@@ -46,7 +46,7 @@ public abstract class OrgLaborServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, OrgLaborService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>OrgLaborService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.OrgLaborServiceUtil</code>.
@@ -262,8 +262,8 @@ public abstract class OrgLaborServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

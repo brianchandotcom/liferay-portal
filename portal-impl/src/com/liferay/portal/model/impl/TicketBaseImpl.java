@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
  */
 public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ticket model instance should use the <code>Ticket</code> interface instead.

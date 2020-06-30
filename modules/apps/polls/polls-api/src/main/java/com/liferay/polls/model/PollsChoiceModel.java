@@ -48,7 +48,7 @@ public interface PollsChoiceModel
 	extends BaseModel<PollsChoice>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a polls choice model instance should use the {@link PollsChoice} interface instead.

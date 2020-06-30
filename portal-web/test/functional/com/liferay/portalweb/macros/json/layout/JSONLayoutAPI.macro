@@ -1,0 +1,139 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a layout"
+	macro _addLayout {
+		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/add-layout \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout} \
+				-d parentLayoutId=${parentLayoutId} \
+				-d name=${layoutName} \
+				-d title= \
+				-d description= \
+				-d type=${type} \
+				-d hidden=false \
+				-d friendlyURL=${friendlyURL} \
+				-d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to delete a layout"
+	macro _deleteLayout {
+		Variables.assertDefined(parameterList = "${groupId},${layoutId},${privateLayout},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/delete-layout \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout} \
+				-d layoutId=${layoutId} \
+				-d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Get the default plid from a site by using groupId"
+	macro _getDefaultPlidByGroupId {
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-default-plid \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var defaultPlid = JSONCurlUtil.post("${curl}");
+		var defaultPlid = StringUtil.extractDigits("${defaultPlid}");
+
+		if ("${defaultPlid}" == "[]") {
+			fail("FAIL. Cannot find defaultPlid.");
+		}
+
+		return "${defaultPlid}";
+	}
+
+	@summary = "Get the layoutId from a layout by using groupId and layoutName"
+	macro _getLayoutIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var layoutId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['layoutId']");
+		var layoutId = StringUtil.replace("${layoutId}", "[&quot;", "");
+		var layoutId = StringUtil.replace("${layoutId}", "&quot;]", "");
+
+		if ("${layoutId}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+
+		return "${layoutId}";
+	}
+
+	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
+	macro _getTypeSettingsByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var typeSettings = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
+		var typeSettings = StringUtil.replace("${typeSettings}", "[&quot;", "");
+		var typeSettings = StringUtil.replace("${typeSettings}", "&quot;]", "");
+
+		if ("${typeSettings}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+
+		return "${typeSettings}";
+	}
+
+	@summary = "Directly calls the JavaScript API to update typeSettings"
+	macro _updateTypeSettings {
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
+
+		var javaScript =
+		'''Liferay.Service(
+			'/layout/update-layout',
+			{
+				groupId: ${groupId},
+				privateLayout: ${privateLayout},
+				layoutId: ${layoutId},
+				typeSettings: '${typeSettings}'
+			},
+			function(obj) {
+				console.log(obj);
+			}
+		);''';
+
+		var JSON = selenium.getEval("${javaScript}");
+
+		return "${JSON}";
+	}
+
+}

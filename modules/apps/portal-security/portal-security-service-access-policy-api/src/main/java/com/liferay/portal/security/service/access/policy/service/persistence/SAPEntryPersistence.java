@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryUtil} to access the sap entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

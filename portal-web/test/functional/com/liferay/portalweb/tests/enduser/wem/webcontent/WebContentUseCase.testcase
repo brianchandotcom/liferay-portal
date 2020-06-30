@@ -2825,6 +2825,8 @@ definition {
 		);
 	}
 
+	@description = "This will be ignored until LPS-85964 is backported on BPR-22041."
+	@ignore = "true"
 	@priority = "4"
 	test ViewSourceContainsNoGarbageData {
 		property testray.component.names = "Web Content Administration";

@@ -53,42 +53,40 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 </aui:fieldset>
 
 <aui:script use="liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />countryTwoLettersISOCode',
-				selectData: function(callback) {
-					Liferay.Service(
-						'/commerce.commercecountry/get-commerce-countries',
-						{
-							companyId: <%= company.getCompanyId() %>,
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'nameCurrentValue',
-				selectId: 'twoLettersISOCode',
-				selectSort: '<%= true %>',
-				selectVal: '<%= HtmlUtil.escape(countryTwoLettersISOCode) %>'
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />countryTwoLettersISOCode',
+			selectData: function(callback) {
+				Liferay.Service(
+					'/commerce.commercecountry/get-commerce-countries',
+					{
+						companyId: <%= company.getCompanyId() %>,
+						active: true
+					},
+					callback
+				);
 			},
-			{
-				select: '<portlet:namespace />commerceRegionCode',
-				selectData: function(callback, selectKey) {
-					Liferay.Service(
-						'/commerce.commerceregion/get-commerce-regions',
-						{
-							companyId: <%= company.getCompanyId() %>,
-							countryTwoLettersISOCode: selectKey,
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'name',
-				selectId: 'code',
-				selectVal: '<%= HtmlUtil.escape(commerceRegionCode) %>'
-			}
-		]
-	);
+			selectDesc: 'nameCurrentValue',
+			selectId: 'twoLettersISOCode',
+			selectSort: '<%= true %>',
+			selectVal: '<%= HtmlUtil.escape(countryTwoLettersISOCode) %>'
+		},
+		{
+			select: '<portlet:namespace />commerceRegionCode',
+			selectData: function(callback, selectKey) {
+				Liferay.Service(
+					'/commerce.commerceregion/get-commerce-regions',
+					{
+						companyId: <%= company.getCompanyId() %>,
+						countryTwoLettersISOCode: selectKey,
+						active: true
+					},
+					callback
+				);
+			},
+			selectDesc: 'name',
+			selectId: 'code',
+			selectVal: '<%= HtmlUtil.escape(commerceRegionCode) %>'
+		}
+	]);
 </aui:script>

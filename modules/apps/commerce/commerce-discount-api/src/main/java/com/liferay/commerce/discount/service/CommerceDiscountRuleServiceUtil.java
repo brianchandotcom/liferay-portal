@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceDiscountRuleServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRuleServiceUtil} to access the commerce discount rule remote service. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.discount.model.CommerceDiscountRule
 			addCommerceDiscountRule(
@@ -51,6 +45,17 @@ public class CommerceDiscountRuleServiceUtil {
 
 		return getService().addCommerceDiscountRule(
 			commerceDiscountId, type, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule
+			addCommerceDiscountRule(
+				long commerceDiscountId, String name, String type,
+				String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceDiscountRule(
+			commerceDiscountId, name, type, typeSettings, serviceContext);
 	}
 
 	public static void deleteCommerceDiscountRule(long commerceDiscountRuleId)
@@ -108,6 +113,16 @@ public class CommerceDiscountRuleServiceUtil {
 
 		return getService().updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRule
+			updateCommerceDiscountRule(
+				long commerceDiscountRuleId, String name, String type,
+				String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceDiscountRule(
+			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
 	public static CommerceDiscountRuleService getService() {

@@ -35,11 +35,6 @@ public class CommerceNotificationQueueEntryServiceWrapper
 			commerceNotificationQueueEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationQueueEntryServiceUtil} to access the commerce notification queue entry remote service. Add custom service methods to <code>com.liferay.commerce.notification.service.impl.CommerceNotificationQueueEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void deleteCommerceNotificationQueueEntry(
 			long commerceNotificationQueueEntryId)

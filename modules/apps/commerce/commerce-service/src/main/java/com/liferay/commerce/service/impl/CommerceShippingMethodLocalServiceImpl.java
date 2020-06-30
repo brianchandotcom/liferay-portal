@@ -42,27 +42,41 @@ public class CommerceShippingMethodLocalServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commerceShippingMethodId, long commerceCountryId,
-			ServiceContext serviceContext)
+			long userId, long groupId, long commerceShippingMethodId,
+			long commerceCountryId)
 		throws PortalException {
 
 		return commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
-				CommerceShippingMethod.class.getName(),
-				commerceShippingMethodId, commerceCountryId, serviceContext);
+				userId, groupId, CommerceShippingMethod.class.getName(),
+				commerceShippingMethodId, commerceCountryId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceAddressRestriction addCommerceAddressRestriction(
+			long commerceShippingMethodId, long commerceCountryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			commerceShippingMethodId, commerceCountryId);
 	}
 
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey, double priority, boolean active,
-			ServiceContext serviceContext)
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, File imageFile,
+			String engineKey, double priority, boolean active)
 		throws PortalException {
 
 		// Commerce shipping method
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		if ((imageFile != null) && !imageFile.exists()) {
 			imageFile = null;
@@ -90,7 +104,8 @@ public class CommerceShippingMethodLocalServiceImpl
 		commerceShippingMethod.setPriority(priority);
 		commerceShippingMethod.setActive(active);
 
-		commerceShippingMethodPersistence.update(commerceShippingMethod);
+		commerceShippingMethod = commerceShippingMethodPersistence.update(
+			commerceShippingMethod);
 
 		// Image
 
@@ -252,9 +267,7 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		commerceShippingMethod.setActive(active);
 
-		commerceShippingMethodPersistence.update(commerceShippingMethod);
-
-		return commerceShippingMethod;
+		return commerceShippingMethodPersistence.update(commerceShippingMethod);
 	}
 
 	@Override
@@ -284,7 +297,8 @@ public class CommerceShippingMethodLocalServiceImpl
 		commerceShippingMethod.setPriority(priority);
 		commerceShippingMethod.setActive(active);
 
-		commerceShippingMethodPersistence.update(commerceShippingMethod);
+		commerceShippingMethod = commerceShippingMethodPersistence.update(
+			commerceShippingMethod);
 
 		// Image
 

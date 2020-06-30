@@ -12,7 +12,7 @@
 	}
 
 	&__dot {
-		animation: scale-dot .8s ease-out infinite;
+		animation: scale-dot 0.8s ease-out infinite;
 		background: $color-fg;
 		border-radius: 50%;
 		display: inline-block;

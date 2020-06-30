@@ -37,14 +37,12 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = CommerceAdminModuleRegistry.class)
 public class CommerceAdminModuleRegistry {
 
-	public NavigableMap<String, CommerceAdminModule> getCommerceAdminModules(
-		int type) {
-
+	public NavigableMap<String, CommerceAdminModule> getCommerceAdminModules() {
 		NavigableMap<String, CommerceAdminModule> commerceAdminModules =
 			new TreeMap<>();
 
 		try {
-			commerceAdminModules = getCommerceAdminModules(-1, -1, type);
+			commerceAdminModules = getCommerceAdminModules(-1, -1);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -56,7 +54,7 @@ public class CommerceAdminModuleRegistry {
 	}
 
 	public NavigableMap<String, CommerceAdminModule> getCommerceAdminModules(
-			long companyId, long groupId, int type)
+			long companyId, long groupId)
 		throws PortalException {
 
 		NavigableMap<String, CommerceAdminModule> commerceAdminModules =
@@ -67,8 +65,7 @@ public class CommerceAdminModuleRegistry {
 				_commerceAdminModuleServiceTrackerMap.getService(key);
 
 			if ((companyId < 0) || (groupId < 0) ||
-				(commerceAdminModule.isVisible(groupId) &&
-				 (type == commerceAdminModule.getType()))) {
+				commerceAdminModule.isVisible(groupId)) {
 
 				commerceAdminModules.put(key, commerceAdminModule);
 			}

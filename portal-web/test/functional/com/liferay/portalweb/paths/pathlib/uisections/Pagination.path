@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FIRST_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'1')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CURRENT_PAGE_SELECT</td>
-	<td>//div[contains(@class,'pagination-results')]</td>
+	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>RESULTS</td>
-	<td>//div[@class='pagination-results']</td>
+	<td>//p[@class='pagination-results']</td>
 	<td></td>
 </tr>
 <tr>

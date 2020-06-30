@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoActionUtil} to access the kaleo action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

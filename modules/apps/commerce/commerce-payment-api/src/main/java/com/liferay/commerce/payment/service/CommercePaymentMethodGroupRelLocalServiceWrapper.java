@@ -35,11 +35,23 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 			commercePaymentMethodGroupRelLocalService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
+				long userId, long groupId, long commercePaymentMethodGroupRelId,
+				long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentMethodGroupRelLocalService.
+			addCommerceAddressRestriction(
+				userId, groupId, commercePaymentMethodGroupRelId,
+				commerceCountryId);
+	}
+
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelLocalServiceUtil} to access the commerce payment method group rel local service. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
@@ -72,18 +84,17 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(
+				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey,
-				java.util.Map<String, String> engineParameterMap,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.io.File imageFile, String engineKey, double priority,
+				boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
-				nameMap, descriptionMap, imageFile, engineKey,
-				engineParameterMap, priority, active, serviceContext);
+				userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+				priority, active);
 	}
 
 	/**
@@ -465,6 +476,9 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 			getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -505,17 +519,13 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 				long commercePaymentMethodGroupRelId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile,
-				java.util.Map<String, String> engineParameterMap,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelLocalService.
 			updateCommercePaymentMethodGroupRel(
 				commercePaymentMethodGroupRelId, nameMap, descriptionMap,
-				imageFile, engineParameterMap, priority, active,
-				serviceContext);
+				imageFile, priority, active);
 	}
 
 	@Override

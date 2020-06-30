@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CPDefinitionOptionValueRelServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionValueRelServiceUtil} to access the cp definition option value rel remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
 			addCPDefinitionOptionValueRel(
@@ -149,6 +143,20 @@ public class CPDefinitionOptionValueRelServiceUtil {
 		return getService().searchCPDefinitionOptionValueRels(
 			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
 			sort);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRel(
+				long cpDefinitionOptionValueRelId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				double priority, String key, long cpInstanceId, int quantity,
+				java.math.BigDecimal price,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId, nameMap, priority, key, cpInstanceId,
+			quantity, price, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel

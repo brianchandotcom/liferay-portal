@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @ExtendedObjectClassDefinition(category = "catalog")
 @Meta.OCD(
@@ -33,5 +34,12 @@ public interface CPOptionConfiguration {
 		name = "product-option-form-field-types-allowed", required = false
 	)
 	public String[] ddmFormFieldTypesAllowed();
+
+	@Meta.AD(
+		deflt = "select|radio|checkbox_multiple",
+		name = "sku-contributor-product-option-form-field-types-allowed",
+		required = false
+	)
+	public String[] skuContributorDDMFormFieldTypesAllowed();
 
 }

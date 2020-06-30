@@ -63,7 +63,7 @@ public class CPInstanceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(75);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,8 +95,6 @@ public class CPInstanceCacheModel
 		sb.append(manufacturerPartNumber);
 		sb.append(", purchasable=");
 		sb.append(purchasable);
-		sb.append(", json=");
-		sb.append(json);
 		sb.append(", width=");
 		sb.append(width);
 		sb.append(", height=");
@@ -131,6 +129,16 @@ public class CPInstanceCacheModel
 		sb.append(subscriptionTypeSettings);
 		sb.append(", maxSubscriptionCycles=");
 		sb.append(maxSubscriptionCycles);
+		sb.append(", deliverySubscriptionEnabled=");
+		sb.append(deliverySubscriptionEnabled);
+		sb.append(", deliverySubscriptionLength=");
+		sb.append(deliverySubscriptionLength);
+		sb.append(", deliverySubscriptionType=");
+		sb.append(deliverySubscriptionType);
+		sb.append(", deliverySubscriptionTypeSettings=");
+		sb.append(deliverySubscriptionTypeSettings);
+		sb.append(", deliveryMaxSubscriptionCycles=");
+		sb.append(deliveryMaxSubscriptionCycles);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -219,14 +227,6 @@ public class CPInstanceCacheModel
 		}
 
 		cpInstanceImpl.setPurchasable(purchasable);
-
-		if (json == null) {
-			cpInstanceImpl.setJson("");
-		}
-		else {
-			cpInstanceImpl.setJson(json);
-		}
-
 		cpInstanceImpl.setWidth(width);
 		cpInstanceImpl.setHeight(height);
 		cpInstanceImpl.setDepth(depth);
@@ -277,6 +277,29 @@ public class CPInstanceCacheModel
 		}
 
 		cpInstanceImpl.setMaxSubscriptionCycles(maxSubscriptionCycles);
+		cpInstanceImpl.setDeliverySubscriptionEnabled(
+			deliverySubscriptionEnabled);
+		cpInstanceImpl.setDeliverySubscriptionLength(
+			deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			cpInstanceImpl.setDeliverySubscriptionType("");
+		}
+		else {
+			cpInstanceImpl.setDeliverySubscriptionType(
+				deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			cpInstanceImpl.setDeliverySubscriptionTypeSettings("");
+		}
+		else {
+			cpInstanceImpl.setDeliverySubscriptionTypeSettings(
+				deliverySubscriptionTypeSettings);
+		}
+
+		cpInstanceImpl.setDeliveryMaxSubscriptionCycles(
+			deliveryMaxSubscriptionCycles);
 		cpInstanceImpl.setStatus(status);
 		cpInstanceImpl.setStatusByUserId(statusByUserId);
 
@@ -324,7 +347,6 @@ public class CPInstanceCacheModel
 		manufacturerPartNumber = objectInput.readUTF();
 
 		purchasable = objectInput.readBoolean();
-		json = objectInput.readUTF();
 
 		width = objectInput.readDouble();
 
@@ -348,9 +370,17 @@ public class CPInstanceCacheModel
 
 		subscriptionLength = objectInput.readInt();
 		subscriptionType = objectInput.readUTF();
-		subscriptionTypeSettings = objectInput.readUTF();
+		subscriptionTypeSettings = (String)objectInput.readObject();
 
 		maxSubscriptionCycles = objectInput.readLong();
+
+		deliverySubscriptionEnabled = objectInput.readBoolean();
+
+		deliverySubscriptionLength = objectInput.readInt();
+		deliverySubscriptionType = objectInput.readUTF();
+		deliverySubscriptionTypeSettings = objectInput.readUTF();
+
+		deliveryMaxSubscriptionCycles = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -425,13 +455,6 @@ public class CPInstanceCacheModel
 
 		objectOutput.writeBoolean(purchasable);
 
-		if (json == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(json);
-		}
-
 		objectOutput.writeDouble(width);
 
 		objectOutput.writeDouble(height);
@@ -462,13 +485,33 @@ public class CPInstanceCacheModel
 		}
 
 		if (subscriptionTypeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(subscriptionTypeSettings);
+			objectOutput.writeObject(subscriptionTypeSettings);
 		}
 
 		objectOutput.writeLong(maxSubscriptionCycles);
+
+		objectOutput.writeBoolean(deliverySubscriptionEnabled);
+
+		objectOutput.writeInt(deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionTypeSettings);
+		}
+
+		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
 
 		objectOutput.writeInt(status);
 
@@ -499,7 +542,6 @@ public class CPInstanceCacheModel
 	public String gtin;
 	public String manufacturerPartNumber;
 	public boolean purchasable;
-	public String json;
 	public double width;
 	public double height;
 	public double depth;
@@ -517,6 +559,11 @@ public class CPInstanceCacheModel
 	public String subscriptionType;
 	public String subscriptionTypeSettings;
 	public long maxSubscriptionCycles;
+	public boolean deliverySubscriptionEnabled;
+	public int deliverySubscriptionLength;
+	public String deliverySubscriptionType;
+	public String deliverySubscriptionTypeSettings;
+	public long deliveryMaxSubscriptionCycles;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

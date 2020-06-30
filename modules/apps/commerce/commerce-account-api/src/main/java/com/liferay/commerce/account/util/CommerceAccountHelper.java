@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommerceAccountHelper {
 
+	public int countUserCommerceAccounts(long userId, long channelGroupId)
+		throws PortalException;
+
 	public String getAccountManagementPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

@@ -68,6 +68,8 @@ public class CommercePriceListWrapper
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put(
 			"parentCommercePriceListId", getParentCommercePriceListId());
+		attributes.put("catalogBasePriceList", isCatalogBasePriceList());
+		attributes.put("type", getType());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("displayDate", getDisplayDate());
@@ -151,6 +153,19 @@ public class CommercePriceListWrapper
 			setParentCommercePriceListId(parentCommercePriceListId);
 		}
 
+		Boolean catalogBasePriceList = (Boolean)attributes.get(
+			"catalogBasePriceList");
+
+		if (catalogBasePriceList != null) {
+			setCatalogBasePriceList(catalogBasePriceList);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -215,6 +230,16 @@ public class CommercePriceListWrapper
 	@Override
 	public int compareTo(CommercePriceList commercePriceList) {
 		return _commercePriceList.compareTo(commercePriceList);
+	}
+
+	/**
+	 * Returns the catalog base price list of this commerce price list.
+	 *
+	 * @return the catalog base price list of this commerce price list
+	 */
+	@Override
+	public boolean getCatalogBasePriceList() {
+		return _commercePriceList.getCatalogBasePriceList();
 	}
 
 	@Override
@@ -426,6 +451,16 @@ public class CommercePriceListWrapper
 	}
 
 	/**
+	 * Returns the type of this commerce price list.
+	 *
+	 * @return the type of this commerce price list
+	 */
+	@Override
+	public String getType() {
+		return _commercePriceList.getType();
+	}
+
+	/**
 	 * Returns the user ID of this commerce price list.
 	 *
 	 * @return the user ID of this commerce price list
@@ -483,6 +518,16 @@ public class CommercePriceListWrapper
 	@Override
 	public boolean isCachedModel() {
 		return _commercePriceList.isCachedModel();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce price list is catalog base price list.
+	 *
+	 * @return <code>true</code> if this commerce price list is catalog base price list; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isCatalogBasePriceList() {
+		return _commercePriceList.isCatalogBasePriceList();
 	}
 
 	/**
@@ -565,11 +610,6 @@ public class CommercePriceListWrapper
 		return _commercePriceList.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce price list model instance should use the <code>CommercePriceList</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commercePriceList.persist();
@@ -578,6 +618,16 @@ public class CommercePriceListWrapper
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_commercePriceList.setCachedModel(cachedModel);
+	}
+
+	/**
+	 * Sets whether this commerce price list is catalog base price list.
+	 *
+	 * @param catalogBasePriceList the catalog base price list of this commerce price list
+	 */
+	@Override
+	public void setCatalogBasePriceList(boolean catalogBasePriceList) {
+		_commercePriceList.setCatalogBasePriceList(catalogBasePriceList);
 	}
 
 	/**
@@ -796,6 +846,16 @@ public class CommercePriceListWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_commercePriceList.setStatusDate(statusDate);
+	}
+
+	/**
+	 * Sets the type of this commerce price list.
+	 *
+	 * @param type the type of this commerce price list
+	 */
+	@Override
+	public void setType(String type) {
+		_commercePriceList.setType(type);
 	}
 
 	/**

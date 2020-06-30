@@ -32,7 +32,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 public abstract class AssetCategoryBaseImpl
 	extends AssetCategoryModelImpl implements AssetCategory {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset category model instance should use the <code>AssetCategory</code> interface instead.

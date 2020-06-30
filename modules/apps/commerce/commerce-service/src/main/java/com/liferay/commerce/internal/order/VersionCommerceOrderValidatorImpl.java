@@ -70,11 +70,12 @@ public class VersionCommerceOrderValidatorImpl
 		if ((commerceOrderItem.getCPInstanceId() != 0) &&
 			(commerceOrderItem.getCProductId() != 0)) {
 
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
+			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
-			CProduct cProduct = commerceOrderItem.getCProduct();
+			CProduct cProduct = commerceOrderItem.fetchCProduct();
 
-			if ((cpInstance.getCPDefinitionId() !=
+			if ((cpInstance != null) && (cProduct != null) &&
+				(cpInstance.getCPDefinitionId() !=
 					cProduct.getPublishedCPDefinitionId()) &&
 				(cProduct.getPublishedCPDefinitionId() != 0)) {
 
@@ -114,6 +115,10 @@ public class VersionCommerceOrderValidatorImpl
 	}
 
 	private String _getLocalizedMessage(Locale locale, String key) {
+		if (locale == null) {
+			return key;
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 

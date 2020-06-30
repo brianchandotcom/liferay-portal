@@ -34,7 +34,7 @@ import org.osgi.util.tracker.ServiceTracker;
 @Deprecated
 public class KaleoDefinitionServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.

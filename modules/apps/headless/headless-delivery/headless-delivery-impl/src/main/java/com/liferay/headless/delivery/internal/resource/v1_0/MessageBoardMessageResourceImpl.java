@@ -20,7 +20,6 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardMessageDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -40,8 +39,11 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -110,9 +112,12 @@ public class MessageBoardMessageResourceImpl
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			parentMessageBoardMessageId);
+
 		return _getMessageBoardMessagesPage(
-			parentMessageBoardMessageId, search, filter, pagination, sorts,
-			false, null);
+			_getMessageBoardListActions(mbMessage), parentMessageBoardMessageId,
+			search, filter, pagination, sorts, false, null);
 	}
 
 	@Override
@@ -135,6 +140,7 @@ public class MessageBoardMessageResourceImpl
 			messageBoardThreadId);
 
 		return _getMessageBoardMessagesPage(
+			_getMessageBoardThreadListActions(mbThread),
 			mbThread.getRootMessageId(), search, filter, pagination, sorts,
 			false, null);
 	}
@@ -146,7 +152,8 @@ public class MessageBoardMessageResourceImpl
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
-			null, search, filter, pagination, sorts, flatten, siteId);
+			_getSiteListActions(siteId), null, search, filter, pagination,
+			sorts, flatten, siteId);
 	}
 
 	@Override
@@ -278,6 +285,32 @@ public class MessageBoardMessageResourceImpl
 		return _toMessageBoardMessage(mbMessage);
 	}
 
+	private Map<String, Map<String, String>> _getActions(MBMessage mbMessage) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction("DELETE", mbMessage, "deleteMessageBoardMessage")
+		).put(
+			"get", addAction("VIEW", mbMessage, "getMessageBoardMessage")
+		).put(
+			"replace", addAction("UPDATE", mbMessage, "putMessageBoardMessage")
+		).put(
+			"reply-to-message",
+			addAction(
+				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
+				"postMessageBoardMessageMessageBoardMessage",
+				mbMessage.getUserId(), "com.liferay.message.boards",
+				mbMessage.getGroupId())
+		).put(
+			"subscribe",
+			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+		).put(
+			"unsubscribe",
+			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+		).put(
+			"update", addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
+		).build();
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		MessageBoardMessage messageBoardMessage) {
 
@@ -287,17 +320,48 @@ public class MessageBoardMessageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map<String, String>> _getMessageBoardListActions(
+		MBMessage mbMessage) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get-child-messages",
+			addAction(
+				"VIEW", mbMessage.getMessageId(),
+				"getMessageBoardMessageMessageBoardMessagesPage",
+				mbMessage.getUserId(), "com.liferay.message.boards",
+				mbMessage.getGroupId())
+		).put(
+			"reply-to-message",
+			addAction(
+				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
+				"postMessageBoardMessageMessageBoardMessage",
+				mbMessage.getUserId(), "com.liferay.message.boards",
+				mbMessage.getGroupId())
+		).build();
+	}
+
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
+			Map<String, Map<String, String>> actions,
 			Long messageBoardMessageId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts, Boolean flatten, Long siteId)
 		throws Exception {
 
+		if (messageBoardMessageId != null) {
+			MBMessage mbMessage = _mbMessageService.getMessage(
+				messageBoardMessageId);
+
+			siteId = mbMessage.getGroupId();
+		}
+
+		long messageBoardMessageSiteId = siteId;
+
 		return SearchUtil.search(
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				if (siteId == null) {
+				if (messageBoardMessageId != null) {
 					booleanFilter.add(
 						new TermFilter(
 							Field.ENTRY_CLASS_PK,
@@ -317,7 +381,9 @@ public class MessageBoardMessageResourceImpl
 					}
 
 					booleanFilter.add(
-						new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
+						new TermFilter(
+							Field.GROUP_ID,
+							String.valueOf(messageBoardMessageSiteId)),
 						BooleanClauseOccur.MUST);
 				}
 			},
@@ -326,10 +392,39 @@ public class MessageBoardMessageResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	private Map<String, Map<String, String>> _getMessageBoardThreadListActions(
+		MBThread mbThread) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_MESSAGE", mbThread.getThreadId(),
+				"postMessageBoardThreadMessageBoardMessage",
+				mbThread.getUserId(), "com.liferay.message.boards",
+				mbThread.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", mbThread.getThreadId(),
+				"getMessageBoardThreadMessageBoardMessagesPage",
+				mbThread.getUserId(), "com.liferay.message.boards",
+				mbThread.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(long site) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getSiteMessageBoardMessagesPage",
+				"com.liferay.message.boards", site)
+		).build();
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -345,7 +440,10 @@ public class MessageBoardMessageResourceImpl
 
 		return _messageBoardMessageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, mbMessage.getPrimaryKey(), contextUriInfo, contextUser));
+				false, (Map)_getActions(mbMessage), _dtoConverterRegistry,
+				mbMessage.getPrimaryKey(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private void _updateAnswer(
@@ -361,6 +459,9 @@ public class MessageBoardMessageResourceImpl
 			mbMessage.setAnswer(showAsAnswer);
 		}
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

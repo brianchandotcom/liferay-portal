@@ -1,0 +1,138 @@
+definition {
+
+	@summary = "Add a basic fragment collection."
+	macro addFragmentCollection {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		JSONFragmentAPI._addFragmentCollection(
+			groupId = "${groupId}",
+			name = "${name}");
+	}
+
+	@summary = "Add a section to a fragment collection."
+	macro addSection {
+		Variables.assertDefined(parameterList = "${collectionName},${name}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var collectionId = JSONFragmentSetter.setCollectionId(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}");
+
+		var configuration = JSONFragmentSetter.setConfiguration(
+			configuration = "${configuration}");
+
+		var html = JSONFragmentSetter.setHTML(
+			html = "${html}");
+
+		var status = JSONFragmentSetter.setStatus(
+			status = "${status}");
+
+		var type = JSONFragmentSetter.setType(
+			type = "${type}");
+
+		JSONFragmentAPI._addSection(
+			collectionId = "${collectionId}",
+			configuration = "${configuration}",
+			groupId = "${groupId}",
+			html = "${html}",
+			name = "${name}",
+			status = "${status}",
+			type = "${type}");
+	}
+
+	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
+	macro assertFragmentCollectionInGroup {
+		Variables.assertDefined(parameterList = "${collectionName}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var collectionNameResult = JSONFragmentAPI._getCollectionName(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}"
+		);
+
+		if ("${collectionNameResult}" == "[]") {
+			fail("The collection ${collectionName} was not found.");
+		}
+	}
+
+	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
+	macro assertFragmentCollectionNotInGroup {
+		Variables.assertDefined(parameterList = "${collectionName}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var collectionNameResult = JSONFragmentAPI._getCollectionName(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}"
+		);
+
+		if ("${collectionNameResult}" != "[]") {
+			fail("The collection ${collectionName} was found.");
+		}
+	}
+
+	@summary = "Assert that a fragment exists in a fragmentCollection given its collectionName, fragmentName, and groupName"
+	macro assertFragmentInGroup {
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}");
+
+		var fragmentNameResult = JSONFragmentAPI._getFragmentName(
+			fragmentCollectionId = "${fragmentCollectionId}",
+			fragmentName = "${fragmentName}",
+			groupId = "${groupId}"
+		);
+
+		if ("${fragmentNameResult}" == "[]") {
+			fail("The fragment ${fragmentName} was not found.");
+		}
+	}
+
+	@summary = "Assert that a fragment does not exist in a group given its fragmentName"
+	macro assertFragmentNotInGroup {
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}");
+
+		var fragmentNameResult = JSONFragmentAPI._getFragmentName(
+			fragmentCollectionId = "${fragmentCollectionId}",
+			fragmentName = "${fragmentName}",
+			groupId = "${groupId}"
+		);
+
+		if ("${fragmentNameResult}" != "[]") {
+			fail("The fragment ${fragmentName} was found.");
+		}
+	}
+
+}

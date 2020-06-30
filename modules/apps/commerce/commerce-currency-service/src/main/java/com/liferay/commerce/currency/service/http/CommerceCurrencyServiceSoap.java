@@ -68,12 +68,11 @@ public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap
 			addCommerceCurrency(
 				long userId, String code, String[] nameMapLanguageIds,
-				String[] nameMapValues, java.math.BigDecimal rate,
-				String[] formatPatternMapLanguageIds,
+				String[] nameMapValues, String symbol,
+				java.math.BigDecimal rate, String[] formatPatternMapLanguageIds,
 				String[] formatPatternMapValues, int maxFractionDigits,
 				int minFractionDigits, String roundingMode, boolean primary,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				double priority, boolean active)
 		throws RemoteException {
 
 		try {
@@ -85,17 +84,17 @@ public class CommerceCurrencyServiceSoap {
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue =
 				CommerceCurrencyServiceUtil.addCommerceCurrency(
-					userId, code, nameMap, rate, formatPatternMap,
+					userId, code, nameMap, symbol, rate, formatPatternMap,
 					maxFractionDigits, minFractionDigits, roundingMode, primary,
-					priority, active, serviceContext);
+					priority, active);
 
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -106,10 +105,10 @@ public class CommerceCurrencyServiceSoap {
 			CommerceCurrencyServiceUtil.deleteCommerceCurrency(
 				commerceCurrencyId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -125,10 +124,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -148,10 +147,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -171,10 +170,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -188,10 +187,10 @@ public class CommerceCurrencyServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -205,10 +204,10 @@ public class CommerceCurrencyServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -224,10 +223,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -243,10 +242,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -262,10 +261,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -281,10 +280,10 @@ public class CommerceCurrencyServiceSoap {
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -292,7 +291,8 @@ public class CommerceCurrencyServiceSoap {
 			updateCommerceCurrency(
 				long commerceCurrencyId, String code,
 				String[] nameMapLanguageIds, String[] nameMapValues,
-				java.math.BigDecimal rate, String[] formatPatternMapLanguageIds,
+				String symbol, java.math.BigDecimal rate,
+				String[] formatPatternMapLanguageIds,
 				String[] formatPatternMapValues, int maxFractionDigits,
 				int minFractionDigits, String roundingMode, boolean primary,
 				double priority, boolean active,
@@ -308,17 +308,17 @@ public class CommerceCurrencyServiceSoap {
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue =
 				CommerceCurrencyServiceUtil.updateCommerceCurrency(
-					commerceCurrencyId, code, nameMap, rate, formatPatternMap,
-					maxFractionDigits, minFractionDigits, roundingMode, primary,
-					priority, active, serviceContext);
+					commerceCurrencyId, code, nameMap, symbol, rate,
+					formatPatternMap, maxFractionDigits, minFractionDigits,
+					roundingMode, primary, priority, active, serviceContext);
 
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -330,10 +330,10 @@ public class CommerceCurrencyServiceSoap {
 			CommerceCurrencyServiceUtil.updateExchangeRate(
 				commerceCurrencyId, exchangeRateProviderKey);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -341,10 +341,10 @@ public class CommerceCurrencyServiceSoap {
 		try {
 			CommerceCurrencyServiceUtil.updateExchangeRates();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

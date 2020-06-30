@@ -60,7 +60,7 @@ import java.util.List;
 public interface CProductLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CProductLocalServiceUtil} to access the c product local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CProductLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -94,10 +94,11 @@ public interface CProductLocalService
 	 *
 	 * @param cProduct the c product
 	 * @return the c product that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CProduct deleteCProduct(CProduct cProduct);
+	public CProduct deleteCProduct(CProduct cProduct) throws PortalException;
 
 	/**
 	 * Deletes the c product with the primary key from the database. Also notifies the appropriate model listeners.
@@ -297,6 +298,9 @@ public interface CProductLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -312,6 +316,10 @@ public interface CProductLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CProduct updateCProduct(CProduct cProduct);
+
+	public CProduct updateCProductExternalReferenceCode(
+			long cProductId, String externalReferenceCode)
+		throws PortalException;
 
 	public CProduct updatePublishedCPDefinitionId(
 			long cProductId, long publishedCPDefinitionId)

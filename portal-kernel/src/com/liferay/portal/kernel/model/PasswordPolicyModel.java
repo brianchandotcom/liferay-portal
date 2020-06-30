@@ -40,7 +40,7 @@ public interface PasswordPolicyModel
 	extends BaseModel<PasswordPolicy>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a password policy model instance should use the {@link PasswordPolicy} interface instead.

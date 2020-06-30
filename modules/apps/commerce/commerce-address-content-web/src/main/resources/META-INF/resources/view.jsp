@@ -18,18 +18,6 @@
 
 <%
 CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("commerceAddressDisplayContext", commerceAddressDisplayContext);
-
-SearchContainer<CommerceAddress> commerceAddressSearchContainer = commerceAddressDisplayContext.getSearchContainer();
-
-PortletURL portletURL = commerceAddressDisplayContext.getPortletURL();
-
-portletURL.setParameter("searchContainerId", "commerceAddresses");
-
-request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <c:choose>
@@ -39,6 +27,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</div>
 	</c:when>
 	<c:otherwise>
+
+		<%
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("commerceAddressDisplayContext", commerceAddressDisplayContext);
+
+		SearchContainer<CommerceAddress> commerceAddressSearchContainer = commerceAddressDisplayContext.getSearchContainer();
+
+		PortletURL portletURL = commerceAddressDisplayContext.getPortletURL();
+
+		portletURL.setParameter("searchContainerId", "commerceAddresses");
+
+		request.setAttribute("view.jsp-portletURL", portletURL);
+		%>
+
 		<liferay-ddm:template-renderer
 			className="<%= CommerceAddressContentPortlet.class.getName() %>"
 			contextObjects="<%= contextObjects %>"
@@ -79,6 +82,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 								<liferay-ui:search-container-column-text
 									property="zip"
+								/>
+
+								<liferay-ui:search-container-column-text
+									name="country"
+									property="commerceCountry.name"
+								/>
+
+								<%
+								CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+								%>
+
+								<liferay-ui:search-container-column-text
+									name="region"
+									value="<%= (commerceRegion != null) ? commerceRegion.getName() : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-jsp

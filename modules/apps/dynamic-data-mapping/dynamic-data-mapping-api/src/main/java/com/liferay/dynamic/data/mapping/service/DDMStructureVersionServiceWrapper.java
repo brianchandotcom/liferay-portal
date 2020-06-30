@@ -33,11 +33,6 @@ public class DDMStructureVersionServiceWrapper
 		_ddmStructureVersionService = ddmStructureVersionService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMStructureVersionServiceUtil} to access the ddm structure version remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
 			getLatestStructureVersion(long structureId)

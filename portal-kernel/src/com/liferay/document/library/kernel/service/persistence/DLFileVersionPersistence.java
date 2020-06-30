@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DLFileVersionPersistence
 	extends BasePersistence<DLFileVersion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileVersionUtil} to access the document library file version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

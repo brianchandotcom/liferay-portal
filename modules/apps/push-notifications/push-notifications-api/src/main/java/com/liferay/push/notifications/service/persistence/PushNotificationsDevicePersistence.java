@@ -40,7 +40,7 @@ import java.util.Set;
 public interface PushNotificationsDevicePersistence
 	extends BasePersistence<PushNotificationsDevice> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceUtil} to access the push notifications device persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

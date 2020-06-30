@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 public abstract class CPOptionValueBaseImpl
 	extends CPOptionValueModelImpl implements CPOptionValue {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp option value model instance should use the <code>CPOptionValue</code> interface instead.

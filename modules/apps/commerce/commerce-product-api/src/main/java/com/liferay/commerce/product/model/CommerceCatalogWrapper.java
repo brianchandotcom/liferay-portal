@@ -334,11 +334,6 @@ public class CommerceCatalogWrapper
 		return _commerceCatalog.isSystem();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce catalog model instance should use the <code>CommerceCatalog</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceCatalog.persist();

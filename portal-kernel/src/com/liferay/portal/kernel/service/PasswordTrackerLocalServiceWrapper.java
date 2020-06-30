@@ -274,6 +274,9 @@ public class PasswordTrackerLocalServiceWrapper
 		return _passwordTrackerLocalService.getPasswordTrackersCount();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

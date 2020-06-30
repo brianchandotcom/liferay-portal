@@ -255,7 +255,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
-			"20"
+			"65"
 		).when(
 			props
 		).get(

@@ -47,7 +47,7 @@ public interface DLFileEntryModel
 	extends AttachedModel, BaseModel<DLFileEntry>, ShardedModel,
 			StagedGroupedModel, TrashedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a document library file entry model instance should use the {@link DLFileEntry} interface instead.

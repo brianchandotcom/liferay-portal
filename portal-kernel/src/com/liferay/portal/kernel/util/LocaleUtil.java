@@ -235,6 +235,17 @@ public class LocaleUtil {
 			return locale;
 		}
 
+		if (languageId.equals("zh-Hans-CN")) {
+			languageId = "zh_CN";
+		}
+		else if (languageId.equals("zh-Hant-TW")) {
+			languageId = "zh_TW";
+		}
+		else {
+			languageId = StringUtil.replace(
+				languageId, CharPool.MINUS, CharPool.UNDERLINE);
+		}
+
 		try {
 			int pos = languageId.indexOf(CharPool.UNDERLINE);
 

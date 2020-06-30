@@ -19,8 +19,6 @@ AUI.add(
 
 		var CSS_SEARCH_CHOSEN = A.getClassName('drop', 'chosen');
 
-		var CSS_SELECT_DROPDOWN_ITEM = A.getClassName('dropdown', 'item');
-
 		var CSS_SELECT_LABEL_ITEM_CLOSE = A.getClassName('trigger', 'label', 'item', 'close');
 
 		var CSS_SELECT_OPTION_ITEM = A.getClassName('select', 'option', 'item');
@@ -42,6 +40,7 @@ AUI.add(
 
 					fixedOptions: {
 						getter: '_getFixedOptions',
+						setter: '_setOptions',
 						state: true,
 						validator: Array.isArray,
 						value: []
@@ -54,6 +53,7 @@ AUI.add(
 
 					options: {
 						getter: '_getOptions',
+						setter: '_setOptions',
 						state: true,
 						validator: Array.isArray,
 						value: []
@@ -90,7 +90,6 @@ AUI.add(
 
 					value: {
 						state: true,
-						validator: '_validateValue',
 						value: []
 					}
 				},
@@ -104,12 +103,12 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-select',
 
 				prototype: {
+					_selectedLabels: {},
+
 					initializer: function() {
 						var instance = this;
 
 						instance._open = false;
-
-						instance._createLabelTooltip();
 
 						instance._eventHandlers.push(
 							A.one('doc').after('click', A.bind(instance._afterClickOutside, instance)),
@@ -135,9 +134,11 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
-						if (instance._tooltip) {
-							instance._tooltip.destroy();
+						if (instance._virtualScroller) {
+							instance._virtualScroller.destroy();
 						}
+
+						instance._selectedLabels = {};
 					},
 
 					alignPosition: function(selectInputNode, dropdownMenuNode, dropdownMenu) {
@@ -164,29 +165,6 @@ AUI.add(
 						}
 					},
 
-					checkOpenList: function(page) {
-						var instance = this;
-
-						if (page) {
-							var dropNodes = page._node.getElementsByClassName(CSS_DROP_CHOSEN);
-							var selectNodes = page._node.getElementsByClassName(CSS_SELECT_TRIGGER_ACTION);
-
-							for (var i = 0; i < dropNodes.length; i++) {
-								if (!(dropNodes[i].classList.contains(CSS_HIDE))) {
-									dropNodes[i].classList.add(CSS_HIDE);
-								}
-							}
-
-							for (var j = 0; j < selectNodes.length; j++) {
-								if (selectNodes[j].classList.contains(CSS_ACTIVE)) {
-									selectNodes[j].classList.remove(CSS_ACTIVE);
-								}
-							}
-
-							instance._open = false;
-						}
-					},
-
 					cleanSelect: function() {
 						var instance = this;
 
@@ -201,19 +179,17 @@ AUI.add(
 						var instance = this;
 
 						if (!instance.get('readOnly') && instance._isListOpen()) {
-							var container = instance.get('container');
-
-							container.one('.' + CSS_DROP_CHOSEN).addClass(CSS_HIDE);
-
-							container.one('.' + CSS_SELECT_TRIGGER_ACTION).removeClass(CSS_ACTIVE);
-
 							instance._open = false;
 
-							if (instance._isErrorRequired()) {
-								instance.showErrorMessage();
-							}
+							instance.onceAfter('render', function() {
+								if (instance._isErrorRequired()) {
+									instance.showErrorMessage();
+								}
+	
+								instance.fire('closeList');
+							});
 
-							instance.fire('closeList');
+							instance.render();
 						}
 					},
 
@@ -223,7 +199,7 @@ AUI.add(
 						var container = instance.get('container');
 
 						if (instance._hasMultipleOptionFocused) {
-							var dropdownNodesList = container.all('.' + CSS_SELECT_DROPDOWN_ITEM);
+							var dropdownNodesList = container.all('.select-option-item');
 
 							var focusedDropdownNodeList = dropdownNodesList.filter(
 								function(dropdownNode) {
@@ -255,29 +231,68 @@ AUI.add(
 
 						var soyIncDom = window.DDMSelect.render.Soy.toIncDom;
 
+						var options = instance.getOptions();
+						var paddingBottom = 0;
+						var paddingTop = 0;
+
+						if (instance.get('multiple')) {
+							var scroller = instance._virtualScroller;
+
+							options = scroller.getVisibleItems();
+							paddingBottom = scroller.getPaddingBottom();
+							paddingTop = scroller.getPaddingTop();
+						}
+
+						var predefinedValue = instance.get('predefinedValue');
+						var value = instance.getValue();		
+
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								fixedOptions: instance.get('fixedOptions'),
+								fixedOptions: instance.get('fixedOptions').map(A.bind(instance._isSelectedOption, instance)),
 								labelCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times')),
 								multiple: instance.get('multiple'),
 								open: instance._open,
-								options: instance.get('options'),
-								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
+								options: options.map(A.bind(instance._isSelectedOption, instance)),
+								paddingBottom: paddingBottom,
+								paddingTop: paddingTop,
+								predefinedValue: instance.get('readOnly') ? predefinedValue : value,
 								selectCaretDoubleIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('caret-double')),
+								selectedLabels: instance._selectedLabels,
 								selectSearchIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('search')),
 								showPlaceholderOption: instance._showPlaceholderOption(),
 								showSearch: instance._showSearch(),
 								strings: instance.get('strings'),
-								value: instance.getValue()
+								value: value
 							}
 						);
+					},
+
+					getVirtualScrollerElement: function() {
+						var instance = this;
+
+						return instance.get('container').one('.inline-scroller');
 					},
 
 					getValue: function() {
 						var instance = this;
 
-						return instance.get('value') || [];
+						var fixedOptions = instance.get('fixedOptions');
+
+						var options = instance.get('options');
+
+						var value = instance.get('value') || [];
+
+						return value.filter(function(currentValue) {
+							return (
+								options.find(function(currentOption) {
+									return currentOption.value === currentValue;
+								}) ||
+								fixedOptions.find(function(currentOption) {
+									return currentOption.value === currentValue;
+								})
+							)
+						});
 					},
 
 					hasFocus: function(node) {
@@ -305,20 +320,64 @@ AUI.add(
 					openList: function() {
 						var instance = this;
 
-						instance._getSelectTriggerAction().addClass(CSS_ACTIVE);
-
-						instance.get('container').one('.form-group').removeClass(CSS_HIDE);
-						instance.get('container').one('.' + CSS_DROP_CHOSEN).removeClass(CSS_HIDE);
-
 						instance._open = true;
+
+						instance.onceAfter('render', function() {
+							var trigger = instance._getSelectTriggerAction();
+
+							trigger.addClass(CSS_ACTIVE);
+
+							var container = instance.get('container');
+
+							if (container.ancestor('.ddm-user-view-content')) {
+								var selectInputNode = container.one('.input-select-wrapper')._node;
+
+								var dropdownMenu = container.one('.dropdown-menu');
+
+								var dropdownMenuNode = dropdownMenu._node;
+
+								instance.alignPosition(selectInputNode, dropdownMenuNode, dropdownMenu);
+							}
+						});
+
+						instance.render();
 					},
 
 					render: function() {
 						var instance = this;
 
-						var dataSourceType = instance.get('dataSourceType');
+						if (instance.get('multiple')) {
+							var options = instance.getOptions();
+
+							if (!instance._virtualScroller) {
+								instance._virtualScroller = new Liferay.DDM.VirtualScroller({
+									items: options
+								});
+		
+								instance._virtualScroller.on('update', function() {
+									window.requestAnimationFrame(function() {
+										instance.render();
+									});
+								});
+							}
+
+							instance._virtualScroller.set('items', options);
+
+							instance.onceAfter('render', function() {
+								var scroller = instance._virtualScroller;
+								var scrollerElement = instance.getVirtualScrollerElement();
+
+								if (scroller && instance._open) {
+									scroller.set('element', scrollerElement);
+
+									scroller.bindScrollEvent();
+								}
+							});
+						}
 
 						SelectField.superclass.render.apply(instance, arguments);
+
+						var dataSourceType = instance.get('dataSourceType');
 
 						if (dataSourceType !== 'manual' && instance.get('builder')) {
 							var inputNode = instance.getInputNode();
@@ -343,13 +402,15 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
+						instance.onceAfter('render', function() {
+							if (instance._isErrorRequired()) {
+								instance.showErrorMessage();
+							}
+						});
+
 						instance.set('value', value);
 
 						instance.render();
-
-						if (instance._isErrorRequired()) {
-							instance.showErrorMessage();
-						}
 					},
 
 					showErrorMessage: function() {
@@ -373,13 +434,7 @@ AUI.add(
 					toggleList: function(event) {
 						var instance = this;
 
-						if (event) {
-							event.stopPropagation();
-						}
-
 						var container = instance.get('container');
-
-						var page = container.ancestor('.lfr-ddm-form-page', true);
 
 						var selectTrigger = container.one('.select-field-trigger');
 
@@ -387,28 +442,14 @@ AUI.add(
 							instance.closeList();
 						}
 						else if (!selectTrigger.hasAttribute('disabled')) {
-							instance.checkOpenList(page);
-
 							instance.openList();
-
-							var userView = container.ancestor('.ddm-user-view-content');
-
-							if (event && userView) {
-								var selectInputNode = event.currentTarget.one('.input-select-wrapper')._node;
-
-								var dropdownMenu = event.currentTarget.one('.dropdown-menu');
-
-								var dropdownMenuNode = dropdownMenu._node;
-
-								instance.alignPosition(selectInputNode, dropdownMenuNode, dropdownMenu);
-							}
 						}
 					},
 
 					_afterClickOutside: function(event) {
 						var instance = this;
 
-						if (!instance._preventDocumentClick && instance._isClickingOutside(event)) {
+						if (instance._isClickingOutside(event)) {
 							instance.closeList();
 						}
 
@@ -425,20 +466,6 @@ AUI.add(
 								}
 							},
 							100
-						);
-					},
-
-					_createLabelTooltip: function() {
-						var instance = this;
-
-						instance._tooltip = new A.TooltipDelegate(
-							{
-								position: 'bottom',
-								trigger: '.multiple-label-list .multiple-label',
-								triggerHideEvent: ['blur', 'mouseleave'],
-								triggerShowEvent: ['focus', 'mouseover'],
-								visible: false
-							}
 						);
 					},
 
@@ -461,17 +488,9 @@ AUI.add(
 
 						var target = event.target;
 
-						var addRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-add-button');
-
 						var closeIconNode = target.ancestor('.' + CSS_SELECT_LABEL_ITEM_CLOSE, true);
 
-						var deleteRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-delete-button');
-
-						var optionNode = target.ancestor('.' + CSS_SELECT_OPTION_ITEM, true);
-
-						if (instance.get('multiple')) {
-							optionNode = target.ancestor('.' + CSS_SELECT_DROPDOWN_ITEM, true);
-						}
+						var optionNode = target.ancestor('.select-option-item');
 
 						if (closeIconNode) {
 							instance._handleLabelItemCloseClick(closeIconNode);
@@ -479,54 +498,56 @@ AUI.add(
 						else if (optionNode) {
 							instance._handleItemClick(optionNode);
 						}
-						else if (!addRepeatebleButton && !deleteRepeatebleButton) {
+						else if (
+							!target.hasClass('lfr-ddm-form-field-repeatable-add-button') &&
+							!target.hasClass('lfr-ddm-form-field-repeatable-delete-button')
+						) {
 							instance._handleSelectTriggerClick(event);
 						}
 
 						instance._preventDocumentClick = true;
 					},
 
-					_handleItemClick: function(target) {
+					_handleItemClick: function(currentTarget) {
 						var instance = this;
 
 						var value = instance.get('value') || [];
 
-						var container = instance.get('container');
+						var dataset = currentTarget._node.dataset;
 
-						var page = container.ancestor('.lfr-ddm-form-page', true);
-
-						var currentTarget = target;
-
-						var itemValue = currentTarget.getAttribute('data-option-value');
+						var optionValue = dataset.optionValue;
+						var optionSelected = dataset.optionSelected;
 
 						if (instance.get('multiple')) {
-							instance.checkOpenList(page);
-
 							instance._open = true;
 
-							if (currentTarget.getAttribute('data-option-selected')) {
-								value = instance._removeValue(itemValue);
+							if (optionSelected) {
+								value = instance._removeValue(optionValue);
 							}
-							else if (value.indexOf(itemValue) == -1) {
-								value.push(itemValue);
+							else if (value.indexOf(optionValue) == -1) {
+								value.push(optionValue);
 							}
 						}
 						else {
-							if (itemValue === '') {
+							if (optionValue === '' || optionValue === undefined) {
 								value = [];
 							}
 							else {
-								value = [itemValue];
+								value = [optionValue];
 							}
 
 							instance._open = false;
 						}
 
+						instance.onceAfter('render', function() {
+							instance.focus(currentTarget);
+
+							instance._fireStartedFillingEvent();
+						});
+
 						instance.setValue(value);
 
-						instance.focus(currentTarget);
-
-						instance._fireStartedFillingEvent();
+						instance.render();
 					},
 
 					_handleLabelItemCloseClick: function(target) {
@@ -589,12 +610,7 @@ AUI.add(
 							var targetNode = event.target._node;
 
 							if (targetNode && !targetNode.classList.contains(CSS_SELECT_LABEL_ITEM_CLOSE)) {
-								if (!instance._isListOpen()) {
-									instance.openList();
-								}
-								else {
-									instance.closeList();
-								}
+								instance.toggleList();
 							}
 						}
 						else if (keyCodes.pressedKeyCode === keyCodes.tabCode) {
@@ -606,6 +622,12 @@ AUI.add(
 						var instance = this;
 
 						if (!instance.get('readOnly')) {
+							if (instance._isClickingOutside(event)) {
+								instance.closeList();
+
+								return;
+							}
+
 							var target = event.target;
 
 							if (target.ancestor('.' + CSS_SEARCH_CHOSEN)) {
@@ -638,6 +660,10 @@ AUI.add(
 						var instance = this;
 
 						var container = instance.get('container');
+
+						if (!container.inDoc()) {
+							return true;
+						}
 
 						var triggers = instance.get('triggers');
 
@@ -676,12 +702,24 @@ AUI.add(
 						var dropChosen = container.one('.' + CSS_DROP_CHOSEN);
 
 						if (dropChosen) {
-							var openList = dropChosen.hasClass(CSS_HIDE);
-
-							return !openList;
+							return !dropChosen.hasClass(CSS_HIDE);
 						}
 
 						return false;
+					},
+
+					_isSelectedOption: function(option) {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						option.selected = '';
+
+						if (value.indexOf(option.value) > -1) {
+							option.selected = 'true';
+						}
+
+						return option;
 					},
 
 					_preventFormSubmissionWhenEnterIsPressed: function(event) {
@@ -744,6 +782,16 @@ AUI.add(
 						return keyCodes;
 					},
 
+					_setOptions: function(options) {
+						var instance = this;
+
+						for (var i = 0; i < options.length; i++) {
+							instance._selectedLabels[options[i].value] = options[i].label;
+						}
+
+						return options;
+					},
+
 					_setSelectNodeOptions: function(optionNode, value) {
 						var instance = this;
 
@@ -782,32 +830,6 @@ AUI.add(
 						}
 
 						return showSearch;
-					},
-
-					_validateValue: function(value) {
-						var instance = this;
-
-						if (value.length == 0) {
-							return true;
-						}
-
-						var fixedOptions = instance.get('fixedOptions');
-
-						var options = instance.get('options');
-
-						var fieldOptions = options.concat(fixedOptions);
-
-						var valid = false;
-
-						for (var indexOption in fieldOptions) {
-							for (var indexValue in value) {
-								if (fieldOptions[indexOption].value == value[indexValue]) {
-									valid = true;
-								}
-							}
-						}
-
-						return valid;
 					}
 				}
 			}
@@ -817,6 +839,13 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tooltip', 'liferay-ddm-form-field-select', 'liferay-ddm-form-field-select-search-support', 'liferay-ddm-form-renderer-field']
+		requires: [
+			'aui-tooltip',
+			'liferay-ddm-form-field-select',
+			'liferay-ddm-form-field-select-search-support',
+			'liferay-ddm-form-renderer-field',
+			'liferay-ddm-form-field-select-virtual-scroller',
+			'yui-throttle'
+		]
 	}
 );

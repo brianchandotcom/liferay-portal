@@ -32,7 +32,7 @@ import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 public abstract class TrashEntryBaseImpl
 	extends TrashEntryModelImpl implements TrashEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a trash entry model instance should use the <code>TrashEntry</code> interface instead.

@@ -16,16 +16,14 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
-import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -38,12 +36,10 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -51,6 +47,7 @@ import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,6 +109,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		CommerceOrder commerceOrder =
 			orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
 
+		String goToConfirmation = (String)httpServletRequest.getAttribute(
+			"goToConfirmation");
+
 		if (!commerceOrder.isOpen()) {
 			httpServletRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_ORDER_DETAIL_URL,
@@ -120,6 +120,21 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 			_jspRenderer.renderJSP(
 				httpServletRequest, httpServletResponse, "/error.jsp");
+		}
+		else if (Validator.isNotNull(goToConfirmation)) {
+			while (httpServletResponse instanceof HttpServletResponseWrapper) {
+				HttpServletResponseWrapper httpServletResponseWrapper =
+					(HttpServletResponseWrapper)httpServletResponse;
+
+				httpServletResponse =
+					(HttpServletResponse)
+						httpServletResponseWrapper.getResponse();
+			}
+
+			goToConfirmation = httpServletResponse.encodeRedirectURL(
+				goToConfirmation);
+
+			httpServletResponse.sendRedirect(goToConfirmation);
 		}
 		else {
 			httpServletRequest.setAttribute(
@@ -168,16 +183,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		if (commerceOrder.isOpen()) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceOrder.class.getName(), httpServletRequest);
-
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			_commerceOrderService.checkoutCommerceOrder(
-				commerceOrder.getCommerceOrderId(), commerceContext,
-				serviceContext);
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _portal.getUserId(httpServletRequest));
 		}
 	}
 
@@ -220,6 +227,16 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 			throw new CommerceOrderPaymentMethodException();
 		}
+
+		int subscriptionCommerceOrderItemsCount =
+			_commerceOrderItemService.countSubscriptionCommerceOrderItems(
+				commerceOrderId);
+
+		if ((subscriptionCommerceOrderItemsCount > 0) &&
+			commercePaymentMethodKey.isEmpty()) {
+
+			throw new CommerceOrderPaymentMethodException();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -229,7 +246,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceCheckoutStepHelper _commerceCheckoutStepHelper;
 
 	@Reference
-	private CommerceInventoryEngine _commerceInventoryEngine;
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
@@ -251,9 +268,6 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

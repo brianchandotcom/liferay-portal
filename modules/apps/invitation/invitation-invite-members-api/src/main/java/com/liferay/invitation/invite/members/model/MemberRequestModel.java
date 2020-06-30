@@ -43,7 +43,7 @@ import java.util.Date;
 public interface MemberRequestModel
 	extends BaseModel<MemberRequest>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a member request model instance should use the {@link MemberRequest} interface instead.

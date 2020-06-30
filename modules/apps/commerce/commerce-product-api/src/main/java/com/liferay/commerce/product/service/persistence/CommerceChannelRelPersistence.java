@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceChannelRelPersistence
 	extends BasePersistence<CommerceChannelRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceChannelRelUtil} to access the commerce channel rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

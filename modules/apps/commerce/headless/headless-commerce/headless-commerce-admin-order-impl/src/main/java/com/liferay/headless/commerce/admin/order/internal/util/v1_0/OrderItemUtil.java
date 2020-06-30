@@ -61,8 +61,8 @@ public class OrderItemUtil {
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(),
 				GetterUtil.get(orderItem.getQuantity(), 0),
-				GetterUtil.get(orderItem.getShippedQuantity(), 0),
-				cpInstance.getJson(), commerceContext, serviceContext);
+				GetterUtil.get(orderItem.getShippedQuantity(), 0), null,
+				commerceContext, serviceContext);
 
 		// Pricing
 

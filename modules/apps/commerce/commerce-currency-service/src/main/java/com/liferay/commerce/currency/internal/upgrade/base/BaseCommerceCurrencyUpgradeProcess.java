@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.currency.internal.upgrade.base;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -24,6 +25,33 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public abstract class BaseCommerceCurrencyUpgradeProcess
 	extends UpgradeProcess {
+
+	protected void addColumn(
+			Class<?> entityClass, String tableName, String columnName,
+			String columnType)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				String.format(
+					"Adding column %s to table %s", columnName, tableName));
+		}
+
+		if (!hasColumn(tableName, columnName)) {
+			alter(
+				entityClass,
+				new UpgradeProcess.AlterTableAddColumn(
+					columnName + StringPool.SPACE + columnType));
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					String.format(
+						"Column %s already exists on table %s", columnName,
+						tableName));
+			}
+		}
+	}
 
 	@Override
 	protected abstract void doUpgrade() throws Exception;

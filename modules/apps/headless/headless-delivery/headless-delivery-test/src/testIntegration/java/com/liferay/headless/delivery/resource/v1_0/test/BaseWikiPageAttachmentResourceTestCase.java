@@ -201,6 +201,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 	@Test
 	public void testDeleteWikiPageAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPageAttachment wikiPageAttachment =
 			testDeleteWikiPageAttachment_addWikiPageAttachment();
 

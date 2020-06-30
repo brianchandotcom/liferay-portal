@@ -193,10 +193,6 @@ public class BaseCPPublisherDisplayContext {
 		return cpPublisherPortletInstanceConfiguration.paginationDelta();
 	}
 
-	public String getPaginationType() {
-		return cpPublisherPortletInstanceConfiguration.paginationType();
-	}
-
 	public String getRenderSelection() {
 		if (renderSelection != null) {
 			return renderSelection;

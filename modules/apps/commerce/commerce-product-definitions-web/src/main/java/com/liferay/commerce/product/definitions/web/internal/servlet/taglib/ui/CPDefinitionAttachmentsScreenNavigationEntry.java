@@ -20,7 +20,6 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
@@ -32,21 +31,19 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,19 +69,22 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_MEDIA;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_MEDIA;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		return LanguageUtil.get(
-			locale,
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS);
+			resourceBundle,
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_MEDIA);
 	}
 
 	@Override
@@ -99,10 +99,20 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 			return false;
 		}
 
-		return _portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(),
-			cpDefinition.getGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (_portletResourcePermission.contains(
+				permissionChecker, cpDefinition.getGroupId(),
+				CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS) &&
+			_portletResourcePermission.contains(
+				permissionChecker, cpDefinition.getGroupId(),
+				CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -111,30 +121,21 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		try {
-			httpServletRequest.setAttribute(
-				"type", CPAttachmentFileEntryConstants.TYPE_OTHER);
+		CPAttachmentFileEntriesDisplayContext
+			cpAttachmentFileEntriesDisplayContext =
+				new CPAttachmentFileEntriesDisplayContext(
+					_actionHelper, _attachmentsConfiguration,
+					_cpAttachmentFileEntryService,
+					_cpDefinitionOptionRelService, _cpInstanceHelper,
+					_dlMimeTypeDisplayContext, httpServletRequest,
+					_itemSelector);
 
-			CPAttachmentFileEntriesDisplayContext
-				cpAttachmentFileEntriesDisplayContext =
-					new CPAttachmentFileEntriesDisplayContext(
-						_actionHelper, _attachmentsConfiguration,
-						_cpAttachmentFileEntryService,
-						_cpDefinitionOptionRelService, _cpInstanceHelper,
-						_dlMimeTypeDisplayContext, httpServletRequest,
-						_itemSelector, _portal, _portletResourcePermission,
-						_workflowDefinitionLinkLocalService);
-
-			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpAttachmentFileEntriesDisplayContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpAttachmentFileEntriesDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			httpServletRequest, httpServletResponse,
 			"/attachment_file_entries.jsp");
 	}
 
@@ -143,9 +144,6 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
 			AttachmentsConfiguration.class, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionAttachmentsScreenNavigationEntry.class);
 
 	@Reference
 	private ActionHelper _actionHelper;
@@ -170,19 +168,7 @@ public class CPDefinitionAttachmentsScreenNavigationEntry
 	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference
-	private Portal _portal;
-
 	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
-	)
-	private ServletContext _setServletContext;
-
-	@Reference
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 }

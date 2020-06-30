@@ -32,6 +32,4 @@ public class CommerceConstants {
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 
-	public static final String TAXES_COMMERCE_ADMIN_MODULE_KEY = "taxes";
-
 }

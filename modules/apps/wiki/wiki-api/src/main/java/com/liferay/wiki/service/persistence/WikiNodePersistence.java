@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeUtil} to access the wiki node persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

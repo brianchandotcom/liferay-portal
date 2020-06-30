@@ -27,12 +27,15 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.time.LocalDateTime;
@@ -42,7 +45,6 @@ import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -131,7 +133,7 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 		DDMFormField ddmFormField,
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap) {
 
-		List<DDMFormFieldValue> ddmForFieldValues = ddmFormFieldValueMap.get(
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValueMap.get(
 			ddmFormField.getName());
 
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
@@ -141,9 +143,19 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());
 
+		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
 		String valueString = HtmlUtil.render(
-			ddmFormFieldValueRenderer.render(
-				ddmForFieldValues.get(0), getLocale()));
+			StringUtil.merge(
+				stream.map(
+					ddmForFieldValue -> ddmFormFieldValueRenderer.render(
+						ddmForFieldValue, getLocale())
+				).filter(
+					Validator::isNotNull
+				).collect(
+					Collectors.toList()
+				),
+				StringPool.COMMA_AND_SPACE));
 
 		return new DDMFormFieldRenderedValue(
 			ddmFormField.getName(), ddmFormField.getLabel(), valueString);
@@ -157,13 +169,25 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
 
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			DDMForm ddmForm = ddmStructureVersion.getDDMForm();
+		Stream<DDMStructureVersion> stream = ddmStructureVersions.stream();
 
-			ddmFormFields.putAll(ddmForm.getNontransientDDMFormFieldsMap(true));
-		}
+		stream.map(
+			this::getNontransientDDMFormFieldsMap
+		).forEach(
+			map -> map.forEach(
+				(key, ddmFormField) -> ddmFormFields.putIfAbsent(
+					key, ddmFormField))
+		);
 
 		return ddmFormFields;
+	}
+
+	protected Map<String, DDMFormField> getNontransientDDMFormFieldsMap(
+		DDMStructureVersion ddmStructureVersion) {
+
+		DDMForm ddmForm = ddmStructureVersion.getDDMForm();
+
+		return ddmForm.getNontransientDDMFormFieldsMap(true);
 	}
 
 	protected Map<String, DDMFormFieldRenderedValue> getRenderedValues(
@@ -205,9 +229,7 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
 				formInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		formInstanceVersions = ListUtil.copy(formInstanceVersions);
-
-		Collections.sort(
+		formInstanceVersions = ListUtil.sort(
 			formInstanceVersions, new FormInstanceVersionVersionComparator());
 
 		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();

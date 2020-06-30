@@ -39,7 +39,7 @@ import java.util.Set;
 public interface LayoutSetPrototypePersistence
 	extends BasePersistence<LayoutSetPrototype> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetPrototypeUtil} to access the layout set prototype persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

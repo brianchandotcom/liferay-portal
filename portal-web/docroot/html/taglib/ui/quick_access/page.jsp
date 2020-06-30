@@ -72,7 +72,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 				function(event) {
 					var callbackFn = callbacks[$(event.currentTarget).attr('id')];
 
-					if (_.isFunction(callbackFn)) {
+					if (callbackFn instanceof Function) {
 						callbackFn();
 					}
 				}

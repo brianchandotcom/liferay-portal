@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface JournalArticle
 	extends JournalArticleModel, PersistedModel, TreeModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalArticleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

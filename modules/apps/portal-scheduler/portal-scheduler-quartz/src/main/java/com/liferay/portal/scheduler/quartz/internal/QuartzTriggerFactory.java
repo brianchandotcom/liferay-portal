@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -94,6 +95,19 @@ public class QuartzTriggerFactory implements TriggerFactory {
 		return createTrigger(
 			jobName, groupName, startDate, endDate,
 			CronScheduleBuilder.cronSchedule(cronExpression));
+	}
+
+	@Override
+	public Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronExpression, TimeZone timeZone) {
+
+		CronScheduleBuilder cronScheduleBuilder =
+			CronScheduleBuilder.cronSchedule(cronExpression);
+
+		return createTrigger(
+			jobName, groupName, startDate, endDate,
+			cronScheduleBuilder.inTimeZone(timeZone));
 	}
 
 	@Override

@@ -313,10 +313,10 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 
 		long[] roleIds = null;
 
-		AccountRole[] roles = accountMember.getRoles();
+		AccountRole[] accountRoles = accountMember.getAccountRoles();
 
-		if (roles != null) {
-			Stream<AccountRole> accountRoleStream = Arrays.stream(roles);
+		if (accountRoles != null) {
+			Stream<AccountRole> accountRoleStream = Arrays.stream(accountRoles);
 
 			roleIds = accountRoleStream.mapToLong(
 				AccountRole::getRoleId

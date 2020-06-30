@@ -31,11 +31,6 @@ public class RepositoryEntryLocalServiceWrapper
 		_repositoryEntryLocalService = repositoryEntryLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link RepositoryEntryLocalServiceUtil} to access the repository entry local service. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.RepositoryEntry addRepositoryEntry(
 			long userId, long groupId, long repositoryId,
@@ -284,6 +279,9 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

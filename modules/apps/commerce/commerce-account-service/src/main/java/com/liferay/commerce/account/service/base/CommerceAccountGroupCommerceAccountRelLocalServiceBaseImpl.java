@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,7 +73,7 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	implements CommerceAccountGroupCommerceAccountRelLocalService,
 			   IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountGroupCommerceAccountRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalServiceUtil</code>.
@@ -341,6 +342,15 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 				(CommerceAccountGroupCommerceAccountRel)persistedModel);
 	}
 
+	public BasePersistence<CommerceAccountGroupCommerceAccountRel>
+		getBasePersistence() {
+
+		return commerceAccountGroupCommerceAccountRelPersistence;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
@@ -898,8 +908,8 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

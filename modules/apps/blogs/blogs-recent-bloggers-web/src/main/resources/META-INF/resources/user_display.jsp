@@ -22,11 +22,10 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Object[] objArray = (Object[])row.getObject();
 
 BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
-String rowHREF = (String)objArray[1];
 %>
 
 <liferay-ui:user-display
-	url="<%= rowHREF %>"
+	url="<%= (String)objArray[1] %>"
 	userId="<%= statsUser.getUserId() %>"
 >
 	<div class="blogger-post-count">

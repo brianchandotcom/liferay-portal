@@ -55,7 +55,7 @@ import java.util.List;
 public interface DLSyncEventLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLSyncEventLocalServiceUtil} to access the dl sync event local service. Add custom service methods to <code>com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -230,6 +230,9 @@ public interface DLSyncEventLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

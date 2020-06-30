@@ -15,7 +15,9 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -26,6 +28,12 @@ public class CPDefinitionOptionValueRelImpl
 	extends CPDefinitionOptionValueRelBaseImpl {
 
 	public CPDefinitionOptionValueRelImpl() {
+	}
+
+	@Override
+	public CPInstance fetchCPInstance() {
+		return CPInstanceLocalServiceUtil.fetchCProductInstance(
+			getCProductId(), getCPInstanceUuid());
 	}
 
 	@Override

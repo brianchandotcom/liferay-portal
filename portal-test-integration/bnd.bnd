@@ -1,9 +1,8 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 5.2.4
+Bundle-Version: 5.2.9
 Export-Package:\
 	com.liferay.portal.lar.test,\
-	com.liferay.portal.module.framework.test,\
 	com.liferay.portal.osgi.util.test,\
 	com.liferay.portal.search.test,\
 	com.liferay.portal.service.permission.test,\
@@ -23,8 +22,7 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.util.test,\
 	com.liferay.portlet.notifications.test,\
 	com.liferay.portlet.social.test,\
-	com.liferay.portlet.subscriptions.test,\
-	com.liferay.portlet.trash.test
+	com.liferay.portlet.subscriptions.test
 Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\

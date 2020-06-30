@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface BookmarksEntry
 	extends BookmarksEntryModel, PersistedModel, TreeModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.bookmarks.model.impl.BookmarksEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

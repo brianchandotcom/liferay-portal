@@ -16,6 +16,8 @@ package com.liferay.exportimport.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.Serializable;
+
 import java.util.Map;
 
 /**
@@ -54,6 +56,10 @@ public class ExportImportContentValidationException extends PortalException {
 		return _className;
 	}
 
+	public String getDlReference() {
+		return _dlReference;
+	}
+
 	public Map<String, String[]> getDlReferenceParameters() {
 		return _dlReferenceParameters;
 	}
@@ -74,8 +80,17 @@ public class ExportImportContentValidationException extends PortalException {
 		return _stagedModelClassName;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getStagedModelPrimaryKeyObj()}
+	 */
+	@Deprecated
 	public long getStagedModelClassPK() {
 		return _stagedModelClassPK;
+	}
+
+	public Serializable getStagedModelPrimaryKeyObj() {
+		return _stagedModelPrimaryKeyObj;
 	}
 
 	public int getType() {
@@ -84,6 +99,10 @@ public class ExportImportContentValidationException extends PortalException {
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setDlReference(String dlReference) {
+		_dlReference = dlReference;
 	}
 
 	public void setDlReferenceParameters(
@@ -110,8 +129,19 @@ public class ExportImportContentValidationException extends PortalException {
 		_stagedModelClassName = stagedModelClassName;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #setStagedModelPrimaryKeyObj(Serializable)}
+	 */
+	@Deprecated
 	public void setStagedModelClassPK(long stagedModelClassPK) {
 		_stagedModelClassPK = stagedModelClassPK;
+	}
+
+	public void setStagedModelPrimaryKeyObj(
+		Serializable stagedModelPrimaryKeyObj) {
+
+		_stagedModelPrimaryKeyObj = stagedModelPrimaryKeyObj;
 	}
 
 	public void setType(int type) {
@@ -119,12 +149,14 @@ public class ExportImportContentValidationException extends PortalException {
 	}
 
 	private String _className;
+	private String _dlReference;
 	private Map<String, String[]> _dlReferenceParameters;
 	private String _groupFriendlyURL;
 	private Map<String, String> _layoutReferenceParameters;
 	private String _layoutURL;
 	private String _stagedModelClassName;
 	private long _stagedModelClassPK;
+	private Serializable _stagedModelPrimaryKeyObj;
 	private int _type = DEFAULT;
 
 }

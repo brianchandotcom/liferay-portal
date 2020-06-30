@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.model.impl;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceInventoryBookedQuantityCacheModel
-	implements CacheModel<CommerceInventoryBookedQuantity>, Externalizable {
+	implements CacheModel<CommerceInventoryBookedQuantity>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class CommerceInventoryBookedQuantityCacheModel
 			commerceInventoryBookedQuantityCacheModel =
 				(CommerceInventoryBookedQuantityCacheModel)obj;
 
-		if (commerceInventoryBookedQuantityId ==
+		if ((commerceInventoryBookedQuantityId ==
 				commerceInventoryBookedQuantityCacheModel.
-					commerceInventoryBookedQuantityId) {
+					commerceInventoryBookedQuantityId) &&
+			(mvccVersion ==
+				commerceInventoryBookedQuantityCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class CommerceInventoryBookedQuantityCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceInventoryBookedQuantityId);
+		int hashCode = HashUtil.hash(0, commerceInventoryBookedQuantityId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{commerceInventoryBookedQuantityId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceInventoryBookedQuantityId=");
 		sb.append(commerceInventoryBookedQuantityId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -99,6 +117,7 @@ public class CommerceInventoryBookedQuantityCacheModel
 			commerceInventoryBookedQuantityImpl =
 				new CommerceInventoryBookedQuantityImpl();
 
+		commerceInventoryBookedQuantityImpl.setMvccVersion(mvccVersion);
 		commerceInventoryBookedQuantityImpl.
 			setCommerceInventoryBookedQuantityId(
 				commerceInventoryBookedQuantityId);
@@ -159,6 +178,8 @@ public class CommerceInventoryBookedQuantityCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		commerceInventoryBookedQuantityId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -176,6 +197,8 @@ public class CommerceInventoryBookedQuantityCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(commerceInventoryBookedQuantityId);
 
 		objectOutput.writeLong(companyId);
@@ -210,6 +233,7 @@ public class CommerceInventoryBookedQuantityCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long commerceInventoryBookedQuantityId;
 	public long companyId;
 	public long userId;

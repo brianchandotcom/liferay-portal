@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface ResourceTypePermission
 	extends PersistedModel, ResourceTypePermissionModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourceTypePermissionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -600,6 +600,9 @@ public class SocialActivityCounterLocalServiceWrapper
 				groupId, name, startPeriod, endPeriod);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

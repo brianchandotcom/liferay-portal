@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface AttachmentPersistence extends BasePersistence<Attachment> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AttachmentUtil} to access the attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

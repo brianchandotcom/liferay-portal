@@ -32,7 +32,7 @@ import com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil;
 public abstract class TestEntityBaseImpl
 	extends TestEntityModelImpl implements TestEntity {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a test entity model instance should use the <code>TestEntity</code> interface instead.

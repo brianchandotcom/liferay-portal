@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portlet Display Template API
 Bundle-SymbolicName: com.liferay.portlet.display.template.api
-Bundle-Version: 1.0.7
+Bundle-Version: 1.0.8
 Export-Package:\
 	com.liferay.portlet.display.template,\
 	com.liferay.portlet.display.template.constants,\

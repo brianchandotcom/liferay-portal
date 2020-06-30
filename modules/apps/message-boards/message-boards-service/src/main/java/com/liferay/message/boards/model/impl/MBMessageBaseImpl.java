@@ -32,7 +32,7 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 public abstract class MBMessageBaseImpl
 	extends MBMessageModelImpl implements MBMessage {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message-boards message model instance should use the <code>MBMessage</code> interface instead.

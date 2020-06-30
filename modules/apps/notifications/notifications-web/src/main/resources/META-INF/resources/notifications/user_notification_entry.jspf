@@ -52,49 +52,53 @@ if (notificationUnread) {
 			<liferay-ui:message key="notification-no-longer-applies" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
-	<c:when test="<%= !userNotificationFeedEntry.isApplicable() %>">
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
-			<liferay-ui:message key="<%= userNotificationFeedEntry.getBody() %>" />
-		</liferay-ui:search-container-column-text>
-	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
-			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
+		<c:choose>
+			<c:when test="<%= !userNotificationFeedEntry.isApplicable() %>">
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<liferay-ui:message key="<%= userNotificationFeedEntry.getBody() %>" />
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
+					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
-					<portlet:param name="redirect" value="<%= userNotificationFeedEntry.getLink() %>" />
-				</c:when>
-				<c:otherwise>
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</c:otherwise>
-			</c:choose>
-		</portlet:actionURL>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
+							<portlet:param name="redirect" value="<%= PortalUtil.addPreservedParameters(themeDisplay, userNotificationFeedEntry.getLink(), false, true) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</c:otherwise>
+					</c:choose>
+				</portlet:actionURL>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
-			<c:if test="<%= notificationUnread %>">
-				<h4>
-			</c:if>
-				<a href="<%= markNotificationAsReadURL.toString() %>">
-					<%= userNotificationFeedEntry.getBody() %>
-				</a>
-			<c:if test="<%= notificationUnread %>">
-				</h4>
-			</c:if>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<c:if test="<%= notificationUnread %>">
+						<h4>
+					</c:if>
+						<a href="<%= markNotificationAsReadURL.toString() %>">
+							<%= userNotificationFeedEntry.getBody() %>
+						</a>
+					<c:if test="<%= notificationUnread %>">
+						</h4>
+					</c:if>
 
-			<h5 class="text-default">
-				<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
-					<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
-				</span>
-			</h5>
-		</liferay-ui:search-container-column-text>
+					<h5 class="text-default">
+						<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
+							<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
+						</span>
+					</h5>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/notifications/notification_action.jsp"
-		/>
+				<liferay-ui:search-container-column-jsp
+					path="/notifications/notification_action.jsp"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

@@ -348,7 +348,7 @@ public class PriceTag extends IncludeTag {
 
 		CPCatalogEntry cpCatalogEntry = cpDefinitionHelper.getCPCatalogEntry(
 			commerceAccount.getCommerceAccountId(),
-			_commerceContext.getSiteGroupId(), _cpDefinitionId,
+			_themeDisplay.getScopeGroupId(), _cpDefinitionId,
 			_themeDisplay.getLocale());
 
 		if (_quantity <= 0) {
@@ -369,8 +369,8 @@ public class PriceTag extends IncludeTag {
 			CPInstanceHelper cpInstanceHelper =
 				ServletContextUtil.getCPInstanceHelper();
 
-			CPInstance cpInstance = cpInstanceHelper.getCPInstance(
-				_cpDefinitionId, null);
+			CPInstance cpInstance = cpInstanceHelper.getDefaultCPInstance(
+				_cpDefinitionId);
 
 			_cpInstanceId = cpInstance.getCPInstanceId();
 		}

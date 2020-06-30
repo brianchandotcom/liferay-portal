@@ -37,7 +37,7 @@ import java.io.Serializable;
 public interface UserNotificationEventModel
 	extends BaseModel<UserNotificationEvent>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a user notification event model instance should use the {@link UserNotificationEvent} interface instead.

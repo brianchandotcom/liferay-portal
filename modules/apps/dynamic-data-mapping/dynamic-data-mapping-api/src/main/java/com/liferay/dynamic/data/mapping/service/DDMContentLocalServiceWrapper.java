@@ -32,11 +32,6 @@ public class DDMContentLocalServiceWrapper
 		_ddmContentLocalService = ddmContentLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMContentLocalServiceUtil} to access the ddm content local service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 			long userId, long groupId, String name, String description,
@@ -402,6 +397,9 @@ public class DDMContentLocalServiceWrapper
 		return _ddmContentLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

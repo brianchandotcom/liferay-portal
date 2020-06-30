@@ -40,7 +40,7 @@ import java.util.Set;
 public interface AnnouncementsDeliveryPersistence
 	extends BasePersistence<AnnouncementsDelivery> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsDeliveryUtil} to access the announcements delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

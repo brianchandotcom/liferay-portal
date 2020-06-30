@@ -410,11 +410,6 @@ public class RepositoryWrapper implements ModelWrapper<Repository>, Repository {
 		return _repository.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a repository model instance should use the <code>Repository</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_repository.persist();

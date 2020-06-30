@@ -48,7 +48,7 @@ public interface CPTaxCategoryModel
 	extends AuditedModel, BaseModel<CPTaxCategory>, LocalizedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp tax category model instance should use the {@link CPTaxCategory} interface instead.

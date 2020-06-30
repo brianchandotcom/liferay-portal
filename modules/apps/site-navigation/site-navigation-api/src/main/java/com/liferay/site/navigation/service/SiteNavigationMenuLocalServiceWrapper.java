@@ -33,11 +33,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuLocalServiceUtil} to access the site navigation menu local service. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu
 			addDefaultSiteNavigationMenu(
@@ -336,6 +331,9 @@ public class SiteNavigationMenuLocalServiceWrapper
 		return _siteNavigationMenuLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

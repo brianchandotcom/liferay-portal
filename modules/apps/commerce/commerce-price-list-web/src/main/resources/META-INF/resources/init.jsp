@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
+taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -51,17 +52,15 @@ page import="com.liferay.commerce.price.list.web.internal.display.context.CPInst
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommercePriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext" %><%@
-page import="com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceEntryFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.price.list.web.internal.frontend.CommercePriceListDataSetConstants" %><%@
 page import="com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
-page import="com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCatalogException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.model.CommerceCatalog" %><%@
-page import="com.liferay.commerce.product.util.CPNavigationItemRegistryUtil" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -74,7 +73,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.taglib.util.CustomAttributesUtil" %>
 
 <%@ page import="java.math.BigDecimal" %>
 
@@ -95,10 +95,8 @@ page import="java.util.Map" %>
 <%
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 PortletURL priceListsURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePriceListPortletKeys.COMMERCE_PRICE_LIST, lifecycle);
 
-String catalogURL = catalogURLObj.toString();
 String priceListsURL = priceListsURLObj.toString();
 
 String languageId = LanguageUtil.getLanguageId(locale);

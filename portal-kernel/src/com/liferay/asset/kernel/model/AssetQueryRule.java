@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * @author     Roberto Díaz
  * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.asset.publisher.web.util.AssetQueryRule}
+ *             com.liferay.asset.publisher.web.internal.util.AssetQueryRule}
  */
 @Deprecated
 public class AssetQueryRule {

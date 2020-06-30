@@ -117,7 +117,7 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 			String listTypeId)
 		throws Exception {
 
-		return _toEmail(
+		return _toEmailAddress(
 			EmailAddressLocalServiceUtil.addEmailAddress(
 				_user.getUserId(), className, classPK,
 				emailAddress.getEmailAddress(), _getListTypeId(listTypeId),
@@ -132,7 +132,7 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		return listType.getListTypeId();
 	}
 
-	private EmailAddress _toEmail(
+	private EmailAddress _toEmailAddress(
 		com.liferay.portal.kernel.model.EmailAddress
 			serviceBuilderEmailAddress) {
 

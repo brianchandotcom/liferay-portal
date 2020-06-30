@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface ResourceAction extends PersistedModel, ResourceActionModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourceActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

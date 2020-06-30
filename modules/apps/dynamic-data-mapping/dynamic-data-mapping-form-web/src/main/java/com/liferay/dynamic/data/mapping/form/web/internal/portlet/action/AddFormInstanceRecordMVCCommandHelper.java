@@ -60,12 +60,6 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			DDMFormValues ddmFormValues, Locale locale)
 		throws Exception {
 
-		List<DDMFormField> requiredFields = getRequiredFields(ddmForm);
-
-		if (requiredFields.isEmpty()) {
-			return;
-		}
-
 		DDMFormEvaluationResult ddmFormEvaluationResult = evaluate(
 			actionRequest, ddmForm, ddmFormValues, locale);
 
@@ -79,7 +73,12 @@ public class AddFormInstanceRecordMVCCommandHelper {
 
 		invisibleFields.addAll(fieldsFromDisabledPages);
 
-		if (invisibleFields.isEmpty()) {
+		removeDDMValidationExpression(
+			ddmForm.getDDMFormFields(), invisibleFields);
+
+		List<DDMFormField> requiredFields = getRequiredFields(ddmForm);
+
+		if (requiredFields.isEmpty() || invisibleFields.isEmpty()) {
 			return;
 		}
 
@@ -185,6 +184,21 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		stream = stream.filter(ddmFormField -> ddmFormField.isRequired());
 
 		return stream.collect(Collectors.toList());
+	}
+
+	protected void removeDDMValidationExpression(DDMFormField ddmFormField) {
+		ddmFormField.setDDMFormFieldValidation(null);
+	}
+
+	protected void removeDDMValidationExpression(
+		List<DDMFormField> ddmFormFields, Set<String> invisibleFields) {
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
+
+		stream = stream.filter(
+			ddmFormField -> invisibleFields.contains(ddmFormField.getName()));
+
+		stream.forEach(this::removeDDMValidationExpression);
 	}
 
 	protected void removeRequiredProperty(DDMFormField ddmFormField) {

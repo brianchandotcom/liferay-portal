@@ -15,6 +15,7 @@
 package com.liferay.petra.io;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -351,6 +352,194 @@ public class OutputStreamWriterTest {
 	public void testWriteString() throws IOException {
 		_testWriteString(false);
 		_testWriteString(true);
+	}
+
+	@Test
+	public void testWriteWithExceptionThrownFromOutputStream()
+		throws IOException {
+
+		IOException ioException1 = new IOException();
+
+		AtomicBoolean throwIOException = new AtomicBoolean();
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream() {
+
+				@Override
+				public void write(byte[] bytes, int offset, int length) {
+					if (throwIOException.get()) {
+						ReflectionUtil.throwException(ioException1);
+					}
+
+					super.write(bytes, offset, length);
+				}
+
+			};
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			unsyncByteArrayOutputStream, "UTF-8", 4, true);
+
+		// Fill up the ByteBuffer
+
+		throwIOException.set(true);
+
+		try {
+			outputStreamWriter.write('a');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('b');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('c');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('d');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// Fill up the CharBuffer
+
+		try {
+			outputStreamWriter.write('e');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('f');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// No space in buffer, discard
+
+		try {
+			outputStreamWriter.write('g');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('h');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		Assert.assertEquals("", unsyncByteArrayOutputStream.toString());
+
+		try {
+			outputStreamWriter.flush();
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		Assert.assertEquals("", unsyncByteArrayOutputStream.toString());
+
+		// Recovered, data within buffer size has been preserved
+
+		throwIOException.set(false);
+
+		outputStreamWriter.write('i');
+
+		Assert.assertEquals("abcdefi", unsyncByteArrayOutputStream.toString());
+
+		// Cut in between surrogate pair
+
+		unsyncByteArrayOutputStream.reset();
+
+		char[] surrogatePair = Character.toChars(0x2363A);
+
+		Assert.assertEquals(
+			Arrays.toString(surrogatePair), 2, surrogatePair.length);
+
+		throwIOException.set(true);
+
+		// Fill up the ByteBuffer
+
+		try {
+			outputStreamWriter.write("abcd".toCharArray());
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// Fill up the CharBuffer
+
+		try {
+			outputStreamWriter.write('e');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write(surrogatePair[0]);
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// No space in buffer, discard
+
+		try {
+			outputStreamWriter.write(surrogatePair[1]);
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		throwIOException.set(false);
+
+		// New write must discard leftover surrogate char
+
+		outputStreamWriter.write('f');
+
+		Assert.assertEquals("abcdef", unsyncByteArrayOutputStream.toString());
 	}
 
 	private int _getDefaultOutputBufferSize() {

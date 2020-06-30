@@ -430,11 +430,6 @@ public class CommerceShipmentWrapper
 		return _commerceShipment.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce shipment model instance should use the <code>CommerceShipment</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceShipment.persist();

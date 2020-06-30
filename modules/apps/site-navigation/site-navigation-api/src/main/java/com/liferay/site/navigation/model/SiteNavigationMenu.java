@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface SiteNavigationMenu
 	extends PersistedModel, SiteNavigationMenuModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

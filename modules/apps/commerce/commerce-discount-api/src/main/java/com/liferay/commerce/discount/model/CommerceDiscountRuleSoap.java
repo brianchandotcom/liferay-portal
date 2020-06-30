@@ -39,6 +39,7 @@ public class CommerceDiscountRuleSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setName(model.getName());
 		soapModel.setCommerceDiscountId(model.getCommerceDiscountId());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
@@ -152,6 +153,14 @@ public class CommerceDiscountRuleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public long getCommerceDiscountId() {
 		return _commerceDiscountId;
 	}
@@ -182,6 +191,7 @@ public class CommerceDiscountRuleSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _name;
 	private long _commerceDiscountId;
 	private String _type;
 	private String _typeSettings;

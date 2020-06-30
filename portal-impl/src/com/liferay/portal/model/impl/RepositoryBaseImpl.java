@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 public abstract class RepositoryBaseImpl
 	extends RepositoryModelImpl implements Repository {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a repository model instance should use the <code>Repository</code> interface instead.

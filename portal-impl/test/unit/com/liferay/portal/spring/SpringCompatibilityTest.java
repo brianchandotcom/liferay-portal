@@ -30,15 +30,11 @@ public class SpringCompatibilityTest {
 
 	@Test
 	public void testAbstractAutowireCapableBeanFactory() throws Exception {
-		Class<?> abstractAutowireCapableBeanFactoryClass = null;
-
-		abstractAutowireCapableBeanFactoryClass = Class.forName(
+		Class<?> abstractAutowireCapableBeanFactoryClass = Class.forName(
 			"org.springframework.beans.factory.support." +
 				"AbstractAutowireCapableBeanFactory");
 
-		Field filteredPropertyDescriptorsCacheField = null;
-
-		filteredPropertyDescriptorsCacheField =
+		Field filteredPropertyDescriptorsCacheField =
 			abstractAutowireCapableBeanFactoryClass.getDeclaredField(
 				"filteredPropertyDescriptorsCache");
 
@@ -57,10 +53,8 @@ public class SpringCompatibilityTest {
 		Class<?> aspectJExpressionPointcutClass = Class.forName(
 			"org.springframework.aop.aspectj.AspectJExpressionPointcut");
 
-		Field shadowMatchCacheField = null;
-
-		shadowMatchCacheField = aspectJExpressionPointcutClass.getDeclaredField(
-			"shadowMatchCache");
+		Field shadowMatchCacheField =
+			aspectJExpressionPointcutClass.getDeclaredField("shadowMatchCache");
 
 		Class<?> shadowMatchCacheClass = shadowMatchCacheField.getType();
 

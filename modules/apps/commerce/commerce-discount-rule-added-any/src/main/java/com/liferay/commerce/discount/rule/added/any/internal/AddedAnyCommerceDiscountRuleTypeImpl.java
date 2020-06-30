@@ -22,8 +22,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -104,22 +102,10 @@ public class AddedAnyCommerceDiscountRuleTypeImpl
 
 			@Override
 			public long applyAsLong(CommerceOrderItem commerceOrderItem) {
-				try {
-					return commerceOrderItem.getCPDefinitionId();
-				}
-				catch (PortalException pe) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
-					}
-
-					return 0;
-				}
+				return commerceOrderItem.getCPDefinitionId();
 			}
 
 		};
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddedAnyCommerceDiscountRuleTypeImpl.class);
 
 }

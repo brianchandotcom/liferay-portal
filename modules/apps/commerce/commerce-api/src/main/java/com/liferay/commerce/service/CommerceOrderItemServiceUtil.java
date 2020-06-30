@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceOrderItemServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemServiceUtil} to access the commerce order item remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.model.CommerceOrderItem
 			addCommerceOrderItem(
@@ -54,6 +48,13 @@ public class CommerceOrderItemServiceUtil {
 		return getService().addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
 			commerceContext, serviceContext);
+	}
+
+	public static int countSubscriptionCommerceOrderItems(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().countSubscriptionCommerceOrderItems(
+			commerceOrderId);
 	}
 
 	public static void deleteCommerceOrderItem(long commerceOrderItemId)
@@ -123,6 +124,16 @@ public class CommerceOrderItemServiceUtil {
 		return getService().getCommerceOrderItems(commerceOrderId, start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+			getCommerceOrderItems(
+				long groupId, long commerceAccountId, int[] orderStatuses,
+				int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceOrderItems(
+			groupId, commerceAccountId, orderStatuses, start, end);
+	}
+
 	public static int getCommerceOrderItemsCount(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -135,6 +146,14 @@ public class CommerceOrderItemServiceUtil {
 
 		return getService().getCommerceOrderItemsCount(
 			commerceOrderId, cpInstanceId);
+	}
+
+	public static int getCommerceOrderItemsCount(
+			long groupId, long commerceAccountId, int[] orderStatuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceOrderItemsCount(
+			groupId, commerceAccountId, orderStatuses);
 	}
 
 	public static int getCommerceOrderItemsQuantity(long commerceOrderId)
@@ -200,6 +219,24 @@ public class CommerceOrderItemServiceUtil {
 				long commerceOrderItemId, String deliveryGroup,
 				long shippingAddressId, String printedNote,
 				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
+				int requestedDeliveryDateYear)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceOrderItemInfo(
+			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote,
+			requestedDeliveryDateMonth, requestedDeliveryDateDay,
+			requestedDeliveryDateYear);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemInfo(
+				long commerceOrderItemId, String deliveryGroup,
+				long shippingAddressId, String printedNote,
+				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
 				int requestedDeliveryDateYear, int requestedDeliveryDateHour,
 				int requestedDeliveryDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -231,7 +268,7 @@ public class CommerceOrderItemServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderItem

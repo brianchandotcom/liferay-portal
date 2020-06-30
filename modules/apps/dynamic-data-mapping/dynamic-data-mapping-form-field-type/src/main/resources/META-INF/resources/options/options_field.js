@@ -292,9 +292,11 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						OptionsField.superclass.render.apply(instance, arguments);
+						instance.onceAfter('render', function() {
+							instance._renderOptions();
+						});
 
-						instance._renderOptions();
+						OptionsField.superclass.render.apply(instance, arguments);
 
 						return instance;
 					},
@@ -384,6 +386,10 @@ AUI.add(
 					_afterOptionKeyChange: function() {
 						var instance = this;
 
+						if (instance._skipOptionChange) {
+							return;
+						}
+
 						var value = instance.getValue();
 
 						instance._setValue(value);
@@ -423,7 +429,7 @@ AUI.add(
 					_afterOptionValueChange: function(event) {
 						var instance = this;
 
-						if (instance._skipOptionValueChange) {
+						if (instance._skipOptionChange) {
 							return;
 						}
 
@@ -656,26 +662,28 @@ AUI.add(
 
 						instance.empty();
 
-						mainOption.render(container.one('.options'));
+						mainOption.onceAfter('render', function() {
+							instance._syncOptionUI(mainOption);
 
-						instance._syncOptionUI(mainOption);
+							optionsValues.forEach(
+								function(optionValue, index) {
+									if (index === 0) {
+										instance._restoreOption(mainOption, optionValue);
+									}
+									else {
+										var newOption = instance.addOption();
 
-						optionsValues.forEach(
-							function(optionValue, index) {
-								if (index === 0) {
-									instance._restoreOption(mainOption, optionValue);
+										instance._restoreOption(newOption, optionValue);
+									}
 								}
-								else {
-									var newOption = instance.addOption();
+							);
 
-									instance._restoreOption(newOption, optionValue);
-								}
+							if (optionsValues.length && optionsValues[optionsValues.length - 1].value) {
+								instance.addOption();
 							}
-						);
+						});	
 
-						if (optionsValues.length && optionsValues[optionsValues.length - 1].value) {
-							instance.addOption();
-						}
+						mainOption.render(container.one('.options'));
 					},
 
 					_renderOptionUI: function(option) {
@@ -692,10 +700,11 @@ AUI.add(
 					_restoreOption: function(option, contextValue) {
 						var instance = this;
 
-						instance._skipOptionValueChange = true;
+						instance._skipOptionChange = true;
+
+						option.setValue(contextValue.label);
 
 						option.setKey(contextValue.value);
-						option.setValue(contextValue.label);
 
 						if (contextValue.value && option.normalizeKey(contextValue.label) !== contextValue.value) {
 							option.set('generationLocked', true);
@@ -704,7 +713,7 @@ AUI.add(
 							option.set('generationLocked', false);
 						}
 
-						instance._skipOptionValueChange = false;
+						instance._skipOptionChange = false;
 					},
 
 					_setContext: function(val) {

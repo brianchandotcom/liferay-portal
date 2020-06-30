@@ -54,6 +54,9 @@ import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
+import com.liferay.journal.web.internal.util.JournalArticleTranslation;
+import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
@@ -80,6 +83,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -100,6 +104,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -157,7 +162,7 @@ public class JournalDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
 				add(
@@ -274,6 +279,80 @@ public class JournalDisplayContext {
 			_themeDisplay);
 
 		return _articleDisplay;
+	}
+
+	public SearchContainer getArticleTranslationsSearchContainer()
+		throws Exception {
+
+		if (_articleTranslationsSearchContainer != null) {
+			return _articleTranslationsSearchContainer;
+		}
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse),
+			_liferayPortletResponse);
+
+		portletURL.setParameter("mvcPath", "/select_article_translations.jsp");
+
+		SearchContainer articleTranslationsSearchContainer =
+			new SearchContainer(_liferayPortletRequest, portletURL, null, null);
+
+		articleTranslationsSearchContainer.setId("articleTranslations");
+		articleTranslationsSearchContainer.setRowChecker(
+			new JournalArticleTranslationRowChecker(_liferayPortletResponse));
+
+		List<JournalArticleTranslation> articleTranslations = new ArrayList<>();
+
+		JournalArticle article = getArticle();
+
+		String keywords = getKeywords();
+
+		for (String languageId : article.getAvailableLanguageIds()) {
+			JournalArticleTranslation articleTranslation =
+				new JournalArticleTranslation(
+					StringUtil.equalsIgnoreCase(
+						article.getDefaultLanguageId(), languageId),
+					LocaleUtil.fromLanguageId(languageId));
+
+			if (Validator.isNotNull(keywords) &&
+				!StringUtil.containsIgnoreCase(
+					LocaleUtil.getLongDisplayName(
+						articleTranslation.getLocale(), Collections.emptySet()),
+					keywords, StringPool.BLANK)) {
+
+				continue;
+			}
+
+			articleTranslations.add(articleTranslation);
+		}
+
+		articleTranslationsSearchContainer.setTotal(articleTranslations.size());
+
+		articleTranslationsSearchContainer.setResults(
+			ListUtil.subList(
+				articleTranslations,
+				articleTranslationsSearchContainer.getStart(),
+				articleTranslationsSearchContainer.getEnd()));
+
+		_articleTranslationsSearchContainer =
+			articleTranslationsSearchContainer;
+
+		return _articleTranslationsSearchContainer;
+	}
+
+	public List<DropdownItem> getArticleVersionActionDropdownItems(
+			JournalArticle article)
+		throws Exception {
+
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					article, _liferayPortletRequest, _liferayPortletResponse,
+					_trashHelper);
+
+		return articleActionDropdownItemsProvider.
+			getArticleVersionActionDropdownItems();
 	}
 
 	public List<Locale> getAvailableArticleLocales() throws PortalException {
@@ -548,6 +627,23 @@ public class JournalDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		return LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
+	}
+
+	public String getDeleteTranslationsActionURL(JournalArticle article)
+		throws Exception {
+
+		JournalArticleActionDropdownItemsProvider
+			articleActionDropdownItemsProvider =
+				new JournalArticleActionDropdownItemsProvider(
+					article, _liferayPortletRequest, _liferayPortletResponse,
+					_trashHelper);
+
+		return articleActionDropdownItemsProvider.
+			getArticleTranslationActionDropdownItems();
+	}
+
+	public String getDeleteTranslationsEventName() {
+		return _liferayPortletResponse.getNamespace() + "selectTranslations";
 	}
 
 	public String getDisplayStyle() {
@@ -1023,6 +1119,10 @@ public class JournalDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
+		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter("orderByCol", getOrderByCol());
+		portletURL.setParameter("orderByType", getOrderByType());
+		portletURL.setParameter("status", String.valueOf(getStatus()));
 		portletURL.setParameter(
 			"showEditActions", String.valueOf(isShowEditActions()));
 
@@ -1165,7 +1265,10 @@ public class JournalDisplayContext {
 						Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 				}
 				else if (Objects.equals(getOrderByCol(), "title")) {
-					sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
+					sort = new Sort(
+						Field.getSortableFieldName(
+							"localized_title_" + _themeDisplay.getLanguageId()),
+						!orderByAsc);
 				}
 
 				LinkedHashMap<String, Object> params = new LinkedHashMap<>();
@@ -1722,11 +1825,7 @@ public class JournalDisplayContext {
 		return dropdownItem -> {
 			dropdownItem.setActive(active);
 
-			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(), "navigation",
-				navigation, "folderId",
-				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-				"showEditActions", String.valueOf(isShowEditActions()));
+			dropdownItem.setHref(getPortletURL(), "navigation", navigation);
 
 			dropdownItem.setLabel(LanguageUtil.get(_request, navigation));
 		};
@@ -1985,6 +2084,7 @@ public class JournalDisplayContext {
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
+	private SearchContainer _articleTranslationsSearchContainer;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;

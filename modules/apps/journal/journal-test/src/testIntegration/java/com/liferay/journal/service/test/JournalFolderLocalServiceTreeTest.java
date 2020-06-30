@@ -101,7 +101,7 @@ public class JournalFolderLocalServiceTreeTest
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), parentFolderId, RandomTestUtil.randomString());
 
-		folder.setTreePath(null);
+		folder.setTreePath("/0/");
 
 		return JournalFolderLocalServiceUtil.updateJournalFolder(folder);
 	}

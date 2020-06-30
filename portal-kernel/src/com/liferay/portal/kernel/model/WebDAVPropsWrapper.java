@@ -285,11 +285,6 @@ public class WebDAVPropsWrapper
 		return _webDAVProps.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a web dav props model instance should use the <code>WebDAVProps</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_webDAVProps.persist();

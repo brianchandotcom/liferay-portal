@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.scheduler;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @author Shuyang Zhou
@@ -37,6 +38,14 @@ public class TriggerFactoryUtil {
 
 		return _triggerFactory.createTrigger(
 			jobName, groupName, startDate, endDate, cronExpression);
+	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronExpression, TimeZone timeZone) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, startDate, endDate, cronExpression, timeZone);
 	}
 
 	public static Trigger createTrigger(

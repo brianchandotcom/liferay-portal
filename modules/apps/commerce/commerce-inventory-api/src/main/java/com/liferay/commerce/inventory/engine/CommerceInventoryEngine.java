@@ -34,7 +34,8 @@ public interface CommerceInventoryEngine {
 		throws PortalException;
 
 	public void decreaseStockQuantity(
-			long commerceInventoryWarehouseId, String sku, int quantity)
+			long userId, long commerceInventoryWarehouseId, String sku,
+			int quantity)
 		throws PortalException;
 
 	public Map<String, Integer> getStockQuantities(

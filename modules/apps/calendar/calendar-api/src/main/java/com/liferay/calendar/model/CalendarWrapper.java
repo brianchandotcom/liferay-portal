@@ -595,11 +595,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		return _calendar.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a calendar model instance should use the <code>Calendar</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_calendar.persist();

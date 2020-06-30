@@ -49,7 +49,7 @@ public interface KaleoDefinitionVersionModel
 	extends BaseModel<KaleoDefinitionVersion>, GroupedModel, LocalizedModel,
 			ShardedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo definition version model instance should use the {@link KaleoDefinitionVersion} interface instead.

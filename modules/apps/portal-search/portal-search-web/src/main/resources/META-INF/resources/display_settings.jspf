@@ -36,7 +36,7 @@
 
 		<aui:input label="<%= searchFacet.getTitle() %>" name='<%= "preferences--" + searchFacet.getClassName() + "--" %>' type="checkbox" value="<%= searchDisplayContext.isDisplayFacet(searchFacet.getClassName()) %>" />
 
-		<div class="facet-configuration" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration" style="margin-left: 40px">
+		<div class="facet-configuration" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration" style="margin-left: 40px;">
 			<liferay-ui:toggle-area
 				align="none"
 				defaultShowContent="hide"

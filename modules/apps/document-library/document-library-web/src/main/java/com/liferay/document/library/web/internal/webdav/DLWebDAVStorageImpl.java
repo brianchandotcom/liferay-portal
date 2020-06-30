@@ -763,7 +763,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				title, description, changeLog, false, file, serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
-				fileEntry = _dlAppService.moveFileEntry(
+				_dlAppService.moveFileEntry(
 					fileEntry.getFileEntryId(), newParentFolderId,
 					serviceContext);
 			}

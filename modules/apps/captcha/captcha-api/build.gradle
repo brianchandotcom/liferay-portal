@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.jhlabs", name: "imaging", version: "01012005"
+	compileInclude group: "com.jhlabs", name: "filters", version: "2.0.235"
 	compileInclude group: "com.liferay", name: "nl.captcha.simplecaptcha", version: "1.1.1"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

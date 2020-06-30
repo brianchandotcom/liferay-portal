@@ -40,7 +40,7 @@ import java.util.Set;
 public interface PowwowMeetingPersistence
 	extends BasePersistence<PowwowMeeting> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingUtil} to access the powwow meeting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CPDefinitionOptionValueRel
 	extends CPDefinitionOptionValueRelModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -62,6 +62,8 @@ public interface CPDefinitionOptionValueRel
 				}
 
 			};
+
+	public CPInstance fetchCPInstance();
 
 	public CPDefinitionOptionRel getCPDefinitionOptionRel()
 		throws com.liferay.portal.kernel.exception.PortalException;

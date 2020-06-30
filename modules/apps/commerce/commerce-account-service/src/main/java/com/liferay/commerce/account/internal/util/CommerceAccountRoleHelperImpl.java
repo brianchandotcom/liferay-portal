@@ -108,7 +108,7 @@ public class CommerceAccountRoleHelperImpl
 			resourceActionIds.put(
 				"com.liferay.commerce.account.model.CommerceAccount",
 				new String[] {
-					CommerceAccountActionKeys.MANAGE_ADDRESS,
+					CommerceAccountActionKeys.MANAGE_ADDRESSES,
 					CommerceAccountActionKeys.MANAGE_MEMBERS, ActionKeys.UPDATE,
 					ActionKeys.VIEW, CommerceAccountActionKeys.VIEW_ADDRESSES,
 					CommerceAccountActionKeys.VIEW_MEMBERS

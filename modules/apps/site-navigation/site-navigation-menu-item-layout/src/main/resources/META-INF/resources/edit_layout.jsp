@@ -20,9 +20,17 @@
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 
 String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
+
+boolean useLayoutName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME));
+
+String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNamespace() + "name, [for=" + renderResponse.getNamespace() + "name]', event.target.checked)";
 %>
 
-<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
+<aui:fieldset>
+	<aui:input checked="<%= useLayoutName %>" helpMessage="use-layout-name-help" label="use-layout-name" name="TypeSettingsProperties--useLayoutName--" onChange="<%= taglibOnChange %>" type="checkbox" />
+</aui:fieldset>
+
+<aui:input disabled="<%= useLayoutName %>" label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
 	<aui:validator name="required" />
 </aui:input>
 

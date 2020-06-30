@@ -16,9 +16,9 @@ package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -79,14 +79,9 @@ public class AssetPublisherPortletToolbarContributor
 			PortletResponse portletResponse)
 		throws Exception {
 
-		AssetPublisherCustomizer assetPublisherCustomizer =
-			(AssetPublisherCustomizer)portletRequest.getAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
-
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
-			new AssetPublisherDisplayContext(
-				assetPublisherCustomizer, portletRequest, portletResponse,
-				portletRequest.getPreferences());
+			(AssetPublisherDisplayContext)portletRequest.getAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT);
 
 		if (!_isVisible(assetPublisherDisplayContext, portletRequest)) {
 			return;
@@ -184,11 +179,6 @@ public class AssetPublisherPortletToolbarContributor
 		}
 
 		return menuItems;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
 	}
 
 	private URLMenuItem _getPortletTitleAddAssetEntryMenuItem(
@@ -299,8 +289,12 @@ public class AssetPublisherPortletToolbarContributor
 	private AssetHelper _assetHelper;
 
 	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

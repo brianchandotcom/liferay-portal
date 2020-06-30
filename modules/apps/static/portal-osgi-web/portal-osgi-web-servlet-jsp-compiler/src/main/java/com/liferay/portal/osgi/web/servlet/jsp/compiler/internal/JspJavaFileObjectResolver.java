@@ -251,7 +251,9 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 							String entryPathString = entryPath.toString();
 
-							entryPathString = entryPathString.substring(1);
+							if (entryPathString.charAt(0) == CharPool.SLASH) {
+								entryPathString = entryPathString.substring(1);
+							}
 
 							javaFileObjects.add(
 								new JarJavaFileObject(

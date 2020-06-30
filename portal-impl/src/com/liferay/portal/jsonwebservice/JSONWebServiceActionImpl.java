@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
@@ -35,6 +36,9 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.util.StringPlus;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -243,6 +247,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Class<?>[] genericParameterTypes) {
 
 		if (parameterType.isArray()) {
+			if (value instanceof File) {
+				try {
+					return FileUtil.getBytes((File)value);
+				}
+				catch (IOException ioException) {
+					_log.error(ioException, ioException);
+
+					return null;
+				}
+			}
+
 			List<?> list = null;
 
 			if (value instanceof List) {

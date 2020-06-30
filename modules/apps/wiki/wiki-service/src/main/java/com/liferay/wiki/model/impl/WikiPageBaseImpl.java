@@ -32,7 +32,7 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 public abstract class WikiPageBaseImpl
 	extends WikiPageModelImpl implements WikiPage {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki page model instance should use the <code>WikiPage</code> interface instead.

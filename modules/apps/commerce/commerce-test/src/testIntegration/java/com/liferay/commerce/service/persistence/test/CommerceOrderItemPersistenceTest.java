@@ -321,6 +321,13 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByBookedQuantityId() throws Exception {
+		_persistence.countByBookedQuantityId(RandomTestUtil.nextLong());
+
+		_persistence.countByBookedQuantityId(0L);
+	}
+
+	@Test
 	public void testCountByC_I() throws Exception {
 		_persistence.countByC_I(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -612,6 +619,12 @@ public class CommerceOrderItemPersistenceTest {
 
 		CommerceOrderItem existingCommerceOrderItem =
 			_persistence.findByPrimaryKey(newCommerceOrderItem.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingCommerceOrderItem.getBookedQuantityId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommerceOrderItem, "getOriginalBookedQuantityId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(existingCommerceOrderItem.getCompanyId()),

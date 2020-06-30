@@ -141,6 +141,10 @@ public class SubscriptionCommerceOrderValidatorImpl
 	}
 
 	private String _getLocalizedMessage(Locale locale, String key) {
+		if (locale == null) {
+			return key;
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 

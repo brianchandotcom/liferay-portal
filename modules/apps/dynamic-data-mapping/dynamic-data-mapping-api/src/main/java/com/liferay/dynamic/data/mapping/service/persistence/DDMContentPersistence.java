@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMContentUtil} to access the ddm content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

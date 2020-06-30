@@ -106,12 +106,16 @@ AUI.add(
 							);
 						}
 
-						instance._createDataProviderList().render(fieldsListContainer);
+						var dataProviderList = instance._createDataProviderList();
 
-						instance._fillDataProvidersSelectField();
+						dataProviderList.onceAfter('render', function() {
+							instance._fillDataProvidersSelectField();
 
-						fieldMessageContainer.show();
-						fieldsListContainer.show();
+							fieldMessageContainer.show();
+							fieldsListContainer.show();
+						});
+
+						dataProviderList.render(fieldsListContainer);
 					},
 
 					_afterDataProviderChange: function(event) {

@@ -38,7 +38,7 @@ public interface UserNotificationDeliveryModel
 	extends BaseModel<UserNotificationDelivery>, MVCCModel, ShardedModel,
 			TypedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a user notification delivery model instance should use the {@link UserNotificationDelivery} interface instead.

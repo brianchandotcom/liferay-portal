@@ -54,7 +54,7 @@ public abstract class LayoutRevisionServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, LayoutRevisionService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>LayoutRevisionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.LayoutRevisionServiceUtil</code>.
@@ -608,8 +608,8 @@ public abstract class LayoutRevisionServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

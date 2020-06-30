@@ -5,4 +5,12 @@
 	<category name="com.liferay.portal.search.internal.IndexerRegistryImpl">
 		<priority value="WARN" />
 	</category>
+
+	<category name="com.liferay.portal.search.internal.index.contributor.helper.ModelIndexerWriterDocumentHelperImpl">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.portal.search.internal.indexer.IndexerWriterImpl">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

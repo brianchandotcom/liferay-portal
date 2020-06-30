@@ -18,14 +18,6 @@
 
 <%
 CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDisplayContext = (CommerceVirtualOrderItemContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("commerceVirtualOrderItemContentDisplayContext", commerceVirtualOrderItemContentDisplayContext);
-
-SearchContainer<CommerceVirtualOrderItem> commerceVirtualOrderContentDisplayContextSearchContainer = commerceVirtualOrderItemContentDisplayContext.getSearchContainer();
-
-List<CommerceVirtualOrderItem> results = commerceVirtualOrderContentDisplayContextSearchContainer.getResults();
 %>
 
 <c:choose>
@@ -35,6 +27,17 @@ List<CommerceVirtualOrderItem> results = commerceVirtualOrderContentDisplayConte
 		</div>
 	</c:when>
 	<c:otherwise>
+
+		<%
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("commerceVirtualOrderItemContentDisplayContext", commerceVirtualOrderItemContentDisplayContext);
+
+		SearchContainer<CommerceVirtualOrderItem> commerceVirtualOrderContentDisplayContextSearchContainer = commerceVirtualOrderItemContentDisplayContext.getSearchContainer();
+
+		List<CommerceVirtualOrderItem> results = commerceVirtualOrderContentDisplayContextSearchContainer.getResults();
+		%>
+
 		<liferay-ddm:template-renderer
 			className="<%= CommerceVirtualOrderItemContentPortlet.class.getName() %>"
 			contextObjects="<%= contextObjects %>"
@@ -148,7 +151,8 @@ List<CommerceVirtualOrderItem> results = commerceVirtualOrderContentDisplayConte
 					function(dialogId, commerceVirtualOrderItemId) {
 						<portlet:namespace />closePopup(dialogId);
 
-						var formName = '#<portlet:namespace />' + commerceVirtualOrderItemId + 'Fm';
+						var formName =
+							'#<portlet:namespace />' + commerceVirtualOrderItemId + 'Fm';
 
 						var form = AUI.$(formName);
 

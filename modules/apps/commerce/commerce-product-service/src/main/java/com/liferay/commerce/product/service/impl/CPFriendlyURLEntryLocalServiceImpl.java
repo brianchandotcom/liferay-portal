@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,8 +72,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			title = title.substring(0, maxLength);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				title);
+			title = FriendlyURLNormalizerUtil.normalizeWithEncoding(title);
 		}
 
 		String urlTitle = ModelHintsUtil.trimString(
@@ -224,7 +224,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 		validate(groupId, classNameId, classPK, languageId, normalizedUrlTitle);
 
@@ -269,7 +269,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		String urlTitle) {
 
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			CPFriendlyURLEntry.class.getName(), "urlTitle");
@@ -277,28 +277,17 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		String curUrlTitle = normalizedUrlTitle.substring(
 			0, Math.min(maxLength, normalizedUrlTitle.length()));
 
-		for (int i = 1;; i++) {
-			CPFriendlyURLEntry curCPFriendlyURLEntry =
-				cpFriendlyURLEntryPersistence.fetchByG_C_L_U(
-					groupId, classNameId, languageId, curUrlTitle);
+		CPFriendlyURLEntry curCPFriendlyURLEntry =
+			cpFriendlyURLEntryPersistence.fetchByG_C_L_U(
+				groupId, classNameId, languageId, curUrlTitle);
 
-			if ((curCPFriendlyURLEntry == null) ||
-				(curCPFriendlyURLEntry.getClassPK() == classPK)) {
+		if ((curCPFriendlyURLEntry == null) ||
+			(curCPFriendlyURLEntry.getClassPK() == classPK)) {
 
-				break;
-			}
-
-			String suffix = StringPool.DASH + i;
-
-			String prefix = normalizedUrlTitle.substring(
-				0,
-				Math.min(
-					maxLength - suffix.length(), normalizedUrlTitle.length()));
-
-			curUrlTitle = prefix + suffix;
+			return curUrlTitle;
 		}
 
-		return curUrlTitle;
+		return curUrlTitle + StringPool.DASH + PortalUUIDUtil.generate();
 	}
 
 	protected Map<Locale, String> getUrlTitleMap(

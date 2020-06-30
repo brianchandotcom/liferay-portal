@@ -76,10 +76,34 @@ public class CommerceDiscountRuleServiceSoap {
 			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap
+			addCommerceDiscountRule(
+				long commerceDiscountId, String name, String type,
+				String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.discount.model.CommerceDiscountRule
+				returnValue =
+					CommerceDiscountRuleServiceUtil.addCommerceDiscountRule(
+						commerceDiscountId, name, type, typeSettings,
+						serviceContext);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -90,10 +114,10 @@ public class CommerceDiscountRuleServiceSoap {
 			CommerceDiscountRuleServiceUtil.deleteCommerceDiscountRule(
 				commerceDiscountRuleId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -110,10 +134,10 @@ public class CommerceDiscountRuleServiceSoap {
 			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -130,10 +154,10 @@ public class CommerceDiscountRuleServiceSoap {
 			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -157,10 +181,10 @@ public class CommerceDiscountRuleServiceSoap {
 			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -174,10 +198,10 @@ public class CommerceDiscountRuleServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -195,10 +219,32 @@ public class CommerceDiscountRuleServiceSoap {
 			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap
+			updateCommerceDiscountRule(
+				long commerceDiscountRuleId, String name, String type,
+				String typeSettings)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.discount.model.CommerceDiscountRule
+				returnValue =
+					CommerceDiscountRuleServiceUtil.updateCommerceDiscountRule(
+						commerceDiscountRuleId, name, type, typeSettings);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

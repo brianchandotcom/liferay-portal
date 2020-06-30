@@ -299,7 +299,7 @@
 	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	overflow: hidden;
 	transition: box-shadow 0.1s ease-in, transform 0.1s ease-in;
-	
+
 	&.card {
 		box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0);
 
@@ -308,13 +308,13 @@
 			transform: translateY(-4px);
 		}
 	}
-	
+
 	.card-body {
 		padding: 20px;
 	}
 
-	&.image-card .bom-card__folder-picture-container{
-		background-color: #E7EEFE;
+	&.image-card .bom-card__folder-picture-container {
+		background-color: #e7eefe;
 		background-image: none;
 	}
 
@@ -325,7 +325,7 @@
 	}
 
 	.sticker {
-		color: #99B9FF;
+		color: #99b9ff;
 		font-size: 40px;
 		height: 40px;
 		width: 40px;

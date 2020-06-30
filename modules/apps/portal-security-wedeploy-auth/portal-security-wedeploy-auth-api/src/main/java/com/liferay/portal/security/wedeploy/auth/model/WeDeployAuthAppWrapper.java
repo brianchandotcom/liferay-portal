@@ -293,11 +293,6 @@ public class WeDeployAuthAppWrapper
 		return _weDeployAuthApp.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a we deploy auth app model instance should use the <code>WeDeployAuthApp</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_weDeployAuthApp.persist();

@@ -45,7 +45,7 @@ public interface MDRRuleGroupInstanceModel
 	extends AttachedModel, BaseModel<MDRRuleGroupInstance>, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a mdr rule group instance model instance should use the {@link MDRRuleGroupInstance} interface instead.

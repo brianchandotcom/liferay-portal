@@ -19,6 +19,8 @@ import com.liferay.commerce.payment.method.mercanet.internal.MercanetCommercePay
 import com.liferay.commerce.payment.method.mercanet.internal.configuration.MercanetGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.mercanet.internal.constants.MercanetCommercePaymentMethodConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,7 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -83,6 +85,10 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 	public boolean isVisible(
 		User user, CommercePaymentMethodGroupRel commercePaymentMethod) {
 
+		if (commercePaymentMethod == null) {
+			return false;
+		}
+
 		if (Objects.equals(
 				commercePaymentMethod.getEngineKey(),
 				MercanetCommercePaymentMethod.KEY)) {
@@ -100,6 +106,12 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 		throws IOException {
 
 		try {
+			long commerceChannelId = ParamUtil.getLong(
+				httpServletRequest, "commerceChannelId");
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannel(commerceChannelId);
+
 			MercanetGroupServiceConfiguration
 				mercanetGroupServiceConfiguration =
 					_configurationProvider.getConfiguration(
@@ -107,7 +119,7 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 						new ParameterMapSettingsLocator(
 							httpServletRequest.getParameterMap(),
 							new GroupServiceSettingsLocator(
-								_portal.getScopeGroupId(httpServletRequest),
+								commerceChannel.getGroupId(),
 								MercanetCommercePaymentMethodConstants.
 									SERVICE_NAME)));
 
@@ -125,13 +137,13 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 	}
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.mercanet)"

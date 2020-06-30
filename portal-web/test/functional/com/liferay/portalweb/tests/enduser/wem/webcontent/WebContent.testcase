@@ -42,6 +42,94 @@ definition {
 			folderName = "WC Folder Name");
 	}
 
+	@priority = "4"
+	test AddMultipleTemplatesToSameStructure {
+		property testray.component.names = "Web Content Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure1");
+
+		for (var structureFieldName : list "Image") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure1");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure1");
+
+		WebContentTemplates.addCP(
+			fieldName = "Image",
+			templateDescription = "Template for Structure1",
+			templateName = "Structure1_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure2");
+
+		for (var structureFieldName : list "Text") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure2");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure2");
+
+		WebContentTemplates.addCP(
+			fieldName = "Text",
+			templateDescription = "First template for Structure2",
+			templateName = "Structure2_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure2");
+
+		WebContentTemplates.addCP(
+			fieldName = "Text",
+			templateDescription = "Second template for Structure2",
+			templateName = "Structure2_Template2",
+			validateStructureFields = "true");
+
+		Check(
+			key_rowEntry = "Structure2_Template1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "1 of 2 Selected");
+	}
+
 	@priority = "5"
 	test AddStructures {
 		property testray.component.names = "Training,Web Content Administration";
@@ -174,6 +262,97 @@ definition {
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
+	}
+
+	@priority = "4"
+	test AddStructuresWithTemplates {
+		property testray.component.names = "Web Content Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure1");
+
+		for (var structureFieldName : list "Image") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure1");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure1");
+
+		WebContentTemplates.addCP(
+			fieldName = "Image",
+			templateDescription = "Template for Structure1",
+			templateName = "Structure1_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure2");
+
+		for (var structureFieldName : list "Text") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure2");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure2");
+
+		WebContentTemplates.addCP(
+			fieldName = "Text",
+			templateDescription = "Template for Structure2",
+			templateName = "Structure2_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			templateDescription = "Template without structure",
+			templateName = "Template without structure");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		Check(
+			key_rowEntry = "Structure2_Template1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "1 of 3 Selected");
 	}
 
 	@description = "This is a use case for LPS-77387."
@@ -374,6 +553,8 @@ definition {
 		}
 	}
 
+	@description = "This will be ignored until LPS-96630 is fixed and backported on BPR-47052."
+	@ignore = "true"
 	@priority = "4"
 	test AddStructureWithUnlocalizableFields {
 		property testray.component.names = "Localization,Web Content Administration";
@@ -454,31 +635,40 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC WebContent Title");
+
+		FormFields.viewTextValue(
+			fieldName = "Text",
+			fieldValue = "Text");
+
+		FormFields.viewTextMultilineValue(
+			fieldName = "TextBox",
+			fieldValue = "Text Box");
+
 		PortletEntry.changeLocale(
 			fieldName = "Title",
 			locale = "es-ES");
 
 		WebContent.addCP(webContentTitle = "Title Spanish");
 
-		FormFields.editText(
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Title Spanish");
+
+		Type(
+			key_fieldName = "Text",
+			locator1 = "TextInput#DDM",
+			value1 = "Text Spanish");
+
+		FormFields.viewTextValue(
 			fieldName = "Text",
 			fieldValue = "Text Spanish");
 
-		FormFields.editTextMultiline(
-			fieldName = "TextBox",
-			fieldValue = "Text Box Spanish");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.viewUnlocalizableTextBox(
-			editLocalizedTextBox = "Text Box Unlocalized",
-			localizedText = "Text Spanish",
-			localizedTextBox = "Text Box",
-			localizedTitle = "Title Spanish",
-			webContentTextBox = "Text Box",
-			webContentTitle = "WC WebContent Title");
+		AssertNotEditable(
+			key_fieldName = "TextBox",
+			locator1 = "DDMField#TEXT_BOX");
 	}
 
 	@description = "This is a use case for LPS-69560."
@@ -1254,6 +1444,99 @@ definition {
 			version = "1.1");
 	}
 
+	@priority = "4"
+	test CorrectTemplateNumberAfterDeletion {
+		property testray.component.names = "Web Content Administration";
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure1");
+
+		for (var structureFieldName : list "Image") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure1");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure1");
+
+		WebContentTemplates.addCP(
+			fieldName = "Image",
+			templateDescription = "Template for Structure1",
+			templateName = "Structure1_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		AssertVisible(locator1 = "Button#PLUS");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Structure2");
+
+		for (var structureFieldName : list "Text") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = "${structureFieldName}");
+		}
+
+		WebContentStructures.saveCP(structureName = "Structure2");
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Structure2");
+
+		WebContentTemplates.addCP(
+			fieldName = "Text",
+			templateDescription = "Template for Structure2",
+			templateName = "Structure2_Template1",
+			validateStructureFields = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			templateDescription = "Template without structure",
+			templateName = "Template without structure");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.deleteCP(templateName = "Structure1_Template1");
+
+		Check(
+			key_rowEntry = "Structure2_Template1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "1 of 2 Selected");
+	}
+
 	@priority = "5"
 	test DeleteWebContent {
 		property testray.component.names = "Web Content Administration";
@@ -1851,12 +2134,16 @@ definition {
 
 		WebContentTemplates.deleteCP(templateName = "WC Template Name");
 
+		Portlet.viewEmptyMessage(message = "There are no templates.");
+
 		ProductMenu.gotoPortlet(
 			category = "Content",
 			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentStructures.deleteCP(structureName = "WC Structure Name");
+
+		Portlet.viewEmptyMessage(message = "There are no Structures.");
 
 		Navigator.openURL();
 

@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -73,7 +75,7 @@ public class TaxonomyCategory {
 	@GraphQLField(
 		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long taxonomyCategoryId;
 
 	@Schema(description = "The category's name.")
@@ -101,8 +103,41 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField(description = "The category's name.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String taxonomyCategoryName;
+
+	@Schema
+	@Valid
+	public Map<String, String> getTaxonomyCategoryName_i18n() {
+		return taxonomyCategoryName_i18n;
+	}
+
+	public void setTaxonomyCategoryName_i18n(
+		Map<String, String> taxonomyCategoryName_i18n) {
+
+		this.taxonomyCategoryName_i18n = taxonomyCategoryName_i18n;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			taxonomyCategoryName_i18nUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryName_i18n =
+				taxonomyCategoryName_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> taxonomyCategoryName_i18n;
 
 	@Override
 	public boolean equals(Object object) {
@@ -153,6 +188,16 @@ public class TaxonomyCategory {
 			sb.append(_escape(taxonomyCategoryName));
 
 			sb.append("\"");
+		}
+
+		if (taxonomyCategoryName_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryName_i18n\": ");
+
+			sb.append(_toJSON(taxonomyCategoryName_i18n));
 		}
 
 		sb.append("}");

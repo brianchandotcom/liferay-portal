@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceShipmentItemModel
 	extends BaseModel<CommerceShipmentItem>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce shipment item model instance should use the {@link CommerceShipmentItem} interface instead.

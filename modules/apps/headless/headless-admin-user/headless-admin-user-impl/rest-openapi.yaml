@@ -60,6 +60,10 @@ components:
                             description:
                                 The field's content for simple types.
                             type: object
+                        data_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         geo:
                             description:
                                 A point determined by latitude and longitude.
@@ -198,6 +202,10 @@ components:
                                 The organization's country. This follows the [`addressCountry`](https://schema.org/addressCountry) specification.
                             readOnly: true
                             type: string
+                        addressCountry_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         addressRegion:
                             description:
                                 The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification.
@@ -320,6 +328,10 @@ components:
                         The address's country (e.g., USA).
                     readOnly: true
                     type: string
+                addressCountry_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 addressLocality:
                     description:
                         The address's locality (e.g., city).
@@ -401,6 +413,11 @@ components:
                         The role's description.
                     readOnly: true
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 id:
                     description:
                         The role's ID.
@@ -412,6 +429,11 @@ components:
                         The role's name.
                     readOnly: true
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 roleType:
                     description:
                         The role's type.
@@ -433,6 +455,11 @@ components:
                         The role's name.
                     readOnly: true
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
             type: object
         Segment:
             description:
@@ -520,6 +547,10 @@ components:
                     $ref: "#/components/schemas/Creator"
                 description:
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 friendlyUrlPath:
                     type: string
                 id:
@@ -531,6 +562,10 @@ components:
                     type: string
                 name:
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 sites:
                     items:
                         $ref: "#/components/schemas/Site"
@@ -551,6 +586,11 @@ components:
                         The site's name.
                     readOnly: true
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
             type: object
         Subscription:
             properties:
@@ -906,6 +946,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Subscription"]

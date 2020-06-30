@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceAddressServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceAddressServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -113,6 +113,24 @@ public class CommerceAddressServiceUtil {
 
 		return getService().getBillingCommerceAddresses(
 			companyId, className, classPK);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceAddress>
+			getBillingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getBillingCommerceAddresses(
+			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	public static int getBillingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getBillingCommerceAddressesCount(
+			companyId, className, classPK, keywords);
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress getCommerceAddress(
@@ -226,6 +244,24 @@ public class CommerceAddressServiceUtil {
 
 		return getService().getShippingCommerceAddresses(
 			companyId, className, classPK);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceAddress>
+			getShippingCommerceAddresses(
+				long companyId, String className, long classPK, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getShippingCommerceAddresses(
+			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	public static int getShippingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getShippingCommerceAddressesCount(
+			companyId, className, classPK, keywords);
 	}
 
 	/**

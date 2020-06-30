@@ -20,6 +20,7 @@ import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroup
 import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_3_0.CommerceAccountNameUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_4_0.CommerceAccountDefaultAddressesUpgradeProcess;
+import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroupSystemUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -62,6 +63,10 @@ public class CommerceAccountUpgradeStepRegistrator
 			_SCHEMA_VERSION_1_4_0, _SCHEMA_VERSION_1_5_0,
 			new DummyUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_1_5_0, _SCHEMA_VERSION_2_0_0,
+			new CommerceAccountGroupSystemUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE ACCOUNT UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -78,6 +83,8 @@ public class CommerceAccountUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_1_4_0 = "1.4.0";
 
 	private static final String _SCHEMA_VERSION_1_5_0 = "1.5.0";
+
+	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountUpgradeStepRegistrator.class);

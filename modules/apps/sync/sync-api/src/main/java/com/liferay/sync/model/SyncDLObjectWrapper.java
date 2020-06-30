@@ -615,11 +615,6 @@ public class SyncDLObjectWrapper
 		return _syncDLObject.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a sync dl object model instance should use the <code>SyncDLObject</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_syncDLObject.persist();

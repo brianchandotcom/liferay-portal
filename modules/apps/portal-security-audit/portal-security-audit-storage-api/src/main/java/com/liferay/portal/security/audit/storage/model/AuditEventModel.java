@@ -41,7 +41,7 @@ import java.util.Date;
 @ProviderType
 public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a audit event model instance should use the {@link AuditEvent} interface instead.

@@ -91,7 +91,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 		List<BookmarksEntry> entries = createTree();
 
 		for (BookmarksEntry entry : entries) {
-			entry.setTreePath(null);
+			entry.setTreePath("/0/");
 
 			BookmarksEntryLocalServiceUtil.updateBookmarksEntry(entry);
 		}

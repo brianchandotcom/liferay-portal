@@ -553,9 +553,7 @@ public class CustomSQL {
 				});
 		}
 
-		sql = replaceIsNull(sql);
-
-		return sql;
+		return replaceIsNull(sql);
 	}
 
 	public String replaceGroupBy(String sql, String groupBy) {

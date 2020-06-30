@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthTokenUtil} to access the o auth token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

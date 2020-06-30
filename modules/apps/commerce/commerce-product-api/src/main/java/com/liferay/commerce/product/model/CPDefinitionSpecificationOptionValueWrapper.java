@@ -479,11 +479,6 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		return _cpDefinitionSpecificationOptionValue.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition specification option value model instance should use the <code>CPDefinitionSpecificationOptionValue</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinitionSpecificationOptionValue.persist();

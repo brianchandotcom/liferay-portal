@@ -48,7 +48,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, WeDeployAuthAppService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>WeDeployAuthAppService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceUtil</code>.
@@ -374,8 +374,8 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

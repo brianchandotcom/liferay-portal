@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.background.task.model.impl.BackgroundTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

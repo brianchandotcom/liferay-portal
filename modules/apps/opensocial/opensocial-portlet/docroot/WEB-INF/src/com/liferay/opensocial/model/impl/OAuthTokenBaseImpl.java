@@ -32,7 +32,7 @@ import com.liferay.opensocial.service.OAuthTokenLocalServiceUtil;
 public abstract class OAuthTokenBaseImpl
 	extends OAuthTokenModelImpl implements OAuthToken {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth token model instance should use the <code>OAuthToken</code> interface instead.

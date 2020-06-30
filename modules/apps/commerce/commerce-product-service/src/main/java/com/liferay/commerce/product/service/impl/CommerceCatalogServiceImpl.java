@@ -156,6 +156,19 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			catalogDefaultLanguageId);
 	}
 
+	@Override
+	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(
+			long commerceCatalogId, String externalReferenceCode)
+		throws PortalException {
+
+		_commerceCatalogModelResourcePermission.check(
+			getPermissionChecker(), commerceCatalogId, ActionKeys.UPDATE);
+
+		return commerceCatalogLocalService.
+			updateCommerceCatalogExternalReferenceCode(
+				commerceCatalogId, externalReferenceCode);
+	}
+
 	private static volatile ModelResourcePermission<CommerceCatalog>
 		_commerceCatalogModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

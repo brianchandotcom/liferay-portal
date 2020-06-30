@@ -326,11 +326,6 @@ public class CommerceOrderNoteWrapper
 		return _commerceOrderNote.isRestricted();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce order note model instance should use the <code>CommerceOrderNote</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceOrderNote.persist();

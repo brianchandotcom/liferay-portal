@@ -31,7 +31,7 @@ import com.liferay.marketplace.service.AppLocalServiceUtil;
  */
 public abstract class AppBaseImpl extends AppModelImpl implements App {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a app model instance should use the <code>App</code> interface instead.

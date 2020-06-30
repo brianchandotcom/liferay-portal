@@ -1326,6 +1326,14 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public int getLayoutsCount(
+		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
+		java.lang.String[] types) {
+
+		return _layoutLocalService.getLayoutsCount(group, privateLayout, types);
+	}
+
+	@Override
+	public int getLayoutsCount(
 			com.liferay.portal.kernel.model.User user, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1401,6 +1409,9 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getParentLayout(layout);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

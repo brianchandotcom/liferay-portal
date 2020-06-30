@@ -22,7 +22,7 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryLocalServiceBaseImpl;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
-import com.liferay.petra.string.StringPool;
+import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,26 +38,26 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.service.access.policy.model.SAPEntry;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @author Alessio Antonio Rendina
@@ -107,9 +107,7 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setActive(active);
 		commerceCountry.setChannelFilterEnabled(false);
 
-		commerceCountryPersistence.update(commerceCountry);
-
-		return commerceCountry;
+		return commerceCountryPersistence.update(commerceCountry);
 	}
 
 	@Override
@@ -147,6 +145,12 @@ public class CommerceCountryLocalServiceImpl
 
 		commerceAddressRestrictionLocalService.
 			deleteCommerceAddressRestrictions(
+				commerceCountry.getCommerceCountryId());
+
+		// Commerce tax fixed rate address rel
+
+		_commerceTaxFixedRateAddressRelLocalService.
+			deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
 				commerceCountry.getCommerceCountryId());
 
 		return commerceCountry;
@@ -313,67 +317,30 @@ public class CommerceCountryLocalServiceImpl
 				}
 			}
 		}
-
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			serviceContext.getCompanyId(), _COMMERCE_SAP_ENTRY_NAME);
-
-		if (sapEntry == null) {
-			String ungatedServicesPath =
-				"com/liferay/commerce/internal/ungated-services.json";
-
-			String ungatedServicesJSON = StringUtil.read(
-				clazz.getClassLoader(), ungatedServicesPath, false);
-
-			JSONArray ungatedServicesJSONArray =
-				JSONFactoryUtil.createJSONArray(ungatedServicesJSON);
-
-			String[] ungatedServices =
-				new String[ungatedServicesJSONArray.length()];
-
-			for (int i = 0; i < ungatedServicesJSONArray.length(); i++) {
-				ungatedServices[i] = ungatedServicesJSONArray.getString(i);
-			}
-
-			Map<Locale, String> titleMap = new HashMap<>();
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", serviceContext.getLocale(), clazz);
-
-			String localizedTitle = LanguageUtil.get(
-				resourceBundle,
-				"public-access-to-the-commerce-country-and-region-apis");
-
-			titleMap.put(serviceContext.getLocale(), localizedTitle);
-
-			_sapEntryLocalService.addSAPEntry(
-				serviceContext.getUserId(),
-				StringUtil.merge(ungatedServices, StringPool.NEW_LINE), true,
-				true, _COMMERCE_SAP_ENTRY_NAME, titleMap, serviceContext);
-		}
 	}
 
+	@Override
+	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
+			long companyId, Boolean active, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, active, keywords, start, end, sort);
+
+		return _searchCommerceCountries(searchContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceCountry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceCountry.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommerceCountry> commerceCountries = getCommerceCountries(
-				hits);
-
-			if (commerceCountries != null) {
-				return new BaseModelSearchResult<>(
-					commerceCountries, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
+		return _searchCommerceCountries(searchContext);
 	}
 
 	@Override
@@ -385,9 +352,7 @@ public class CommerceCountryLocalServiceImpl
 
 		commerceCountry.setActive(active);
 
-		commerceCountryPersistence.update(commerceCountry);
-
-		return commerceCountry;
+		return commerceCountryPersistence.update(commerceCountry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -415,9 +380,7 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setPriority(priority);
 		commerceCountry.setActive(active);
 
-		commerceCountryPersistence.update(commerceCountry);
-
-		return commerceCountry;
+		return commerceCountryPersistence.update(commerceCountry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -432,6 +395,44 @@ public class CommerceCountryLocalServiceImpl
 		commerceCountry.setChannelFilterEnabled(enable);
 
 		return commerceCountryPersistence.update(commerceCountry);
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, Boolean active, String keywords, int start, int end,
+		Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put("active", active);
+
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		attributes.put(Field.NAME, keywords);
+		attributes.put("numericISOCode", keywords);
+		attributes.put("threeLettersISOCode", keywords);
+		attributes.put("twoLettersISOCode", keywords);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(new Sort[] {sort});
+		}
+
+		return searchContext;
 	}
 
 	protected List<CommerceCountry> getCommerceCountries(Hits hits)
@@ -494,7 +495,28 @@ public class CommerceCountryLocalServiceImpl
 		}
 	}
 
-	private static final String _COMMERCE_SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
+	private BaseModelSearchResult<CommerceCountry> _searchCommerceCountries(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceCountry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceCountry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceCountry> commerceCountries = getCommerceCountries(
+				hits);
+
+			if (commerceCountries != null) {
+				return new BaseModelSearchResult<>(
+					commerceCountries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
@@ -503,7 +525,8 @@ public class CommerceCountryLocalServiceImpl
 	@ServiceReference(type = CommerceRegionsStarterRegistry.class)
 	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
 
-	@ServiceReference(type = SAPEntryLocalService.class)
-	private SAPEntryLocalService _sapEntryLocalService;
+	@ServiceReference(type = CommerceTaxFixedRateAddressRelLocalService.class)
+	private CommerceTaxFixedRateAddressRelLocalService
+		_commerceTaxFixedRateAddressRelLocalService;
 
 }

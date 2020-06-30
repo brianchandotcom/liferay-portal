@@ -42,6 +42,7 @@ public class CommerceCurrencySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCode(model.getCode());
 		soapModel.setName(model.getName());
+		soapModel.setSymbol(model.getSymbol());
 		soapModel.setRate(model.getRate());
 		soapModel.setFormatPattern(model.getFormatPattern());
 		soapModel.setMaxFractionDigits(model.getMaxFractionDigits());
@@ -184,6 +185,14 @@ public class CommerceCurrencySoap implements Serializable {
 		_name = name;
 	}
 
+	public String getSymbol() {
+		return _symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		_symbol = symbol;
+	}
+
 	public BigDecimal getRate() {
 		return _rate;
 	}
@@ -273,6 +282,7 @@ public class CommerceCurrencySoap implements Serializable {
 	private Date _modifiedDate;
 	private String _code;
 	private String _name;
+	private String _symbol;
 	private BigDecimal _rate;
 	private String _formatPattern;
 	private int _maxFractionDigits;

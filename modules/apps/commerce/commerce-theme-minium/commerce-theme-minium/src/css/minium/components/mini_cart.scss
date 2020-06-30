@@ -2,22 +2,22 @@
 	$minicart-width: 550px;
 
 	@function getOpeningTranslation($direction) {
-		@return translateX(if($direction == left, -1, 1) *
-		($minicart-width + $liferay-sidebars-width));
+		@return translateX(
+			if($direction == left, -1, 1) *
+				($minicart-width + $liferay-sidebars-width)
+		);
 	}
 
 	background-color: $color-bg;
 	box-shadow: -20px 0 40px $color-shadow;
 	display: flex;
 	flex-direction: column;
+	height: calc(100vh - #{$frame-size});
 	max-width: $minicart-width;
 	position: absolute;
 	right: 0;
 	top: 100%;
-	transition:
-		box-shadow $transition,
-		transform $transition;
-	height: calc(100vh - #{$frame-size});
+	transition: box-shadow $transition, transform $transition;
 	width: $minicart-width;
 	z-index: 1140;
 
@@ -29,7 +29,9 @@
 		height: calc(100vh - #{$liferay-topbar-size + $frame-size});
 
 		@media screen and (max-width: $bp-xsmall) {
-			height: calc(100vh - #{$liferay-topbar-size-small + $frame-size-small});
+			height: calc(
+				100vh - #{$liferay-topbar-size-small + $frame-size-small}
+			);
 		}
 	}
 
@@ -84,18 +86,14 @@
 			width: 100%;
 
 			&-icon {
-				font-size: 13em;
-				margin: -.5em 0 -.25em;
-				opacity: .3;
+				color: $color-border;
+				font-size: 60px;
 			}
 
 			&-label {
-				font-size: 20px;
+				font-size: 16px;
+				max-width: 220px;
 				text-align: center;
-
-				p {
-					margin: 0;
-				}
 
 				.stress {
 					color: $color-theme;

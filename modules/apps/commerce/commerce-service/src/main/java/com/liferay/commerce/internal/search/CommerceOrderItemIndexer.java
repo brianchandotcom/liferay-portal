@@ -83,7 +83,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_SKU, true);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
 	}
 

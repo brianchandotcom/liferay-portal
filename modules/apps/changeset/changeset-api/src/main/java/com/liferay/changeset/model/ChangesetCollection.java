@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface ChangesetCollection
 	extends ChangesetCollectionModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.changeset.model.impl.ChangesetCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

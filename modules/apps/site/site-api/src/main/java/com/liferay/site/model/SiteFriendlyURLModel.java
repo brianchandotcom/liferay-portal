@@ -43,7 +43,7 @@ import java.util.Date;
 public interface SiteFriendlyURLModel
 	extends BaseModel<SiteFriendlyURL>, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a site friendly url model instance should use the {@link SiteFriendlyURL} interface instead.

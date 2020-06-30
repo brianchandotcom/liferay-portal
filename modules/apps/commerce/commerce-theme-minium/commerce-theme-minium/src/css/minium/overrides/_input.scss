@@ -26,7 +26,7 @@
 .form-inline {
 	display: grid;
 	grid-auto-columns: min-content auto;
-	grid-template-areas: "label input" "label message";
+	grid-template-areas: 'label input' 'label message';
 
 	.control-label {
 		align-self: start;

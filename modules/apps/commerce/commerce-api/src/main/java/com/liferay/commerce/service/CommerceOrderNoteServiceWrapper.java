@@ -33,11 +33,6 @@ public class CommerceOrderNoteServiceWrapper
 		_commerceOrderNoteService = commerceOrderNoteService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceOrderNoteServiceUtil} to access the commerce order note remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
 			long commerceOrderId, String content, boolean restricted,

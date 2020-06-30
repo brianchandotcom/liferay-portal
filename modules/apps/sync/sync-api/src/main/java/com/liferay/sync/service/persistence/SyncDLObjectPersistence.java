@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface SyncDLObjectPersistence extends BasePersistence<SyncDLObject> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLObjectUtil} to access the sync dl object persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

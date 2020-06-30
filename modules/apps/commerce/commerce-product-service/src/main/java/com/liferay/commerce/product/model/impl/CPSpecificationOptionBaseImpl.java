@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUti
 public abstract class CPSpecificationOptionBaseImpl
 	extends CPSpecificationOptionModelImpl implements CPSpecificationOption {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp specification option model instance should use the <code>CPSpecificationOption</code> interface instead.

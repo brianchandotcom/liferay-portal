@@ -62,8 +62,8 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folderid", folderId);
-			data.put("folderissupportsmetadata", ((folder != null) ? folder.isSupportsMetadata() : Boolean.TRUE.toString()));
-			data.put("folderissupportssocial", ((folder != null) ? folder.isSupportsSocial() : Boolean.TRUE.toString()));
+			data.put("folderissupportsmetadata", (folder != null) ? folder.isSupportsMetadata() : Boolean.TRUE.toString());
+			data.put("folderissupportssocial", (folder != null) ? folder.isSupportsSocial() : Boolean.TRUE.toString());
 			data.put("foldername", folderName);
 			%>
 

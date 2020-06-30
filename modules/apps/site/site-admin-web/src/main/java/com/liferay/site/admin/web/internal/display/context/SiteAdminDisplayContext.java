@@ -304,11 +304,9 @@ public class SiteAdminDisplayContext {
 				siteInitializerItemDisplayContext);
 		}
 
-		siteInitializerItemDisplayContexts = ListUtil.sort(
+		return ListUtil.sort(
 			siteInitializerItemDisplayContexts,
 			new SiteInitializerNameComparator(true));
-
-		return siteInitializerItemDisplayContexts;
 	}
 
 	public String getSortingURL() {

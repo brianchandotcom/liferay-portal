@@ -45,7 +45,7 @@ public abstract class ERUserGroupLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ERUserGroupLocalService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ERUserGroupLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.ERUserGroupLocalServiceUtil</code>.
@@ -172,8 +172,8 @@ public abstract class ERUserGroupLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

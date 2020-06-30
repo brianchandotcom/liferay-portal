@@ -69,9 +69,7 @@ public class AtomTargetBuilder implements TargetBuilder {
 
 			collectionIndex += collectionName.length() + 1;
 
-			url = url.substring(0, collectionIndex);
-
-			return url;
+			return url.substring(0, collectionIndex);
 		}
 
 		return url + collectionName + query;

@@ -45,7 +45,7 @@ public interface CommerceAccountModel
 	extends AuditedModel, BaseModel<CommerceAccount>, ShardedModel,
 			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce account model instance should use the {@link CommerceAccount} interface instead.

@@ -26,6 +26,9 @@ public class CPContentContributorConstants {
 
 	public static final String AVAILABLE = "available";
 
+	public static final String DELIVERY_SUBSCRIPTION_INFO =
+		"deliverySubscriptionInfo";
+
 	public static final String PRICE = "price";
 
 	public static final String PROMO_PRICE = "promoPrice";

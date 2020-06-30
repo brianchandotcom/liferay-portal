@@ -395,6 +395,9 @@ public class CPOptionValueLocalServiceWrapper
 		return _cpOptionValueLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

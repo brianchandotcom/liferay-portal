@@ -437,11 +437,6 @@ public class KaleoDefinitionWrapper
 		return _kaleoDefinition.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo definition model instance should use the <code>KaleoDefinition</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoDefinition.persist();

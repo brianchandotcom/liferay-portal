@@ -195,7 +195,7 @@ taskListURL.setParameter("tabs2", tabs2);
 
 					<div class="progress-wrapper">
 						<div class="current">
-							<div class="progress" style="width:<%= width %>%">
+							<div class="progress" style="width: <%= width %>%;">
 								<!-- -->
 							</div>
 

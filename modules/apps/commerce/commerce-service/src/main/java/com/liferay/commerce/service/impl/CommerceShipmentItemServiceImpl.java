@@ -51,8 +51,20 @@ public class CommerceShipmentItemServiceImpl
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
+	 */
+	@Deprecated
 	@Override
 	public void deleteCommerceShipmentItem(long commerceShipmentItemId)
+		throws PortalException {
+
+		deleteCommerceShipmentItem(commerceShipmentItemId, false);
+	}
+
+	@Override
+	public void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
 		throws PortalException {
 
 		CommerceShipmentItem commerceShipmentItem =
@@ -64,24 +76,48 @@ public class CommerceShipmentItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		commerceShipmentItemLocalService.deleteCommerceShipmentItem(
-			commerceShipmentItem);
+			commerceShipmentItem, restoreStockQuantity);
 	}
 
+	@Override
+	public CommerceShipmentItem fetchCommerceShipmentItem(
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		PortalPermissionUtil.contains(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.fetchCommerceShipmentItem(
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public CommerceShipmentItem getCommerceShipmentItem(
+			long commerceShipmentItemId)
+		throws PortalException {
+
+		PortalPermissionUtil.contains(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.getCommerceShipmentItem(
+			commerceShipmentItemId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
 			long commerceOrderItemId)
 		throws PortalException {
 
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemLocalService.getCommerceOrderItem(
-				commerceOrderItemId);
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
-			ActionKeys.VIEW);
-
-		return commerceShipmentItemLocalService.getCommerceShipmentItems(
-			commerceOrderItemId);
+		return commerceShipmentItemService.
+			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	@Override
@@ -99,6 +135,24 @@ public class CommerceShipmentItemServiceImpl
 	}
 
 	@Override
+	public List<CommerceShipmentItem>
+			getCommerceShipmentItemsByCommerceOrderItemId(
+				long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.VIEW);
+
+		return commerceShipmentItemLocalService.
+			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
+	}
+
+	@Override
 	public int getCommerceShipmentItemsCount(long commerceShipmentId)
 		throws PortalException {
 
@@ -108,6 +162,34 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
 			commerceShipmentId);
+	}
+
+	@Override
+	public int getCommerceShipmentItemsCountByCommerceOrderItemId(
+			long commerceOrderItemId)
+		throws PortalException {
+
+		PortalPermissionUtil.contains(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.
+			getCommerceShipmentItemsCountByCommerceOrderItemId(
+				commerceOrderItemId);
+	}
+
+	@Override
+	public int getCommerceShipmentOrderItemsQuantity(
+			long commerceShipmentId, long commerceOrderItemId)
+		throws PortalException {
+
+		PortalPermissionUtil.contains(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.
+			getCommerceShipmentOrderItemsQuantity(
+				commerceShipmentId, commerceOrderItemId);
 	}
 
 	@Override
@@ -121,6 +203,20 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
+	}
+
+	@Override
+	public CommerceShipmentItem updateCommerceShipmentItem(
+			long commerceShipmentItemId, long commerceInventoryWarehouseId,
+			int quantity)
+		throws PortalException {
+
+		PortalPermissionUtil.contains(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	private static volatile ModelResourcePermission<CommerceOrder>

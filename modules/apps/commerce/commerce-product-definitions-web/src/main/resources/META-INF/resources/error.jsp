@@ -25,5 +25,6 @@
 <liferay-ui:error exception="<%= NoSuchCPDefinitionOptionRelException.class %>" message="the-option-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPDefinitionOptionValueRelException.class %>" message="the-option-value-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchCPInstanceException.class %>" message="the-sku-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchCProductException.class %>" message="the-product-could-not-be-found" />
 
 <liferay-ui:error-principal />

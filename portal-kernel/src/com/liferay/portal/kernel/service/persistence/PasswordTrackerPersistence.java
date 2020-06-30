@@ -39,7 +39,7 @@ import java.util.Set;
 public interface PasswordTrackerPersistence
 	extends BasePersistence<PasswordTracker> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordTrackerUtil} to access the password tracker persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

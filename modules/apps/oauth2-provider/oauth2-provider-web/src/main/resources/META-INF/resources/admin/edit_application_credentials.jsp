@@ -160,7 +160,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			</div>
 
 			<div class="padlock" id="<portlet:namespace />clientIdPadlock">
-				<div class="open" style="display:none">
+				<div class="open" style="display: none;">
 					<clay:icon symbol="unlock" /><liferay-ui:message key="changed" />
 				</div>
 
@@ -190,7 +190,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			</div>
 
 			<div class="padlock" id="<portlet:namespace />clientSecretPadlock">
-				<div class="open" style="display:none">
+				<div class="open" style="display: none;">
 					<clay:icon symbol="unlock" /><liferay-ui:message key="changed" />
 				</div>
 

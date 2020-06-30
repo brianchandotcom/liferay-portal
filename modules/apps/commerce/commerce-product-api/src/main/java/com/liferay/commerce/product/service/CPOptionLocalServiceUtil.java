@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CPOptionLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -255,6 +255,17 @@ public class CPOptionLocalServiceUtil {
 		return getService().fetchCPOptionByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPOption>
+		findCPOptionByCompanyId(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.product.model.CPOption>
+					orderByComparator) {
+
+		return getService().findCPOptionByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -351,6 +362,9 @@ public class CPOptionLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

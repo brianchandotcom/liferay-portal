@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface AnnouncementsDeliveryModel
 	extends BaseModel<AnnouncementsDelivery>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a announcements delivery model instance should use the {@link AnnouncementsDelivery} interface instead.

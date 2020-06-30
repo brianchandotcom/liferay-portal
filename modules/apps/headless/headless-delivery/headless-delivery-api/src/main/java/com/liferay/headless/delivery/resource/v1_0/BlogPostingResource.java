@@ -22,11 +22,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Locale;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -43,7 +46,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BlogPostingResource {
 
+	public static Builder builder() {
+		return FactoryHolder.factory.create();
+	}
+
 	public void deleteBlogPosting(Long blogPostingId) throws Exception;
+
+	public Response deleteBlogPostingBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
 
@@ -53,6 +63,9 @@ public interface BlogPostingResource {
 
 	public BlogPosting putBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response putBlogPostingBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception;
@@ -71,6 +84,10 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response postSiteBlogPostingBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;
@@ -97,5 +114,34 @@ public interface BlogPostingResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public static class FactoryHolder {
+
+		public static volatile Factory factory;
+
+	}
+
+	@ProviderType
+	public interface Builder {
+
+		public BlogPostingResource build();
+
+		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
+
+		public Builder preferredLocale(Locale preferredLocale);
+
+		public Builder user(com.liferay.portal.kernel.model.User user);
+
+	}
+
+	@ProviderType
+	public interface Factory {
+
+		public Builder create();
+
+	}
 
 }

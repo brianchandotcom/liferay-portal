@@ -230,6 +230,13 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCommerceCountryId() throws Exception {
+		_persistence.countByCommerceCountryId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceCountryId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceTaxFixedRateAddressRel newCommerceTaxFixedRateAddressRel =
 			addCommerceTaxFixedRateAddressRel();

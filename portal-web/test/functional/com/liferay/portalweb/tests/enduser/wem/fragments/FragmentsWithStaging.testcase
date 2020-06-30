@@ -40,7 +40,7 @@ definition {
 			name = "Collection Name",
 			site = "false");
 
-		JSONFragment.addFragment(
+		JSONFragment.addSection(
 			collectionName = "Collection Name",
 			groupKey = "Test Site Name-staging",
 			name = "Fragment Name",

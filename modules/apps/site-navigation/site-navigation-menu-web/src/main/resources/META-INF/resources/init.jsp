@@ -49,8 +49,6 @@ page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 

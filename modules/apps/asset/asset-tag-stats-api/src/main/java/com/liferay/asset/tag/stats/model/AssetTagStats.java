@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface AssetTagStats extends AssetTagStatsModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

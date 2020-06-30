@@ -48,7 +48,7 @@ public interface MBThreadModel
 	extends BaseModel<MBThread>, ContainerModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message boards thread model instance should use the {@link MBThread} interface instead.

@@ -20,7 +20,6 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.KnowledgeBaseArticleDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -42,9 +41,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -119,6 +121,7 @@ public class KnowledgeBaseArticleResourceImpl
 			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticlesPage(
+			_getKnowledgeBaseArticleListActions(kbArticle.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -151,6 +154,7 @@ public class KnowledgeBaseArticleResourceImpl
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
 		return _getKnowledgeBaseArticlesPage(
+			_getKnowledgeFolderListActions(kbFolder.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -179,6 +183,7 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
@@ -317,6 +322,45 @@ public class KnowledgeBaseArticleResourceImpl
 			siteId, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 	}
 
+	private Map<String, Map<String, String>> _getActions(KBArticle kbArticle) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", kbArticle.getResourcePrimKey(),
+				"deleteKnowledgeBaseArticle", kbArticle.getUserId(),
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", kbArticle.getResourcePrimKey(),
+				"getKnowledgeBaseArticle", kbArticle.getUserId(),
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticle", kbArticle.getUserId(),
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticleSubscribe", kbArticle.getUserId(),
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticleUnsubscribe", kbArticle.getUserId(),
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).build();
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 
@@ -346,15 +390,33 @@ public class KnowledgeBaseArticleResourceImpl
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
+	private Map<String, Map<String, String>>
+		_getKnowledgeBaseArticleListActions(Long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE",
+				"postKnowledgeBaseArticleKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", groupId)
+		).build();
+	}
+
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, KBArticle.class, search,
-			pagination,
+			actions, booleanQueryUnsafeConsumer, filter, KBArticle.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -367,9 +429,51 @@ public class KnowledgeBaseArticleResourceImpl
 					searchContext.setKeywords("");
 				}
 			},
+			sorts,
 			document -> _toKnowledgeBaseArticle(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-			sorts);
+				_kbArticleService.getLatestKBArticle(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
+					WorkflowConstants.STATUS_APPROVED)));
+	}
+
+	private Map<String, Map<String, String>> _getKnowledgeFolderListActions(
+		long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE", "postKnowledgeBaseFolderKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", groupId)
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteKnowledgeBaseArticleSubscribe",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteKnowledgeBaseArticleUnsubscribe",
+				"com.liferay.knowledge.base.admin", siteId)
+		).build();
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -387,19 +491,17 @@ public class KnowledgeBaseArticleResourceImpl
 			return null;
 		}
 
-		return _toKnowledgeBaseArticle(kbArticle.getResourcePrimKey());
-	}
-
-	private KnowledgeBaseArticle _toKnowledgeBaseArticle(
-			long knowledgeBaseArticleResourcePrimKey)
-		throws Exception {
-
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				knowledgeBaseArticleResourcePrimKey, contextUriInfo,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(kbArticle), _dtoConverterRegistry,
+				kbArticle.getResourcePrimKey(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

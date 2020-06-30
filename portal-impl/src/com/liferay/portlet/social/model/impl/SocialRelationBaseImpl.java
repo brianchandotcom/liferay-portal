@@ -32,7 +32,7 @@ import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
 public abstract class SocialRelationBaseImpl
 	extends SocialRelationModelImpl implements SocialRelation {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social relation model instance should use the <code>SocialRelation</code> interface instead.

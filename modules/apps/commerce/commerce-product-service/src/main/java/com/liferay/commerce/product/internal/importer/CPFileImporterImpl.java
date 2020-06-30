@@ -110,6 +110,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CPFileImporter.class)
 public class CPFileImporterImpl implements CPFileImporter {
 
+	public static final String GROUP_ID_PLACEHOLDER = "[£groupId£]";
+
 	public static final String IMG_TAG =
 		"<img alt='' src='%s' data-fileentryid='%s' />";
 
@@ -661,6 +663,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 				return jsonObject.toJSONString();
 			},
 			classLoader, dependenciesFilePath, serviceContext);
+
+		content = StringUtil.replace(
+			content, GROUP_ID_PLACEHOLDER,
+			String.valueOf(serviceContext.getScopeGroupId()));
 
 		content = StringUtil.replace(
 			content, LOCALE_PLACEHOLDER,

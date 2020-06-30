@@ -301,5 +301,5 @@ if (column != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, column.getName(), null);
 }
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((column == null) ? "add-attribute" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, (column == null) ? "add-attribute" : "edit"), currentURL);
 %>

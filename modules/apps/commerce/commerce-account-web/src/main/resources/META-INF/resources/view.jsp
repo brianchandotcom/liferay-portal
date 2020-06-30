@@ -28,16 +28,20 @@ List<CommerceAccount> commerceAccounts = commerceAccountDisplayContext.getCommer
 			<liferay-ui:message key="this-site-does-not-have-a-channel" />
 		</div>
 	</c:when>
-	<c:when test="<%= commerceAccountDisplayContext.getCommerceSiteType() == CommerceAccountConstants.SITE_TYPE_B2C %>">
-		<liferay-util:include page="/edit_user.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test="<%= (commerceAccounts.size() > 1) || commerceAccountDisplayContext.hasManageCommerceAccountPermissions() %>">
-		<liferay-util:include page="/view_account_list.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test="<%= !commerceAccounts.isEmpty() && commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccounts.get(0), ActionKeys.VIEW) %>">
-		<liferay-util:include page="/view_account.jsp" servletContext="<%= application %>" />
-	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
+		<c:choose>
+			<c:when test="<%= commerceAccountDisplayContext.getCommerceSiteType() == CommerceAccountConstants.SITE_TYPE_B2C %>">
+				<liferay-util:include page="/edit_user.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test="<%= (commerceAccounts.size() > 1) || commerceAccountDisplayContext.hasManageCommerceAccountPermissions() %>">
+				<liferay-util:include page="/view_account_list.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test="<%= !commerceAccounts.isEmpty() && commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccounts.get(0), ActionKeys.VIEW) %>">
+				<liferay-util:include page="/view_account.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

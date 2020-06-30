@@ -40,7 +40,7 @@ public interface EmailAddressModel
 	extends AttachedModel, BaseModel<EmailAddress>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a email address model instance should use the {@link EmailAddress} interface instead.

@@ -166,6 +166,14 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					branchingPrivate, remoteAddress, remotePort,
 					remotePathContext, secureConnection, remoteGroupId,
 					serviceContext);
+
+				boolean overrideRemoteSiteURL = ParamUtil.getBoolean(
+					actionRequest, "overrideRemoteSiteURL");
+				String remoteSiteURL = ParamUtil.getString(
+					actionRequest, "remoteSiteURL");
+
+				_staging.setRemoteSiteURL(
+					liveGroup, overrideRemoteSiteURL, remoteSiteURL);
 			}
 			catch (Exception e) {
 				SessionErrors.add(actionRequest, Exception.class, e);

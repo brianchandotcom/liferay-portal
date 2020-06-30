@@ -41,7 +41,7 @@ import java.util.Set;
 public interface CommerceOrderPersistence
 	extends BasePersistence<CommerceOrder> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderUtil} to access the commerce order persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

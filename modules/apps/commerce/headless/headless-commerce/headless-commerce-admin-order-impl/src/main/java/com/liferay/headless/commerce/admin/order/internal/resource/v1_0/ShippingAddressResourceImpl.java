@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
@@ -72,7 +73,7 @@ public class ShippingAddressResourceImpl
 				commerceAddress.getCommerceAddressId()));
 	}
 
-	@NestedField("shippingAddress")
+	@NestedField(parentClass = Order.class, value = "shippingAddress")
 	@Override
 	public ShippingAddress getOrderIdShippingAddress(Long id) throws Exception {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(

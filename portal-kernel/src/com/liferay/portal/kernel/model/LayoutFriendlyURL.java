@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface LayoutFriendlyURL
 	extends LayoutFriendlyURLModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutFriendlyURLImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

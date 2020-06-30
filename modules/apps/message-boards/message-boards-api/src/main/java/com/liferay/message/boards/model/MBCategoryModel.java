@@ -48,7 +48,7 @@ public interface MBCategoryModel
 	extends BaseModel<MBCategory>, ContainerModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message boards category model instance should use the {@link MBCategory} interface instead.

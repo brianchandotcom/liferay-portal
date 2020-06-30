@@ -36,9 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 public class YearlyCPSubscriptionTypeDisplayContext {
 
 	public YearlyCPSubscriptionTypeDisplayContext(
-		Object object, HttpServletRequest httpServletRequest) {
+		Object object, HttpServletRequest httpServletRequest, boolean payment) {
 
 		_object = object;
+		_payment = payment;
 
 		_cpSubscriptionTypeRequestHelper = new CPSubscriptionTypeRequestHelper(
 			httpServletRequest);
@@ -65,7 +66,7 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 	public int getMonthDay() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if ((subscriptionTypeSettingsProperties == null) ||
 			subscriptionTypeSettingsProperties.isEmpty()) {
@@ -73,8 +74,13 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 			return 1;
 		}
 
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("monthDay"));
+		}
+
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthDay"));
+			subscriptionTypeSettingsProperties.get("deliveryMonthDay"));
 	}
 
 	public String getMonthDisplayName(int month) {
@@ -95,10 +101,15 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 	public int getSelectedMonth() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if (subscriptionTypeSettingsProperties == null) {
 			return 0;
+		}
+
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("deliveryMonth"));
 		}
 
 		return GetterUtil.getInteger(
@@ -108,14 +119,23 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 	public int getSelectedYearlyMode() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if (subscriptionTypeSettingsProperties == null) {
 			return CPSubscriptionTypeConstants.MODE_ORDER_DATE;
 		}
 
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("yearlyMode"));
+		}
+
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("yearlyMode"));
+			subscriptionTypeSettingsProperties.get("deliveryYearlyMode"));
+	}
+
+	public boolean isPayment() {
+		return _payment;
 	}
 
 	protected Map<String, Integer> getCalendarMonthsDisplayNames() {
@@ -130,5 +150,6 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 	private final CPSubscriptionTypeRequestHelper
 		_cpSubscriptionTypeRequestHelper;
 	private final Object _object;
+	private final boolean _payment;
 
 }

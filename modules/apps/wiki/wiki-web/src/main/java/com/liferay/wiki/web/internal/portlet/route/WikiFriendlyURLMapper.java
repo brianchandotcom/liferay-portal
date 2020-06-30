@@ -57,13 +57,11 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		friendlyURLPath = StringPool.SLASH.concat(
+		return StringPool.SLASH.concat(
 			getMapping()
 		).concat(
 			friendlyURLPath
 		);
-
-		return friendlyURLPath;
 	}
 
 	@Override

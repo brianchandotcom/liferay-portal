@@ -35,7 +35,7 @@
 		<div class="commerce-modal">
 			<div class="commerce-modal__header">
 				<h3 class="commerce-modal__title">
-					{msg desc="Add Organization to this account"}add-organization-to-this-account{/msg}
+					{msg desc="Add Organization to This Account"}add-organization-to-this-account{/msg}
 				</h3>
 
 				<button
@@ -44,7 +44,7 @@
 				>
 					{call ClayIcon.render}
 						{param spritemap: $spritemap /}
-						{param symbol: 'close' /}
+						{param symbol: 'times' /}
 					{/call}
 				</button>
 			</div>
@@ -52,7 +52,7 @@
 			<div class="commerce-modal__content">
 
 				<label class="commerce-modal__label">
-					{msg desc="Organization name"}organization-name{/msg}
+					{msg desc="Organization Name"}organization-name{/msg}
 				</label>
 
 				<div class="user-invitation">
@@ -121,7 +121,7 @@
 					class="{$inviteButtonClasses}"
 					data-onclick="{$_addOrganizations}"
 				>
-					{msg desc="Add organization"}add-organization{/msg}
+					{msg desc="Add Organization"}add-organization{/msg}
 				</button>
 			</div>
 		</div>

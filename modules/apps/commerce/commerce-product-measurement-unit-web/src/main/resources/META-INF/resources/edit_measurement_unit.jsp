@@ -118,10 +118,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 			keyInput.value = slugify(nameInput.value);
 		};
 
-		nameInput.addEventListener(
-			'input',
-			debounce(handleOnNameInput, 200)
-		);
+		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 	</aui:script>
 </c:if>
 
@@ -130,5 +127,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />primary', '<portlet:namespace />rateOptions', true);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />primary',
+		'<portlet:namespace />rateOptions',
+		true
+	);
 </aui:script>

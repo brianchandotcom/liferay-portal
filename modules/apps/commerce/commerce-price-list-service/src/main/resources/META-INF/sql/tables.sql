@@ -12,21 +12,6 @@ create table CPLCommerceGroupAccountRel (
 	lastPublishDate DATE null
 );
 
-create table CPLUserSegmentEntryRel (
-	uuid_ VARCHAR(75) null,
-	CPLUserSegmentEntryRelId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	commercePriceListId LONG,
-	commerceUserSegmentEntryId LONG,
-	order_ INTEGER,
-	lastPublishDate DATE null
-);
-
 create table CommercePriceEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
@@ -41,8 +26,20 @@ create table CommercePriceEntry (
 	CProductId LONG,
 	price DECIMAL(30, 16) null,
 	promoPrice DECIMAL(30, 16) null,
+	discountDiscovery BOOLEAN,
+	discountLevel1 DECIMAL(30, 16) null,
+	discountLevel2 DECIMAL(30, 16) null,
+	discountLevel3 DECIMAL(30, 16) null,
+	discountLevel4 DECIMAL(30, 16) null,
 	hasTierPrice BOOLEAN,
-	lastPublishDate DATE null
+	bulkPricing BOOLEAN,
+	displayDate DATE null,
+	expirationDate DATE null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table CommercePriceList (
@@ -57,6 +54,8 @@ create table CommercePriceList (
 	modifiedDate DATE null,
 	commerceCurrencyId LONG,
 	parentCommercePriceListId LONG,
+	catalogBasePriceList BOOLEAN,
+	type_ VARCHAR(75) null,
 	name VARCHAR(75) null,
 	priority DOUBLE,
 	displayDate DATE null,
@@ -82,6 +81,34 @@ create table CommercePriceListAccountRel (
 	lastPublishDate DATE null
 );
 
+create table CommercePriceListChannelRel (
+	uuid_ VARCHAR(75) null,
+	CommercePriceListChannelRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceChannelId LONG,
+	commercePriceListId LONG,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
+create table CommercePriceListDiscountRel (
+	uuid_ VARCHAR(75) null,
+	commercePriceListDiscountRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceDiscountId LONG,
+	commercePriceListId LONG,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CommerceTierPriceEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
@@ -94,6 +121,17 @@ create table CommerceTierPriceEntry (
 	commercePriceEntryId LONG,
 	price DECIMAL(30, 16) null,
 	promoPrice DECIMAL(30, 16) null,
+	discountDiscovery BOOLEAN,
+	discountLevel1 DECIMAL(30, 16) null,
+	discountLevel2 DECIMAL(30, 16) null,
+	discountLevel3 DECIMAL(30, 16) null,
+	discountLevel4 DECIMAL(30, 16) null,
 	minQuantity INTEGER,
-	lastPublishDate DATE null
+	displayDate DATE null,
+	expirationDate DATE null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );

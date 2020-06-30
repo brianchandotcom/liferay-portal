@@ -70,4 +70,36 @@ public class LocaleUtilTest extends PowerMockito {
 		}
 	}
 
+	@Test
+	public void testFromLanguageIdBCP47() {
+		mockStatic(LanguageUtil.class);
+
+		when(
+			LanguageUtil.isAvailableLocale(Locale.US)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en-US"));
+
+		when(
+			LanguageUtil.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			Locale.SIMPLIFIED_CHINESE, LocaleUtil.fromLanguageId("zh-Hans-CN"));
+
+		when(
+			LanguageUtil.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			Locale.TRADITIONAL_CHINESE,
+			LocaleUtil.fromLanguageId("zh-Hant-TW"));
+	}
+
 }

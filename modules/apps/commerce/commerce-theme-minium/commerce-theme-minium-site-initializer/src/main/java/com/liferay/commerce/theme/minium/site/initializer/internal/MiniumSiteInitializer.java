@@ -46,6 +46,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -91,6 +92,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -235,9 +237,20 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 			_importPortletSettings(serviceContext);
 
-			setCommerceShippingMethod("fixed", serviceContext);
+			setCommerceShippingMethod(
+				commerceChannel.getGroupId(), "fixed", serviceContext);
 
-			setDefaultCatalogImage(catalogGroupId, serviceContext);
+			int catalogCPDefinitionsCount =
+				_cpDefinitionLocalService.getCPDefinitionsCount(
+					catalogGroupId, WorkflowConstants.STATUS_ANY);
+
+			if (catalogCPDefinitionsCount > 0) {
+				setDefaultCatalogImage(catalogGroupId, serviceContext);
+			}
+			else {
+				_commerceCatalogLocalService.deleteCommerceCatalog(
+					commerceCatalog);
+			}
 
 			setThemeSettings(serviceContext);
 		}
@@ -372,7 +385,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 	}
 
 	protected void setCommerceShippingMethod(
-			String shippingMethod, ServiceContext serviceContext)
+			long groupId, String shippingMethod, ServiceContext serviceContext)
 		throws PortalException {
 
 		Locale locale = serviceContext.getLocale();
@@ -390,23 +403,21 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodLocalService.addCommerceShippingMethod(
-				nameMap, descriptionMap, null, shippingMethod, 0, true,
-				serviceContext);
+				serviceContext.getUserId(), groupId, nameMap, descriptionMap,
+				null, shippingMethod, 0, true);
 
 		setCommerceShippingOption(
-			commerceShippingMethod.getCommerceShippingMethodId(),
-			"Standard Delivery", StringPool.BLANK, BigDecimal.valueOf(15),
-			serviceContext);
+			commerceShippingMethod, "Standard Delivery", StringPool.BLANK,
+			BigDecimal.valueOf(15), serviceContext);
 
 		setCommerceShippingOption(
-			commerceShippingMethod.getCommerceShippingMethodId(),
-			"Expedited Delivery", StringPool.BLANK, BigDecimal.valueOf(25),
-			serviceContext);
+			commerceShippingMethod, "Expedited Delivery", StringPool.BLANK,
+			BigDecimal.valueOf(25), serviceContext);
 	}
 
 	protected void setCommerceShippingOption(
-			long commerceShippingMethodId, String name, String description,
-			BigDecimal price, ServiceContext serviceContext)
+			CommerceShippingMethod commerceShippingMethod, String name,
+			String description, BigDecimal price, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -416,8 +427,9 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		descriptionMap.put(serviceContext.getLocale(), description);
 
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
-			commerceShippingMethodId, nameMap, descriptionMap, price, 0,
-			serviceContext);
+			serviceContext.getUserId(), commerceShippingMethod.getGroupId(),
+			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
+			descriptionMap, price, 0);
 	}
 
 	protected void setDefaultCatalogImage(
@@ -438,18 +450,13 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 			String mimeType = MimeTypesUtil.getContentType(file);
 
-			Group catalogGroup = _groupLocalService.getGroup(catalogGroupId);
-
-			Company company = _companyLocalService.getCompany(
-				catalogGroup.getCompanyId());
-
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				company.getGroupId(), serviceContext.getUserId(),
+				catalogGroupId, serviceContext.getUserId(),
 				MiniumSiteInitializer.class.getName(), file.getName(), file,
 				mimeType);
 
 			_commerceCatalogDefaultImage.updateDefaultCatalogFileEntryId(
-				company.getGroupId(), fileEntry.getFileEntryId());
+				catalogGroupId, fileEntry.getFileEntryId());
 		}
 		finally {
 			if (file != null) {
@@ -1011,6 +1018,9 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Map<String, CPDefinition> _cpDefinitions;
 

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface OAuth2Application
 	extends OAuth2ApplicationModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

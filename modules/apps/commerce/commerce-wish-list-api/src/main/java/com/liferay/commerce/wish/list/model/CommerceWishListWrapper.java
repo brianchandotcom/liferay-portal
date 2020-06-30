@@ -311,11 +311,6 @@ public class CommerceWishListWrapper
 		return _commerceWishList.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce wish list model instance should use the <code>CommerceWishList</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceWishList.persist();

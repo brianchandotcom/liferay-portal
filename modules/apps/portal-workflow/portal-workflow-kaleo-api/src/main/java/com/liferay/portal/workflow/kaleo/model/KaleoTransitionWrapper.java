@@ -424,11 +424,6 @@ public class KaleoTransitionWrapper
 		return _kaleoTransition.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo transition model instance should use the <code>KaleoTransition</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoTransition.persist();

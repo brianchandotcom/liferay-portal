@@ -123,12 +123,12 @@ public class DDMFormInstanceRecordIndexer
 			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
 		}
 
-		long ddmFormInstanceId = GetterUtil.getLong(
-			searchContext.getAttribute("ddmFormInstanceId"));
+		long formInstanceId = GetterUtil.getLong(
+			searchContext.getAttribute("formInstanceId"));
 
-		if (ddmFormInstanceId > 0) {
+		if (formInstanceId > 0) {
 			contextBooleanFilter.addRequiredTerm(
-				"ddmFormInstanceId", ddmFormInstanceId);
+				"formInstanceId", formInstanceId);
 		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
@@ -252,10 +252,10 @@ public class DDMFormInstanceRecordIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		long ddmFormInstanceId = GetterUtil.getLong(
+		long formInstanceId = GetterUtil.getLong(
 			document.get("formInstanceId"));
 
-		String title = getTitle(ddmFormInstanceId, locale);
+		String title = getTitle(formInstanceId, locale);
 
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);
@@ -315,10 +315,10 @@ public class DDMFormInstanceRecordIndexer
 		return portal.getResourceBundle(defaultLocale);
 	}
 
-	protected String getTitle(long ddmFormInstanceId, Locale locale) {
+	protected String getTitle(long formInstanceId, Locale locale) {
 		try {
 			DDMFormInstance ddmFormInstance =
-				ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
+				ddmFormInstanceLocalService.getFormInstance(formInstanceId);
 
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
@@ -340,7 +340,7 @@ public class DDMFormInstanceRecordIndexer
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property ddmFormInstanceRecordIdProperty =
+				Property formInstanceRecordIdProperty =
 					PropertyFactoryUtil.forName("formInstanceRecordId");
 
 				DynamicQuery ddmFormInstanceRecordVersionDynamicQuery =
@@ -350,10 +350,10 @@ public class DDMFormInstanceRecordIndexer
 					ProjectionFactoryUtil.property("formInstanceRecordId"));
 
 				dynamicQuery.add(
-					ddmFormInstanceRecordIdProperty.in(
+					formInstanceRecordIdProperty.in(
 						ddmFormInstanceRecordVersionDynamicQuery));
 
-				Property ddmFormInstanceProperty = PropertyFactoryUtil.forName(
+				Property formInstanceProperty = PropertyFactoryUtil.forName(
 					"formInstanceId");
 
 				DynamicQuery ddmFormInstanceDynamicQuery =
@@ -363,7 +363,7 @@ public class DDMFormInstanceRecordIndexer
 					ProjectionFactoryUtil.property("formInstanceId"));
 
 				dynamicQuery.add(
-					ddmFormInstanceProperty.in(ddmFormInstanceDynamicQuery));
+					formInstanceProperty.in(ddmFormInstanceDynamicQuery));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(

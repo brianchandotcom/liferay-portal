@@ -5,15 +5,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 apply plugin: 'antlr'
 
 String parserDirName = "com/liferay/dynamic/data/mapping/expression/internal/parser"
-
-cleanGenerateGrammarSource {
-	delete "src/main/java/" + parserDirName
-	delete "src/main/resources/" + parserDirName
-}
-
-compileJava {
-	dependsOn.remove "generateGrammarSource"
-}
+List<String> startParameterTaskNames = gradle.startParameter.taskNames
 
 dependencies {
 	annotationProcessor group: "org.antlr", name: "antlr4-annotations", version: "4.3"
@@ -45,6 +37,14 @@ generateGrammarSource {
 	dependsOn cleanGenerateGrammarSource
 
 	doFirst {
+		delete fileTree("src/main/java/" + parserDirName) {
+			exclude "**/source_formatter.ignore"
+		}
+
+		delete fileTree("src/main/resources/" + parserDirName) {
+			exclude "**/source_formatter.ignore"
+		}
+
 		javaexec {
 			args "-o", FileUtil.relativize(generateGrammarSource.outputDirectory, grammarFile.parentFile)
 			args grammarFile.name
@@ -77,6 +77,7 @@ generateGrammarSource {
 		autoClean = false
 	}
 
+	enabled = startParameterTaskNames.contains("generateGrammarSource")
 	maxHeapSize = "1512m"
 	outputDirectory = new File(temporaryDir, "generated")
 }

@@ -16,7 +16,7 @@ definition {
 			name = "Collection Name"
 		);
 
-		JSONFragment.addFragment(
+		JSONFragment.addSection(
 			collectionName = "Collection Name",
 			groupName = "Test Site Name",
 			name = "Fragment Name"

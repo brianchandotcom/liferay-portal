@@ -1,0 +1,25 @@
+definition {
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			site = "true");
+
+		return "${groupId}";
+	}
+
+	macro setSiteNavigationMenuId {
+		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
+
+		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}");
+
+		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
+			groupId = "${groupId}",
+			siteNavigationMenuName = "${siteNavigationMenuName}");
+
+		return "${siteNavigationMenuId}";
+	}
+
+}

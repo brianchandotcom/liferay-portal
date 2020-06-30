@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
-
 DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 
 if (recordSet != null) {

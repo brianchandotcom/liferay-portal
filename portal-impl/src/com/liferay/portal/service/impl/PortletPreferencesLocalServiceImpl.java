@@ -111,7 +111,8 @@ public class PortletPreferencesLocalServiceImpl
 		}
 
 		try {
-			portletPreferencesPersistence.update(portletPreferences);
+			portletPreferences = portletPreferencesPersistence.update(
+				portletPreferences);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -630,9 +631,7 @@ public class PortletPreferencesLocalServiceImpl
 
 		portletPreferences.setPreferences(xml);
 
-		portletPreferencesPersistence.update(portletPreferences);
-
-		return portletPreferences;
+		return portletPreferencesPersistence.update(portletPreferences);
 	}
 
 	private boolean _exists(long plid, long companyId, String portletId) {

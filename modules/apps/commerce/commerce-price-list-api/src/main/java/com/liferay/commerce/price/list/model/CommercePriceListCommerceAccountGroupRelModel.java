@@ -44,7 +44,7 @@ public interface CommercePriceListCommerceAccountGroupRelModel
 	extends BaseModel<CommercePriceListCommerceAccountGroupRel>, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce price list commerce account group rel model instance should use the {@link CommercePriceListCommerceAccountGroupRel} interface instead.

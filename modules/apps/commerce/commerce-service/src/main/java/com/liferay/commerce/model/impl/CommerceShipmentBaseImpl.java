@@ -32,7 +32,7 @@ import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
 public abstract class CommerceShipmentBaseImpl
 	extends CommerceShipmentModelImpl implements CommerceShipment {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce shipment model instance should use the <code>CommerceShipment</code> interface instead.

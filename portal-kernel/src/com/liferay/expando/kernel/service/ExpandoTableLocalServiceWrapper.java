@@ -33,11 +33,6 @@ public class ExpandoTableLocalServiceWrapper
 		_expandoTableLocalService = expandoTableLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ExpandoTableLocalServiceUtil} to access the expando table local service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable addDefaultTable(
 			long companyId, long classNameId)
@@ -379,6 +374,9 @@ public class ExpandoTableLocalServiceWrapper
 		return _expandoTableLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

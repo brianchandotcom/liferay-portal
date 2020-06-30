@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -87,6 +88,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_PRODUCT_URL.length());
 
+		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
@@ -107,7 +110,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		if (cpFriendlyURLEntry == null) {
 			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
 				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-					groupId, classNameId, urlTitle);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
+					urlTitle);
 
 			cpFriendlyURLEntry = cpFriendlyURLEntries.get(0);
 		}
@@ -210,6 +214,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_PRODUCT_URL.length());
+
+		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
@@ -230,7 +237,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		if (cpFriendlyURLEntry == null) {
 			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
 				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-					groupId, classNameId, urlTitle);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
+					urlTitle);
 
 			if (cpFriendlyURLEntries.isEmpty()) {
 				return null;

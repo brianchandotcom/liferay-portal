@@ -30,11 +30,6 @@ public class ERUserLocalServiceWrapper
 		_erUserLocalService = erUserLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ERUserLocalServiceUtil} to access the er user local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.User addOrUpdateUser(
 			String externalReferenceCode, long creatorUserId, long companyId,

@@ -43,7 +43,7 @@ import java.util.Map;
 )
 public interface ResourcePermissionService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourcePermissionServiceUtil} to access the resource permission remote service. Add custom service methods to <code>com.liferay.portal.service.impl.ResourcePermissionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

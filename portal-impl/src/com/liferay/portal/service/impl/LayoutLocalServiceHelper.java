@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -65,6 +66,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Raymond Augé
@@ -556,7 +559,23 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			List<Layout> layouts = layoutPersistence.findByG_P_P(
 				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 2);
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 3);
+
+			Group group = groupLocalService.fetchGroup(groupId);
+
+			if (!group.isControlPanel() && privateLayout &&
+				!layouts.isEmpty()) {
+
+				layouts = layouts.stream(
+				).filter(
+					layout1 -> !Objects.equals(
+						layout1.getType(), LayoutConstants.TYPE_CONTROL_PANEL)
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			layouts = layouts.subList(0, 2);
 
 			// You can only reach this point if there are more than two layouts
 			// at the root level because of the descendant check
@@ -592,6 +611,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			String.valueOf(layout.getPlid()), role.getRoleId(),
 			ActionKeys.VIEW);
 	}
+
+	@BeanReference(type = GroupLocalService.class)
+	protected GroupLocalService groupLocalService;
 
 	@BeanReference(type = LayoutFriendlyURLPersistence.class)
 	protected LayoutFriendlyURLPersistence layoutFriendlyURLPersistence;

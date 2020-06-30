@@ -13,7 +13,8 @@
 	"name": "commerce-frontend-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
-		"checkFormat": "liferay-npm-scripts check"
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
 	},
-	"version": "3.0.5"
+	"version": "7.0.8"
 }

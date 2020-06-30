@@ -1211,12 +1211,24 @@ public interface PropsKeys {
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED =
 		"ehcache.blocking.cache.allowed";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED =
 		"ehcache.bootstrap.cache.loader.enabled";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES =
 		"ehcache.bootstrap.cache.loader.properties";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String
 		EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT =
 			"ehcache.bootstrap.cache.loader.properties.default";

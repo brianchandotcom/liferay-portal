@@ -57,6 +57,7 @@ java.lang.String placeholder = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String prefix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:prefix"));
 boolean required = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:required")));
 boolean resizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:resizable")));
+java.lang.String selectedLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:selectedLanguageId"));
 boolean showRequiredLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:showRequiredLabel")), true);
 java.lang.String suffix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:suffix"));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:title"));

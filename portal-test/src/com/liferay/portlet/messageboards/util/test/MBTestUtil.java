@@ -114,11 +114,9 @@ public class MBTestUtil {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
-		message = MBMessageLocalServiceUtil.updateStatus(
+		return MBMessageLocalServiceUtil.updateStatus(
 			message.getUserId(), message.getMessageId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
-
-		return message;
 	}
 
 }

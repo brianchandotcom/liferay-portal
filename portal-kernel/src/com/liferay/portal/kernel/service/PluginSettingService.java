@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface PluginSettingService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PluginSettingServiceUtil} to access the plugin setting remote service. Add custom service methods to <code>com.liferay.portal.service.impl.PluginSettingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

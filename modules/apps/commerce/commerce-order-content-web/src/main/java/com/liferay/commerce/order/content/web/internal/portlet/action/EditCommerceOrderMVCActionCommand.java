@@ -16,6 +16,7 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -24,6 +25,7 @@ import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -99,10 +102,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		return _commerceOrderService.addCommerceOrder(
 			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
 			commerceCurrencyId, 0, StringPool.BLANK);
-	}
-
-	protected void approveCommerceOrder(long commerceOrderId) throws Exception {
-		_commerceOrderService.approveCommerceOrder(commerceOrderId);
 	}
 
 	protected void checkoutCommerceOrder(
@@ -255,19 +254,22 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			executeWorkflowTransition(
 				actionRequest, commerceOrderId, transitionName, workflowTaskId);
 		}
-		else if (transitionName.equals("approve") ||
-				 transitionName.equals("force-approve")) {
-
-			approveCommerceOrder(commerceOrderId);
-		}
 		else if (transitionName.equals("checkout")) {
 			checkoutCommerceOrder(actionRequest, commerceOrderId);
 		}
-		else if (transitionName.equals("reorder")) {
-			reorderCommerceOrder(actionRequest);
-		}
-		else if (transitionName.equals("submit")) {
-			submitCommerceOrder(commerceOrderId);
+		else {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(commerceOrderId);
+
+			int orderStatus = GetterUtil.getInteger(
+				transitionName, commerceOrder.getOrderStatus());
+
+			if (transitionName.equals("submit")) {
+				orderStatus = CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS;
+			}
+
+			_commerceOrderEngine.transitionCommerceOrder(
+				commerceOrder, orderStatus, _portal.getUserId(actionRequest));
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -320,10 +322,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderHttpHelper.setCurrentCommerceOrder(
 			_portal.getHttpServletRequest(actionRequest),
 			_commerceOrderService.getCommerceOrder(commerceOrderId));
-	}
-
-	protected void submitCommerceOrder(long commerceOrderId) throws Exception {
-		_commerceOrderService.submitCommerceOrder(commerceOrderId);
 	}
 
 	protected void updateCommerceOrder(ActionRequest actionRequest)
@@ -381,6 +379,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

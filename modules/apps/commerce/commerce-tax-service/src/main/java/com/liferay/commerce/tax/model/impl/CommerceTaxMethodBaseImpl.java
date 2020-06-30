@@ -32,7 +32,7 @@ import com.liferay.commerce.tax.service.CommerceTaxMethodLocalServiceUtil;
 public abstract class CommerceTaxMethodBaseImpl
 	extends CommerceTaxMethodModelImpl implements CommerceTaxMethod {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce tax method model instance should use the <code>CommerceTaxMethod</code> interface instead.

@@ -33,10 +33,9 @@ public class CPDisplayLayoutServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutServiceUtil} to access the cp display layout remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout
 			addCPDisplayLayout(
@@ -46,6 +45,17 @@ public class CPDisplayLayoutServiceWrapper
 
 		return _cpDisplayLayoutService.addCPDisplayLayout(
 			clazz, classPK, layoutUuid, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout
+			addCPDisplayLayout(
+				long userId, long groupId, Class<?> clazz, long classPK,
+				String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutService.addCPDisplayLayout(
+			userId, groupId, clazz, classPK, layoutUuid);
 	}
 
 	@Override
@@ -78,6 +88,19 @@ public class CPDisplayLayoutServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpDisplayLayoutService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDisplayLayout>
+				searchCPDisplayLayout(
+					long companyId, long groupId, String className,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutService.searchCPDisplayLayout(
+			companyId, groupId, className, keywords, start, end, sort);
 	}
 
 	@Override

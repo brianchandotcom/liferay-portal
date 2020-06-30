@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,6 +94,9 @@ public class AutoDeployDir {
 					break;
 				}
 			}
+		}
+		else if (StringUtil.endsWith(fileName, ".jar") && !_isModule(file)) {
+			throw new AutoDeployException(fileName + " is an invalid module");
 		}
 		else if (StringUtil.endsWith(fileName, ".lpkg")) {
 			for (String curDirName : dirNames) {
@@ -326,6 +334,37 @@ public class AutoDeployDir {
 				processFile(file);
 			}
 		}
+	}
+
+	private static boolean _isModule(File file) throws AutoDeployException {
+		Manifest manifest = null;
+
+		try (JarFile jarFile = new JarFile(file)) {
+			manifest = jarFile.getManifest();
+		}
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
+		}
+
+		if (manifest == null) {
+			return false;
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		String bundleSymbolicName = attributes.getValue("Bundle-SymbolicName");
+
+		if (bundleSymbolicName == null) {
+			return false;
+		}
+
+		int index = bundleSymbolicName.indexOf(CharPool.SEMICOLON);
+
+		if (index != -1) {
+			bundleSymbolicName = bundleSymbolicName.substring(0, index);
+		}
+
+		return !bundleSymbolicName.isEmpty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);

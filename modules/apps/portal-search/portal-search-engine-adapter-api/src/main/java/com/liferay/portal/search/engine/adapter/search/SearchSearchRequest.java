@@ -183,11 +183,19 @@ public class SearchSearchRequest
 		_size = size;
 	}
 
+	public void setSize(Integer size) {
+		_size = size;
+	}
+
 	public void setSorts(Sort[] sorts) {
 		_sorts = sorts;
 	}
 
 	public void setStart(int start) {
+		_start = start;
+	}
+
+	public void setStart(Integer start) {
 		_start = start;
 	}
 

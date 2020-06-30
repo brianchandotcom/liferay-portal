@@ -77,10 +77,10 @@ public class MiniCartTag extends ComponentRendererTag {
 				}
 			}
 
+			String checkoutURL = StringPool.BLANK;
+
 			PortletURL commerceCheckoutPortletURL =
 				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request);
-
-			String checkoutURL = StringPool.BLANK;
 
 			if (commerceCheckoutPortletURL != null) {
 				checkoutURL = String.valueOf(commerceCheckoutPortletURL);
@@ -115,8 +115,7 @@ public class MiniCartTag extends ComponentRendererTag {
 			putValue("products", Collections.emptyList());
 			putValue("productsCount", 0);
 			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+				"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 			setTemplateNamespace("MiniCart.render");
 		}

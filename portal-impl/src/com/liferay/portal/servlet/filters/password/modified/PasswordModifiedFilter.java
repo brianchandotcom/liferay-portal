@@ -46,13 +46,13 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		if (_isPasswordModified(request)) {
 			AuthenticatedSessionManagerUtil.logout(request, response);
 
-			String redirect = PortalUtil.getCurrentCompleteURL(request);
-
-			if (!StringUtil.equals(request.getMethod(), HttpMethods.GET)) {
-				redirect = PortalUtil.getPortalURL(request);
+			if (StringUtil.equals(request.getMethod(), HttpMethods.GET)) {
+				response.sendRedirect(
+					PortalUtil.getCurrentCompleteURL(request));
 			}
-
-			response.sendRedirect(redirect);
+			else {
+				response.sendRedirect(PortalUtil.getPortalURL(request));
+			}
 		}
 		else {
 			filterChain.doFilter(request, response);
@@ -87,7 +87,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 				return false;
 			}
 
-			if (!request.isRequestedSessionIdValid() || (session == null) ||
+			if (!request.isRequestedSessionIdValid() ||
 				(session.getCreationTime() < passwordModifiedDate.getTime())) {
 
 				return true;

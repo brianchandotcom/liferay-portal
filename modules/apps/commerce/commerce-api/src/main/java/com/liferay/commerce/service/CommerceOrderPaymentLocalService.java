@@ -56,7 +56,7 @@ import java.util.List;
 public interface CommerceOrderPaymentLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderPaymentLocalServiceUtil} to access the commerce order payment local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderPaymentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -227,6 +227,11 @@ public interface CommerceOrderPaymentLocalService
 	public List<CommerceOrderPayment> getCommerceOrderPayments(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderPayment> getCommerceOrderPayments(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderPayment> orderByComparator);
+
 	/**
 	 * Returns the number of commerce order payments.
 	 *
@@ -234,6 +239,9 @@ public interface CommerceOrderPaymentLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderPaymentsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderPaymentsCount(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -245,6 +253,9 @@ public interface CommerceOrderPaymentLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

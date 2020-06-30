@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceChannelLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -258,6 +258,13 @@ public class CommerceChannelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannelByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceChannelByGroupId(groupId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
 			getCommerceChannelByOrderGroupId(long orderGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -327,6 +334,9 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -386,6 +396,15 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().updateCommerceChannel(
 			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
 			commerceCurrencyCode);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
+			updateCommerceChannelExternalReferenceCode(
+				long commerceChannelId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceChannelExternalReferenceCode(
+			commerceChannelId, externalReferenceCode);
 	}
 
 	public static CommerceChannelLocalService getService() {

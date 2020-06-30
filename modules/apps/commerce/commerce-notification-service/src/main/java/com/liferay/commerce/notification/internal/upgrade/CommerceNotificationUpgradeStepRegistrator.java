@@ -17,12 +17,16 @@ package com.liferay.commerce.notification.internal.upgrade;
 import com.liferay.commerce.notification.internal.upgrade.v2_0_0.CommerceNotificationTemplateAccountGroupRelUpgradeProcess;
 import com.liferay.commerce.notification.internal.upgrade.v2_1_0.CommerceNotificationQueueEntryUpgradeProcess;
 import com.liferay.commerce.notification.internal.upgrade.v2_2_0.CommerceNotificationTemplateUpgradeProcess;
+import com.liferay.commerce.notification.internal.upgrade.v2_2_1.CommerceNotificationTemplateGroupIdUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -54,6 +58,11 @@ public class CommerceNotificationUpgradeStepRegistrator
 			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
 			new CommerceNotificationTemplateUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_2_2_1,
+			new CommerceNotificationTemplateGroupIdUpgradeProcess(
+				_classNameLocalService, _groupLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"COMMERCE NOTIFICATION UPGRADE STEP REGISTRATOR FINISHED");
@@ -70,7 +79,15 @@ public class CommerceNotificationUpgradeStepRegistrator
 
 	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
 
+	private static final String _SCHEMA_VERSION_2_2_1 = "2.2.1";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceNotificationUpgradeStepRegistrator.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -35,11 +35,6 @@ public class CommerceDiscountCommerceAccountGroupRelServiceWrapper
 			commerceDiscountCommerceAccountGroupRelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountCommerceAccountGroupRelServiceUtil} to access the commerce discount commerce account group rel remote service. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountCommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public
 		com.liferay.commerce.discount.model.

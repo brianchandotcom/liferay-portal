@@ -76,6 +76,7 @@ public class CPDefinitionOptionRelWrapper
 		attributes.put("required", isRequired());
 		attributes.put("skuContributor", isSkuContributor());
 		attributes.put("key", getKey());
+		attributes.put("priceType", getPriceType());
 
 		return attributes;
 	}
@@ -190,6 +191,12 @@ public class CPDefinitionOptionRelWrapper
 
 		if (key != null) {
 			setKey(key);
+		}
+
+		String priceType = (String)attributes.get("priceType");
+
+		if (priceType != null) {
+			setPriceType(priceType);
 		}
 	}
 
@@ -493,6 +500,16 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	/**
+	 * Returns the price type of this cp definition option rel.
+	 *
+	 * @return the price type of this cp definition option rel
+	 */
+	@Override
+	public String getPriceType() {
+		return _cpDefinitionOptionRel.getPriceType();
+	}
+
+	/**
 	 * Returns the primary key of this cp definition option rel.
 	 *
 	 * @return the primary key of this cp definition option rel
@@ -627,11 +644,6 @@ public class CPDefinitionOptionRelWrapper
 		return _cpDefinitionOptionRel.isSkuContributor();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition option rel model instance should use the <code>CPDefinitionOptionRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinitionOptionRel.persist();
@@ -910,6 +922,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public void setNew(boolean n) {
 		_cpDefinitionOptionRel.setNew(n);
+	}
+
+	/**
+	 * Sets the price type of this cp definition option rel.
+	 *
+	 * @param priceType the price type of this cp definition option rel
+	 */
+	@Override
+	public void setPriceType(String priceType) {
+		_cpDefinitionOptionRel.setPriceType(priceType);
 	}
 
 	/**

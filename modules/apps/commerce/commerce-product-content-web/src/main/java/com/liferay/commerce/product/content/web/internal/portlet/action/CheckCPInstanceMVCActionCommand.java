@@ -95,7 +95,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
-			CPInstance cpInstance = _cpInstanceHelper.getCPInstance(
+			CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
 				cpDefinitionId, ddmFormValues);
 
 			if (cpInstance != null) {

@@ -32,11 +32,6 @@ public class CommerceCatalogServiceWrapper
 		_commerceCatalogService = commerceCatalogService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceCatalogServiceUtil} to access the commerce catalog remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.product.model.CommerceCatalog
 			addCommerceCatalog(
@@ -139,6 +134,17 @@ public class CommerceCatalogServiceWrapper
 		return _commerceCatalogService.updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceCatalog
+			updateCommerceCatalogExternalReferenceCode(
+				long commerceCatalogId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCatalogService.
+			updateCommerceCatalogExternalReferenceCode(
+				commerceCatalogId, externalReferenceCode);
 	}
 
 	@Override

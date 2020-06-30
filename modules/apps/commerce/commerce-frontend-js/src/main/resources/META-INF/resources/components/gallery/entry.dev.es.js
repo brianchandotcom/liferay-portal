@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import launcher from './entry.es';
 
 import '../../styles/main.scss';
@@ -14,9 +28,9 @@ const props = {
 		'photo-1526434426615-1abe81efcb0b',
 		'photo-1518131672697-613becd4fab5'
 	].map(img => ({
-		url: getImgUrl(img, 800),
 		thumbnailUrl: getImgUrl(img, 100),
-		title: img
+		title: img,
+		url: getImgUrl(img, 800)
 	}))
 };
 

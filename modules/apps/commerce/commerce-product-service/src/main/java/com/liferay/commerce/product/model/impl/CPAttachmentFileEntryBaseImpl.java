@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUti
 public abstract class CPAttachmentFileEntryBaseImpl
 	extends CPAttachmentFileEntryModelImpl implements CPAttachmentFileEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp attachment file entry model instance should use the <code>CPAttachmentFileEntry</code> interface instead.

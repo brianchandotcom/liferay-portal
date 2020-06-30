@@ -33,11 +33,6 @@ public class ExpandoColumnLocalServiceWrapper
 		_expandoColumnLocalService = expandoColumnLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnLocalServiceUtil} to access the expando column local service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
 			long tableId, String name, int type)
@@ -491,6 +486,9 @@ public class ExpandoColumnLocalServiceWrapper
 		return _expandoColumnLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

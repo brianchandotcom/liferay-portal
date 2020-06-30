@@ -40,6 +40,7 @@ public class CommerceAccountGroupFinderBaseImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("system", "system_");
 
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
@@ -49,9 +50,9 @@ public class CommerceAccountGroupFinderBaseImpl
 
 			field.set(this, dbColumnNames);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}

@@ -20,8 +20,12 @@
 	<div class="sheet-section">
 		<h3 class="sheet-subtitle"><liferay-ui:message key="permissions" /></h3>
 
+		<%
+		ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getSystemConfiguration(ExportImportServiceConfiguration.class);
+		%>
+
 		<liferay-staging:checkbox
-			checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>"
+			checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, exportImportServiceConfiguration.publishPermissionsByDefault()) %>"
 			description="<%= inputDescription %>"
 			disabled="<%= disableInputs %>"
 			label="<%= inputTitle %>"

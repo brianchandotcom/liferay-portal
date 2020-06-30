@@ -53,7 +53,7 @@ public class CommerceNotificationPortletResourcePermissionRegistrar {
 				CommerceNotificationConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
-					CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE)),
+					CommerceAdminPortletKeys.COMMERCE_ADMIN)),
 			properties);
 	}
 

@@ -64,7 +64,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			searchContext.setAttribute(Field.USER_ID, user.getUserId());
 			searchContext.setAttribute("paginationType", "regular");
 
-			String[] powwowParticipantKeys = {(user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_ATTENDEE), (user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_HOST)};
+			String[] powwowParticipantKeys = {user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_ATTENDEE, user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_HOST};
 
 			searchContext.setAttribute("powwowParticipantKeys", powwowParticipantKeys);
 

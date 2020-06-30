@@ -30,15 +30,15 @@
 		@include panel-body;
 	}
 
-	.facet-checkbox-label {
-		color: #7F848D;
+	.asset-type .facet-checkbox-label {
+		color: #7f848d;
 		font-size: 13px;
 		font-weight: 400;
 		line-height: 1.6;
 		padding-left: 25px;
 		position: relative;
 
-		input[type="checkbox"] {
+		input[type='checkbox'] {
 			left: 0;
 			position: absolute;
 			top: 2px;

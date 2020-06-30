@@ -4,14 +4,50 @@
 	line-height: 1.1;
 	width: 100%;
 
+	thead td {
+		height: 100%;
+		position: relative;
+		vertical-align: top;
+		z-index: 1;
+	}
+
+	.product-card {
+		box-shadow: none !important;
+		padding-bottom: 84px !important;
+		position: static !important;
+
+		&::before {
+			background-color: white;
+			border-radius: 8px;
+			bottom: 0;
+			content: '';
+			left: 1px;
+			position: absolute;
+			right: 1px;
+			top: 0;
+			z-index: -1;
+		}
+
+		.btn-add-to-cart {
+			bottom: 0;
+			left: 1px;
+			position: absolute;
+			width: calc(100% - 2px) !important;
+		}
+	}
+
 	tbody td {
-		border-right: 2px solid #F8F8F9;
+		border-right: 2px solid #f8f8f9;
 		padding: 15px;
 		vertical-align: baseline;
 
 		&:last-child {
-			border-right: none
+			border-right: none;
 		}
+	}
+
+	thead tr {
+		height: 1px;
 	}
 
 	tbody tr {

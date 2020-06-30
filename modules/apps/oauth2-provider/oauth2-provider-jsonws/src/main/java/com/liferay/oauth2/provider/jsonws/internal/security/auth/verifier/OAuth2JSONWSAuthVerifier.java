@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
@@ -100,6 +101,10 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 				accessToken.getOAuth2Application();
 
 			long companyId = oAuth2Application.getCompanyId();
+
+			if (companyId != CompanyThreadLocal.getCompanyId()) {
+				return authVerifierResult;
+			}
 
 			BearerTokenProvider bearerTokenProvider =
 				_bearerTokenProviderAccessor.getBearerTokenProvider(

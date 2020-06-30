@@ -33,7 +33,7 @@ public abstract class CPDefinitionGroupedEntryBaseImpl
 	extends CPDefinitionGroupedEntryModelImpl
 	implements CPDefinitionGroupedEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp definition grouped entry model instance should use the <code>CPDefinitionGroupedEntry</code> interface instead.

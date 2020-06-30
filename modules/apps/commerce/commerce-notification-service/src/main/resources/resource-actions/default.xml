@@ -5,8 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.notification</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminGroupInstancePortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminVirtualInstancePortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -34,8 +33,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.notification.model.CommerceNotificationTemplate</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminGroupInstancePortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminVirtualInstancePortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

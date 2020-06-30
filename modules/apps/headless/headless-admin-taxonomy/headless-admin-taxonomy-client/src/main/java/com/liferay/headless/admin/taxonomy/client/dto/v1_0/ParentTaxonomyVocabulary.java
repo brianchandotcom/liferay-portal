@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ParentTaxonomyVocabulary {
+public class ParentTaxonomyVocabulary implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -65,6 +65,11 @@ public class ParentTaxonomyVocabulary {
 	}
 
 	protected String name;
+
+	@Override
+	public ParentTaxonomyVocabulary clone() throws CloneNotSupportedException {
+		return (ParentTaxonomyVocabulary)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,10 +42,10 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceInventoryBookedQuantityModel
-	extends AuditedModel, BaseModel<CommerceInventoryBookedQuantity>,
+	extends AuditedModel, BaseModel<CommerceInventoryBookedQuantity>, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce inventory booked quantity model instance should use the {@link CommerceInventoryBookedQuantity} interface instead.
@@ -63,6 +64,22 @@ public interface CommerceInventoryBookedQuantityModel
 	 * @param primaryKey the primary key of this commerce inventory booked quantity
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce inventory booked quantity.
+	 *
+	 * @return the mvcc version of this commerce inventory booked quantity
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce inventory booked quantity.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory booked quantity
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce inventory booked quantity ID of this commerce inventory booked quantity.

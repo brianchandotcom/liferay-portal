@@ -69,7 +69,8 @@ public class TrackerAuthVerifierTest {
 			_url, "/o/auth-verifier-filter-tracker-default-test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+			Assert.assertEquals(
+				"remote-user-set", StringUtil.read(inputStream));
 		}
 	}
 

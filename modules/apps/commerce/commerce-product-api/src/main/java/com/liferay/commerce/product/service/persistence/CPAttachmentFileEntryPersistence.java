@@ -41,7 +41,7 @@ import java.util.Set;
 public interface CPAttachmentFileEntryPersistence
 	extends BasePersistence<CPAttachmentFileEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPAttachmentFileEntryUtil} to access the cp attachment file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

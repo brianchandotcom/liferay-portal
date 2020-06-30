@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
@@ -27,7 +28,7 @@ import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_TAX_METHODS,
 		"mvc.command.name=editCommerceTaxFixedRateAddressRel"
 	},
 	service = MVCRenderCommand.class
@@ -69,11 +70,12 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 			CommerceTaxFixedRateAddressRelsDisplayContext
 				commerceTaxFixedRateAddressRelsDisplayContext =
 					new CommerceTaxFixedRateAddressRelsDisplayContext(
+						_commerceChannelLocalService,
+						_commerceChannelModelResourcePermission,
 						_commerceCountryService, _commerceCurrencyLocalService,
 						_commerceRegionService, _commerceTaxMethodService,
 						_commerceTaxFixedRateAddressRelService,
-						_cpTaxCategoryService, _portletResourcePermission,
-						renderRequest);
+						_cpTaxCategoryService, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -100,6 +102,15 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 	}
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
+	)
+	private ModelResourcePermission<CommerceChannel>
+		_commerceChannelModelResourcePermission;
+
+	@Reference
 	private CommerceCountryService _commerceCountryService;
 
 	@Reference
@@ -120,11 +131,6 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.engine.fixed.web)"

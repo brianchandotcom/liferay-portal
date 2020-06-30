@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.subscription;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
@@ -23,6 +24,7 @@ import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,9 +55,13 @@ public class CommerceSubscriptionEntryHelperImpl
 				commerceOrder.getCommerceOrderId());
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
-
 			if (_isNewSubscription(commerceOrderItem)) {
+				CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+				if (cpInstance == null) {
+					continue;
+				}
+
 				CPSubscriptionInfo cpSubscriptionInfo =
 					cpInstance.getCPSubscriptionInfo();
 
@@ -69,12 +75,73 @@ public class CommerceSubscriptionEntryHelperImpl
 							cpSubscriptionInfo.getSubscriptionType(),
 							cpSubscriptionInfo.getMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
-								getSubscriptionTypeSettingsProperties());
+								getSubscriptionTypeSettingsProperties(),
+							cpSubscriptionInfo.getDeliverySubscriptionLength(),
+							cpSubscriptionInfo.getDeliverySubscriptionType(),
+							cpSubscriptionInfo.
+								getDeliveryMaxSubscriptionCycles(),
+							cpSubscriptionInfo.
+								getDeliverySubscriptionTypeSettingsProperties());
 				}
 			}
 		}
 	}
 
+	@Override
+	public void checkDeliverySubscriptionEntriesStatus(
+			List<CommerceSubscriptionEntry> commerceSubscriptionEntries)
+		throws Exception {
+
+		for (CommerceSubscriptionEntry commerceSubscriptionEntry :
+				commerceSubscriptionEntries) {
+
+			checkDeliverySubscriptionStatus(commerceSubscriptionEntry);
+		}
+	}
+
+	@Override
+	public void checkDeliverySubscriptionStatus(
+			CommerceSubscriptionEntry commerceSubscriptionEntry)
+		throws Exception {
+
+		Date now = new Date();
+
+		Date nextIterationDate =
+			commerceSubscriptionEntry.getNextIterationDate();
+
+		CommerceOrderItem commerceOrderItem =
+			commerceSubscriptionEntry.fetchCommerceOrderItem();
+
+		if ((commerceOrderItem != null) && now.after(nextIterationDate)) {
+			if (Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_ACTIVE,
+					commerceSubscriptionEntry.getSubscriptionStatus()) &&
+				Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_ACTIVE,
+					commerceSubscriptionEntry.
+						getDeliverySubscriptionStatus())) {
+
+				_addShipment(commerceOrderItem);
+
+				_commerceSubscriptionEntryLocalService.
+					incrementCommerceDeliverySubscriptionEntryCycle(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
+			}
+			else {
+				_commerceSubscriptionEntryLocalService.
+					updateDeliverySubscriptionStatus(
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId(),
+						CommerceSubscriptionEntryConstants.
+							SUBSCRIPTION_STATUS_SUSPENDED);
+			}
+		}
+	}
+
+	@Override
 	public void checkSubscriptionEntriesStatus(
 			List<CommerceSubscriptionEntry> commerceSubscriptionEntries)
 		throws Exception {
@@ -86,6 +153,7 @@ public class CommerceSubscriptionEntryHelperImpl
 		}
 	}
 
+	@Override
 	public void checkSubscriptionStatus(
 			CommerceSubscriptionEntry commerceSubscriptionEntry)
 		throws Exception {
@@ -125,6 +193,23 @@ public class CommerceSubscriptionEntryHelperImpl
 		}
 	}
 
+	private void _addShipment(CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+
+		_commerceShipmentLocalService.addCommerceDeliverySubscriptionShipment(
+			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
+			shippingAddress.getName(), shippingAddress.getDescription(),
+			shippingAddress.getStreet1(), shippingAddress.getStreet2(),
+			shippingAddress.getStreet3(), shippingAddress.getCity(),
+			shippingAddress.getZip(), shippingAddress.getCommerceRegionId(),
+			shippingAddress.getCommerceCountryId(),
+			shippingAddress.getPhoneNumber());
+	}
+
 	private boolean _isNewSubscription(CommerceOrderItem commerceOrderItem) {
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			_commerceSubscriptionEntryLocalService.
@@ -140,6 +225,9 @@ public class CommerceSubscriptionEntryHelperImpl
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
 	@Reference
 	private CommerceSubscriptionEngine _commerceSubscriptionEngine;

@@ -137,9 +137,6 @@ public class AssetTagsSelectorDisplayContext {
 			return _tagsSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SearchContainer tagsSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-tags");
 
@@ -164,7 +161,7 @@ public class AssetTagsSelectorDisplayContext {
 			new EntriesChecker(_renderRequest, _renderResponse));
 
 		int tagsCount = AssetTagServiceUtil.getTagsCount(
-			themeDisplay.getScopeGroupId(), _getKeywords());
+			_getGroupIds(), _getKeywords());
 
 		tagsSearchContainer.setTotal(tagsCount);
 

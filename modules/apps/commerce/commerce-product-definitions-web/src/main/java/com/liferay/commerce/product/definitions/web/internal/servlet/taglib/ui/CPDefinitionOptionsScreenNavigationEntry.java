@@ -19,7 +19,6 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -110,21 +109,15 @@ public class CPDefinitionOptionsScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		try {
-			CPDefinitionOptionRelDisplayContext
-				cpDefinitionOptionRelDisplayContext =
-					new CPDefinitionOptionRelDisplayContext(
-						_actionHelper, httpServletRequest,
-						_configurationProvider, _cpDefinitionOptionRelService,
-						_ddmFormFieldTypeServicesTracker, _itemSelector);
+		CPDefinitionOptionRelDisplayContext
+			cpDefinitionOptionRelDisplayContext =
+				new CPDefinitionOptionRelDisplayContext(
+					_actionHelper, httpServletRequest, _configurationProvider,
+					_ddmFormFieldTypeServicesTracker, _itemSelector);
 
-			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionOptionRelDisplayContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpDefinitionOptionRelDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
@@ -145,9 +138,6 @@ public class CPDefinitionOptionsScreenNavigationEntry
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

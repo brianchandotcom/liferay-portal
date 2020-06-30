@@ -33,11 +33,6 @@ public class CommerceShipmentItemServiceWrapper
 		_commerceShipmentItemService = commerceShipmentItemService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentItemServiceUtil} to access the commerce shipment item remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			addCommerceShipmentItem(
@@ -51,6 +46,10 @@ public class CommerceShipmentItemServiceWrapper
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
+	 */
+	@Deprecated
 	@Override
 	public void deleteCommerceShipmentItem(long commerceShipmentItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,6 +58,40 @@ public class CommerceShipmentItemServiceWrapper
 			commerceShipmentItemId);
 	}
 
+	@Override
+	public void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceShipmentItemService.deleteCommerceShipmentItem(
+			commerceShipmentItemId, restoreStockQuantity);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			fetchCommerceShipmentItem(
+				long commerceShipmentId, long commerceOrderItemId,
+				long commerceInventoryWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.fetchCommerceShipmentItem(
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			getCommerceShipmentItem(long commerceShipmentItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.getCommerceShipmentItem(
+			commerceShipmentItemId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
 			getCommerceShipmentItems(long commerceOrderItemId)
@@ -82,11 +115,41 @@ public class CommerceShipmentItemServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
+			getCommerceShipmentItemsByCommerceOrderItemId(
+				long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.
+			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
+	}
+
+	@Override
 	public int getCommerceShipmentItemsCount(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.getCommerceShipmentItemsCount(
 			commerceShipmentId);
+	}
+
+	@Override
+	public int getCommerceShipmentItemsCountByCommerceOrderItemId(
+			long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.
+			getCommerceShipmentItemsCountByCommerceOrderItemId(
+				commerceOrderItemId);
+	}
+
+	@Override
+	public int getCommerceShipmentOrderItemsQuantity(
+			long commerceShipmentId, long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.
+			getCommerceShipmentOrderItemsQuantity(
+				commerceShipmentId, commerceOrderItemId);
 	}
 
 	/**
@@ -107,6 +170,17 @@ public class CommerceShipmentItemServiceWrapper
 
 		return _commerceShipmentItemService.updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			updateCommerceShipmentItem(
+				long commerceShipmentItemId, long commerceInventoryWarehouseId,
+				int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.updateCommerceShipmentItem(
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	@Override

@@ -19,24 +19,31 @@
 <%
 CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
+
+Map<String, String> contextParams = new HashMap<>();
+
+contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+
 PortletURL portletURL = currentURLObj;
 
 portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
 %>
 
-<commerce-ui:table
-	dataProviderKey="commerceAccountUsers"
-	filter="<%= commerceAccountDisplayContext.getAccountFilter() %>"
-	itemPerPage="<%= 5 %>"
+<commerce-ui:dataset-display
+	contextParams="<%= contextParams %>"
+	dataProviderKey="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"
+	id="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"
+	itemsPerPage="<%= 10 %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	pageNumber="1"
+	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
-	tableName="commerceAccountUsers"
+	style="stacked"
 />
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(CommerceAccountActionKeys.MANAGE_MEMBERS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="commerce-button commerce-button--big js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
+		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= renderResponse.getNamespace() + "openUserInvitationModal();" %>' value="invite-user" />
 	</div>
 
 	<commerce-ui:user-invitation-modal
@@ -55,7 +62,6 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 	</aui:form>
 
 	<aui:script>
-
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openUserInvitationModal',
@@ -65,52 +71,47 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 			}
 		);
 
-		Liferay.provide(
-			window,
-			'removeCommerceAccountUser',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.REMOVE %>';
-				document.querySelector('#<portlet:namespace />userId').value = id;
+		Liferay.provide(window, 'removeCommerceAccountUser', function(id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'<%= Constants.REMOVE %>';
+			document.querySelector('#<portlet:namespace />userId').value = id;
+
+			submitForm(document.<portlet:namespace />inviteUserFm);
+		});
+
+		Liferay.componentReady('userInvitationModal').then(function(
+			userInvitationModal
+		) {
+			userInvitationModal.on('inviteUserToAccount', function(users) {
+				let existingUsersIds = users
+					.filter(function(el) {
+						return el.userId;
+					})
+					.map(function(usr) {
+						return usr.userId;
+					})
+					.join(',');
+
+				let newUsersEmails = users
+					.filter(function(el) {
+						return !el.userId;
+					})
+					.map(function(usr) {
+						return usr.email;
+					})
+					.join(',');
+
+				document.querySelector(
+					'#<portlet:namespace />userIds'
+				).value = existingUsersIds;
+				document.querySelector(
+					'#<portlet:namespace />emailAddresses'
+				).value = newUsersEmails;
+
+				userInvitationModal.close();
 
 				submitForm(document.<portlet:namespace />inviteUserFm);
-			}
-		);
-
-		Liferay.componentReady('userInvitationModal').then(
-			function(userInvitationModal) {
-				userInvitationModal.on(
-					'inviteUserToAccount',
-					function(users) {
-						let existingUsersIds = users.filter(
-							function(el) {
-								return el.userId
-							}
-						).map(
-							function(usr) {
-								return usr.userId
-							}
-						).join(',');
-
-						let newUsersEmails = users.filter(
-							function(el) {
-								return !el.userId
-							}
-						).map(
-							function(usr) {
-								return usr.email
-							}
-						).join(',');
-
-						document.querySelector('#<portlet:namespace />userIds').value = existingUsersIds;
-						document.querySelector('#<portlet:namespace />emailAddresses').value = newUsersEmails;
-
-						userInvitationModal.close();
-
-						submitForm(document.<portlet:namespace />inviteUserFm);
-					}
-				);
-			}
-		);
-
+			});
+		});
 	</aui:script>
 </c:if>

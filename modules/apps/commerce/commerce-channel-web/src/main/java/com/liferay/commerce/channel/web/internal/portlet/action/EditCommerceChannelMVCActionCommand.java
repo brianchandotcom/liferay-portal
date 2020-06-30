@@ -14,22 +14,43 @@
 
 package com.liferay.commerce.channel.web.internal.portlet.action;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.channel.CommerceChannelType;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
+import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,6 +73,40 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
+
+	protected CommerceChannel addCommerceChannel(ActionRequest actionRequest)
+		throws Exception {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String type = ParamUtil.getString(actionRequest, "type");
+		String commerceCurrencyCode = ParamUtil.getString(
+			actionRequest, "commerceCurrencyCode");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceChannel.class.getName(), actionRequest);
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		CommerceChannelType commerceChannelType =
+			_commerceChannelTypeRegistry.getCommerceChannelType(type);
+
+		UnicodeProperties typeSettingsProperties = null;
+
+		String channelType = commerceChannelType.getKey();
+
+		if ((commerceChannelType != null) &&
+			!channelType.equals(CommerceChannelConstants.CHANNEL_TYPE_SITE)) {
+
+			typeSettingsProperties =
+				commerceChannelType.getTypeSettingsProperties(
+					httpServletRequest.getParameterMap());
+		}
+
+		return _commerceChannelService.addCommerceChannel(
+			0, name, type, typeSettingsProperties, commerceCurrencyCode, null,
+			serviceContext);
+	}
 
 	protected void deleteCommerceChannel(ActionRequest actionRequest)
 		throws Exception {
@@ -86,10 +141,14 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceChannel(actionRequest);
 			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.UPDATE)) {
-
+			else if (cmd.equals(Constants.ADD)) {
+				addCommerceChannel(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
 				updateCommerceChannel(actionRequest);
+			}
+			else if (cmd.equals("selectSite")) {
+				selectSite(actionRequest);
 			}
 		}
 		catch (PrincipalException pe) {
@@ -99,49 +158,131 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CommerceChannel updateCommerceChannel(ActionRequest actionRequest)
+	protected ObjectValuePair<Long, String> getWorkflowDefinitionOVP(
+		ActionRequest actionRequest, long typePK, String typePrefix) {
+
+		String workflowDefinition = ParamUtil.getString(
+			actionRequest, typePrefix + "WorkflowDefinition");
+
+		return new ObjectValuePair<>(typePK, workflowDefinition);
+	}
+
+	protected CommerceChannel selectSite(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceChannelId = ParamUtil.getLong(
 			actionRequest, "commerceChannelId");
 
 		long siteGroupId = ParamUtil.getLong(actionRequest, "siteGroupId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		return _commerceChannelService.updateCommerceChannel(
+			commerceChannel.getCommerceChannelId(), siteGroupId,
+			commerceChannel.getName(), commerceChannel.getType(),
+			commerceChannel.getTypeSettingsProperties(),
+			commerceChannel.getCommerceCurrencyCode());
+	}
+
+	protected CommerceChannel updateCommerceChannel(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+
 		String name = ParamUtil.getString(actionRequest, "name");
-		String type = ParamUtil.getString(actionRequest, "type");
 		String commerceCurrencyCode = ParamUtil.getString(
 			actionRequest, "commerceCurrencyCode");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceChannel.class.getName(), actionRequest);
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		CommerceChannelType commerceChannelType =
-			_commerceChannelTypeRegistry.getCommerceChannelType(type);
-
-		UnicodeProperties typeSettingsProperties = null;
-
-		String channelType = commerceChannelType.getKey();
-
-		if ((commerceChannelType != null) &&
-			!channelType.equals(CommerceChannelConstants.CHANNEL_TYPE_SITE)) {
-
-			typeSettingsProperties =
-				commerceChannelType.getTypeSettingsProperties(
-					httpServletRequest.getParameterMap());
-		}
-
-		if (commerceChannelId <= 0) {
-			return _commerceChannelService.addCommerceChannel(
-				siteGroupId, name, type, typeSettingsProperties,
-				commerceCurrencyCode, null, serviceContext);
-		}
+		_updateSiteType(commerceChannel, actionRequest);
+		_updatePurchcaseOrderNumber(commerceChannel, actionRequest);
+		updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
 
 		return _commerceChannelService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
-			commerceCurrencyCode);
+			commerceChannelId, commerceChannel.getSiteGroupId(), name,
+			commerceChannel.getType(),
+			commerceChannel.getTypeSettingsProperties(), commerceCurrencyCode);
 	}
+
+	protected void updateWorkflowDefinitionLinks(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_commerceChannelPermission.check(
+			themeDisplay.getPermissionChecker(), commerceChannel,
+			ActionKeys.UPDATE);
+
+		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
+			new ArrayList<>(2);
+
+		workflowDefinitionOVPs.add(
+			getWorkflowDefinitionOVP(
+				actionRequest, CommerceOrderConstants.TYPE_PK_APPROVAL,
+				"buyer-order-approval"));
+		workflowDefinitionOVPs.add(
+			getWorkflowDefinitionOVP(
+				actionRequest, CommerceOrderConstants.TYPE_PK_FULFILLMENT,
+				"seller-order-acceptance"));
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
+			_portal.getUserId(actionRequest), commerceChannel.getCompanyId(),
+			commerceChannel.getGroupId(), CommerceOrder.class.getName(), 0,
+			workflowDefinitionOVPs);
+	}
+
+	private void _updatePurchcaseOrderNumber(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws Exception {
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "settings--");
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.ORDER_SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
+	}
+
+	private void _updateSiteType(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws Exception {
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "settings--");
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceAccountConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
+	}
+
+	@Reference
+	private CommerceChannelPermission _commerceChannelPermission;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
@@ -150,6 +291,16 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 	private CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

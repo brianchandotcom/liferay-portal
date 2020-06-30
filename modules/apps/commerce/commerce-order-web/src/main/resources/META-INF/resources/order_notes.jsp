@@ -17,25 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String taglibIconCssClass = "icon-file-text";
+String taglibMessage = "notes";
+
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
 
-String taglibIconCssClass = "icon-file-text";
-String taglibMessage = "notes";
-
 int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
-
-if (commerceOrderNotesCount <= 0) {
-	taglibIconCssClass += " no-notes";
-}
 
 if (commerceOrderNotesCount == 1) {
 	taglibMessage = LanguageUtil.get(request, "1-note");
 }
 else {
+	if (commerceOrderNotesCount <= 0) {
+		taglibIconCssClass += " no-notes";
+	}
+
 	taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
 }
 %>

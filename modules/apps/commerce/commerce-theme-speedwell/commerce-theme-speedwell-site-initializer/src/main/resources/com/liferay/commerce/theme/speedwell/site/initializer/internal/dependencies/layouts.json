@@ -76,6 +76,11 @@
 				"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell"
 			},
 			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 5,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet"
+			},
+			{
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell"
@@ -95,13 +100,6 @@
 					"lfr-theme:regular:wide-layout": "true"
 				},
 				"name": "Category",
-				"permissions": [
-					{
-						"actionIds": [],
-						"roleName": "Guest",
-						"scope": 4
-					}
-				],
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",

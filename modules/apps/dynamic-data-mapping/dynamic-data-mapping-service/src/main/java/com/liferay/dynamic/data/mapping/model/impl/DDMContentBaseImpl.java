@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMContentLocalServiceUtil;
 public abstract class DDMContentBaseImpl
 	extends DDMContentModelImpl implements DDMContent {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm content model instance should use the <code>DDMContent</code> interface instead.

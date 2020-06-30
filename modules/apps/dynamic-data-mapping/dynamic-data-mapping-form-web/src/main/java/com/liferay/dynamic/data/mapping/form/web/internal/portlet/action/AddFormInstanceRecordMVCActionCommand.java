@@ -112,7 +112,7 @@ public class AddFormInstanceRecordMVCActionCommand
 		_addFormInstanceMVCCommandHelper.
 			updateRequiredFieldsAccordingToVisibility(
 				actionRequest, ddmForm, ddmFormValues,
-				themeDisplay.getLocale());
+				ddmForm.getDefaultLocale());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);

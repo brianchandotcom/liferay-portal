@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface DLFileVersion
 	extends DLFileVersionModel, PersistedModel, TreeModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

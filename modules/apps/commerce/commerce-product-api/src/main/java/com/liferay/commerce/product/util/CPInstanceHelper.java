@@ -22,6 +22,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -36,15 +37,27 @@ import javax.portlet.RenderResponse;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @ProviderType
 public interface CPInstanceHelper {
 
+	public CPInstance fetchCPInstance(
+			long cpDefinitionId, String serializedDDMFormValues)
+		throws PortalException;
+
+	public List<CPDefinitionOptionValueRel> filterCPDefinitionOptionValueRels(
+			long cpDefinitionOptionRelId,
+			List<Long> skuCombinationCPDefinitionOptionValueRelIds)
+		throws PortalException;
+
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long commerceAccountId, long commerceChannelGroupId,
 			long cpDefinitionId, String serializedDDMFormValues, int type)
 		throws Exception;
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long commerceAccountId, long commerceChannelGroupId,
 			long cpDefinitionId, String serializedDDMFormValues, int type,
 			int start, int end)
 		throws Exception;
@@ -57,14 +70,17 @@ public interface CPInstanceHelper {
 			getCPDefinitionOptionRelsMap(long cpDefinitionId, String json)
 		throws PortalException;
 
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
-			long cpDefinitionId, String optionKey,
-			Map<String, String> optionMap)
-		throws Exception;
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			getCPInstanceCPDefinitionOptionRelsMap(long cpInstanceId)
+		throws PortalException;
 
-	public CPInstance getCPInstance(
-			long cpDefinitionId, String serializedDDMFormValues)
-		throws Exception;
+	public List<CPDefinitionOptionValueRel>
+			getCPInstanceCPDefinitionOptionValueRels(
+				long cpDefinitionId, long cpDefinitionOptionRelId)
+		throws PortalException;
+
+	public List<CPInstanceOptionValueRel>
+		getCPInstanceCPInstanceOptionValueRels(long cpInstanceId);
 
 	public DDMForm getCPInstanceDDMForm(
 			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
@@ -72,6 +88,9 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public String getCPInstanceThumbnailSrc(long cpInstanceId) throws Exception;
+
+	public CPInstance getDefaultCPInstance(long cpDefinitionId)
+		throws PortalException;
 
 	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
 		throws Exception;

@@ -31,11 +31,6 @@ public class RecentLayoutBranchLocalServiceWrapper
 		_recentLayoutBranchLocalService = recentLayoutBranchLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link RecentLayoutBranchLocalServiceUtil} to access the recent layout branch local service. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.RecentLayoutBranch
 			addRecentLayoutBranch(
@@ -265,6 +260,9 @@ public class RecentLayoutBranchLocalServiceWrapper
 		return _recentLayoutBranchLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

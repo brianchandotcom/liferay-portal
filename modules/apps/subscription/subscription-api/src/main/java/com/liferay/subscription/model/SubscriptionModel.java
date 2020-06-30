@@ -46,7 +46,7 @@ public interface SubscriptionModel
 	extends AttachedModel, BaseModel<Subscription>, GroupedModel, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a subscription model instance should use the {@link Subscription} interface instead.

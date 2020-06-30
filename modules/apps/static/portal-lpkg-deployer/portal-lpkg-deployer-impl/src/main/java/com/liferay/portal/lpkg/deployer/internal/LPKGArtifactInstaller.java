@@ -14,6 +14,8 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
@@ -22,11 +24,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +45,6 @@ import org.apache.felix.fileinstall.ArtifactInstaller;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.Version;
@@ -71,52 +75,21 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void install(File file) throws Exception {
-		List<File> lpkgFiles = ContainerLPKGUtil.deploy(file, _bundleContext);
+		Properties properties = new Properties();
 
-		if (lpkgFiles != null) {
-			return;
-		}
+		List<File> lpkgFiles = ContainerLPKGUtil.deploy(
+			file, _bundleContext, properties);
 
-		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
-
-		Bundle existingBundle = _bundleContext.getBundle(canonicalPath);
-
-		if (existingBundle != null) {
-			update(file);
-		}
-
-		Properties properties = _readMarketplaceProperties(file);
-
-		if (GetterUtil.getBoolean(
-				properties.getProperty("restart-required"), true)) {
-
-			if (existingBundle == null) {
-				_logRestartRequired(canonicalPath);
-			}
+		if (lpkgFiles == null) {
+			_install(file, properties);
 
 			return;
 		}
 
-		for (Bundle bundle : _lpkgDeployer.deploy(_bundleContext, file)) {
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
+		try (SafeClosable safeCloseable =
+				LPKGBatchInstallThreadLocal.setBatchInstallInProcess(true)) {
 
-			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-			if (fragmentHost != null) {
-				continue;
-			}
-
-			try {
-				bundle.start();
-			}
-			catch (BundleException be) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to start ", String.valueOf(bundle), " for ",
-						String.valueOf(file)),
-					be);
-			}
+			_batchInstall(lpkgFiles);
 		}
 	}
 
@@ -132,69 +105,103 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void update(File file) throws Exception {
-		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
+		_update(file, _readMarketplaceProperties(file));
+	}
 
-		Bundle bundle = _bundleContext.getBundle(canonicalPath);
+	private void _batchInstall(List<File> lpkgFiles) throws Exception {
+		Map<Bundle, List<Bundle>> lpkgBundles = new HashMap<>();
 
-		if (bundle != null) {
-			Version currentVersion = bundle.getVersion();
+		for (File file : lpkgFiles) {
+			Properties properties = new Properties();
 
-			Properties properties = _readMarketplaceProperties(file);
+			try (ZipFile zipFile = new ZipFile(file)) {
+				ZipEntry zipEntry = zipFile.getEntry(
+					"liferay-marketplace.properties");
 
-			Version newVersion = new Version(properties.getProperty("version"));
+				if (zipEntry != null) {
+					try (InputStream inputStream = zipFile.getInputStream(
+							zipEntry)) {
 
-			if (newVersion.compareTo(currentVersion) > 0) {
-				if (GetterUtil.getBoolean(
-						properties.getProperty("restart-required"), true)) {
-
-					_logRestartRequired(canonicalPath);
-
-					return;
-				}
-
-				Map<Bundle, List<Bundle>> deployedLPKGBundles =
-					_lpkgDeployer.getDeployedLPKGBundles();
-
-				List<Bundle> installedBundles = deployedLPKGBundles.get(bundle);
-
-				Set<Bundle> wrapperBundles = new HashSet<>();
-
-				for (Bundle installedBundle : installedBundles) {
-					Dictionary<String, String> headers = bundle.getHeaders(
-						StringPool.BLANK);
-
-					if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
-						wrapperBundles.add(installedBundle);
+						properties.load(inputStream);
 					}
 				}
+			}
 
-				if (!wrapperBundles.isEmpty()) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Refreshing ", String.valueOf(wrapperBundles),
-								" to update ", String.valueOf(bundle)));
-					}
+			List<Bundle> bundles = _install(file, properties);
 
-					FrameworkEvent frameworkEvent = _refreshBundles(
-						wrapperBundles);
-
-					if (frameworkEvent.getType() !=
-							FrameworkEvent.PACKAGES_REFRESHED) {
-
-						_log.error(
-							StringBundler.concat(
-								"Unable to refresh ",
-								String.valueOf(wrapperBundles),
-								" because of framework event ",
-								String.valueOf(frameworkEvent)),
-							frameworkEvent.getThrowable());
-					}
-				}
-
-				bundle.update(_lpkgDeployer.toBundle(file));
+			if (!bundles.isEmpty()) {
+				lpkgBundles.put(bundles.remove(0), bundles);
 			}
 		}
+
+		for (Map.Entry<Bundle, List<Bundle>> entry : lpkgBundles.entrySet()) {
+			List<Bundle> bundles = entry.getValue();
+
+			for (Bundle bundle : bundles) {
+				try {
+					BundleStartLevelUtil.setStartLevelAndStart(
+						bundle,
+						PropsValues.
+							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+						_bundleContext);
+				}
+				catch (BundleException be) {
+					_log.error(
+						"Rollback bundle installation for " + bundles, be);
+
+					Bundle lpkgBundle = entry.getKey();
+
+					lpkgBundle.uninstall();
+
+					break;
+				}
+			}
+		}
+	}
+
+	private List<Bundle> _install(File file, Properties properties)
+		throws Exception {
+
+		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
+
+		Bundle existingBundle = _bundleContext.getBundle(canonicalPath);
+
+		if (existingBundle != null) {
+			_update(file, properties);
+
+			return Collections.emptyList();
+		}
+
+		if (GetterUtil.getBoolean(
+				properties.getProperty("restart-required"), true)) {
+
+			if (existingBundle == null) {
+				_logRestartRequired(canonicalPath);
+			}
+
+			return Collections.emptyList();
+		}
+
+		List<Bundle> bundles = _lpkgDeployer.deploy(_bundleContext, file);
+
+		if (bundles.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Bundle lpkgBundle = bundles.get(0);
+
+		try {
+			lpkgBundle.start();
+		}
+		catch (BundleException be) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to start ", String.valueOf(lpkgBundle), " for ",
+					String.valueOf(file)),
+				be);
+		}
+
+		return bundles;
 	}
 
 	private void _logRestartRequired(String canonicalPath) {
@@ -257,6 +264,70 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			});
 
 		return defaultNoticeableFuture.get();
+	}
+
+	private void _update(File file, Properties properties) throws Exception {
+		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
+
+		Bundle bundle = _bundleContext.getBundle(canonicalPath);
+
+		if (bundle != null) {
+			Version currentVersion = bundle.getVersion();
+
+			Version newVersion = new Version(properties.getProperty("version"));
+
+			if (newVersion.compareTo(currentVersion) > 0) {
+				if (GetterUtil.getBoolean(
+						properties.getProperty("restart-required"), true)) {
+
+					_logRestartRequired(canonicalPath);
+
+					return;
+				}
+
+				Map<Bundle, List<Bundle>> deployedLPKGBundles =
+					_lpkgDeployer.getDeployedLPKGBundles();
+
+				List<Bundle> installedBundles = deployedLPKGBundles.get(bundle);
+
+				Set<Bundle> wrapperBundles = new HashSet<>();
+
+				for (Bundle installedBundle : installedBundles) {
+					Dictionary<String, String> headers = bundle.getHeaders(
+						StringPool.BLANK);
+
+					if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
+						wrapperBundles.add(installedBundle);
+					}
+				}
+
+				if (!wrapperBundles.isEmpty()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Refreshing ", String.valueOf(wrapperBundles),
+								" to update ", String.valueOf(bundle)));
+					}
+
+					FrameworkEvent frameworkEvent = _refreshBundles(
+						wrapperBundles);
+
+					if (frameworkEvent.getType() !=
+							FrameworkEvent.PACKAGES_REFRESHED) {
+
+						_log.error(
+							StringBundler.concat(
+								"Unable to refresh ",
+								String.valueOf(wrapperBundles),
+								" because of framework event ",
+								String.valueOf(frameworkEvent)),
+							frameworkEvent.getThrowable());
+					}
+				}
+
+				bundle.update(_lpkgDeployer.toBundle(file));
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

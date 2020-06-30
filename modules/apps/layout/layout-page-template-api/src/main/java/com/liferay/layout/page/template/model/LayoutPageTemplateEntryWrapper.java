@@ -612,11 +612,6 @@ public class LayoutPageTemplateEntryWrapper
 		return _layoutPageTemplateEntry.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a layout page template entry model instance should use the <code>LayoutPageTemplateEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_layoutPageTemplateEntry.persist();

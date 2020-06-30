@@ -30,12 +30,12 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editDisplayPageURL">
+		<liferay-portlet:renderURL plid="<%= GroupControlPanelLayoutUtil.getGroupControlPanelPlid(themeDisplay.getSiteGroup()) %>" var="editDisplayPageURL">
 			<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"

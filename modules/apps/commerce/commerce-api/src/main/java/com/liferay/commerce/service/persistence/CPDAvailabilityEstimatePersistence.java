@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPDAvailabilityEstimatePersistence
 	extends BasePersistence<CPDAvailabilityEstimate> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDAvailabilityEstimateUtil} to access the cpd availability estimate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

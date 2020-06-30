@@ -58,40 +58,38 @@ List<CommerceDiscountCommerceAccountGroupRel> commerceDiscountCommerceAccountGro
 <aui:button name="selectCommerceAccountGroup" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommerceAccountGroup').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	$('#<portlet:namespace />selectCommerceAccountGroup').on('click', function(
+		event
+	) {
+		event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'accountGroupSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var <portlet:namespace />addCommerceAccountGroupIds = [];
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: 'accountGroupSelectItem',
+			on: {
+				selectedItemChange: function(event) {
+					var <portlet:namespace />addCommerceAccountGroupIds = [];
 
-							var selectedItems = event.newVal;
+					var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								var A = AUI();
+					if (selectedItems) {
+						var A = AUI();
 
-								A.Array.each(
-									selectedItems,
-									function(item, index, selectedItems) {
-										<portlet:namespace />addCommerceAccountGroup(item);
-									}
-								);
-							}
-						}
-					},
-					title: '<liferay-ui:message key="select-account-group" />',
-					url: '<%= commerceDiscountDisplayContext.getItemSelectorUrl() %>'
+						A.Array.each(selectedItems, function(
+							item,
+							index,
+							selectedItems
+						) {
+							<portlet:namespace />addCommerceAccountGroup(item);
+						});
+					}
 				}
-			);
+			},
+			title: '<liferay-ui:message key="select-account-group" />',
+			url: '<%= commerceDiscountDisplayContext.getItemSelectorUrl() %>'
+		});
 
-			itemSelectorDialog.open();
-		}
-	);
+		itemSelectorDialog.open();
+	});
 </aui:script>
 
 <aui:script>
@@ -101,41 +99,69 @@ List<CommerceDiscountCommerceAccountGroupRel> commerceDiscountCommerceAccountGro
 	function <portlet:namespace />addCommerceAccountGroup(item) {
 		var A = AUI();
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceDiscountCommerceAccountGroupRelSearchContainer');
+		var searchContainer = Liferay.SearchContainer.get(
+			'<portlet:namespace />commerceDiscountCommerceAccountGroupRelSearchContainer'
+		);
 
 		var rowColumns = [];
 
 		rowColumns.push(item.name);
-		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item.commerceAccountGroupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceAccountGroupIcon) %></a>');
+		rowColumns.push(
+			'<a class="float-right modify-link" data-rowId="' +
+				item.commerceAccountGroupId +
+				'" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceAccountGroupIcon) %></a>'
+		);
 
-		A.Array.removeItem(<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds, item.commerceAccountGroupId);
+		A.Array.removeItem(
+			<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds,
+			item.commerceAccountGroupId
+		);
 
-		<portlet:namespace />addCommerceAccountGroupIds.push(item.commerceAccountGroupId);
+		<portlet:namespace />addCommerceAccountGroupIds.push(
+			item.commerceAccountGroupId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.join(
+			','
+		);
 
 		searchContainer.addRow(rowColumns, item.commerceAccountGroupId);
 
 		searchContainer.updateDataStore();
 	}
 
-	function <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRel(commerceDiscountCommerceAccountGroupRelId) {
+	function <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRel(
+		commerceDiscountCommerceAccountGroupRelId
+	) {
 		var A = AUI();
 
-		A.Array.removeItem(<portlet:namespace />addCommerceAccountGroupIds, commerceDiscountCommerceAccountGroupRelId);
+		A.Array.removeItem(
+			<portlet:namespace />addCommerceAccountGroupIds,
+			commerceDiscountCommerceAccountGroupRelId
+		);
 
-		<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.push(commerceDiscountCommerceAccountGroupRelId);
+		<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.push(
+			commerceDiscountCommerceAccountGroupRelId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRelIds.join(
+			','
+		);
 	}
 </aui:script>
 
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
 
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceDiscountCommerceAccountGroupRelSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commerceDiscountCommerceAccountGroupRelSearchContainer'
+	);
 
 	var searchContainerContentBox = searchContainer.get('contentBox');
 
@@ -150,7 +176,9 @@ List<CommerceDiscountCommerceAccountGroupRel> commerceDiscountCommerceAccountGro
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
-			<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRel(rowId);
+			<portlet:namespace />deleteCommerceDiscountCommerceAccountGroupRel(
+				rowId
+			);
 		},
 		'.modify-link'
 	);

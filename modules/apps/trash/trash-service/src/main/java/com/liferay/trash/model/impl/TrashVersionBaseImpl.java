@@ -32,7 +32,7 @@ import com.liferay.trash.service.TrashVersionLocalServiceUtil;
 public abstract class TrashVersionBaseImpl
 	extends TrashVersionModelImpl implements TrashVersion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a trash version model instance should use the <code>TrashVersion</code> interface instead.

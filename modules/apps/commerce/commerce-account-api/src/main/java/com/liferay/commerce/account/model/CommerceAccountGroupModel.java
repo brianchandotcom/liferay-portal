@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceAccountGroupModel
 	extends AuditedModel, BaseModel<CommerceAccountGroup>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce account group model instance should use the {@link CommerceAccountGroup} interface instead.

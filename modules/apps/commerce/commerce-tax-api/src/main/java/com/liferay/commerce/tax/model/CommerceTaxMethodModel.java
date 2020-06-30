@@ -48,7 +48,7 @@ public interface CommerceTaxMethodModel
 	extends BaseModel<CommerceTaxMethod>, GroupedModel, LocalizedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce tax method model instance should use the {@link CommerceTaxMethod} interface instead.

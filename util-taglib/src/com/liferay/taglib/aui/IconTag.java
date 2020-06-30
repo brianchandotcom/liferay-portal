@@ -173,8 +173,9 @@ public class IconTag extends BaseIconTag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String label = getLabel();
 				String title = GetterUtil.getString(getImage());
+
+				String label = getLabel();
 
 				if (label != null) {
 					ResourceBundle resourceBundle =
@@ -183,13 +184,13 @@ public class IconTag extends BaseIconTag {
 
 					title = HtmlUtil.escapeAttribute(
 						LanguageUtil.get(resourceBundle, label));
-
-					jspWriter.write(title);
 				}
 
 				if (title == null) {
 					title = "Icon";
 				}
+
+				jspWriter.write(title);
 
 				jspWriter.write("\" ");
 				jspWriter.write(

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,10 +42,10 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceInventoryWarehouseItemModel
-	extends AuditedModel, BaseModel<CommerceInventoryWarehouseItem>,
+	extends AuditedModel, BaseModel<CommerceInventoryWarehouseItem>, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce inventory warehouse item model instance should use the {@link CommerceInventoryWarehouseItem} interface instead.
@@ -63,6 +64,22 @@ public interface CommerceInventoryWarehouseItemModel
 	 * @param primaryKey the primary key of this commerce inventory warehouse item
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this commerce inventory warehouse item.
+	 *
+	 * @return the mvcc version of this commerce inventory warehouse item
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this commerce inventory warehouse item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory warehouse item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce inventory warehouse item.

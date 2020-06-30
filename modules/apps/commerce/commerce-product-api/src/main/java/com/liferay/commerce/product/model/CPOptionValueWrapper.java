@@ -428,11 +428,6 @@ public class CPOptionValueWrapper
 		return _cpOptionValue.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp option value model instance should use the <code>CPOptionValue</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpOptionValue.persist();

@@ -33,7 +33,7 @@ public abstract class CommerceAccountGroupRelBaseImpl
 	extends CommerceAccountGroupRelModelImpl
 	implements CommerceAccountGroupRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account group rel model instance should use the <code>CommerceAccountGroupRel</code> interface instead.

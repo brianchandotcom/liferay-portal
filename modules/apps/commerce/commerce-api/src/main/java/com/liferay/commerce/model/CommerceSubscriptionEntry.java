@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceSubscriptionEntry
 	extends CommerceSubscriptionEntryModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -68,17 +68,22 @@ public interface CommerceSubscriptionEntry
 	public com.liferay.commerce.product.model.CPDefinition fetchCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance();
 
 	public long getCPDefinitionId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public long getCPInstanceId()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public long getCPInstanceId();
+
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getDeliverySubscriptionTypeSettingsProperties();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSubscriptionTypeSettingsProperties();
+
+	public void setDeliverySubscriptionTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			deliverySubscriptionTypeSettingsProperties);
 
 	public void setSubscriptionTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties

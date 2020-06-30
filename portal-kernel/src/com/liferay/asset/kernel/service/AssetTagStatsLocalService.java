@@ -58,7 +58,7 @@ import java.util.List;
 public interface AssetTagStatsLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetTagStatsLocalServiceUtil} to access the asset tag stats local service. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -262,6 +262,9 @@ public interface AssetTagStatsLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

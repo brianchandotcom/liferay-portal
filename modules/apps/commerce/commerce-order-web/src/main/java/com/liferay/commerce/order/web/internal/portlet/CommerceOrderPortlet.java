@@ -16,10 +16,7 @@ package com.liferay.commerce.order.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
-import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -95,9 +92,7 @@ public class CommerceOrderPortlet extends MVCPortlet {
 				CommerceOrderListDisplayContext
 					commerceOrderListDisplayContext =
 						new CommerceOrderListDisplayContext(
-							_commerceChannelService, _commerceOrderLocalService,
-							_commerceOrderNoteService, _groupLocalService,
-							_jsonFactory, renderRequest);
+							_commerceOrderNoteService, renderRequest);
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -112,18 +107,9 @@ public class CommerceOrderPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
-
-	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

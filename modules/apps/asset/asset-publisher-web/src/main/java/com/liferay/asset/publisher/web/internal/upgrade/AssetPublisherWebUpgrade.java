@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.upgrade;
 
-import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.asset.publisher.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.asset.publisher.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -33,7 +33,7 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.4", new DummyUpgradeStep());
 
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradePortletId(),
@@ -43,41 +43,32 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new com.liferay.asset.publisher.web.upgrade.v1_0_1.
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_1.
 				UpgradePortletPreferences(_saxReader));
 
 		registry.register(
 			"1.0.1", "1.0.2",
-			new com.liferay.asset.publisher.web.upgrade.v1_0_2.
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_2.
 				UpgradePortletPreferences());
 
 		registry.register(
 			"1.0.2", "1.0.3",
-			new com.liferay.asset.publisher.web.upgrade.v1_2_0.
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_3.
+				UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.3", "1.0.4",
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_4.
 				UpgradePortletPreferences());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLinkLocalService(
-		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
-
-		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAXReader(SAXReader saxReader) {
-		_saxReader = saxReader;
-	}
-
+	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private SAXReader _saxReader;
 
 }

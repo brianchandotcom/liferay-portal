@@ -59,6 +59,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceInventoryReplenishmentItemId",
 			getCommerceInventoryReplenishmentItemId());
@@ -78,6 +79,12 @@ public class CommerceInventoryReplenishmentItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long commerceInventoryReplenishmentItemId = (Long)attributes.get(
 			"commerceInventoryReplenishmentItemId");
 
@@ -178,6 +185,14 @@ public class CommerceInventoryReplenishmentItemWrapper
 			getCommerceInventoryReplenishmentItemId();
 	}
 
+	@Override
+	public CommerceInventoryWarehouse getCommerceInventoryWarehouse()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryReplenishmentItem.
+			getCommerceInventoryWarehouse();
+	}
+
 	/**
 	 * Returns the commerce inventory warehouse ID of this commerce inventory replenishment item.
 	 *
@@ -222,6 +237,16 @@ public class CommerceInventoryReplenishmentItemWrapper
 	@Override
 	public Date getModifiedDate() {
 		return _commerceInventoryReplenishmentItem.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this commerce inventory replenishment item.
+	 *
+	 * @return the mvcc version of this commerce inventory replenishment item
+	 */
+	@Override
+	public long getMvccVersion() {
+		return _commerceInventoryReplenishmentItem.getMvccVersion();
 	}
 
 	/**
@@ -309,11 +334,6 @@ public class CommerceInventoryReplenishmentItemWrapper
 		return _commerceInventoryReplenishmentItem.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce inventory replenishment item model instance should use the <code>CommerceInventoryReplenishmentItem</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceInventoryReplenishmentItem.persist();
@@ -410,6 +430,16 @@ public class CommerceInventoryReplenishmentItemWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_commerceInventoryReplenishmentItem.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce inventory replenishment item.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce inventory replenishment item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_commerceInventoryReplenishmentItem.setMvccVersion(mvccVersion);
 	}
 
 	@Override

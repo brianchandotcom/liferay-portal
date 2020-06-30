@@ -175,9 +175,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 			theme = getTheme();
 		}
 
-		value = theme.getSetting(key);
-
-		return value;
+		return theme.getSetting(key);
 	}
 
 	@Override

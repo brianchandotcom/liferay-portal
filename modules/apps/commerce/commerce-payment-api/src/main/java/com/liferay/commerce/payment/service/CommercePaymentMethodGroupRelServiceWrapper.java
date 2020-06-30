@@ -35,11 +35,21 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 			commercePaymentMethodGroupRelService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceAddressRestriction
+			addCommerceAddressRestriction(
+				long userId, long groupId, long classPK, long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentMethodGroupRelService.
+			addCommerceAddressRestriction(
+				userId, groupId, classPK, commerceCountryId);
+	}
+
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelServiceUtil} to access the commerce payment method group rel remote service. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
@@ -55,27 +65,17 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(
+				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey,
-				java.util.Map<String, String> engineParameterMap,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.io.File imageFile, String engineKey, double priority,
+				boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelService.
 			addCommercePaymentMethodGroupRel(
-				nameMap, descriptionMap, imageFile, engineKey,
-				engineParameterMap, priority, active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-			createCommercePaymentMethodGroupRel(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePaymentMethodGroupRelService.
-			createCommercePaymentMethodGroupRel(groupId);
+				userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+				priority, active);
 	}
 
 	@Override
@@ -85,6 +85,15 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 
 		_commercePaymentMethodGroupRelService.deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
+	}
+
+	@Override
+	public void deleteCommerceAddressRestrictions(
+			long commercePaymentMethodGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commercePaymentMethodGroupRelService.deleteCommerceAddressRestrictions(
+			commercePaymentMethodGroupRelId);
 	}
 
 	@Override
@@ -262,17 +271,13 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 				long commercePaymentMethodGroupRelId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile,
-				java.util.Map<String, String> engineParameterMap,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelService.
 			updateCommercePaymentMethodGroupRel(
 				commercePaymentMethodGroupRelId, nameMap, descriptionMap,
-				imageFile, engineParameterMap, priority, active,
-				serviceContext);
+				imageFile, priority, active);
 	}
 
 	@Override

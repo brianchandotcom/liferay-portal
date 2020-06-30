@@ -376,11 +376,6 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 		return _auditEvent.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a audit event model instance should use the <code>AuditEvent</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_auditEvent.persist();

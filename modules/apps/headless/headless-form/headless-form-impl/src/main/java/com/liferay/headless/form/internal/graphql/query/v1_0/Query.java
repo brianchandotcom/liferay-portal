@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -89,7 +90,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {form(formId: ___){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, formRecords, formRecordsIds, id, name, siteId, structure, structureId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {form(formId: ___){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, description_i18n, formRecords, formRecordsIds, id, name, name_i18n, siteId, structure, structureId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Form form(@GraphQLName("formId") Long formId) throws Exception {
@@ -192,7 +193,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formStructure(formStructureId: ___){availableLanguages, creator, dateCreated, dateModified, description, formPages, formSuccessPage, id, name, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formStructure(formStructureId: ___){availableLanguages, creator, dateCreated, dateModified, description, description_i18n, formPages, formSuccessPage, id, name, name_i18n, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public FormStructure formStructure(
@@ -270,12 +271,16 @@ public class Query {
 	public class FormPage {
 
 		public FormPage(Page formPage) {
+			actions = formPage.getActions();
 			items = formPage.getItems();
 			lastPage = formPage.getLastPage();
 			page = formPage.getPage();
 			pageSize = formPage.getPageSize();
 			totalCount = formPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<Form> items;
@@ -298,12 +303,16 @@ public class Query {
 	public class FormDocumentPage {
 
 		public FormDocumentPage(Page formDocumentPage) {
+			actions = formDocumentPage.getActions();
 			items = formDocumentPage.getItems();
 			lastPage = formDocumentPage.getLastPage();
 			page = formDocumentPage.getPage();
 			pageSize = formDocumentPage.getPageSize();
 			totalCount = formDocumentPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<FormDocument> items;
@@ -326,12 +335,16 @@ public class Query {
 	public class FormRecordPage {
 
 		public FormRecordPage(Page formRecordPage) {
+			actions = formRecordPage.getActions();
 			items = formRecordPage.getItems();
 			lastPage = formRecordPage.getLastPage();
 			page = formRecordPage.getPage();
 			pageSize = formRecordPage.getPageSize();
 			totalCount = formRecordPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<FormRecord> items;
@@ -354,12 +367,16 @@ public class Query {
 	public class FormStructurePage {
 
 		public FormStructurePage(Page formStructurePage) {
+			actions = formStructurePage.getActions();
 			items = formStructurePage.getItems();
 			lastPage = formStructurePage.getLastPage();
 			page = formStructurePage.getPage();
 			pageSize = formStructurePage.getPageSize();
 			totalCount = formStructurePage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<FormStructure> items;

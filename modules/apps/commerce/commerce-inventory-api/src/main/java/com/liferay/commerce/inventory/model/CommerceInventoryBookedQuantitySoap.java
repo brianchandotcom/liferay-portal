@@ -34,6 +34,7 @@ public class CommerceInventoryBookedQuantitySoap implements Serializable {
 		CommerceInventoryBookedQuantitySoap soapModel =
 			new CommerceInventoryBookedQuantitySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceInventoryBookedQuantityId(
 			model.getCommerceInventoryBookedQuantityId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -105,6 +106,14 @@ public class CommerceInventoryBookedQuantitySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceInventoryBookedQuantityId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceInventoryBookedQuantityId() {
@@ -189,6 +198,7 @@ public class CommerceInventoryBookedQuantitySoap implements Serializable {
 		_bookedNote = bookedNote;
 	}
 
+	private long _mvccVersion;
 	private long _commerceInventoryBookedQuantityId;
 	private long _companyId;
 	private long _userId;

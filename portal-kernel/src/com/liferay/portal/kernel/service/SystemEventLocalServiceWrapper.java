@@ -31,11 +31,6 @@ public class SystemEventLocalServiceWrapper
 		_systemEventLocalService = systemEventLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link SystemEventLocalServiceUtil} to access the system event local service. Add custom service methods to <code>com.liferay.portal.service.impl.SystemEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.SystemEvent addSystemEvent(
 			long userId, long groupId, java.lang.String className, long classPK,
@@ -271,6 +266,9 @@ public class SystemEventLocalServiceWrapper
 		return _systemEventLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

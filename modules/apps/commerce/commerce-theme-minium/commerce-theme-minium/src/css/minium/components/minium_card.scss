@@ -1,7 +1,6 @@
-
 $card-spacer: 20px;
 
-.minium-card {
+.minium-frame .minium-card {
 	align-items: center;
 	background: white;
 	border-radius: 5px;
@@ -14,7 +13,7 @@ $card-spacer: 20px;
 	padding: $card-spacer;
 	position: relative;
 	text-align: center;
-	transition: box-shadow .2s ease-in-out;
+	transition: box-shadow 0.2s ease-in-out;
 
 	&:hover {
 		box-shadow: 0 17px 56px 0 rgba(52, 55, 62, 0.08);
@@ -77,34 +76,33 @@ $card-spacer: 20px;
 	}
 
 	&__delete {
-		background: #F1676A;
+		align-items: center;
+		background: #f1676a;
 		border-radius: 50%;
 		color: white;
 		cursor: pointer;
-		font-size: 11px;
-		height: 17px;
+		display: flex;
+		height: 18px;
+		justify-content: center;
 		left: 18px;
-		line-height: 1.1;
+		line-height: 1;
 		position: absolute;
 		top: 18px;
-		width: 17px;
+		width: 18px;
 		z-index: 10;
 
-		[class*="-icon"] {
-			height: 22px;
-			left: -3px;
+		[class*='-icon'] {
 			position: relative;
 			top: 0;
-			width: 22px;
 		}
 
 		path {
-			fill: rgba(255,255,255, 0.9);
+			fill: rgba(255, 255, 255, 0.9);
 		}
 	}
 
 	&__picture {
-		background-color: #EBEBEB;
+		background-color: #ebebeb;
 		background-position: 50%;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -118,7 +116,7 @@ $card-spacer: 20px;
 		&::before {
 			background: inherit;
 			bottom: 0;
-			content: "";
+			content: '';
 			left: 0;
 			position: absolute;
 			right: 0;
@@ -157,8 +155,8 @@ $card-spacer: 20px;
 		margin-bottom: 8px;
 
 		&:hover {
-		 color: inherit;
-		 text-decoration: underline;
+			color: inherit;
+			text-decoration: underline;
 		}
 	}
 
@@ -234,44 +232,42 @@ $card-spacer: 20px;
 			outline: none;
 		}
 
-		[class*="-icon"] {
-			height: 24px;
-			opacity: .5;
-			position: relative;
-			top: 2px;
-			transition: all 0.1s ease-in;
-			width: 24px;
+		[class*='-icon'] {
+			left: 50%;
+			margin-top: 0;
+			opacity: 0.5;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			transition: opacity 0.1s ease-in;
+			z-index: 1;
 		}
 
-		&:hover [class*="-icon"] {
+		&:hover [class*='-icon'] {
 			opacity: 1;
-			transition: all .1s ease-in;
 		}
 
-		.empty-shape {
-			transition: all .1s ease-in;
-		}
-
-		.filled-shape {
+		.lexicon-icon-heart-full {
 			color: $color-theme;
 			opacity: 0;
-			transform: scale(0);
-			transform-origin: 50% 40%;
+			transform: translate(-50%, -50%) scale(0);
+			transform-origin: 50%;
 			transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			z-index: 2;
 		}
 
 		&--added {
-			[class*="-icon"] {
+			[class*='-icon'] {
 				opacity: 1;
 			}
 
-			&:hover [class*="-icon"] {
-				transform: scale(1.2);
+			&:hover [class*='-icon'] {
+				transform: translate(-50%, -50%) scale(1.2);
 			}
 
-			.filled-shape {
+			.lexicon-icon-heart-full {
 				opacity: 1;
-				transform: scale(1);
+				transform: translate(-50%, -50%) scale(1);
 			}
 		}
 	}

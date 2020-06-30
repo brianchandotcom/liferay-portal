@@ -267,6 +267,18 @@ public class CPOptionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPOption>
+		findCPOptionByCompanyId(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.product.model.CPOption>
+					orderByComparator) {
+
+		return _cpOptionLocalService.findCPOptionByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -373,6 +385,9 @@ public class CPOptionLocalServiceWrapper
 		return _cpOptionLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

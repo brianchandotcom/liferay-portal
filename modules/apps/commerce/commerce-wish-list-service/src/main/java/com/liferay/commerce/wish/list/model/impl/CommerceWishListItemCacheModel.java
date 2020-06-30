@@ -149,7 +149,9 @@ public class CommerceWishListItemCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		commerceWishListItemId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -165,7 +167,7 @@ public class CommerceWishListItemCacheModel
 		CPInstanceUuid = objectInput.readUTF();
 
 		CProductId = objectInput.readLong();
-		json = objectInput.readUTF();
+		json = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -200,10 +202,10 @@ public class CommerceWishListItemCacheModel
 		objectOutput.writeLong(CProductId);
 
 		if (json == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(json);
+			objectOutput.writeObject(json);
 		}
 	}
 

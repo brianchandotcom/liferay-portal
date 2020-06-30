@@ -22,11 +22,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Locale;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -43,6 +46,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentResource {
 
+	public static Builder builder() {
+		return FactoryHolder.factory.create();
+	}
+
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -55,6 +62,10 @@ public interface StructuredContentResource {
 
 	public StructuredContent postSiteStructuredContent(
 			Long siteId, StructuredContent structuredContent)
+		throws Exception;
+
+	public Response postSiteStructuredContentBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public StructuredContent getSiteStructuredContentByKey(
@@ -75,6 +86,10 @@ public interface StructuredContentResource {
 			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception;
 
+	public Response postStructuredContentFolderStructuredContentBatch(
+			Long structuredContentFolderId, String callbackURL, Object object)
+		throws Exception;
+
 	public void putStructuredContentSubscribe(Long structuredContentId)
 		throws Exception;
 
@@ -82,6 +97,10 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public void deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
+	public Response deleteStructuredContentBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public StructuredContent getStructuredContent(Long structuredContentId)
@@ -93,6 +112,9 @@ public interface StructuredContentResource {
 
 	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
+
+	public Response putStructuredContentBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteStructuredContentMyRating(Long structuredContentId)
@@ -133,5 +155,34 @@ public interface StructuredContentResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public static class FactoryHolder {
+
+		public static volatile Factory factory;
+
+	}
+
+	@ProviderType
+	public interface Builder {
+
+		public StructuredContentResource build();
+
+		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
+
+		public Builder preferredLocale(Locale preferredLocale);
+
+		public Builder user(com.liferay.portal.kernel.model.User user);
+
+	}
+
+	@ProviderType
+	public interface Factory {
+
+		public Builder create();
+
+	}
 
 }

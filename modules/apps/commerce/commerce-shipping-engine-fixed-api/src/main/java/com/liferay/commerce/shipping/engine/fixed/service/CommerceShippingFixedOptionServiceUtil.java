@@ -32,17 +32,29 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShippingFixedOptionServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static
+		com.liferay.commerce.shipping.engine.fixed.model.
+			CommerceShippingFixedOption addCommerceShippingFixedOption(
+					long userId, long groupId, long commerceShippingMethodId,
+					java.util.Map<java.util.Locale, String> nameMap,
+					java.util.Map<java.util.Locale, String> descriptionMap,
+					java.math.BigDecimal amount, double priority)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceShippingFixedOption(
+			userId, groupId, commerceShippingMethodId, nameMap, descriptionMap,
+			amount, priority);
+	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionServiceUtil} to access the commerce shipping fixed option remote service. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption addCommerceShippingFixedOption(

@@ -14,10 +14,11 @@
 
 package com.liferay.portal.search.internal.analysis;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
+import com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration;
 
 import java.util.Map;
 
@@ -31,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true, property = "exact.match.boost=2.0",
-	service = TitleFieldQueryBuilder.class
+	configurationPid = "com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration",
+	immediate = true, service = TitleFieldQueryBuilder.class
 )
 public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 
@@ -43,6 +44,7 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 
 		fullTextQueryBuilder.setAutocomplete(true);
 		fullTextQueryBuilder.setExactMatchBoost(_exactMatchBoost);
+		fullTextQueryBuilder.setMaxExpansions(_maxExpansions);
 
 		return fullTextQueryBuilder.build(field, keywords);
 	}
@@ -50,13 +52,20 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_exactMatchBoost = GetterUtil.getFloat(
-			properties.get("exact.match.boost"), _exactMatchBoost);
+		TitleFieldQueryBuilderConfiguration
+			titleFieldQueryBuilderConfiguration =
+				ConfigurableUtil.createConfigurable(
+					TitleFieldQueryBuilderConfiguration.class, properties);
+
+		_exactMatchBoost =
+			titleFieldQueryBuilderConfiguration.exactMatchBoost();
+		_maxExpansions = titleFieldQueryBuilderConfiguration.maxExpansions();
 	}
 
 	@Reference
 	protected KeywordTokenizer keywordTokenizer;
 
 	private volatile float _exactMatchBoost = 2.0F;
+	private volatile int _maxExpansions = 300;
 
 }

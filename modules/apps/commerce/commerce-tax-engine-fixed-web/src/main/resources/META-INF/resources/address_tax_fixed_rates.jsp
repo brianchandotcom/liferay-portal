@@ -18,146 +18,47 @@
 
 <%
 CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDisplayContext = (CommerceTaxFixedRateAddressRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-SearchContainer<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRelSearchContainer = commerceTaxFixedRateAddressRelsDisplayContext.getSearchContainer();
-
-boolean manageCommerceTaxMethodsPermission = commerceTaxFixedRateAddressRelsDisplayContext.hasManageCommerceTaxMethodsPermission();
 %>
-
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commerceTaxFixedRateAddressRels"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceTaxFixedRateAddressRelsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceTaxFixedRateAddressRelsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<c:if test="<%= manageCommerceTaxMethodsPermission %>">
-			<portlet:renderURL var="addCommerceTaxFixedRateAddressRelURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRateAddressRel" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>'
-					url="<%= addCommerceTaxFixedRateAddressRelURL %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<c:if test="<%= manageCommerceTaxMethodsPermission %>">
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTaxFixedRateAddressRels();" %>'
-				icon="times"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</c:if>
-</liferay-frontend:management-bar>
 
 <portlet:actionURL name="editCommerceTaxFixedRateAddressRel" var="editCommerceTaxFixedRateAddressRelActionURL" />
 
 <aui:form action="<%= editCommerceTaxFixedRateAddressRelActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateConfiguration" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCommerceTaxFixedRateAddressRelIds" type="hidden" />
+	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId() %>" />
 
-	<liferay-ui:search-container
-		id="commerceTaxFixedRateAddressRels"
-		searchContainer="<%= commerceTaxFixedRateAddressRelSearchContainer %>"
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(resourceBundle, "taxed-address") %>'
 	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel"
-			keyProperty="commerceTaxFixedRateAddressRelId"
-			modelVar="commerceTaxFixedRateAddressRel"
-		>
+		<aui:select name="applyTaxTo" onChange='<%= renderResponse.getNamespace() + "selectApplyTaxTo();" %>'>
+			<aui:option label="shipping-address" selected="<%= commerceTaxFixedRateAddressRelsDisplayContext.isTaxAppliedToShippingAddress() %>" value="<%= true %>" />
+			<aui:option label="billing-address" selected="<%= !commerceTaxFixedRateAddressRelsDisplayContext.isTaxAppliedToShippingAddress() %>" value="<%= false %>" />
+		</aui:select>
+	</commerce-ui:panel>
 
-			<%
-			CommerceCountry commerceCountry = commerceTaxFixedRateAddressRel.getCommerceCountry();
-			CommerceRegion commerceRegion = commerceTaxFixedRateAddressRel.getCommerceRegion();
-			%>
+	<%
+	Map<String, String> contextParams = new HashMap<>();
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="tax-rate"
-			>
+	contextParams.put("commerceChannelId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceChannelId()));
+	contextParams.put("commerceTaxMethodId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()));
+	%>
 
-				<%
-				CPTaxCategory cpTaxCategory = commerceTaxFixedRateAddressRel.getCPTaxCategory();
-				%>
-
-				<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="country"
-			>
-				<%= (commerceCountry == null) ? StringPool.STAR : HtmlUtil.escape(commerceCountry.getName(languageId)) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="region"
-			>
-				<%= (commerceRegion == null) ? StringPool.STAR : HtmlUtil.escape(commerceRegion.getName()) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="zip"
-			>
-				<%= Validator.isNull(commerceTaxFixedRateAddressRel.getZip()) ? StringPool.STAR : HtmlUtil.escape(commerceTaxFixedRateAddressRel.getZip()) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="rate"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/address_tax_fixed_rate_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
+	<commerce-ui:dataset-display
+		clayCreationMenu="<%= commerceTaxFixedRateAddressRelsDisplayContext.getClayCreationMenu() %>"
+		contextParams="<%= contextParams %>"
+		dataProviderKey="<%= CommerceTaxRateSettingClayTable.NAME %>"
+		id="<%= CommerceTaxRateSettingClayTable.NAME %>"
+		itemsPerPage="<%= 10 %>"
+		namespace="<%= renderResponse.getNamespace() %>"
+		pageNumber="<%= 1 %>"
+		portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
+	/>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />deleteCommerceTaxFixedRateAddressRels() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-tax-rate-settings" />')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+	function <portlet:namespace />selectApplyTaxTo() {
+		var fm = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('deleteCommerceTaxFixedRateAddressRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
+		submitForm(fm);
 	}
 </aui:script>

@@ -284,11 +284,6 @@ public class CommerceDiscountUsageEntryWrapper
 		return _commerceDiscountUsageEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce discount usage entry model instance should use the <code>CommerceDiscountUsageEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceDiscountUsageEntry.persist();

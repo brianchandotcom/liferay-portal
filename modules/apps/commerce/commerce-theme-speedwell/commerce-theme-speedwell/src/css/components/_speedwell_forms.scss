@@ -1,25 +1,25 @@
 .form-group {
-  font-size: 12px;
+	font-size: 12px;
 
-  .control-label {
-    font-weight: bold;
-    padding-left: 10px;
-    margin: 0;
-  }
+	.control-label {
+		font-weight: bold;
+		margin: 0;
+		padding-left: 10px;
+	}
 
-  .form-control {
-    background-color: rgba(0, 0, 0, .05);
-    border: 0;
-    color: $stroke-variant;
-    font-size: 14px;
-    height: 50px;
-  }
+	.form-control {
+		background-color: rgba(0, 0, 0, 0.05);
+		border: 0;
+		color: $stroke-variant;
+		font-size: 14px;
+		height: 50px;
+	}
 
-  .reference-mark {
-    font-size: .35rem !important;
+	.reference-mark {
+		font-size: 0.35rem !important;
 
-    &.text-warning {
-      color: $stroke-variant !important;
-    }
-  }
+		&.text-warning {
+			color: $stroke-variant !important;
+		}
+	}
 }

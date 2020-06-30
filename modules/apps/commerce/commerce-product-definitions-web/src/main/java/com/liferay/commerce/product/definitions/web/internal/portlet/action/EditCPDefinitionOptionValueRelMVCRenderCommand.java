@@ -14,14 +14,12 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionValueRelDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,29 +49,16 @@ public class EditCPDefinitionOptionValueRelMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			CPDefinitionOptionValueRelDisplayContext
-				cpDefinitionOptionValueRelDisplayContext =
-					new CPDefinitionOptionValueRelDisplayContext(
-						_actionHelper,
-						_portal.getHttpServletRequest(renderRequest),
-						_cpDefinitionOptionValueRelService);
+		CPDefinitionOptionValueRelDisplayContext
+			cpDefinitionOptionValueRelDisplayContext =
+				new CPDefinitionOptionValueRelDisplayContext(
+					_actionHelper, _commerceCatalogLocalService,
+					_commerceCurrencyLocalService,
+					_portal.getHttpServletRequest(renderRequest));
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionOptionValueRelDisplayContext);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionOptionRelException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(e);
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpDefinitionOptionValueRelDisplayContext);
 
 		return "/edit_definition_option_value_rel.jsp";
 	}
@@ -82,8 +67,10 @@ public class EditCPDefinitionOptionValueRelMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CPDefinitionOptionValueRelService
-		_cpDefinitionOptionValueRelService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private Portal _portal;

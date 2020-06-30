@@ -39,9 +39,25 @@ public class CommerceChannelRelServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceChannelRel(long commerceChannelRelId)
+		throws PortalException {
+
+		commerceChannelRelLocalService.deleteCommerceChannelRel(
+			commerceChannelRelId);
+	}
+
+	@Override
 	public void deleteCommerceChannelRels(String className, long classPK) {
 		commerceChannelRelLocalService.deleteCommerceChannelRels(
 			className, classPK);
+	}
+
+	@Override
+	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
+		throws PortalException {
+
+		return commerceChannelRelLocalService.getCommerceChannelRel(
+			commerceChannelRelId);
 	}
 
 	@Override

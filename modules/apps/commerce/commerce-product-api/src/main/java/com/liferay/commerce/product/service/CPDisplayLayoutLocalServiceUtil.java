@@ -32,17 +32,16 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CPDisplayLayoutLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutLocalServiceUtil} to access the cp display layout local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPDisplayLayout
 			addCPDisplayLayout(
 				Class<?> clazz, long classPK, String layoutUuid,
@@ -65,6 +64,16 @@ public class CPDisplayLayoutLocalServiceUtil {
 				cpDisplayLayout) {
 
 		return getService().addCPDisplayLayout(cpDisplayLayout);
+	}
+
+	public static com.liferay.commerce.product.model.CPDisplayLayout
+			addCPDisplayLayout(
+				long userId, long groupId, Class<?> clazz, long classPK,
+				String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCPDisplayLayout(
+			userId, groupId, clazz, classPK, layoutUuid);
 	}
 
 	/**
@@ -113,6 +122,10 @@ public class CPDisplayLayoutLocalServiceUtil {
 		return getService().deleteCPDisplayLayout(CPDisplayLayoutId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void deleteCPDisplayLayoutByGroupIdAndLayoutUuid(
 		long groupId, String layoutUuid) {
 
@@ -226,6 +239,15 @@ public class CPDisplayLayoutLocalServiceUtil {
 		fetchCPDisplayLayout(long CPDisplayLayoutId) {
 
 		return getService().fetchCPDisplayLayout(CPDisplayLayoutId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPDisplayLayout>
+			fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
+				long groupId, String layoutUuid) {
+
+		return getService().fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
+			groupId, layoutUuid);
 	}
 
 	public static java.util.List
@@ -373,11 +395,26 @@ public class CPDisplayLayoutLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDisplayLayout>
+				searchCPDisplayLayout(
+					long companyId, long groupId, String className,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDisplayLayout(
+			companyId, groupId, className, keywords, start, end, sort);
 	}
 
 	/**

@@ -81,9 +81,7 @@
 		position: fixed;
 		right: 0;
 		top: $frame-size;
-		transition:
-			box-shadow $transition,
-			transform $transition;
+		transition: box-shadow $transition, transform $transition;
 		width: 100%;
 
 		@media screen and (hover: none) {
@@ -131,14 +129,11 @@
 		pointer-events: none;
 		position: fixed;
 		right: 0;
-		transition:
-			bottom $transition,
-			transform $transition,
-			left ease 500ms;
+		transition: bottom $transition, transform $transition, left ease 500ms;
 		z-index: 100;
 
 		@media screen and (hover: none) {
-			bottom:	$frame-size;
+			bottom: $frame-size;
 			left: 0;
 
 			.minium-frame.is-scrolling-down.is-scrolled & {

@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeExecutor {
 
 	public void execute(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
+		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
+		String outputStreamContainerFactoryName) {
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
@@ -81,11 +82,14 @@ public class UpgradeExecutor {
 			return;
 		}
 
-		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
+		executeUpgradeInfos(
+			bundleSymbolicName, upgradeInfosList.get(0),
+			outputStreamContainerFactoryName);
 	}
 
 	public void executeUpgradeInfos(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
+		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
+		String outputStreamContainerFactoryName) {
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
@@ -93,11 +97,13 @@ public class UpgradeExecutor {
 			_releasePublisher.publishInProgress(release);
 		}
 
+		UpgradeInfosRunnable upgradeInfosRunnable = new UpgradeInfosRunnable(
+			bundleSymbolicName, upgradeInfos,
+			_swappedLogExecutor::getOutputStream);
+
 		_swappedLogExecutor.execute(
-			bundleSymbolicName,
-			new UpgradeInfosRunnable(
-				bundleSymbolicName, upgradeInfos,
-				_swappedLogExecutor::getOutputStream));
+			bundleSymbolicName, upgradeInfosRunnable,
+			outputStreamContainerFactoryName);
 
 		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 

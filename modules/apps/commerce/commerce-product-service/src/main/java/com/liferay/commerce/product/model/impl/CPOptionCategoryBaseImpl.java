@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
 public abstract class CPOptionCategoryBaseImpl
 	extends CPOptionCategoryModelImpl implements CPOptionCategory {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp option category model instance should use the <code>CPOptionCategory</code> interface instead.

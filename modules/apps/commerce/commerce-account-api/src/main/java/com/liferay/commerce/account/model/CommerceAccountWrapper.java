@@ -667,11 +667,6 @@ public class CommerceAccountWrapper
 		return _commerceAccount.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce account model instance should use the <code>CommerceAccount</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceAccount.persist();

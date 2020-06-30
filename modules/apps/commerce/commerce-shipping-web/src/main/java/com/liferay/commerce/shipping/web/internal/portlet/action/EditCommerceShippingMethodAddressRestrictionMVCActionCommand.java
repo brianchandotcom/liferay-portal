@@ -14,21 +14,29 @@
 
 package com.liferay.commerce.shipping.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchAddressRestrictionException;
-import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
 		"mvc.command.name=editCommerceShippingMethodAddressRestriction"
 	},
 	service = MVCActionCommand.class
@@ -50,87 +58,26 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCommerceAddressRestrictions(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] addCommerceCountryIds = null;
-
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
-
-		if (commerceCountryId > 0) {
-			addCommerceCountryIds = new long[] {commerceCountryId};
-		}
-		else {
-			addCommerceCountryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "commerceCountryIds"), 0L);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAddressRestriction.class.getName(), actionRequest);
-
-		for (long addCommerceCountryId : addCommerceCountryIds) {
-			_commerceShippingMethodService.addCommerceAddressRestriction(
-				classPK, addCommerceCountryId, serviceContext);
-		}
-	}
-
-	protected void deleteCommerceAddressRestrictions(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCommerceAddressRestrictionIds = null;
-
-		long commerceAddressRestrictionId = ParamUtil.getLong(
-			actionRequest, "commerceAddressRestrictionId");
-
-		if (commerceAddressRestrictionId > 0) {
-			deleteCommerceAddressRestrictionIds = new long[] {
-				commerceAddressRestrictionId
-			};
-		}
-		else {
-			deleteCommerceAddressRestrictionIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceAddressRestrictionIds"),
-				0L);
-		}
-
-		for (long deleteCommerceAddressRestrictionId :
-				deleteCommerceAddressRestrictionIds) {
-
-			_commerceShippingMethodService.deleteCommerceAddressRestriction(
-				deleteCommerceAddressRestrictionId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		try {
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.ADD_MULTIPLE)) {
+			Callable<Object> commerceAddressRestrictionsCallable =
+				new CommerceAddressRestrictionsCallable(actionRequest);
 
-				addCommerceAddressRestrictions(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceAddressRestrictions(actionRequest);
-			}
+			TransactionInvokerUtil.invoke(
+				_transactionConfig, commerceAddressRestrictionsCallable);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchAddressRestrictionException ||
-				e instanceof PrincipalException) {
+		catch (Throwable t) {
+			if (t instanceof NoSuchAddressRestrictionException ||
+				t instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, t.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -138,15 +85,98 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw e;
+				_log.error(t, t);
 			}
 		}
 	}
+
+	protected void updateCommerceAddressRestrictions(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		List<CommerceShippingMethod> commerceShippingMethods =
+			_commerceShippingMethodService.getCommerceShippingMethods(
+				commerceChannel.getGroupId(), true);
+
+		for (CommerceShippingMethod commerceShippingMethod :
+				commerceShippingMethods) {
+
+			_commerceShippingMethodService.deleteCommerceAddressRestrictions(
+				commerceShippingMethod.getCommerceShippingMethodId());
+		}
+
+		List<CommerceCountry> commerceCountries =
+			_commerceCountryService.getCommerceCountries(
+				_portal.getCompanyId(actionRequest), true);
+
+		for (CommerceCountry commerceCountry : commerceCountries) {
+			long[] commercePaymentMethodGroupRelIds = ParamUtil.getLongValues(
+				actionRequest,
+				String.valueOf(commerceCountry.getCommerceCountryId()));
+
+			if (ArrayUtil.isEmpty(commercePaymentMethodGroupRelIds)) {
+				continue;
+			}
+
+			for (long commercePaymentMethodGroupRelId :
+					commercePaymentMethodGroupRelIds) {
+
+				if (commercePaymentMethodGroupRelId <= 0) {
+					continue;
+				}
+
+				_commerceShippingMethodService.addCommerceAddressRestriction(
+					_portal.getUserId(actionRequest),
+					commerceChannel.getGroupId(),
+					commercePaymentMethodGroupRelId,
+					commerceCountry.getCommerceCountryId());
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCommerceShippingMethodAddressRestrictionMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceCountryService _commerceCountryService;
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private Portal _portal;
+
+	private class CommerceAddressRestrictionsCallable
+		implements Callable<Object> {
+
+		@Override
+		public Object call() throws Exception {
+			updateCommerceAddressRestrictions(_actionRequest);
+
+			return null;
+		}
+
+		private CommerceAddressRestrictionsCallable(
+			ActionRequest actionRequest) {
+
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

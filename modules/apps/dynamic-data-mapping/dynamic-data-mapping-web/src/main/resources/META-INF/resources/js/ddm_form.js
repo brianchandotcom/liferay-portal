@@ -11,6 +11,10 @@ AUI.add(
 
 		var INSTANCE_ID_PREFIX = '_INSTANCE_';
 
+		var INTEGER_MIN_VALUE = 0;
+
+		var INTEGER_MAX_VALUE = 2147483647;
+
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
 		var TPL_ICON_CARET = '<span class="collapse-icon-closed"><span class="icon-caret-right"></span></span>';
@@ -449,6 +453,43 @@ AUI.add(
 						instance.get('container').remove();
 					},
 
+					addIntegerRangeRule: function() {
+						var instance = this;
+
+						var dataType = instance.get('dataType');
+
+						if (dataType && dataType === 'integer') {
+							var liferayForm = instance.get('liferayForm');
+
+							if (liferayForm) {
+								var node = instance.getInputNode();
+
+								var fieldName = node.get('name');
+
+								var errorMessage = Liferay.Util.sub(
+									Liferay.Language.get(
+										'please-enter-a-valid-integer-value-between-x-and-x'
+									),
+									INTEGER_MIN_VALUE,
+									INTEGER_MAX_VALUE
+								);
+
+								liferayForm.addRule(
+									fieldName,
+									'integerRange_custom',
+									errorMessage,
+									function(val) {
+										return (
+											val >= INTEGER_MIN_VALUE &&
+											val <= INTEGER_MAX_VALUE
+										);
+									},
+									true
+								);
+							}
+						}
+					},
+
 					createField: function(fieldTemplate) {
 						var instance = this;
 
@@ -625,7 +666,13 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						return Lang.String.unescapeHTML(inputNode.val());
+						var value = '';
+
+						if (inputNode) {
+							value = Lang.String.unescapeHTML(inputNode.val());
+						}
+
+						return value;
 					},
 
 					parseContent: function(content) {
@@ -735,6 +782,19 @@ AUI.add(
 						}
 					},
 
+					syncLabel: function(locale) {
+						var instance = this;
+
+						var fieldDefinition = instance.getFieldDefinition();
+
+						if (Lang.isUndefined(fieldDefinition.label[locale])) {
+							instance.setLabel(fieldDefinition.label[instance.getDefaultLocale()]);
+						}
+						else {
+							instance.setLabel(fieldDefinition.label[locale]);
+						}
+					},
+
 					syncReadOnlyUI: function() {
 						var instance = this;
 
@@ -794,7 +854,8 @@ AUI.add(
 									value = localizationMap[instance.get('displayLocale')];
 								}
 							}
-							else {
+
+							if (Lang.isUndefined(value)) {
 								value = instance.getValue();
 							}
 
@@ -818,7 +879,9 @@ AUI.add(
 
 						var dataType = instance.get('dataType');
 
-						if (dataType) {
+						var fields = instance.get('fields');
+
+						if (dataType || fields.length) {
 							instance.updateLocalizationMap(instance.get('displayLocale'));
 
 							fieldJSON.value = instance.get('localizationMap');
@@ -830,8 +893,6 @@ AUI.add(
 							}
 
 						}
-
-						var fields = instance.get('fields');
 
 						if (fields.length) {
 							fieldJSON.nestedFieldValues = AArray.invoke(fields, 'toJSON');
@@ -852,7 +913,8 @@ AUI.add(
 
 							if (
 								locale === defaultLocale ||
-								value !== localizationMap[defaultLocale]
+								value !== localizationMap[defaultLocale] ||
+								localizationMap[locale]
 							) {
 								localizationMap[locale] = value;
 							}
@@ -915,6 +977,8 @@ AUI.add(
 						if (event.formName === formNode.attr('name')) {
 							instance.set('liferayForm', event.form);
 						}
+
+						instance.addIntegerRangeRule();
 					},
 
 					_getLocalizable: function() {
@@ -958,6 +1022,7 @@ AUI.add(
 
 						instance.set('displayLocale', displayLocale);
 
+						instance.syncLabel(displayLocale);
 						instance.syncValueUI();
 						instance.syncReadOnlyUI();
 					},
@@ -3168,7 +3233,13 @@ AUI.add(
 
 						radioNodes.set('checked', false);
 
-						radioNodes.filter('[value=' + value + ']').set('checked', true);
+						radioNodes.each(
+							function(radioNode) {
+								if (radioNode.get('value') === value) {
+									radioNode.set('checked', true);
+								}
+							}
+						);
 					},
 
 					syncReadOnlyUI: function() {
@@ -3432,6 +3503,35 @@ AUI.add(
 						);
 					},
 
+					fillEmptyLocales: function(instance, fields, availableLanguageIds) {
+						fields.forEach(
+							function(field) {
+								if (field.get('localizable')) {
+									var localizationMap = field.get('localizationMap');
+
+									var defaultLocale = field.getDefaultLocale();
+
+									availableLanguageIds.forEach(
+										function(locale) {
+											if (!localizationMap[locale]) {
+												localizationMap[locale] =
+													localizationMap[defaultLocale];
+											}
+										}
+									);
+
+									field.set('localizationMap', localizationMap);
+								}
+							
+								instance.fillEmptyLocales(
+									instance,
+									field.get('fields'),
+									availableLanguageIds
+								);
+							}
+						);
+					},
+
 					finalizeRepeatableFieldLocalizations: function() {
 						var instance = this;
 
@@ -3457,13 +3557,22 @@ AUI.add(
 						var fields = parentField.get('fields');
 
 						fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
+
+						instance.recreateEditors(fields[newIndex]);
 					},
 
 					populateBlankLocalizationMap: function(defaultLocale, originalField, repeatedField) {
 						var instance = this;
 
 						var newFieldLocalizations = repeatedField.get('localizationMap');
-						var totalLocalizations = originalField.get('localizationMap');
+
+						var totalLocalizations = {};
+
+						if (originalField) {
+							totalLocalizations = originalField.get(
+								'localizationMap'
+							);
+						}
 
 						var currentLocale = repeatedField.get('displayLocale');
 
@@ -3489,10 +3598,69 @@ AUI.add(
 						repeatedField.set('localizationMap', newFieldLocalizations);
 
 						var newNestedFields = repeatedField.get('fields');
-						var originalNestedFields = originalField.get('fields');
+
+						var originalNestedFields = [];
+
+						if (originalField) {
+							originalNestedFields = originalField.get('fields');
+						}
 
 						for (var i = 0; i < newNestedFields.length; i++) {
 							instance.populateBlankLocalizationMap(defaultLocale, originalNestedFields[i], newNestedFields[i]);
+						}
+					},
+
+					recreateEditor: function(field) {
+						var usingCKEditor =
+							CKEDITOR &&
+							CKEDITOR.instances &&
+							CKEDITOR.instances[field.getInputName() + 'Editor'];
+							
+						var editor = field.getEditor();
+						
+						var nativeEditor = editor.getNativeEditor();
+						
+						var usingAlloyEditor =
+							nativeEditor &&
+							nativeEditor._editor &&
+							nativeEditor._editor.window.$.AlloyEditor;
+
+						if (usingCKEditor && !usingAlloyEditor) {
+							var html = editor.getHTML();
+
+							editor.dispose();
+
+							editor.create();
+
+							CKEDITOR.on('instanceReady', function() {
+								editor.setHTML(html);
+							});
+						}
+					},
+
+					recreateEditors: function(field) {
+						var instance = this;
+
+						var fieldDefinition = field.getFieldDefinition();
+
+						if (fieldDefinition) {
+							var type = fieldDefinition.type;
+
+							if (type === 'ddm-text-html') {
+								instance.recreateEditor(field);
+							}
+
+							var nestedFields = field.get('fields');
+
+							if (!nestedFields || nestedFields.length == 0) {
+								return;
+							}
+
+							nestedFields.forEach(
+								function(nestedField) {
+									instance.recreateEditors(nestedField);
+								}
+							);
 						}
 					},
 
@@ -3728,6 +3896,14 @@ AUI.add(
 
 					_onSubmitForm: function(event) {
 						var instance = this;
+						
+						instance.toJSON();
+
+						instance.fillEmptyLocales(
+							instance,
+							instance.get('fields'),
+							instance.get('availableLanguageIds')
+						);
 
 						instance.finalizeRepeatableFieldLocalizations();
 

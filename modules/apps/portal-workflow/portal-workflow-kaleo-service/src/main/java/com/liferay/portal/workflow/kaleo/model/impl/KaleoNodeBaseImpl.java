@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 public abstract class KaleoNodeBaseImpl
 	extends KaleoNodeModelImpl implements KaleoNode {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo node model instance should use the <code>KaleoNode</code> interface instead.

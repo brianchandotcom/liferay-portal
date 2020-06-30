@@ -31,7 +31,7 @@ import com.liferay.chat.service.StatusLocalServiceUtil;
  */
 public abstract class StatusBaseImpl extends StatusModelImpl implements Status {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a status model instance should use the <code>Status</code> interface instead.

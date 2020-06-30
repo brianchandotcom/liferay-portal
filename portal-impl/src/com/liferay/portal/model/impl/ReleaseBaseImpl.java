@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 public abstract class ReleaseBaseImpl
 	extends ReleaseModelImpl implements Release {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a release model instance should use the <code>Release</code> interface instead.

@@ -62,28 +62,36 @@ CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryCon
 </aui:form>
 
 <aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-content',
-			expanded: <%= cpCategoryContentDisplayContext.useAssetCategory() %>,
-			header: '#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
+	new A.Toggler({
+		animated: true,
+		content:
+			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-content',
+		expanded: <%= cpCategoryContentDisplayContext.useAssetCategory() %>,
+		header:
+			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
+		on: {
+			animatingChange: function(event) {
+				var instance = this;
 
-					var expanded = !instance.get('expanded');
+				var expanded = !instance.get('expanded');
 
-					A.one('#<portlet:namespace />useAssetCategory').attr('checked', expanded);
+				A.one('#<portlet:namespace />useAssetCategory').attr(
+					'checked',
+					expanded
+				);
 
-					if (expanded) {
-						A.one('#<portlet:namespace />preferencesAssetCategoryId').attr('disabled', false);
-					}
-					else {
-						A.one('#<portlet:namespace />preferencesAssetCategoryId').attr('disabled', true);
-					}
+				if (expanded) {
+					A.one('#<portlet:namespace />preferencesAssetCategoryId').attr(
+						'disabled',
+						false
+					);
+				} else {
+					A.one('#<portlet:namespace />preferencesAssetCategoryId').attr(
+						'disabled',
+						true
+					);
 				}
 			}
 		}
-	);
+	});
 </aui:script>

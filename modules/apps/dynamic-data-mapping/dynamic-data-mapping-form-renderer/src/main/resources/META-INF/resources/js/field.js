@@ -143,6 +143,10 @@ AUI.add(
 
 						instance._eventHandlers = null;
 
+						if (instance._metalComponent) {
+							instance._metalComponent.dispose();
+						}
+
 						instance.set('rendered', false);
 					},
 
@@ -301,17 +305,40 @@ AUI.add(
 							container.appendTo(target);
 						}
 
-						container.setContent(instance.getTemplate());
+						var context = instance.getTemplateContext();
 
-						instance.eachNestedField(
-							function(field) {
-								field.updateContainer();
+						if (instance._metalComponent) {
+							instance._metalComponent.setState(context, function() {
+								instance.eachNestedField(
+									function(field) {
+										field.updateContainer();
+									}
+								);
+	
+								instance.fire('render');
+							});
+						}
+						else {
+							var MetalComponent = instance.getTemplateRenderer();
+
+							var element = container.get('firstChild');
+
+							if (element) {
+								context.element = element.getDOM();
 							}
-						);
 
-						instance.fire('render');
+							instance._metalComponent = new MetalComponent(context, container.getDOM());
 
-						instance.set('rendered', true);
+							instance.eachNestedField(
+								function(field) {
+									field.updateContainer();
+								}
+							);
+
+							instance.fire('render');
+
+							instance.set('rendered', true);
+						}
 
 						return instance;
 					},
@@ -372,21 +399,19 @@ AUI.add(
 					_getContainerByInstanceId: function(instanceId) {
 						var instance = this;
 
-						var container;
-
 						var root = instance.getRoot();
 
 						if (root) {
-							container = root.filterNodes(
+							return root.findNode(
 								function(qualifiedName) {
 									var nodeInstanceId = Util.getInstanceIdFromQualifiedName(qualifiedName);
 
 									return instanceId === nodeInstanceId;
 								}
-							).item(0);
+							);
 						}
 
-						return container;
+						return undefined;
 					},
 
 					_getContainerByNameAndIndex: function(name, repeatedIndex) {
@@ -418,13 +443,27 @@ AUI.add(
 					_valueContainer: function() {
 						var instance = this;
 
-						var container = instance.fetchContainer();
+						var container;
 
-						if (!container) {
-							container = instance._createContainer();
+						var root = instance.getRoot();
+
+						if (root) {
+							var name = instance.get('context.name');
+
+							container = root.getFieldContainer(name);
+
+							if (container) {
+								return A.one(container);
+							}
 						}
 
-						return container;
+						container = instance.fetchContainer();
+
+						if (container) {
+							return container;
+						}
+
+						return instance._createContainer();
 					},
 
 					_valueInstanceId: function() {

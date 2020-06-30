@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+<!-- test order_details.jsp -->
 
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -24,56 +25,87 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 
 CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	redirect = String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL());
-}
-
-portletDisplay.setURLBack(redirect);
+Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 %>
 
 <portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemActionURL" />
 
-<aui:form action="<%= editCommerceOrderItemActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderId() %>" />
-	<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
+<commerce-ui:panel
+	title='<%= LanguageUtil.get(request, "detail") %>'
+>
+	<aui:form action="<%= editCommerceOrderItemActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderId() %>" />
+		<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
 
-	<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
+		<liferay-ui:error exception="<%= CommerceOrderItemRequestedDeliveryDateException.class %>" message="please-enter-a-valid-requested-delivery-date" />
 
-		<%
-		CommerceOrderValidatorException cove = (CommerceOrderValidatorException)errorException;
+		<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
-		if (cove != null) {
-			for (CommerceOrderValidatorResult commerceOrderValidatorResult : cove.getCommerceOrderValidatorResults()) {
-		%>
+			<%
+			CommerceOrderValidatorException cove = (CommerceOrderValidatorException)errorException;
 
-				<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />
+			if (cove != null) {
+				for (CommerceOrderValidatorResult commerceOrderValidatorResult : cove.getCommerceOrderValidatorResults()) {
+			%>
 
-		<%
+					<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />
+
+			<%
+				}
 			}
+			%>
+
+		</liferay-ui:error>
+
+		<aui:input bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" name="quantity">
+			<aui:validator name="min">1</aui:validator>
+			<aui:validator name="number" />
+		</aui:input>
+
+		<c:if test="<%= !commerceOrder.isOpen() %>">
+			<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getUnitPrice()) %>">
+				<aui:validator name="min">0</aui:validator>
+				<aui:validator name="number" />
+			</aui:input>
+		</c:if>
+
+		<%
+		int requestedDeliveryDay = 0;
+		int requestedDeliveryMonth = -1;
+		int requestedDeliveryYear = 0;
+
+		if (requestedDeliveryDate != null) {
+			Calendar calendar = CalendarFactoryUtil.getCalendar(requestedDeliveryDate.getTime());
+
+			requestedDeliveryDay = calendar.get(Calendar.DAY_OF_MONTH);
+			requestedDeliveryMonth = calendar.get(Calendar.MONTH);
+			requestedDeliveryYear = calendar.get(Calendar.YEAR);
 		}
 		%>
 
-	</liferay-ui:error>
+		<div class="form-group input-date-wrapper">
+			<label for="requestedDeliveryDate"><liferay-ui:message key="requested-delivery-date" /></label>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input bean="<%= commerceOrderItem %>" name="quantity" />
+			<liferay-ui:input-date
+				dayParam="requestedDeliveryDateDay"
+				dayValue="<%= requestedDeliveryDay %>"
+				disabled="<%= false %>"
+				monthParam="requestedDeliveryDateMonth"
+				monthValue="<%= requestedDeliveryMonth %>"
+				name="requestedDeliveryDate"
+				nullable="<%= true %>"
+				showDisableCheckbox="<%= false %>"
+				yearParam="requestedDeliveryDateYear"
+				yearValue="<%= requestedDeliveryYear %>"
+			/>
+		</div>
 
-			<c:if test="<%= !commerceOrder.isOpen() %>">
-				<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getUnitPrice()) %>">
-					<aui:validator name="number" />
-				</aui:input>
-			</c:if>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		<aui:input bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" name="deliveryGroup" />
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+		</aui:button-row>
+	</aui:form>
+</commerce-ui:panel>

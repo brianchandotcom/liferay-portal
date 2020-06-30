@@ -105,7 +105,7 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 		cpOptionValue.setExternalReferenceCode(externalReferenceCode);
 
-		cpOptionValuePersistence.update(cpOptionValue);
+		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
 		reindexCPOption(cpOptionId);
 
@@ -240,7 +240,7 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
 
-		cpOptionValuePersistence.update(cpOptionValue);
+		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
 		reindexCPOption(cpOptionValue.getCPOptionId());
 

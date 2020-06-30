@@ -259,7 +259,13 @@
 
 			if (tagName == TAG_PARAGRAPH) {
 				if (!instance._isLastItemNewLine()) {
-					instance._endResult.push(NEW_LINE);
+					if (instance._hasParentNode(element, 'table', Infinity)) {
+						instance._endResult.push(
+							STR_LIST_ITEM_ESCAPE_CHARACTERS
+						);
+					} else {
+						instance._endResult.push(NEW_LINE);
+					}
 				}
 			}
 			else if (tagName == TAG_UNORDERED_LIST || tagName == TAG_ORDERED_LIST) {
@@ -443,11 +449,13 @@
 		_handleParagraph: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			if (instance._isDataAvailable()) {
-				instance._appendNewLines(2);
+			if (!instance._hasParentNode(element, 'table', Infinity)) {
+				if (instance._isDataAvailable()) {
+					instance._appendNewLines(2);
+				}
+ 
+				listTagsOut.push(NEW_LINE);
 			}
-
-			listTagsOut.push(NEW_LINE);
 		},
 
 		_handlePre: function(element, listTagsIn, listTagsOut) {

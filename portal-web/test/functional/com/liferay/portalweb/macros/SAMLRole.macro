@@ -53,6 +53,8 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Save");
 
+		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
 		AssertElementPresent(locator1 = "Button#DOWNLOAD_CERTIFICATE");
 
 		AssertElementPresent(locator1 = "Button#REPLACE_CERTIFICATE");

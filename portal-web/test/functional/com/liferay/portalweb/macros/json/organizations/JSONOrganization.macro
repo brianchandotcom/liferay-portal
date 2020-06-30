@@ -1,0 +1,69 @@
+definition {
+
+	macro addOrganization {
+		Variables.assertDefined(parameterList = "${organizationName}");
+
+		JSONOrganizationAPI._addOrganization(
+			organizationName = "${organizationName}",
+			organizationSite = "${organizationSite}");
+	}
+
+	macro assignUserToOrganization {
+		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		JSONOrganizationAPI._assignUserToOrganization(
+			organizationId = "${organizationId}",
+			userId = "${userId}");
+	}
+
+	macro deleteOrganizationByName {
+		Variables.assertDefined(parameterList = "${organizationName}");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "${organizationName}"
+		);
+
+		JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
+	}
+
+	macro getOrganizationIdByName {
+		Variables.assertDefined(parameterList = "${organizationName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/0 \
+				-u test@liferay.com:test
+		''';
+
+		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
+		var organizationId = StringUtil.replace("${organizationId}", "[&quot;", "");
+		var organizationId = StringUtil.replace("${organizationId}", "&quot;]", "");
+
+		return "${organizationId}";
+	}
+
+	macro getOrganizationName {
+		Variables.assertDefined(parameterList = "${organizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
+				-u test@liferay.com:test
+		''';
+
+		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");
+
+		return "${organizationName}";
+	}
+
+}

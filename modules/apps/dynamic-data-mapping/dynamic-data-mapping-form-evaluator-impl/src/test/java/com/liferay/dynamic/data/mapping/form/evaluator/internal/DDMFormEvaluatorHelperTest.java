@@ -26,10 +26,13 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -56,8 +59,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -900,6 +905,97 @@ public class DDMFormEvaluatorHelperTest {
 			expectedField2DDMFormFieldEvaluationResult,
 			ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 				"field2", "field2_instanceId"));
+	}
+
+	@Test
+	public void testUpdateAndCalculateRuleWithRequiredFieldsAndUnavailableLocale()
+		throws Exception {
+
+		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
+			LocaleUtil.US);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			availableLocales, LocaleUtil.US);
+
+		boolean localizable = true;
+		boolean repeatable = false;
+		boolean required = true;
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field0", "field0", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field1", "field1", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"field2", "field2", "numeric", FieldConstants.DOUBLE,
+				localizable, repeatable, required));
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0",
+				"calculate(\"field2\", getValue(\"field0\") * " +
+					"getValue(\"field1\"))"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		LocalizedValue value0 = DDMFormValuesTestUtil.createLocalizedValue(
+			"5", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", value0));
+
+		LocalizedValue value1 = DDMFormValuesTestUtil.createLocalizedValue(
+			"2", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_instanceId", "field1", value1));
+
+		LocalizedValue value2 = DDMFormValuesTestUtil.createLocalizedValue(
+			"0", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field2_instanceId", "field2", value2));
+
+		DDMFormEvaluatorContext ddmFormEvaluatorContext =
+			new DDMFormEvaluatorContext(
+				ddmForm, ddmFormValues, LocaleUtil.BRAZIL);
+
+		ddmFormEvaluatorContext.addProperty("groupId", 1L);
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, _ddmExpressionFactory, ddmFormEvaluatorContext,
+				Mockito.mock(DDMFormFieldTypeServicesTracker.class),
+				_jsonFactory, null, null, null);
+
+		ddmFormEvaluatorHelper.evaluate();
+
+		List<DDMFormFieldValue> evaluatedDDMFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Stream<DDMFormFieldValue> evaluatedDDMFormFieldValuesStream =
+			evaluatedDDMFormFieldValues.stream();
+
+		Optional<DDMFormFieldValue> actualDDMFormFieldValue =
+			evaluatedDDMFormFieldValuesStream.filter(
+				ddmFormFieldValue -> ddmFormFieldValue.getName(
+				).equals(
+					"field2"
+				)
+			).findFirst();
+
+		Value actualValue = actualDDMFormFieldValue.get(
+		).getValue();
+
+		Assert.assertEquals("10.0", actualValue.getString(LocaleUtil.US));
 	}
 
 	@Test

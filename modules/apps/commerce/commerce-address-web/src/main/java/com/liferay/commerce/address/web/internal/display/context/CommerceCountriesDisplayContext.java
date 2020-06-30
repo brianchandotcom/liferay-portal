@@ -30,19 +30,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
@@ -150,15 +143,12 @@ public class CommerceCountriesDisplayContext
 			Sort sort = CommerceUtil.getCommerceCountrySort(
 				orderByCol, orderByType);
 
-			SearchContext searchContext = buildSearchContext(
-				_commerceCountryRequestHelper.getCompanyId(), active,
-				getKeywords(), searchContainer.getStart(),
-				searchContainer.getEnd(), sort);
-
 			BaseModelSearchResult<CommerceCountry>
 				commerceCountryBaseModelSearchResult =
 					_commerceCountryService.searchCommerceCountries(
-						searchContext);
+						_commerceCountryRequestHelper.getCompanyId(), active,
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
 
 			total = commerceCountryBaseModelSearchResult.getLength();
 			results = commerceCountryBaseModelSearchResult.getBaseModels();
@@ -195,44 +185,6 @@ public class CommerceCountriesDisplayContext
 			commerceCountry.getCommerceRegions();
 
 		return !commerceRegions.isEmpty();
-	}
-
-	protected SearchContext buildSearchContext(
-		long companyId, Boolean active, String keywords, int start, int end,
-		Sort sort) {
-
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put("active", active);
-
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.NAME, keywords);
-		attributes.put("numericISOCode", keywords);
-		attributes.put("threeLettersISOCode", keywords);
-		attributes.put("twoLettersISOCode", keywords);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(new Sort[] {sort});
-		}
-
-		return searchContext;
 	}
 
 	protected String getKeywords() {

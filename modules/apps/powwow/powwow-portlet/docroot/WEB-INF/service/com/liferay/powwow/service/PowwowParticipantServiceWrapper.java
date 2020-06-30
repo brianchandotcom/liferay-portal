@@ -33,11 +33,6 @@ public class PowwowParticipantServiceWrapper
 		_powwowParticipantService = powwowParticipantService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PowwowParticipantServiceUtil} to access the powwow participant remote service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowParticipantServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
 			com.liferay.powwow.model.PowwowParticipant powwowParticipant)

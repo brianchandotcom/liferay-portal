@@ -25,11 +25,11 @@
 	}
 
 	.btn {
-		@extend .commerce-button
+		@extend .commerce-button;
 	}
 
 	.btn:not(.btn-primary) {
-		@extend .commerce-button--outline
+		@extend .commerce-button--outline;
 	}
 
 	.shipping-as-billing > .form-inline.input-checkbox-wrapper {

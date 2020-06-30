@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -33,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -50,6 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OptionCategory {
 
 	@Schema
+	@Valid
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -78,6 +80,7 @@ public class OptionCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -131,6 +134,7 @@ public class OptionCategory {
 	@NotEmpty
 	protected String key;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getPriority() {
 		return priority;
@@ -160,6 +164,7 @@ public class OptionCategory {
 	protected Double priority;
 
 	@Schema
+	@Valid
 	public Map<String, String> getTitle() {
 		return title;
 	}
@@ -273,6 +278,12 @@ public class OptionCategory {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

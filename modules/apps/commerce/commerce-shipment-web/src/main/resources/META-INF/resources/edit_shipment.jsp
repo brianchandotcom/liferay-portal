@@ -20,44 +20,37 @@
 CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
-long commerceShipmentId = commerceShipmentDisplayContext.getCommerceShipmentId();
+
+CommerceAccount commerceAccount = commerceShipment.getCommerceAccount();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+
+if (Validator.isNull(redirect)) {
+	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
+}
+else {
+	portletDisplay.setURLBack(redirect);
+}
 %>
 
-<portlet:actionURL name="editCommerceShipment" var="editCommerceShipmentActionURL" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceShipmentStatusException.class %>" message="please-select-a-valid-warehouse-and-quantity-for-all-shipment-items" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceShipmentItemQuantityException.class %>" message="please-add-at-least-one-item-to-the-shipment" />
 
-<aui:form action="<%= editCommerceShipmentActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceShipmentId" type="hidden" value="<%= String.valueOf(commerceShipmentId) %>" />
+<commerce-ui:header
+	actions="<%= commerceShipmentDisplayContext.getHeaderActionModels() %>"
+	bean="<%= commerceShipment %>"
+	beanIdLabel="id"
+	model="<%= CommerceShipment.class %>"
+	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(commerceAccount, themeDisplay.getPathImage()) %>"
+	title="<%= commerceAccount.getName() %>"
+	wrapperCssClasses="side-panel-top-anchor"
+/>
 
-	<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
-
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:select label="order" name="commerceOrderId" required="<%= true %>">
-
-				<%
-				List<CommerceOrder> commerceOrders = commerceShipmentDisplayContext.getCommerceOrders();
-
-				for (CommerceOrder commerceOrder : commerceOrders) {
-				%>
-
-					<aui:option label="<%= commerceOrder.getCommerceOrderId() %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+<div id="<portlet:namespace />editShipmentContainer">
+	<liferay-frontend:screen-navigation
+		fullContainerCssClass="col-12 pt-4"
+		key="<%= CommerceShipmentScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_SHIPMENT_GENERAL %>"
+		modelBean="<%= commerceShipment %>"
+		portletURL="<%= currentURLObj %>"
+	/>
+</div>

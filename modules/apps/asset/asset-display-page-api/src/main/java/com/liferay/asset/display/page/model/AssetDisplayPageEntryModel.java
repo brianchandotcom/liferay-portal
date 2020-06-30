@@ -46,7 +46,7 @@ public interface AssetDisplayPageEntryModel
 	extends AttachedModel, BaseModel<AssetDisplayPageEntry>, GroupedModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a asset display page entry model instance should use the {@link AssetDisplayPageEntry} interface instead.

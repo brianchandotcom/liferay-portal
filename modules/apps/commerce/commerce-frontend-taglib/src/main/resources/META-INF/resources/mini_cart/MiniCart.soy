@@ -79,7 +79,7 @@
 		>
 			{call ClayIcon.render}
 				{param spritemap: $spritemap /}
-				{param symbol: 'cart' /}
+				{param symbol: 'shopping-cart' /}
 			{/call}
 		</button>
 
@@ -90,7 +90,7 @@
 			>
 				{call ClayIcon.render}
 					{param spritemap: $spritemap /}
-					{param symbol: 'close' /}
+					{param symbol: 'times' /}
 				{/call}
 			</button>
 
@@ -105,7 +105,7 @@
 								<a class="commerce-link" href="{$detailsUrl}">{msg desc="View Details"}view-details{/msg}</a>
 							{/if}
 						{else}
-							{msg desc="The Cart is Empty"}the-cart-is-empty{/msg}
+							{msg desc="The cart is empty."}the-cart-is-empty{/msg}
 						{/if}
 					</div>
 					{if isNonnull($flushCartUrl) and
@@ -151,23 +151,15 @@
 							<div class="empty-cart-icon">
 								{call ClayIcon.render}
 									{param spritemap: $spritemap /}
-									{param symbol: 'cart' /}
+									{param symbol: 'shopping-cart' /}
 								{/call}
 							</div>
 
-							<div class="empty-cart-label">
-								<p>
-									{msg desc="Add a"}add-a{/msg}
-									&nbsp;
-									<span class="stress">{msg desc="Product"}product{/msg}</span>
-								</p>
-
-								<p>
-									{msg desc="to the Cart"}
-										to-the-cart
-									{/msg}
-								</p>
-							</div>
+							<p class="empty-cart-label">
+								{msg desc="Add a product to the cart"}
+									add-a-product-to-the-cart
+								{/msg}
+							</p>
 						</div>
 					{/if}
 				</div>

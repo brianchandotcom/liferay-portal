@@ -8,6 +8,7 @@ create table CommerceCurrency (
 	modifiedDate DATE null,
 	code_ VARCHAR(75) null,
 	name STRING null,
+	symbol VARCHAR(75) null,
 	rate DECIMAL(30, 16) null,
 	formatPattern STRING null,
 	maxFractionDigits INTEGER,

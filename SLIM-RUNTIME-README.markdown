@@ -128,10 +128,10 @@ runs.
     +------------------+
     | Tables_in_lportal|
     +------------------+
-    | ClassName_       |
-    | Configuration_   |
-    | Counter          |
-    | Release_         |
+    | ClassName_ |
+    | Configuration_ |
+    | Counter |
+    | Release_ |
     | ServiceComponent |
     +------------------+
     5 rows in set (0.00 sec)
@@ -159,11 +159,11 @@ database:
     +------------------+
     | Tables_in_lportal|
     +------------------+
-    | ClassName_       |
-    | Configuration_   |
-    | Contacts_Entry   |
-    | Counter          |
-    | Release_         |
+    | ClassName_ |
+    | Configuration_ |
+    | Contacts_Entry |
+    | Counter |
+    | Release_ |
     | ServiceComponent |
     +------------------+
     6 rows in set (0.00 sec)

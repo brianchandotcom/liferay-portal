@@ -81,10 +81,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 				CommerceDiscountCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -97,10 +97,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 				deleteCommerceDiscountCommerceAccountGroupRel(
 					commerceDiscountCommerceAccountGroupRelId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -121,10 +121,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 				CommerceDiscountCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -145,10 +145,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 				CommerceDiscountCommerceAccountGroupRelSoap.toSoapModel(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -175,10 +175,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 				CommerceDiscountCommerceAccountGroupRelSoap.toSoapModels(
 					returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -194,10 +194,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

@@ -30,11 +30,6 @@ public class LayoutRevisionServiceWrapper
 		_layoutRevisionService = layoutRevisionService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutRevisionServiceUtil} to access the layout revision remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutRevisionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,

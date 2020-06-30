@@ -303,11 +303,6 @@ public class RatingsEntryWrapper
 		return _ratingsEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ratings entry model instance should use the <code>RatingsEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ratingsEntry.persist();

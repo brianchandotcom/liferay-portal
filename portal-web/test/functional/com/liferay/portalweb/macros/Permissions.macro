@@ -88,19 +88,10 @@ definition {
 	}
 
 	macro definePermissionViaJSONAPI {
-		if (!(isSet(groupName))) {
-			var groupName = "Global";
-		}
-
-		if (!(isSet(roleType))) {
-			var roleType = "regular";
-		}
-
-		JSONPermission.editPermission(
+		JSONPermission.addPermission(
+			actionId = "${resourceAction}",
 			groupName = "${groupName}",
-			method = "add-resource-permission",
-			resourceAction = "${resourceAction}",
-			resourceName = "${resourceName}",
+			name = "${resourceName}",
 			roleTitle = "${roleTitle}",
 			roleType = "${roleType}");
 	}
@@ -137,19 +128,10 @@ definition {
 	}
 
 	macro removePermissionViaAPI {
-		if (!(isSet(groupName))) {
-			var groupName = "Global";
-		}
-
-		if (!(isSet(roleType))) {
-			var roleType = "regular";
-		}
-
-		JSONPermission.editPermission(
+		JSONPermission.removePermission(
+			actionId = "${resourceAction}",
 			groupName = "${groupName}",
-			method = "remove-resource-permission",
-			resourceAction = "${resourceAction}",
-			resourceName = "${resourceName}",
+			name = "${resourceName}",
 			roleTitle = "${roleTitle}",
 			roleType = "${roleType}");
 	}

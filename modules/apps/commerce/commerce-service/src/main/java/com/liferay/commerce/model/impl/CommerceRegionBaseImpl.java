@@ -32,7 +32,7 @@ import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 public abstract class CommerceRegionBaseImpl
 	extends CommerceRegionModelImpl implements CommerceRegion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce region model instance should use the <code>CommerceRegion</code> interface instead.

@@ -14,8 +14,8 @@
 
 package com.liferay.notifications.web.internal.application.list;
 
-import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.UserMenuPanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class NotificationsPanelApp extends BasePanelApp {
+public class NotificationsPanelApp extends UserMenuPanelApp {
 
 	@Override
 	public int getNotificationsCount(User user) {

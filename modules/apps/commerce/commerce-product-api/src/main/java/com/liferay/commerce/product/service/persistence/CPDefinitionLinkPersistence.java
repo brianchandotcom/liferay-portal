@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPDefinitionLinkPersistence
 	extends BasePersistence<CPDefinitionLink> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkUtil} to access the cp definition link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 public abstract class CommerceChannelBaseImpl
 	extends CommerceChannelModelImpl implements CommerceChannel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce channel model instance should use the <code>CommerceChannel</code> interface instead.

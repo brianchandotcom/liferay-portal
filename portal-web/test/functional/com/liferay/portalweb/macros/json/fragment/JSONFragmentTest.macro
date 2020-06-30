@@ -1,0 +1,52 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		//collection
+
+		JSONFragment.addFragmentCollection(
+			groupName = "${groupName}",
+			name = "Collection 1");
+
+		//fragment
+
+		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+		JSONFragment.addSection(
+			collectionName = "Collection 1",
+			configuration = "${jsonSnippet}",
+			groupName = "${groupName}",
+			html = "${htmlSnippet}",
+			name = "Fragment 1");
+
+		JSONFragment.addSection(
+			collectionName = "Collection 1",
+			groupName = "${groupName}",
+			html = "${htmlSnippet}",
+			name = "Fragment 2");
+
+		//assertion
+
+		JSONFragment.assertFragmentCollectionInGroup(
+			collectionName = "Collection 1",
+			groupName = "${groupName}");
+
+		JSONFragment.assertFragmentCollectionNotInGroup(
+			collectionName = "Collection 2",
+			groupName = "${groupName}");
+
+		JSONFragment.assertFragmentInGroup(
+			collectionName = "Collection 1",
+			fragmentName = "Fragment 1",
+			groupName = "${groupName}");
+
+		JSONFragment.assertFragmentNotInGroup(
+			collectionName = "Collection 1",
+			fragmentName = "Fragment 3",
+			groupName = "${groupName}");
+	}
+
+}

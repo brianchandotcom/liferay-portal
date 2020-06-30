@@ -1,35 +1,105 @@
 .step-tracker {
-  display: table;
-  width: 100%;
-  overflow: hidden;
+	display: flex;
+	overflow: hidden;
+	width: 100%;
 
-  .step {
-    display: table-cell;
-    text-align: center;
-    background: currentColor;
-    padding: 8px;
-    position: relative;
+	.step {
+		align-items: center;
+		background: currentColor;
+		clip-path: polygon(
+			calc(100% - 10px) 0%,
+			calc(100% + 8px) 50%,
+			calc(100% - 10px) 100%,
+			-8px 100%,
+			11px 50%,
+			-8px 0
+		);
+		display: flex;
+		flex-basis: 100%;
+		font-size: 14px;
+		font-weight: 600;
+		justify-content: center;
+		padding: 8px 12px;
+		position: relative;
+		text-align: center;
 
-    &:not(:first-child) {
-      clip-path: polygon(calc(100% + 26px) 0%, calc(100% + 26px) 100%, 4px 100%, 26px 50%, 4px 0);
-    }
+		&:first-child {
+			clip-path: polygon(
+				calc(100% - 10px) 0%,
+				calc(100% + 8px) 50%,
+				calc(100% - 10px) 100%,
+				0 100%,
+				0 0
+			);
+		}
 
-    &:not(:last-child) {
-      &::after {
-        content: '';
-        background-color: currentColor;
-        position: absolute;
-        top: 0;
-        left: 100%;
-        width: 22px;
-        height: 100%;
-        z-index: 0;
-        clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-      }
-    }
+		&:last-child {
+			clip-path: polygon(100% 0%, 100% 100%, -8px 100%, 11px 50%, -8px 0);
+		}
 
-    .step-label {
-      color: white;
-    }
-  }
+		&:not(:first-child) {
+			&::before {
+				background: currentColor;
+				content: '';
+				height: 100%;
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 11px;
+			}
+		}
+
+		&:not(:last-child) {
+			&::after {
+				background: currentColor;
+				content: '';
+				height: 100%;
+				left: 100%;
+				position: absolute;
+				top: 0;
+				width: 11px;
+			}
+		}
+
+		&.active {
+			color: $step-tracker-active;
+		}
+
+		&.completed {
+			color: $step-tracker-completed;
+		}
+
+		&.inactive {
+			color: $step-tracker-inactive;
+		}
+
+		.step-label {
+			color: white;
+		}
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.step-tracker {
+		flex-wrap: wrap;
+
+		.step {
+			clip-path: none !important;
+
+			&::before {
+				display: none;
+			}
+
+			&::after {
+				background: none !important;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				border-top: 6px solid currentColor;
+				height: 0 !important;
+				left: calc(50% - 6px) !important;
+				top: 100% !important;
+				z-index: 1;
+			}
+		}
+	}
 }

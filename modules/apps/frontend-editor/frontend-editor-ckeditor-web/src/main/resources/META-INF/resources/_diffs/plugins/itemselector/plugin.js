@@ -325,7 +325,6 @@
 				if (itemSelectorDialog) {
 					itemSelectorDialog.set('eventName', eventName);
 					itemSelectorDialog.set('url', url);
-					itemSelectorDialog.set('zIndex', CKEDITOR.getNextZIndex());
 
 					callback(itemSelectorDialog);
 				}
@@ -336,8 +335,7 @@
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									eventName: eventName,
-									url: url,
-									zIndex: CKEDITOR.getNextZIndex()
+									url: url
 								}
 							);
 

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.measurement.unit.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.admin.constants.CommerceAdminConstants;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -71,11 +70,6 @@ public class MeasurementUnitsCommerceAdminModule
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return null;
-	}
-
-	@Override
-	public int getType() {
-		return CommerceAdminConstants.COMMERCE_ADMIN_TYPE_VIRTUAL_INSTANCE;
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public interface LayoutPrototypeModel
 	extends BaseModel<LayoutPrototype>, LocalizedModel, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a layout prototype model instance should use the {@link LayoutPrototype} interface instead.

@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommercePaymentMethodGroupRelPersistence
 	extends BasePersistence<CommercePaymentMethodGroupRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodGroupRelUtil} to access the commerce payment method group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

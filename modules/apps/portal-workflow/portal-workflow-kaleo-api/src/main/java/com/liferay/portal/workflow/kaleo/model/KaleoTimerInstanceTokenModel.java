@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoTimerInstanceTokenModel
 	extends BaseModel<KaleoTimerInstanceToken>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo timer instance token model instance should use the {@link KaleoTimerInstanceToken} interface instead.

@@ -111,10 +111,10 @@ public class CommercePriceListAccountRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListAccountRel fetchCommercePriceListAccountRel(
-		long commercePriceListId, long commerceAccountId) {
+		long commerceAccountId, long commercePriceListId) {
 
 		return commercePriceListAccountRelPersistence.fetchByC_C(
-			commercePriceListId, commerceAccountId);
+			commerceAccountId, commercePriceListId);
 	}
 
 	@Override

@@ -19,7 +19,6 @@
 			propertySeparator=","
 		/>
 		<cacheEventListenerFactory class="com.liferay.dummy.DummyCacheEventListenerFactory" />
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</defaultCache>
 
 	<cache name="test.cache">
@@ -29,6 +28,5 @@
 			propertySeparator=","
 		/>
 		<cacheEventListenerFactory class="com.liferay.dummy.DummyCacheEventListenerFactory" />
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</cache>
 </ehcache>

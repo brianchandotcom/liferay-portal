@@ -30,11 +30,6 @@ public class DLAppLocalServiceWrapper
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DLAppLocalServiceUtil} to access the dl app local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 			long userId, long repositoryId, long folderId,

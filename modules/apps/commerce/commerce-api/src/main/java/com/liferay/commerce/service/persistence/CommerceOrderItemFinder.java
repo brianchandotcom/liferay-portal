@@ -23,14 +23,20 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface CommerceOrderItemFinder {
 
+	public int countByG_A_O(
+		long groupId, long commerceAccountId, int[] orderStatuses);
+
 	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
 		findByAvailableQuantity(long commerceOrderId);
 
 	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
 		findByAvailableQuantity(long commerceOrderId, int start, int end);
 
-	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+		findByG_A_O(
+			long groupId, long commerceAccountId, int[] orderStatuses,
+			int start, int end);
 
-	public int getCPInstanceQuantity(long cpInstanceId, int status);
+	public int getCommerceOrderItemsQuantity(long commerceOrderId);
 
 }

@@ -182,7 +182,9 @@ public class DDMFormInstanceVersionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		formInstanceVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -198,7 +200,7 @@ public class DDMFormInstanceVersionCacheModel
 		structureVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		settings = objectInput.readUTF();
+		settings = (String)objectInput.readObject();
 		version = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -246,10 +248,10 @@ public class DDMFormInstanceVersionCacheModel
 		}
 
 		if (settings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(settings);
+			objectOutput.writeObject(settings);
 		}
 
 		if (version == null) {

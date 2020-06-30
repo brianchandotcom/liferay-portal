@@ -18,18 +18,12 @@ import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 
@@ -38,27 +32,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public abstract class BaseCommerceShipmentDisplayContext<T> {
+public class BaseCommerceShipmentDisplayContext<T> {
 
 	public BaseCommerceShipmentDisplayContext(
-		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		String portalPreferenceNamespace) {
+		ActionHelper actionHelper, HttpServletRequest httpServletRequest) {
 
 		this.actionHelper = actionHelper;
 		this.httpServletRequest = httpServletRequest;
-
-		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			this.httpServletRequest);
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
-
-		_portalPreferenceNamespace = portalPreferenceNamespace;
-
-		_defaultOrderByCol = "create-date";
-		_defaultOrderByType = "desc";
 	}
 
 	public CommerceShipment getCommerceShipment() throws PortalException {
@@ -82,66 +67,8 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 		return commerceShipment.getCommerceShipmentId();
 	}
 
-	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(
-				httpServletRequest, portalPreferences);
-		}
-
-		return _displayStyle;
-	}
-
 	public String getKeywords() {
 		return ParamUtil.getString(httpServletRequest, "keywords");
-	}
-
-	public String getOrderByCol() {
-		if (_orderByCol != null) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(httpServletRequest, "orderByCol");
-
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = portalPreferences.getValue(
-				_portalPreferenceNamespace, "order-by-col", _defaultOrderByCol);
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					_portalPreferenceNamespace, "order-by-col", _orderByCol);
-			}
-		}
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (_orderByType != null) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(httpServletRequest, "orderByType");
-
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = portalPreferences.getValue(
-				_portalPreferenceNamespace, "order-by-type",
-				_defaultOrderByType);
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				portalPreferences.setValue(
-					_portalPreferenceNamespace, "order-by-type", _orderByType);
-			}
-		}
-
-		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
@@ -173,44 +100,14 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
-		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
-
-		if (Validator.isNotNull(displayStyle)) {
-			portletURL.setParameter("displayStyle", getDisplayStyle());
-		}
-
 		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
-		}
-
 		return portletURL;
 	}
-
-	public RowChecker getRowChecker() {
-		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
-		}
-
-		return _rowChecker;
-	}
-
-	public abstract SearchContainer<T> getSearchContainer()
-		throws PortalException;
 
 	public boolean hasManageCommerceShipmentsPermission() {
 		return PortalPermissionUtil.contains(
@@ -218,59 +115,12 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 	}
 
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public void setDefaultOrderByCol(String defaultOrderByCol) {
-		_defaultOrderByCol = defaultOrderByCol;
-	}
-
-	public void setDefaultOrderByType(String defaultOrderByType) {
-		_defaultOrderByType = defaultOrderByType;
-	}
-
-	protected String getDisplayStyle(
-		HttpServletRequest httpServletRequest,
-		PortalPreferences portalPreferences) {
-
-		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				_portalPreferenceNamespace, "display-style", "list");
-		}
-		else {
-			portalPreferences.setValue(
-				_portalPreferenceNamespace, "display-style", displayStyle);
-
-			httpServletRequest.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-		}
-
-		return displayStyle;
-	}
-
 	protected final ActionHelper actionHelper;
 	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
-	protected final PortalPreferences portalPreferences;
-	protected SearchContainer<T> searchContainer;
 
 	private CommerceShipment _commerceShipment;
-	private String _defaultOrderByCol;
-	private String _defaultOrderByType;
-	private String _displayStyle;
-	private String _orderByCol;
-	private String _orderByType;
-	private final String _portalPreferenceNamespace;
-	private RowChecker _rowChecker;
 
 }

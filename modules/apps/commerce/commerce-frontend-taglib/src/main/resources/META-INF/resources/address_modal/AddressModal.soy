@@ -41,9 +41,9 @@
 			<div class="commerce-modal__header">
 				<h3 class="commerce-modal__title">
 					{if isNonnull($_formData.id)}
-						{msg desc="Update address"}update-address{/msg}
+						{msg desc="Update Address"}update-address{/msg}
 					{else}
-						{msg desc="Add new address"}add-new-address{/msg}
+						{msg desc="Add New Address"}add-new-address{/msg}
 					{/if}
 				</h3>
 
@@ -53,7 +53,7 @@
 				>
 					{call ClayIcon.render}
 						{param spritemap: $spritemap /}
-						{param symbol: 'close' /}
+						{param symbol: 'times' /}
 					{/call}
 				</button>
 			</div>
@@ -192,21 +192,18 @@
 						</div>
 
 						<div class="col-12">
-							{let $nextButtonClasses kind="text"}
-								commerce-button commerce-button--big commerce-button--icon
-								{if (isNonnull($_firstFormValid) and $_firstFormValid == true) == false}
-									{sp}commerce-button--disabled
-								{/if}
-							{/let}
 							<div class="commerce-modal__actions justify-content-end">
 								<button
 									type="submit"
-									class="{$nextButtonClasses}"
+									class="btn btn-lg btn-monospaced btn-primary"
 									data-onclick="{$_handleNextButton}"
+									{if $_firstFormValid == false}
+										disabled
+									{/if}
 								>
 									{call ClayIcon.render}
 										{param spritemap: $spritemap /}
-										{param symbol: 'next' /}
+										{param symbol: 'arrow-next' /}
 									{/call}
 								</button>
 							</div>
@@ -275,7 +272,7 @@
 				{if isNonnull($_stage) and $_stage == 2}
 					{sp}commerce-dot-navigation__dot--active
 				{/if}
-				{if (isNonnull($_firstFormValid) and $_firstFormValid == true) == false}
+				{if $_firstFormValid == false}
 					{sp}commerce-dot-navigation__dot--disabled
 				{/if}
 			{/let}

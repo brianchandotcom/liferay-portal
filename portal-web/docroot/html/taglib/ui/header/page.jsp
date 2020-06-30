@@ -21,7 +21,7 @@ if (Validator.isNull(backLabel)) {
 	backLabel = LanguageUtil.get(resourceBundle, "back");
 }
 
-String headerTitle = (localizeTitle) ? LanguageUtil.get(resourceBundle, title) : title;
+String headerTitle = localizeTitle ? LanguageUtil.get(resourceBundle, title) : title;
 %>
 
 <div class="taglib-header <%= cssClass %>">

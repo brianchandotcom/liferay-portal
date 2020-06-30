@@ -264,10 +264,7 @@ public class Java2WsddTask {
 		_addElements(serviceElement, operationElements);
 		_addElements(serviceElement, parameterElements);
 
-		content = StringUtil.replace(
-			_formattedString(document), "\"/>", "\" />");
-
-		return content;
+		return StringUtil.replace(_formattedString(document), "\"/>", "\" />");
 	}
 
 	private static String _formattedString(Node node) throws Exception {

@@ -54,12 +54,18 @@ public class CommerceOrderPortletProvider
 			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (group == null) {
+			return _portal.getControlPanelPortletURL(
+				httpServletRequest, group, getPortletName(), 0, 0,
+				PortletRequest.RENDER_PHASE);
+		}
 
 		long plid = _portal.getPlidFromPortletId(
 			group.getGroupId(), getPortletName());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long controlPanelPlid = _portal.getControlPanelPlid(
 			themeDisplay.getCompanyId());

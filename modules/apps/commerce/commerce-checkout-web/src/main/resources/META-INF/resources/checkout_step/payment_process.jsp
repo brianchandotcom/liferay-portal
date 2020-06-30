@@ -21,5 +21,14 @@ PaymentProcessCheckoutStepDisplayContext paymentProcessCheckoutStepDisplayContex
 %>
 
 <div>
-	<c:redirect url="<%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %>" />
+	<c:set var="redirectLink">
+		<a href="<%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %>"><%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %></a>
+	</c:set>
+
+	<liferay-ui:message arguments="${redirectLink}" key="the-payment-process-has-been-initiated.-you-should-be-redirected-automatically.-if-the-page-does-not-reload-within-a-few-seconds-please-click-this-link-x" />
 </div>
+
+<script>
+	window.location.href =
+		'<%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %>';
+</script>

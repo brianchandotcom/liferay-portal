@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SegmentUser {
+public class SegmentUser implements Cloneable {
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -86,6 +86,11 @@ public class SegmentUser {
 	}
 
 	protected String name;
+
+	@Override
+	public SegmentUser clone() throws CloneNotSupportedException {
+		return (SegmentUser)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

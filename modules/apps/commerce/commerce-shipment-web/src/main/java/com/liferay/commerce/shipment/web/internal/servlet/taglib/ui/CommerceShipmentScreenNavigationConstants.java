@@ -19,11 +19,12 @@ package com.liferay.commerce.shipment.web.internal.servlet.taglib.ui;
  */
 public class CommerceShipmentScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_DETAILS = "details";
+	public static final String CATEGORY_KEY_ATTACHMENTS = "attachments";
 
-	public static final String CATEGORY_KEY_ITEMS = "items";
+	public static final String CATEGORY_KEY_SHIPPING_SUMMARY =
+		"shipping-summary";
 
-	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_SHIPMENT =
-		"commerce.shipment.form";
+	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_SHIPMENT_GENERAL =
+		"commerce.shipment.general";
 
 }

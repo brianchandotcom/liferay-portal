@@ -371,11 +371,6 @@ public class CPFriendlyURLEntryWrapper
 		return _cpFriendlyURLEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp friendly url entry model instance should use the <code>CPFriendlyURLEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpFriendlyURLEntry.persist();

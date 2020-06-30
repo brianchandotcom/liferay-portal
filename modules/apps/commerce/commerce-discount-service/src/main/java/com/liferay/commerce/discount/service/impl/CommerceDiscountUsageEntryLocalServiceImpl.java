@@ -53,10 +53,8 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 		commerceDiscountUsageEntry.setCommerceOrderId(commerceOrderId);
 		commerceDiscountUsageEntry.setCommerceDiscountId(commerceDiscountId);
 
-		commerceDiscountUsageEntryPersistence.update(
+		return commerceDiscountUsageEntryPersistence.update(
 			commerceDiscountUsageEntry);
-
-		return commerceDiscountUsageEntry;
 	}
 
 }

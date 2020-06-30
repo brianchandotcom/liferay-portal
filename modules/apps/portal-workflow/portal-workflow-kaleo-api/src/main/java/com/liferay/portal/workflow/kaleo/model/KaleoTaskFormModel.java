@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoTaskFormModel
 	extends BaseModel<KaleoTaskForm>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo task form model instance should use the {@link KaleoTaskForm} interface instead.

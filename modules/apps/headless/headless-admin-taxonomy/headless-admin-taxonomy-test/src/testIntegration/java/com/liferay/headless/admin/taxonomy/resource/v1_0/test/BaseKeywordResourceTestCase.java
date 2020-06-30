@@ -200,6 +200,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testDeleteKeyword() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword = testDeleteKeyword_addKeyword();
 
 		assertHttpResponseStatusCode(
@@ -513,9 +514,11 @@ public abstract class BaseKeywordResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						keyword1, entityField.getName(), "Aaa");
+						keyword1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						keyword2, entityField.getName(), "Bbb");
+						keyword2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

@@ -65,9 +65,7 @@ public class CommerceRegionLocalServiceImpl
 		commerceRegion.setPriority(priority);
 		commerceRegion.setActive(active);
 
-		commerceRegionPersistence.update(commerceRegion);
-
-		return commerceRegion;
+		return commerceRegionPersistence.update(commerceRegion);
 	}
 
 	@Override
@@ -175,9 +173,7 @@ public class CommerceRegionLocalServiceImpl
 
 		commerceRegion.setActive(active);
 
-		commerceRegionPersistence.update(commerceRegion);
-
-		return commerceRegion;
+		return commerceRegionPersistence.update(commerceRegion);
 	}
 
 	@Override
@@ -196,9 +192,7 @@ public class CommerceRegionLocalServiceImpl
 		commerceRegion.setPriority(priority);
 		commerceRegion.setActive(active);
 
-		commerceRegionPersistence.update(commerceRegion);
-
-		return commerceRegion;
+		return commerceRegionPersistence.update(commerceRegion);
 	}
 
 	protected void validate(String name) throws PortalException {

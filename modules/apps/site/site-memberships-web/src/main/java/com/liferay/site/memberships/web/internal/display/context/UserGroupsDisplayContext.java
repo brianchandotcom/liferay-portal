@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -333,13 +333,13 @@ public class UserGroupsDisplayContext {
 				});
 		}
 
-		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(
+		int userGroupsCount = UserGroupServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			userGroupParams);
 
 		userGroupSearch.setTotal(userGroupsCount);
 
-		List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
+		List<UserGroup> userGroups = UserGroupServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			userGroupParams, userGroupSearch.getStart(),
 			userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());

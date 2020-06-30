@@ -1254,11 +1254,6 @@ public class CommerceOrderWrapper
 		return _commerceOrder.isSubscriptionOrder();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce order model instance should use the <code>CommerceOrder</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceOrder.persist();

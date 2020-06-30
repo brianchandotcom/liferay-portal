@@ -130,6 +130,9 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 		CommerceInventoryBookedQuantity newCommerceInventoryBookedQuantity =
 			_persistence.create(pk);
 
+		newCommerceInventoryBookedQuantity.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceInventoryBookedQuantity.setCompanyId(
 			RandomTestUtil.nextLong());
 
@@ -164,6 +167,9 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 				_persistence.findByPrimaryKey(
 					newCommerceInventoryBookedQuantity.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceInventoryBookedQuantity.getMvccVersion(),
+			newCommerceInventoryBookedQuantity.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceInventoryBookedQuantity.
 				getCommerceInventoryBookedQuantityId(),
@@ -221,6 +227,15 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_S(0L, "null");
+
+		_persistence.countByC_S(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceInventoryBookedQuantity newCommerceInventoryBookedQuantity =
 			addCommerceInventoryBookedQuantity();
@@ -252,9 +267,10 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CIBookedQuantity", "commerceInventoryBookedQuantityId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "sku", true, "quantity", true,
+			"CIBookedQuantity", "mvccVersion", true,
+			"commerceInventoryBookedQuantityId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "sku", true, "quantity", true,
 			"expirationDate", true, "bookedNote", true);
 	}
 
@@ -519,6 +535,9 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			_persistence.create(pk);
+
+		commerceInventoryBookedQuantity.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		commerceInventoryBookedQuantity.setCompanyId(RandomTestUtil.nextLong());
 

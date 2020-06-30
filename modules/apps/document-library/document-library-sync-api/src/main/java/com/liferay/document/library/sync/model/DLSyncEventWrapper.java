@@ -213,11 +213,6 @@ public class DLSyncEventWrapper
 		return _dlSyncEvent.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a dl sync event model instance should use the <code>DLSyncEvent</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_dlSyncEvent.persist();

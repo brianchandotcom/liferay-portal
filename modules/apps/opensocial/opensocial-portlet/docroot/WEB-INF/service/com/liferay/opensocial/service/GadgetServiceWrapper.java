@@ -30,11 +30,6 @@ public class GadgetServiceWrapper
 		_gadgetService = gadgetService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link GadgetServiceUtil} to access the gadget remote service. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.opensocial.model.Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,

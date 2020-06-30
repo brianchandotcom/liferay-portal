@@ -33,7 +33,7 @@ public abstract class CommercePriceListAccountRelBaseImpl
 	extends CommercePriceListAccountRelModelImpl
 	implements CommercePriceListAccountRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce price list account rel model instance should use the <code>CommercePriceListAccountRel</code> interface instead.

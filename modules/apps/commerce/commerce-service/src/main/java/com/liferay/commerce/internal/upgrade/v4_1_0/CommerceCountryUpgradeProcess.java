@@ -33,7 +33,8 @@ public class CommerceCountryUpgradeProcess
 				CommerceCountryModelImpl.TABLE_NAME, "channelFilterEnabled",
 				"BOOLEAN");
 
-			runSQL("update CommerceCountry set channelFilterEnabled = false");
+			runSQL(
+				"update CommerceCountry set channelFilterEnabled = [$FALSE$]");
 		}
 	}
 

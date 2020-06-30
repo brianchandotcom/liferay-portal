@@ -32,7 +32,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 public abstract class DLFileEntryTypeBaseImpl
 	extends DLFileEntryTypeModelImpl implements DLFileEntryType {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a document library file entry type model instance should use the <code>DLFileEntryType</code> interface instead.

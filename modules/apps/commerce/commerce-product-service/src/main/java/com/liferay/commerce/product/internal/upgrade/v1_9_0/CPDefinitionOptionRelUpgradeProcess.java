@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_9_0;
 
+import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionRelModelImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,11 +25,12 @@ import java.sql.Statement;
 /**
  * @author Marco Leo
  */
-public class CPDefinitionOptionRelUpgradeProcess extends UpgradeProcess {
+public class CPDefinitionOptionRelUpgradeProcess
+	extends BaseCommerceProductServiceUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
+		addColumn(
 			CPDefinitionOptionRelModelImpl.class,
 			CPDefinitionOptionRelModelImpl.TABLE_NAME, "key_", "VARCHAR(75)");
 
@@ -52,41 +50,11 @@ public class CPDefinitionOptionRelUpgradeProcess extends UpgradeProcess {
 				ps.setString(1, rs.getString("key_"));
 				ps.setLong(2, rs.getLong("CPOptionId"));
 
-				ps.executeUpdate();
+				ps.addBatch();
 			}
 
 			ps.executeBatch();
 		}
 	}
-
-	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionOptionRelUpgradeProcess.class);
 
 }

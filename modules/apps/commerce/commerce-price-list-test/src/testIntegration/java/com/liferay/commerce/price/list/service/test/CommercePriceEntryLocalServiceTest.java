@@ -77,7 +77,7 @@ public class CommercePriceEntryLocalServiceTest {
 			_company.getCompanyId(), defaultUser.getUserId(), 0);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getGroupId());
+			_company.getCompanyId());
 	}
 
 	@Test

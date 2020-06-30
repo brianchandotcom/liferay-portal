@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Marketplace Service
 Bundle-SymbolicName: com.liferay.marketplace.service
-Bundle-Version: 4.0.33
+Bundle-Version: 4.0.40
 Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true

@@ -48,7 +48,7 @@ public interface CPDefinitionSpecificationOptionValueModel
 	extends BaseModel<CPDefinitionSpecificationOptionValue>, LocalizedModel,
 			ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition specification option value model instance should use the {@link CPDefinitionSpecificationOptionValue} interface instead.

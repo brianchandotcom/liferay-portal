@@ -27,8 +27,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
-import java.io.IOException;
-
 import org.elasticsearch.action.bulk.BulkAction;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -95,7 +93,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithNoRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			false, WriteRequest.RefreshPolicy.NONE);
@@ -103,7 +101,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -111,7 +109,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithNoRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			false, WriteRequest.RefreshPolicy.NONE);
@@ -119,7 +117,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -163,7 +161,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	protected void doTestIndexDocumentRequestTranslation(
 			boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
-		throws IOException {
+		throws Exception {
 
 		String id = "1";
 
@@ -213,7 +211,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	protected void doTestUpdateDocumentRequestTranslation(
 			boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
-		throws IOException {
+		throws Exception {
 
 		String id = "1";
 

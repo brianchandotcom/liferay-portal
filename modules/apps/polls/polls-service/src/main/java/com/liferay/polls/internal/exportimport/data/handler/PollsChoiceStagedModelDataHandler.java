@@ -115,6 +115,10 @@ public class PollsChoiceStagedModelDataHandler
 
 		PollsChoice existingChoice = fetchMissingReference(uuid, groupId);
 
+		if (existingChoice == null) {
+			return;
+		}
+
 		Map<Long, Long> choiceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsChoice.class);

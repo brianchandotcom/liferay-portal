@@ -223,11 +223,6 @@ public class PasswordPolicyRelWrapper
 		return _passwordPolicyRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a password policy rel model instance should use the <code>PasswordPolicyRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_passwordPolicyRel.persist();

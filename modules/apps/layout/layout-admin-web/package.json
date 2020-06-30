@@ -23,8 +23,7 @@
 		"metal-events": "2.16.8",
 		"metal-position": "^2.1.2",
 		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8",
-		"metal-uri": "2.4.0"
+		"metal-state": "2.16.8"
 	},
 	"name": "layout-admin-web",
 	"scripts": {
@@ -32,5 +31,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.94"
+	"version": "2.0.112"
 }

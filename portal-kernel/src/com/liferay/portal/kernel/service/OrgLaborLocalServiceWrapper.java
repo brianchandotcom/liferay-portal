@@ -30,11 +30,6 @@ public class OrgLaborLocalServiceWrapper
 		_orgLaborLocalService = orgLaborLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link OrgLaborLocalServiceUtil} to access the org labor local service. Add custom service methods to <code>com.liferay.portal.service.impl.OrgLaborLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
 			long organizationId, long typeId, int sunOpen, int sunClose,
@@ -284,6 +279,9 @@ public class OrgLaborLocalServiceWrapper
 		return _orgLaborLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

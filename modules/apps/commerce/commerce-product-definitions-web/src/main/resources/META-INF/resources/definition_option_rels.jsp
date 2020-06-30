@@ -22,47 +22,139 @@ CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDef
 CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition();
 %>
 
-<c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpDefinition, ActionKeys.VIEW) %>">
-	<portlet:resourceURL id="cpDefinitionOptionRels" var="cpDefinitionOptionsURL">
-		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
-	</portlet:resourceURL>
+<c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpDefinitionOptionRelDisplayContext.getCPDefinition(), ActionKeys.VIEW) %>">
+	<div class="pt-4" id="<portlet:namespace />productOptionRelsContainer">
+		<div id="item-finder-root"></div>
 
-	<liferay-portlet:renderURL var="cpDefinitionOptionRelURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
-	</liferay-portlet:renderURL>
+		<aui:script require="commerce-frontend-js/components/item_finder/entry.es as itemFinder, commerce-frontend-js/utilities/index.es as utilities, commerce-frontend-js/utilities/eventsDefinitions.es as events">
+			var headers = new Headers({
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken
+			});
 
-	<portlet:resourceURL id="cpDefinitionOptionValueRels" var="cpDefinitionOptionValueRelsURL">
-	</portlet:resourceURL>
+			var productId = <%= cpDefinition.getCProductId() %>;
 
-	<portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelURL" />
+			function selectItem(option) {
+				return fetch(
+					'/o/headless-commerce-admin-catalog/v1.0/products/' +
+						productId +
+						'/productOptions/',
+					{
+						body: JSON.stringify([
+							{
+								facetable: option.facetable,
+								fieldType: option.fieldType,
+								key: option.key,
+								name: option.name,
+								optionId: option.id,
+								required: option.required,
+								skuContributor: option.skuContributor,
+								productOptionValues: []
+							}
+						]),
+						credentials: 'include',
+						headers: headers,
+						method: 'POST'
+					}
+				).then(function() {
+					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+						id:
+							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
+					});
+					return option.id;
+				});
+			}
 
-	<liferay-portlet:renderURL var="cpDefinitionOptionValueRelURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="editCPDefinitionOptionValueRel" />
-	</liferay-portlet:renderURL>
+			function addNewItem(name) {
+				return fetch('/o/headless-commerce-admin-catalog/v1.0/options', {
+					body: JSON.stringify({
+						fieldType: 'select',
+						key: utilities.slugify(encodeURIComponent(name)),
+						name: {
+							[themeDisplay.getLanguageId()]: name
+						}
+					}),
+					credentials: 'include',
+					headers: headers,
+					method: 'POST'
+				})
+					.then(function(response) {
+						if (response.ok) {
+							return response.json();
+						}
 
-	<%
-	Map<String, Object> context = new HashMap<>();
+						return response.json().then(function(data) {
+							return Promise.reject(data.message);
+						});
+					})
+					.then(selectItem);
+			}
 
-	context.put("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-	context.put("cpDefinitionOptionsURL", cpDefinitionOptionsURL);
-	context.put("cpDefinitionOptionValueRelsURL", cpDefinitionOptionValueRelsURL);
-	context.put("cpDefinitionOptionValueRelURL", cpDefinitionOptionValueRelURL);
-	context.put("editProductDefinitionOptionRelURL", editProductDefinitionOptionRelURL);
-	context.put("hasEditPermission", CommerceCatalogPermission.contains(permissionChecker, cpDefinition, ActionKeys.UPDATE));
-	context.put("id", "CPDefinitionOptionsEditor");
-	context.put("namespace", liferayPortletResponse.getNamespace());
-	context.put("optionsItemSelectorURL", cpDefinitionOptionRelDisplayContext.getItemSelectorUrl());
-	context.put("optionURL", cpDefinitionOptionRelURL);
-	context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-	context.put("successMessage", LanguageUtil.get(request, "your-request-completed-successfully"));
-	%>
+			function getSelectedItems() {
+				return fetch(
+					'/o/headless-commerce-admin-catalog/v1.0/products/' +
+						productId +
+						'/productOptions/',
+					{
+						credentials: 'include',
+						headers: headers
+					}
+				)
+					.then(function(response) {
+						return response.json();
+					})
+					.then(function(jsonResponse) {
+						return jsonResponse.items.map(function(option) {
+							return option.optionId;
+						});
+					});
+			}
 
-	<div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">
-		<soy:template-renderer
-			context="<%= context %>"
-			module="definition_option_rel/CPDefinitionOptionsEditor.es"
-			templateNamespace="CPDefinitionOptionsEditor.render"
-			useNamespace="<%= true %>"
-		/>
+			itemFinder.default('itemFinder', 'item-finder-root', {
+				apiUrl: '/o/headless-commerce-admin-catalog/v1.0/options',
+				createNewItemLabel: '<%= LanguageUtil.get(request, "create-new") %>',
+				getSelectedItems: getSelectedItems,
+				inputPlaceholder:
+					'<%= LanguageUtil.get(request, "find-or-create-an-option") %>',
+				itemsKey: 'id',
+				linkedDatasetsId: [
+					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
+				],
+				onItemCreated: addNewItem,
+				onItemSelected: selectItem,
+				pageSize: 10,
+				panelHeaderLabel: '<%= LanguageUtil.get(request, "add-options") %>',
+				portletId: '<%= portletDisplay.getRootPortletId() %>',
+				schema: {
+					itemTitle: ['name', themeDisplay.getLanguageId()]
+				},
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+				titleLabel: '<%= LanguageUtil.get(request, "add-an-existing-option") %>'
+			});
+		</aui:script>
+
+		<commerce-ui:panel
+			bodyClasses="p-0"
+			elementClasses="mt-4"
+			title='<%= LanguageUtil.get(request, "options") %>'
+		>
+
+			<%
+			Map<String, String> contextParams = new HashMap<>();
+
+			contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId()));
+			%>
+
+			<commerce-ui:dataset-display
+				contextParams="<%= contextParams %>"
+				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
+				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
+				itemsPerPage="<%= 10 %>"
+				namespace="<%= renderResponse.getNamespace() %>"
+				pageNumber="<%= 1 %>"
+				portletURL="<%= currentURLObj %>"
+			/>
+		</commerce-ui:panel>
 	</div>
 </c:if>

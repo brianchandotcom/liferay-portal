@@ -433,6 +433,10 @@ public class AccountResourceImpl
 	private Account _toAccount(CommerceAccount commerceAccount)
 		throws Exception {
 
+		if (commerceAccount == null) {
+			return null;
+		}
+
 		DTOConverter accountDTOConverter =
 			_dtoConverterRegistry.getDTOConverter(
 				CommerceAccount.class.getName());
@@ -485,7 +489,7 @@ public class AccountResourceImpl
 
 		// Account addresses
 
-		AccountAddress[] accountAddresses = account.getAddresses();
+		AccountAddress[] accountAddresses = account.getAccountAddresses();
 
 		if (accountAddresses != null) {
 			List<CommerceAddress> commerceAddresses =
@@ -542,7 +546,7 @@ public class AccountResourceImpl
 
 		// Account members
 
-		AccountMember[] accountMembers = account.getUsers();
+		AccountMember[] accountMembers = account.getAccountMembers();
 
 		if (accountMembers != null) {
 			for (AccountMember accountMember : accountMembers) {
@@ -568,7 +572,8 @@ public class AccountResourceImpl
 
 		// Account organizations
 
-		AccountOrganization[] accountOrganizations = account.getOrganizations();
+		AccountOrganization[] accountOrganizations =
+			account.getAccountOrganizations();
 
 		if (accountOrganizations != null) {
 			for (AccountOrganization accountOrganization :

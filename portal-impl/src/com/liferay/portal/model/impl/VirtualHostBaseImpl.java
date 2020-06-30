@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 public abstract class VirtualHostBaseImpl
 	extends VirtualHostModelImpl implements VirtualHost {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a virtual host model instance should use the <code>VirtualHost</code> interface instead.

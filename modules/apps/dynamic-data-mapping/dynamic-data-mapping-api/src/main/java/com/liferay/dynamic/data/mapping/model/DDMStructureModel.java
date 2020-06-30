@@ -49,7 +49,7 @@ public interface DDMStructureModel
 	extends BaseModel<DDMStructure>, LocalizedModel, ShardedModel,
 			StagedGroupedModel, TypedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm structure model instance should use the {@link DDMStructure} interface instead.

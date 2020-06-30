@@ -139,7 +139,10 @@ public class CommerceInventoryAuditPersistenceTest {
 
 		newCommerceInventoryAudit.setSku(RandomTestUtil.randomString());
 
-		newCommerceInventoryAudit.setDescription(RandomTestUtil.randomString());
+		newCommerceInventoryAudit.setLogType(RandomTestUtil.randomString());
+
+		newCommerceInventoryAudit.setLogTypeSettings(
+			RandomTestUtil.randomString());
 
 		newCommerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
 
@@ -175,8 +178,11 @@ public class CommerceInventoryAuditPersistenceTest {
 			existingCommerceInventoryAudit.getSku(),
 			newCommerceInventoryAudit.getSku());
 		Assert.assertEquals(
-			existingCommerceInventoryAudit.getDescription(),
-			newCommerceInventoryAudit.getDescription());
+			existingCommerceInventoryAudit.getLogType(),
+			newCommerceInventoryAudit.getLogType());
+		Assert.assertEquals(
+			existingCommerceInventoryAudit.getLogTypeSettings(),
+			newCommerceInventoryAudit.getLogTypeSettings());
 		Assert.assertEquals(
 			existingCommerceInventoryAudit.getQuantity(),
 			newCommerceInventoryAudit.getQuantity());
@@ -190,12 +196,12 @@ public class CommerceInventoryAuditPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySku() throws Exception {
-		_persistence.countBySku("");
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
 
-		_persistence.countBySku("null");
+		_persistence.countByC_S(0L, "null");
 
-		_persistence.countBySku((String)null);
+		_persistence.countByC_S(0L, (String)null);
 	}
 
 	@Test
@@ -228,7 +234,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CIAudit", "commerceInventoryAuditId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "sku", true, "quantity", true);
+			"modifiedDate", true, "sku", true, "logType", true, "quantity",
+			true);
 	}
 
 	@Test
@@ -486,7 +493,10 @@ public class CommerceInventoryAuditPersistenceTest {
 
 		commerceInventoryAudit.setSku(RandomTestUtil.randomString());
 
-		commerceInventoryAudit.setDescription(RandomTestUtil.randomString());
+		commerceInventoryAudit.setLogType(RandomTestUtil.randomString());
+
+		commerceInventoryAudit.setLogTypeSettings(
+			RandomTestUtil.randomString());
 
 		commerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
 

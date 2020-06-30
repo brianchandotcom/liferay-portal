@@ -22,6 +22,7 @@
 
 		<column name="code" type="String" />
 		<column localized="true" name="name" type="String" />
+		<column name="symbol" type="String" />
 		<column name="rate" type="BigDecimal" />
 		<column localized="true" name="formatPattern" type="String" />
 		<column name="maxFractionDigits" type="int" />

@@ -196,9 +196,8 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 			commerceAvailabilityEstimateId);
 		cpdAvailabilityEstimate.setCProductId(cProductId);
 
-		cpdAvailabilityEstimatePersistence.update(cpdAvailabilityEstimate);
-
-		return cpdAvailabilityEstimate;
+		return cpdAvailabilityEstimatePersistence.update(
+			cpdAvailabilityEstimate);
 	}
 
 	protected void validate(long commerceAvailabilityEstimateId)

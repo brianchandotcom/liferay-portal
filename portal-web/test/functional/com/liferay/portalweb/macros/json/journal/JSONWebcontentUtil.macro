@@ -1,0 +1,45 @@
+definition {
+
+	@summary = "Helper function to help input content html info"
+	macro _convertToXML {
+		Variables.assertDefined(parameterList = "${content}");
+
+		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ''';
+
+		return "${contentXML}";
+	}
+
+	@summary = "Helper function to help input localized content html info"
+	macro _localizedConvertToXML {
+		Variables.assertDefined(parameterList = "${contentMap}");
+
+		// Get list of localizations used
+
+		var localeList = "";
+
+		for (var i : list "${contentMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var localeList = "${localeList},${locale}";
+		}
+
+		var localeList = RegexUtil.replace("${localeList}", ",(.*)", "1");
+
+		// Build dynamic content
+
+		var dynamicContent = "";
+
+		for (var i : list "${contentMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var translated = StringUtil.extractLast("${i}", ":");
+
+			var dynamicContent = '''${dynamicContent} <dynamic-content language-id="${locale}">${translated}</dynamic-content>''';
+		}
+
+		// Build XML
+
+		var contentXML = '''<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ''';
+
+		return "${contentXML}";
+	}
+
+}

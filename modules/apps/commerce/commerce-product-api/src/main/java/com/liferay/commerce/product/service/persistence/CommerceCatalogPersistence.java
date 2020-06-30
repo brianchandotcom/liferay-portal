@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceCatalogPersistence
 	extends BasePersistence<CommerceCatalog> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCatalogUtil} to access the commerce catalog persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
@@ -654,5 +654,8 @@ public interface CommerceCatalogPersistence
 	 * @return the number of commerce catalogs
 	 */
 	public int countAll();
+
+	@Override
+	public Set<String> getBadColumnNames();
 
 }

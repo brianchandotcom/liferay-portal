@@ -39,7 +39,7 @@ import java.util.Set;
 public interface UserGroupRolePersistence
 	extends BasePersistence<UserGroupRole> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupRoleUtil} to access the user group role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

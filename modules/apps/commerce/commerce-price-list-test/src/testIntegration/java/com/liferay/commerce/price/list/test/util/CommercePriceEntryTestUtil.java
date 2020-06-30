@@ -90,6 +90,24 @@ public class CommercePriceEntryTestUtil {
 			serviceContext);
 	}
 
+	public static CommercePriceEntry addCommercePriceEntry(
+			long cpProductId, String cpInstanceUuid, long commercePriceListId,
+			String externalReferenceCode, BigDecimal price)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId());
+
+		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+			cpProductId, cpInstanceUuid, commercePriceListId,
+			externalReferenceCode, price, BigDecimal.ZERO, serviceContext);
+	}
+
 	public static CommercePriceEntry upsertCommercePriceEntry(
 			long commercePriceEntryId, long skuId, long commercePriceListId,
 			String externalReferenceCode, String skuExternalReferenceCode,

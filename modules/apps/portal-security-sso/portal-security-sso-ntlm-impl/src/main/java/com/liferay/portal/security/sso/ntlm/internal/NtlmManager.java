@@ -158,9 +158,7 @@ public class NtlmManager {
 
 		byte[] eol = getAVPairBytes(0, StringPool.BLANK);
 
-		targetInformation = ArrayUtil.append(targetInformation, eol);
-
-		return targetInformation;
+		return ArrayUtil.append(targetInformation, eol);
 	}
 
 	private static final int _NTLMSSP_NEGOTIATE_EXTENDED_SESSION_SECURITY =

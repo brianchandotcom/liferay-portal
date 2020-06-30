@@ -53,7 +53,7 @@ public abstract class KBFolderServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, KBFolderService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>KBFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBFolderServiceUtil</code>.
@@ -609,8 +609,8 @@ public abstract class KBFolderServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

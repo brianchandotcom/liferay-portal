@@ -703,14 +703,7 @@ definition {
 
 		WikiPage.viewFrontPageDefaultADTPG(wikiPageContent = "Test Wiki Content");
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Build",
-			panel = "Site Administration",
-			portlet = "Application Display Templates");
-
-		ApplicationDisplayTemplates.addCP(
+		ApplicationDisplayTemplates.addPG(
 			adtFile = "adt_wiki_social.ftl",
 			adtType = "Wiki");
 

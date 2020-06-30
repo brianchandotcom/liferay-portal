@@ -40,7 +40,7 @@ public interface WorkflowDefinitionLinkModel
 	extends AttachedModel, BaseModel<WorkflowDefinitionLink>, GroupedModel,
 			MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a workflow definition link model instance should use the {@link WorkflowDefinitionLink} interface instead.

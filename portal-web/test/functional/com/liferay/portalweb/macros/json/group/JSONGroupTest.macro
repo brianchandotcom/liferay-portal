@@ -1,0 +1,42 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+
+		//group
+
+		JSONGroup.addGroup(groupName = "group name");
+
+		JSONGroup.addGroup(groupName = "group name 2");
+
+		JSONGroup.addChildSite(
+			groupName = "child group name",
+			parentGroupName = "group name");
+
+		//user
+
+		JSONUser.addUser(
+			userEmailAddress = "test2@liferay.com",
+			userFirstName = "test2",
+			userLastName = "test2",
+			userScreenName = "test2");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "group name",
+			userEmailAddress = "test2@liferay.com");
+
+		//role
+
+		JSONRole.addSiteRole(roleTitle = "role title");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "group name",
+			roleTitle = "role title",
+			userEmailAddress = "test2@liferay.com");
+
+		//delete
+
+		JSONGroup.deleteGroupByName(groupName = "group name 2");
+	}
+
+}

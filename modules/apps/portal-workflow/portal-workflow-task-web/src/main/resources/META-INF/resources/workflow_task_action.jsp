@@ -19,6 +19,8 @@
 <%
 String randomId = workflowTaskDisplayContext.getWorkflowTaskRandomId();
 
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view.jsp");
+
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -49,7 +51,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 					String message = workflowTaskDisplayContext.getTransitionMessage(transitionName);
 				%>
 
-					<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
+					<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
 						<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 						<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 						<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -76,7 +78,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 			</c:when>
 			<c:otherwise>
-				<liferay-portlet:renderURL var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -91,7 +93,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-portlet:renderURL var="assignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="assignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
 			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -103,8 +105,8 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 			url="javascript:;"
 		/>
 
-		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
-			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
+		<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
+			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</liferay-portlet:actionURL>

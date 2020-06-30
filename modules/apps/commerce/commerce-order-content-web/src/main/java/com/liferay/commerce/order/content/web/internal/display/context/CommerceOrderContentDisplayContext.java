@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -73,6 +72,7 @@ import java.text.DecimalFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -336,8 +336,8 @@ public class CommerceOrderContentDisplayContext {
 			long commerceOrderItemId)
 		throws PortalException {
 
-		return _commerceShipmentItemService.getCommerceShipmentItems(
-			commerceOrderItemId);
+		return _commerceShipmentItemService.
+			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
 	}
 
 	public String getCommerceShipmentStatusLabel(int status) {
@@ -416,22 +416,7 @@ public class CommerceOrderContentDisplayContext {
 	public List<HeaderActionModel> getHeaderActionModels()
 		throws PortalException {
 
-		List<HeaderActionModel> headerActionModels = new ArrayList<>();
-
-		HeaderActionModel headerActionModel1 = new HeaderActionModel();
-
-		headerActionModel1.setLabel("Action 1");
-		headerActionModel1.setStyle("secondary");
-
-		headerActionModels.add(headerActionModel1);
-
-		HeaderActionModel headerActionModel2 = new HeaderActionModel();
-
-		headerActionModel2.setLabel("Action 2");
-
-		headerActionModels.add(headerActionModel2);
-
-		return headerActionModels;
+		return Collections.emptyList();
 	}
 
 	public OrderFilterImpl getOrderFilter() {
@@ -516,16 +501,12 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
 			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
 				ConfigurationProviderUtil.getConfiguration(
 					CommerceOrderFieldsConfiguration.class,
 					new GroupServiceSettingsLocator(
-						themeDisplay.getScopeGroupId(),
+						_cpRequestHelper.getChannelGroupId(),
 						CommerceConstants.ORDER_SERVICE_NAME));
 
 			return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();

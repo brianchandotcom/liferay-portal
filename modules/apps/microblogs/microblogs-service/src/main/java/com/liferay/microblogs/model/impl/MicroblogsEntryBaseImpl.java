@@ -32,7 +32,7 @@ import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 public abstract class MicroblogsEntryBaseImpl
 	extends MicroblogsEntryModelImpl implements MicroblogsEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a microblogs entry model instance should use the <code>MicroblogsEntry</code> interface instead.

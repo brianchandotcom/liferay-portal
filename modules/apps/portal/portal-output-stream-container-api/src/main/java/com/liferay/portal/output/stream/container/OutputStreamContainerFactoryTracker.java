@@ -23,6 +23,11 @@ import java.util.Set;
  */
 public interface OutputStreamContainerFactoryTracker {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *			   #getOutputStreamContainerFactory(String)}
+	 */
+	@Deprecated
 	public OutputStreamContainerFactory getOutputStreamContainerFactory();
 
 	public OutputStreamContainerFactory getOutputStreamContainerFactory(
@@ -30,11 +35,21 @@ public interface OutputStreamContainerFactoryTracker {
 
 	public Set<String> getOutputStreamContainerFactoryNames();
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 */
+	@Deprecated
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint);
 
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamName, OutputStream outputStream);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 */
+	@Deprecated
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamHint,
 		String outputStreamContainerName);

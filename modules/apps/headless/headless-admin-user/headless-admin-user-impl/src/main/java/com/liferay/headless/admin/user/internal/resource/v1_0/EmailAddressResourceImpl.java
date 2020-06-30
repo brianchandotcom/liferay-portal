@@ -40,7 +40,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	@Override
 	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception {
-		return EmailAddressUtil.toEmail(
+		return EmailAddressUtil.toEmailAddress(
 			_emailAddressService.getEmailAddress(emailAddressId));
 	}
 
@@ -57,7 +57,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 				_emailAddressService.getEmailAddresses(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				EmailAddressUtil::toEmail));
+				EmailAddressUtil::toEmailAddress));
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 			transform(
 				_emailAddressService.getEmailAddresses(
 					Contact.class.getName(), user.getContactId()),
-				EmailAddressUtil::toEmail));
+				EmailAddressUtil::toEmailAddress));
 	}
 
 	@Reference

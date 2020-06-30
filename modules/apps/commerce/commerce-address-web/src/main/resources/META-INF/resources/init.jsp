@@ -74,7 +74,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
 
-PortletURL countriesURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceAdminPortletKeys.COMMERCE_ADMIN_VIRTUAL_INSTANCE, lifecycle);
+PortletURL countriesURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceAdminPortletKeys.COMMERCE_ADMIN, lifecycle);
 
 countriesURLObj.setParameter("commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
 

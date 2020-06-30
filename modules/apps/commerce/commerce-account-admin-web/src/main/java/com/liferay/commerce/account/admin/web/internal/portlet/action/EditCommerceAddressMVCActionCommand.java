@@ -94,6 +94,8 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 				updateCommerceAddress(actionRequest);
 			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchAddressException ||
@@ -115,8 +117,6 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
-
-		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	protected void updateCommerceAddress(ActionRequest actionRequest)

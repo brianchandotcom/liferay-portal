@@ -132,7 +132,7 @@ data.put("qa-id", "info");
 
 	var DOC = A.getDoc();
 
-	new A.Popover(
+	var popover = new A.Popover(
 		{
 			align: {
 					node: trigger,
@@ -157,5 +157,15 @@ data.put("qa-id", "info");
 			width: 300,
 			zIndex: Liferay.zIndex.POPOVER
 		}
-	).render();
+	);
+
+	popover.render();
+
+	function removeListener() {
+		popover.destroy();
+
+		Liferay.detach('beforeScreenFlip', removeListener);
+	}
+
+	Liferay.on('beforeScreenFlip', removeListener);
 </aui:script>

@@ -22,6 +22,8 @@ public class CPField {
 	public static final String ACCOUNT_GROUP_FILTER_ENABLED =
 		"accountGroupFilterEnabled";
 
+	public static final String BASE_PRICE = "basePrice";
+
 	public static final String CATALOG_DEFAULT_LANGUAGE_ID =
 		"catalogDefaultLanguageId";
 

@@ -32,7 +32,7 @@ import com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil;
 public abstract class CommerceOrderNoteBaseImpl
 	extends CommerceOrderNoteModelImpl implements CommerceOrderNote {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce order note model instance should use the <code>CommerceOrderNote</code> interface instead.

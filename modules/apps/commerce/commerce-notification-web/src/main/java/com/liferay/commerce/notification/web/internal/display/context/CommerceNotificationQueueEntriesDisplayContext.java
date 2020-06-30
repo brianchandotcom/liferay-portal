@@ -14,24 +14,19 @@
 
 package com.liferay.commerce.notification.web.internal.display.context;
 
-import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
-import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
-import com.liferay.commerce.notification.type.CommerceNotificationType;
-import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.web.internal.admin.NotificationsCommerceAdminModule;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
-import com.liferay.commerce.notification.web.internal.util.CommerceNotificationsUtil;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -43,50 +38,66 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceNotificationQueueEntriesDisplayContext {
 
 	public CommerceNotificationQueueEntriesDisplayContext(
-		CommerceNotificationQueueEntryService
-			commerceNotificationQueueEntryService,
-		CommerceNotificationTemplateService commerceNotificationTemplateService,
-		CommerceNotificationTypeRegistry commerceNotificationTypeRegistry,
-		HttpServletRequest httpServletRequest,
-		PortletResourcePermission portletResourcePermission) {
+		CommerceChannelLocalService commerceChannelLocalService,
+		HttpServletRequest httpServletRequest) {
 
-		_commerceNotificationQueueEntryService =
-			commerceNotificationQueueEntryService;
-		_commerceNotificationTemplateService =
-			commerceNotificationTemplateService;
-		_commerceNotificationTypeRegistry = commerceNotificationTypeRegistry;
-		_portletResourcePermission = portletResourcePermission;
+		_commerceChannelLocalService = commerceChannelLocalService;
 
 		_commerceNotificationsRequestHelper =
 			new CommerceNotificationsRequestHelper(httpServletRequest);
 	}
 
-	public String getCommerceNotificationType(
-			long commerceNotificationTemplateId)
-		throws PortalException {
+	public String getAddNotificationTemplateURL() throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_commerceNotificationsRequestHelper.getRequest(),
+			CommerceChannel.class.getName(), PortletProvider.Action.MANAGE);
 
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			_commerceNotificationTemplateService.
-				getCommerceNotificationTemplate(commerceNotificationTemplateId);
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommerceNotificationTemplate");
+		portletURL.setParameter(
+			"commerceChannelId", String.valueOf(getCommerceChannelId()));
 
-		CommerceNotificationType commerceNotificationType =
-			_commerceNotificationTypeRegistry.getCommerceNotificationType(
-				commerceNotificationTemplate.getType());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		return commerceNotificationType.getLabel(
-			_commerceNotificationsRequestHelper.getLocale());
+		return portletURL.toString();
 	}
 
-	public String getOrderByCol() {
-		return ParamUtil.getString(
+	public CommerceChannel getCommerceChannel() throws PortalException {
+		long commerceChannelId = ParamUtil.getLong(
 			_commerceNotificationsRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "priority");
+			"commerceChannelId");
+
+		if (commerceChannelId > 0) {
+			return _commerceChannelLocalService.getCommerceChannel(
+				commerceChannelId);
+		}
+
+		return null;
 	}
 
-	public String getOrderByType() {
-		return ParamUtil.getString(
-			_commerceNotificationsRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
+	public long getCommerceChannelId() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		if (commerceChannel == null) {
+			return 0;
+		}
+
+		return commerceChannel.getCommerceChannelId();
+	}
+
+	public ClayCreationMenu getNotificationTemplateClayCreationMenu()
+		throws Exception {
+
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+
+		clayCreationMenu.addClayCreationMenuActionItem(
+			getAddNotificationTemplateURL(),
+			LanguageUtil.get(
+				_commerceNotificationsRequestHelper.getRequest(),
+				"add-notification-template"),
+			ClayCreationMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+
+		return clayCreationMenu;
 	}
 
 	public PortletURL getPortletURL() {
@@ -95,9 +106,6 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"commerceAdminModuleKey", NotificationsCommerceAdminModule.KEY);
-
 		String delta = ParamUtil.getString(
 			_commerceNotificationsRequestHelper.getRequest(), "delta");
 
@@ -105,67 +113,11 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 			portletURL.setParameter("delta", delta);
 		}
 
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
-
 		return portletURL;
 	}
 
-	public SearchContainer<CommerceNotificationQueueEntry> getSearchContainer()
-		throws PortalException {
-
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		_searchContainer = new SearchContainer<>(
-			_commerceNotificationsRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, "there-are-no-notification-queue-entries");
-
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
-
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator =
-			CommerceNotificationsUtil.
-				getCommerceNotificationQueueEntryOrderByComparator(
-					orderByCol, orderByType);
-
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-
-		int total =
-			_commerceNotificationQueueEntryService.
-				getCommerceNotificationQueueEntriesCount(
-					_commerceNotificationsRequestHelper.getScopeGroupId());
-		List<CommerceNotificationQueueEntry> results =
-			_commerceNotificationQueueEntryService.
-				getCommerceNotificationQueueEntries(
-					_commerceNotificationsRequestHelper.getScopeGroupId(),
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					orderByComparator);
-
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
-
-		return _searchContainer;
-	}
-
-	public boolean hasPermission(String actionId) {
-		return _portletResourcePermission.contains(
-			_commerceNotificationsRequestHelper.getPermissionChecker(),
-			_commerceNotificationsRequestHelper.getScopeGroupId(), actionId);
-	}
-
-	private final CommerceNotificationQueueEntryService
-		_commerceNotificationQueueEntryService;
+	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceNotificationsRequestHelper
 		_commerceNotificationsRequestHelper;
-	private final CommerceNotificationTemplateService
-		_commerceNotificationTemplateService;
-	private final CommerceNotificationTypeRegistry
-		_commerceNotificationTypeRegistry;
-	private final PortletResourcePermission _portletResourcePermission;
-	private SearchContainer<CommerceNotificationQueueEntry> _searchContainer;
 
 }

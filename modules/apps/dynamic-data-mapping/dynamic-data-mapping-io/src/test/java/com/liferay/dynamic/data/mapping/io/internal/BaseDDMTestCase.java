@@ -147,6 +147,18 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 
 		when(
+			LocaleUtil.fromLanguageId("en_US", true, false)
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		when(
+			LocaleUtil.fromLanguageId("pt_BR", true, false)
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
+		when(
 			LocaleUtil.getDefault()
 		).thenReturn(
 			LocaleUtil.US

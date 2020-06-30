@@ -91,9 +91,7 @@ public class FragmentCollectionLocalServiceImpl
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 
-		fragmentCollectionPersistence.update(fragmentCollection);
-
-		return fragmentCollection;
+		return fragmentCollectionPersistence.update(fragmentCollection);
 	}
 
 	@Override
@@ -200,14 +198,19 @@ public class FragmentCollectionLocalServiceImpl
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 
-		fragmentCollectionPersistence.update(fragmentCollection);
-
-		return fragmentCollection;
+		return fragmentCollectionPersistence.update(fragmentCollection);
 	}
 
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException("Name must not be null");
+		}
+
+		if (name.contains(StringPool.PERIOD) ||
+			name.contains(StringPool.SLASH)) {
+
+			throw new FragmentCollectionNameException(
+				"Name contains invalid characters");
 		}
 	}
 

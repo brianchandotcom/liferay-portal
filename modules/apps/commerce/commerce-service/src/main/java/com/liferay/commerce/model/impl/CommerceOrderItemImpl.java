@@ -36,6 +36,16 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 	}
 
 	@Override
+	public CPInstance fetchCPInstance() {
+		return CPInstanceLocalServiceUtil.fetchCPInstance(getCPInstanceId());
+	}
+
+	@Override
+	public CProduct fetchCProduct() {
+		return CProductLocalServiceUtil.fetchCProduct(getCProductId());
+	}
+
+	@Override
 	public CommerceOrder getCommerceOrder() throws PortalException {
 		return CommerceOrderLocalServiceUtil.getCommerceOrder(
 			getCommerceOrderId());
@@ -43,23 +53,39 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 
 	@Override
 	public CPDefinition getCPDefinition() throws PortalException {
-		CPInstance cpInstance = getCPInstance();
+		CPInstance cpInstance = fetchCPInstance();
+
+		if (cpInstance == null) {
+			return null;
+		}
 
 		return cpInstance.getCPDefinition();
 	}
 
 	@Override
-	public long getCPDefinitionId() throws PortalException {
-		CPInstance cpInstance = getCPInstance();
+	public long getCPDefinitionId() {
+		CPInstance cpInstance = fetchCPInstance();
+
+		if (cpInstance == null) {
+			return 0;
+		}
 
 		return cpInstance.getCPDefinitionId();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CPInstance getCPInstance() throws PortalException {
 		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CProduct getCProduct() throws PortalException {
 		return CProductLocalServiceUtil.getCProduct(getCProductId());

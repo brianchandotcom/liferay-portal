@@ -10,7 +10,7 @@
 	transition: background $micro-transition;
 
 	&__disabled {
-		opacity: .5;
+		opacity: 0.5;
 
 		.product-compare-checkbox__input {
 			&::before,

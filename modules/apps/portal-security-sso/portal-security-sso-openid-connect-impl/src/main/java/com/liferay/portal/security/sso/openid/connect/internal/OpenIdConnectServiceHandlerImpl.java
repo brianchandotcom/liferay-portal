@@ -33,6 +33,7 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.oauth2.sdk.AuthorizationCode;
 import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
 import com.nimbusds.oauth2.sdk.AuthorizationGrant;
@@ -559,15 +560,23 @@ public class OpenIdConnectServiceHandlerImpl
 			UserInfoSuccessResponse userInfoSuccessResponse =
 				(UserInfoSuccessResponse)userInfoResponse;
 
-			return userInfoSuccessResponse.getUserInfo();
+			UserInfo userInfo = userInfoSuccessResponse.getUserInfo();
+
+			if (userInfo != null) {
+				return userInfo;
+			}
+
+			JWT userInfoJWT = userInfoSuccessResponse.getUserInfoJWT();
+
+			return new UserInfo(userInfoJWT.getJWTClaimsSet());
 		}
 		catch (IOException ioe) {
 			throw new OpenIdConnectServiceException.UserInfoException(
 				"Unable to get user information", ioe);
 		}
-		catch (ParseException pe) {
+		catch (java.text.ParseException | ParseException e) {
 			throw new OpenIdConnectServiceException.UserInfoException(
-				"Unable to parse user information response", pe);
+				"Unable to parse user information response", e);
 		}
 	}
 

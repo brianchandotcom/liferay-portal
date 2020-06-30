@@ -64,7 +64,7 @@ public class CPDefinitionOptionRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class CPDefinitionOptionRelCacheModel
 		sb.append(skuContributor);
 		sb.append(", key=");
 		sb.append(key);
+		sb.append(", priceType=");
+		sb.append(priceType);
 		sb.append("}");
 
 		return sb.toString();
@@ -183,6 +185,13 @@ public class CPDefinitionOptionRelCacheModel
 			cpDefinitionOptionRelImpl.setKey(key);
 		}
 
+		if (priceType == null) {
+			cpDefinitionOptionRelImpl.setPriceType("");
+		}
+		else {
+			cpDefinitionOptionRelImpl.setPriceType(priceType);
+		}
+
 		cpDefinitionOptionRelImpl.resetOriginalValues();
 
 		return cpDefinitionOptionRelImpl;
@@ -218,6 +227,7 @@ public class CPDefinitionOptionRelCacheModel
 
 		skuContributor = objectInput.readBoolean();
 		key = objectInput.readUTF();
+		priceType = objectInput.readUTF();
 	}
 
 	@Override
@@ -286,6 +296,13 @@ public class CPDefinitionOptionRelCacheModel
 		else {
 			objectOutput.writeUTF(key);
 		}
+
+		if (priceType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(priceType);
+		}
 	}
 
 	public String uuid;
@@ -306,5 +323,6 @@ public class CPDefinitionOptionRelCacheModel
 	public boolean required;
 	public boolean skuContributor;
 	public String key;
+	public String priceType;
 
 }

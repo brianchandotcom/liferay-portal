@@ -95,7 +95,7 @@ public class CommerceCatalogLocalServiceImpl
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
 
-		commerceCatalogPersistence.update(commerceCatalog);
+		commerceCatalog = commerceCatalogPersistence.update(commerceCatalog);
 
 		// Resources
 
@@ -277,17 +277,25 @@ public class CommerceCatalogLocalServiceImpl
 		CommerceCatalog commerceCatalog =
 			commerceCatalogPersistence.findByPrimaryKey(commerceCatalogId);
 
-		if (commerceCatalog.isSystem()) {
-			throw new CommerceCatalogSystemException();
-		}
-
 		commerceCatalog.setName(name);
 		commerceCatalog.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceCatalog.setCatalogDefaultLanguageId(catalogDefaultLanguageId);
 
-		commerceCatalog = commerceCatalogPersistence.update(commerceCatalog);
+		return commerceCatalogPersistence.update(commerceCatalog);
+	}
 
-		return commerceCatalog;
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(
+			long commerceCatalogId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceCatalog commerceCatalog =
+			commerceCatalogPersistence.findByPrimaryKey(commerceCatalogId);
+
+		commerceCatalog.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceCatalogPersistence.update(commerceCatalog);
 	}
 
 	protected SearchContext buildSearchContext(

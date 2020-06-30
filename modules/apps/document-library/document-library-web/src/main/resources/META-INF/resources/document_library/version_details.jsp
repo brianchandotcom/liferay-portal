@@ -20,7 +20,7 @@
 boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"));
 %>
 
-<div id="<portlet:namespace />versionDetails" style="display: none">
+<div id="<portlet:namespace />versionDetails" style="display: none;">
 	<aui:fieldset>
 		<h5 class="control-label"><liferay-ui:message key="select-whether-this-is-a-major-or-minor-version" /></h5>
 

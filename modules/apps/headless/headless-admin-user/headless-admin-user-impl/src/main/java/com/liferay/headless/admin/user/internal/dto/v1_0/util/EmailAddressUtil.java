@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.ListType;
  */
 public class EmailAddressUtil {
 
-	public static EmailAddress toEmail(
+	public static EmailAddress toEmailAddress(
 			com.liferay.portal.kernel.model.EmailAddress
 				serviceBuilderEmailAddress)
 		throws Exception {

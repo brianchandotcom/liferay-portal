@@ -72,7 +72,8 @@ public class OrderStockManagementTest {
 		_user = UserTestUtil.addUser();
 		_commerceOrders = new ArrayList<>();
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency();
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_user.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_commerceCurrency.getCode());
@@ -103,7 +104,7 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -112,7 +113,7 @@ public class OrderStockManagementTest {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		CommerceTestUtil.addBackOrderCPDefinitionInventory(cpDefinition);
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
 		int orderedQuantity = 4;
 
@@ -142,7 +143,7 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -212,7 +213,7 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -255,7 +256,7 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -284,7 +285,7 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -324,14 +325,14 @@ public class OrderStockManagementTest {
 		);
 
 		CommerceOrder commerceOrder1 = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder1);
 
 		CommerceOrder commerceOrder2 = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), commerceOrder1.getCommerceAccountId(),
-			_commerceChannel.getSiteGroupId(), _commerceCurrency);
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder2);
 

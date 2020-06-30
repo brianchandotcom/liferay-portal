@@ -32,7 +32,7 @@ import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 public abstract class SyncDeviceBaseImpl
 	extends SyncDeviceModelImpl implements SyncDevice {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a sync device model instance should use the <code>SyncDevice</code> interface instead.

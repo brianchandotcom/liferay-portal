@@ -43,7 +43,7 @@ import java.util.Date;
 public interface MBBanModel
 	extends BaseModel<MBBan>, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message boards ban model instance should use the {@link MBBan} interface instead.

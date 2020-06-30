@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TrashVersionUtil} to access the trash version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

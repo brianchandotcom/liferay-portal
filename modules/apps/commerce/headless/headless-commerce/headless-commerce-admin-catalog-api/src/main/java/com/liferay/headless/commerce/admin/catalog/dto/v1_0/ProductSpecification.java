@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -33,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -49,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ProductSpecification")
 public class ProductSpecification {
 
+	@DecimalMin("0")
 	@Schema
 	public Long getId() {
 		return id;
@@ -75,6 +77,7 @@ public class ProductSpecification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getOptionCategoryId() {
 		return optionCategoryId;
@@ -103,6 +106,7 @@ public class ProductSpecification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	@DecimalMin("0")
 	@Schema
 	public Double getPriority() {
 		return priority;
@@ -131,6 +135,7 @@ public class ProductSpecification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getProductId() {
 		return productId;
@@ -159,6 +164,7 @@ public class ProductSpecification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@DecimalMin("0")
 	@Schema
 	public Long getSpecificationId() {
 		return specificationId;
@@ -217,6 +223,7 @@ public class ProductSpecification {
 	protected String specificationKey;
 
 	@Schema
+	@Valid
 	public Map<String, String> getValue() {
 		return value;
 	}
@@ -351,6 +358,12 @@ public class ProductSpecification {
 
 		return sb.toString();
 	}
+
+	@Schema(
+		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

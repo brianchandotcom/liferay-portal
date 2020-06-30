@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.model.impl;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class CommerceInventoryWarehouseCacheModel
-	implements CacheModel<CommerceInventoryWarehouse>, Externalizable {
+	implements CacheModel<CommerceInventoryWarehouse>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,10 @@ public class CommerceInventoryWarehouseCacheModel
 			commerceInventoryWarehouseCacheModel =
 				(CommerceInventoryWarehouseCacheModel)obj;
 
-		if (commerceInventoryWarehouseId ==
+		if ((commerceInventoryWarehouseId ==
 				commerceInventoryWarehouseCacheModel.
-					commerceInventoryWarehouseId) {
+					commerceInventoryWarehouseId) &&
+			(mvccVersion == commerceInventoryWarehouseCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +64,28 @@ public class CommerceInventoryWarehouseCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceInventoryWarehouseId);
+		int hashCode = HashUtil.hash(0, commerceInventoryWarehouseId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{externalReferenceCode=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceInventoryWarehouseId=");
 		sb.append(commerceInventoryWarehouseId);
@@ -117,6 +134,8 @@ public class CommerceInventoryWarehouseCacheModel
 	public CommerceInventoryWarehouse toEntityModel() {
 		CommerceInventoryWarehouseImpl commerceInventoryWarehouseImpl =
 			new CommerceInventoryWarehouseImpl();
+
+		commerceInventoryWarehouseImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			commerceInventoryWarehouseImpl.setExternalReferenceCode("");
@@ -237,6 +256,7 @@ public class CommerceInventoryWarehouseCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceInventoryWarehouseId = objectInput.readLong();
@@ -267,6 +287,8 @@ public class CommerceInventoryWarehouseCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -367,6 +389,7 @@ public class CommerceInventoryWarehouseCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public String externalReferenceCode;
 	public long commerceInventoryWarehouseId;
 	public long companyId;

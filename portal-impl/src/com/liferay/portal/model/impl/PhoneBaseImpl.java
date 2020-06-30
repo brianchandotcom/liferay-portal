@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
  */
 public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a phone model instance should use the <code>Phone</code> interface instead.

@@ -63,17 +63,18 @@ public class CPDefinitionInventoryServiceSoap {
 
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap
 			addCPDefinitionInventory(
-				long cpDefinitionId, String cpDefinitionInventoryEngine,
-				String lowStockActivity, boolean displayAvailability,
-				boolean displayStockQuantity, int minStockQuantity,
-				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-				String allowedOrderQuantities, int multipleOrderQuantity)
+				long userId, long cpDefinitionId,
+				String cpDefinitionInventoryEngine, String lowStockActivity,
+				boolean displayAvailability, boolean displayStockQuantity,
+				int minStockQuantity, boolean backOrders, int minOrderQuantity,
+				int maxOrderQuantity, String allowedOrderQuantities,
+				int multipleOrderQuantity)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CPDefinitionInventory returnValue =
 				CPDefinitionInventoryServiceUtil.addCPDefinitionInventory(
-					cpDefinitionId, cpDefinitionInventoryEngine,
+					userId, cpDefinitionId, cpDefinitionInventoryEngine,
 					lowStockActivity, displayAvailability, displayStockQuantity,
 					minStockQuantity, backOrders, minOrderQuantity,
 					maxOrderQuantity, allowedOrderQuantities,
@@ -82,60 +83,10 @@ public class CPDefinitionInventoryServiceSoap {
 			return com.liferay.commerce.model.CPDefinitionInventorySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * Adds new CP definition inventory.
-	 *
-	 * @param cpDefinitionId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 #addCPDefinitionInventory(long, String, String, boolean,
-	 boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.model.CPDefinitionInventorySoap
-			addCPDefinitionInventory(
-				long cpDefinitionId, String cpDefinitionInventoryEngine,
-				String lowStockActivity, boolean displayAvailability,
-				boolean displayStockQuantity, int minStockQuantity,
-				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-				String allowedOrderQuantities, int multipleOrderQuantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.model.CPDefinitionInventory returnValue =
-				CPDefinitionInventoryServiceUtil.addCPDefinitionInventory(
-					cpDefinitionId, cpDefinitionInventoryEngine,
-					lowStockActivity, displayAvailability, displayStockQuantity,
-					minStockQuantity, backOrders, minOrderQuantity,
-					maxOrderQuantity, allowedOrderQuantities,
-					multipleOrderQuantity, serviceContext);
-
-			return com.liferay.commerce.model.CPDefinitionInventorySoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -146,10 +97,10 @@ public class CPDefinitionInventoryServiceSoap {
 			CPDefinitionInventoryServiceUtil.deleteCPDefinitionInventory(
 				cpDefinitionInventoryId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -165,13 +116,17 @@ public class CPDefinitionInventoryServiceSoap {
 			return com.liferay.commerce.model.CPDefinitionInventorySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap
 			updateCPDefinitionInventory(
 				long groupId, long cpDefinitionInventoryId,
@@ -194,34 +149,13 @@ public class CPDefinitionInventoryServiceSoap {
 			return com.liferay.commerce.model.CPDefinitionInventorySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
-	/**
-	 * Updates CP definition inventory
-	 *
-	 * @param cpDefinitionInventoryId
-	 * @param cpDefinitionInventoryEngine
-	 * @param lowStockActivity
-	 * @param displayAvailability
-	 * @param displayStockQuantity
-	 * @param minStockQuantity
-	 * @param backOrders
-	 * @param minOrderQuantity
-	 * @param maxOrderQuantity
-	 * @param allowedOrderQuantities
-	 * @param multipleOrderQuantity
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Mueller (7.2.x), see {@link
-	 #updateCPDefinitionInventory(long, long, String, String,
-	 boolean, boolean, int, boolean, int, int, String, int)}
-	 */
-	@Deprecated
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap
 			updateCPDefinitionInventory(
 				long cpDefinitionInventoryId,
@@ -229,8 +163,7 @@ public class CPDefinitionInventoryServiceSoap {
 				boolean displayAvailability, boolean displayStockQuantity,
 				int minStockQuantity, boolean backOrders, int minOrderQuantity,
 				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				int multipleOrderQuantity)
 		throws RemoteException {
 
 		try {
@@ -240,15 +173,15 @@ public class CPDefinitionInventoryServiceSoap {
 					lowStockActivity, displayAvailability, displayStockQuantity,
 					minStockQuantity, backOrders, minOrderQuantity,
 					maxOrderQuantity, allowedOrderQuantities,
-					multipleOrderQuantity, serviceContext);
+					multipleOrderQuantity);
 
 			return com.liferay.commerce.model.CPDefinitionInventorySoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

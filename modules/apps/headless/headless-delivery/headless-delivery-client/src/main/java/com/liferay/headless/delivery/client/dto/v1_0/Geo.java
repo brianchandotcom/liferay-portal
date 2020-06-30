@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Geo {
+public class Geo implements Cloneable {
 
 	public Double getLatitude() {
 		return latitude;
@@ -69,6 +69,11 @@ public class Geo {
 	}
 
 	protected Double longitude;
+
+	@Override
+	public Geo clone() throws CloneNotSupportedException {
+		return (Geo)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

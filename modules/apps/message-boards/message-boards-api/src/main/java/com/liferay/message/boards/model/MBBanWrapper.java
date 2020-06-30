@@ -302,11 +302,6 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		return _mbBan.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a message boards ban model instance should use the <code>MBBan</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_mbBan.persist();

@@ -37,11 +37,10 @@ portletDisplay.setURLBack(redirect);
 %>
 
 <div id="<portlet:namespace />editOrderItemContainer">
-	<liferay-frontend:screen-navigation
-		containerCssClass="col-md-10"
-		key="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL %>"
-		modelBean="<%= commerceOrderItem %>"
-		navCssClass="col-md-2"
-		portletURL="<%= currentURLObj %>"
+	<commerce-ui:side-panel-content
+		screenNavigatorKey="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL %>"
+		screenNavigatorModelBean="<%= commerceOrderItem %>"
+		screenNavigatorPortletURL="<%= currentURLObj %>"
+		title='<%= StringBundler.concat(commerceOrderItem.getName(locale), " - ", commerceOrderItem.getSku()) %>'
 	/>
 </div>

@@ -101,7 +101,7 @@ public class CPInstanceUpgradeProcess extends UpgradeProcess {
 				ps.setString(1, outputJSONArray.toString());
 				ps.setLong(2, rs1.getLong("CPInstanceId"));
 
-				ps.executeUpdate();
+				ps.addBatch();
 			}
 
 			ps.executeBatch();

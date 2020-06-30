@@ -54,6 +54,9 @@ public class CommercePriceFormatterTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+
 		_price = new BigDecimal(1234560.78);
 	}
 
@@ -71,13 +74,10 @@ public class CommercePriceFormatterTest {
 	public void testFormatCurrencyBigDecimalLocaleFR() throws Exception {
 		String regexFR = "^\\d{1,3}(.\\d{3})*,\\d\\d\\s[" + _SYMBOLS + "]$";
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(_group.getGroupId());
-
-		commerceCurrency.setFormatPattern("###,##0.00 $", LocaleUtil.FRANCE);
+		_commerceCurrency.setFormatPattern("###,##0.00 $", LocaleUtil.FRANCE);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			commerceCurrency, _price, LocaleUtil.FRANCE);
+			_commerceCurrency, _price, LocaleUtil.FRANCE);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexFR) {
@@ -99,13 +99,10 @@ public class CommercePriceFormatterTest {
 	public void testFormatCurrencyBigDecimalLocaleIT() throws Exception {
 		String regexIT = "^[" + _SYMBOLS + "]\\s\\d{1,3}(\\.\\d{3})*,\\d\\d$";
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(_group.getGroupId());
-
-		commerceCurrency.setFormatPattern("$ ###,##0.00", LocaleUtil.ITALY);
+		_commerceCurrency.setFormatPattern("$ ###,##0.00", LocaleUtil.ITALY);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			commerceCurrency, _price, LocaleUtil.ITALY);
+			_commerceCurrency, _price, LocaleUtil.ITALY);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexIT) {
@@ -127,13 +124,10 @@ public class CommercePriceFormatterTest {
 	public void testFormatCurrencyBigDecimalLocaleUS() throws Exception {
 		String regexUS = "^[" + _SYMBOLS + "]\\d{1,3}(\\,\\d{3})*\\.\\d\\d$";
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(_group.getGroupId());
-
-		commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.US);
+		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.US);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			commerceCurrency, _price, LocaleUtil.US);
+			_commerceCurrency, _price, LocaleUtil.US);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexUS) {
@@ -152,6 +146,9 @@ public class CommercePriceFormatterTest {
 	}
 
 	private static final String _SYMBOLS = "€$¥£R$₹";
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommercePriceFormatter _commercePriceFormatter;

@@ -44,7 +44,7 @@ import javax.sql.DataSource;
 public abstract class PortalServiceBaseImpl
 	extends BaseServiceImpl implements IdentifiableOSGiService, PortalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PortalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PortalServiceUtil</code>.
@@ -232,8 +232,8 @@ public abstract class PortalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

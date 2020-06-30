@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 public abstract class CPDefinitionLinkBaseImpl
 	extends CPDefinitionLinkModelImpl implements CPDefinitionLink {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp definition link model instance should use the <code>CPDefinitionLink</code> interface instead.

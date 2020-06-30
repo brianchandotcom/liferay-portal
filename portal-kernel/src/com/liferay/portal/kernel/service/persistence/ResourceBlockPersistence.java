@@ -41,7 +41,7 @@ import java.util.Set;
 public interface ResourceBlockPersistence
 	extends BasePersistence<ResourceBlock> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockUtil} to access the resource block persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -19,11 +19,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.Locale;
+
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,7 +43,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBoardAttachmentResource {
 
+	public static Builder builder() {
+		return FactoryHolder.factory.create();
+	}
+
 	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
+		throws Exception;
+
+	public Response deleteMessageBoardAttachmentBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public MessageBoardAttachment getMessageBoardAttachment(
@@ -56,6 +67,11 @@ public interface MessageBoardAttachmentResource {
 			Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Response postMessageBoardMessageMessageBoardAttachmentBatch(
+			Long messageBoardMessageId, MultipartBody multipartBody,
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
 				Long messageBoardThreadId)
@@ -63,6 +79,11 @@ public interface MessageBoardAttachmentResource {
 
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
 			Long messageBoardThreadId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response postMessageBoardThreadMessageBoardAttachmentBatch(
+			Long messageBoardThreadId, MultipartBody multipartBody,
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -85,5 +106,34 @@ public interface MessageBoardAttachmentResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public static class FactoryHolder {
+
+		public static volatile Factory factory;
+
+	}
+
+	@ProviderType
+	public interface Builder {
+
+		public MessageBoardAttachmentResource build();
+
+		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
+
+		public Builder preferredLocale(Locale preferredLocale);
+
+		public Builder user(com.liferay.portal.kernel.model.User user);
+
+	}
+
+	@ProviderType
+	public interface Factory {
+
+		public Builder create();
+
+	}
 
 }

@@ -45,7 +45,7 @@ public interface CommerceAddressModel
 	extends AttachedModel, BaseModel<CommerceAddress>, GroupedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce address model instance should use the {@link CommerceAddress} interface instead.

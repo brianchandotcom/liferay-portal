@@ -1,10 +1,24 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import Component from 'metal-component';
-import Soy, {Config} from 'metal-soy';
 import debounce from 'metal-debounce';
+import Soy, {Config} from 'metal-soy';
+
 import template from './SearchResults.soy';
 
 class SearchResults extends Component {
-
 	created() {
 		this.search = debounce(this.search.bind(this), 500);
 
@@ -30,7 +44,9 @@ class SearchResults extends Component {
 	}
 
 	getLastSuggestion() {
-		const selectables = this.results.filter(i => i.type !== 'label').reverse();
+		const selectables = this.results
+			.filter(i => i.type !== 'label')
+			.reverse();
 
 		return selectables.length ? selectables[0].pos : -1;
 	}
@@ -41,8 +57,7 @@ class SearchResults extends Component {
 		if (selected.length && selected[0].url) {
 			if (Liferay.SPA) {
 				Liferay.SPA.app.navigate(selected[0].url);
-			}
-			else {
+			} else {
 				window.location.href = selected[0].url;
 			}
 		}
@@ -51,8 +66,7 @@ class SearchResults extends Component {
 	handleKeyDown(e) {
 		if (e.key === 'ArrowDown') {
 			this.selectNext();
-		}
-		else if (e.key === 'ArrowUp') {
+		} else if (e.key === 'ArrowUp') {
 			this.selectPrevious();
 		}
 	}
@@ -61,14 +75,16 @@ class SearchResults extends Component {
 		this.selectedIndex = parseInt(e.delegateTarget.dataset.pos, 10);
 	}
 
-	handleMouseLeave(e) {
+	handleMouseLeave(_e) {
 		this.selectedIndex = this.getFirstSuggestion();
 	}
 
 	rendered() {
 		if (this.refs && this.refs.selected) {
-			this.refs.selected.scrollIntoView({behavior: 'smooth',
-				block: 'nearest'});
+			this.refs.selected.scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest'
+			});
 		}
 	}
 
@@ -80,23 +96,27 @@ class SearchResults extends Component {
 		this.lock = true;
 
 		fetch(
-			`${this.searchAPI}${themeDisplay.getPlid()}?commerceAccountId=${this.commerceAccountId}&
-				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}&q=${this.queryString}`,
+			`${this.searchAPI}${themeDisplay.getPlid()}?commerceAccountId=${
+				this.commerceAccountId
+			}&
+				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}&q=${
+				this.queryString
+			}`,
 			{
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'GET'
 			}
 		)
 			.then(response => response.json())
-			.then(
-				results => {
-					this.loading = false;
-					this.lock = false;
-					this.queryValue = this.queryString;
-					this.results = results;
-					this.selectedIndex = -1;
-					this.selectNext();
-				}
-			);
+			.then(results => {
+				this.loading = false;
+				this.lock = false;
+				this.queryValue = this.queryString;
+				this.results = results;
+				this.selectedIndex = -1;
+				this.selectNext();
+			});
 	}
 
 	selectNext() {
@@ -104,9 +124,9 @@ class SearchResults extends Component {
 			i => i.pos > this.selectedIndex && i.type !== 'label'
 		);
 
-		this.selectedIndex = nexts.length ?
-			nexts[0].pos :
-			this.getFirstSuggestion();
+		this.selectedIndex = nexts.length
+			? nexts[0].pos
+			: this.getFirstSuggestion();
 	}
 
 	selectPrevious() {
@@ -114,22 +134,21 @@ class SearchResults extends Component {
 			.filter(i => i.pos < this.selectedIndex && i.type !== 'label')
 			.reverse();
 
-		this.selectedIndex = prevs.length ? prevs[0].pos : this.getLastSuggestion();
+		this.selectedIndex = prevs.length
+			? prevs[0].pos
+			: this.getLastSuggestion();
 	}
 
 	setSelected(sel) {
-		sel = ((sel + 1 + this.results.length + 1) % (this.results.length + 1)) - 1;
+		sel =
+			((sel + 1 + this.results.length + 1) % (this.results.length + 1)) -
+			1;
 
-		this.results = this.results.map(
-			(item, i) => Object.assign(
-				{},
-				item,
-				{
-					pos: i,
-					selected: i === sel
-				}
-			)
-		);
+		this.results = this.results.map((item, i) => ({
+			...item,
+			pos: i,
+			selected: i === sel
+		}));
 
 		return sel;
 	}
@@ -146,8 +165,7 @@ class SearchResults extends Component {
 		if (visible) {
 			if (visible.newVal) {
 				document.addEventListener('keydown', this.handleKeyDown);
-			}
-			else {
+			} else {
 				document.removeEventListener('keydown', this.handleKeyDown);
 			}
 		}
@@ -156,18 +174,12 @@ class SearchResults extends Component {
 	_handleClick() {
 		this.goToSelected();
 	}
-
 }
 
 Soy.register(SearchResults, template);
 
 SearchResults.STATE = {
-	commerceAccountId: Config.oneOfType(
-		[
-			Config.number(),
-			Config.string()
-		]
-	),
+	commerceAccountId: Config.oneOfType([Config.number(), Config.string()]),
 	loading: Config.bool().value(false),
 	queryString: Config.string().value(''),
 	queryValue: Config.string().value(''),

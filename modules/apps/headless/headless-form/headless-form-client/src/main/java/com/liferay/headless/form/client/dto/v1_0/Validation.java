@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.dto.v1_0;
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 import com.liferay.headless.form.client.serdes.v1_0.ValidationSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Validation {
+public class Validation implements Cloneable {
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -48,6 +49,28 @@ public class Validation {
 	}
 
 	protected String errorMessage;
+
+	public Map<String, String> getErrorMessage_i18n() {
+		return errorMessage_i18n;
+	}
+
+	public void setErrorMessage_i18n(Map<String, String> errorMessage_i18n) {
+		this.errorMessage_i18n = errorMessage_i18n;
+	}
+
+	public void setErrorMessage_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			errorMessage_i18nUnsafeSupplier) {
+
+		try {
+			errorMessage_i18n = errorMessage_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> errorMessage_i18n;
 
 	public String getExpression() {
 		return expression;
@@ -88,6 +111,11 @@ public class Validation {
 	}
 
 	protected Long id;
+
+	@Override
+	public Validation clone() throws CloneNotSupportedException {
+		return (Validation)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

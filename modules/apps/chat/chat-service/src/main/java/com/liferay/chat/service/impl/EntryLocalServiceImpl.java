@@ -69,7 +69,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry.setToUserId(toUserId);
 		entry.setContent(content);
 
-		entryPersistence.update(entry);
+		entry = entryPersistence.update(entry);
 
 		JabberUtil.sendMessage(fromUserId, toUserId, content);
 

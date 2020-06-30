@@ -29,39 +29,34 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 %>
 
-<c:choose>
-	<c:when test="<%= portletName.equals(CommerceWishListPortletKeys.COMMERCE_WISH_LIST) %>">
-		<liferay-ui:icon-menu
-			direction="left-side"
-			icon="<%= StringPool.BLANK %>"
-			markupView="lexicon"
-			message="<%= StringPool.BLANK %>"
-			showWhenSingleIcon="<%= true %>"
-		>
-			<c:if test="<%= commerceWishListDisplayContext.hasManageCommerceWishListsPermission() %>">
-				<portlet:actionURL name="editCommerceWishListItem" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="commerceWishListItemId" value="<%= String.valueOf(commerceWishListItem.getCommerceWishListItemId()) %>" />
-				</portlet:actionURL>
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
+	<c:if test="<%= commerceWishListDisplayContext.hasManageCommerceWishListsPermission() %>">
+		<portlet:actionURL name="editCommerceWishListItem" var="deleteURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceWishListItemId" value="<%= String.valueOf(commerceWishListItem.getCommerceWishListItemId()) %>" />
+		</portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					url="<%= deleteURL %>"
-				/>
-			</c:if>
-		</liferay-ui:icon-menu>
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
+</liferay-ui:icon-menu>
+
+<c:choose>
+	<c:when test="<%= cpInstance != null %>">
+		<commerce-ui:add-to-cart
+			CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
+			id="<%= addToCartId %>"
+		/>
 	</c:when>
 	<c:otherwise>
-		<c:choose>
-			<c:when test="<%= cpInstance != null %>">
-				<commerce-ui:add-to-cart
-					CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
-					id="<%= addToCartId %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<a class="commerce-button commerce-button--outline w-100" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(cProduct.getPublishedCPDefinitionId(), themeDisplay) %>"><liferay-ui:message key="view-all-variants" /></a>
-			</c:otherwise>
-		</c:choose>
+		<a class="commerce-button commerce-button--outline w-100" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(cProduct.getPublishedCPDefinitionId(), themeDisplay) %>"><liferay-ui:message key="view-all-variants" /></a>
 	</c:otherwise>
 </c:choose>

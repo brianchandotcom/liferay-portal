@@ -587,11 +587,6 @@ public class OrganizationWrapper
 		return _organization.isRoot();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a organization model instance should use the <code>Organization</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_organization.persist();

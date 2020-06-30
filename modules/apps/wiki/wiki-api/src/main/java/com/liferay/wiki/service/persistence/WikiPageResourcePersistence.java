@@ -40,7 +40,7 @@ import java.util.Set;
 public interface WikiPageResourcePersistence
 	extends BasePersistence<WikiPageResource> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceUtil} to access the wiki page resource persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

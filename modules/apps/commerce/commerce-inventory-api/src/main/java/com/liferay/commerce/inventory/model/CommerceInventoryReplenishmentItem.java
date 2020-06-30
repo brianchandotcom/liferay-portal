@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CommerceInventoryReplenishmentItem
 	extends CommerceInventoryReplenishmentItemModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -65,5 +65,8 @@ public interface CommerceInventoryReplenishmentItem
 				}
 
 			};
+
+	public CommerceInventoryWarehouse getCommerceInventoryWarehouse()
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

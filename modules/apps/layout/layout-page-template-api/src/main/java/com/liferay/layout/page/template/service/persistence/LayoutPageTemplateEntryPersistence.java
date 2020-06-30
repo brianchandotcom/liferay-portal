@@ -40,7 +40,7 @@ import java.util.Set;
 public interface LayoutPageTemplateEntryPersistence
 	extends BasePersistence<LayoutPageTemplateEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryUtil} to access the layout page template entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

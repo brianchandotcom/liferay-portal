@@ -34,6 +34,7 @@ public class CommerceInventoryReplenishmentItemSoap implements Serializable {
 		CommerceInventoryReplenishmentItemSoap soapModel =
 			new CommerceInventoryReplenishmentItemSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceInventoryReplenishmentItemId(
 			model.getCommerceInventoryReplenishmentItemId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,6 +108,14 @@ public class CommerceInventoryReplenishmentItemSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceInventoryReplenishmentItemId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceInventoryReplenishmentItemId() {
@@ -194,6 +203,7 @@ public class CommerceInventoryReplenishmentItemSoap implements Serializable {
 		_quantity = quantity;
 	}
 
+	private long _mvccVersion;
 	private long _commerceInventoryReplenishmentItemId;
 	private long _companyId;
 	private long _userId;

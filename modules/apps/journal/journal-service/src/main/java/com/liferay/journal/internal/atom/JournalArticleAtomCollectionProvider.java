@@ -166,13 +166,11 @@ public class JournalArticleAtomCollectionProvider
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		journalArticles = _journalArticleService.search(
+		return _journalArticleService.search(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate, atomPager.getStart(), atomPager.getEnd() + 1,
 			obc);
-
-		return journalArticles;
 	}
 
 	@Override
@@ -245,11 +243,9 @@ public class JournalArticleAtomCollectionProvider
 
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		journalArticle = _journalArticleService.updateStatus(
+		return _journalArticleService.updateStatus(
 			groupId, journalArticle.getArticleId(), version, status, articleURL,
 			serviceContext);
-
-		return journalArticle;
 	}
 
 	@Override

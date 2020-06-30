@@ -14,16 +14,15 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,25 +51,24 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			CPInstanceDisplayContext cpInstanceDisplayContext =
-				new CPInstanceDisplayContext(
-					_actionHelper, _portal.getHttpServletRequest(renderRequest),
-					_commercePriceFormatter, _cpDefinitionOptionRelService,
-					_cpInstanceService, _cpInstanceHelper);
+		CPInstanceDisplayContext cpInstanceDisplayContext =
+			new CPInstanceDisplayContext(
+				_actionHelper, _portal.getHttpServletRequest(renderRequest),
+				_commerceCurrencyLocalService, _commercePriceFormatter,
+				_cpDefinitionOptionRelService, _cpInstanceHelper,
+				_cpMeasurementUnitLocalService);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
-		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
 
 		return "/view_instances.jsp";
 	}
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
@@ -82,7 +80,7 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private Portal _portal;

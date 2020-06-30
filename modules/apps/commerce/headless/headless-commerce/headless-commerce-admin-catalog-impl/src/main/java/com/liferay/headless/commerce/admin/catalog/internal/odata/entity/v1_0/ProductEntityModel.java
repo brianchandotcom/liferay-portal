@@ -15,7 +15,6 @@
 package com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -45,9 +44,7 @@ public class ProductEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new StringEntityField("productType", locale -> "productTypeName"),
 			new StringEntityField(
-				"name",
-				locale -> Field.getSortableFieldName(
-					"localized_name_".concat(LocaleUtil.toLanguageId(locale))))
+				"name", locale -> Field.getSortableFieldName("name"))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

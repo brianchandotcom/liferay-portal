@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Organization {
+public class Organization implements Cloneable {
 
 	public String getComment() {
 		return comment;
@@ -300,6 +300,11 @@ public class Organization {
 	}
 
 	protected Service[] services;
+
+	@Override
+	public Organization clone() throws CloneNotSupportedException {
+		return (Organization)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

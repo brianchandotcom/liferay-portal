@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentStructureFieldSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentStructureField {
+public class ContentStructureField implements Cloneable {
 
 	public String getDataType() {
 		return dataType;
@@ -90,6 +91,28 @@ public class ContentStructureField {
 	}
 
 	protected String label;
+
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label_i18n;
 
 	public Boolean getLocalizable() {
 		return localizable;
@@ -219,6 +242,30 @@ public class ContentStructureField {
 
 	protected String predefinedValue;
 
+	public Map<String, String> getPredefinedValue_i18n() {
+		return predefinedValue_i18n;
+	}
+
+	public void setPredefinedValue_i18n(
+		Map<String, String> predefinedValue_i18n) {
+
+		this.predefinedValue_i18n = predefinedValue_i18n;
+	}
+
+	public void setPredefinedValue_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			predefinedValue_i18nUnsafeSupplier) {
+
+		try {
+			predefinedValue_i18n = predefinedValue_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> predefinedValue_i18n;
+
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -281,6 +328,11 @@ public class ContentStructureField {
 	}
 
 	protected Boolean showLabel;
+
+	@Override
+	public ContentStructureField clone() throws CloneNotSupportedException {
+		return (ContentStructureField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

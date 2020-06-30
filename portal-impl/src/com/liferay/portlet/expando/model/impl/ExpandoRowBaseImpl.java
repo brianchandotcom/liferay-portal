@@ -32,7 +32,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 public abstract class ExpandoRowBaseImpl
 	extends ExpandoRowModelImpl implements ExpandoRow {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a expando row model instance should use the <code>ExpandoRow</code> interface instead.

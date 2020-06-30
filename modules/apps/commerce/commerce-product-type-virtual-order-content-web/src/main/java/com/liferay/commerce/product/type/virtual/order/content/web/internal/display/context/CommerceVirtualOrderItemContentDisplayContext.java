@@ -76,15 +76,11 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_commerceAccountHelper = commerceAccountHelper;
 		_cpDefinitionVirtualSettingService = cpDefinitionVirtualSettingService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_httpServletRequest = httpServletRequest;
 
 		_commerceVirtualOrderItemContentRequestHelper =
 			new CommerceVirtualOrderItemContentRequestHelper(
 				httpServletRequest);
-
-		_commerceAccount = commerceAccountHelper.getCurrentCommerceAccount(
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				_commerceVirtualOrderItemContentRequestHelper.getSiteGroupId()),
-			httpServletRequest);
 
 		PortletDisplay portletDisplay =
 			_commerceVirtualOrderItemContentRequestHelper.getPortletDisplay();
@@ -311,14 +307,16 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				_commerceVirtualOrderItemContentRequestHelper.
 					getScopeGroupId());
 
+		CommerceAccount commerceAccount = _getCommerceAccount();
+
 		int total =
 			_commerceVirtualOrderItemLocalService.
 				getCommerceVirtualOrderItemsCount(
 					commerceChannelGroupId,
-					_commerceAccount.getCommerceAccountId());
+					commerceAccount.getCommerceAccountId());
 		List<CommerceVirtualOrderItem> results =
 			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
-				commerceChannelGroupId, _commerceAccount.getCommerceAccountId(),
+				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new CommerceVirtualOrderItemCreateDateComparator());
 
@@ -345,8 +343,14 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		return false;
 	}
 
+	private CommerceAccount _getCommerceAccount() throws PortalException {
+		return _commerceAccountHelper.getCurrentCommerceAccount(
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				_commerceVirtualOrderItemContentRequestHelper.getSiteGroupId()),
+			_httpServletRequest);
+	}
+
 	private JournalArticleDisplay _articleDisplay;
-	private final CommerceAccount _commerceAccount;
 	private final CommerceAccountHelper _commerceAccountHelper;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceVirtualOrderItemContentPortletInstanceConfiguration
@@ -360,6 +364,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_cpDefinitionVirtualSettingService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private long _displayStyleGroupId;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer<CommerceVirtualOrderItem> _searchContainer;
 
 }

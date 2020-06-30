@@ -129,10 +129,19 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 
 	<aui:script>
 		function <portlet:namespace />deleteCommerceAvailabilityEstimates() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-estimates" />')) {
+			if (
+				confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-estimates" />'
+				)
+			) {
 				var form = AUI.$(document.<portlet:namespace />fm);
 
-				form.fm('deleteCommerceAvailabilityEstimateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+				form.fm('deleteCommerceAvailabilityEstimateIds').val(
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
+				);
 
 				submitForm(form);
 			}

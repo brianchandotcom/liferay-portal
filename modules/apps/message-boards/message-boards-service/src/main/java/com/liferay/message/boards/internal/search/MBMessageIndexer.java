@@ -439,9 +439,7 @@ public class MBMessageIndexer
 				e);
 		}
 
-		content = HtmlUtil.extractText(content);
-
-		return content;
+		return HtmlUtil.extractText(content);
 	}
 
 	protected void reindexAttachments(MBMessage mbMessage)

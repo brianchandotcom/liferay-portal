@@ -415,7 +415,7 @@ public class JournalArticleModelValidator
 		}
 		catch (ExportImportContentValidationException eicve) {
 			eicve.setStagedModelClassName(JournalArticle.class.getName());
-			eicve.setStagedModelClassPK(Long.valueOf(article.getArticleId()));
+			eicve.setStagedModelPrimaryKeyObj(article.getArticleId());
 
 			ModelValidationResults.FailureBuilder failureBuilder =
 				ModelValidationResults.failure();

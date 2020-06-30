@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Fragment Display Web
 Bundle-SymbolicName: com.liferay.fragment.display.web
-Bundle-Version: 1.0.17
+Bundle-Version: 1.0.20
 Provide-Capability:\
 	soy;\
 		type="fragment-display-web";\

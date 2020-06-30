@@ -4,7 +4,7 @@
 	position: relative;
 
 	&__dot {
-		animation: scale-dot .8s ease-out infinite;
+		animation: scale-dot 0.8s ease-out infinite;
 		background: currentColor;
 		border-radius: 50%;
 		display: inline-block;

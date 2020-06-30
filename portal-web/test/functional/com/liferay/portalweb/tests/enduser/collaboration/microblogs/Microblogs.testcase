@@ -58,6 +58,7 @@ definition {
 
 	@priority = "5"
 	test DeleteEntry {
+		property osgi.app.includes = "microblogs";
 		property portal.acceptance = "true";
 
 		Microblogs.updateStatus(entryContent = "Microblog Entry Content");
@@ -75,6 +76,7 @@ definition {
 
 	@priority = "5"
 	test EditEntry {
+		property osgi.app.includes = "microblogs";
 		property portal.acceptance = "true";
 
 		Microblogs.updateStatus(entryContent = "Microblog Entry Content");

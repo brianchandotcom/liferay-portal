@@ -24,6 +24,9 @@ public class CommerceDiscountScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_DISCOUNT_DETAIL = "detail";
 
+	public static final String CATEGORY_KEY_COMMERCE_DISCOUNT_PRICING_CLASSES =
+		"pricing-classes";
+
 	public static final String CATEGORY_KEY_COMMERCE_DISCOUNT_PRODUCTS =
 		"products";
 
@@ -33,6 +36,9 @@ public class CommerceDiscountScreenNavigationConstants {
 		"categories";
 
 	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_DETAIL = "detail";
+
+	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_PRICING_CLASSES =
+		"pricing-classes";
 
 	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_PRODUCTS =
 		"products";

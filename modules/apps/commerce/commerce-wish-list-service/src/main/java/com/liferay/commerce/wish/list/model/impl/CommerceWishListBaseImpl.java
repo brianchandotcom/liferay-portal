@@ -32,7 +32,7 @@ import com.liferay.commerce.wish.list.service.CommerceWishListLocalServiceUtil;
 public abstract class CommerceWishListBaseImpl
 	extends CommerceWishListModelImpl implements CommerceWishList {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce wish list model instance should use the <code>CommerceWishList</code> interface instead.

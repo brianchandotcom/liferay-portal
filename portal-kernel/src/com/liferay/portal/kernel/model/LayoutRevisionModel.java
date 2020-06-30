@@ -43,7 +43,7 @@ public interface LayoutRevisionModel
 	extends BaseModel<LayoutRevision>, GroupedModel, LocalizedModel, MVCCModel,
 			ShardedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a layout revision model instance should use the {@link LayoutRevision} interface instead.

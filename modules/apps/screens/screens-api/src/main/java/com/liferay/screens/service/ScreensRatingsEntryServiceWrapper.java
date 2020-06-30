@@ -33,11 +33,6 @@ public class ScreensRatingsEntryServiceWrapper
 		_screensRatingsEntryService = screensRatingsEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
 			long classPK, String className, int ratingsLength)

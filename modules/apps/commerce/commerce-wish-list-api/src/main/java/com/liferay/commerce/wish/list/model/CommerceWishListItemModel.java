@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceWishListItemModel
 	extends BaseModel<CommerceWishListItem>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce wish list item model instance should use the {@link CommerceWishListItem} interface instead.

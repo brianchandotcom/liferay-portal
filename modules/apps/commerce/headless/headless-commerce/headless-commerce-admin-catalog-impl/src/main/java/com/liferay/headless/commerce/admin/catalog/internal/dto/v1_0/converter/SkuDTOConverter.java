@@ -14,15 +14,13 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterContext;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,34 +70,22 @@ public class SkuDTOConverter implements DTOConverter {
 		};
 	}
 
-	private Map<String, String> _getOptions(CPInstance cpInstance)
-		throws PortalException {
-
+	private Map<String, String> _getOptions(CPInstance cpInstance) {
 		Map<String, String> options = new HashMap<>();
 
-		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap =
-				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
-					cpInstance.getCPDefinitionId(), cpInstance.getJson());
+		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
+			_cpInstanceHelper.getCPInstanceCPInstanceOptionValueRels(
+				cpInstance.getCPDefinitionId());
 
-		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				entry : cpDefinitionOptionRelsMap.entrySet()) {
+		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+				cpInstanceOptionValueRels) {
 
-			CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				entry.getValue();
-
-			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionValueRels) {
-
-				options.put(
-					String.valueOf(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
-					String.valueOf(
-						cpDefinitionOptionValueRel.
-							getCPDefinitionOptionValueRelId()));
-			}
+			options.put(
+				String.valueOf(
+					cpInstanceOptionValueRel.getCPDefinitionOptionRelId()),
+				String.valueOf(
+					cpInstanceOptionValueRel.
+						getCPDefinitionOptionValueRelId()));
 		}
 
 		return options;

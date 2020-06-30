@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -66,7 +68,7 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +94,14 @@ public class CPDefinitionOptionValueRelCacheModel
 		sb.append(priority);
 		sb.append(", key=");
 		sb.append(key);
+		sb.append(", CPInstanceUuid=");
+		sb.append(CPInstanceUuid);
+		sb.append(", CProductId=");
+		sb.append(CProductId);
+		sb.append(", quantity=");
+		sb.append(quantity);
+		sb.append(", price=");
+		sb.append(price);
 		sb.append("}");
 
 		return sb.toString();
@@ -156,13 +166,26 @@ public class CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelImpl.setKey(key);
 		}
 
+		if (CPInstanceUuid == null) {
+			cpDefinitionOptionValueRelImpl.setCPInstanceUuid("");
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setCPInstanceUuid(CPInstanceUuid);
+		}
+
+		cpDefinitionOptionValueRelImpl.setCProductId(CProductId);
+		cpDefinitionOptionValueRelImpl.setQuantity(quantity);
+		cpDefinitionOptionValueRelImpl.setPrice(price);
+
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
 
 		return cpDefinitionOptionValueRelImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		CPDefinitionOptionValueRelId = objectInput.readLong();
@@ -181,6 +204,12 @@ public class CPDefinitionOptionValueRelCacheModel
 
 		priority = objectInput.readDouble();
 		key = objectInput.readUTF();
+		CPInstanceUuid = objectInput.readUTF();
+
+		CProductId = objectInput.readLong();
+
+		quantity = objectInput.readInt();
+		price = (BigDecimal)objectInput.readObject();
 	}
 
 	@Override
@@ -227,6 +256,18 @@ public class CPDefinitionOptionValueRelCacheModel
 		else {
 			objectOutput.writeUTF(key);
 		}
+
+		if (CPInstanceUuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(CPInstanceUuid);
+		}
+
+		objectOutput.writeLong(CProductId);
+
+		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(price);
 	}
 
 	public String uuid;
@@ -241,5 +282,9 @@ public class CPDefinitionOptionValueRelCacheModel
 	public String name;
 	public double priority;
 	public String key;
+	public String CPInstanceUuid;
+	public long CProductId;
+	public int quantity;
+	public BigDecimal price;
 
 }

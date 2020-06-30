@@ -12,24 +12,24 @@
 			"visible": false
 		},
 		{
-			"errorMessage": "Integer must be equal to zero.",
+			"errorMessage": "",
 			"instanceId": "uvwn",
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
 			"required": false,
-			"valid": false,
+			"valid": true,
 			"value": 1,
 			"visible": false
 		},
 		{
-			"errorMessage": "Integer must be equal to zero.",
+			"errorMessage": "",
 			"instanceId": "lsky",
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
 			"required": false,
-			"valid": false,
+			"valid": true,
 			"value": 2,
 			"visible": false
 		},
@@ -78,24 +78,24 @@
 			"visible": true
 		},
 		{
-			"errorMessage": "Integer must be equal to zero.",
+			"errorMessage": "",
 			"instanceId": "uvwn",
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
 			"required": false,
-			"valid": false,
+			"valid": true,
 			"value": 1,
 			"visible": false
 		},
 		{
-			"errorMessage": "Integer must be equal to zero.",
+			"errorMessage": "",
 			"instanceId": "lsky",
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
 			"required": false,
-			"valid": false,
+			"valid": true,
 			"value": 2,
 			"visible": false
 		},

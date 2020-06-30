@@ -33,7 +33,7 @@ public abstract class CalendarNotificationTemplateBaseImpl
 	extends CalendarNotificationTemplateModelImpl
 	implements CalendarNotificationTemplate {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a calendar notification template model instance should use the <code>CalendarNotificationTemplate</code> interface instead.

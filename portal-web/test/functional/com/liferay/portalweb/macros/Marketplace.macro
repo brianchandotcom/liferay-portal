@@ -1,15 +1,12 @@
 definition {
 
 	macro smoke {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-		
-		Navigator.openSiteURL(siteName = "${siteName}");
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Test Page");
 
@@ -21,40 +18,28 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry 1 Content",
-			entryTitle = "Blogs Entry 1 Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			entryTitle = "Blogs Entry 1 Title");
 
 		BlogsEntry.viewPG(
 			entryAuthorFirstName = "Test",
 			entryAuthorLastName = "Test",
 			entryContent = "Blogs Entry 1 Content",
-			entryTitle = "Blogs Entry 1 Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			entryTitle = "Blogs Entry 1 Title");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry 1 Content",
-			entryTitle = "Blogs Entry 1 Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			entryTitle = "Blogs Entry 1 Title");
 
 		Comments.addPG(entryComment = "Blogs Entry 1 Comment");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 
-		Navigator.openSiteURL(siteName = "${siteName}");
-
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Test Page");
 
@@ -68,47 +53,29 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentSize = "0.3k",
-			dmDocumentTitle = "DM Document Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
-		DMFolder.addPG(
-			dmFolderName = "DM Folder 1 Name",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		DMFolder.addPG(dmFolderName = "DM Folder 1 Name");
 
-		DMNavigator.gotoFolder(
-			dmFolderName = "DM Folder 1 Name",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder 1 Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Folder Image 1 Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Folder Image 1 Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			dmDocumentTitle = "DM Folder Image 1 Title");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Folder Image 1 Description",
-			dmDocumentTitle = "DM Folder Image 1 Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			dmDocumentTitle = "DM Folder Image 1 Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 
@@ -117,32 +84,23 @@ definition {
 		Portlet.addPG(portletName = "Wiki");
 
 		WikiPage.addFrontPagePG(
-			siteName = "${siteName}",
-			siteURL = "${siteURL}",
 			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiPage.addChildPagePG(
-			siteName = "${siteName}",
-			siteURL = "${siteURL}",
 			wikiChildPageContent = "Wiki Front Page Child Page Content 1",
 			wikiChildPageTitle = "Wiki Front Page Child Page Title 1",
 			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Navigator.openSiteURL(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Calendar Test Page");
 
@@ -158,99 +116,10 @@ definition {
 			eventTitle = "Calendar Event Title",
 			eventType = "Regular",
 			frequency = "Weekly",
-			pageName = "Calendar Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			pageName = "Calendar Test Page");
 
 		Navigator.gotoPage(pageName = "Calendar Test Page");
 
-		CalendarEvent.view(
-			eventTitle = "Calendar Event Title",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Navigator.gotoPage(pageName = "Calendar Test Page");
-
-		Navigator.openSiteURL(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Build",
-			panel = "Site Administration",
-			portlet = "Pages"
-		);
-
-		SitePages.addPublicPage(pageName = "Bookmarks Test Page");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		Portlet.addPG(portletName = "Bookmarks");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.addPG(
-			folderDescription = "Test Folder Description",
-			folderName = "Test Folder",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.gotoPG(
-			folderName = "Test Folder",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Bookmark.addPG(
-			bookmarkDescription = "Test Folder Entry 1 Description",
-			bookmarkName = "Test Folder Entry 1",
-			bookmarkURL = "https://www.liferay.com",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.gotoPG(
-			folderName = "Test Folder",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Bookmark.viewBookmark(
-			bookmarkName = "Test Folder Entry 1",
-			bookmarkURL = "https://www.liferay.com",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		// LPS-69746
-
-		/* <execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Home" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute> */
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
 	}
 }

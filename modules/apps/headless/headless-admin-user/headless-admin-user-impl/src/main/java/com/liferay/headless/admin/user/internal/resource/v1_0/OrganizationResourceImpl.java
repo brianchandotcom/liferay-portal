@@ -33,6 +33,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -64,6 +65,11 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -204,11 +210,13 @@ public class OrganizationResourceImpl
 							_emailAddressService.getEmailAddresses(
 								organization.getModelClassName(),
 								organization.getOrganizationId()),
-							EmailAddressUtil::toEmail, EmailAddress.class);
+							EmailAddressUtil::toEmailAddress,
+							EmailAddress.class);
 						postalAddresses = transformToArray(
 							organization.getAddresses(),
 							address -> PostalAddressUtil.toPostalAddress(
-								address,
+								contextAcceptLanguage.isAcceptAllLanguages(),
+								address, organization.getCompanyId(),
 								contextAcceptLanguage.getPreferredLocale()),
 							PostalAddress.class);
 						telephones = transformToArray(
@@ -224,6 +232,7 @@ public class OrganizationResourceImpl
 					}
 				};
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					com.liferay.portal.kernel.model.Organization.class.
 						getName(),
 					organization.getOrganizationId(),
@@ -250,6 +259,28 @@ public class OrganizationResourceImpl
 
 								return country.getName(
 									contextAcceptLanguage.getPreferredLocale());
+							});
+						setAddressCountry_i18n(
+							() -> {
+								if (!contextAcceptLanguage.
+										isAcceptAllLanguages()) {
+
+									return null;
+								}
+
+								Set<Locale> locales =
+									LanguageUtil.getCompanyAvailableLocales(
+										organization.getCompanyId());
+
+								Stream<Locale> localesStream = locales.stream();
+
+								Country country = _countryService.getCountry(
+									organization.getCountryId());
+
+								return localesStream.collect(
+									Collectors.toMap(
+										Locale::toLanguageTag,
+										country::getName));
 							});
 						setAddressRegion(
 							() -> {

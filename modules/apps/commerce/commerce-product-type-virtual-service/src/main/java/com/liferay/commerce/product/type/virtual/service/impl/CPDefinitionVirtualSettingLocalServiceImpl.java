@@ -160,10 +160,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setOverride(override);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionVirtualSettingPersistence.update(
+		return cpDefinitionVirtualSettingPersistence.update(
 			cpDefinitionVirtualSetting);
-
-		return cpDefinitionVirtualSetting;
 	}
 
 	@Override
@@ -390,10 +388,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setOverride(override);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionVirtualSettingPersistence.update(
+		return cpDefinitionVirtualSettingPersistence.update(
 			cpDefinitionVirtualSetting);
-
-		return cpDefinitionVirtualSetting;
 	}
 
 	@Override

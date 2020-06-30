@@ -66,7 +66,7 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,10 +94,34 @@ public class CommercePriceEntryCacheModel
 		sb.append(price);
 		sb.append(", promoPrice=");
 		sb.append(promoPrice);
+		sb.append(", discountDiscovery=");
+		sb.append(discountDiscovery);
+		sb.append(", discountLevel1=");
+		sb.append(discountLevel1);
+		sb.append(", discountLevel2=");
+		sb.append(discountLevel2);
+		sb.append(", discountLevel3=");
+		sb.append(discountLevel3);
+		sb.append(", discountLevel4=");
+		sb.append(discountLevel4);
 		sb.append(", hasTierPrice=");
 		sb.append(hasTierPrice);
+		sb.append(", bulkPricing=");
+		sb.append(bulkPricing);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,7 +184,27 @@ public class CommercePriceEntryCacheModel
 		commercePriceEntryImpl.setCProductId(CProductId);
 		commercePriceEntryImpl.setPrice(price);
 		commercePriceEntryImpl.setPromoPrice(promoPrice);
+		commercePriceEntryImpl.setDiscountDiscovery(discountDiscovery);
+		commercePriceEntryImpl.setDiscountLevel1(discountLevel1);
+		commercePriceEntryImpl.setDiscountLevel2(discountLevel2);
+		commercePriceEntryImpl.setDiscountLevel3(discountLevel3);
+		commercePriceEntryImpl.setDiscountLevel4(discountLevel4);
 		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
+		commercePriceEntryImpl.setBulkPricing(bulkPricing);
+
+		if (displayDate == Long.MIN_VALUE) {
+			commercePriceEntryImpl.setDisplayDate(null);
+		}
+		else {
+			commercePriceEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			commercePriceEntryImpl.setExpirationDate(null);
+		}
+		else {
+			commercePriceEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commercePriceEntryImpl.setLastPublishDate(null);
@@ -168,6 +212,23 @@ public class CommercePriceEntryCacheModel
 		else {
 			commercePriceEntryImpl.setLastPublishDate(
 				new Date(lastPublishDate));
+		}
+
+		commercePriceEntryImpl.setStatus(status);
+		commercePriceEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			commercePriceEntryImpl.setStatusByUserName("");
+		}
+		else {
+			commercePriceEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			commercePriceEntryImpl.setStatusDate(null);
+		}
+		else {
+			commercePriceEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
 		commercePriceEntryImpl.resetOriginalValues();
@@ -198,8 +259,24 @@ public class CommercePriceEntryCacheModel
 		price = (BigDecimal)objectInput.readObject();
 		promoPrice = (BigDecimal)objectInput.readObject();
 
+		discountDiscovery = objectInput.readBoolean();
+		discountLevel1 = (BigDecimal)objectInput.readObject();
+		discountLevel2 = (BigDecimal)objectInput.readObject();
+		discountLevel3 = (BigDecimal)objectInput.readObject();
+		discountLevel4 = (BigDecimal)objectInput.readObject();
+
 		hasTierPrice = objectInput.readBoolean();
+
+		bulkPricing = objectInput.readBoolean();
+		displayDate = objectInput.readLong();
+		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -247,8 +324,31 @@ public class CommercePriceEntryCacheModel
 		objectOutput.writeObject(price);
 		objectOutput.writeObject(promoPrice);
 
+		objectOutput.writeBoolean(discountDiscovery);
+		objectOutput.writeObject(discountLevel1);
+		objectOutput.writeObject(discountLevel2);
+		objectOutput.writeObject(discountLevel3);
+		objectOutput.writeObject(discountLevel4);
+
 		objectOutput.writeBoolean(hasTierPrice);
+
+		objectOutput.writeBoolean(bulkPricing);
+		objectOutput.writeLong(displayDate);
+		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;
@@ -264,7 +364,19 @@ public class CommercePriceEntryCacheModel
 	public long CProductId;
 	public BigDecimal price;
 	public BigDecimal promoPrice;
+	public boolean discountDiscovery;
+	public BigDecimal discountLevel1;
+	public BigDecimal discountLevel2;
+	public BigDecimal discountLevel3;
+	public BigDecimal discountLevel4;
 	public boolean hasTierPrice;
+	public boolean bulkPricing;
+	public long displayDate;
+	public long expirationDate;
 	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

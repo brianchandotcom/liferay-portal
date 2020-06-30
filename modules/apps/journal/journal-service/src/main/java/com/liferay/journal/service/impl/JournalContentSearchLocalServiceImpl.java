@@ -18,21 +18,25 @@ import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import javax.portlet.PortletPreferences;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -65,59 +69,83 @@ public class JournalContentSearchLocalServiceImpl
 			_log.info("Checking journal content search for " + companyId);
 		}
 
-		List<Layout> layouts = new ArrayList<>();
+		Map<JournalContentSearchKey, JournalContentSearch>
+			orphanedJournalContentSearches = new HashMap<>();
 
-		List<Group> groups = groupLocalService.search(
-			companyId, null, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<JournalContentSearch> journalContentSearches =
+			journalContentSearchPersistence.findByCompanyId(companyId);
 
-		for (Group group : groups) {
+		for (JournalContentSearch journalContentSearch :
+				journalContentSearches) {
 
-			// Private layouts
+			JournalContentSearchKey journalContentSearchKey =
+				new JournalContentSearchKey(journalContentSearch);
 
-			deleteOwnerContentSearches(group.getGroupId(), true);
-
-			layouts.addAll(
-				layoutLocalService.getLayouts(group.getGroupId(), true));
-
-			// Public layouts
-
-			deleteOwnerContentSearches(group.getGroupId(), false);
-
-			layouts.addAll(
-				layoutLocalService.getLayouts(group.getGroupId(), false));
+			orphanedJournalContentSearches.put(
+				journalContentSearchKey, journalContentSearch);
 		}
 
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+		Set<String> rootPortletIds = _serviceTrackerMap.keySet();
 
-			List<String> portletIds = layoutTypePortlet.getPortletIds();
+		for (String rootPortletId : rootPortletIds) {
+			DisplayInformationProvider displayInformationProvider =
+				_serviceTrackerMap.getService(rootPortletId);
 
-			for (String portletId : portletIds) {
-				String rootPortletId = PortletIdCodec.decodePortletName(
-					portletId);
+			List<PortletPreferences> portletPreferencesList = new ArrayList<>();
 
-				DisplayInformationProvider displayInformationProvider =
-					_serviceTrackerMap.getService(rootPortletId);
+			portletPreferencesList.addAll(
+				portletPreferencesLocalService.getPortletPreferences(
+					companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, rootPortletId));
+			portletPreferencesList.addAll(
+				portletPreferencesLocalService.getPortletPreferences(
+					companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					rootPortletId + "_INSTANCE_%"));
 
-				if (displayInformationProvider == null) {
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
+
+				long plid = portletPreferences.getPlid();
+
+				Layout layout = layoutLocalService.fetchLayout(plid);
+
+				if (layout == null) {
 					continue;
 				}
 
-				PortletPreferences portletPreferences =
-					portletPreferencesLocalService.getPreferences(
-						layout.getCompanyId(),
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						portletId);
+				String portletId = portletPreferences.getPortletId();
 
-				String classPK = displayInformationProvider.getClassPK(
-					portletPreferences);
+				javax.portlet.PortletPreferences jxPortletPreferences =
+					PortletPreferencesFactoryUtil.fromXML(
+						companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+						portletPreferences.getPreferences());
 
-				updateContentSearch(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), portletId, classPK);
+				String articleId = displayInformationProvider.getClassPK(
+					jxPortletPreferences);
+
+				JournalContentSearchKey journalContentSearchKey =
+					new JournalContentSearchKey(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						layout.getLayoutId(), portletId, articleId);
+
+				JournalContentSearch existingJournalContentSearch =
+					orphanedJournalContentSearches.remove(
+						journalContentSearchKey);
+
+				if (existingJournalContentSearch == null) {
+					updateContentSearch(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						layout.getLayoutId(), portletId, articleId);
+				}
 			}
+		}
+
+		for (JournalContentSearch journalContentSearch :
+				orphanedJournalContentSearches.values()) {
+
+			journalContentSearchPersistence.remove(journalContentSearch);
 		}
 	}
 
@@ -282,9 +310,7 @@ public class JournalContentSearchLocalServiceImpl
 			contentSearch.setArticleId(articleId);
 		}
 
-		journalContentSearchPersistence.update(contentSearch);
-
-		return contentSearch;
+		return journalContentSearchPersistence.update(contentSearch);
 	}
 
 	@Override
@@ -313,5 +339,68 @@ public class JournalContentSearchLocalServiceImpl
 
 	private ServiceTrackerMap<String, DisplayInformationProvider>
 		_serviceTrackerMap;
+
+	private static class JournalContentSearchKey implements Serializable {
+
+		@Override
+		public boolean equals(Object obj) {
+			JournalContentSearchKey journalContentSearchKey =
+				(JournalContentSearchKey)obj;
+
+			if (Objects.equals(
+					journalContentSearchKey._articleId, _articleId) &&
+				(journalContentSearchKey._groupId == _groupId) &&
+				Objects.equals(journalContentSearchKey._layoutId, _layoutId) &&
+				Objects.equals(
+					journalContentSearchKey._portletId, _portletId) &&
+				(journalContentSearchKey._privateLayout == _privateLayout)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _groupId);
+
+			hashCode = HashUtil.hash(hashCode, _articleId);
+			hashCode = HashUtil.hash(hashCode, _layoutId);
+			hashCode = HashUtil.hash(hashCode, _privateLayout);
+
+			return HashUtil.hash(hashCode, _portletId);
+		}
+
+		private JournalContentSearchKey(
+			JournalContentSearch journalContentSearch) {
+
+			_articleId = journalContentSearch.getArticleId();
+			_groupId = journalContentSearch.getGroupId();
+			_layoutId = journalContentSearch.getLayoutId();
+			_portletId = journalContentSearch.getPortletId();
+			_privateLayout = journalContentSearch.getPrivateLayout();
+		}
+
+		private JournalContentSearchKey(
+			long groupId, boolean privateLayout, long layoutId,
+			String portletId, String articleId) {
+
+			_groupId = groupId;
+			_privateLayout = privateLayout;
+			_layoutId = layoutId;
+			_portletId = portletId;
+			_articleId = articleId;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final String _articleId;
+		private final long _groupId;
+		private final long _layoutId;
+		private final String _portletId;
+		private final boolean _privateLayout;
+
+	}
 
 }

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Commerce Health Status API
-Bundle-SymbolicName: com.liferay.commerce.health.status.api
-Bundle-Version: 2.0.2
-Export-Package:\
-	com.liferay.commerce.health.status,\
-	com.liferay.commerce.health.status.constants

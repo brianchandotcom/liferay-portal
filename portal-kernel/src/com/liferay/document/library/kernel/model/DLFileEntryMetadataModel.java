@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface DLFileEntryMetadataModel
 	extends BaseModel<DLFileEntryMetadata>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a document library file entry metadata model instance should use the {@link DLFileEntryMetadata} interface instead.

@@ -14,24 +14,26 @@
 
 package com.liferay.commerce.inventory.model.impl;
 
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * The extended model implementation for the CommerceInventoryReplenishmentItem service. Represents a row in the &quot;CIReplenishmentItem&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem} interface.
- * </p>
- *
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommerceInventoryReplenishmentItemImpl
 	extends CommerceInventoryReplenishmentItemBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce inventory replenishment item model instance should use the {@link com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem} interface instead.
-	 */
 	public CommerceInventoryReplenishmentItemImpl() {
+	}
+
+	@Override
+	public CommerceInventoryWarehouse getCommerceInventoryWarehouse()
+		throws PortalException {
+
+		return CommerceInventoryWarehouseLocalServiceUtil.
+			getCommerceInventoryWarehouse(getCommerceInventoryWarehouseId());
 	}
 
 }

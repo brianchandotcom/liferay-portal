@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface OAuth2ScopeGrantModel
 	extends BaseModel<OAuth2ScopeGrant>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a o auth2 scope grant model instance should use the {@link OAuth2ScopeGrant} interface instead.

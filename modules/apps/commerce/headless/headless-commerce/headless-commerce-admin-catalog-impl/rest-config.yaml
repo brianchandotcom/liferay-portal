@@ -5,3 +5,4 @@ application:
     className: "HeadlessCommerceAdminCatalogApplication"
     name: "Liferay.Headless.Commerce.Admin.Catalog"
 author: "Zoltán Takács"
+forcePredictableSchemaPropertyName: false

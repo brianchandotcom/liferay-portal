@@ -48,7 +48,7 @@ public interface ExportImportConfigurationModel
 	extends BaseModel<ExportImportConfiguration>, GroupedModel, MVCCModel,
 			ShardedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a export import configuration model instance should use the {@link ExportImportConfiguration} interface instead.

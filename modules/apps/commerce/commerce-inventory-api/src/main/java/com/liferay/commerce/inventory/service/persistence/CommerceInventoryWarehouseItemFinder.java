@@ -23,6 +23,8 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface CommerceInventoryWarehouseItemFinder {
 
+	public int countItemsByCompanyId(long companyId, String sku);
+
 	public int countStockQuantityByC_S(long companyId, String sku);
 
 	public int countStockQuantityByC_G_S(
@@ -30,6 +32,9 @@ public interface CommerceInventoryWarehouseItemFinder {
 
 	public int countUpdatedItemsByC_M(
 		long companyId, java.util.Date startDate, java.util.Date endDate);
+
+	public java.util.List<Object[]> findItemsByCompanyId(
+		long companyId, String sku, int start, int end);
 
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>

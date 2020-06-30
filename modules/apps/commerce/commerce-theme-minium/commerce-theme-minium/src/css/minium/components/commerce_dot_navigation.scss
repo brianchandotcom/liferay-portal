@@ -12,7 +12,7 @@
 		height: 15px;
 		margin-right: 16px;
 		padding: 0;
-		transition: all .1s ease-in;
+		transition: all 0.1s ease-in;
 		width: 15px;
 
 		&:last-child {
@@ -24,10 +24,10 @@
 		}
 
 		&--disabled {
-			border: 2px solid #9D9E9E;
+			border: 2px solid #9d9e9e;
 
 			&:hover {
-				background: transparent
+				background: transparent;
 			}
 		}
 

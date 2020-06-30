@@ -37,7 +37,7 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 <div class="container-fluid-1280 mt-4 sheet">
 	<aui:form action="<%= editCommerceAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAddress == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="commerceAddressId" type="hidden" value="<%= commerceAddressId %>" />
 		<aui:input name="commerceAccountId" type="hidden" value="<%= (commerceAddress == null) ? commerceAccountAddressAdminDisplayContext.getCommerceAccountId() : commerceAddress.getClassPK() %>" />
@@ -130,42 +130,40 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 </div>
 
 <aui:script use="aui-base,liferay-dynamic-select">
-	new Liferay.DynamicSelect(
-		[
-			{
-				select: '<portlet:namespace />commerceCountryId',
-				selectData: function(callback) {
-					Liferay.Service(
-						'/commerce.commercecountry/get-billing-commerce-countries',
-						{
-							companyId: <%= company.getCompanyId() %>,
-							start: -1,
-							end: -1
-						},
-						callback
-					);
-				},
-				selectDesc: 'nameCurrentValue',
-				selectId: 'commerceCountryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>'
+	new Liferay.DynamicSelect([
+		{
+			select: '<portlet:namespace />commerceCountryId',
+			selectData: function(callback) {
+				Liferay.Service(
+					'/commerce.commercecountry/get-billing-commerce-countries',
+					{
+						companyId: <%= company.getCompanyId() %>,
+						end: -1,
+						start: -1
+					},
+					callback
+				);
 			},
-			{
-				select: '<portlet:namespace />commerceRegionId',
-				selectData: function(callback, selectKey) {
-					Liferay.Service(
+			selectDesc: 'nameCurrentValue',
+			selectId: 'commerceCountryId',
+			selectSort: '<%= true %>',
+			selectVal: '<%= commerceCountryId %>'
+		},
+		{
+			select: '<portlet:namespace />commerceRegionId',
+			selectData: function(callback, selectKey) {
+				Liferay.Service(
 					'/commerce.commerceregion/get-commerce-regions',
-						{
-							commerceCountryId: Number(selectKey),
-							active: true
-						},
-						callback
-					);
-				},
-				selectDesc: 'name',
-				selectId: 'commerceRegionId',
-				selectVal: '<%= commerceRegionId %>'
-			}
-		]
-	);
+					{
+						active: true,
+						commerceCountryId: Number(selectKey)
+					},
+					callback
+				);
+			},
+			selectDesc: 'name',
+			selectId: 'commerceRegionId',
+			selectVal: '<%= commerceRegionId %>'
+		}
+	]);
 </aui:script>

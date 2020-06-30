@@ -35,9 +35,10 @@ import javax.servlet.http.HttpServletRequest;
 public class WeeklyCPSubscriptionTypeDisplayContext {
 
 	public WeeklyCPSubscriptionTypeDisplayContext(
-		Object object, HttpServletRequest httpServletRequest) {
+		Object object, HttpServletRequest httpServletRequest, boolean payment) {
 
 		_object = object;
+		_payment = payment;
 
 		_cpSubscriptionTypeRequestHelper = new CPSubscriptionTypeRequestHelper(
 			httpServletRequest);
@@ -64,7 +65,7 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 	public int getSelectedWeekDay() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if ((subscriptionTypeSettingsProperties == null) ||
 			subscriptionTypeSettingsProperties.isEmpty()) {
@@ -72,8 +73,13 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 			return 0;
 		}
 
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("weekDay"));
+		}
+
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("weekDay"));
+			subscriptionTypeSettingsProperties.get("deliveryWeekDay"));
 	}
 
 	public String getWeekDayDisplayName(int weekDay) {
@@ -91,6 +97,10 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public boolean isPayment() {
+		return _payment;
+	}
+
 	protected Map<String, Integer> getCalendarWeekDaysDisplayNames() {
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			_cpSubscriptionTypeRequestHelper.getLocale());
@@ -103,5 +113,6 @@ public class WeeklyCPSubscriptionTypeDisplayContext {
 	private final CPSubscriptionTypeRequestHelper
 		_cpSubscriptionTypeRequestHelper;
 	private final Object _object;
+	private final boolean _payment;
 
 }

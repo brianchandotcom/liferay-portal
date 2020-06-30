@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.CustomValueSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CustomValue {
+public class CustomValue implements Cloneable {
 
 	public Object getData() {
 		return data;
@@ -47,6 +48,28 @@ public class CustomValue {
 
 	protected Object data;
 
+	public Map<String, String> getData_i18n() {
+		return data_i18n;
+	}
+
+	public void setData_i18n(Map<String, String> data_i18n) {
+		this.data_i18n = data_i18n;
+	}
+
+	public void setData_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			data_i18nUnsafeSupplier) {
+
+		try {
+			data_i18n = data_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> data_i18n;
+
 	public Geo getGeo() {
 		return geo;
 	}
@@ -65,6 +88,11 @@ public class CustomValue {
 	}
 
 	protected Geo geo;
+
+	@Override
+	public CustomValue clone() throws CloneNotSupportedException {
+		return (CustomValue)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

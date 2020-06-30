@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMDataProviderInstancePersistence
 	extends BasePersistence<DDMDataProviderInstance> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceUtil} to access the ddm data provider instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

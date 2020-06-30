@@ -41,7 +41,7 @@ import java.util.Set;
 public interface CommerceNotificationQueueEntryPersistence
 	extends BasePersistence<CommerceNotificationQueueEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationQueueEntryUtil} to access the commerce notification queue entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

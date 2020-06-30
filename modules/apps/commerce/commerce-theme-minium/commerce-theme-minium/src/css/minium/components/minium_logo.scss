@@ -14,9 +14,7 @@
 	}
 
 	&__type {
-		transition:
-			opacity $transition,
-			transform $transition;
+		transition: opacity $transition, transform $transition;
 
 		.minium-sidebar:not(:hover):not(:focus) & {
 			opacity: 0;

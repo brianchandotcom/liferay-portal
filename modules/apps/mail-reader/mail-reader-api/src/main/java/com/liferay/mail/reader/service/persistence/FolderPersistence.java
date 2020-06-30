@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface FolderPersistence extends BasePersistence<Folder> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FolderUtil} to access the folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -272,7 +272,9 @@ public class SyncDLObjectCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		syncDLObjectId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -293,7 +295,7 @@ public class SyncDLObjectCacheModel
 		mimeType = objectInput.readUTF();
 		description = objectInput.readUTF();
 		changeLog = objectInput.readUTF();
-		extraSettings = objectInput.readUTF();
+		extraSettings = (String)objectInput.readObject();
 		version = objectInput.readUTF();
 
 		versionId = objectInput.readLong();
@@ -379,10 +381,10 @@ public class SyncDLObjectCacheModel
 		}
 
 		if (extraSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(extraSettings);
+			objectOutput.writeObject(extraSettings);
 		}
 
 		if (version == null) {

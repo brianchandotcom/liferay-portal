@@ -31,11 +31,6 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyLocalServiceUtil} to access the password policy local service. Add custom service methods to <code>com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
 			long userId, boolean defaultPolicy, java.lang.String name,
@@ -401,6 +396,9 @@ public class PasswordPolicyLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

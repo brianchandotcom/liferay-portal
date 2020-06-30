@@ -43,16 +43,16 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 	@Override
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
-			String name, String description, String from,
-			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
-			String type, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			long userId, long groupId, String name, String description,
+			String from, Map<Locale, String> fromNameMap, String to, String cc,
+			String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce notification template
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		validate(name, from, type);
 
@@ -79,8 +79,9 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		commerceNotificationTemplate.setBodyMap(bodyMap);
 		commerceNotificationTemplate.setExpandoBridgeAttributes(serviceContext);
 
-		commerceNotificationTemplatePersistence.update(
-			commerceNotificationTemplate);
+		commerceNotificationTemplate =
+			commerceNotificationTemplatePersistence.update(
+				commerceNotificationTemplate);
 
 		// Resources
 
@@ -88,6 +89,25 @@ public class CommerceNotificationTemplateLocalServiceImpl
 			commerceNotificationTemplate, serviceContext);
 
 		return commerceNotificationTemplate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceNotificationTemplate addCommerceNotificationTemplate(
+			String name, String description, String from,
+			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
+			String type, boolean enabled, Map<Locale, String> subjectMap,
+			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceNotificationTemplateLocalService.
+			addCommerceNotificationTemplate(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				name, description, from, fromNameMap, to, cc, bcc, type,
+				enabled, subjectMap, bodyMap, serviceContext);
 	}
 
 	@Override
@@ -227,10 +247,8 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		commerceNotificationTemplate.setBodyMap(bodyMap);
 		commerceNotificationTemplate.setExpandoBridgeAttributes(serviceContext);
 
-		commerceNotificationTemplatePersistence.update(
+		return commerceNotificationTemplatePersistence.update(
 			commerceNotificationTemplate);
-
-		return commerceNotificationTemplate;
 	}
 
 	protected void validate(String name, String from, String type)

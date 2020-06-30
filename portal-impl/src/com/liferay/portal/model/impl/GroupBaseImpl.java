@@ -36,7 +36,7 @@ import java.util.List;
  */
 public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a group model instance should use the <code>Group</code> interface instead.

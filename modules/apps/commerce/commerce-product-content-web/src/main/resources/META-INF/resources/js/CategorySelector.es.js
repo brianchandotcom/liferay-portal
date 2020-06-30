@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -9,7 +23,6 @@ import templates from './CategorySelector.soy';
  * AUI module liferay-commerce-frontend-asset-categories-selector
  */
 class CategorySelector extends Component {
-
 	/**
 	 * Updates the calculated rule fields for `queryValues` and `categoryIdsTitles`
 	 * every time a new category entry is added or removed to the selection
@@ -28,52 +41,34 @@ class CategorySelector extends Component {
 	 */
 
 	rendered() {
-		AUI().use(
-			'liferay-commerce-frontend-asset-categories-selector',
-			function(A) {
-				const config = {
-					categoryIds: this.rule.queryValues || '',
-					categoryTitles: this.rule.categoryIdsTitles || [],
-					contentBox: this.element,
-					eventName: this.eventName,
-					groupIds: this.groupIds,
-					hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
-					portletURL: this.categorySelectorURL,
-					vocabularyIds: this.vocabularyIds
-				};
+		AUI().use('liferay-commerce-frontend-asset-categories-selector', () => {
+			const config = {
+				categoryIds: this.rule.queryValues || '',
+				categoryTitles: this.rule.categoryIdsTitles || [],
+				contentBox: this.element,
+				eventName: this.eventName,
+				groupIds: this.groupIds,
+				hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
+				portletURL: this.categorySelectorURL,
+				vocabularyIds: this.vocabularyIds
+			};
 
-				this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(
-					config
-				);
+			this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(
+				config
+			);
 
-				const entries = this.categoriesSelector_.entries;
+			const entries = this.categoriesSelector_.entries;
 
-				entries.after('add', this.onEntriesChanged_, this);
-				entries.after('remove', this.onEntriesChanged_, this);
+			entries.after('add', this.onEntriesChanged_, this);
+			entries.after('remove', this.onEntriesChanged_, this);
 
-				this.categoriesSelector_.render();
-				this.element.parentNode.removeAttribute('tabindex');
-			}.bind(this)
-		);
+			this.categoriesSelector_.render();
+			this.element.parentNode.removeAttribute('tabindex');
+		});
 	}
 }
 
 CategorySelector.STATE = {
-
-	/**
-	 * Number used for avoiding conflicts between different
-	 * instances of the component/portlet.
-	 */
-
-	index: Config.number().value(0),
-
-	/**
-	 * String used for avoiding conflicts between different
-	 * instances of the component/portlet.
-	 */
-
-	namespace: Config.string().value(''),
-
 	/**
 	 * Portlet ID used for selecting categories.
 	 * For this component it's required because is the only way
@@ -101,6 +96,20 @@ CategorySelector.STATE = {
 	 */
 
 	hiddenInput: Config.string().value(''),
+
+	/**
+	 * Number used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+
+	index: Config.number().value(0),
+
+	/**
+	 * String used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+
+	namespace: Config.string().value(''),
 
 	/**
 	 * Existing information of the form.

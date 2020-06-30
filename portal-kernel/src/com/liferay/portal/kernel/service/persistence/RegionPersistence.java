@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface RegionPersistence extends BasePersistence<Region> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionUtil} to access the region persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

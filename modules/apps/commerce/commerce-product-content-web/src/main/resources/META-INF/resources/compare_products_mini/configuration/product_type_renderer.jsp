@@ -72,9 +72,7 @@ CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompa
 </div>
 
 <aui:script use="aui-tabview">
-	new A.TabView(
-		{
-			srcNode: '#<portlet:namespace/>configuration-tabs'
-		}
-	).render();
+	new A.TabView({
+		srcNode: '#<portlet:namespace/>configuration-tabs'
+	}).render();
 </aui:script>

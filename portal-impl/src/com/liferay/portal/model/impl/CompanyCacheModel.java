@@ -165,7 +165,7 @@ public class CompanyCacheModel
 
 		accountId = objectInput.readLong();
 		webId = objectInput.readUTF();
-		key = objectInput.readUTF();
+		key = (String)objectInput.readObject();
 		mx = objectInput.readUTF();
 		homeURL = objectInput.readUTF();
 
@@ -199,10 +199,10 @@ public class CompanyCacheModel
 		}
 
 		if (key == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(key);
+			objectOutput.writeObject(key);
 		}
 
 		if (mx == null) {

@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface RepositoryPersistence extends BasePersistence<Repository> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryUtil} to access the repository persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

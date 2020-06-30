@@ -65,10 +65,10 @@ public class AnnouncementsFlagServiceSoap {
 		try {
 			AnnouncementsFlagServiceUtil.addFlag(entryId, value);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -76,10 +76,10 @@ public class AnnouncementsFlagServiceSoap {
 		try {
 			AnnouncementsFlagServiceUtil.deleteFlag(flagId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -95,10 +95,10 @@ public class AnnouncementsFlagServiceSoap {
 			return com.liferay.announcements.kernel.model.AnnouncementsFlagSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

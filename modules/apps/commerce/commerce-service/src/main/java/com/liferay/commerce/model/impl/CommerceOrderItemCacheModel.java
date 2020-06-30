@@ -273,7 +273,7 @@ public class CommerceOrderItemCacheModel
 		quantity = objectInput.readInt();
 
 		shippedQuantity = objectInput.readInt();
-		json = objectInput.readUTF();
+		json = (String)objectInput.readObject();
 		name = objectInput.readUTF();
 		sku = objectInput.readUTF();
 		unitPrice = (BigDecimal)objectInput.readObject();
@@ -335,10 +335,10 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeInt(shippedQuantity);
 
 		if (json == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(json);
+			objectOutput.writeObject(json);
 		}
 
 		if (name == null) {

@@ -183,6 +183,8 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		document.addKeyword(
 			"externalReferenceCode", commerceOrder.getExternalReferenceCode());
 		document.addNumber("total", commerceOrder.getTotal());
+		document.addDate("orderDate", commerceOrder.getOrderDate());
+		document.addDateSortable("orderDate", commerceOrder.getOrderDate());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceOrder + " indexed successfully");

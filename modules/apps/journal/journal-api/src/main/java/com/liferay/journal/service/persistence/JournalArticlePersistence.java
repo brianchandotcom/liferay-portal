@@ -41,7 +41,7 @@ import java.util.Set;
 public interface JournalArticlePersistence
 	extends BasePersistence<JournalArticle> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleUtil} to access the journal article persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

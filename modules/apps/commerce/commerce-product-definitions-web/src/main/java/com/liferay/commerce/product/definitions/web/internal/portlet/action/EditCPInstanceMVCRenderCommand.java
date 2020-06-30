@@ -14,13 +14,14 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -57,8 +58,9 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
-					_commercePriceFormatter, _cpDefinitionOptionRelService,
-					_cpInstanceService, _cpInstanceHelper);
+					_commerceCurrencyLocalService, _commercePriceFormatter,
+					_cpDefinitionOptionRelService, _cpInstanceHelper,
+					_cpMeasurementUnitLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
@@ -82,6 +84,9 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 	private ActionHelper _actionHelper;
 
 	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
@@ -91,7 +96,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private Portal _portal;

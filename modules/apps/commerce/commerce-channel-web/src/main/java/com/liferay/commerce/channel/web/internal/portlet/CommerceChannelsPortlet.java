@@ -16,17 +16,21 @@ package com.liferay.commerce.channel.web.internal.portlet;
 
 import com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.product.channel.CommerceChannelTypeJSPContributorRegistry;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
 import java.io.IOException;
 
@@ -88,16 +92,22 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 		CommerceChannelDisplayContext commerceChannelDisplayContext =
 			new CommerceChannelDisplayContext(
 				_commerceChannelModelResourcePermission,
-				_commerceChannelService, _commerceChannelTypeRegistry,
-				_commerceChannelTypeJSPContributorRegistry,
-				_commerceCurrencyService,
-				_portal.getHttpServletRequest(renderRequest), _portal);
+				_commerceChannelHealthStatusRegistry, _commerceChannelService,
+				_commerceChannelTypeRegistry, _commerceCurrencyService,
+				_commercePaymentMethodRegistry, _configurationProvider,
+				_portal.getHttpServletRequest(renderRequest), _portal,
+				_workflowDefinitionLinkLocalService,
+				_workflowDefinitionManager);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceChannelDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private CommerceChannelHealthStatusRegistry
+		_commerceChannelHealthStatusRegistry;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
@@ -109,16 +119,25 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceChannelTypeJSPContributorRegistry
-		_commerceChannelTypeJSPContributorRegistry;
-
-	@Reference
 	private CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

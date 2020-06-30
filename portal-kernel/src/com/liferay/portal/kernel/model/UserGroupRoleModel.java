@@ -37,7 +37,7 @@ import java.io.Serializable;
 public interface UserGroupRoleModel
 	extends BaseModel<UserGroupRole>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a user group role model instance should use the {@link UserGroupRole} interface instead.

@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface CountryPersistence extends BasePersistence<Country> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CountryUtil} to access the country persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

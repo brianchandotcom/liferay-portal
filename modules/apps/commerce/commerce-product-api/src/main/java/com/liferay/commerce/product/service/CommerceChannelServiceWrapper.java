@@ -32,11 +32,6 @@ public class CommerceChannelServiceWrapper
 		_commerceChannelService = commerceChannelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceChannelServiceUtil} to access the commerce channel remote service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceChannelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
 			addCommerceChannel(
@@ -74,6 +69,15 @@ public class CommerceChannelServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelService.getCommerceChannel(commerceChannelId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannelByOrderGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelService.getCommerceChannelByOrderGroupId(
+			groupId);
 	}
 
 	@Override
@@ -142,6 +146,17 @@ public class CommerceChannelServiceWrapper
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, siteGroupId, name, type, typeSettingsProperties,
 			commerceCurrencyCode);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
+			updateCommerceChannelExternalReferenceCode(
+				long commerceChannelId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelService.
+			updateCommerceChannelExternalReferenceCode(
+				commerceChannelId, externalReferenceCode);
 	}
 
 	@Override

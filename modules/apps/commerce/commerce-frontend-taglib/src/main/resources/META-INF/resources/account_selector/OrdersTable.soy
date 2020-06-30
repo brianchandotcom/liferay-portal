@@ -32,7 +32,7 @@
 				<button class="commerce-account-switcher__back" data-onclick="_handleBackButtonClick">
 					{call ClayIcon.render}
 						{param spritemap: $spritemap /}
-						{param symbol: 'back' /}
+						{param symbol: 'arrow-back' /}
 					{/call}
 					{msg desc="Back"}back{/msg}
 				</button>
@@ -51,7 +51,7 @@
 					<input
 						type="text"
 						data-onkeyup="_handleFilterChange"
-						placeholder="{msg desc="Search order…"}search-order{/msg}"
+						placeholder="{msg desc="Search Order..."}search-order{/msg}"
 					>
 				</div>
 			</form>
@@ -94,7 +94,7 @@
 					href="{$createNewOrderLink}"
 					class="commerce-account-switcher__button commerce-button commerce-button--block commerce-button--link"
 				>
-					{msg desc="Create new order"}create-new-order{/msg}
+					{msg desc="Create New Order"}create-new-order{/msg}
 				</a>
 			{/if}
 			{if isNonnull($viewAllOrdersLink)}
@@ -102,7 +102,7 @@
 					href="{$viewAllOrdersLink}"
 					class="commerce-account-switcher__button commerce-button commerce-button--block"
 				>
-					{msg desc="View all orders"}view-all-orders{/msg}
+					{msg desc="View All Orders"}view-all-orders{/msg}
 				</a>
 			{/if}
 		</div>

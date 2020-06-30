@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Value {
+public class Value implements Cloneable {
 
 	public String getData() {
 		return data;
@@ -150,6 +150,11 @@ public class Value {
 	}
 
 	protected StructuredContentLink structuredContentLink;
+
+	@Override
+	public Value clone() throws CloneNotSupportedException {
+		return (Value)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

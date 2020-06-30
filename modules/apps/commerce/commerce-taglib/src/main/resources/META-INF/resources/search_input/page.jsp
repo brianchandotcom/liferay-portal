@@ -19,10 +19,9 @@
 <%
 PortletURL actionURL = (PortletURL)request.getAttribute("liferay-commerce:search-input:actionURL");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-commerce:search-input:data");
-String formName = (String)request.getAttribute("liferay-commerce:search-input:formName");
 %>
 
-<aui:form action="<%= String.valueOf(actionURL) %>" method="get" name="<%= formName %>">
+<aui:form action="<%= String.valueOf(actionURL) %>" method="get" name='<%= (String)request.getAttribute("liferay-commerce:search-input:formName") %>'>
 
 	<%
 	for (Map.Entry<String, Object> entry : data.entrySet()) {

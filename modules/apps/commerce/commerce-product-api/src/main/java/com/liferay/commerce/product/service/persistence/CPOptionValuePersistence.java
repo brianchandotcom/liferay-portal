@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPOptionValuePersistence
 	extends BasePersistence<CPOptionValue> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionValueUtil} to access the cp option value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -330,11 +330,6 @@ public class KaleoConditionWrapper
 		return _kaleoCondition.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo condition model instance should use the <code>KaleoCondition</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoCondition.persist();

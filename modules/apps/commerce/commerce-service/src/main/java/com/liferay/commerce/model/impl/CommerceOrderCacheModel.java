@@ -380,7 +380,7 @@ public class CommerceOrderCacheModel
 
 		shippingAddressId = objectInput.readLong();
 		commercePaymentMethodKey = objectInput.readUTF();
-		transactionId = objectInput.readUTF();
+		transactionId = (String)objectInput.readObject();
 
 		commerceShippingMethodId = objectInput.readLong();
 		shippingOptionName = objectInput.readUTF();
@@ -474,10 +474,10 @@ public class CommerceOrderCacheModel
 		}
 
 		if (transactionId == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(transactionId);
+			objectOutput.writeObject(transactionId);
 		}
 
 		objectOutput.writeLong(commerceShippingMethodId);

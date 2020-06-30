@@ -15,12 +15,16 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -43,14 +47,18 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,7 +97,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		// Commerce product definition option value rel
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
@@ -121,7 +128,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 		}
 
-		cpDefinitionOptionValueRel.setGroupId(groupId);
+		cpDefinitionOptionValueRel.setGroupId(
+			cpDefinitionOptionRel.getGroupId());
 		cpDefinitionOptionValueRel.setCompanyId(user.getCompanyId());
 		cpDefinitionOptionValueRel.setUserId(user.getUserId());
 		cpDefinitionOptionValueRel.setUserName(user.getFullName());
@@ -130,10 +138,12 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setNameMap(nameMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
+		cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionOptionValueRelPersistence.update(
-			cpDefinitionOptionValueRel);
+		cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.update(
+				cpDefinitionOptionValueRel);
 
 		// Commerce product definition
 
@@ -177,6 +187,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		// Expando
 
 		expandoRowLocalService.deleteRows(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+
+		cpInstanceLocalService.inactivateCPDefinitionOptionValueRelCPInstances(
+			PrincipalThreadLocal.getUserId(),
+			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 
 		// Commerce product definition
@@ -293,6 +308,38 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionOptionValueRel getCPInstanceCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, long cpInstanceId)
+		throws PortalException {
+
+		List<CPInstanceOptionValueRel> cpInstanceCPInstanceOptionValueRels =
+			cpInstanceOptionValueRelLocalService.
+				getCPInstanceCPInstanceOptionValueRels(
+					cpDefinitionOptionRelId, cpInstanceId);
+
+		for (CPInstanceOptionValueRel cpInstanceCPInstanceOptionValueRel :
+				cpInstanceCPInstanceOptionValueRels) {
+
+			if (cpDefinitionOptionRelId !=
+					cpInstanceCPInstanceOptionValueRel.
+						getCPDefinitionOptionRelId()) {
+
+				continue;
+			}
+
+			return cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
+				cpInstanceCPInstanceOptionValueRel.
+					getCPDefinitionOptionValueRelId());
+		}
+
+		throw new NoSuchCPDefinitionOptionValueRelException(
+			String.format(
+				"Unable to find option value with CP definition option ID %d " +
+					"assigned to CP instance ID %d",
+				cpDefinitionOptionRelId, cpInstanceId));
+	}
+
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId, ServiceContext serviceContext)
 		throws PortalException {
@@ -312,10 +359,15 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpOptionValueLocalService.getCPOptionValues(
 				cpOption.getCPOptionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (CPOptionValue cpOptionValue : cpOptionValues) {
-			cpDefinitionOptionValueRelLocalService.
-				addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId, cpOptionValue, serviceContext);
+		Map<String, Serializable> expandoBridgeAttributes =
+			serviceContext.getExpandoBridgeAttributes();
+
+		try {
+			_addCPDefinitionOptionValueRel(
+				cpDefinitionOptionRelId, cpOptionValues, serviceContext);
+		}
+		finally {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 		}
 	}
 
@@ -351,7 +403,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
-			double priority, String key, ServiceContext serviceContext)
+			double priority, String key, long cpInstanceId, int quantity,
+			BigDecimal price, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -359,6 +412,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionValueRelId);
+
+		CPInstance cpInstance = cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
 
 		key = FriendlyURLNormalizerUtil.normalize(key);
 
@@ -392,14 +448,39 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionOptionValueRelPersistence.update(
-			cpDefinitionOptionValueRel);
+		if (cpInstance != null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			cpDefinitionOptionValueRel.setCPInstanceUuid(
+				cpInstance.getCPInstanceUuid());
+			cpDefinitionOptionValueRel.setCProductId(
+				cpDefinition.getCProductId());
+		}
+
+		cpDefinitionOptionValueRel.setQuantity(quantity);
+		cpDefinitionOptionValueRel.setPrice(price);
+
+		cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.update(
+				cpDefinitionOptionValueRel);
 
 		// Commerce product definition
 
 		reindexCPDefinition(cpDefinitionOptionRel);
 
 		return cpDefinitionOptionValueRel;
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
+			double priority, String key, ServiceContext serviceContext)
+		throws PortalException {
+
+		return cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId, nameMap, priority, key, 0, 0,
+				BigDecimal.ZERO, serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -530,6 +611,42 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				cpDefinitionOptionValueRelId)) {
 
 			throw new CPDefinitionOptionValueRelKeyException();
+		}
+	}
+
+	private void _addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, List<CPOptionValue> cpOptionValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (CPOptionValue cpOptionValue : cpOptionValues) {
+			if (_hasCustomAttributes(cpOptionValue)) {
+				ExpandoBridge expandoBridge = cpOptionValue.getExpandoBridge();
+
+				serviceContext.setExpandoBridgeAttributes(
+					expandoBridge.getAttributes());
+			}
+			else {
+				serviceContext.setExpandoBridgeAttributes(
+					Collections.emptyMap());
+			}
+
+			cpDefinitionOptionValueRelLocalService.
+				addCPDefinitionOptionValueRel(
+					cpDefinitionOptionRelId, cpOptionValue, serviceContext);
+		}
+	}
+
+	private boolean _hasCustomAttributes(CPOptionValue cpOptionValue)
+		throws PortalException {
+
+		try {
+			return CustomAttributesUtil.hasCustomAttributes(
+				cpOptionValue.getCompanyId(), CPOptionValue.class.getName(),
+				cpOptionValue.getCPOptionValueId(), null);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
 		}
 	}
 

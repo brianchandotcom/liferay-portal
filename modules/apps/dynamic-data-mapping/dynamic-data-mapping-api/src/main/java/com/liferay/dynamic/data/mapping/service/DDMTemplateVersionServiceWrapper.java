@@ -33,11 +33,6 @@ public class DDMTemplateVersionServiceWrapper
 		_ddmTemplateVersionService = ddmTemplateVersionService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMTemplateVersionServiceUtil} to access the ddm template version remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
 			getLatestTemplateVersion(long templateId)

@@ -40,7 +40,7 @@ import java.util.Set;
 @ProviderType
 public interface LockPersistence extends BasePersistence<Lock> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LockUtil} to access the lock persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

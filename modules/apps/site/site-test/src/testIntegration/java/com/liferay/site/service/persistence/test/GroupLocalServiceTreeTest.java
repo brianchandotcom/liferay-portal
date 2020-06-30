@@ -54,7 +54,7 @@ public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 		Group group = GroupTestUtil.addGroup(parentGroupId);
 
-		group.setTreePath(null);
+		group.setTreePath("/0/");
 
 		return GroupLocalServiceUtil.updateGroup(group);
 	}

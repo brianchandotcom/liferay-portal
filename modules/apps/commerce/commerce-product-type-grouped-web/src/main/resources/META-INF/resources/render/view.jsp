@@ -26,6 +26,8 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
+
+String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortletKeys.CP_CONTENT_WEB);
 %>
 
 <div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -69,7 +71,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 						<div class="price"><liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
-						<div class="subscription-info"><liferay-commerce:subscription-info CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
+						<div class="subscription-info"><commerce-ui:product-subscription-info CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
 						<div class="availability"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
 
@@ -83,6 +85,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 						<div class="price" data-text-cp-instance-price=""></div>
 
 						<div class="subscription-info" data-text-cp-instance-subscription-info="" data-text-cp-instance-subscription-info-show></div>
+
+						<div class="subscription-info" data-text-cp-instance-delivery-subscription-info="" data-text-cp-instance-delivery-subscription-info-show></div>
 
 						<div class="availability" data-text-cp-instance-availability=""></div>
 
@@ -280,28 +284,31 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 </div>
 
 <aui:script>
-	$(document).ready(
-		function() {
-			$(".thumb").click(
-				function() {
-					$("#<portlet:namespace />full-image").attr("src", $(this).attr("data-url"));
-				}
+	$(document).ready(function() {
+		$('.thumb').click(function() {
+			$('#<portlet:namespace />full-image').attr(
+				'src',
+				$(this).attr('data-url')
 			);
-		}
-	);
+		});
+	});
 </aui:script>
 
 <aui:script use="liferay-commerce-product-content">
-	var productContent = new Liferay.Portlet.ProductContent(
-		{
-			cpDefinitionId: <%= cpDefinitionId %>,
-			fullImageSelector : '#<portlet:namespace />full-image',
-			namespace: '<portlet:namespace />',
-			productContentSelector: '#<portlet:namespace /><%= cpDefinitionId %>ProductContent',
-			thumbsContainerSelector : '#<portlet:namespace />thumbs-container',
-			viewAttachmentURL: '<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>'
-		}
-	);
+	var productContent = new Liferay.Portlet.ProductContent({
+		cpDefinitionId: <%= cpDefinitionId %>,
+		fullImageSelector: '#<portlet:namespace />full-image',
+		namespace: '<portlet:namespace />',
+		productContentAuthToken: '<%= productContentAuthToken %>',
+		productContentSelector:
+			'#<portlet:namespace /><%= cpDefinitionId %>ProductContent',
+		thumbsContainerSelector: '#<portlet:namespace />thumbs-container',
+		viewAttachmentURL:
+			'<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>'
+	});
 
-	Liferay.component('<portlet:namespace /><%= cpDefinitionId %>ProductContent', productContent);
+	Liferay.component(
+		'<portlet:namespace /><%= cpDefinitionId %>ProductContent',
+		productContent
+	);
 </aui:script>

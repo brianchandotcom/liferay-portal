@@ -32,7 +32,7 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceU
 public abstract class AssetDisplayPageEntryBaseImpl
 	extends AssetDisplayPageEntryModelImpl implements AssetDisplayPageEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset display page entry model instance should use the <code>AssetDisplayPageEntry</code> interface instead.

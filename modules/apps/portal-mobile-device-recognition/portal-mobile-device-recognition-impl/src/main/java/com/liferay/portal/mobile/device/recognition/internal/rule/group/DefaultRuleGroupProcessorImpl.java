@@ -60,11 +60,9 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
-		mdrRuleGroupInstance = evaluateRuleGroupInstances(
+		return evaluateRuleGroupInstances(
 			LayoutSet.class.getName(), layoutSet.getLayoutSetId(),
 			themeDisplay);
-
-		return mdrRuleGroupInstance;
 	}
 
 	@Override

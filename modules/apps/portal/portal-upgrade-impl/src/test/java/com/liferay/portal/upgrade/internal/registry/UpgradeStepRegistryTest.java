@@ -23,6 +23,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.osgi.framework.Version;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -43,13 +45,18 @@ public class UpgradeStepRegistryTest {
 		Assert.assertEquals(upgradeInfos.toString(), 4, upgradeInfos.size());
 		Assert.assertEquals(
 			Arrays.asList(
-				new UpgradeInfo("0.0.0", "1.0.0-step-3", 0, testUpgradeStep),
+				new UpgradeInfo("0.0.0", "1.0.0.step-3", 0, testUpgradeStep),
 				new UpgradeInfo(
-					"1.0.0-step-3", "1.0.0-step-2", 0, testUpgradeStep),
+					"1.0.0.step-3", "1.0.0.step-2", 0, testUpgradeStep),
 				new UpgradeInfo(
-					"1.0.0-step-2", "1.0.0-step-1", 0, testUpgradeStep),
-				new UpgradeInfo("1.0.0-step-1", "1.0.0", 0, testUpgradeStep)),
+					"1.0.0.step-2", "1.0.0.step-1", 0, testUpgradeStep),
+				new UpgradeInfo("1.0.0.step-1", "1.0.0", 0, testUpgradeStep)),
 			upgradeInfos);
+
+		for (UpgradeInfo upgradeInfo : upgradeInfos) {
+			new Version(upgradeInfo.getFromSchemaVersionString());
+			new Version(upgradeInfo.getToSchemaVersionString());
+		}
 	}
 
 	@Test

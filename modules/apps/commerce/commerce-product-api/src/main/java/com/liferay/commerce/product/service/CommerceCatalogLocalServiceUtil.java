@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceCatalogLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -340,6 +340,9 @@ public class CommerceCatalogLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -396,6 +399,15 @@ public class CommerceCatalogLocalServiceUtil {
 		return getService().updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceCatalog
+			updateCommerceCatalogExternalReferenceCode(
+				long commerceCatalogId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceCatalogExternalReferenceCode(
+			commerceCatalogId, externalReferenceCode);
 	}
 
 	public static CommerceCatalogLocalService getService() {

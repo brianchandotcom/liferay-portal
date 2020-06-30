@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Expression
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.expression
-Bundle-Version: 3.0.18
+Bundle-Version: 3.0.19
 Import-Package:\
 	!javax.imageio.*,\
 	\

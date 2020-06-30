@@ -32,6 +32,7 @@ create index IX_CC7576C7 on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], c
 create unique index IX_84AB0309 on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_9207CB31 on JournalContentSearch (articleId[$COLUMN_LENGTH:75$]);
+create index IX_42F51F38 on JournalContentSearch (companyId);
 create index IX_6838E427 on JournalContentSearch (groupId, articleId[$COLUMN_LENGTH:75$]);
 create index IX_7CC7D73E on JournalContentSearch (groupId, privateLayout, articleId[$COLUMN_LENGTH:75$]);
 create unique index IX_C3AA93B8 on JournalContentSearch (groupId, privateLayout, layoutId, portletId[$COLUMN_LENGTH:200$], articleId[$COLUMN_LENGTH:75$]);

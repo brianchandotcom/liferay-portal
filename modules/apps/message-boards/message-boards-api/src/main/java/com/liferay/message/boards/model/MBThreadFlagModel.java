@@ -43,7 +43,7 @@ import java.util.Date;
 public interface MBThreadFlagModel
 	extends BaseModel<MBThreadFlag>, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a message boards thread flag model instance should use the {@link MBThreadFlag} interface instead.

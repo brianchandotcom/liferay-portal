@@ -17,12 +17,16 @@ package com.liferay.portal.service;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
@@ -32,12 +36,14 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -283,6 +289,61 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(
 			userGroupUsers.toString(), delta, userGroupUsers.size());
 		Assert.assertTrue(_users.containsAll(userGroupUsers));
+	}
+
+	@Test
+	public void testSetRoleUsers() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long roleId = RoleTestUtil.addGroupRole(user.getGroupId());
+
+		UserLocalServiceUtil.addRoleUser(roleId, user);
+
+		user = UserLocalServiceUtil.getUser(user.getUserId());
+
+		Assert.assertTrue(ArrayUtil.contains(user.getRoleIds(), roleId));
+	}
+
+	@Test
+	public void testUnsetRoleUsers() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long roleId = RoleTestUtil.addGroupRole(user.getGroupId());
+
+		UserLocalServiceUtil.addRoleUser(roleId, user);
+
+		UserLocalServiceUtil.unsetRoleUsers(
+			roleId, new long[] {user.getUserId()});
+
+		Assert.assertFalse(ArrayUtil.contains(user.getRoleIds(), roleId));
+	}
+
+	@Test(expected = RequiredRoleException.MustNotRemoveLastAdministator.class)
+	public void testUnsetRoleUsersLastAdministratorRole() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		UserTestUtil.addUser(group.getGroupId());
+
+		List<User> groupUsers = UserLocalServiceUtil.getGroupUsers(
+			group.getGroupId());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		UserLocalServiceUtil.unsetRoleUsers(role.getRoleId(), groupUsers);
+	}
+
+	@Test(expected = RequiredRoleException.MustNotRemoveUserRole.class)
+	public void testUnsetRoleUsersUserRole() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addUser(group.getGroupId());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.USER);
+
+		UserLocalServiceUtil.unsetRoleUsers(
+			role.getRoleId(), new long[] {user.getUserId()});
 	}
 
 	@Test

@@ -294,11 +294,6 @@ public class CommerceDiscountRelWrapper
 		return _commerceDiscountRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce discount rel model instance should use the <code>CommerceDiscountRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceDiscountRel.persist();

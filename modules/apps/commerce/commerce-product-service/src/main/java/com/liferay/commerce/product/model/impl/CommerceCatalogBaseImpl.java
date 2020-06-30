@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 public abstract class CommerceCatalogBaseImpl
 	extends CommerceCatalogModelImpl implements CommerceCatalog {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce catalog model instance should use the <code>CommerceCatalog</code> interface instead.

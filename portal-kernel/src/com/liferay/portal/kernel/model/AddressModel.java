@@ -40,7 +40,7 @@ public interface AddressModel
 	extends AttachedModel, BaseModel<Address>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a address model instance should use the {@link Address} interface instead.

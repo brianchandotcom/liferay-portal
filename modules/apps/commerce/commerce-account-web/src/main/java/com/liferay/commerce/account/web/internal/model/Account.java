@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.account.web.internal.model;
 
+import com.liferay.commerce.frontend.model.LabelField;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -21,7 +23,7 @@ public class Account {
 
 	public Account(
 		long accountId, boolean active, String name, String email,
-		String address, String statusLabel, String thumbnail, String href) {
+		String address, LabelField statusLabel, String thumbnail, String href) {
 
 		_accountId = accountId;
 		_active = active;
@@ -57,7 +59,7 @@ public class Account {
 		return _name;
 	}
 
-	public String getStatusLabel() {
+	public LabelField getStatusLabel() {
 		return _statusLabel;
 	}
 
@@ -71,7 +73,7 @@ public class Account {
 	private final String _email;
 	private final String _href;
 	private final String _name;
-	private final String _statusLabel;
+	private final LabelField _statusLabel;
 	private final String _thumbnail;
 
 }

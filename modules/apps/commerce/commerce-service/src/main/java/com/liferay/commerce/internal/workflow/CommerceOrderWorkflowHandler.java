@@ -63,7 +63,7 @@ public class CommerceOrderWorkflowHandler
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(classPK);
 
-		long typePK = CommerceOrderConstants.TYPE_PK_TRANSMISSION;
+		long typePK = CommerceOrderConstants.TYPE_PK_FULFILLMENT;
 
 		if (commerceOrder.isOpen()) {
 			typePK = CommerceOrderConstants.TYPE_PK_APPROVAL;

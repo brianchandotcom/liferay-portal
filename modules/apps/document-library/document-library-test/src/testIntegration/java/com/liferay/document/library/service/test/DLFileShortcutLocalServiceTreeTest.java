@@ -106,7 +106,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 				DLFileShortcutLocalServiceUtil.getDLFileShortcut(
 					fileShortcut.getFileShortcutId());
 
-			dlFileShortcut.setTreePath(null);
+			dlFileShortcut.setTreePath("/0/");
 
 			DLFileShortcutLocalServiceUtil.updateDLFileShortcut(dlFileShortcut);
 		}

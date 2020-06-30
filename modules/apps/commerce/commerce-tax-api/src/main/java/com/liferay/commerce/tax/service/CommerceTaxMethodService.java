@@ -57,11 +57,21 @@ import java.util.Map;
 )
 public interface CommerceTaxMethodService extends BaseService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodServiceUtil} to access the commerce tax method remote service. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceTaxMethod addCommerceTaxMethod(
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceTaxMethod addCommerceTaxMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String engineKey, boolean percentage, boolean active,
@@ -73,6 +83,11 @@ public interface CommerceTaxMethodService extends BaseService {
 		throws PortalException;
 
 	public void deleteCommerceTaxMethod(long commerceTaxMethodId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTaxMethod fetchCommerceTaxMethod(
+			long groupId, String engineKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

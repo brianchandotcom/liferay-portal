@@ -64,12 +64,12 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
 
-			<portlet:renderURL var="editDisplayPageURL">
+			<liferay-portlet:renderURL plid="<%= GroupControlPanelLayoutUtil.getGroupControlPanelPlid(themeDisplay.getSiteGroup()) %>" var="editDisplayPageURL">
 				<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
 				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
+			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text>
 				<c:choose>

@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
@@ -71,7 +72,7 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 				commerceAddress.getCommerceAddressId()));
 	}
 
-	@NestedField("billingAddress")
+	@NestedField(parentClass = Order.class, value = "billingAddress")
 	@Override
 	public BillingAddress getOrderIdBillingAddress(Long id) throws Exception {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(

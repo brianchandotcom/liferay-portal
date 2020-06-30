@@ -51,7 +51,8 @@ public class CommerceAccountFinderImpl
 
 	@Override
 	public int countByU_P(
-		long userId, QueryDefinition<CommerceAccount> queryDefinition) {
+		List<Long> organizationIds, long userId,
+		QueryDefinition<CommerceAccount> queryDefinition) {
 
 		Session session = null;
 
@@ -59,6 +60,8 @@ public class CommerceAccountFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_U_P);
+
+			sql = _replaceOrganizationIds(organizationIds, sql);
 
 			sql = StringUtil.replace(
 				sql, "[$USER_ID$]", String.valueOf(userId));
@@ -116,9 +119,8 @@ public class CommerceAccountFinderImpl
 			Boolean active = (Boolean)queryDefinition.getAttribute("active");
 
 			if (active != null) {
-				sql = StringUtil.add(
-					sql, " AND (CommerceAccount.active_ = " + active + ")",
-					StringPool.BLANK);
+				sql = _customSQL.appendCriteria(
+					sql, "AND (CommerceAccount.active_ = ?)");
 			}
 
 			sql = _customSQL.replaceAndOperator(sql, true);
@@ -129,6 +131,10 @@ public class CommerceAccountFinderImpl
 
 			if (Validator.isNotNull(keywords)) {
 				qPos.add(names, 2);
+			}
+
+			if (active != null) {
+				qPos.add(active);
 			}
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -157,7 +163,8 @@ public class CommerceAccountFinderImpl
 
 	@Override
 	public List<CommerceAccount> findByU_P(
-		long userId, QueryDefinition<CommerceAccount> queryDefinition) {
+		List<Long> organizationIds, long userId,
+		QueryDefinition<CommerceAccount> queryDefinition) {
 
 		Session session = null;
 
@@ -165,6 +172,8 @@ public class CommerceAccountFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_U_P);
+
+			sql = _replaceOrganizationIds(organizationIds, sql);
 
 			sql = StringUtil.replace(
 				sql, "[$USER_ID$]", String.valueOf(userId));
@@ -226,9 +235,8 @@ public class CommerceAccountFinderImpl
 			Boolean active = (Boolean)queryDefinition.getAttribute("active");
 
 			if (active != null) {
-				sql = StringUtil.add(
-					sql, " AND (CommerceAccount.active_ = " + active + ")",
-					StringPool.BLANK);
+				sql = _customSQL.appendCriteria(
+					sql, "AND (CommerceAccount.active_ = ?)");
 			}
 
 			sql = _customSQL.replaceAndOperator(sql, true);
@@ -244,6 +252,10 @@ public class CommerceAccountFinderImpl
 				qPos.add(names, 2);
 			}
 
+			if (active != null) {
+				qPos.add(active);
+			}
+
 			return (List<CommerceAccount>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
@@ -257,13 +269,17 @@ public class CommerceAccountFinderImpl
 	}
 
 	@Override
-	public CommerceAccount findByU_C(long userId, long commerceAccountId) {
+	public CommerceAccount findByU_C(
+		List<Long> organizationIds, long userId, long commerceAccountId) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_U_C);
+
+			sql = _replaceOrganizationIds(organizationIds, sql);
 
 			sql = StringUtil.replace(
 				sql, "[$USER_ID$]", String.valueOf(userId));
@@ -299,6 +315,17 @@ public class CommerceAccountFinderImpl
 
 		return "(CommerceAccount.parentCommerceAccountId = " +
 			parentCommerceAccountId + ") AND";
+	}
+
+	private String _replaceOrganizationIds(
+		List<Long> organizationIds, String sql) {
+
+		if (organizationIds.isEmpty()) {
+			organizationIds.add(0L);
+		}
+
+		return StringUtil.replace(
+			sql, "[$ORGANIZATION_IDS$]", StringUtil.merge(organizationIds));
 	}
 
 	@ServiceReference(type = CustomSQL.class)

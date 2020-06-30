@@ -49,7 +49,7 @@ boolean viewInContext = GetterUtil.getBoolean(request.getAttribute("liferay-asse
 
 			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
 
-			if (Validator.isNull(assetRendererFactory)) {
+			if (assetRendererFactory == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("No asset renderer factory found for class " + PortalUtil.getClassName(assetLinkEntry.getClassNameId()));
 				}

@@ -1,0 +1,123 @@
+definition {
+
+	macro _addAssetCategoryIds {
+		Variables.assertDefined(parameterList = "${JSON},${assetCategoryIds}");
+
+		var JSON = JSONUtil2._addJSONArray(
+			JSON = "${JSON}",
+			key = "assetCategoryIds");
+
+		var JSON = JSONUtil2._addJSONArrayValues(
+			JSON = "${JSON}",
+			key = "assetCategoryIds",
+			values = "${assetCategoryIds}");
+
+		return "${JSON}";
+	}
+
+	macro _addAssetTagNames {
+		Variables.assertDefined(parameterList = "${JSON},${assetTagNames}");
+
+		var JSON = JSONUtil2._addJSONArray(
+			JSON = "${JSON}",
+			key = "assetTagNames");
+
+		var JSON = JSONUtil2._addJSONArrayValues(
+			JSON = "${JSON}",
+			key = "assetTagNames",
+			values = "${assetTagNames}");
+
+		return "${JSON}";
+	}
+
+	macro _addGroupId {
+		Variables.assertDefined(parameterList = "${groupName},${JSON}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "scopeGroupId",
+			value = "${groupId}");
+
+		return "${JSON}";
+	}
+
+	macro _addGuestPermissions {
+		Variables.assertDefined(parameterList = "${JSON},${addGuestPermissions}");
+
+		if (!(("${addGuestPermissions}" == "true") || ("${addGuestPermissions}" == "false"))) {
+			fail("Invalid addGuestPermissions: '${addGuestPermissions}' specified. Allowed values are 'true' or 'false'.");
+		}
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "addGuestPermissions",
+			value = "${addGuestPermissions}");
+
+		return "${JSON}";
+	}
+
+	@summary = "See WorkflowConstants.java for available actions"
+	macro _addWorkflowAction {
+		Variables.assertDefined(parameterList = "${JSON},${workflowAction}");
+
+		if ("${workflowAction}" == "DRAFT") {
+			var workflowActionNumber = "2";
+		}
+		else if ("${workflowAction}" == "PUBLISH") {
+			var workflowActionNumber = "1";
+		}
+		else {
+			fail("Invalid workflowAction: '${workflowAction}' specified. Allowed values are 'DRAFT' or 'PUBLISH'.");
+		}
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "workflowAction",
+			value = "${workflowActionNumber}");
+
+		return "${JSON}";
+	}
+
+	macro setServiceContext {
+		var serviceContext = "{}";
+
+		if (isSet(assetCategoryIds)) {
+			var serviceContext = JSONServiceContextUtil._addAssetCategoryIds(
+				assetCategoryIds = "${assetCategoryIds}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(assetTagNames)) {
+			var serviceContext = JSONServiceContextUtil._addAssetTagNames(
+				assetTagNames = "${assetTagNames}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(addGuestPermissions)) {
+			var serviceContext = JSONServiceContextUtil._addGuestPermissions(
+				addGuestPermissions = "${addGuestPermissions}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(groupName)) {
+			var serviceContext = JSONServiceContextUtil._addGroupId(
+				groupName = "${groupName}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(workflowAction)) {
+			var serviceContext = JSONServiceContextUtil._addWorkflowAction(
+				JSON = "${serviceContext}",
+				workflowAction = "${workflowAction}");
+		}
+
+		return "${serviceContext}";
+	}
+
+}

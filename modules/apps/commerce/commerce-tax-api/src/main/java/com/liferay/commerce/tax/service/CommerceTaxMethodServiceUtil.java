@@ -32,17 +32,28 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceTaxMethodServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.tax.model.CommerceTaxMethod
+			addCommerceTaxMethod(
+				long userId, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String engineKey, boolean percentage, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceTaxMethod(
+			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
+			active);
+	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodServiceUtil} to access the commerce tax method remote service. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public static com.liferay.commerce.tax.model.CommerceTaxMethod
 			addCommerceTaxMethod(
 				java.util.Map<java.util.Locale, String> nameMap,
@@ -68,6 +79,13 @@ public class CommerceTaxMethodServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteCommerceTaxMethod(commerceTaxMethodId);
+	}
+
+	public static com.liferay.commerce.tax.model.CommerceTaxMethod
+			fetchCommerceTaxMethod(long groupId, String engineKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommerceTaxMethod(groupId, engineKey);
 	}
 
 	public static com.liferay.commerce.tax.model.CommerceTaxMethod

@@ -196,10 +196,8 @@ definition {
 
 	macro deactivateWorkflow {
 		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Deactivate",
+			menuItem = "Unpublish",
 			rowEntry = "${workflowDefinitionTitle}");
-
-		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 
 		Alert.viewSuccessMessage();
 	}

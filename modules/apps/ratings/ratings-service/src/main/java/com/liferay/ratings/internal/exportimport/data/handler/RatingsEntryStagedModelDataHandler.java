@@ -18,6 +18,8 @@ import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +39,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -139,7 +142,30 @@ public class RatingsEntryStagedModelDataHandler
 				}
 			}
 			else {
-				persistedModelLocalService.getPersistedModel(newClassPK);
+				try {
+					persistedModelLocalService.getPersistedModel(newClassPK);
+				}
+				catch (NoSuchModelException nsme) {
+					if (Objects.equals(
+							entry.getClassName(), Discussion.class.getName()) ||
+						Objects.equals(
+							entry.getClassName(),
+							"com.liferay.message.boards.model.MBDiscussion")) {
+
+						PersistedModelLocalService
+							mbMessagePersistedModelLocalService =
+								PersistedModelLocalServiceRegistryUtil.
+									getPersistedModelLocalService(
+										"com.liferay.message.boards.model." +
+											"MBMessage");
+
+						mbMessagePersistedModelLocalService.getPersistedModel(
+							newClassPK);
+					}
+					else {
+						throw nsme;
+					}
+				}
 			}
 		}
 		catch (PortalException pe) {
@@ -163,22 +189,13 @@ public class RatingsEntryStagedModelDataHandler
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RatingsEntryStagedModelDataHandler.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

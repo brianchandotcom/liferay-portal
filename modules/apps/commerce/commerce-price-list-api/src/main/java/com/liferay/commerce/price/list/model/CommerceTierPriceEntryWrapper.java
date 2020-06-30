@@ -72,8 +72,19 @@ public class CommerceTierPriceEntryWrapper
 		attributes.put("commercePriceEntryId", getCommercePriceEntryId());
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
+		attributes.put("discountDiscovery", isDiscountDiscovery());
+		attributes.put("discountLevel1", getDiscountLevel1());
+		attributes.put("discountLevel2", getDiscountLevel2());
+		attributes.put("discountLevel3", getDiscountLevel3());
+		attributes.put("discountLevel4", getDiscountLevel4());
 		attributes.put("minQuantity", getMinQuantity());
+		attributes.put("displayDate", getDisplayDate());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -149,16 +160,87 @@ public class CommerceTierPriceEntryWrapper
 			setPromoPrice(promoPrice);
 		}
 
+		Boolean discountDiscovery = (Boolean)attributes.get(
+			"discountDiscovery");
+
+		if (discountDiscovery != null) {
+			setDiscountDiscovery(discountDiscovery);
+		}
+
+		BigDecimal discountLevel1 = (BigDecimal)attributes.get(
+			"discountLevel1");
+
+		if (discountLevel1 != null) {
+			setDiscountLevel1(discountLevel1);
+		}
+
+		BigDecimal discountLevel2 = (BigDecimal)attributes.get(
+			"discountLevel2");
+
+		if (discountLevel2 != null) {
+			setDiscountLevel2(discountLevel2);
+		}
+
+		BigDecimal discountLevel3 = (BigDecimal)attributes.get(
+			"discountLevel3");
+
+		if (discountLevel3 != null) {
+			setDiscountLevel3(discountLevel3);
+		}
+
+		BigDecimal discountLevel4 = (BigDecimal)attributes.get(
+			"discountLevel4");
+
+		if (discountLevel4 != null) {
+			setDiscountLevel4(discountLevel4);
+		}
+
 		Integer minQuantity = (Integer)attributes.get("minQuantity");
 
 		if (minQuantity != null) {
 			setMinQuantity(minQuantity);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -220,9 +302,79 @@ public class CommerceTierPriceEntryWrapper
 		return _commerceTierPriceEntry.getCreateDate();
 	}
 
+	/**
+	 * Returns the discount discovery of this commerce tier price entry.
+	 *
+	 * @return the discount discovery of this commerce tier price entry
+	 */
+	@Override
+	public boolean getDiscountDiscovery() {
+		return _commerceTierPriceEntry.getDiscountDiscovery();
+	}
+
+	/**
+	 * Returns the discount level1 of this commerce tier price entry.
+	 *
+	 * @return the discount level1 of this commerce tier price entry
+	 */
+	@Override
+	public BigDecimal getDiscountLevel1() {
+		return _commerceTierPriceEntry.getDiscountLevel1();
+	}
+
+	/**
+	 * Returns the discount level2 of this commerce tier price entry.
+	 *
+	 * @return the discount level2 of this commerce tier price entry
+	 */
+	@Override
+	public BigDecimal getDiscountLevel2() {
+		return _commerceTierPriceEntry.getDiscountLevel2();
+	}
+
+	/**
+	 * Returns the discount level3 of this commerce tier price entry.
+	 *
+	 * @return the discount level3 of this commerce tier price entry
+	 */
+	@Override
+	public BigDecimal getDiscountLevel3() {
+		return _commerceTierPriceEntry.getDiscountLevel3();
+	}
+
+	/**
+	 * Returns the discount level4 of this commerce tier price entry.
+	 *
+	 * @return the discount level4 of this commerce tier price entry
+	 */
+	@Override
+	public BigDecimal getDiscountLevel4() {
+		return _commerceTierPriceEntry.getDiscountLevel4();
+	}
+
+	/**
+	 * Returns the display date of this commerce tier price entry.
+	 *
+	 * @return the display date of this commerce tier price entry
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return _commerceTierPriceEntry.getDisplayDate();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceTierPriceEntry.getExpandoBridge();
+	}
+
+	/**
+	 * Returns the expiration date of this commerce tier price entry.
+	 *
+	 * @return the expiration date of this commerce tier price entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return _commerceTierPriceEntry.getExpirationDate();
 	}
 
 	/**
@@ -317,6 +469,56 @@ public class CommerceTierPriceEntryWrapper
 	}
 
 	/**
+	 * Returns the status of this commerce tier price entry.
+	 *
+	 * @return the status of this commerce tier price entry
+	 */
+	@Override
+	public int getStatus() {
+		return _commerceTierPriceEntry.getStatus();
+	}
+
+	/**
+	 * Returns the status by user ID of this commerce tier price entry.
+	 *
+	 * @return the status by user ID of this commerce tier price entry
+	 */
+	@Override
+	public long getStatusByUserId() {
+		return _commerceTierPriceEntry.getStatusByUserId();
+	}
+
+	/**
+	 * Returns the status by user name of this commerce tier price entry.
+	 *
+	 * @return the status by user name of this commerce tier price entry
+	 */
+	@Override
+	public String getStatusByUserName() {
+		return _commerceTierPriceEntry.getStatusByUserName();
+	}
+
+	/**
+	 * Returns the status by user uuid of this commerce tier price entry.
+	 *
+	 * @return the status by user uuid of this commerce tier price entry
+	 */
+	@Override
+	public String getStatusByUserUuid() {
+		return _commerceTierPriceEntry.getStatusByUserUuid();
+	}
+
+	/**
+	 * Returns the status date of this commerce tier price entry.
+	 *
+	 * @return the status date of this commerce tier price entry
+	 */
+	@Override
+	public Date getStatusDate() {
+		return _commerceTierPriceEntry.getStatusDate();
+	}
+
+	/**
 	 * Returns the user ID of this commerce tier price entry.
 	 *
 	 * @return the user ID of this commerce tier price entry
@@ -361,14 +563,84 @@ public class CommerceTierPriceEntryWrapper
 		return _commerceTierPriceEntry.hashCode();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is approved.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved() {
+		return _commerceTierPriceEntry.isApproved();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _commerceTierPriceEntry.isCachedModel();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is denied.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied() {
+		return _commerceTierPriceEntry.isDenied();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is discount discovery.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is discount discovery; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDiscountDiscovery() {
+		return _commerceTierPriceEntry.isDiscountDiscovery();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is a draft.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft() {
+		return _commerceTierPriceEntry.isDraft();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _commerceTierPriceEntry.isEscapedModel();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is expired.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired() {
+		return _commerceTierPriceEntry.isExpired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is inactive.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive() {
+		return _commerceTierPriceEntry.isInactive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is incomplete.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete() {
+		return _commerceTierPriceEntry.isIncomplete();
 	}
 
 	@Override
@@ -377,10 +649,25 @@ public class CommerceTierPriceEntryWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Returns <code>true</code> if this commerce tier price entry is pending.
 	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce tier price entry model instance should use the <code>CommerceTierPriceEntry</code> interface instead.
+	 * @return <code>true</code> if this commerce tier price entry is pending; <code>false</code> otherwise
 	 */
+	@Override
+	public boolean isPending() {
+		return _commerceTierPriceEntry.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce tier price entry is scheduled.
+	 *
+	 * @return <code>true</code> if this commerce tier price entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled() {
+		return _commerceTierPriceEntry.isScheduled();
+	}
+
 	@Override
 	public void persist() {
 		_commerceTierPriceEntry.persist();
@@ -432,6 +719,66 @@ public class CommerceTierPriceEntryWrapper
 		_commerceTierPriceEntry.setCreateDate(createDate);
 	}
 
+	/**
+	 * Sets whether this commerce tier price entry is discount discovery.
+	 *
+	 * @param discountDiscovery the discount discovery of this commerce tier price entry
+	 */
+	@Override
+	public void setDiscountDiscovery(boolean discountDiscovery) {
+		_commerceTierPriceEntry.setDiscountDiscovery(discountDiscovery);
+	}
+
+	/**
+	 * Sets the discount level1 of this commerce tier price entry.
+	 *
+	 * @param discountLevel1 the discount level1 of this commerce tier price entry
+	 */
+	@Override
+	public void setDiscountLevel1(BigDecimal discountLevel1) {
+		_commerceTierPriceEntry.setDiscountLevel1(discountLevel1);
+	}
+
+	/**
+	 * Sets the discount level2 of this commerce tier price entry.
+	 *
+	 * @param discountLevel2 the discount level2 of this commerce tier price entry
+	 */
+	@Override
+	public void setDiscountLevel2(BigDecimal discountLevel2) {
+		_commerceTierPriceEntry.setDiscountLevel2(discountLevel2);
+	}
+
+	/**
+	 * Sets the discount level3 of this commerce tier price entry.
+	 *
+	 * @param discountLevel3 the discount level3 of this commerce tier price entry
+	 */
+	@Override
+	public void setDiscountLevel3(BigDecimal discountLevel3) {
+		_commerceTierPriceEntry.setDiscountLevel3(discountLevel3);
+	}
+
+	/**
+	 * Sets the discount level4 of this commerce tier price entry.
+	 *
+	 * @param discountLevel4 the discount level4 of this commerce tier price entry
+	 */
+	@Override
+	public void setDiscountLevel4(BigDecimal discountLevel4) {
+		_commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
+	}
+
+	/**
+	 * Sets the display date of this commerce tier price entry.
+	 *
+	 * @param displayDate the display date of this commerce tier price entry
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		_commerceTierPriceEntry.setDisplayDate(displayDate);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -447,6 +794,16 @@ public class CommerceTierPriceEntryWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	 * Sets the expiration date of this commerce tier price entry.
+	 *
+	 * @param expirationDate the expiration date of this commerce tier price entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		_commerceTierPriceEntry.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -527,6 +884,56 @@ public class CommerceTierPriceEntryWrapper
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
 		_commerceTierPriceEntry.setPromoPrice(promoPrice);
+	}
+
+	/**
+	 * Sets the status of this commerce tier price entry.
+	 *
+	 * @param status the status of this commerce tier price entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		_commerceTierPriceEntry.setStatus(status);
+	}
+
+	/**
+	 * Sets the status by user ID of this commerce tier price entry.
+	 *
+	 * @param statusByUserId the status by user ID of this commerce tier price entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_commerceTierPriceEntry.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	 * Sets the status by user name of this commerce tier price entry.
+	 *
+	 * @param statusByUserName the status by user name of this commerce tier price entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_commerceTierPriceEntry.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	 * Sets the status by user uuid of this commerce tier price entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this commerce tier price entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_commerceTierPriceEntry.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	 * Sets the status date of this commerce tier price entry.
+	 *
+	 * @param statusDate the status date of this commerce tier price entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_commerceTierPriceEntry.setStatusDate(statusDate);
 	}
 
 	/**

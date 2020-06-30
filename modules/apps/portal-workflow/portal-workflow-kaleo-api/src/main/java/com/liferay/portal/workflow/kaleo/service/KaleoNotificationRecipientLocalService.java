@@ -57,7 +57,7 @@ import java.util.List;
 public interface KaleoNotificationRecipientLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationRecipientLocalServiceUtil} to access the kaleo notification recipient local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationRecipientLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -244,6 +244,9 @@ public interface KaleoNotificationRecipientLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

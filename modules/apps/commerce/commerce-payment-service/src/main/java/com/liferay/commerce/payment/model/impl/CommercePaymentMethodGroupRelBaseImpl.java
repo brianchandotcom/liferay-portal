@@ -33,7 +33,7 @@ public abstract class CommercePaymentMethodGroupRelBaseImpl
 	extends CommercePaymentMethodGroupRelModelImpl
 	implements CommercePaymentMethodGroupRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce payment method group rel model instance should use the <code>CommercePaymentMethodGroupRel</code> interface instead.

@@ -45,7 +45,7 @@ public interface CPDefinitionGroupedEntryModel
 	extends BaseModel<CPDefinitionGroupedEntry>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp definition grouped entry model instance should use the {@link CPDefinitionGroupedEntry} interface instead.

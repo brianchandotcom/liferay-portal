@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +74,10 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
+		attributes.put("CPInstanceUuid", getCPInstanceUuid());
+		attributes.put("CProductId", getCProductId());
+		attributes.put("quantity", getQuantity());
+		attributes.put("price", getPrice());
 
 		return attributes;
 	}
@@ -151,6 +157,30 @@ public class CPDefinitionOptionValueRelWrapper
 		if (key != null) {
 			setKey(key);
 		}
+
+		String CPInstanceUuid = (String)attributes.get("CPInstanceUuid");
+
+		if (CPInstanceUuid != null) {
+			setCPInstanceUuid(CPInstanceUuid);
+		}
+
+		Long CProductId = (Long)attributes.get("CProductId");
+
+		if (CProductId != null) {
+			setCProductId(CProductId);
+		}
+
+		Integer quantity = (Integer)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
+		}
+
+		BigDecimal price = (BigDecimal)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
+		}
 	}
 
 	@Override
@@ -165,6 +195,11 @@ public class CPDefinitionOptionValueRelWrapper
 
 		return _cpDefinitionOptionValueRel.compareTo(
 			cpDefinitionOptionValueRel);
+	}
+
+	@Override
+	public CPInstance fetchCPInstance() {
+		return _cpDefinitionOptionValueRel.fetchCPInstance();
 	}
 
 	@Override
@@ -207,6 +242,26 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public long getCPDefinitionOptionValueRelId() {
 		return _cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
+	}
+
+	/**
+	 * Returns the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @return the cp instance uuid of this cp definition option value rel
+	 */
+	@Override
+	public String getCPInstanceUuid() {
+		return _cpDefinitionOptionValueRel.getCPInstanceUuid();
+	}
+
+	/**
+	 * Returns the c product ID of this cp definition option value rel.
+	 *
+	 * @return the c product ID of this cp definition option value rel
+	 */
+	@Override
+	public long getCProductId() {
+		return _cpDefinitionOptionValueRel.getCProductId();
 	}
 
 	/**
@@ -336,6 +391,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	 * Returns the price of this cp definition option value rel.
+	 *
+	 * @return the price of this cp definition option value rel
+	 */
+	@Override
+	public BigDecimal getPrice() {
+		return _cpDefinitionOptionValueRel.getPrice();
+	}
+
+	/**
 	 * Returns the primary key of this cp definition option value rel.
 	 *
 	 * @return the primary key of this cp definition option value rel
@@ -358,6 +423,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public double getPriority() {
 		return _cpDefinitionOptionValueRel.getPriority();
+	}
+
+	/**
+	 * Returns the quantity of this cp definition option value rel.
+	 *
+	 * @return the quantity of this cp definition option value rel
+	 */
+	@Override
+	public int getQuantity() {
+		return _cpDefinitionOptionValueRel.getQuantity();
 	}
 
 	/**
@@ -420,11 +495,6 @@ public class CPDefinitionOptionValueRelWrapper
 		return _cpDefinitionOptionValueRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition option value rel model instance should use the <code>CPDefinitionOptionValueRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinitionOptionValueRel.persist();
@@ -483,6 +553,26 @@ public class CPDefinitionOptionValueRelWrapper
 
 		_cpDefinitionOptionValueRel.setCPDefinitionOptionValueRelId(
 			CPDefinitionOptionValueRelId);
+	}
+
+	/**
+	 * Sets the cp instance uuid of this cp definition option value rel.
+	 *
+	 * @param CPInstanceUuid the cp instance uuid of this cp definition option value rel
+	 */
+	@Override
+	public void setCPInstanceUuid(String CPInstanceUuid) {
+		_cpDefinitionOptionValueRel.setCPInstanceUuid(CPInstanceUuid);
+	}
+
+	/**
+	 * Sets the c product ID of this cp definition option value rel.
+	 *
+	 * @param CProductId the c product ID of this cp definition option value rel
+	 */
+	@Override
+	public void setCProductId(long CProductId) {
+		_cpDefinitionOptionValueRel.setCProductId(CProductId);
 	}
 
 	/**
@@ -611,6 +701,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	 * Sets the price of this cp definition option value rel.
+	 *
+	 * @param price the price of this cp definition option value rel
+	 */
+	@Override
+	public void setPrice(BigDecimal price) {
+		_cpDefinitionOptionValueRel.setPrice(price);
+	}
+
+	/**
 	 * Sets the primary key of this cp definition option value rel.
 	 *
 	 * @param primaryKey the primary key of this cp definition option value rel
@@ -633,6 +733,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public void setPriority(double priority) {
 		_cpDefinitionOptionValueRel.setPriority(priority);
+	}
+
+	/**
+	 * Sets the quantity of this cp definition option value rel.
+	 *
+	 * @param quantity the quantity of this cp definition option value rel
+	 */
+	@Override
+	public void setQuantity(int quantity) {
+		_cpDefinitionOptionValueRel.setQuantity(quantity);
 	}
 
 	/**

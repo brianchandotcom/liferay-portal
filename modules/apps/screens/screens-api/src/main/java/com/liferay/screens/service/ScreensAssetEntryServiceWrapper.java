@@ -33,11 +33,6 @@ public class ScreensAssetEntryServiceWrapper
 		_screensAssetEntryService = screensAssetEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link ScreensAssetEntryServiceUtil} to access the screens asset entry remote service. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensAssetEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.portal.kernel.json.JSONArray getAssetEntries(
 			com.liferay.asset.kernel.service.persistence.AssetEntryQuery

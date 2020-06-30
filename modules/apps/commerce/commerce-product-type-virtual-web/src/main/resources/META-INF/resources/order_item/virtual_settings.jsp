@@ -132,56 +132,53 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
 	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
 
-	$('#<portlet:namespace />selectFile').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	$('#<portlet:namespace />selectFile').on('click', function(event) {
+		event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'uploadCommerceVirtualOrderItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: 'uploadCommerceVirtualOrderItem',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItem = event.newVal;
 
-							if (selectedItem) {
-								var value = JSON.parse(selectedItem.value);
+					if (selectedItem) {
+						var value = JSON.parse(selectedItem.value);
 
-								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);
+						$('#<portlet:namespace />fileEntryId').val(
+							value.fileEntryId
+						);
 
-								$('#<portlet:namespace />url').attr('disabled', true);
+						$('#<portlet:namespace />url').attr('disabled', true);
 
-								$('#lfr-virtual-order-item-button-row-message').addClass('hide');
+						$('#lfr-virtual-order-item-button-row-message').addClass(
+							'hide'
+						);
 
-								fileEntryRemove.removeClass('hide');
+						fileEntryRemove.removeClass('hide');
 
-								fileEntryNameInput.html('<a>' + value.title + '</a>');
-							}
-						}
-					},
-					title: '<liferay-ui:message key="select-file" />',
-					url: '<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>'
+						fileEntryNameInput.html('<a>' + value.title + '</a>');
+					}
 				}
-			);
+			},
+			title: '<liferay-ui:message key="select-file" />',
+			url:
+				'<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>'
+		});
 
-			itemSelectorDialog.open();
-		}
-	);
+		itemSelectorDialog.open();
+	});
 
-	$('#<portlet:namespace />fileEntryRemove').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	$('#<portlet:namespace />fileEntryRemove').on('click', function(event) {
+		event.preventDefault();
 
-			$('#<portlet:namespace />fileEntryId').val(0);
+		$('#<portlet:namespace />fileEntryId').val(0);
 
-			$('#<portlet:namespace />url').attr('disabled', false);
+		$('#<portlet:namespace />url').attr('disabled', false);
 
-			$('#lfr-virtual-order-item-button-row-message').removeClass('hide');
+		$('#lfr-virtual-order-item-button-row-message').removeClass('hide');
 
-			fileEntryNameInput.html('<liferay-ui:message key="none" />');
+		fileEntryNameInput.html('<liferay-ui:message key="none" />');
 
-			fileEntryRemove.addClass('hide');
-		}
-	);
+		fileEntryRemove.addClass('hide');
+	});
 </aui:script>

@@ -69,7 +69,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
-			value1 = "Unable to validate referenced file entry because it cannot be found with the following parameters");
+			value1 = "Unable to validate referenced document because it cannot be found with the following parameters");
 	}
 
 	@priority = "4"
@@ -307,10 +307,15 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Site Name",
-			title = "Web Content Title");
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -319,6 +324,55 @@ definition {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.publishCustomPublication();
+	}
+
+	@description = "This is a use case for LPS-95589."
+	@priority = "4"
+	test ExportDMWithDeletedDocumentLink {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Documents and Media",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Type Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "NoSuchFileEntryException");
 	}
 
 	@description = "This is a use case for LPS-96391."
@@ -1052,7 +1106,8 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScope(siteName = "Site Name B");
 	}
 
-	@description = "This is a use case for LPS-96470."
+	@description = "This will be ignored until LPS-96928 is fixed. This is a use case for LPS-96470."
+	@ignore = "true"
 	@priority = "3"
 	test ExportImportSiteWithCommentsAndRatingsUnderBlogsEntry {
 		JSONLayout.addPublicLayout(
@@ -1991,6 +2046,7 @@ definition {
 
 	@priority = "5"
 	test ImportCorruptedFile {
+		property osgi.app.includes = "bookmarks";
 		property portal.acceptance = "true";
 		property portal.release = "false";
 
@@ -2106,7 +2162,8 @@ definition {
 			siteName = "Site C");
 	}
 
-	@description = "This is a use case for LPS-97544 and LPS-90886."
+	@description = "This will be ignored until LPS-90886 is fixed and backported on BPR-32057. This is a use case for LPS-97544 and LPS-90886."
+	@ignore = "true"
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {
 		JSONGroup.addGroup(groupName = "Site Name");

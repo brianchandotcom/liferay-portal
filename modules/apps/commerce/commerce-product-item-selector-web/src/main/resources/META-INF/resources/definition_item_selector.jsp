@@ -173,7 +173,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 					var popupWindow = Liferay.Util.getWindow();
 
 					if (popupWindow !== null) {
-						Liferay.Util.getWindow().hide()
+						Liferay.Util.getWindow().hide();
 					}
 				},
 				'.selector-button'
@@ -182,21 +182,25 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 	</c:when>
 	<c:otherwise>
 		<aui:script use="liferay-search-container">
-			var cpDefinitionSelectorWrapper = A.one("#<portlet:namespace />cpDefinitionSelectorWrapper");
-
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />cpDefinitions');
-
-			searchContainer.on(
-				'rowToggled',
-				function(event) {
-					Liferay.Util.getOpener().Liferay.fire(
-						'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-						{
-							data: Liferay.Util.listCheckedExcept(cpDefinitionSelectorWrapper, '<portlet:namespace />allRowIds')
-						}
-					);
-				}
+			var cpDefinitionSelectorWrapper = A.one(
+				'#<portlet:namespace />cpDefinitionSelectorWrapper'
 			);
+
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />cpDefinitions'
+			);
+
+			searchContainer.on('rowToggled', function(event) {
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+					{
+						data: Liferay.Util.listCheckedExcept(
+							cpDefinitionSelectorWrapper,
+							'<portlet:namespace />allRowIds'
+						)
+					}
+				);
+			});
 		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -15,7 +15,7 @@
 					AssetCategory.categoryId = AssetEntryAssetCategoryRel.assetCategoryId
 			WHERE
 				(AssetEntry.classNameId = ?) AND
-				(AssetEntry.classPK =  ?)
+				(AssetEntry.classPK = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByG_C_N">
@@ -87,7 +87,7 @@
 					AssetCategory.categoryId = AssetEntryAssetCategoryRel.assetCategoryId
 			WHERE
 				(AssetEntry.classNameId = ?) AND
-				(AssetEntry.classPK =  ?)
+				(AssetEntry.classPK = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByG_N_P">

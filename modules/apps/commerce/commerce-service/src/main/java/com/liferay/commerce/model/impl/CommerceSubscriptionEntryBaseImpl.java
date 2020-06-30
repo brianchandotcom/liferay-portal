@@ -33,7 +33,7 @@ public abstract class CommerceSubscriptionEntryBaseImpl
 	extends CommerceSubscriptionEntryModelImpl
 	implements CommerceSubscriptionEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce subscription entry model instance should use the <code>CommerceSubscriptionEntry</code> interface instead.

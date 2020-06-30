@@ -61,6 +61,10 @@ import java.rmi.RemoteException;
  */
 public class CPDisplayLayoutServiceSoap {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPDisplayLayoutSoap
 			addCPDisplayLayout(
 				Class<?> clazz, long classPK, String layoutUuid,
@@ -75,10 +79,31 @@ public class CPDisplayLayoutServiceSoap {
 			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDisplayLayoutSoap
+			addCPDisplayLayout(
+				long userId, long groupId, Class<?> clazz, long classPK,
+				String layoutUuid)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDisplayLayout returnValue =
+				CPDisplayLayoutServiceUtil.addCPDisplayLayout(
+					userId, groupId, clazz, classPK, layoutUuid);
+
+			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -88,10 +113,10 @@ public class CPDisplayLayoutServiceSoap {
 		try {
 			CPDisplayLayoutServiceUtil.deleteCPDisplayLayout(clazz, classPK);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -101,10 +126,10 @@ public class CPDisplayLayoutServiceSoap {
 		try {
 			CPDisplayLayoutServiceUtil.deleteCPDisplayLayout(cpDisplayLayoutId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -120,10 +145,10 @@ public class CPDisplayLayoutServiceSoap {
 			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -139,10 +164,10 @@ public class CPDisplayLayoutServiceSoap {
 			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

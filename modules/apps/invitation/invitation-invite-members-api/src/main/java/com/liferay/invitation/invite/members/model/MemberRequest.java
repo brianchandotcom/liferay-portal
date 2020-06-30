@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface MemberRequest extends MemberRequestModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.invitation.invite.members.model.impl.MemberRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

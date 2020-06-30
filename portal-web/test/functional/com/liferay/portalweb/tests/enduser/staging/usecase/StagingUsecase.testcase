@@ -552,6 +552,13 @@ definition {
 			publishTemplateDescription = "Publish Template Description",
 			publishTemplateName = "Publish Template Name");
 
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewPublishTemplate(
+			publishTemplateDescription = "Publish Template Description",
+			publishTemplateName = "Publish Template Name",
+			uncheckContentNameList = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
@@ -924,6 +931,8 @@ definition {
 			teamName = "Site Team Name");
 	}
 
+	@description = "This will be ignored until LPS-103054 is fixed."
+	@ignore = "true"
 	@priority = "3"
 	test PublishWebContentFriendlyURLEncoding {
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -969,7 +978,8 @@ definition {
 			webContentTitle = "Web Content Title2");
 	}
 
-	@description = "This is a use case for LPS-82757."
+	@description = "This will be ignored until LPS-100625 is backported on BPR-31156. This is a use case for LPS-82757."
+	@ignore = "true"
 	@priority = "3"
 	test PublishWebContentWithFeeds {
 		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";

@@ -1,0 +1,40 @@
+.portlet-analytics-settings {
+	.contacts-link-disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	.empty-state-icon {
+		background-image: url(@theme_image_path@/states/empty_state.gif);
+		margin: auto;
+		max-width: 250px;
+		padding-top: 250px;
+	}
+
+	.list-group-sync {
+		list-style: none;
+		padding: 0;
+	}
+
+	.radio-buttons {
+		label {
+			cursor: pointer;
+		}
+
+		small {
+			margin: 0 0 0 1.4rem;
+		}
+
+		.radio {
+			margin-bottom: 0;
+		}
+	}
+
+	.sync-all-contacts {
+		margin: 1rem 0 1rem -1rem;
+	}
+
+	.sync-options {
+		display: inline-block;
+	}
+}

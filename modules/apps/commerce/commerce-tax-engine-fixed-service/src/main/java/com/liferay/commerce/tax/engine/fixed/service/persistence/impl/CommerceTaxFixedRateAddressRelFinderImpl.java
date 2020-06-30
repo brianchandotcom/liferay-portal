@@ -37,6 +37,27 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 	public static final String FIND_BY_C_C_C_Z =
 		CommerceTaxFixedRateAddressRelFinder.class.getName() + ".findByC_C_C_Z";
 
+	public static final String FIND_BY_C_C_C_C_Z =
+		CommerceTaxFixedRateAddressRelFinder.class.getName() +
+			".findByC_C_C_C_Z";
+
+	@Override
+	public CommerceTaxFixedRateAddressRel fetchByC_C_C_C_Z_First(
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, String zip) {
+
+		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels =
+			findByC_C_C_C_Z(
+				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
+				commerceRegionId, zip, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (!commerceTaxFixedRateAddressRels.isEmpty()) {
+			return commerceTaxFixedRateAddressRels.get(0);
+		}
+
+		return null;
+	}
+
 	@Override
 	public CommerceTaxFixedRateAddressRel fetchByC_C_C_Z_First(
 		long commerceTaxMethodId, long commerceCountryId, long commerceRegionId,
@@ -84,6 +105,43 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(commerceTaxMethodId);
+			qPos.add(commerceCountryId);
+			qPos.add(commerceRegionId);
+			qPos.add(zip);
+
+			return (List<CommerceTaxFixedRateAddressRel>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<CommerceTaxFixedRateAddressRel> findByC_C_C_C_Z(
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, String zip, int start, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_C_C_C_C_Z);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				"CommerceTaxFixedRateAddressRel",
+				CommerceTaxFixedRateAddressRelImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(commerceTaxMethodId);
+			qPos.add(cpTaxCategoryId);
 			qPos.add(commerceCountryId);
 			qPos.add(commerceRegionId);
 			qPos.add(zip);

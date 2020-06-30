@@ -1,0 +1,41 @@
+##
+## Deprecated or Archived Modules
+##
+
+	#
+	# Ignore apps that are no longer under active development.
+	#
+	apps/archived
+	apps/google-maps
+	apps/microblogs
+
+##
+## Generated Files
+##
+
+	#
+	# For the most part, these are artifacts of our installation and build
+	# processes and exist only as untracked files. A small number are committed
+	# to the repository, but as they are generated files the linter should
+	# not touch them.
+	#
+	*.soy.js
+	apps/frontend-editor/frontend-editor-tinymce-web
+	build/**
+	classes/**
+	css/clay/**
+	node_modules/**
+	swfobject.js
+	xp_progress.js
+	yarn-*.js
+
+##
+## Sample Files
+##
+
+	#
+	# The few files here are provided for example purposes and are not actively
+	# changed, so we exclude them from linting.
+	#
+	sdk/**
+	testIntegration/**

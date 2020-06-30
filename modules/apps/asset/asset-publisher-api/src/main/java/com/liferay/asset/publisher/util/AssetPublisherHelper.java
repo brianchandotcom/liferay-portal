@@ -16,7 +16,10 @@ package com.liferay.asset.publisher.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -25,6 +28,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
 
@@ -35,6 +41,7 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Eudaldo Alonso
@@ -122,6 +129,50 @@ public interface AssetPublisherHelper {
 		LiferayPortletResponse liferayPortletResponse,
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry,
 		boolean viewInContext);
+
+	public default PortletURL getBaseAssetViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		AssetRenderer<?> assetRenderer, AssetEntry assetEntry) {
+
+		PortletURL baseAssetViewURL = liferayPortletResponse.createRenderURL();
+
+		baseAssetViewURL.setParameter("mvcPath", "/view_content.jsp");
+		baseAssetViewURL.setParameter(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+		AssetRendererFactory<?> assetRendererFactory =
+			assetRenderer.getAssetRendererFactory();
+
+		baseAssetViewURL.setParameter("type", assetRendererFactory.getType());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String urlTitle = assetRenderer.getUrlTitle();
+
+		if (Validator.isNotNull(urlTitle)) {
+			if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()) {
+				baseAssetViewURL.setParameter(
+					"groupId", String.valueOf(assetRenderer.getGroupId()));
+			}
+
+			urlTitle = urlTitle.replaceAll(StringPool.SLASH, StringPool.DASH);
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.PLUS);
+
+			urlTitle = urlTitle.replaceAll(sb.toString(), StringPool.DASH);
+
+			baseAssetViewURL.setParameter("urlTitle", urlTitle);
+		}
+
+		return baseAssetViewURL;
+	}
 
 	public long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds);

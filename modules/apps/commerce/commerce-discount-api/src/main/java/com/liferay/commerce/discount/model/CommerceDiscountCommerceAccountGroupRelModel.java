@@ -44,7 +44,7 @@ public interface CommerceDiscountCommerceAccountGroupRelModel
 	extends AuditedModel, BaseModel<CommerceDiscountCommerceAccountGroupRel>,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce discount commerce account group rel model instance should use the {@link CommerceDiscountCommerceAccountGroupRel} interface instead.

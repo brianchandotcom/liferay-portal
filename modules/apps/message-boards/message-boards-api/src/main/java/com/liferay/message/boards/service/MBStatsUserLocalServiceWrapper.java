@@ -309,6 +309,9 @@ public class MBStatsUserLocalServiceWrapper
 		return _mbStatsUserLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

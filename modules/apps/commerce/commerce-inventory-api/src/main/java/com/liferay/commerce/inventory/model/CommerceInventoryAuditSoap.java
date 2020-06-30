@@ -41,7 +41,8 @@ public class CommerceInventoryAuditSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setSku(model.getSku());
-		soapModel.setDescription(model.getDescription());
+		soapModel.setLogType(model.getLogType());
+		soapModel.setLogTypeSettings(model.getLogTypeSettings());
 		soapModel.setQuantity(model.getQuantity());
 
 		return soapModel;
@@ -161,12 +162,20 @@ public class CommerceInventoryAuditSoap implements Serializable {
 		_sku = sku;
 	}
 
-	public String getDescription() {
-		return _description;
+	public String getLogType() {
+		return _logType;
 	}
 
-	public void setDescription(String description) {
-		_description = description;
+	public void setLogType(String logType) {
+		_logType = logType;
+	}
+
+	public String getLogTypeSettings() {
+		return _logTypeSettings;
+	}
+
+	public void setLogTypeSettings(String logTypeSettings) {
+		_logTypeSettings = logTypeSettings;
 	}
 
 	public int getQuantity() {
@@ -184,7 +193,8 @@ public class CommerceInventoryAuditSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _sku;
-	private String _description;
+	private String _logType;
+	private String _logTypeSettings;
 	private int _quantity;
 
 }

@@ -64,7 +64,7 @@ public class CommerceDiscountRuleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{commerceDiscountRuleId=");
 		sb.append(commerceDiscountRuleId);
@@ -78,6 +78,8 @@ public class CommerceDiscountRuleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", commerceDiscountId=");
 		sb.append(commerceDiscountId);
 		sb.append(", type=");
@@ -120,6 +122,13 @@ public class CommerceDiscountRuleCacheModel
 			commerceDiscountRuleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			commerceDiscountRuleImpl.setName("");
+		}
+		else {
+			commerceDiscountRuleImpl.setName(name);
+		}
+
 		commerceDiscountRuleImpl.setCommerceDiscountId(commerceDiscountId);
 
 		if (type == null) {
@@ -142,7 +151,9 @@ public class CommerceDiscountRuleCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		commerceDiscountRuleId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -151,10 +162,11 @@ public class CommerceDiscountRuleCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
 
 		commerceDiscountId = objectInput.readLong();
 		type = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -175,6 +187,13 @@ public class CommerceDiscountRuleCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeLong(commerceDiscountId);
 
 		if (type == null) {
@@ -185,10 +204,10 @@ public class CommerceDiscountRuleCacheModel
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 	}
 
@@ -198,6 +217,7 @@ public class CommerceDiscountRuleCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
 	public long commerceDiscountId;
 	public String type;
 	public String typeSettings;

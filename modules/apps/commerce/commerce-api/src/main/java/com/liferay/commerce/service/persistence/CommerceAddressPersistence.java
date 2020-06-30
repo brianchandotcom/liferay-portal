@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceAddressPersistence
 	extends BasePersistence<CommerceAddress> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressUtil} to access the commerce address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

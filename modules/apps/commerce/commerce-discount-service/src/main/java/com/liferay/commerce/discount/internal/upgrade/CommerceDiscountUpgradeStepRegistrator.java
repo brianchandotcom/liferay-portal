@@ -20,6 +20,8 @@ import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountRul
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountUsageEntryUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_1_0.CommerceDiscountExternalReferenceCodeUpgradeProcess;
+import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountAccountRelUpgradeProcess;
+import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountRuleNameUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -51,6 +53,20 @@ public class CommerceDiscountUpgradeStepRegistrator
 			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
 			new CommerceDiscountExternalReferenceCodeUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
+			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
+				CommerceDiscountUpgradeProcess(),
+			new CommerceDiscountAccountRelUpgradeProcess(),
+			new CommerceDiscountRuleNameUpgradeProcess(),
+			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
+				CommerceDiscountCommerceAccountGroupRelUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_2_3_0,
+			new com.liferay.commerce.discount.internal.upgrade.v2_3_0.
+				CommerceDiscountUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE DISCOUNT UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -61,6 +77,10 @@ public class CommerceDiscountUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
 
 	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
+
+	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
+
+	private static final String _SCHEMA_VERSION_2_3_0 = "2.3.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountUpgradeStepRegistrator.class);

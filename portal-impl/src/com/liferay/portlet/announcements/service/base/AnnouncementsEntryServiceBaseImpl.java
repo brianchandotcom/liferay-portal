@@ -61,7 +61,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl
 	extends BaseServiceImpl
 	implements AnnouncementsEntryService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>AnnouncementsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil</code>.
@@ -941,8 +941,8 @@ public abstract class AnnouncementsEntryServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

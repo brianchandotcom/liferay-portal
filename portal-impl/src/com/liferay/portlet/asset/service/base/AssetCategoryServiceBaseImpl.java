@@ -53,7 +53,7 @@ public abstract class AssetCategoryServiceBaseImpl
 	extends BaseServiceImpl
 	implements AssetCategoryService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>AssetCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.kernel.service.AssetCategoryServiceUtil</code>.
@@ -561,8 +561,8 @@ public abstract class AssetCategoryServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

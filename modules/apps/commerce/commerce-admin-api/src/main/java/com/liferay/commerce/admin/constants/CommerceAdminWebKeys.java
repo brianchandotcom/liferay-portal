@@ -25,6 +25,4 @@ public class CommerceAdminWebKeys {
 	public static final String COMMERCE_ADMIN_SERVLET_CONTEXT =
 		"COMMERCE_ADMIN_SERVLET_CONTEXT";
 
-	public static final String COMMERCE_ADMIN_TYPE = "COMMERCE_ADMIN_TYPE";
-
 }

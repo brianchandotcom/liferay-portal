@@ -1,0 +1,36 @@
+definition {
+
+	macro _getUserByIdCurl {
+		Variables.assertDefined(parameterList = "${userId}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
+				-u test@liferay.com:test
+		''';
+
+		return "${curl}";
+	}
+
+	macro getEmailAddress {
+		Variables.assertDefined(parameterList = "${userId}");
+
+		var curl = JSONUserGetter._getUserByIdCurl(userId = "${userId}");
+
+		var userEmailAddress = JSONCurlUtil.get("${curl}", "$['emailAddress']");
+
+		return "${userEmailAddress}";
+	}
+
+	macro getFirstName {
+		Variables.assertDefined(parameterList = "${userId}");
+
+		var curl = JSONUserGetter._getUserByIdCurl(userId = "${userId}");
+
+		var userFirstName = JSONCurlUtil.get("${curl}", "$['firstName']");
+	}
+
+}

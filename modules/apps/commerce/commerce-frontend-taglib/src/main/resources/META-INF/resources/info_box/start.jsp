@@ -17,14 +17,14 @@
 <%@ include file="/info_box/init.jsp" %>
 
 <%
-String infoxBoxCssClasses = "info-box" + (Validator.isNotNull(elementClasses) ? " " + elementClasses : "");
+String infoxBoxCssClasses = "info-box" + (Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK);
 String linkId = PortalUtil.generateRandomKey(request, "info-box") + StringPool.UNDERLINE + "action-link";
 %>
 
 <div class="<%= infoxBoxCssClasses %>">
-	<header class="header">
+	<header class="header pb-2">
 		<c:if test="<%= Validator.isNotNull(title) %>">
-			<h4 class="title"><%= title %></h4>
+			<h5 class="mb-0 title"><%= title %></h5>
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
@@ -32,16 +32,13 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + StringPool.U
 				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions.es as eventsDefinitions">
 					const link = document.getElementById('<%= linkId %>');
 
-					if(link) {
+					if (link) {
 						link.addEventListener('click', function(e) {
 							e.preventDefault();
-							Liferay.fire(
-								eventsDefinitions.OPEN,
-								{
-									id: "<%= actionTargetId %>"
-								}
-							)
-						})
+							Liferay.fire(eventsDefinitions.OPEN_MODAL, {
+								id: '<%= actionTargetId %>'
+							});
+						});
 					}
 				</aui:script>
 			</c:if>

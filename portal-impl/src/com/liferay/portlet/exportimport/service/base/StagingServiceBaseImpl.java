@@ -56,7 +56,7 @@ import javax.sql.DataSource;
 public abstract class StagingServiceBaseImpl
 	extends BaseServiceImpl implements IdentifiableOSGiService, StagingService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>StagingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.exportimport.kernel.service.StagingServiceUtil</code>.
@@ -863,8 +863,8 @@ public abstract class StagingServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

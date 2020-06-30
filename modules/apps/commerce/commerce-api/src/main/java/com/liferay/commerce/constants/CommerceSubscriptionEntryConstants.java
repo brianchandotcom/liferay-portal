@@ -24,25 +24,29 @@ public class CommerceSubscriptionEntryConstants {
 	public static final int SUBSCRIPTION_STATUS_ACTIVE =
 		WorkflowConstants.STATUS_APPROVED;
 
-	public static final int SUBSCRIPTION_STATUS_ANY =
-		WorkflowConstants.STATUS_ANY;
-
 	public static final int SUBSCRIPTION_STATUS_CANCELLED =
 		WorkflowConstants.STATUS_DRAFT;
 
 	public static final int SUBSCRIPTION_STATUS_COMPLETED =
 		WorkflowConstants.STATUS_EXPIRED;
 
+	public static final int SUBSCRIPTION_STATUS_INACTIVE =
+		WorkflowConstants.STATUS_ANY;
+
 	public static final int SUBSCRIPTION_STATUS_SUSPENDED =
 		WorkflowConstants.STATUS_PENDING;
 
 	public static final int[] SUBSCRIPTION_STATUSES = {
-		SUBSCRIPTION_STATUS_ACTIVE, SUBSCRIPTION_STATUS_SUSPENDED,
-		SUBSCRIPTION_STATUS_CANCELLED, SUBSCRIPTION_STATUS_COMPLETED
+		SUBSCRIPTION_STATUS_INACTIVE, SUBSCRIPTION_STATUS_ACTIVE,
+		SUBSCRIPTION_STATUS_SUSPENDED, SUBSCRIPTION_STATUS_CANCELLED,
+		SUBSCRIPTION_STATUS_COMPLETED
 	};
 
 	public static String getSubscriptionStatusLabel(int subscriptionStatus) {
-		if (subscriptionStatus == SUBSCRIPTION_STATUS_ACTIVE) {
+		if (subscriptionStatus == SUBSCRIPTION_STATUS_INACTIVE) {
+			return "inactive";
+		}
+		else if (subscriptionStatus == SUBSCRIPTION_STATUS_ACTIVE) {
 			return "active";
 		}
 		else if (subscriptionStatus == SUBSCRIPTION_STATUS_SUSPENDED) {

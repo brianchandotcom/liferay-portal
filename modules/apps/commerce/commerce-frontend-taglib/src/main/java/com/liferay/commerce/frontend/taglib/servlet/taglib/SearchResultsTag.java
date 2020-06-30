@@ -40,9 +40,6 @@ public class SearchResultsTag extends ComponentRendererTag {
 		CommerceContext commerceContext = (CommerceContext)request.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
@@ -58,12 +55,14 @@ public class SearchResultsTag extends ComponentRendererTag {
 		}
 
 		putValue(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
-
-		putValue(
 			"searchAPI",
 			PortalUtil.getPortalURL(request) + "/o/commerce-ui/search/");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
+
 		putValue("visible", false);
 
 		setTemplateNamespace("SearchResults.render");

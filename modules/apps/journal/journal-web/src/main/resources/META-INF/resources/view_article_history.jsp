@@ -268,6 +268,15 @@ JournalArticle article = journalDisplayContext.getArticle();
 				}
 			</c:if>
 
+			<c:if test="<%= portletDisplay.isStatePopUp() %>">
+
+				<%
+				Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), journalHistoryDisplayContext.getReferringPortletResource());
+				%>
+
+				Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_');
+			</c:if>
+
 			Liferay.componentReady('journalHistoryManagementToolbar').then(
 				function(managementToolbar) {
 					managementToolbar.on(

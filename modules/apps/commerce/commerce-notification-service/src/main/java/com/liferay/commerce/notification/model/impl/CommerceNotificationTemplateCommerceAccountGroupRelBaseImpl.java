@@ -34,7 +34,7 @@ public abstract class
 		extends CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		implements CommerceNotificationTemplateCommerceAccountGroupRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce notification template commerce account group rel model instance should use the <code>CommerceNotificationTemplateCommerceAccountGroupRel</code> interface instead.

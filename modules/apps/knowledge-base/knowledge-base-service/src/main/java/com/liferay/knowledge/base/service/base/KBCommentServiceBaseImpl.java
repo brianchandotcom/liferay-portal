@@ -54,7 +54,7 @@ public abstract class KBCommentServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, KBCommentService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>KBCommentService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBCommentServiceUtil</code>.
@@ -699,8 +699,8 @@ public abstract class KBCommentServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

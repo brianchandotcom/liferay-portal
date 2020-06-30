@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {closest} from 'metal-dom';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
@@ -106,6 +107,23 @@ class LayoutColumn extends Component {
 			)
 		) {
 			event.preventDefault();
+		}
+	}
+
+	/**
+	 * Handle column item title click event and propagate it to
+	 * the corresponding item mask.
+	 * @param {MouseEvent} event
+	 */
+	_handleLayoutColumnItemTitleClick(event) {
+		const layoutItemElement = closest(event.delegateTarget, '.layout-item');
+
+		const maskElement =
+			layoutItemElement &&
+			layoutItemElement.querySelector('.layout-column-item-click-mask');
+
+		if (maskElement) {
+			maskElement.click();
 		}
 	}
 }

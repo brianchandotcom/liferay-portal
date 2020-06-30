@@ -1,8 +1,11 @@
 Bundle-Name: Liferay Export Import Service
 Bundle-SymbolicName: com.liferay.exportimport.service
-Bundle-Version: 5.0.71
+Bundle-Version: 5.0.81
 Import-Package:\
 	com.liferay.exportimport.kernel.lar;version="[1.0.0,2.0.0)",\
 	\
 	*
--includeresource: content=../../staging/staging-lang/src/main/resources/content
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.staging.lang)";\
+		resource.bundle.base.name="content.Language"

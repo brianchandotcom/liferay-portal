@@ -76,9 +76,9 @@ To build a module (e.g., a module located in
 
 The following messages should appear in the bundle logs:
 
-      20:31:55,899 INFO  [fileinstall-/Users/jamie/liferay/repos/contrib/bundles/osgi/modules][BundleStartStopLogger:38] STOPPED com.liferay.comment.web_1.1.8 [243]
+      20:31:55,899 INFO [fileinstall-/Users/jamie/liferay/repos/contrib/bundles/osgi/modules][BundleStartStopLogger:38] STOPPED com.liferay.comment.web_1.1.8 [243]
 
-      20:31:56,038 INFO  [Refresh Thread: Equinox Container: 208f839d-2b6b-0017-1f31-cc9c6b1fc91b][BundleStartStopLogger:35] STARTED com.liferay.comment.web_1.1.8 [243]
+      20:31:56,038 INFO [Refresh Thread: Equinox Container: 208f839d-2b6b-0017-1f31-cc9c6b1fc91b][BundleStartStopLogger:35] STARTED com.liferay.comment.web_1.1.8 [243]
 
 # Making Changes
 

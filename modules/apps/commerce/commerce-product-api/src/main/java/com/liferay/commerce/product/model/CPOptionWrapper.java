@@ -573,11 +573,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		return _cpOption.isSkuContributor();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp option model instance should use the <code>CPOption</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpOption.persist();

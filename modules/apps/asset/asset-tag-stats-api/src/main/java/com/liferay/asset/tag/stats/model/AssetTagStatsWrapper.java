@@ -206,11 +206,6 @@ public class AssetTagStatsWrapper
 		return _assetTagStats.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a asset tag stats model instance should use the <code>AssetTagStats</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_assetTagStats.persist();

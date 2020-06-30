@@ -72,9 +72,7 @@ public class ViewJournalSourcePortletConfigurationIcon
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		JournalArticle article = null;
-
-		article = getArticle(portletRequest);
+		JournalArticle article = getArticle(portletRequest);
 
 		if (article == null) {
 			return StringPool.BLANK;

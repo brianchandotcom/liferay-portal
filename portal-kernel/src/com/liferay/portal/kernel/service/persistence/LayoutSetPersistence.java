@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetUtil} to access the layout set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

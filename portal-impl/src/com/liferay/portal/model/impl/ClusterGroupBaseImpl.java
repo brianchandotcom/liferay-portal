@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil;
 public abstract class ClusterGroupBaseImpl
 	extends ClusterGroupModelImpl implements ClusterGroup {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cluster group model instance should use the <code>ClusterGroup</code> interface instead.

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface SyncDevice extends PersistedModel, SyncDeviceModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDeviceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

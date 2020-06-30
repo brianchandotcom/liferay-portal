@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface DDMFormInstanceVersion
 	extends DDMFormInstanceVersionModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

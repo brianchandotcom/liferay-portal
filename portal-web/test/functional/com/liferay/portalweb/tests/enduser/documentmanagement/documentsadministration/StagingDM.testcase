@@ -41,7 +41,8 @@ definition {
 			portlet = "Documents and Media");
 	}
 
-	@description = "This is a use case for LPS-74621."
+	@description = "This will be ignored until LPS-98154 is fixed. This is a use case for LPS-74621."
+	@ignore = "true"
 	@priority = "3"
 	test CommentDMDocumentOnLiveSite {
 		Navigator.gotoStagedSitePage(

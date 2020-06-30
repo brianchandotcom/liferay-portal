@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface AddressPersistence extends BasePersistence<Address> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressUtil} to access the address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -43,7 +43,7 @@ import java.util.Date;
 public interface WeDeployAuthTokenModel
 	extends AuditedModel, BaseModel<WeDeployAuthToken>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a we deploy auth token model instance should use the {@link WeDeployAuthToken} interface instead.

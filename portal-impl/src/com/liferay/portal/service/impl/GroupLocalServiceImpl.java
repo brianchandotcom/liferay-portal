@@ -93,7 +93,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -108,6 +110,8 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -135,6 +139,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
 import java.io.Serializable;
+
+import java.net.ConnectException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -418,7 +424,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
-		groupPersistence.update(group);
+		group = groupPersistence.update(group);
 
 		// Layout sets
 
@@ -1068,7 +1074,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				group.setSite(false);
 
-				groupPersistence.update(group);
+				group = groupPersistence.update(group);
 
 				// Group roles
 
@@ -1107,12 +1113,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					}
 				}
 
+				long companyId = group.getCompanyId();
 				long[] userIds = getUserPrimaryKeys(group.getGroupId());
 
 				if (ArrayUtil.isNotEmpty(userIds)) {
 					TransactionCommitCallbackUtil.registerCallback(
 						() -> {
-							reindex(group.getCompanyId(), userIds);
+							reindex(companyId, userIds);
 
 							return null;
 						});
@@ -3729,9 +3736,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setFriendlyURL(friendlyURL);
 
-		groupPersistence.update(group);
-
-		return group;
+		return groupPersistence.update(group);
 	}
 
 	@Override
@@ -3743,7 +3748,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		final Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		String className = group.getClassName();
 		long classNameId = group.getClassNameId();
@@ -3758,9 +3763,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if ((nameMap != null) &&
-			Validator.isNotNull(nameMap.get(LocaleUtil.getDefault()))) {
+			Validator.isNotNull(
+				nameMap.get(
+					LocaleUtil.fromLanguageId(group.getDefaultLanguageId())))) {
 
-			groupKey = nameMap.get(LocaleUtil.getDefault());
+			groupKey = nameMap.get(
+				LocaleUtil.fromLanguageId(group.getDefaultLanguageId()));
 		}
 
 		friendlyURL = getFriendlyURL(
@@ -3811,9 +3819,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (group.isActive() != active) {
 			group.setActive(active);
 
+			long companyId = group.getCompanyId();
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(group.getCompanyId(), getUserPrimaryKeys(groupId));
+					reindex(companyId, getUserPrimaryKeys(groupId));
 
 					return null;
 				});
@@ -3823,7 +3833,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
-		groupPersistence.update(group);
+		group = groupPersistence.update(group);
 
 		if (group.hasStagingGroup() && !group.isStagedRemotely()) {
 			Group stagingGroup = group.getStagingGroup();
@@ -3841,9 +3851,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		User user = null;
-
-		user = userPersistence.fetchByPrimaryKey(group.getCreatorUserId());
+		User user = userPersistence.fetchByPrimaryKey(group.getCreatorUserId());
 
 		if (user == null) {
 			user = userPersistence.fetchByPrimaryKey(
@@ -3939,6 +3947,30 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			validateLanguageIds(defaultLanguageId, newLanguageIds);
 
+			if (!Objects.equals(
+					group.getDefaultLanguageId(), defaultLanguageId)) {
+
+				Locale defaultLocale = LocaleUtil.fromLanguageId(
+					defaultLanguageId);
+
+				Map<Locale, String> oldNameMap = group.getNameMap();
+
+				group.setNameMap(oldNameMap, defaultLocale);
+
+				Map<Locale, String> oldDecriptionMap =
+					group.getDescriptionMap();
+
+				group.setDescriptionMap(oldDecriptionMap, defaultLocale);
+
+				Map<Locale, String> nameMap = group.getNameMap();
+
+				if ((nameMap != null) &&
+					Validator.isNotNull(nameMap.get(defaultLocale))) {
+
+					group.setGroupKey(nameMap.get(defaultLocale));
+				}
+			}
+
 			if (!Objects.equals(oldLanguageIds, newLanguageIds)) {
 				LanguageUtil.resetAvailableGroupLocales(groupId);
 			}
@@ -3946,9 +3978,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setTypeSettings(typeSettings);
 
-		groupPersistence.update(group);
-
-		return group;
+		return groupPersistence.update(group);
 	}
 
 	/**
@@ -3969,9 +3999,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setSite(site);
 
-		groupPersistence.update(group);
-
-		return group;
+		return groupPersistence.update(group);
 	}
 
 	@Override
@@ -5207,8 +5235,41 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Ping the remote host and verify that the remote group exists in
 			// the same company as the remote user
 
-			GroupServiceHttp.checkRemoteStagingGroup(
-				httpPrincipal, remoteGroupId);
+			try {
+				MethodKey methodKey = new MethodKey(
+					GroupService.class, "checkRemoteStagingGroup",
+					_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES);
+
+				MethodHandler methodHandler = new MethodHandler(
+					methodKey, remoteGroupId);
+
+				try {
+					TunnelUtil.invoke(httpPrincipal, methodHandler);
+				}
+				catch (Exception exception) {
+					if (exception instanceof PortalException) {
+						throw (PortalException)exception;
+					}
+
+					throw new SystemException(exception);
+				}
+			}
+			catch (SystemException systemException) {
+				if (systemException.getCause() instanceof ConnectException) {
+					_log.error(
+						"Unable to connect to remote live: " +
+							systemException.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(systemException, systemException);
+					}
+				}
+				else {
+					_log.error(systemException, systemException);
+				}
+
+				throw systemException;
+			}
 
 			// Ensure that the local group and the remote group are not the same
 			// group and that they are either both company groups or both not
@@ -5293,6 +5354,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected File publicLARFile;
+
+	private static final Class<?>[]
+		_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES = new Class<?>[] {
+			long.class
+		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);

@@ -33,7 +33,7 @@ public abstract class KaleoTimerInstanceTokenBaseImpl
 	extends KaleoTimerInstanceTokenModelImpl
 	implements KaleoTimerInstanceToken {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo timer instance token model instance should use the <code>KaleoTimerInstanceToken</code> interface instead.

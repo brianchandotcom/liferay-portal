@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPDefinitionInventoryPersistence
 	extends BasePersistence<CPDefinitionInventory> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionInventoryUtil} to access the cp definition inventory persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

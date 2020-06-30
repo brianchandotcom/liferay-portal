@@ -40,7 +40,7 @@ public interface WorkflowInstanceLinkModel
 	extends AttachedModel, BaseModel<WorkflowInstanceLink>, GroupedModel,
 			MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a workflow instance link model instance should use the {@link WorkflowInstanceLink} interface instead.

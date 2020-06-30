@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupUtil} to access the mdr rule group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

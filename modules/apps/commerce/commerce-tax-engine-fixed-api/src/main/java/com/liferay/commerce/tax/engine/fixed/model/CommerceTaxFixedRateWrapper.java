@@ -303,11 +303,6 @@ public class CommerceTaxFixedRateWrapper
 		return _commerceTaxFixedRate.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce tax fixed rate model instance should use the <code>CommerceTaxFixedRate</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceTaxFixedRate.persist();

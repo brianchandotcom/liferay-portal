@@ -608,11 +608,6 @@ public class CommerceAddressWrapper
 		return _commerceAddress.isSameAddress(commerceAddress);
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce address model instance should use the <code>CommerceAddress</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceAddress.persist();

@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.inventory.service.http;
 
+import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityServiceUtil</code> service
+ * <code>CommerceInventoryBookedQuantityServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,51 @@ package com.liferay.commerce.inventory.service.http;
  * @generated
  */
 public class CommerceInventoryBookedQuantityServiceSoap {
+
+	public static
+		com.liferay.commerce.inventory.model.
+			CommerceInventoryBookedQuantitySoap[]
+					getCommerceInventoryBookedQuantities(
+						long companyId, String sku, int start, int end)
+				throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.inventory.model.
+					CommerceInventoryBookedQuantity> returnValue =
+						CommerceInventoryBookedQuantityServiceUtil.
+							getCommerceInventoryBookedQuantities(
+								companyId, sku, start, end);
+
+			return com.liferay.commerce.inventory.model.
+				CommerceInventoryBookedQuantitySoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String sku)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceInventoryBookedQuantityServiceUtil.
+					getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CommerceInventoryBookedQuantityServiceSoap.class);
+
 }

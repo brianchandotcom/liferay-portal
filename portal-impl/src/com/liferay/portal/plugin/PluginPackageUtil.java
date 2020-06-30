@@ -642,6 +642,8 @@ public class PluginPackageUtil {
 
 				response = options.getResponse();
 
+				responseCode = response.getResponseCode();
+
 				if (responseCode != HttpServletResponse.SC_OK) {
 					throw new PluginPackageException(
 						StringBundler.concat(

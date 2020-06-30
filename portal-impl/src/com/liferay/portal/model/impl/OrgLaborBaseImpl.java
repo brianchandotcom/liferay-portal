@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
 public abstract class OrgLaborBaseImpl
 	extends OrgLaborModelImpl implements OrgLabor {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a org labor model instance should use the <code>OrgLabor</code> interface instead.

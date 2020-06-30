@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalServiceUtil;
 public abstract class RecentLayoutRevisionBaseImpl
 	extends RecentLayoutRevisionModelImpl implements RecentLayoutRevision {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a recent layout revision model instance should use the <code>RecentLayoutRevision</code> interface instead.

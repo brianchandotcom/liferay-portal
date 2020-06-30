@@ -75,7 +75,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 				align="center"
 				name="color"
 			>
-				<span class="calendar-portlet-color-box" style="background-color:<%= ColorUtil.toHexString(calendar.getColor()) %>;">&nbsp;</span>
+				<span class="calendar-portlet-color-box" style="background-color: <%= ColorUtil.toHexString(calendar.getColor()) %>;">&nbsp;</span>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

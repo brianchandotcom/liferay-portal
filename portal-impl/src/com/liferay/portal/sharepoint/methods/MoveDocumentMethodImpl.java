@@ -51,9 +51,7 @@ public class MoveDocumentMethodImpl extends BaseMethodImpl {
 
 		oldUrl = SharepointUtil.replaceBackSlashes(oldUrl);
 
-		String newUrl = sharepointRequest.getParameterValue("newUrl");
-
-		newUrl = SharepointUtil.replaceBackSlashes(oldUrl);
+		String newUrl = SharepointUtil.replaceBackSlashes(oldUrl);
 
 		SharepointStorage storage = sharepointRequest.getSharepointStorage();
 

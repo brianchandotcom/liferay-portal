@@ -48,7 +48,7 @@ public interface MDRRuleGroupModel
 	extends BaseModel<MDRRuleGroup>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a mdr rule group model instance should use the {@link MDRRuleGroup} interface instead.

@@ -30,19 +30,19 @@ import java.util.Map;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceTaxMethodLocalServiceImpl
 	extends CommerceTaxMethodLocalServiceBaseImpl {
 
 	@Override
 	public CommerceTaxMethod addCommerceTaxMethod(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String engineKey, boolean percentage, boolean active,
-			ServiceContext serviceContext)
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		validate(nameMap, engineKey);
 
@@ -61,9 +61,23 @@ public class CommerceTaxMethodLocalServiceImpl
 		commerceTaxMethod.setPercentage(percentage);
 		commerceTaxMethod.setActive(active);
 
-		commerceTaxMethodPersistence.update(commerceTaxMethod);
+		return commerceTaxMethodPersistence.update(commerceTaxMethod);
+	}
 
-		return commerceTaxMethod;
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceTaxMethod addCommerceTaxMethod(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String engineKey, boolean percentage, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceTaxMethodLocalService.addCommerceTaxMethod(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			nameMap, descriptionMap, engineKey, percentage, active);
 	}
 
 	@Override
@@ -110,9 +124,7 @@ public class CommerceTaxMethodLocalServiceImpl
 
 		commerceTaxMethod.setActive(active);
 
-		commerceTaxMethodPersistence.update(commerceTaxMethod);
-
-		return commerceTaxMethod;
+		return commerceTaxMethodPersistence.update(commerceTaxMethod);
 	}
 
 	@Override
@@ -132,9 +144,7 @@ public class CommerceTaxMethodLocalServiceImpl
 		commerceTaxMethod.setPercentage(percentage);
 		commerceTaxMethod.setActive(active);
 
-		commerceTaxMethodPersistence.update(commerceTaxMethod);
-
-		return commerceTaxMethod;
+		return commerceTaxMethodPersistence.update(commerceTaxMethod);
 	}
 
 	protected void validate(Map<Locale, String> nameMap, String engineKey)

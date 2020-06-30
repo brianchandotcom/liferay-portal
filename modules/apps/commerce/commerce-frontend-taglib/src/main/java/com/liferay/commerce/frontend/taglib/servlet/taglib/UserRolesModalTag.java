@@ -48,9 +48,7 @@ public class UserRolesModalTag extends ComponentRendererTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		putValue(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		try {
 			List<AccountRole> selectedRoles = new ArrayList<>();

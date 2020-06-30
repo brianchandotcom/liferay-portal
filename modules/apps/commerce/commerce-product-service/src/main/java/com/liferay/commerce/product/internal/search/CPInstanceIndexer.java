@@ -16,10 +16,7 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -223,31 +220,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addKeyword(
 			CPField.EXTERNAL_REFERENCE_CODE,
 			cpInstance.getExternalReferenceCode());
-
-		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelListMap =
-				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
-					cpInstance.getCPDefinitionId(), cpInstance.getJson());
-
-		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelListMapEntry :
-					cpDefinitionOptionRelListMap.entrySet()) {
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				cpDefinitionOptionRelListMapEntry.getKey();
-
-			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				cpDefinitionOptionRelListMapEntry.getValue();
-
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				cpDefinitionOptionValueRels.get(0);
-
-			document.addText(
-				"ATTRIBUTE_" + cpOption.getKey() + "_VALUE_ID",
-				cpDefinitionOptionValueRel.getKey());
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpInstance + " indexed successfully");

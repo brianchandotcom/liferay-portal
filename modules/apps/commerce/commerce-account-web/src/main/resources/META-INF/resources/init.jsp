@@ -31,8 +31,11 @@ page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %>
 page import="com.liferay.commerce.account.exception.NoSuchAccountException" %><%@
 page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
 page import="com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext" %><%@
-page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountAddressClayTable" %><%@
-page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountOrganizationClayTable" %><%@
+page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountAddressClayDataSetDataSetDisplayView" %><%@
+page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountClayDataSetDataSetDisplayView" %><%@
+page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountOrganizationClayDataSetDataSetDisplayView" %><%@
+page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountUserClayDataSetDataSetDisplayView" %><%@
+page import="com.liferay.commerce.account.web.internal.frontend.CommerceAccountUserRolesClayTableDataSetDisplayView" %><%@
 page import="com.liferay.commerce.account.web.internal.servlet.taglib.ui.CommerceAccountScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.exception.NoSuchAddressException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@
@@ -64,7 +67,9 @@ page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

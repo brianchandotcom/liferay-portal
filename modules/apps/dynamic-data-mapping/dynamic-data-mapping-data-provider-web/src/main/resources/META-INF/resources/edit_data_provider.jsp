@@ -24,8 +24,6 @@ DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.
 long dataProviderInstanceId = BeanParamUtil.getLong(ddmDataProviderInstance, request, "dataProviderInstanceId");
 
 long groupId = BeanParamUtil.getLong(ddmDataProviderInstance, request, "groupId", scopeGroupId);
-String name = BeanParamUtil.getString(ddmDataProviderInstance, request, "name");
-String description = BeanParamUtil.getString(ddmDataProviderInstance, request, "description");
 String type = BeanParamUtil.getString(ddmDataProviderInstance, request, "type");
 
 portletDisplay.setShowBackIcon(true);
@@ -48,6 +46,8 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<aui:input name="dataProviderInstanceId" type="hidden" value="<%= String.valueOf(dataProviderInstanceId) %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="languageId" type="hidden" value="<%= String.valueOf(themeDisplay.getLanguageId()) %>" />
+
+	<%@ include file="/exceptions.jspf" %>
 
 	<div class="container-fluid-1280 lfr-ddm-edit-data-provider">
 		<aui:fieldset-group markupView="lexicon">

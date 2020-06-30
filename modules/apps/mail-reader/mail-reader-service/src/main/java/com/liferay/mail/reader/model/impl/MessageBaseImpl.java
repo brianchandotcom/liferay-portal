@@ -32,7 +32,7 @@ import com.liferay.mail.reader.service.MessageLocalServiceUtil;
 public abstract class MessageBaseImpl
 	extends MessageModelImpl implements Message {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message model instance should use the <code>Message</code> interface instead.

@@ -14,15 +14,16 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service.impl;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingFixedOptionServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,19 +42,35 @@ public class CommerceShippingFixedOptionServiceImpl
 
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
+			long userId, long groupId, long commerceShippingMethodId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			BigDecimal amount, double priority)
+		throws PortalException {
+
+		_checkCommerceChannelPermissionByGroupId(groupId);
+
+		return commerceShippingFixedOptionLocalService.
+			addCommerceShippingFixedOption(
+				userId, groupId, commerceShippingMethodId, nameMap,
+				descriptionMap, amount, priority);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, BigDecimal amount,
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
-
-		return commerceShippingFixedOptionLocalService.
+		return commerceShippingFixedOptionService.
 			addCommerceShippingFixedOption(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				commerceShippingMethodId, nameMap, descriptionMap, amount,
-				priority, serviceContext);
+				priority);
 	}
 
 	@Override
@@ -65,9 +82,8 @@ public class CommerceShippingFixedOptionServiceImpl
 			commerceShippingFixedOptionLocalService.
 				getCommerceShippingFixedOption(commerceShippingFixedOptionId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingFixedOption.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingFixedOption.getGroupId());
 
 		commerceShippingFixedOptionLocalService.
 			deleteCommerceShippingFixedOption(commerceShippingFixedOption);
@@ -83,10 +99,8 @@ public class CommerceShippingFixedOptionServiceImpl
 				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
 
 		if (commerceShippingFixedOption != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(),
-				commerceShippingFixedOption.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+			_checkCommerceChannelPermissionByGroupId(
+				commerceShippingFixedOption.getGroupId());
 		}
 
 		return commerceShippingFixedOption;
@@ -148,9 +162,8 @@ public class CommerceShippingFixedOptionServiceImpl
 			commerceShippingFixedOptionLocalService.
 				getCommerceShippingFixedOption(commerceShippingFixedOptionId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceShippingFixedOption.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceShippingFixedOption.getGroupId());
 
 		return commerceShippingFixedOptionLocalService.
 			updateCommerceShippingFixedOption(
@@ -158,11 +171,25 @@ public class CommerceShippingFixedOptionServiceImpl
 				priority);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
+	private void _checkCommerceChannelPermissionByGroupId(long groupId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.UPDATE);
+	}
+
+	private static volatile ModelResourcePermission<CommerceChannel>
+		_commerceChannelModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
 				CommerceShippingFixedOptionServiceImpl.class,
-				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
+				"_commerceChannelModelResourcePermission",
+				CommerceChannel.class);
+
+	@ServiceReference(type = CommerceChannelLocalService.class)
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@ServiceReference(type = CommerceShippingMethodService.class)
 	private CommerceShippingMethodService _commerceShippingMethodService;

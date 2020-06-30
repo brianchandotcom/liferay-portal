@@ -42,7 +42,7 @@ import java.util.Set;
 @Deprecated
 public class AssetTagStatsUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

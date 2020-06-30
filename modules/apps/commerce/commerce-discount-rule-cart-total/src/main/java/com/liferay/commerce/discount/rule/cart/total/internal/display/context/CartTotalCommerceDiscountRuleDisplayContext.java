@@ -91,6 +91,10 @@ public class CartTotalCommerceDiscountRuleDisplayContext {
 			return typeSettings;
 		}
 
+		if (typeSettings == null) {
+			return null;
+		}
+
 		BigDecimal value = new BigDecimal(typeSettings);
 
 		value = commerceCurrency.round(value);

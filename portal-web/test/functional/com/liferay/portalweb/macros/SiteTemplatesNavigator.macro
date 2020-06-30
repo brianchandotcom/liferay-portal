@@ -12,4 +12,10 @@ definition {
 		Navigator._gotoPage(pageName = "${pageName}");
 	}
 
+	macro openSiteTemplatesAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage/-/site_templates/templates");
+	}
+
 }

@@ -40,11 +40,6 @@ public class RoleItemSelectorChecker extends EmptyOnClickRowChecker {
 		return ArrayUtil.contains(_checkedRoleIds, role.getRoleId());
 	}
 
-	@Override
-	public boolean isDisabled(Object obj) {
-		return isChecked(obj);
-	}
-
 	private final long[] _checkedRoleIds;
 
 }

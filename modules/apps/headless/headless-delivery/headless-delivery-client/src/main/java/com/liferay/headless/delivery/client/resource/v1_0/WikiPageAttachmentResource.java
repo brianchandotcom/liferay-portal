@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.resource.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageAttachmentSerDes;
 
 import java.io.File;
@@ -47,6 +48,13 @@ public interface WikiPageAttachmentResource {
 			Long wikiPageAttachmentId)
 		throws Exception;
 
+	public void deleteWikiPageAttachmentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteWikiPageAttachmentBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public WikiPageAttachment getWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception;
 
@@ -70,6 +78,18 @@ public interface WikiPageAttachmentResource {
 	public HttpInvoker.HttpResponse postWikiPageWikiPageAttachmentHttpResponse(
 			Long wikiPageId, WikiPageAttachment wikiPageAttachment,
 			Map<String, File> multipartFiles)
+		throws Exception;
+
+	public void postWikiPageWikiPageAttachmentBatch(
+			Long wikiPageId, WikiPageAttachment wikiPageAttachment,
+			Map<String, File> multipartFiles, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postWikiPageWikiPageAttachmentBatchHttpResponse(
+				Long wikiPageId, WikiPageAttachment wikiPageAttachment,
+				Map<String, File> multipartFiles, String callbackURL,
+				Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -141,6 +161,17 @@ public interface WikiPageAttachmentResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse deleteWikiPageAttachmentHttpResponse(
@@ -180,6 +211,64 @@ public interface WikiPageAttachmentResource {
 			return httpInvoker.invoke();
 		}
 
+		public void deleteWikiPageAttachmentBatch(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteWikiPageAttachmentBatchHttpResponse(callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteWikiPageAttachmentBatchHttpResponse(
+					String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-page-attachments/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public WikiPageAttachment getWikiPageAttachment(
 				Long wikiPageAttachmentId)
 			throws Exception {
@@ -203,7 +292,7 @@ public interface WikiPageAttachmentResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -259,7 +348,16 @@ public interface WikiPageAttachmentResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, WikiPageAttachmentSerDes::toDTO);
+			try {
+				return Page.of(content, WikiPageAttachmentSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -324,7 +422,7 @@ public interface WikiPageAttachmentResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -369,6 +467,73 @@ public interface WikiPageAttachmentResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments",
+				wikiPageId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postWikiPageWikiPageAttachmentBatch(
+				Long wikiPageId, WikiPageAttachment wikiPageAttachment,
+				Map<String, File> multipartFiles, String callbackURL,
+				Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWikiPageWikiPageAttachmentBatchHttpResponse(
+					wikiPageId, wikiPageAttachment, multipartFiles, callbackURL,
+					object);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				postWikiPageWikiPageAttachmentBatchHttpResponse(
+					Long wikiPageId, WikiPageAttachment wikiPageAttachment,
+					Map<String, File> multipartFiles, String callbackURL,
+					Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments/batch",
 				wikiPageId);
 
 			httpInvoker.userNameAndPassword(

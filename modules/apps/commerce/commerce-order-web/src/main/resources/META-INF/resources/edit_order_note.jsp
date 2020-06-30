@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+<!-- test edit_order_note -->
 
 <%
 CommerceOrderNoteEditDisplayContext commerceOrderNoteEditDisplayContext = (CommerceOrderNoteEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);

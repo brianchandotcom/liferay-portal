@@ -28,8 +28,9 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -91,7 +94,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	immediate = true, service = AssetPublisherHelper.class
 )
 public class AssetPublisherHelperImpl implements AssetPublisherHelper {
@@ -139,7 +142,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		if (_isSearchWithIndex(portletName, assetEntryQuery)) {
 			return _assetHelper.searchAssetEntries(
-				assetEntryQuery, getAssetCategoryIds(portletPreferences),
+				assetEntryQuery,
+				_filterAssetCategoryIds(assetEntryQuery, portletPreferences),
 				getAssetTagNames(portletPreferences), attributes, companyId,
 				assetEntryQuery.getKeywords(), layout, locale, scopeGroupId,
 				timeZone, userId, start, end);
@@ -508,12 +512,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry,
 		boolean viewInContext) {
 
-		PortletURL viewFullContentURL =
-			liferayPortletResponse.createRenderURL();
-
-		viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
-		viewFullContentURL.setParameter(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		PortletURL viewFullContentURL = getBaseAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetRenderer,
+			assetEntry);
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
@@ -539,11 +540,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		viewFullContentURL.setParameter(
 			"redirect", redirectURLToOriginalLayout);
 
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
-		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
 		String viewURL = null;
 
 		if (viewInContext) {
@@ -562,7 +558,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 						_portal.getCurrentURL(liferayPortletRequest));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -570,10 +566,54 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			viewURL = viewFullContentURL.toString();
 		}
 
-		viewURL = _replacePortletIdIfLinkedToAnotherLayout(
+		return _replacePortletIdIfLinkedToAnotherLayout(
 			liferayPortletRequest, viewURL);
+	}
 
-		return viewURL;
+	@Override
+	public PortletURL getBaseAssetViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		AssetRenderer<?> assetRenderer, AssetEntry assetEntry) {
+
+		PortletURL baseAssetViewURL = liferayPortletResponse.createRenderURL();
+
+		baseAssetViewURL.setParameter("mvcPath", "/view_content.jsp");
+		baseAssetViewURL.setParameter(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+		AssetRendererFactory<?> assetRendererFactory =
+			assetRenderer.getAssetRendererFactory();
+
+		baseAssetViewURL.setParameter("type", assetRendererFactory.getType());
+
+		String urlTitle = assetRenderer.getUrlTitle(
+			liferayPortletRequest.getLocale());
+
+		if (Validator.isNotNull(urlTitle)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()) {
+				baseAssetViewURL.setParameter(
+					"groupId", String.valueOf(assetRenderer.getGroupId()));
+			}
+
+			urlTitle = urlTitle.replaceAll(StringPool.SLASH, StringPool.DASH);
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.PLUS);
+
+			urlTitle = urlTitle.replaceAll(sb.toString(), StringPool.DASH);
+
+			baseAssetViewURL.setParameter("urlTitle", urlTitle);
+		}
+
+		return baseAssetViewURL;
 	}
 
 	@Override
@@ -810,6 +850,18 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		}
 
 		return false;
+	}
+
+	private long[] _filterAssetCategoryIds(
+		AssetEntryQuery assetEntryQuery,
+		PortletPreferences portletPreferences) {
+
+		long[] filteredAssetCategoryIds = ArrayUtil.filter(
+			getAssetCategoryIds(portletPreferences),
+			assetCategoryId -> !ArrayUtil.contains(
+				assetEntryQuery.getAllCategoryIds(), assetCategoryId));
+
+		return _filterAssetCategoryIds(filteredAssetCategoryIds);
 	}
 
 	private long[] _filterAssetCategoryIds(long[] assetCategoryIds) {
@@ -1250,6 +1302,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
 		}
+
+		anyAssetCategoryIds = _filterAssetCategoryIds(anyAssetCategoryIds);
 
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 

@@ -1,0 +1,33 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+
+		//add role
+
+		JSONRole.addOrganizationRole(roleTitle = "organization role");
+
+		JSONRole.addRegularRole(roleTitle = "regular role");
+
+		JSONRole.addSiteRole(roleTitle = "site role");
+
+		JSONRole.addOrganizationRole(
+			roleKey = "organization role 2",
+			roleTitle = "organization role 2");
+
+		JSONRole.addRegularRole(
+			roleKey = "regular role 2",
+			roleTitle = "regular role 2");
+
+		JSONRole.addSiteRole(
+			roleKey = "site role 2",
+			roleTitle = "site role 2");
+
+		//user
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "site role",
+			userEmailAddress = "test@liferay.com");
+	}
+
+}

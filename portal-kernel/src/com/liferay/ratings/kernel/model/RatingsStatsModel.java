@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface RatingsStatsModel
 	extends AttachedModel, BaseModel<RatingsStats>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ratings stats model instance should use the {@link RatingsStats} interface instead.

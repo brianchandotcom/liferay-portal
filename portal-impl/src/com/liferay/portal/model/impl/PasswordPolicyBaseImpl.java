@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 public abstract class PasswordPolicyBaseImpl
 	extends PasswordPolicyModelImpl implements PasswordPolicy {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a password policy model instance should use the <code>PasswordPolicy</code> interface instead.

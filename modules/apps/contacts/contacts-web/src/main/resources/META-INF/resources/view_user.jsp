@@ -187,8 +187,6 @@ request.setAttribute("view_user.jsp-user", user2);
 									String title = extensionPath.substring(extensionPath.lastIndexOf(StringPool.SLASH) + 1, extensionPath.lastIndexOf(StringPool.PERIOD));
 
 									title = title.replace(CharPool.UNDERLINE, CharPool.DASH);
-
-									String cssClass = "lfr-" + title + "-container";
 								%>
 
 									<div class="user-information-title">

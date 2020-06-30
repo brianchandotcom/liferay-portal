@@ -36,11 +36,11 @@ public class InfoBoxTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		setNamespacedAttribute(request, "actionLabel", _actionLabel);
+		setNamespacedAttribute(request, "actionTargetId", _actionTargetId);
+		setNamespacedAttribute(request, "actionUrl", _actionUrl);
 		setNamespacedAttribute(request, "elementClasses", _elementClasses);
 		setNamespacedAttribute(request, "title", _title);
-		setNamespacedAttribute(request, "actionTargetId", _actionTargetId);
-		setNamespacedAttribute(request, "actionLabel", _actionLabel);
-		setNamespacedAttribute(request, "actionUrl", _actionUrl);
 
 		super.doStartTag();
 

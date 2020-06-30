@@ -32,11 +32,6 @@ public class BookmarksFolderServiceWrapper
 		_bookmarksFolderService = bookmarksFolderService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link BookmarksFolderServiceUtil} to access the bookmarks folder remote service. Add custom service methods to <code>com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder addFolder(
 			long parentFolderId, String name, String description,

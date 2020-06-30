@@ -53,7 +53,7 @@ public abstract class AssetTagServiceBaseImpl
 	extends BaseServiceImpl
 	implements AssetTagService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>AssetTagService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.kernel.service.AssetTagServiceUtil</code>.
@@ -526,8 +526,8 @@ public abstract class AssetTagServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

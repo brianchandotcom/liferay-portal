@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMStorageLinkPersistence
 	extends BasePersistence<DDMStorageLink> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStorageLinkUtil} to access the ddm storage link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

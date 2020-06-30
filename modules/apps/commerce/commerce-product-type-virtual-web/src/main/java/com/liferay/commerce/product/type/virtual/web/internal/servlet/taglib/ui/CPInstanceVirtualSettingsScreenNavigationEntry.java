@@ -22,6 +22,7 @@ import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstant
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -50,15 +51,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=50",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=50",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CPInstanceVirtualSettingsScreenNavigationEntry
-	implements ScreenNavigationEntry<CPInstance> {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+		return "virtual-settings";
 	}
 
 	@Override

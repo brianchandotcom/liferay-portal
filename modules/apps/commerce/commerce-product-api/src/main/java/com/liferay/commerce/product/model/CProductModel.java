@@ -45,7 +45,7 @@ public interface CProductModel
 	extends BaseModel<CProduct>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a c product model instance should use the {@link CProduct} interface instead.

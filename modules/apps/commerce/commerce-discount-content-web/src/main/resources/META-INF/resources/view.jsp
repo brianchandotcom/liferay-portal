@@ -58,14 +58,13 @@ if (commerceOrder != null) {
 			</div>
 
 			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />couponCodeIconRemove').on(
-					'click',
-					function(event) {
-						event.preventDefault();
+				A.one('#<portlet:namespace />couponCodeIconRemove').on('click', function(
+					event
+				) {
+					event.preventDefault();
 
-						submitForm(document.<portlet:namespace />fm);
-					}
-				);
+					submitForm(document.<portlet:namespace />fm);
+				});
 			</aui:script>
 		</c:when>
 		<c:otherwise>

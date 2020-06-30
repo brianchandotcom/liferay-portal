@@ -228,11 +228,6 @@ public class UserGroupRoleWrapper
 		return _userGroupRole.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a user group role model instance should use the <code>UserGroupRole</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_userGroupRole.persist();

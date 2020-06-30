@@ -67,9 +67,7 @@ public class AddressModalTag extends ComponentRendererTag {
 			"regionsAPI",
 			PortalUtil.getPortalURL(request) +
 				"/o/commerce-ui/address/regions/");
-		putValue(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		setTemplateNamespace("AddressModal.render");
 

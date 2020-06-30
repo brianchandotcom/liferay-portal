@@ -62,7 +62,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
 				<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+				<portlet:param name="scopeId" value="<%= assetPublisherHelper.getScopeId(group, scopeGroupId) %>" />
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon

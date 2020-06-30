@@ -14,13 +14,17 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_6_0;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
+import com.liferay.commerce.product.model.impl.CommerceChannelModelImpl;
+import com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -35,12 +39,24 @@ import java.sql.Statement;
  */
 public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 
-	public CommerceCatalogUpgradeProcess(GroupLocalService groupLocalService) {
+	public CommerceCatalogUpgradeProcess(
+		ClassNameLocalService classNameLocalService,
+		GroupLocalService groupLocalService) {
+
+		_classNameLocalService = classNameLocalService;
 		_groupLocalService = groupLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!hasTable(CommerceChannelModelImpl.TABLE_NAME)) {
+			runSQL(CommerceChannelModelImpl.TABLE_SQL_CREATE);
+		}
+
+		if (!hasTable(CommerceChannelRelModelImpl.TABLE_NAME)) {
+			runSQL(CommerceChannelRelModelImpl.TABLE_SQL_CREATE);
+		}
+
 		if (!hasTable(CommerceCatalogModelImpl.TABLE_NAME)) {
 			runSQL(CommerceCatalogModelImpl.TABLE_SQL_CREATE);
 		}
@@ -55,17 +71,29 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 			"userId, userName, createDate, modifiedDate, name, siteGroupId, ",
 			"type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+		String insertCommerceChannelRelSQL = StringBundler.concat(
+			"insert into CommerceChannelRel (commerceChannelRelId, companyId, ",
+			"userId, userName, createDate, modifiedDate, classNameId, ",
+			"classPK, commerceChannelId) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 		try (PreparedStatement ps1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, insertCommerceCatalogSQL);
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, insertCommerceChannelSQL);
-			Statement s = connection.createStatement(
+			PreparedStatement ps3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection, insertCommerceChannelRelSQL);
+			Statement s1 = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = s.executeQuery(
+			ResultSet rs = s1.executeQuery(
 				"select distinct groupId, companyId, userId, userName, " +
 					"defaultLanguageId from CPDefinition")) {
+
+			long cpDefinitionClassNameId =
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName());
 
 			while (rs.next()) {
 				long commerceCatalogId = increment();
@@ -90,7 +118,7 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 
 				ps1.setString(8, defaultLanguageId);
 
-				ps1.executeUpdate();
+				ps1.addBatch();
 
 				ps2.setLong(1, commerceChannelId);
 				ps2.setLong(2, companyId);
@@ -102,7 +130,7 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 				ps2.setLong(8, siteGroup.getGroupId());
 				ps2.setString(9, CommerceChannelConstants.CHANNEL_TYPE_SITE);
 
-				ps2.executeUpdate();
+				ps2.addBatch();
 
 				Group catalogGroup = _groupLocalService.addGroup(
 					userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -129,6 +157,32 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 					String.format(
 						updateTableGroupIdSQL, "CPDefinition",
 						catalogGroup.getGroupId(), siteGroup.getGroupId()));
+
+				Statement s2 = connection.createStatement(
+					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
+				ResultSet cpDefinitionsResultSet = s2.executeQuery(
+					"select distinct cpDefinitionId from CPDefinition where " +
+						"groupId = " + catalogGroup.getGroupId());
+
+				while (cpDefinitionsResultSet.next()) {
+					long commerceChannelRelId = increment();
+
+					ps3.setLong(1, commerceChannelRelId);
+
+					ps3.setLong(2, companyId);
+					ps3.setLong(3, userId);
+					ps3.setString(4, userName);
+					ps3.setDate(5, now);
+					ps3.setDate(6, now);
+					ps3.setLong(7, cpDefinitionClassNameId);
+					ps3.setLong(
+						8, cpDefinitionsResultSet.getLong("cpDefinitionId"));
+					ps3.setLong(9, commerceChannelId);
+
+					ps3.addBatch();
+				}
+
 				runSQL(
 					String.format(
 						updateTableGroupIdSQL, "AssetEntry",
@@ -172,11 +226,6 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 
 				runSQL(
 					String.format(
-						updateTableGroupIdSQL, "CProduct",
-						catalogGroup.getGroupId(), siteGroup.getGroupId()));
-
-				runSQL(
-					String.format(
 						updateTableGroupIdSQL, "CPFriendlyURLEntry",
 						GroupConstants.DEFAULT_LIVE_GROUP_ID,
 						siteGroup.getGroupId()));
@@ -199,9 +248,11 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 
 			ps1.executeBatch();
 			ps2.executeBatch();
+			ps3.executeBatch();
 		}
 	}
 
+	private final ClassNameLocalService _classNameLocalService;
 	private final GroupLocalService _groupLocalService;
 
 }

@@ -1,11 +1,12 @@
 Bundle-Name: Liferay Dynamic Data Mapping API
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.api
-Bundle-Version: 4.10.2
+Bundle-Version: 4.11.1
 Export-Package:\
 	com.liferay.dynamic.data.mapping.annotations,\
 	com.liferay.dynamic.data.mapping.configuration,\
 	com.liferay.dynamic.data.mapping.constants,\
 	com.liferay.dynamic.data.mapping.data.provider,\
+	com.liferay.dynamic.data.mapping.data.provider.configuration,\
 	com.liferay.dynamic.data.mapping.exception,\
 	com.liferay.dynamic.data.mapping.expression,\
 	com.liferay.dynamic.data.mapping.expression.model,\

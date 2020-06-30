@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ProviderType
 public interface FriendlyURLEntryMapping extends FriendlyURLEntryMappingModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

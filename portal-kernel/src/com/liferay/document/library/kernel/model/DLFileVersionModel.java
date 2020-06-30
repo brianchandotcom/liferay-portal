@@ -45,7 +45,7 @@ public interface DLFileVersionModel
 	extends BaseModel<DLFileVersion>, ShardedModel, StagedGroupedModel,
 			WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a document library file version model instance should use the {@link DLFileVersion} interface instead.

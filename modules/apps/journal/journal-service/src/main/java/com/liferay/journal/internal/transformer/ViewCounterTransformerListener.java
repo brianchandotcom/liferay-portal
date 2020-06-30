@@ -69,9 +69,7 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 		sb.append(articleResourcePK);
 		sb.append("});</script>");
 
-		s = StringUtil.replace(s, _COUNTER_TOKEN, sb.toString());
-
-		return s;
+		return StringUtil.replace(s, _COUNTER_TOKEN, sb.toString());
 	}
 
 	private static final String _COUNTER_TOKEN =

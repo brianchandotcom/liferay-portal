@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -32,6 +33,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -105,7 +110,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				CPInstance cpInstance = updateCPInstance(actionRequest);
+				Callable<CPInstance> cpInstanceCallable =
+					new CPInstanceCallable(actionRequest);
+
+				CPInstance cpInstance = TransactionInvokerUtil.invoke(
+					_transactionConfig, cpInstanceCallable);
 
 				String redirect = getSaveAndContinueRedirect(
 					actionRequest, cpInstance);
@@ -118,33 +127,27 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPInstances(actionRequest);
 			}
-			else if (cmd.equals("updatePricingInfo")) {
-				updatePricingInfo(actionRequest);
-			}
-			else if (cmd.equals("updateShippingInfo")) {
-				updateShippingInfo(actionRequest);
-			}
 			else if (cmd.equals("updateSubscriptionInfo")) {
 				updateSubscriptionInfo(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CPDefinitionIgnoreSKUCombinationsException ||
-				e instanceof CPInstanceJsonException ||
-				e instanceof CPInstanceSkuException ||
-				e instanceof
+		catch (Throwable t) {
+			if (t instanceof CPDefinitionIgnoreSKUCombinationsException ||
+				t instanceof CPInstanceJsonException ||
+				t instanceof CPInstanceSkuException ||
+				t instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, t.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductInstance");
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(t);
 			}
 		}
 	}
@@ -169,6 +172,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}
@@ -255,16 +260,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateMinute, neverExpire, serviceContext);
 		}
 
-		return cpInstance;
-	}
-
-	protected void updatePricingInfo(ActionRequest actionRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+		// Update pricing info
 
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
@@ -273,25 +269,20 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "cost", BigDecimal.ZERO);
 
-		_cpInstanceService.updatePricingInfo(
-			cpInstanceId, price, promoPrice, cost, serviceContext);
-	}
+		cpInstance = _cpInstanceService.updatePricingInfo(
+			cpInstance.getCPInstanceId(), price, promoPrice, cost,
+			serviceContext);
 
-	protected void updateShippingInfo(ActionRequest actionRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+		// Update shipping info
 
 		double width = ParamUtil.getDouble(actionRequest, "width");
 		double height = ParamUtil.getDouble(actionRequest, "height");
 		double depth = ParamUtil.getDouble(actionRequest, "depth");
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 
-		_cpInstanceService.updateShippingInfo(
-			cpInstanceId, width, height, depth, weight, serviceContext);
+		return _cpInstanceService.updateShippingInfo(
+			cpInstance.getCPInstanceId(), width, height, depth, weight,
+			serviceContext);
 	}
 
 	protected void updateSubscriptionInfo(ActionRequest actionRequest)
@@ -312,21 +303,51 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "subscriptionTypeSettings--");
 		long maxSubscriptionCycles = ParamUtil.getLong(
 			actionRequest, "maxSubscriptionCycles");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
+		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "deliverySubscriptionEnabled");
+		int deliverySubscriptionLength = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionLength");
+		String deliverySubscriptionType = ParamUtil.getString(
+			actionRequest, "deliverySubscriptionType");
+		UnicodeProperties deliverySubscriptionTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "deliverySubscriptionTypeSettings--");
+		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "deliveryMaxSubscriptionCycles");
 
 		_cpInstanceService.updateSubscriptionInfo(
 			cpInstanceId, overrideSubscriptionInfo, subscriptionEnabled,
 			subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsProperties, maxSubscriptionCycles,
-			serviceContext);
+			deliverySubscriptionEnabled, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsProperties,
+			deliveryMaxSubscriptionCycles);
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	private class CPInstanceCallable implements Callable<CPInstance> {
+
+		@Override
+		public CPInstance call() throws Exception {
+			return updateCPInstance(_actionRequest);
+		}
+
+		private CPInstanceCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

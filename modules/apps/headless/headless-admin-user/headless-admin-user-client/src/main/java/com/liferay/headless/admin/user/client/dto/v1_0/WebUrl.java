@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WebUrl {
+public class WebUrl implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -86,6 +86,11 @@ public class WebUrl {
 	}
 
 	protected String urlType;
+
+	@Override
+	public WebUrl clone() throws CloneNotSupportedException {
+		return (WebUrl)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

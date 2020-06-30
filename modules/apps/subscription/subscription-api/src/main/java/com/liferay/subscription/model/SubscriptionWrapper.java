@@ -319,11 +319,6 @@ public class SubscriptionWrapper
 		return _subscription.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a subscription model instance should use the <code>Subscription</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_subscription.persist();

@@ -33,7 +33,7 @@ public class JournalContentFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "content";
+		return "web-content";
 	}
 
 	@Override

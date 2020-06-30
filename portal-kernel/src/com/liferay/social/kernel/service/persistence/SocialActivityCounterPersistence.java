@@ -40,7 +40,7 @@ import java.util.Set;
 public interface SocialActivityCounterPersistence
 	extends BasePersistence<SocialActivityCounter> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityCounterUtil} to access the social activity counter persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

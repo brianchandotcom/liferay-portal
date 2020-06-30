@@ -51,9 +51,9 @@ public class PageJsonSerializer extends JsonSerializer<Page> {
 		for (Object item : page.getItems()) {
 			Class<?> clazz = item.getClass();
 
-			Class<?> superclass = clazz.getSuperclass();
+			Class<?> superClass = clazz.getSuperclass();
 
-			XmlRootElement xmlRootElement = superclass.getAnnotation(
+			XmlRootElement xmlRootElement = superClass.getAnnotation(
 				XmlRootElement.class);
 
 			if (xmlRootElement != null) {

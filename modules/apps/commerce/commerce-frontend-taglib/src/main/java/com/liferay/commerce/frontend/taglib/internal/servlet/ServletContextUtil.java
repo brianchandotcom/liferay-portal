@@ -14,15 +14,14 @@
 
 package com.liferay.commerce.frontend.taglib.internal.servlet;
 
-import com.liferay.commerce.frontend.ClayTableContextContributorRegistry;
-import com.liferay.commerce.frontend.ClayTableDataJSONBuilder;
-import com.liferay.commerce.frontend.ClayTableRegistry;
-import com.liferay.commerce.frontend.ClayTableSerializer;
 import com.liferay.commerce.frontend.CommerceDataProviderRegistry;
 import com.liferay.commerce.frontend.FilterFactoryRegistry;
+import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDataJSONBuilder;
+import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayViewSerializer;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
@@ -35,26 +34,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = ServletContextUtil.class)
 public class ServletContextUtil {
 
-	public static final ClayTableContextContributorRegistry
-		getClayTableContextContributorRegistry() {
+	public static final ClayDataSetDisplayViewSerializer
+		getClayDataSetDisplayViewSerializer() {
 
-		return _servletContextUtil._getClayTableContextContributorRegistry();
+		return _servletContextUtil._getClayDataSetDisplayViewSerializer();
 	}
 
-	public static final ClayTableDataJSONBuilder getClayTableDataJSONBuilder() {
+	public static final ClayDataSetDataJSONBuilder
+		getClayTableDataJSONBuilder() {
+
 		return _servletContextUtil._getClayTableDataJSONBuilder();
-	}
-
-	public static final ClayTableRegistry getClayTableRegistry() {
-		return _servletContextUtil._getClayTableRegistry();
-	}
-
-	public static final ClayTableSerializer getClayTableSerializer() {
-		return _servletContextUtil._getClayTableSerializer();
 	}
 
 	public static final CommerceDataProviderRegistry
@@ -73,6 +67,12 @@ public class ServletContextUtil {
 
 	public static final CPContentHelper getCPContentHelper() {
 		return _servletContextUtil._getCPContentHelper();
+	}
+
+	public static final CPSubscriptionTypeRegistry
+		getCPSubscriptionTypeRegistry() {
+
+		return _servletContextUtil._getCPSubscriptionTypeRegistry();
 	}
 
 	public static final FilterFactoryRegistry getFilterFactoryRegistry() {
@@ -102,31 +102,17 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setClayTableContextContributorRegistry(
-		ClayTableContextContributorRegistry
-			clayTableContextContributorRegistry) {
+	protected void setClayDataSetDataJSONBuilder(
+		ClayDataSetDataJSONBuilder clayDataSetDataJSONBuilder) {
 
-		_clayTableContextContributorRegistry =
-			clayTableContextContributorRegistry;
+		_clayDataSetDataJSONBuilder = clayDataSetDataJSONBuilder;
 	}
 
 	@Reference(unbind = "-")
-	protected void setClayTableDataJSONBuilder(
-		ClayTableDataJSONBuilder clayTableDataJSONBuilder) {
+	protected void setClayDataSetDisplayViewSerializer(
+		ClayDataSetDisplayViewSerializer clayDataSetDisplayViewSerializer) {
 
-		_clayTableDataJSONBuilder = clayTableDataJSONBuilder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClayTableRegistry(ClayTableRegistry clayTableRegistry) {
-		_clayTableRegistry = clayTableRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClayTableSerializer(
-		ClayTableSerializer clayTableSerializer) {
-
-		_clayTableSerializer = clayTableSerializer;
+		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
 	}
 
 	@Reference(unbind = "-")
@@ -156,6 +142,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCPSubscriptionTypeRegistry(
+		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry) {
+
+		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
+	}
+
+	@Reference(unbind = "-")
 	protected void setFilterFactoryRegistry(
 		FilterFactoryRegistry filterFactoryRegistry) {
 
@@ -180,22 +173,14 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ClayTableContextContributorRegistry
-		_getClayTableContextContributorRegistry() {
+	private ClayDataSetDisplayViewSerializer
+		_getClayDataSetDisplayViewSerializer() {
 
-		return _clayTableContextContributorRegistry;
+		return _clayDataSetDisplayViewSerializer;
 	}
 
-	private ClayTableDataJSONBuilder _getClayTableDataJSONBuilder() {
-		return _clayTableDataJSONBuilder;
-	}
-
-	private ClayTableRegistry _getClayTableRegistry() {
-		return _clayTableRegistry;
-	}
-
-	private ClayTableSerializer _getClayTableSerializer() {
-		return _clayTableSerializer;
+	private ClayDataSetDataJSONBuilder _getClayTableDataJSONBuilder() {
+		return _clayDataSetDataJSONBuilder;
 	}
 
 	private CommerceDataProviderRegistry _getCommerceDataProviderRegistry() {
@@ -212,6 +197,10 @@ public class ServletContextUtil {
 
 	private CPContentHelper _getCPContentHelper() {
 		return _cpContentHelper;
+	}
+
+	private CPSubscriptionTypeRegistry _getCPSubscriptionTypeRegistry() {
+		return _cpSubscriptionTypeRegistry;
 	}
 
 	private FilterFactoryRegistry _getFilterFactoryRegistry() {
@@ -232,15 +221,13 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _servletContextUtil;
 
-	private ClayTableContextContributorRegistry
-		_clayTableContextContributorRegistry;
-	private ClayTableDataJSONBuilder _clayTableDataJSONBuilder;
-	private ClayTableRegistry _clayTableRegistry;
-	private ClayTableSerializer _clayTableSerializer;
+	private ClayDataSetDataJSONBuilder _clayDataSetDataJSONBuilder;
+	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
 	private CommerceDataProviderRegistry _commerceDataProviderRegistry;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
 	private CPContentHelper _cpContentHelper;
+	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
 	private FilterFactoryRegistry _filterFactoryRegistry;
 	private NPMResolver _npmResolver;
 	private ProductHelper _productHelper;

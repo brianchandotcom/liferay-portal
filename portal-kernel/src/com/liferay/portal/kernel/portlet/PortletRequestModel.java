@@ -867,7 +867,7 @@ public class PortletRequestModel implements Serializable {
 			resourceURLString = HttpUtil.removeParameter(
 				resourceURLString, _portletNamespace + "redirect");
 
-			_resourceURL = resourceURL.toString();
+			_resourceURL = resourceURLString;
 		}
 	}
 

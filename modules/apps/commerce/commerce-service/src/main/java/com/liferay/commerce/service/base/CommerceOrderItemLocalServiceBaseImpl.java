@@ -30,6 +30,7 @@ import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShipmentFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -56,8 +57,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -84,7 +87,7 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements CommerceOrderItemLocalService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceOrderItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil</code>.
@@ -327,6 +330,13 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 			(CommerceOrderItem)persistedModel);
 	}
 
+	public BasePersistence<CommerceOrderItem> getBasePersistence() {
+		return commerceOrderItemPersistence;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
@@ -875,6 +885,26 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce shipment finder.
+	 *
+	 * @return the commerce shipment finder
+	 */
+	public CommerceShipmentFinder getCommerceShipmentFinder() {
+		return commerceShipmentFinder;
+	}
+
+	/**
+	 * Sets the commerce shipment finder.
+	 *
+	 * @param commerceShipmentFinder the commerce shipment finder
+	 */
+	public void setCommerceShipmentFinder(
+		CommerceShipmentFinder commerceShipmentFinder) {
+
+		this.commerceShipmentFinder = commerceShipmentFinder;
+	}
+
+	/**
 	 * Returns the commerce shipment item local service.
 	 *
 	 * @return the commerce shipment item local service
@@ -1281,6 +1311,53 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the workflow definition link local service.
+	 *
+	 * @return the workflow definition link local service
+	 */
+	public com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+		getWorkflowDefinitionLinkLocalService() {
+
+		return workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Sets the workflow definition link local service.
+	 *
+	 * @param workflowDefinitionLinkLocalService the workflow definition link local service
+	 */
+	public void setWorkflowDefinitionLinkLocalService(
+		com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+			workflowDefinitionLinkLocalService) {
+
+		this.workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Returns the workflow definition link persistence.
+	 *
+	 * @return the workflow definition link persistence
+	 */
+	public WorkflowDefinitionLinkPersistence
+		getWorkflowDefinitionLinkPersistence() {
+
+		return workflowDefinitionLinkPersistence;
+	}
+
+	/**
+	 * Sets the workflow definition link persistence.
+	 *
+	 * @param workflowDefinitionLinkPersistence the workflow definition link persistence
+	 */
+	public void setWorkflowDefinitionLinkPersistence(
+		WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence) {
+
+		this.workflowDefinitionLinkPersistence =
+			workflowDefinitionLinkPersistence;
+	}
+
+	/**
 	 * Returns the expando row local service.
 	 *
 	 * @return the expando row local service
@@ -1372,8 +1449,8 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1477,6 +1554,9 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	@BeanReference(type = CommerceShipmentPersistence.class)
 	protected CommerceShipmentPersistence commerceShipmentPersistence;
 
+	@BeanReference(type = CommerceShipmentFinder.class)
+	protected CommerceShipmentFinder commerceShipmentFinder;
+
 	@BeanReference(
 		type = com.liferay.commerce.service.CommerceShipmentItemLocalService.class
 	)
@@ -1560,6 +1640,17 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService.class
+	)
+	protected
+		com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+			workflowDefinitionLinkLocalService;
+
+	@ServiceReference(type = WorkflowDefinitionLinkPersistence.class)
+	protected WorkflowDefinitionLinkPersistence
+		workflowDefinitionLinkPersistence;
 
 	@ServiceReference(
 		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class

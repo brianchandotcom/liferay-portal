@@ -32,7 +32,7 @@ import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 public abstract class AttachmentBaseImpl
 	extends AttachmentModelImpl implements Attachment {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a attachment model instance should use the <code>Attachment</code> interface instead.

@@ -396,9 +396,11 @@ public abstract class BaseWikiPageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						wikiPage1, entityField.getName(), "Aaa");
+						wikiPage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						wikiPage2, entityField.getName(), "Bbb");
+						wikiPage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -616,6 +618,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testDeleteWikiPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
 
 		assertHttpResponseStatusCode(
@@ -840,6 +843,14 @@ public abstract class BaseWikiPageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (wikiPage.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (wikiPage.getAggregateRating() == null) {
 					valid = false;
@@ -1024,6 +1035,16 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getActions(), wikiPage2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1377,6 +1398,11 @@ public abstract class BaseWikiPageResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("aggregateRating")) {
 			throw new IllegalArgumentException(

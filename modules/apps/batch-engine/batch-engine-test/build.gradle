@@ -1,0 +1,18 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
+	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.19"
+	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "4.1.1"
+	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "4.1.1"
+	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.1"
+	testIntegrationCompile group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
+	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")
+	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":core:petra:petra-io")
+	testIntegrationCompile project(":core:petra:petra-string")
+}

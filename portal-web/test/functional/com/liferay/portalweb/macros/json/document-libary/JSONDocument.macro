@@ -1,0 +1,99 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a Document entry"
+	macro addFile {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/add-file-entry \
+			-u test@liferay.com:test \
+			-d repositoryId=${repositoryId} \
+			-d folderId=${folderId} \
+			-d sourceFileName='' \
+			-d mimeType='' \
+			-d title=${dmDocumentTitle} \
+		 	-d description=${dmDocumentDescription} \
+			-d changeLog='' \
+			-d file=@path_to_file
+		''';
+
+		echo("## Adding a 'File' with the following info using JSONWS:");
+
+		echo("## * Title: ${dmDocumentTitle}");
+
+		echo("## * Description: ${dmDocumentDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a DL Folder"
+	macro addFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var repositoryId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/add-folder \
+			-u test@liferay.com:test \
+			-d repositoryId=${repositoryId} \
+			-d parentFolderId=${parentFolderId} \
+			-d name=${dmFolderName} \
+		 	-d description=${dmFolderDescription} \
+		''';
+
+		echo("## Adding a 'Folder' with the following info using JSONWS:");
+
+		echo("## * Name: ${dmFolderName}");
+
+		echo("## * Description: ${dmFolderDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to delete a Document entry"
+	macro deleteFile {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentry/delete-file-entry \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d folderId=${folderId} \
+			-d title=${dmDocumentTitle}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

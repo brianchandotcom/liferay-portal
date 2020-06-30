@@ -356,11 +356,6 @@ public class CPDefinitionLinkWrapper
 		return _cpDefinitionLink.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition link model instance should use the <code>CPDefinitionLink</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinitionLink.persist();

@@ -396,9 +396,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -489,6 +491,7 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testDeleteComment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Comment comment = testDeleteComment_addComment();
 
 		assertHttpResponseStatusCode(
@@ -807,9 +810,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1085,9 +1090,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1379,9 +1386,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1567,6 +1576,14 @@ public abstract class BaseCommentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (comment.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (comment.getCreator() == null) {
 					valid = false;
@@ -1643,6 +1660,16 @@ public abstract class BaseCommentResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						comment1.getActions(), comment2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1801,6 +1828,11 @@ public abstract class BaseCommentResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

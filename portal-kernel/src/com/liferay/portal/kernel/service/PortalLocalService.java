@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 )
 public interface PortalLocalService extends BaseLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalLocalServiceUtil} to access the portal local service. Add custom service methods to <code>com.liferay.portal.service.impl.PortalLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

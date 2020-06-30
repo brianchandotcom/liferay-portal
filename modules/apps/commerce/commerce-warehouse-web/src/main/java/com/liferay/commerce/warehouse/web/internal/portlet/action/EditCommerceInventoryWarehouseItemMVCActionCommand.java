@@ -83,8 +83,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
 		String sku = ParamUtil.getString(actionRequest, "sku");
-
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		long mvccVersion = ParamUtil.getLong(actionRequest, "mvccVersion");
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem;
 
@@ -92,7 +92,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId, quantity);
+						commerceInventoryWarehouseItemId, quantity,
+						mvccVersion);
 		}
 		else {
 			commerceInventoryWarehouseItem =

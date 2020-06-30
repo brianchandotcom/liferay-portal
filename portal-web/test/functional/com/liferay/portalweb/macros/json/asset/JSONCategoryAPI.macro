@@ -1,0 +1,117 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a category"
+	macro _addCategory {
+		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetcategory/add-category \
+			-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentCategoryId=${parentCategoryId} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d vocabularyId=${vocabularyId} \
+				-d categoryProperties=
+		''';
+
+		var categoryId = JSONCurlUtil.post("${curl}", "$.categoryId");
+		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
+		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
+
+		return "${categoryId}";
+	}
+
+	@summary = "Directly calls the JSON WS API to add a vocabulary"
+	macro _addVocabulary {
+		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d title= \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d Settings=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to get categoryId"
+	macro _getCategoryIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${categoryName} \
+				-d vocabularyId=${vocabularyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -obc=
+		''';
+
+		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${categoryName}')]['categoryId']");
+		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
+		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
+
+		if ("${categoryId}" == "[]") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return "${categoryId}";
+	}
+
+	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
+	macro _getVocabularyIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetvocabulary/get-group-vocabularies \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var vocabularyId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${vocabularyName}')]['vocabularyId']");
+		var vocabularyId = StringUtil.replace("${vocabularyId}", "[&quot;", "");
+		var vocabularyId = StringUtil.replace("${vocabularyId}", "&quot;]", "");
+
+		if ("${vocabularyId}" == "[]") {
+			fail("FAIL. Cannot find vocabulary.");
+		}
+
+		return "${vocabularyId}";
+	}
+
+	@summary = "Directly calls the JSON WS API to update a category"
+	macro _updateCategory {
+		Variables.assertDefined(parameterList = "${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetcategory/update-category \
+				-u test@liferay.com:test \
+				-d categoryId=${categoryId} \
+				-d parentCategoryId=${parentCategoryId} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d vocabularyId=${vocabularyId} \
+				-d categoryProperties=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

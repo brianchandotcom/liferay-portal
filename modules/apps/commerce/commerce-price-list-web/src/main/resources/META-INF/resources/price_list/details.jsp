@@ -213,29 +213,32 @@ if (parentCommercePriceList != null) {
 		function(event) {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'accountsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'accountsSelectItem',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								var A = AUI();
+						if (selectedItems) {
+							var A = AUI();
 
-								A.Array.each(
-									selectedItems,
-									function(item, index, selectedItems) {
-										<portlet:namespace />addCommercePriceListAccountRel(item);
-									}
+							A.Array.each(selectedItems, function(
+								item,
+								index,
+								selectedItems
+							) {
+								<portlet:namespace />addCommercePriceListAccountRel(
+									item
 								);
-							}
+							});
 						}
-					},
-					title: '<liferay-ui:message arguments="criterion" key="select-x" />',
-					url: '<%= commercePriceListDisplayContext.getCommerceAccountSelectorUrl() %>'
-				}
-			);
+					}
+				},
+				title:
+					'<liferay-ui:message arguments="criterion" key="select-x" />',
+				url:
+					'<%= commercePriceListDisplayContext.getCommerceAccountSelectorUrl() %>'
+			});
 
 			itemSelectorDialog.open();
 		}
@@ -246,61 +249,67 @@ if (parentCommercePriceList != null) {
 		function(event) {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'accountGroupsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'accountGroupsSelectItem',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								var A = AUI();
+						if (selectedItems) {
+							var A = AUI();
 
-								A.Array.each(
-									selectedItems,
-									function(item, index, selectedItems) {
-										<portlet:namespace />addCommercePriceListCommerceAccountGroupRel(item);
-									}
+							A.Array.each(selectedItems, function(
+								item,
+								index,
+								selectedItems
+							) {
+								<portlet:namespace />addCommercePriceListCommerceAccountGroupRel(
+									item
 								);
-							}
+							});
 						}
-					},
-					title: '<liferay-ui:message arguments="criterion" key="select-x" />',
-					url: '<%= commercePriceListDisplayContext.getCommerceAccountGroupSelectorUrl() %>'
-				}
-			);
+					}
+				},
+				title:
+					'<liferay-ui:message arguments="criterion" key="select-x" />',
+				url:
+					'<%= commercePriceListDisplayContext.getCommerceAccountGroupSelectorUrl() %>'
+			});
 
 			itemSelectorDialog.open();
 		}
 	);
 
-	$('#<portlet:namespace />setParentCommercePriceList').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	$('#<portlet:namespace />setParentCommercePriceList').on('click', function(
+		event
+	) {
+		event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'priceListsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: 'priceListsSelectItem',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								var parentCommercePriceListId = selectedItems.replace(/(\d+).*/, '$1');
+					if (selectedItems) {
+						var parentCommercePriceListId = selectedItems.replace(
+							/(\d+).*/,
+							'$1'
+						);
 
-								<portlet:namespace />setParentCommercePriceList(parentCommercePriceListId);
-							}
-						}
-					},
-					title: '<liferay-ui:message key="set-parent-price-list" />',
-					url: '<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>'
+						<portlet:namespace />setParentCommercePriceList(
+							parentCommercePriceListId
+						);
+					}
 				}
-			);
+			},
+			title: '<liferay-ui:message key="set-parent-price-list" />',
+			url:
+				'<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>'
+		});
 
-			itemSelectorDialog.open();
-		}
-	);
+		itemSelectorDialog.open();
+	});
 </aui:script>
 
 <aui:script>
@@ -312,70 +321,124 @@ if (parentCommercePriceList != null) {
 	function <portlet:namespace />addCommercePriceListAccountRel(item) {
 		var A = AUI();
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListAccountRelSearchContainer');
+		var searchContainer = Liferay.SearchContainer.get(
+			'<portlet:namespace />commercePriceListAccountRelSearchContainer'
+		);
 
 		var rowColumns = [];
 
 		rowColumns.push(item.name);
-		rowColumns.push('<a class="remove-account-rel-link" data-rowId="' + item.commerceAccountId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>');
+		rowColumns.push(
+			'<a class="remove-account-rel-link" data-rowId="' +
+				item.commerceAccountId +
+				'" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>'
+		);
 
-		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListAccountRelIds, item.commerceAccountId);
+		A.Array.removeItem(
+			<portlet:namespace />deleteCommercePriceListAccountRelIds,
+			item.commerceAccountId
+		);
 
 		<portlet:namespace />addCommerceAccountIds.push(item.commerceAccountId);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountIds.value = <portlet:namespace />addCommerceAccountIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListAccountRelIds.value = <portlet:namespace />deleteCommercePriceListAccountRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountIds.value = <portlet:namespace />addCommerceAccountIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListAccountRelIds.value = <portlet:namespace />deleteCommercePriceListAccountRelIds.join(
+			','
+		);
 
 		searchContainer.addRow(rowColumns, item.commerceAccountId);
 
 		searchContainer.updateDataStore();
 	}
 
-	function <portlet:namespace />deleteCommercePriceListAccountRel(commercePriceListAccountRelId) {
+	function <portlet:namespace />deleteCommercePriceListAccountRel(
+		commercePriceListAccountRelId
+	) {
 		var A = AUI();
 
-		A.Array.removeItem(<portlet:namespace />addCommerceAccountIds, commercePriceListAccountRelId);
+		A.Array.removeItem(
+			<portlet:namespace />addCommerceAccountIds,
+			commercePriceListAccountRelId
+		);
 
-		<portlet:namespace />deleteCommercePriceListAccountRelIds.push(commercePriceListAccountRelId);
+		<portlet:namespace />deleteCommercePriceListAccountRelIds.push(
+			commercePriceListAccountRelId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountIds.value = <portlet:namespace />addCommerceAccountIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListAccountRelIds.value = <portlet:namespace />deleteCommercePriceListAccountRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountIds.value = <portlet:namespace />addCommerceAccountIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListAccountRelIds.value = <portlet:namespace />deleteCommercePriceListAccountRelIds.join(
+			','
+		);
 	}
 
-	function <portlet:namespace />addCommercePriceListCommerceAccountGroupRel(item) {
+	function <portlet:namespace />addCommercePriceListCommerceAccountGroupRel(
+		item
+	) {
 		var A = AUI();
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListAccountGroupEntryRelSearchContainer');
+		var searchContainer = Liferay.SearchContainer.get(
+			'<portlet:namespace />commercePriceListAccountGroupEntryRelSearchContainer'
+		);
 
 		var rowColumns = [];
 
 		rowColumns.push(item.name);
-		rowColumns.push('<a class="remove-rel-link" data-rowId="' + item.commerceAccountGroupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>');
+		rowColumns.push(
+			'<a class="remove-rel-link" data-rowId="' +
+				item.commerceAccountGroupId +
+				'" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>'
+		);
 
-		A.Array.removeItem(<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds, item.commerceAccountGroupId);
+		A.Array.removeItem(
+			<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds,
+			item.commerceAccountGroupId
+		);
 
-		<portlet:namespace />addCommerceAccountGroupIds.push(item.commerceAccountGroupId);
+		<portlet:namespace />addCommerceAccountGroupIds.push(
+			item.commerceAccountGroupId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.join(
+			','
+		);
 
 		searchContainer.addRow(rowColumns, item.commerceAccountGroupId);
 
 		searchContainer.updateDataStore();
 	}
 
-	function <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRel(commercePriceListAccountGroupEntryRelId) {
+	function <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRel(
+		commercePriceListAccountGroupEntryRelId
+	) {
 		var A = AUI();
 
-		A.Array.removeItem(<portlet:namespace />addCommerceAccountGroupIds, commercePriceListAccountGroupEntryRelId);
+		A.Array.removeItem(
+			<portlet:namespace />addCommerceAccountGroupIds,
+			commercePriceListAccountGroupEntryRelId
+		);
 
-		<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.push(commercePriceListAccountGroupEntryRelId);
+		<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.push(
+			commercePriceListAccountGroupEntryRelId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addCommerceAccountGroupIds.value = <portlet:namespace />addCommerceAccountGroupIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.value = <portlet:namespace />deleteCommercePriceListCommerceAccountGroupRelIds.join(
+			','
+		);
 	}
 
-	function <portlet:namespace />setParentCommercePriceList(parentCommercePriceListId) {
+	function <portlet:namespace />setParentCommercePriceList(
+		parentCommercePriceListId
+	) {
 		var A = AUI();
 
 		Liferay.Service(
@@ -384,12 +447,18 @@ if (parentCommercePriceList != null) {
 				commercePriceListId: parentCommercePriceListId
 			},
 			function(commercePriceList) {
-				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentCommercePriceListSearchContainer');
+				var searchContainer = Liferay.SearchContainer.get(
+					'<portlet:namespace />parentCommercePriceListSearchContainer'
+				);
 
 				var rowColumns = [];
 
 				rowColumns.push(commercePriceList.name);
-				rowColumns.push('<a class="remove-parent-link" data-rowId="' + parentCommercePriceListId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>');
+				rowColumns.push(
+					'<a class="remove-parent-link" data-rowId="' +
+						parentCommercePriceListId +
+						'" href="javascript:;"><%= UnicodeFormatter.toString(removeItemIcon) %></a>'
+				);
 
 				searchContainer.addRow(rowColumns, parentCommercePriceListId);
 
@@ -404,7 +473,9 @@ if (parentCommercePriceList != null) {
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
 
-	var parentSearchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentCommercePriceListSearchContainer');
+	var parentSearchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />parentCommercePriceListSearchContainer'
+	);
 
 	var parentSearchContainerContentBox = parentSearchContainer.get('contentBox');
 
@@ -423,7 +494,9 @@ if (parentCommercePriceList != null) {
 		'.remove-parent-link'
 	);
 
-	var relSearchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListAccountGroupEntryRelSearchContainer');
+	var relSearchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commercePriceListAccountGroupEntryRelSearchContainer'
+	);
 
 	var relSearchContainerContentBox = relSearchContainer.get('contentBox');
 
@@ -437,14 +510,20 @@ if (parentCommercePriceList != null) {
 
 			relSearchContainer.deleteRow(tr, rowId);
 
-			<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRel(rowId);
+			<portlet:namespace />deleteCommercePriceListCommerceAccountGroupRel(
+				rowId
+			);
 		},
 		'.remove-rel-link'
 	);
 
-	var accountRelSearchContainer = Liferay.SearchContainer.get('<portlet:namespace />commercePriceListAccountRelSearchContainer');
+	var accountRelSearchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commercePriceListAccountRelSearchContainer'
+	);
 
-	var accountRelSearchContainerContentBox = accountRelSearchContainer.get('contentBox');
+	var accountRelSearchContainerContentBox = accountRelSearchContainer.get(
+		'contentBox'
+	);
 
 	accountRelSearchContainerContentBox.delegate(
 		'click',

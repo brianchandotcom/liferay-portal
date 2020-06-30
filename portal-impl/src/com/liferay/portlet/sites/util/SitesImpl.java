@@ -511,9 +511,6 @@ public class SitesImpl implements Sites {
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						sourceLayout, sourcePortletId);
 
-				sourcePreferencesImpl =
-					(PortletPreferencesImpl)sourcePreferences;
-
 				targetPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						targetLayout, sourcePortletId);
@@ -1867,10 +1864,8 @@ public class SitesImpl implements Sites {
 			return null;
 		}
 
-		List<Layout> layoutSetPrototypeLayouts = null;
-
-		layoutSetPrototypeLayouts = LayoutLocalServiceUtil.getLayouts(
-			layoutSetPrototypeGroupId, true);
+		List<Layout> layoutSetPrototypeLayouts =
+			LayoutLocalServiceUtil.getLayouts(layoutSetPrototypeGroupId, true);
 
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.

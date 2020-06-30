@@ -60,6 +60,7 @@ public class WarehouseDTOConverter implements DTOConverter {
 						getCommerceInventoryWarehouseId();
 				latitude = commerceInventoryWarehouse.getLatitude();
 				longitude = commerceInventoryWarehouse.getLongitude();
+				mvccVersion = commerceInventoryWarehouse.getMvccVersion();
 				name = commerceInventoryWarehouse.getName();
 				regionISOCode =
 					commerceInventoryWarehouse.getCommerceRegionCode();

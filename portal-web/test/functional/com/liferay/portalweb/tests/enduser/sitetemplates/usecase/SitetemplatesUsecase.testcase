@@ -602,6 +602,8 @@ definition {
 	@description = "This is a use case for LPS-86487."
 	@priority = "4"
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
+		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
+
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -800,6 +802,66 @@ definition {
 			pageName4 = "Hello");
 	}
 
+	@description = "This is a use case for LPS-107677."
+	@priority = "3"
+	test ViewImportedSitePageWithoutInfoMessage {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name");
+
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "Site A",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site A");
+
+		SiteTemplates.viewNoInfoMessage();
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.exportPortlet(
+			larFileName = "site-template-name.lar",
+			portletName = "Site Templates");
+
+		LAR.exportSiteCP(siteScopeName = "Site A");
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.deleteGroupByName(groupName = "Site A");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.importPortlet(larFileName = "site-template-name.lar");
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+
+		JSONGroup.addGroup(groupName = "Site B");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site B");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site B");
+
+		SiteTemplates.viewNoInfoMessage();
+	}
+
 	@priority = "3"
 	test ViewInlineGuestPermissionsInSiteTemplatesViaWCD {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -839,6 +901,107 @@ definition {
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 			permissionFlagged = "true",
 			roleTitle = "Guest");
+	}
+
+	@description = "This is a use case for LPS-92663."
+	@priority = "4"
+	test ViewNavigationMenuCopyFromSitesTemplate {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name");
+
+		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page1 Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page2 Name",
+			siteTemplateName = "Site Template Name");
+
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "${siteTemplateID}");
+
+		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+
+		NavigationMenusAdmin.addItem(
+			item = "Page",
+			pageNames = "Page1 Name,Page2 Name",
+			privacy = "Private Pages");
+
+		NavigationMenusAdmin.viewItem(itemName = "Page1 Name");
+
+		NavigationMenusAdmin.viewItem(itemName = "Page2 Name");
+
+		NavigationMenusAdmin.addItem(
+			item = "URL",
+			url = "https://www.liferay.com/",
+			urlName = "Liferay");
+
+		NavigationMenusAdmin.viewItem(itemName = "Liferay");
+
+		NavigationMenusAdmin.addItem(
+			item = "URL",
+			url = "https://www.google.com/",
+			urlName = "Google");
+
+		NavigationMenusAdmin.viewItem(itemName = "Google");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteTemplateID}");
+
+		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+		NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
+
+		Portlet.saveAndCloseConfig();
+
+		AssertVisible(
+			key_pageName = "Page1 Name",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Page2 Name",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Liferay",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Google",
+			locator1 = "Home#PAGE");
+
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertVisible(
+			key_pageName = "Page1 Name",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Page2 Name",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Liferay",
+			locator1 = "Home#PAGE");
+
+		AssertVisible(
+			key_pageName = "Google",
+			locator1 = "Home#PAGE");
 	}
 
 }

@@ -91,6 +91,12 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		String decodedFriendlyURL = HttpUtil.decodePath(friendlyURL);
 
+		if (Validator.isNull(decodedFriendlyURL)) {
+			decodedFriendlyURL = HttpUtil.decodePath(
+				StringUtil.replace(
+					friendlyURL, CharPool.PERCENT, CharPool.POUND));
+		}
+
 		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());
 
 		boolean modified = false;

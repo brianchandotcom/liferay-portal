@@ -691,7 +691,7 @@ public class ExpandoValueLocalServiceImpl
 			row.setTableId(tableId);
 			row.setClassPK(classPK);
 
-			expandoRowPersistence.update(row);
+			row = expandoRowPersistence.update(row);
 		}
 
 		boolean rowModified = false;
@@ -1717,7 +1717,7 @@ public class ExpandoValueLocalServiceImpl
 			row.setTableId(tableId);
 			row.setClassPK(classPK);
 
-			expandoRowPersistence.update(row);
+			row = expandoRowPersistence.update(row);
 		}
 
 		ExpandoValue value = expandoValuePersistence.fetchByC_R(
@@ -1739,7 +1739,7 @@ public class ExpandoValueLocalServiceImpl
 		if (value.isNew() || !Objects.equals(value.getData(), data)) {
 			value.setData(data);
 
-			expandoValuePersistence.update(value);
+			value = expandoValuePersistence.update(value);
 
 			row.setModifiedDate(new Date());
 

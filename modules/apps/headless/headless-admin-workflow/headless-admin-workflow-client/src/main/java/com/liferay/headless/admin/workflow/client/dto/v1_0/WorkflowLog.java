@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowLog {
+public class WorkflowLog implements Cloneable {
 
 	public Creator getAuditPerson() {
 		return auditPerson;
@@ -234,6 +234,11 @@ public class WorkflowLog {
 	}
 
 	protected String type;
+
+	@Override
+	public WorkflowLog clone() throws CloneNotSupportedException {
+		return (WorkflowLog)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

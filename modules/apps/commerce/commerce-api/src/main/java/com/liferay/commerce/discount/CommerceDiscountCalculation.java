@@ -48,4 +48,9 @@ public interface CommerceDiscountCalculation {
 			CommerceContext commerceContext)
 		throws PortalException;
 
+	public CommerceDiscountValue getProductCommerceDiscountValue(
+			long cpInstanceId, long commercePriceListId, int quantity,
+			BigDecimal productUnitPrice, CommerceContext commerceContext)
+		throws PortalException;
+
 }

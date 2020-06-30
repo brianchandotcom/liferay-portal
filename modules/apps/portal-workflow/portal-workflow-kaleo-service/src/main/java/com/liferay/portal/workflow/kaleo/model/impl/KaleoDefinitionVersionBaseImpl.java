@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 public abstract class KaleoDefinitionVersionBaseImpl
 	extends KaleoDefinitionVersionModelImpl implements KaleoDefinitionVersion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo definition version model instance should use the <code>KaleoDefinitionVersion</code> interface instead.

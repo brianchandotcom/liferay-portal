@@ -73,11 +73,9 @@ public class CPSpecificationOptionsImporter {
 			JSONObject jsonObject, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPSpecificationOption cpSpecificationOption;
-
 		String key = jsonObject.getString("Key");
 
-		cpSpecificationOption =
+		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
 				serviceContext.getCompanyId(), key);
 

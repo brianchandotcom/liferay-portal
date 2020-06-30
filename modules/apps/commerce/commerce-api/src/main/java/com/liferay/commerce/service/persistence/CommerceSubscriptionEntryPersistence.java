@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceSubscriptionEntryPersistence
 	extends BasePersistence<CommerceSubscriptionEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceSubscriptionEntryUtil} to access the commerce subscription entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

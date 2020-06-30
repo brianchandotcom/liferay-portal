@@ -40,7 +40,7 @@ import java.util.Set;
 public interface FragmentEntryPersistence
 	extends BasePersistence<FragmentEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryUtil} to access the fragment entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

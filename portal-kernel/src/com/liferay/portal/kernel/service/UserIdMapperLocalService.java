@@ -53,7 +53,7 @@ import java.util.List;
 public interface UserIdMapperLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserIdMapperLocalServiceUtil} to access the user ID mapper local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserIdMapperLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -188,6 +188,9 @@ public interface UserIdMapperLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

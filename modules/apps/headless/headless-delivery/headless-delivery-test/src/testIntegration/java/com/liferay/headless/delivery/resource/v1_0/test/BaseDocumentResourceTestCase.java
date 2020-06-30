@@ -416,9 +416,11 @@ public abstract class BaseDocumentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						document1, entityField.getName(), "Aaa");
+						document1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						document2, entityField.getName(), "Bbb");
+						document2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -520,6 +522,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteDocument() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocument_addDocument();
 
 		assertHttpResponseStatusCode(
@@ -637,8 +640,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Document patchDocument = documentResource.patchDocument(
 			postDocument.getId(), randomPatchDocument, multipartFiles);
 
-		Document expectedPatchDocument = (Document)BeanUtils.cloneBean(
-			postDocument);
+		Document expectedPatchDocument = postDocument.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchDocument, randomPatchDocument);
@@ -687,6 +689,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteDocumentMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocumentMyRating_addDocument();
 
 		assertHttpResponseStatusCode(
@@ -898,9 +901,11 @@ public abstract class BaseDocumentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						document1, entityField.getName(), "Aaa");
+						document1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						document2, entityField.getName(), "Bbb");
+						document2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1401,6 +1406,14 @@ public abstract class BaseDocumentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (document.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("adaptedImages", additionalAssertFieldName)) {
 				if (document.getAdaptedImages() == null) {
 					valid = false;
@@ -1592,6 +1605,14 @@ public abstract class BaseDocumentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (rating.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (rating.getBestRating() == null) {
 					valid = false;
@@ -1663,6 +1684,16 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						document1.getActions(), document2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("adaptedImages", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1895,6 +1926,16 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getActions(), rating2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2129,6 +2170,11 @@ public abstract class BaseDocumentResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("adaptedImages")) {
 			throw new IllegalArgumentException(

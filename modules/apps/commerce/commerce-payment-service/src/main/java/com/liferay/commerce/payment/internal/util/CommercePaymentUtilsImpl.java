@@ -25,7 +25,6 @@ import com.liferay.commerce.payment.request.CommercePaymentRequestProviderRegist
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.payment.util.CommercePaymentUtils;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.CharPool;
@@ -70,14 +69,10 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 			return null;
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 			_commercePaymentMethodGroupRelLocalService.
-				getCommercePaymentMethodGroupRel(
-					commerceChannel.getSiteGroupId(), commercePaymentMethodKey);
+				fetchCommercePaymentMethodGroupRel(
+					commerceOrder.getGroupId(), commercePaymentMethodKey);
 
 		if ((commercePaymentMethodGroupRel != null) &&
 			commercePaymentMethodGroupRel.isActive()) {

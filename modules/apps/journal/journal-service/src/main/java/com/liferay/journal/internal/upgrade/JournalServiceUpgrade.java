@@ -19,6 +19,7 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -50,6 +51,8 @@ import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
 import com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages;
 import com.liferay.journal.internal.upgrade.v1_1_6.UpgradeAssetDisplayPageEntry;
+import com.liferay.journal.internal.upgrade.v1_1_8.UpgradeJournalArticle;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -69,9 +72,9 @@ import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.PrintWriter;
 
@@ -119,9 +122,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeStep() {
 
 				@Override
-				public void upgrade(DBProcessContext dbProcessContext)
-					throws UpgradeException {
-
+				public void upgrade(DBProcessContext dbProcessContext) {
 					try {
 						deleteTempImages();
 					}
@@ -184,6 +185,14 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.5", "1.1.6",
 			new UpgradeAssetDisplayPageEntry(
 				_assetDisplayPageEntryLocalService, _companyLocalService));
+
+		registry.register(
+			"1.1.6", "1.1.7",
+			new UpgradeDiscussionSubscriptionClassName(
+				_subscriptionLocalService, JournalArticle.class.getName(),
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
+
+		registry.register("1.1.7", "1.1.8", new UpgradeJournalArticle());
 	}
 
 	protected void deleteTempImages() throws Exception {
@@ -276,6 +285,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;

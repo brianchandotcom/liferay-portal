@@ -21,10 +21,14 @@ import com.liferay.commerce.util.comparator.CommerceOrderPaymentCreateDateCompar
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderPaymentLocalServiceImpl
 	extends CommerceOrderPaymentLocalServiceBaseImpl {
@@ -68,6 +72,21 @@ public class CommerceOrderPaymentLocalServiceImpl
 
 		return commerceOrderPaymentPersistence.fetchByCommerceOrderId_First(
 			commerceOrderId, new CommerceOrderPaymentCreateDateComparator());
+	}
+
+	@Override
+	public List<CommerceOrderPayment> getCommerceOrderPayments(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderPayment> orderByComparator) {
+
+		return commerceOrderPaymentPersistence.findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceOrderPaymentsCount(long commerceOrderId) {
+		return commerceOrderPaymentPersistence.countByCommerceOrderId(
+			commerceOrderId);
 	}
 
 	private CommerceOrderPayment _getCommerceOrderPayment(

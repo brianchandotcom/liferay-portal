@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPSpecificationOptionPersistence
 	extends BasePersistence<CPSpecificationOption> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPSpecificationOptionUtil} to access the cp specification option persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

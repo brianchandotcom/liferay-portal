@@ -76,6 +76,11 @@ create table CPDefinition (
 	subscriptionType VARCHAR(75) null,
 	subscriptionTypeSettings TEXT null,
 	maxSubscriptionCycles LONG,
+	deliverySubscriptionEnabled BOOLEAN,
+	deliverySubscriptionLength INTEGER,
+	deliverySubscriptionType VARCHAR(75) null,
+	deliverySubTypeSettings VARCHAR(75) null,
+	deliveryMaxSubscriptionCycles LONG,
 	accountGroupFilterEnabled BOOLEAN,
 	channelFilterEnabled BOOLEAN,
 	version INTEGER,
@@ -132,7 +137,8 @@ create table CPDefinitionOptionRel (
 	facetable BOOLEAN,
 	required BOOLEAN,
 	skuContributor BOOLEAN,
-	key_ VARCHAR(75) null
+	key_ VARCHAR(75) null,
+	priceType VARCHAR(75) null
 );
 
 create table CPDefinitionOptionValueRel (
@@ -147,7 +153,11 @@ create table CPDefinitionOptionValueRel (
 	CPDefinitionOptionRelId LONG,
 	name STRING null,
 	priority DOUBLE,
-	key_ VARCHAR(75) null
+	key_ VARCHAR(75) null,
+	CPInstanceUuid VARCHAR(75) null,
+	CProductId LONG,
+	quantity INTEGER,
+	price DECIMAL(30, 16) null
 );
 
 create table CPDisplayLayout (
@@ -196,7 +206,6 @@ create table CPInstance (
 	gtin VARCHAR(75) null,
 	manufacturerPartNumber VARCHAR(75) null,
 	purchasable BOOLEAN,
-	json TEXT null,
 	width DOUBLE,
 	height DOUBLE,
 	depth DOUBLE,
@@ -214,10 +223,29 @@ create table CPInstance (
 	subscriptionType VARCHAR(75) null,
 	subscriptionTypeSettings TEXT null,
 	maxSubscriptionCycles LONG,
+	deliverySubscriptionEnabled BOOLEAN,
+	deliverySubscriptionLength INTEGER,
+	deliverySubscriptionType VARCHAR(75) null,
+	deliverySubTypeSettings VARCHAR(75) null,
+	deliveryMaxSubscriptionCycles LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
 	statusDate DATE null
+);
+
+create table CPInstanceOptionValueRel (
+	uuid_ VARCHAR(75) null,
+	CPInstanceOptionValueRelId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionOptionRelId LONG,
+	CPDefinitionOptionValueRelId LONG,
+	CPInstanceId LONG
 );
 
 create table CPMeasurementUnit (
@@ -340,7 +368,7 @@ create table CommerceCatalog (
 	name VARCHAR(75) null,
 	commerceCurrencyCode VARCHAR(75) null,
 	catalogDefaultLanguageId VARCHAR(75) null,
-	system BOOLEAN
+	system_ BOOLEAN
 );
 
 create table CommerceChannel (

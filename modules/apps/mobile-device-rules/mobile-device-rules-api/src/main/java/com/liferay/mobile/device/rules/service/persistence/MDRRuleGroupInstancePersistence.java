@@ -40,7 +40,7 @@ import java.util.Set;
 public interface MDRRuleGroupInstancePersistence
 	extends BasePersistence<MDRRuleGroupInstance> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupInstanceUtil} to access the mdr rule group instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

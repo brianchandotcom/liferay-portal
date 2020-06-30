@@ -40,7 +40,7 @@ public interface WebsiteModel
 	extends AttachedModel, BaseModel<Website>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a website model instance should use the {@link Website} interface instead.

@@ -46,9 +46,26 @@ public class CommerceAccountGroupRelServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceAccountGroupRel(long commerceAccountGroupRelId)
+		throws PortalException {
+
+		commerceAccountGroupRelLocalService.deleteCommerceAccountGroupRel(
+			commerceAccountGroupRelId);
+	}
+
+	@Override
 	public void deleteCommerceAccountGroupRels(String className, long classPK) {
 		commerceAccountGroupRelLocalService.deleteCommerceAccountGroupRels(
 			className, classPK);
+	}
+
+	@Override
+	public CommerceAccountGroupRel getCommerceAccountGroupRel(
+			long commerceAccountGroupRelId)
+		throws PortalException {
+
+		return commerceAccountGroupRelLocalService.getCommerceAccountGroupRel(
+			commerceAccountGroupRelId);
 	}
 
 	@Override

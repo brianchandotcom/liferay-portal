@@ -191,8 +191,22 @@ public class FriendlyURLEntryStagedModelRepository
 		for (Map.Entry<Locale, String> entry :
 				localeLocalizationMap.entrySet()) {
 
+			String urlTitle = entry.getValue();
+
+			FriendlyURLEntry existingFriendlyURLEntry =
+				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+					friendlyURLEntry.getGroupId(),
+					friendlyURLEntry.getClassNameId(), urlTitle);
+
+			if (existingFriendlyURLEntry != null) {
+				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+					friendlyURLEntry.getGroupId(),
+					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getClassPK(), urlTitle);
+			}
+
 			languageIdLocalizationMap.put(
-				_language.getLanguageId(entry.getKey()), entry.getValue());
+				_language.getLanguageId(entry.getKey()), urlTitle);
 		}
 
 		return languageIdLocalizationMap;

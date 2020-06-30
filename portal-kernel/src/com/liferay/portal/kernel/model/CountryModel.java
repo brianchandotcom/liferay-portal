@@ -36,7 +36,7 @@ import java.io.Serializable;
 @ProviderType
 public interface CountryModel extends BaseModel<Country>, MVCCModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a country model instance should use the {@link Country} interface instead.

@@ -89,7 +89,7 @@ public class JournalArticleLocalServiceTreeTest {
 		List<JournalArticle> articles = createTree();
 
 		for (JournalArticle article : articles) {
-			article.setTreePath(null);
+			article.setTreePath("/0/");
 
 			JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		}

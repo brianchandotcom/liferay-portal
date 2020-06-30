@@ -14,20 +14,16 @@
 
 package com.liferay.commerce.notification.web.internal.portlet.action;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationTemplatesDisplayContext;
 import com.liferay.commerce.order.CommerceDefinitionTermContributorRegistry;
-import com.liferay.item.selector.ItemSelector;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
 		"mvc.command.name=editCommerceNotificationTemplate"
 	},
 	service = MVCRenderCommand.class
@@ -75,12 +71,10 @@ public class EditCommerceNotificationTemplateMVCRenderCommand
 			CommerceNotificationTemplatesDisplayContext
 				commerceNotificationTemplatesDisplayContext =
 					new CommerceNotificationTemplatesDisplayContext(
+						_commerceChannelLocalService,
 						_commerceDefinitionTermContributorRegistry,
 						_commerceNotificationTemplateService,
-						_commerceNotificationTemplateCommerceAccountGroupRelService,
-						_commerceNotificationTypeRegistry,
-						_commerceAccountGroupService, httpServletRequest,
-						_itemSelector, _portletResourcePermission);
+						_commerceNotificationTypeRegistry, httpServletRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -105,15 +99,11 @@ public class EditCommerceNotificationTemplateMVCRenderCommand
 	}
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceDefinitionTermContributorRegistry
 		_commerceDefinitionTermContributorRegistry;
-
-	@Reference
-	private CommerceNotificationTemplateCommerceAccountGroupRelService
-		_commerceNotificationTemplateCommerceAccountGroupRelService;
 
 	@Reference
 	private CommerceNotificationTemplateService
@@ -123,15 +113,7 @@ public class EditCommerceNotificationTemplateMVCRenderCommand
 	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
 
 	@Reference
-	private ItemSelector _itemSelector;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceNotificationConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.notification.web)"

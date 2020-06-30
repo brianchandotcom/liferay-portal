@@ -214,8 +214,6 @@ AUI.add(
 
 						var defaultLanguageValue = instance.getValue(defaultLanguageId);
 
-						var editor = instance.get('editor');
-
 						var inputLanguageValue = instance.getValue(languageId);
 
 						instance._animate(inputPlaceholder, shouldFocus);
@@ -225,19 +223,30 @@ AUI.add(
 
 						instance.set('selected', parseInt(instance.get('items').indexOf(languageId), 10));
 
-						if (editor) {
-							editor.setHTML(inputLanguageValue);
-						}
-						else {
-							inputPlaceholder.val(inputLanguageValue);
-
-							inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
-						}
+						instance.updateInput(inputLanguageValue);
 
 						instance._updateInputPlaceholderDescription(languageId);
 						instance._updateHelpMessage(languageId);
 						instance._updateTrigger(languageId);
 						instance._updateSelectedItem(languageId);
+					},
+
+					updateInput: function(value) {
+						var instance = this;
+
+						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
+
+						var editor = instance.get('editor');
+
+						if (editor) {
+							editor.setHTML(value);
+						}
+						else {
+							inputPlaceholder.val(value);
+
+							inputPlaceholder.attr(
+								'dir', Liferay.Language.direction[instance.getSelectedLanguageId()]);
+						}
 					},
 
 					updateInputLanguage: function(value, languageId) {

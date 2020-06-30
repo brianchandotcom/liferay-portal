@@ -24,18 +24,4 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 	<aui:input checked="<%= cpSearchResultsDisplayContext.isPaginate() %>" label="paginate" name="preferences--paginate--" type="toggle-switch" />
 
 	<aui:input helpMessage="maximum-number-of-products-to-display-if-pagination-is-disabled-otherwise-number-of-items-to-display-per-page" label="number-of-items-to-display" name="preferences--paginationDelta--" type="number" value="<%= cpSearchResultsDisplayContext.getPaginationDelta() %>" />
-
-	<aui:select label="pagination-type" name="preferences--paginationType--" value="<%= cpSearchResultsDisplayContext.getPaginationType() %>">
-
-		<%
-		for (String paginationType : CPContentConstants.PAGINATION_TYPES) {
-		%>
-
-			<aui:option label="<%= paginationType %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
 </aui:fieldset>

@@ -49,7 +49,7 @@ public interface JournalArticleModel
 	extends AttachedModel, BaseModel<JournalArticle>, ResourcedModel,
 			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a journal article model instance should use the {@link JournalArticle} interface instead.

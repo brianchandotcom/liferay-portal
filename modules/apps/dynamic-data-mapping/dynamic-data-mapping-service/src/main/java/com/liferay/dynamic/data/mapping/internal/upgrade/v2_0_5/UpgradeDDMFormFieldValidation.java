@@ -110,20 +110,29 @@ public class UpgradeDDMFormFieldValidation extends UpgradeProcess {
 				JSONObject validationJSONObject = jsonObject.getJSONObject(
 					"validation");
 
-				String originalValue = validationJSONObject.getString(
-					"errorMessage");
-
 				Map<String, String> localizedValue = new HashMap<>();
 
-				for (int j = 0; j < availableLanguageIdsJSONArray.length();
-					 j++) {
+				JSONObject errorMessageJSONObject =
+					validationJSONObject.getJSONObject("errorMessage");
 
-					localizedValue.put(
-						availableLanguageIdsJSONArray.getString(j),
-						originalValue);
+				if (errorMessageJSONObject == null) {
+					String originalValue = validationJSONObject.getString(
+						"errorMessage");
+
+					for (int j = 0; j < availableLanguageIdsJSONArray.length();
+						 j++) {
+
+						localizedValue.put(
+							availableLanguageIdsJSONArray.getString(j),
+							originalValue);
+					}
+
+					validationJSONObject.put("errorMessage", localizedValue);
 				}
-
-				validationJSONObject.put("errorMessage", localizedValue);
+				else {
+					validationJSONObject.put(
+						"errorMessage", errorMessageJSONObject);
+				}
 
 				JSONArray nestedFieldsJSONArray = jsonObject.getJSONArray(
 					"nestedFields");

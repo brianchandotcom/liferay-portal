@@ -13,17 +13,17 @@
  */
 
 module.exports = {
-	extends: ['liferay/react'],
-	parserOptions: {
-		ecmaVersion: 2018
-	},
 	env: {
 		browser: true,
-		node: true,
-		jest: true
+		jest: true,
+		node: true
 	},
+	extends: ['liferay/react'],
 	globals: {
-		Liferay: 'readonly',
-		AUI: 'readonly'
+		AUI: 'readonly',
+		Liferay: 'readonly'
+	},
+	parserOptions: {
+		ecmaVersion: 2018
 	}
 };

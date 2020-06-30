@@ -256,7 +256,9 @@
 		<field name="commerceAccountId" type="long" />
 		<field name="commerceAddressId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
-		<field name="shippingOptionName" type="String" />
+		<field name="shippingOptionName" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="carrier" type="String" />
 		<field name="trackingNumber" type="String" />
 		<field name="shippingDate" type="Date" />
@@ -322,6 +324,15 @@
 		<field name="lastIterationDate" type="Date" />
 		<field name="nextIterationDate" type="Date" />
 		<field name="startDate" type="Date" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryCurrentCycle" type="long" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionStatus" type="int" />
+		<field name="deliveryLastIterationDate" type="Date" />
+		<field name="deliveryNextIterationDate" type="Date" />
+		<field name="deliveryStartDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CPDAvailabilityEstimate">
 		<field name="uuid" type="String" />

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -153,6 +154,10 @@ public class FlagsTag extends ComponentRendererTag {
 		putValue("contentTitle", contentTitle);
 	}
 
+	public void setContentURL(String contentURL) {
+		putValue("contentURL", contentURL);
+	}
+
 	public void setElementClasses(String elementClasses) {
 		putValue("elementClasses", elementClasses);
 	}
@@ -196,11 +201,17 @@ public class FlagsTag extends ComponentRendererTag {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
+		Object contentURL = context.get("contentURL");
+
+		if (Validator.isNull(contentURL)) {
+			contentURL = _getCurrentURL();
+		}
+
 		dataJSONObject.put(namespace + "className", context.get("className"));
 		dataJSONObject.put(namespace + "classPK", context.get("classPK"));
 		dataJSONObject.put(
 			namespace + "contentTitle", context.get("contentTitle"));
-		dataJSONObject.put(namespace + "contentURL", _getCurrentURL());
+		dataJSONObject.put(namespace + "contentURL", contentURL);
 		dataJSONObject.put(
 			namespace + "reportedUserId", context.get("reportedUserId"));
 

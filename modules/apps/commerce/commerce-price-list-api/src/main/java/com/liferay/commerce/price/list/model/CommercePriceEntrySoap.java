@@ -46,8 +46,20 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setCProductId(model.getCProductId());
 		soapModel.setPrice(model.getPrice());
 		soapModel.setPromoPrice(model.getPromoPrice());
+		soapModel.setDiscountDiscovery(model.isDiscountDiscovery());
+		soapModel.setDiscountLevel1(model.getDiscountLevel1());
+		soapModel.setDiscountLevel2(model.getDiscountLevel2());
+		soapModel.setDiscountLevel3(model.getDiscountLevel3());
+		soapModel.setDiscountLevel4(model.getDiscountLevel4());
 		soapModel.setHasTierPrice(model.isHasTierPrice());
+		soapModel.setBulkPricing(model.isBulkPricing());
+		soapModel.setDisplayDate(model.getDisplayDate());
+		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -214,6 +226,50 @@ public class CommercePriceEntrySoap implements Serializable {
 		_promoPrice = promoPrice;
 	}
 
+	public boolean getDiscountDiscovery() {
+		return _discountDiscovery;
+	}
+
+	public boolean isDiscountDiscovery() {
+		return _discountDiscovery;
+	}
+
+	public void setDiscountDiscovery(boolean discountDiscovery) {
+		_discountDiscovery = discountDiscovery;
+	}
+
+	public BigDecimal getDiscountLevel1() {
+		return _discountLevel1;
+	}
+
+	public void setDiscountLevel1(BigDecimal discountLevel1) {
+		_discountLevel1 = discountLevel1;
+	}
+
+	public BigDecimal getDiscountLevel2() {
+		return _discountLevel2;
+	}
+
+	public void setDiscountLevel2(BigDecimal discountLevel2) {
+		_discountLevel2 = discountLevel2;
+	}
+
+	public BigDecimal getDiscountLevel3() {
+		return _discountLevel3;
+	}
+
+	public void setDiscountLevel3(BigDecimal discountLevel3) {
+		_discountLevel3 = discountLevel3;
+	}
+
+	public BigDecimal getDiscountLevel4() {
+		return _discountLevel4;
+	}
+
+	public void setDiscountLevel4(BigDecimal discountLevel4) {
+		_discountLevel4 = discountLevel4;
+	}
+
 	public boolean getHasTierPrice() {
 		return _hasTierPrice;
 	}
@@ -226,12 +282,72 @@ public class CommercePriceEntrySoap implements Serializable {
 		_hasTierPrice = hasTierPrice;
 	}
 
+	public boolean getBulkPricing() {
+		return _bulkPricing;
+	}
+
+	public boolean isBulkPricing() {
+		return _bulkPricing;
+	}
+
+	public void setBulkPricing(boolean bulkPricing) {
+		_bulkPricing = bulkPricing;
+	}
+
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	public void setDisplayDate(Date displayDate) {
+		_displayDate = displayDate;
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
 
 	public void setLastPublishDate(Date lastPublishDate) {
 		_lastPublishDate = lastPublishDate;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
 	}
 
 	private String _uuid;
@@ -247,7 +363,19 @@ public class CommercePriceEntrySoap implements Serializable {
 	private long _CProductId;
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
+	private boolean _discountDiscovery;
+	private BigDecimal _discountLevel1;
+	private BigDecimal _discountLevel2;
+	private BigDecimal _discountLevel3;
+	private BigDecimal _discountLevel4;
 	private boolean _hasTierPrice;
+	private boolean _bulkPricing;
+	private Date _displayDate;
+	private Date _expirationDate;
 	private Date _lastPublishDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 }

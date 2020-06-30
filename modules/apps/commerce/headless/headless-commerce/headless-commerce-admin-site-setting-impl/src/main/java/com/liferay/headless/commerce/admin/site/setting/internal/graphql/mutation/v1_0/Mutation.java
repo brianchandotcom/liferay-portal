@@ -24,16 +24,20 @@ import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.TaxCategor
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
+import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -76,7 +80,7 @@ public class Mutation {
 			warehouseResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteAvailabilityEstimate(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -87,8 +91,23 @@ public class Mutation {
 				availabilityEstimateResource.deleteAvailabilityEstimate(id));
 	}
 
-	@GraphQLInvokeDetached
-	public Response putAvailabilityEstimate(
+	@GraphQLField
+	public Response deleteAvailabilityEstimateBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_availabilityEstimateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			availabilityEstimateResource ->
+				availabilityEstimateResource.deleteAvailabilityEstimateBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response updateAvailabilityEstimate(
 			@GraphQLName("id") Long id,
 			@GraphQLName("availabilityEstimate") AvailabilityEstimate
 				availabilityEstimate)
@@ -103,9 +122,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
+	public Response updateAvailabilityEstimateBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_availabilityEstimateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			availabilityEstimateResource ->
+				availabilityEstimateResource.putAvailabilityEstimateBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
 	public AvailabilityEstimate
-			postCommerceAdminSiteSettingGroupAvailabilityEstimate(
+			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
 				@GraphQLName("groupId") Long groupId,
 				@GraphQLName("availabilityEstimate") AvailabilityEstimate
 					availabilityEstimate)
@@ -121,8 +154,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
+	public MeasurementUnit createCommerceAdminSiteSettingGroupMeasurementUnit(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
 		throws Exception {
@@ -136,7 +168,7 @@ public class Mutation {
 						groupId, measurementUnit));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteMeasurementUnit(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -147,8 +179,23 @@ public class Mutation {
 				measurementUnitResource.deleteMeasurementUnit(id));
 	}
 
-	@GraphQLInvokeDetached
-	public Response putMeasurementUnit(
+	@GraphQLField
+	public Response deleteMeasurementUnitBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.deleteMeasurementUnitBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response updateMeasurementUnit(
 			@GraphQLName("id") Long id,
 			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
 		throws Exception {
@@ -162,8 +209,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
+	public Response updateMeasurementUnitBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.putMeasurementUnitBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("taxCategory") TaxCategory taxCategory)
 		throws Exception {
@@ -177,7 +238,7 @@ public class Mutation {
 						groupId, taxCategory));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteTaxCategory(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -187,8 +248,22 @@ public class Mutation {
 			taxCategoryResource -> taxCategoryResource.deleteTaxCategory(id));
 	}
 
-	@GraphQLInvokeDetached
-	public Response putTaxCategory(
+	@GraphQLField
+	public Response deleteTaxCategoryBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxCategoryResource -> taxCategoryResource.deleteTaxCategoryBatch(
+				id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response updateTaxCategory(
 			@GraphQLName("id") Long id,
 			@GraphQLName("taxCategory") TaxCategory taxCategory)
 		throws Exception {
@@ -201,8 +276,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Warehouse postCommerceAdminSiteSettingGroupWarehouse(
+	public Response updateTaxCategoryBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxCategoryResource -> taxCategoryResource.putTaxCategoryBatch(
+				id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("warehouse") Warehouse warehouse)
 		throws Exception {
@@ -215,7 +303,7 @@ public class Mutation {
 					groupId, warehouse));
 	}
 
-	@GraphQLInvokeDetached
+	@GraphQLField
 	public Response deleteWarehouse(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -225,8 +313,22 @@ public class Mutation {
 			warehouseResource -> warehouseResource.deleteWarehouse(id));
 	}
 
-	@GraphQLInvokeDetached
-	public Response putWarehouse(
+	@GraphQLField
+	public Response deleteWarehouseBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseResource -> warehouseResource.deleteWarehouseBatch(
+				id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response updateWarehouse(
 			@GraphQLName("id") Long id,
 			@GraphQLName("warehouse") Warehouse warehouse)
 		throws Exception {
@@ -235,6 +337,20 @@ public class Mutation {
 			_warehouseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.putWarehouse(id, warehouse));
+	}
+
+	@GraphQLField
+	public Response updateWarehouseBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseResource -> warehouseResource.putWarehouseBatch(
+				id, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -279,35 +395,51 @@ public class Mutation {
 			AvailabilityEstimateResource availabilityEstimateResource)
 		throws Exception {
 
-		availabilityEstimateResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		availabilityEstimateResource.setContextAcceptLanguage(_acceptLanguage);
+		availabilityEstimateResource.setContextCompany(_company);
+		availabilityEstimateResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		availabilityEstimateResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		availabilityEstimateResource.setContextUriInfo(_uriInfo);
+		availabilityEstimateResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
 			MeasurementUnitResource measurementUnitResource)
 		throws Exception {
 
-		measurementUnitResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		measurementUnitResource.setContextAcceptLanguage(_acceptLanguage);
+		measurementUnitResource.setContextCompany(_company);
+		measurementUnitResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		measurementUnitResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		measurementUnitResource.setContextUriInfo(_uriInfo);
+		measurementUnitResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
 			TaxCategoryResource taxCategoryResource)
 		throws Exception {
 
-		taxCategoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		taxCategoryResource.setContextAcceptLanguage(_acceptLanguage);
+		taxCategoryResource.setContextCompany(_company);
+		taxCategoryResource.setContextHttpServletRequest(_httpServletRequest);
+		taxCategoryResource.setContextHttpServletResponse(_httpServletResponse);
+		taxCategoryResource.setContextUriInfo(_uriInfo);
+		taxCategoryResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(WarehouseResource warehouseResource)
 		throws Exception {
 
-		warehouseResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		warehouseResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseResource.setContextCompany(_company);
+		warehouseResource.setContextHttpServletRequest(_httpServletRequest);
+		warehouseResource.setContextHttpServletResponse(_httpServletResponse);
+		warehouseResource.setContextUriInfo(_uriInfo);
+		warehouseResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<AvailabilityEstimateResource>
@@ -318,5 +450,13 @@ public class Mutation {
 		_taxCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseResource>
 		_warehouseResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private com.liferay.portal.kernel.model.User _user;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
 
 }

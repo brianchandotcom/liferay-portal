@@ -130,6 +130,9 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		CommerceInventoryWarehouseItem newCommerceInventoryWarehouseItem =
 			_persistence.create(pk);
 
+		newCommerceInventoryWarehouseItem.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newCommerceInventoryWarehouseItem.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -164,6 +167,9 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceInventoryWarehouseItem.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouseItem.getMvccVersion(),
+			newCommerceInventoryWarehouseItem.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getExternalReferenceCode(),
 			newCommerceInventoryWarehouseItem.getExternalReferenceCode());
@@ -223,6 +229,15 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId_Sku() throws Exception {
+		_persistence.countByCompanyId_Sku(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByCompanyId_Sku(0L, "null");
+
+		_persistence.countByCompanyId_Sku(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_S() throws Exception {
 		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
 
@@ -271,8 +286,8 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CIWarehouseItem", "externalReferenceCode", true,
-			"commerceInventoryWarehouseItemId", true, "companyId", true,
+			"CIWarehouseItem", "mvccVersion", true, "externalReferenceCode",
+			true, "commerceInventoryWarehouseItemId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceInventoryWarehouseId", true, "sku",
 			true, "quantity", true, "reservedQuantity", true);
@@ -573,6 +588,9 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_persistence.create(pk);
+
+		commerceInventoryWarehouseItem.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		commerceInventoryWarehouseItem.setExternalReferenceCode(
 			RandomTestUtil.randomString());

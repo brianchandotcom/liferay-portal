@@ -41,7 +41,7 @@ import java.util.Set;
 public interface ResourceTypePermissionPersistence
 	extends BasePersistence<ResourceTypePermission> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceTypePermissionUtil} to access the resource type permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

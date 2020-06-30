@@ -33,11 +33,6 @@ public class CommerceAccountGroupRelServiceWrapper
 		_commerceAccountGroupRelService = commerceAccountGroupRelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceAccountGroupRelServiceUtil} to access the commerce account group rel remote service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccountGroupRel
 			addCommerceAccountGroupRel(
@@ -50,9 +45,26 @@ public class CommerceAccountGroupRelServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceAccountGroupRel(long commerceAccountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceAccountGroupRelService.deleteCommerceAccountGroupRel(
+			commerceAccountGroupRelId);
+	}
+
+	@Override
 	public void deleteCommerceAccountGroupRels(String className, long classPK) {
 		_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
 			className, classPK);
+	}
+
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccountGroupRel
+			getCommerceAccountGroupRel(long commerceAccountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountGroupRelService.getCommerceAccountGroupRel(
+			commerceAccountGroupRelId);
 	}
 
 	@Override

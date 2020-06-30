@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceOrderNotePersistence
 	extends BasePersistence<CommerceOrderNote> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderNoteUtil} to access the commerce order note persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

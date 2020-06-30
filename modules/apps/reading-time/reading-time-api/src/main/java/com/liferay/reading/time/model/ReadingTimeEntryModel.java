@@ -47,7 +47,7 @@ public interface ReadingTimeEntryModel
 	extends AttachedModel, BaseModel<ReadingTimeEntry>, ShardedModel,
 			StagedModel, TrashedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a reading time entry model instance should use the {@link ReadingTimeEntry} interface instead.

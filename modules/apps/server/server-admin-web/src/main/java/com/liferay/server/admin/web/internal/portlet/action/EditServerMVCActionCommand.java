@@ -25,6 +25,8 @@ import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -50,6 +53,8 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyF
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -57,6 +62,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -64,6 +70,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
@@ -76,6 +83,8 @@ import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -147,12 +156,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("cacheSingle")) {
 			cacheSingle();
 		}
-		else if (cmd.equals("cleanUpPermissions")) {
+		else if (cmd.equals("cleanUpAddToPagePermissions")) {
 			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
 		}
-		else if (cmd.equals("cleanUpPortletPreferences")) {
+		else if (cmd.equals("cleanUpPageRevisionPortletPreferences")) {
 			CleanUpPortletPreferencesUtil.
 				cleanUpLayoutRevisionPortletPreferences();
+		}
+		else if (cmd.equals("cleanUpOrphanedPortletPreferences")) {
+			cleanUpOrphanedPortletPreferences();
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);
@@ -222,6 +234,64 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void cacheSingle() throws Exception {
 		_singleVMPool.clear();
+	}
+
+	protected void cleanUpOrphanedPortletPreferences() throws PortalException {
+		boolean active = CacheRegistryUtil.isActive();
+
+		CacheRegistryUtil.setActive(true);
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_portletPreferencesLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setParallel(true);
+			actionableDynamicQuery.setPerformActionMethod(
+				(com.liferay.portal.kernel.model.PortletPreferences pref) -> {
+					if ((pref.getOwnerId() !=
+							PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
+						(pref.getOwnerType() !=
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT) ||
+						Objects.equals("145", pref.getPortletId())) {
+
+						return;
+					}
+
+					Layout layout = _layoutLocalService.getLayout(
+						pref.getPlid());
+
+					if (layout.isTypeControlPanel()) {
+						return;
+					}
+
+					UnicodeProperties typeSettingsProperties =
+						layout.getTypeSettingsProperties();
+
+					Set<String> keys = typeSettingsProperties.keySet();
+
+					boolean orphan = true;
+
+					for (String key : keys) {
+						String value = typeSettingsProperties.getProperty(key);
+
+						if (value.contains(pref.getPortletId())) {
+							orphan = false;
+
+							break;
+						}
+					}
+
+					if (orphan) {
+						_portletPreferencesLocalService.
+							deletePortletPreferences(pref);
+					}
+				});
+
+			actionableDynamicQuery.performActions();
+		}
+		finally {
+			CacheRegistryUtil.setActive(active);
+		}
 	}
 
 	protected String convertProcess(
@@ -552,6 +622,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	private DirectServletRegistry _directServletRegistry;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private MailService _mailService;
 
 	@Reference
@@ -560,6 +633,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private OrganizationMembershipPolicyFactory
 		_organizationMembershipPolicyFactory;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;

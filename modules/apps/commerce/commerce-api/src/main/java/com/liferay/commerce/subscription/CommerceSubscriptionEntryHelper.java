@@ -31,6 +31,14 @@ public interface CommerceSubscriptionEntryHelper {
 	public void checkCommerceSubscriptions(CommerceOrder commerceOrder)
 		throws PortalException;
 
+	public void checkDeliverySubscriptionEntriesStatus(
+			List<CommerceSubscriptionEntry> commerceSubscriptionEntries)
+		throws Exception;
+
+	public void checkDeliverySubscriptionStatus(
+			CommerceSubscriptionEntry commerceSubscriptionEntry)
+		throws Exception;
+
 	public void checkSubscriptionEntriesStatus(
 			List<CommerceSubscriptionEntry> commerceSubscriptionEntries)
 		throws Exception;

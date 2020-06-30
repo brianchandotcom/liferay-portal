@@ -341,11 +341,6 @@ public class MicroblogsEntryWrapper
 		return _microblogsEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a microblogs entry model instance should use the <code>MicroblogsEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_microblogsEntry.persist();

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 public abstract class RepositoryEntryBaseImpl
 	extends RepositoryEntryModelImpl implements RepositoryEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a repository entry model instance should use the <code>RepositoryEntry</code> interface instead.

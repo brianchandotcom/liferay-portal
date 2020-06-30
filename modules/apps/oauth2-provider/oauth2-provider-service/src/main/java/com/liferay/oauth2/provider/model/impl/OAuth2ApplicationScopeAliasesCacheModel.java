@@ -132,7 +132,9 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		oAuth2ApplicationScopeAliasesId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -142,7 +144,7 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 		createDate = objectInput.readLong();
 
 		oAuth2ApplicationId = objectInput.readLong();
-		scopeAliases = objectInput.readUTF();
+		scopeAliases = (String)objectInput.readObject();
 
 		scopeAliasesHash = objectInput.readLong();
 	}
@@ -167,10 +169,10 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 		objectOutput.writeLong(oAuth2ApplicationId);
 
 		if (scopeAliases == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(scopeAliases);
+			objectOutput.writeObject(scopeAliases);
 		}
 
 		objectOutput.writeLong(scopeAliasesHash);

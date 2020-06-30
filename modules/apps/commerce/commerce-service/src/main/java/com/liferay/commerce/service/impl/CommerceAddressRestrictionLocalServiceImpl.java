@@ -32,12 +32,11 @@ public class CommerceAddressRestrictionLocalServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId,
-			ServiceContext serviceContext)
+			long userId, long groupId, String className, long classPK,
+			long commerceCountryId)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(userId);
 
 		long commerceAddressRestrictionId = counterLocalService.increment();
 
@@ -53,10 +52,24 @@ public class CommerceAddressRestrictionLocalServiceImpl
 		commerceAddressRestriction.setClassPK(classPK);
 		commerceAddressRestriction.setCommerceCountryId(commerceCountryId);
 
-		commerceAddressRestrictionPersistence.update(
+		return commerceAddressRestrictionPersistence.update(
 			commerceAddressRestriction);
+	}
 
-		return commerceAddressRestriction;
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceAddressRestriction addCommerceAddressRestriction(
+			String className, long classPK, long commerceCountryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceAddressRestrictionLocalService.
+			addCommerceAddressRestriction(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				className, classPK, commerceCountryId);
 	}
 
 	@Override
@@ -105,8 +118,9 @@ public class CommerceAddressRestrictionLocalServiceImpl
 		String className, long classPK, long commerceCountryId) {
 
 		CommerceAddressRestriction commerceAddressRestriction =
-			fetchCommerceAddressRestriction(
-				className, classPK, commerceCountryId);
+			commerceAddressRestrictionLocalService.
+				fetchCommerceAddressRestriction(
+					className, classPK, commerceCountryId);
 
 		if (commerceAddressRestriction != null) {
 			return true;

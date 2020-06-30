@@ -1,5 +1,0 @@
-[
-	"com.liferay.commerce.service.CommerceCountryService#getBillingCommerceCountries",
-	"com.liferay.commerce.service.CommerceCountryService#getCommerceCountries",
-	"com.liferay.commerce.service.CommerceCountryService#getShippingCommerceCountries"
-]

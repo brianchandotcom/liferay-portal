@@ -449,11 +449,6 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		return _company.isSystem();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a company model instance should use the <code>Company</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_company.persist();

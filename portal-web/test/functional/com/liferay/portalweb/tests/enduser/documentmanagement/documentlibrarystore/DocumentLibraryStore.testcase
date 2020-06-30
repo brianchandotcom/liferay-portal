@@ -67,6 +67,8 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
+	@description = "This will be ignored until LPS-86667 is backported on BPR-45938."
+	@ignore = "true"
 	@priority = "5"
 	test DBStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";

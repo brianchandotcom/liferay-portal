@@ -33,6 +33,25 @@ public class CommerceInventoryAuditServiceWrapper
 		_commerceInventoryAuditService = commerceInventoryAuditService;
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
+				getCommerceInventoryAudits(
+					long companyId, String sku, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryAuditService.getCommerceInventoryAudits(
+			companyId, sku, start, end);
+	}
+
+	@Override
+	public int getCommerceInventoryAuditsCount(long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryAuditService.getCommerceInventoryAuditsCount(
+			companyId, sku);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

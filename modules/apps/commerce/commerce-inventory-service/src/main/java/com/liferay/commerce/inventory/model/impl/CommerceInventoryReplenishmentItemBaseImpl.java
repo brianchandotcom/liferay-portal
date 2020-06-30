@@ -33,7 +33,7 @@ public abstract class CommerceInventoryReplenishmentItemBaseImpl
 	extends CommerceInventoryReplenishmentItemModelImpl
 	implements CommerceInventoryReplenishmentItem {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce inventory replenishment item model instance should use the <code>CommerceInventoryReplenishmentItem</code> interface instead.

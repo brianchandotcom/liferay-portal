@@ -39,7 +39,7 @@ import java.util.Set;
 @ProviderType
 public interface MessagePersistence extends BasePersistence<Message> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MessageUtil} to access the message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

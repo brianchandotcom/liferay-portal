@@ -17,14 +17,15 @@ package com.liferay.commerce.product.type.virtual.order.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
@@ -37,13 +38,10 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -81,6 +79,15 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_company.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_commerceCurrency.getCode());
+		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			_company.getCompanyId(), _company.getGroupId(), _user.getUserId(),
+			_commerceCurrency.getCode());
+
 		_commerceOrders = new ArrayList<>();
 	}
 
@@ -90,7 +97,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
 
-		_companyLocalService.deleteCompany(_company);
+		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
 	}
 
 	@Test
@@ -105,33 +112,22 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 			"I should be able to see the created virtual order item"
 		);
 
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel();
-
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_company.getGroupId(), _user.getUserId(), 0,
-			commerceChannel.getSiteGroupId());
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
 
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), null,
-				ServiceContextTestUtil.getServiceContext(
-					_company.getGroupId()));
-
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
 			true);
 
 		VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
-			commerceCatalog.getGroupId(), cpDefinition.getModelClassName(),
+			_commerceCatalog.getGroupId(), cpDefinition.getModelClassName(),
 			cpDefinition.getCPDefinitionId(), 0,
-			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT, 0, 0, 0);
+			CommerceOrderConstants.ORDER_STATUS_PENDING, 0, 0, 0);
 
-		CommerceTestUtil.addBackOrderCPDefinitionInventory(cpDefinition);
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
 		for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
 			CommerceTestUtil.addCommerceOrderItem(
@@ -141,7 +137,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		commerceOrder = _setCommerceOrderStatuses(
 			commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID,
-			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT);
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
 			commerceOrder.getCommerceOrderId());
@@ -151,7 +147,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		List<CommerceVirtualOrderItem> userCommerceVirtualOrderItems =
 			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
-				commerceChannel.getGroupId(),
+				_commerceChannel.getGroupId(),
 				commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -164,7 +160,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 			Assert.assertEquals(true, commerceVirtualOrderItem.isActive());
 			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
+				CommerceOrderConstants.ORDER_STATUS_PENDING,
 				commerceVirtualOrderItem.getActivationStatus());
 			Assert.assertEquals(0L, commerceVirtualOrderItem.getDuration());
 
@@ -192,33 +188,22 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 			"I should be able to see the created virtual order item"
 		);
 
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel();
-
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_company.getGroupId(), _user.getUserId(), 0,
-			commerceChannel.getSiteGroupId());
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
 
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), null,
-				ServiceContextTestUtil.getServiceContext(
-					_company.getGroupId()));
-
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
 			true);
 
 		VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
-			commerceCatalog.getGroupId(), cpDefinition.getModelClassName(),
+			_commerceCatalog.getGroupId(), cpDefinition.getModelClassName(),
 			cpDefinition.getCPDefinitionId(), 0L,
-			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT, 0L, 0L, 0L);
+			CommerceOrderConstants.ORDER_STATUS_PENDING, 0L, 0L, 0L);
 
-		CommerceTestUtil.addBackOrderCPDefinitionInventory(cpDefinition);
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
 		int subscriptionLength = 1;
 
@@ -233,7 +218,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		commerceOrder = _setCommerceOrderStatuses(
 			commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID,
-			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT);
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceSubscriptionEntryHelper.checkCommerceSubscriptions(
 			commerceOrder);
@@ -246,7 +231,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		List<CommerceVirtualOrderItem> userCommerceVirtualOrderItems =
 			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
-				commerceChannel.getGroupId(),
+				_commerceChannel.getGroupId(),
 				commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -259,7 +244,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 			Assert.assertEquals(true, commerceVirtualOrderItem.isActive());
 			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
+				CommerceOrderConstants.ORDER_STATUS_PENDING,
 				commerceVirtualOrderItem.getActivationStatus());
 			Assert.assertEquals(0L, commerceVirtualOrderItem.getDuration());
 
@@ -295,8 +280,14 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		return _cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
-	@Inject
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
+	@DeleteAfterTestRun
+	private CommerceCatalog _commerceCatalog;
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -313,14 +304,16 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 	private CommerceVirtualOrderItemLocalService
 		_commerceVirtualOrderItemLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

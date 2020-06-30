@@ -45,7 +45,7 @@ public interface CommerceWishListModel
 	extends BaseModel<CommerceWishList>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce wish list model instance should use the {@link CommerceWishList} interface instead.

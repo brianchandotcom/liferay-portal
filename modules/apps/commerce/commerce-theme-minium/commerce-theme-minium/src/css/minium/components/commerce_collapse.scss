@@ -1,6 +1,4 @@
-
 .commerce-collapse {
-
 	&__header {
 		align-items: center;
 		color: inherit;
@@ -15,29 +13,27 @@
 
 		.collapse-icon-closed,
 		.collapse-icon-open {
-			font-size: 20px;
 			line-height: 0;
 			position: static;
 		}
 
-
 		&--collapsing,
 		&--collapsed {
 			.collapse-icon-closed {
-				display: block
+				display: block;
 			}
 			.collapse-icon-open {
-				display: none
+				display: none;
 			}
 		}
 
 		&--expanding,
 		&--expanded {
 			.collapse-icon-closed {
-				display: none
+				display: none;
 			}
 			.collapse-icon-open {
-				display: block
+				display: block;
 			}
 		}
 	}
@@ -45,7 +41,7 @@
 	&__content {
 		overflow: hidden;
 		padding-top: 10px;
-		transition: max-height .2s ease-in;
+		transition: max-height 0.2s ease-in;
 
 		&--collapsed {
 			display: none;

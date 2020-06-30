@@ -1,14 +1,18 @@
 Bundle-Name: Liferay Commerce API
 Bundle-SymbolicName: com.liferay.commerce.api
-Bundle-Version: 10.1.1
+Bundle-Version: 18.0.2
 Export-Package:\
+	com.liferay.commerce.address,\
 	com.liferay.commerce.constants,\
 	com.liferay.commerce.context,\
 	com.liferay.commerce.discount,\
 	com.liferay.commerce.exception,\
+	com.liferay.commerce.health.status,\
 	com.liferay.commerce.inventory,\
 	com.liferay.commerce.model,\
 	com.liferay.commerce.order,\
+	com.liferay.commerce.order.engine,\
+	com.liferay.commerce.order.status,\
 	com.liferay.commerce.payment.engine,\
 	com.liferay.commerce.payment.method,\
 	com.liferay.commerce.payment.request,\

@@ -43,7 +43,7 @@ import java.util.Date;
 public interface ChangesetCollectionModel
 	extends BaseModel<ChangesetCollection>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a changeset collection model instance should use the {@link ChangesetCollection} interface instead.

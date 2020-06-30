@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
+import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
@@ -136,11 +137,10 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("Execute all verify processes")
 	public void executeAll() {
-		OutputStreamContainerFactory outputStreamContainerFactory =
-			outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactory();
-
-		_runAllVerifiersWithFactory(outputStreamContainerFactory, true);
+		_runAllVerifiersWithFactory(
+			outputStreamContainerFactoryTracker.getOutputStreamContainerFactory(
+				null),
+			true);
 	}
 
 	@Descriptor("Execute all verify processes with a specific output")
@@ -327,19 +327,9 @@ public class VerifyProcessTrackerOSGiCommands {
 		final String verifyProcessName, String outputStreamContainerFactoryName,
 		String outputStreamName, final boolean force) {
 
-		OutputStreamContainerFactory outputStreamContainerFactory;
-
-		if (outputStreamContainerFactoryName != null) {
-			outputStreamContainerFactory =
-				outputStreamContainerFactoryTracker.
-					getOutputStreamContainerFactory(
-						outputStreamContainerFactoryName);
-		}
-		else {
-			outputStreamContainerFactory =
-				outputStreamContainerFactoryTracker.
-					getOutputStreamContainerFactory();
-		}
+		OutputStreamContainerFactory outputStreamContainerFactory =
+			outputStreamContainerFactoryTracker.getOutputStreamContainerFactory(
+				outputStreamContainerFactoryName);
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create(outputStreamName);
@@ -476,7 +466,9 @@ public class VerifyProcessTrackerOSGiCommands {
 			String key, VerifyProcess serviceVerifyProcess,
 			List<VerifyProcess> contentVerifyProcesses) {
 
-			_execute(verifyProcessTrackerMap, key, null, false);
+			_execute(
+				verifyProcessTrackerMap, key,
+				OutputStreamContainerConstants.FACTORY_NAME_DUMMY, false);
 		}
 
 		@Override

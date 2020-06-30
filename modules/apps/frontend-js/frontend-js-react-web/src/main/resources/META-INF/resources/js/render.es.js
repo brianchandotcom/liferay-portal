@@ -12,8 +12,8 @@
  * details.
  */
 
-import React from 'react';
 import ReactDOM from 'react-dom';
+import React from 'react';
 
 let counter = 0;
 
@@ -56,9 +56,9 @@ export default function render(renderFunction, renderData, container) {
 
 	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
-		<React.Fragment>
+		<>
 			{renderFunction(renderData)}
-		</React.Fragment>,
+		</>,
 		container
 	);
 }

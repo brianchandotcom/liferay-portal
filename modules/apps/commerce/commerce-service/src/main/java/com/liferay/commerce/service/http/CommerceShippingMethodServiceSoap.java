@@ -63,6 +63,32 @@ public class CommerceShippingMethodServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap
 			addCommerceAddressRestriction(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceCountryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
+				CommerceShippingMethodServiceUtil.addCommerceAddressRestriction(
+					userId, groupId, commerceShippingMethodId,
+					commerceCountryId);
+
+			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap
+			addCommerceAddressRestriction(
 				long commerceShippingMethodId, long commerceCountryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -76,10 +102,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -95,10 +121,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -110,10 +136,25 @@ public class CommerceShippingMethodServiceSoap {
 			CommerceShippingMethodServiceUtil.deleteCommerceAddressRestriction(
 				commerceAddressRestrictionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCommerceAddressRestrictions(
+			long commerceShippingMethodId)
+		throws RemoteException {
+
+		try {
+			CommerceShippingMethodServiceUtil.deleteCommerceAddressRestrictions(
+				commerceShippingMethodId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -125,10 +166,10 @@ public class CommerceShippingMethodServiceSoap {
 			CommerceShippingMethodServiceUtil.deleteCommerceShippingMethod(
 				commerceShippingMethodId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -144,10 +185,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -171,10 +212,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -190,10 +231,10 @@ public class CommerceShippingMethodServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -209,10 +250,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -229,10 +270,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -249,10 +290,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -271,10 +312,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -289,10 +330,10 @@ public class CommerceShippingMethodServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -308,10 +349,10 @@ public class CommerceShippingMethodServiceSoap {
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

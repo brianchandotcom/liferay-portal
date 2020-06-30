@@ -206,11 +206,6 @@ public class BrowserTrackerWrapper
 		return _browserTracker.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a browser tracker model instance should use the <code>BrowserTracker</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_browserTracker.persist();

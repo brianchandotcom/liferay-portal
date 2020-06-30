@@ -491,11 +491,6 @@ public class CPDefinitionInventoryWrapper
 		return _cpDefinitionInventory.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cp definition inventory model instance should use the <code>CPDefinitionInventory</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpDefinitionInventory.persist();

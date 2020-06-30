@@ -52,7 +52,7 @@ portletURL.setParameter("tabs1", tabs1);
 	searchContainerId="workflowTasks"
 	searchFormName="fm1"
 	selectable="<%= false %>"
-	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingOrder="<%= workflowTaskDisplayContext.getOrderByType() %>"
 	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"
 	viewTypeItems="<%= workflowTaskDisplayContext.getViewTypes() %>"
 />

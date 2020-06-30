@@ -44,7 +44,7 @@ public interface CalendarNotificationTemplateModel
 	extends BaseModel<CalendarNotificationTemplate>, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a calendar notification template model instance should use the {@link CalendarNotificationTemplate} interface instead.

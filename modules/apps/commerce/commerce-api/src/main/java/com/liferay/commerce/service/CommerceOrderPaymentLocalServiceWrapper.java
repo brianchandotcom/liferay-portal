@@ -285,6 +285,18 @@ public class CommerceOrderPaymentLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderPayment>
+		getCommerceOrderPayments(
+			long commerceOrderId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceOrderPayment>
+					orderByComparator) {
+
+		return _commerceOrderPaymentLocalService.getCommerceOrderPayments(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce order payments.
 	 *
@@ -294,6 +306,12 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	public int getCommerceOrderPaymentsCount() {
 		return _commerceOrderPaymentLocalService.
 			getCommerceOrderPaymentsCount();
+	}
+
+	@Override
+	public int getCommerceOrderPaymentsCount(long commerceOrderId) {
+		return _commerceOrderPaymentLocalService.getCommerceOrderPaymentsCount(
+			commerceOrderId);
 	}
 
 	@Override
@@ -314,6 +332,9 @@ public class CommerceOrderPaymentLocalServiceWrapper
 		return _commerceOrderPaymentLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

@@ -122,9 +122,7 @@ public class AccountSelectorTag extends ComponentRendererTag {
 			_log.error(pe, pe);
 		}
 
-		putValue(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/commerce-icons.svg");
+		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		setTemplateNamespace("AccountSelector.render");
 
@@ -193,23 +191,18 @@ public class AccountSelectorTag extends ComponentRendererTag {
 			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
-		PortletURL portletURL = null;
-
 		long groupId = PortalUtil.getScopeGroupId(httpServletRequest);
 
 		long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
 
 		if (plid > 0) {
-			portletURL = PortletURLFactoryUtil.create(
+			return PortletURLFactoryUtil.create(
 				httpServletRequest, portletId, plid,
 				PortletRequest.ACTION_PHASE);
 		}
-		else {
-			portletURL = PortletURLFactoryUtil.create(
-				httpServletRequest, portletId, PortletRequest.ACTION_PHASE);
-		}
 
-		return portletURL;
+		return PortletURLFactoryUtil.create(
+			httpServletRequest, portletId, PortletRequest.ACTION_PHASE);
 	}
 
 	private String _getViewCommerceOrdersURL(ThemeDisplay themeDisplay)

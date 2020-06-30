@@ -84,6 +84,10 @@ public class FragmentEntryLinkEditorConfigContributor
 
 		jsonObject.put("removePlugins", getRemovePluginsLists());
 
+		jsonObject.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
 		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
@@ -110,8 +114,8 @@ public class FragmentEntryLinkEditorConfigContributor
 	}
 
 	protected String getRemovePluginsLists() {
-		return "contextmenu,elementspath,image,link,liststyle,magicline," +
-			"resize,tabletools,toolbar,ae_embed";
+		return "contextmenu,elementspath,floatingspace,image,link,liststyle," +
+			"magicline,resize,table,tabletools,toolbar,ae_embed";
 	}
 
 	protected ItemSelectorCriterion getURLItemSelectorCriterion() {

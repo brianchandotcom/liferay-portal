@@ -14,12 +14,15 @@
 
 package com.liferay.commerce.product.options.web.internal.util;
 
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionModifiedDateComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueNameComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionModifiedDateComparator;
@@ -83,6 +86,28 @@ public class CPOptionsPortletUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CPOption> getCPOptionOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPOption> orderByComparator = null;
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPOptionModifiedDateComparator(orderByAsc);
+		}
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CPOptionNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static OrderByComparator<CPOptionValue>

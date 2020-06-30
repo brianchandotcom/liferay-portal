@@ -164,6 +164,22 @@ definition {
 		Button.clickSave();
 	}
 
+	macro getSiteTemplateID {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "${siteTemplateName}");
+
+		Pause(locator1 = "1000");
+
+		var currentURL = Navigator.getCurrentURL();
+		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
+		var siteTemplateID = StringUtil.extractLast("${siteTemplateURL}", "/");
+
+		echo("siteTemplateID: ${siteTemplateID}");
+
+		return "${siteTemplateID}";
+	}
+
 	macro gotoSettingsCP {
 		var key_siteTemplateName = "${siteTemplateName}";
 

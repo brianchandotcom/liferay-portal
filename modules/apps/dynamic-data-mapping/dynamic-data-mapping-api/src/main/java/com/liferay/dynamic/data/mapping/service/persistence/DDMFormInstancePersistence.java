@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMFormInstancePersistence
 	extends BasePersistence<DDMFormInstance> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceUtil} to access the ddm form instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

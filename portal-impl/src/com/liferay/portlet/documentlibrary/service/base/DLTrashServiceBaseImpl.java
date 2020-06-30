@@ -43,7 +43,7 @@ import javax.sql.DataSource;
 public abstract class DLTrashServiceBaseImpl
 	extends BaseServiceImpl implements DLTrashService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>DLTrashService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.kernel.service.DLTrashServiceUtil</code>.
@@ -166,8 +166,8 @@ public abstract class DLTrashServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

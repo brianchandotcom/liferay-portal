@@ -22,7 +22,6 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
-import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -36,13 +35,17 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -202,12 +205,75 @@ public class DocumentFolderResourceImpl
 					siteId, documentFolder.getViewableByAsString())));
 	}
 
+	private Map<String, Map<String, String>> _getActions(Folder folder) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", folder.getFolderId(), "deleteDocumentFolder",
+				folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"ACCESS", folder.getFolderId(), "getDocumentFolder",
+				folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", folder.getFolderId(), "putDocumentFolder",
+				folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", folder.getFolderId(), "putDocumentFolderSubscribe",
+				folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", folder.getFolderId(),
+				"putDocumentFolderUnsubscribe", folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).put(
+			"update",
+			addAction(
+				"UPDATE", folder.getFolderId(), "patchDocumentFolder",
+				folder.getUserId(),
+				"com.liferay.document.library.kernel.model.DLFolder",
+				folder.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getDocumentFolderListActions(
+		Long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_SUBFOLDER", "postDocumentFolderDocumentFolder",
+				"com.liferay.document.library", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getDocumentFolderDocumentFoldersPage",
+				"com.liferay.document.library", groupId)
+		).build();
+	}
+
 	private Page<DocumentFolder> _getDocumentFoldersPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
+			_getDocumentFolderListActions(siteId),
 			booleanQuery -> {
 				if (parentDocumentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -236,17 +302,20 @@ public class DocumentFolderResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toDocumentFolder(
 				_dlAppService.getFolder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private DocumentFolder _toDocumentFolder(Folder folder) throws Exception {
 		return _documentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.getPreferredLocale(),
-				folder.getFolderId(), contextUriInfo, contextUser));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(folder), _dtoConverterRegistry,
+				folder.getFolderId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private DocumentFolder _updateDocumentFolder(
@@ -270,6 +339,9 @@ public class DocumentFolderResourceImpl
 
 	@Reference
 	private DocumentFolderDTOConverter _documentFolderDTOConverter;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

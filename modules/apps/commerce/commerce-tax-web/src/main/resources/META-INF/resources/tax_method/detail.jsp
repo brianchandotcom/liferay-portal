@@ -17,50 +17,46 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext = (CommerceTaxMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTaxMethod commerceTaxMethod = commerceTaxMethodsDisplayContext.getCommerceTaxMethod();
 
-long commerceTaxMethodId = commerceTaxMethod.getCommerceTaxMethodId();
+long commerceTaxMethodId = 0;
+
+if (commerceTaxMethod != null) {
+	commerceTaxMethodId = commerceTaxMethod.getCommerceTaxMethodId();
+}
+
+String name = BeanParamUtil.getString(commerceTaxMethod, request, "name", commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineName(locale));
+String description = BeanParamUtil.getString(commerceTaxMethod, request, "description", commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineDescription(locale));
 %>
 
 <portlet:actionURL name="editCommerceTaxMethod" var="editCommerceTaxMethodActionURL" />
 
-<aui:form action="<%= editCommerceTaxMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceTaxMethod();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= commerceTaxMethod.isNew() ? Constants.ADD : Constants.UPDATE %>" />
+<aui:form action="<%= editCommerceTaxMethodActionURL %>" enctype="multipart/form-data" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceTaxMethod == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceTaxMethodsDisplayContext.getCommerceChannelId() %>" />
 	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
-	<aui:input name="engineKey" type="hidden" value="<%= commerceTaxMethod.getEngineKey() %>" />
+	<aui:input name="commerceTaxMethodEngineKey" type="hidden" value="<%= commerceTaxMethodsDisplayContext.getCommerceTaxMethodEngineKey() %>" />
 
-	<div class="lfr-form-content">
-		<liferay-ui:error exception="<%= CommerceTaxMethodNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= CommerceTaxMethodNameException.class %>" message="please-enter-a-valid-name" />
+
+	<commerce-ui:panel>
+		<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" name="nameMapAsXML" type="text" value="<%= name %>">
+			<aui:validator name="required" />
+		</aui:input>
+
+		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" type="text" value="<%= description %>" />
 
 		<aui:model-context bean="<%= commerceTaxMethod %>" model="<%= CommerceTaxMethod.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="name" />
+		<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.getPercentage() %>" name="percentage" type="toggle-switch" />
 
-				<aui:input name="description" />
-
-				<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.getPercentage() %>" name="percentage" type="toggle-switch" />
-
-				<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.isActive() %>" name="active" type="toggle-switch" />
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</div>
+		<aui:input checked="<%= (commerceTaxMethod == null) ? false : commerceTaxMethod.isActive() %>" name="active" type="toggle-switch" />
+	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveCommerceTaxMethod() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

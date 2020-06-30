@@ -16,7 +16,7 @@ package com.liferay.commerce.account.group.admin.web.internal.display.context;
 
 import com.liferay.commerce.account.group.admin.web.internal.display.context.util.CommerceAccountGroupAdminRequestHelper;
 import com.liferay.commerce.account.group.admin.web.internal.search.CommerceAccountGroupChecker;
-import com.liferay.commerce.account.item.selector.criterion.CommerceAccountItemSelectorCriterion;
+import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupAccountItemSelectorCriterion;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelService;
@@ -24,7 +24,6 @@ import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,14 +34,11 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -123,11 +119,13 @@ public class CommerceAccountGroupAdminDisplayContext {
 					getCommerceAccountGroupId());
 
 		List<CommerceAccountGroupCommerceAccountRel> results =
-			getCommerceAccountGroupCommerceAccountRels(
-				_commerceAccountGroupCommerceAccountRelSearchContainer.
-					getStart(),
-				_commerceAccountGroupCommerceAccountRelSearchContainer.
-					getEnd());
+			_commerceAccountGroupCommerceAccountRelService.
+				getCommerceAccountGroupCommerceAccountRels(
+					getCommerceAccountGroupId(),
+					_commerceAccountGroupCommerceAccountRelSearchContainer.
+						getStart(),
+					_commerceAccountGroupCommerceAccountRelSearchContainer.
+						getEnd());
 
 		_commerceAccountGroupCommerceAccountRelSearchContainer.setTotal(total);
 		_commerceAccountGroupCommerceAccountRelSearchContainer.setResults(
@@ -151,23 +149,22 @@ public class CommerceAccountGroupAdminDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(
 				_commerceAccountGroupAdminRequestHelper.getRequest());
 
-		CommerceAccountItemSelectorCriterion
-			commerceAccountItemSelectorCriterion =
-				new CommerceAccountItemSelectorCriterion();
+		CommerceAccountGroupAccountItemSelectorCriterion
+			commerceAccountGroupAccountItemSelectorCriterion =
+				new CommerceAccountGroupAccountItemSelectorCriterion();
 
-		commerceAccountItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new UUIDItemSelectorReturnType()));
+		commerceAccountGroupAccountItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new UUIDItemSelectorReturnType()));
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "commerceAccountsSelectItem",
-			commerceAccountItemSelectorCriterion);
-
-		String checkedCommerceAccountIds = StringUtil.merge(
-			getCheckedCommerceAccountIds());
+			commerceAccountGroupAccountItemSelectorCriterion);
 
 		itemSelectorURL.setParameter(
-			"checkedCommerceAccountIds", checkedCommerceAccountIds);
+			"commerceAccountGroupId",
+			String.valueOf(getCommerceAccountGroupId()));
 
 		return itemSelectorURL.toString();
 	}
@@ -283,45 +280,6 @@ public class CommerceAccountGroupAdminDisplayContext {
 		return PortalPermissionUtil.contains(
 			_commerceAccountGroupAdminRequestHelper.getPermissionChecker(),
 			actionId);
-	}
-
-	protected long[] getCheckedCommerceAccountIds() throws PortalException {
-		List<Long> commerceAccountIdsList = new ArrayList<>();
-
-		List<CommerceAccountGroupCommerceAccountRel>
-			commerceAccountGroupCommerceAccountRels =
-				getCommerceAccountGroupCommerceAccountRels();
-
-		for (CommerceAccountGroupCommerceAccountRel
-				commerceAccountGroupCommerceAccountRel :
-					commerceAccountGroupCommerceAccountRels) {
-
-			commerceAccountIdsList.add(
-				commerceAccountGroupCommerceAccountRel.getCommerceAccountId());
-		}
-
-		if (!commerceAccountIdsList.isEmpty()) {
-			return ArrayUtil.toLongArray(commerceAccountIdsList);
-		}
-
-		return new long[0];
-	}
-
-	protected List<CommerceAccountGroupCommerceAccountRel>
-			getCommerceAccountGroupCommerceAccountRels()
-		throws PortalException {
-
-		return getCommerceAccountGroupCommerceAccountRels(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	protected List<CommerceAccountGroupCommerceAccountRel>
-			getCommerceAccountGroupCommerceAccountRels(int start, int end)
-		throws PortalException {
-
-		return _commerceAccountGroupCommerceAccountRelService.
-			getCommerceAccountGroupCommerceAccountRels(
-				getCommerceAccountGroupId(), start, end);
 	}
 
 	private String _getKeywords() {

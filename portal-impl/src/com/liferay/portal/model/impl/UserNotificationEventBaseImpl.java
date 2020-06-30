@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 public abstract class UserNotificationEventBaseImpl
 	extends UserNotificationEventModelImpl implements UserNotificationEvent {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user notification event model instance should use the <code>UserNotificationEvent</code> interface instead.

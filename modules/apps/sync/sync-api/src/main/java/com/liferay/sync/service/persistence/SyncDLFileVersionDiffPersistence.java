@@ -41,7 +41,7 @@ import java.util.Set;
 public interface SyncDLFileVersionDiffPersistence
 	extends BasePersistence<SyncDLFileVersionDiff> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLFileVersionDiffUtil} to access the sync dl file version diff persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

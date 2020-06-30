@@ -35,11 +35,6 @@ public class CommerceAccountOrganizationRelServiceWrapper
 			commerceAccountOrganizationRelService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceAccountOrganizationRelServiceUtil} to access the commerce account organization rel remote service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountOrganizationRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccountOrganizationRel
 			addCommerceAccountOrganizationRel(

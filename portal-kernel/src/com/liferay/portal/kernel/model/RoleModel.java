@@ -43,7 +43,7 @@ public interface RoleModel
 	extends AttachedModel, BaseModel<Role>, LocalizedModel, MVCCModel,
 			ShardedModel, StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a role model instance should use the {@link Role} interface instead.

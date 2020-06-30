@@ -39,7 +39,7 @@ import java.util.Set;
 public interface UserNotificationEventPersistence
 	extends BasePersistence<UserNotificationEvent> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationEventUtil} to access the user notification event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

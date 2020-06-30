@@ -88,10 +88,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -111,10 +111,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -134,10 +134,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -157,10 +157,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -179,10 +179,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -203,10 +203,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -231,10 +231,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -255,10 +255,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -274,10 +274,42 @@ public class CPDefinitionOptionValueRelServiceSoap {
 
 			return returnValue;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
+				updateCPDefinitionOptionValueRel(
+					long cpDefinitionOptionValueRelId,
+					String[] nameMapLanguageIds, String[] nameMapValues,
+					double priority, String key, long cpInstanceId,
+					int quantity, java.math.BigDecimal price,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+				returnValue =
+					CPDefinitionOptionValueRelServiceUtil.
+						updateCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId, nameMap, priority,
+							key, cpInstanceId, quantity, price, serviceContext);
+
+			return com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -305,10 +337,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

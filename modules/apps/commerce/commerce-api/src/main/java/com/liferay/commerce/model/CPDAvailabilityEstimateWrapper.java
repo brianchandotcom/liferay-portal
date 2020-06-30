@@ -308,11 +308,6 @@ public class CPDAvailabilityEstimateWrapper
 		return _cpdAvailabilityEstimate.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cpd availability estimate model instance should use the <code>CPDAvailabilityEstimate</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_cpdAvailabilityEstimate.persist();

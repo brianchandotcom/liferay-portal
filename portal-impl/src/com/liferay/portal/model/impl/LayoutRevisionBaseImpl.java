@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 public abstract class LayoutRevisionBaseImpl
 	extends LayoutRevisionModelImpl implements LayoutRevision {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout revision model instance should use the <code>LayoutRevision</code> interface instead.

@@ -206,6 +206,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	@Test
 	public void testDeleteMessageBoardMessage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
 			testDeleteMessageBoardMessage_addMessageBoardMessage();
 
@@ -350,7 +351,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				randomPatchMessageBoardMessage);
 
 		MessageBoardMessage expectedPatchMessageBoardMessage =
-			(MessageBoardMessage)BeanUtils.cloneBean(postMessageBoardMessage);
+			postMessageBoardMessage.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchMessageBoardMessage, randomPatchMessageBoardMessage);
@@ -404,6 +405,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	@Test
 	public void testDeleteMessageBoardMessageMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
 			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
@@ -734,9 +736,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1097,9 +1101,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1436,9 +1442,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1747,6 +1755,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (messageBoardMessage.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (messageBoardMessage.getAggregateRating() == null) {
 					valid = false;
@@ -1923,6 +1939,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (rating.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (rating.getBestRating() == null) {
 					valid = false;
@@ -2004,6 +2028,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getActions(),
+						messageBoardMessage2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2229,6 +2264,16 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getActions(), rating2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2478,6 +2523,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("aggregateRating")) {
 			throw new IllegalArgumentException(

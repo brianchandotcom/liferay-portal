@@ -30,11 +30,6 @@ public class JournalFeedServiceWrapper
 		_journalFeedService = journalFeedService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalFeedServiceUtil} to access the journal feed remote service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.journal.model.JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,

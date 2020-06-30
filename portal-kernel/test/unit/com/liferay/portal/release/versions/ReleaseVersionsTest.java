@@ -132,7 +132,7 @@ public class ReleaseVersionsTest {
 
 		Version masterVersion = versionPathPair.getKey();
 
-		if ((masterVersion.getMajor() == (releaseVersion.getMajor() + 1)) ||
+		if ((masterVersion.getMajor() > releaseVersion.getMajor()) ||
 			(masterVersion.equals(releaseVersion) &&
 			 (masterVersion.getMinor() == 0) &&
 			 (masterVersion.getMicro() == 0))) {

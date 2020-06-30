@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface CPMeasurementUnit
 	extends CPMeasurementUnitModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.commerce.product.model.impl.CPMeasurementUnitImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

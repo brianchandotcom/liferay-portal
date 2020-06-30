@@ -33,7 +33,7 @@ public abstract class CommerceVirtualOrderItemBaseImpl
 	extends CommerceVirtualOrderItemModelImpl
 	implements CommerceVirtualOrderItem {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce virtual order item model instance should use the <code>CommerceVirtualOrderItem</code> interface instead.

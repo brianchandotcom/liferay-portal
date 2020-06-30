@@ -23,6 +23,8 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
+import com.liferay.exportimport.internal.util.StagingGroupServiceTunnelUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
@@ -102,7 +104,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
@@ -823,7 +827,7 @@ public class StagingImpl implements Staging {
 						new String[] {
 							MapUtil.toString(eicve.getDlReferenceParameters()),
 							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelClassPK())
+							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -848,7 +852,7 @@ public class StagingImpl implements Staging {
 						new String[] {
 							eicve.getLayoutURL(), eicve.getGroupFriendlyURL(),
 							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelClassPK())
+							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -875,7 +879,7 @@ public class StagingImpl implements Staging {
 							MapUtil.toString(
 								eicve.getLayoutReferenceParameters()),
 							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelClassPK())
+							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -899,7 +903,7 @@ public class StagingImpl implements Staging {
 						new String[] {
 							eicve.getLayoutURL(),
 							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelClassPK())
+							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -919,7 +923,7 @@ public class StagingImpl implements Staging {
 						new String[] {
 							eicve.getClassName(),
 							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelClassPK())
+							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -1884,17 +1888,25 @@ public class StagingImpl implements Staging {
 			return StringPool.BLANK;
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = permissionChecker.getUser();
-
 		if (stagingGroup.isLayout()) {
 			stagingGroup = stagingGroup.getParentGroup();
 		}
 
 		UnicodeProperties typeSettingsProperties =
 			stagingGroup.getTypeSettingsProperties();
+
+		boolean overrideRemoteSiteURL = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("overrideRemoteSiteURL"));
+
+		if (overrideRemoteSiteURL) {
+			return GetterUtil.getString(
+				typeSettingsProperties.getProperty("remoteSiteURL"));
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
 			_stagingURLHelper.buildRemoteURL(typeSettingsProperties),
@@ -1905,18 +1917,21 @@ public class StagingImpl implements Staging {
 		boolean secureConnection = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("secureConnection"));
 
-		String groupDisplayURL = GroupServiceHttp.getGroupDisplayURL(
-			httpPrincipal, remoteGroupId, privateLayout, secureConnection);
+		String groupDisplayURL =
+			StagingGroupServiceTunnelUtil.getGroupDisplayURL(
+				httpPrincipal, remoteGroupId, privateLayout, secureConnection);
 
 		try {
 			URL remoteSiteURL = new URL(groupDisplayURL);
 
-			String remoteAddress = typeSettingsProperties.getProperty(
-				"remoteAddress");
+			if (!isStagingUseVirtualHostForRemoteSite()) {
+				String remoteAddress = typeSettingsProperties.getProperty(
+					"remoteAddress");
 
-			remoteSiteURL = new URL(
-				remoteSiteURL.getProtocol(), remoteAddress,
-				remoteSiteURL.getPort(), remoteSiteURL.getFile());
+				remoteSiteURL = new URL(
+					remoteSiteURL.getProtocol(), remoteAddress,
+					remoteSiteURL.getPort(), remoteSiteURL.getFile());
+			}
 
 			return remoteSiteURL.toString();
 		}
@@ -3009,6 +3024,10 @@ public class StagingImpl implements Staging {
 					settingsMap, "privateLayout");
 				layoutIds = GetterUtil.getLongValues(
 					settingsMap.get("layoutIds"));
+
+				parameterMap.put(
+					"timeZoneId",
+					ParamUtil.getParameterValues(portletRequest, "timeZoneId"));
 			}
 		}
 
@@ -3089,6 +3108,10 @@ public class StagingImpl implements Staging {
 				remoteGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 				remotePrivateLayout = MapUtil.getBoolean(
 					settingsMap, "remotePrivateLayout");
+
+				parameterMap.put(
+					"timeZoneId",
+					ParamUtil.getParameterValues(portletRequest, "timeZoneId"));
 			}
 		}
 
@@ -3198,6 +3221,31 @@ public class StagingImpl implements Staging {
 
 		setRecentLayoutSetBranchId(
 			user.getUserId(), layoutSetId, layoutSetBranchId);
+	}
+
+	@Override
+	public void setRemoteSiteURL(
+			Group stagingGroup, boolean overrideRemoteSiteURL,
+			String remoteSiteURL)
+		throws PortalException {
+
+		UnicodeProperties typeSettingsProperties =
+			stagingGroup.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"overrideRemoteSiteURL", String.valueOf(overrideRemoteSiteURL));
+
+		if (overrideRemoteSiteURL) {
+			typeSettingsProperties.setProperty(
+				"remoteSiteURL", String.valueOf(remoteSiteURL));
+		}
+		else {
+			typeSettingsProperties.setProperty(
+				"remoteSiteURL", StringPool.BLANK);
+		}
+
+		_groupLocalService.updateGroup(
+			stagingGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
 	@Override
@@ -3549,7 +3597,7 @@ public class StagingImpl implements Staging {
 			// Ping the remote host and verify that the remote group exists in
 			// the same company as the remote user
 
-			GroupServiceHttp.checkRemoteStagingGroup(
+			StagingGroupServiceTunnelUtil.checkRemoteStagingGroup(
 				httpPrincipal, remoteGroupId);
 
 			Group group = _groupLocalService.getGroup(groupId);
@@ -3851,7 +3899,7 @@ public class StagingImpl implements Staging {
 			portletRequest, "schedulerStartDate", true);
 
 		String cronText = SchedulerEngineHelperUtil.getCronText(
-			portletRequest, startCalendar, true, recurrenceType);
+			portletRequest, startCalendar, false, recurrenceType);
 
 		scheduleInformation.setCronText(cronText);
 
@@ -3938,6 +3986,22 @@ public class StagingImpl implements Staging {
 				WorkflowConstants.STATUS_INCOMPLETE)) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isStagingUseVirtualHostForRemoteSite() {
+		try {
+			ExportImportServiceConfiguration configuration =
+				_configurationProvider.getCompanyConfiguration(
+					ExportImportServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return configuration.stagingUseVirtualHostForRemoteSite();
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -4053,6 +4117,13 @@ public class StagingImpl implements Staging {
 		throws PortalException {
 
 		return 0;
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
 	}
 
 	/**
@@ -4337,6 +4408,8 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLValidator _dlValidator;

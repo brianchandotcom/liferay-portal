@@ -33,7 +33,7 @@ public abstract class CommerceShippingFixedOptionRelBaseImpl
 	extends CommerceShippingFixedOptionRelModelImpl
 	implements CommerceShippingFixedOptionRel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce shipping fixed option rel model instance should use the <code>CommerceShippingFixedOptionRel</code> interface instead.

@@ -40,7 +40,7 @@ import java.util.Set;
 public interface SocialRelationPersistence
 	extends BasePersistence<SocialRelation> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRelationUtil} to access the social relation persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

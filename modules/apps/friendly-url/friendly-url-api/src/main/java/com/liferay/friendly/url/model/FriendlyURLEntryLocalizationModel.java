@@ -43,7 +43,7 @@ public interface FriendlyURLEntryLocalizationModel
 	extends AttachedModel, BaseModel<FriendlyURLEntryLocalization>, MVCCModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a friendly url entry localization model instance should use the {@link FriendlyURLEntryLocalization} interface instead.

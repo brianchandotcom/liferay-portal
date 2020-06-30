@@ -251,16 +251,25 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="pull-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpPermissions" value="execute" />
+					<aui:button cssClass="save-server-button" data-cmd="cleanUpAddToPagePermissions" value="execute" />
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
 				<div class="pull-left">
-					<h5><liferay-ui:message key="clean-up-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-portlet-preferences-help" /></h5>
+					<h5><liferay-ui:message key="clean-up-orphaned-page-revision-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-orphaned-page-revision-portlet-preferences-help" /></h5>
 				</div>
 
 				<div class="pull-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpPortletPreferences" value="execute" />
+					<aui:button cssClass="save-server-button" data-cmd="cleanUpLayoutRevisionPortletPreferences" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clean-up-orphaned-theme-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-orphaned-theme-portlet-preferences-help" /></h5>
+				</div>
+
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cleanUpOrphanedPortletPreferences" value="execute" />
 				</div>
 			</li>
 		</ul>

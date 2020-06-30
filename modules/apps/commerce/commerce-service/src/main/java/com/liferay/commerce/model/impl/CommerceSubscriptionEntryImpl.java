@@ -48,14 +48,14 @@ public class CommerceSubscriptionEntryImpl
 	}
 
 	@Override
-	public CPInstance fetchCPInstance() throws PortalException {
+	public CPInstance fetchCPInstance() {
 		CommerceOrderItem commerceOrderItem = fetchCommerceOrderItem();
 
 		if (commerceOrderItem == null) {
 			return null;
 		}
 
-		return commerceOrderItem.getCPInstance();
+		return commerceOrderItem.fetchCPInstance();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class CommerceSubscriptionEntryImpl
 	}
 
 	@Override
-	public long getCPInstanceId() throws PortalException {
+	public long getCPInstanceId() {
 		CPInstance cpInstance = fetchCPInstance();
 
 		if (cpInstance == null) {
@@ -78,6 +78,19 @@ public class CommerceSubscriptionEntryImpl
 		}
 
 		return cpInstance.getCPInstanceId();
+	}
+
+	@Override
+	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
+		if (_deliverySubscriptionTypeSettingsProperties == null) {
+			_deliverySubscriptionTypeSettingsProperties = new UnicodeProperties(
+				true);
+
+			_deliverySubscriptionTypeSettingsProperties.fastLoad(
+				getDeliverySubscriptionTypeSettings());
+		}
+
+		return _deliverySubscriptionTypeSettingsProperties;
 	}
 
 	@Override
@@ -90,6 +103,22 @@ public class CommerceSubscriptionEntryImpl
 		}
 
 		return _subscriptionTypeSettingsProperties;
+	}
+
+	@Override
+	public void setDeliverySubscriptionTypeSettingsProperties(
+		UnicodeProperties deliverySubscriptionTypeSettingsProperties) {
+
+		_deliverySubscriptionTypeSettingsProperties =
+			deliverySubscriptionTypeSettingsProperties;
+
+		if (_deliverySubscriptionTypeSettingsProperties == null) {
+			_deliverySubscriptionTypeSettingsProperties =
+				new UnicodeProperties();
+		}
+
+		super.setSubscriptionTypeSettings(
+			_deliverySubscriptionTypeSettingsProperties.toString());
 	}
 
 	@Override
@@ -114,6 +143,7 @@ public class CommerceSubscriptionEntryImpl
 			_subscriptionTypeSettingsProperties.toString());
 	}
 
+	private UnicodeProperties _deliverySubscriptionTypeSettingsProperties;
 	private UnicodeProperties _subscriptionTypeSettingsProperties;
 
 }

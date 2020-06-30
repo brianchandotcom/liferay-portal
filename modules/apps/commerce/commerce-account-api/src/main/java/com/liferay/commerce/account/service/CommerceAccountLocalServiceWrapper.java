@@ -33,11 +33,6 @@ public class CommerceAccountLocalServiceWrapper
 		_commerceAccountLocalService = commerceAccountLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceAccountLocalServiceUtil} to access the commerce account local service. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccount
 			addBusinessCommerceAccount(
@@ -315,7 +310,8 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccount
-		getCommerceAccount(long userId, long commerceAccountId) {
+			getCommerceAccount(long userId, long commerceAccountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountLocalService.getCommerceAccount(
 			userId, commerceAccountId);
@@ -384,6 +380,9 @@ public class CommerceAccountLocalServiceWrapper
 		return _commerceAccountLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -402,9 +401,10 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.account.model.CommerceAccount>
-		getUserCommerceAccounts(
-			long userId, Long parentCommerceAccountId, int commerceSiteType,
-			String keywords, Boolean active, int start, int end) {
+			getUserCommerceAccounts(
+				long userId, Long parentCommerceAccountId, int commerceSiteType,
+				String keywords, Boolean active, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountLocalService.getUserCommerceAccounts(
 			userId, parentCommerceAccountId, commerceSiteType, keywords, active,
@@ -413,9 +413,10 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.account.model.CommerceAccount>
-		getUserCommerceAccounts(
-			long userId, Long parentCommerceAccountId, int commerceSiteType,
-			String keywords, int start, int end) {
+			getUserCommerceAccounts(
+				long userId, Long parentCommerceAccountId, int commerceSiteType,
+				String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountLocalService.getUserCommerceAccounts(
 			userId, parentCommerceAccountId, commerceSiteType, keywords, start,
@@ -424,8 +425,9 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountLocalService.getUserCommerceAccountsCount(
 			userId, parentCommerceAccountId, commerceSiteType, keywords);
@@ -433,8 +435,9 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, Boolean active) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAccountLocalService.getUserCommerceAccountsCount(
 			userId, parentCommerceAccountId, commerceSiteType, keywords,

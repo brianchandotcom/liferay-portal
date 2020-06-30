@@ -414,11 +414,6 @@ public class KaleoNotificationWrapper
 		return _kaleoNotification.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo notification model instance should use the <code>KaleoNotification</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoNotification.persist();

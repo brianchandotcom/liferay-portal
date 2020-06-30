@@ -33,11 +33,24 @@ public class CommerceTaxMethodServiceWrapper
 		_commerceTaxMethodService = commerceTaxMethodService;
 	}
 
+	@Override
+	public com.liferay.commerce.tax.model.CommerceTaxMethod
+			addCommerceTaxMethod(
+				long userId, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String engineKey, boolean percentage, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTaxMethodService.addCommerceTaxMethod(
+			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
+			active);
+	}
+
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodServiceUtil} to access the commerce tax method remote service. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.tax.model.CommerceTaxMethod
 			addCommerceTaxMethod(
@@ -66,6 +79,15 @@ public class CommerceTaxMethodServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceTaxMethodService.deleteCommerceTaxMethod(commerceTaxMethodId);
+	}
+
+	@Override
+	public com.liferay.commerce.tax.model.CommerceTaxMethod
+			fetchCommerceTaxMethod(long groupId, String engineKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTaxMethodService.fetchCommerceTaxMethod(
+			groupId, engineKey);
 	}
 
 	@Override

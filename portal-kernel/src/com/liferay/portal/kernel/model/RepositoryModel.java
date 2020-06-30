@@ -40,7 +40,7 @@ public interface RepositoryModel
 	extends BaseModel<Repository>, MVCCModel, ShardedModel, StagedGroupedModel,
 			TypedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a repository model instance should use the {@link Repository} interface instead.

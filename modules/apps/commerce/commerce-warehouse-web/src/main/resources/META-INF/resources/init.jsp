@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.exception.CommerceGeocoderException" %><%@
 page import="com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseActiveException" %><%@
 page import="com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseNameException" %><%@
+page import="com.liferay.commerce.inventory.exception.MVCCException" %><%@
 page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" %><%@
 page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@

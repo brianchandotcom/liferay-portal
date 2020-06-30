@@ -148,9 +148,7 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setType(type);
 		commerceAddress.setExternalReferenceCode(externalReferenceCode);
 
-		commerceAddressPersistence.update(commerceAddress);
-
-		return commerceAddress;
+		return commerceAddressPersistence.update(commerceAddress);
 	}
 
 	@Override
@@ -162,14 +160,26 @@ public class CommerceAddressLocalServiceImpl
 		CommerceAddress commerceAddress =
 			commerceAddressPersistence.findByPrimaryKey(commerceAddressId);
 
-		return commerceAddressLocalService.addCommerceAddress(
-			className, classPK, commerceAddress.getName(),
-			commerceAddress.getDescription(), commerceAddress.getStreet1(),
-			commerceAddress.getStreet2(), commerceAddress.getStreet3(),
-			commerceAddress.getCity(), commerceAddress.getZip(),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
-			commerceAddress.getPhoneNumber(), false, false, serviceContext);
+		CommerceAddress copiedCommerceAddress =
+			commerceAddressLocalService.addCommerceAddress(
+				className, classPK, commerceAddress.getName(),
+				commerceAddress.getDescription(), commerceAddress.getStreet1(),
+				commerceAddress.getStreet2(), commerceAddress.getStreet3(),
+				commerceAddress.getCity(), commerceAddress.getZip(),
+				commerceAddress.getCommerceRegionId(),
+				commerceAddress.getCommerceCountryId(),
+				commerceAddress.getPhoneNumber(), false, false, serviceContext);
+
+		if (Validator.isNotNull(commerceAddress.getExternalReferenceCode())) {
+			copiedCommerceAddress.setExternalReferenceCode(
+				commerceAddress.getExternalReferenceCode());
+
+			copiedCommerceAddress =
+				commerceAddressLocalService.updateCommerceAddress(
+					copiedCommerceAddress);
+		}
+
+		return copiedCommerceAddress;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -252,8 +262,7 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public CommerceAddress fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
+		long companyId, String externalReferenceCode) {
 
 		return commerceAddressPersistence.fetchByC_ERC(
 			companyId, externalReferenceCode, true);
@@ -292,17 +301,45 @@ public class CommerceAddressLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws PortalException {
 
+		return commerceAddressLocalService.getBillingCommerceAddresses(
+			companyId, className, classPK, null, -1, -1, null);
+	}
+
+	@Override
+	public List<CommerceAddress> getBillingCommerceAddresses(
+			long companyId, String className, long classPK, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
 			new int[] {
 				CommerceAddressConstants.ADDRESS_TYPE_BILLING,
 				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING
 			},
-			companyId, className, classPK, null, -1, -1, null);
+			companyId, className, classPK, keywords, start, end, sort);
 
 		BaseModelSearchResult<CommerceAddress> billingAddresses =
 			searchCommerceAddresses(searchContext);
 
 		return billingAddresses.getBaseModels();
+	}
+
+	@Override
+	public int getBillingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			new int[] {
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING,
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING
+			},
+			companyId, className, classPK, keywords, -1, -1, null);
+
+		BaseModelSearchResult<CommerceAddress> billingAddresses =
+			searchCommerceAddresses(searchContext);
+
+		return billingAddresses.getLength();
 	}
 
 	/**
@@ -413,17 +450,45 @@ public class CommerceAddressLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws PortalException {
 
+		return commerceAddressLocalService.getShippingCommerceAddresses(
+			companyId, className, classPK, null, -1, -1, null);
+	}
+
+	@Override
+	public List<CommerceAddress> getShippingCommerceAddresses(
+			long companyId, String className, long classPK, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
 			new int[] {
-				CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+				CommerceAddressConstants.ADDRESS_TYPE_SHIPPING
 			},
-			companyId, className, classPK, null, -1, -1, null);
+			companyId, className, classPK, keywords, start, end, sort);
 
 		BaseModelSearchResult<CommerceAddress> shippingAddresses =
 			searchCommerceAddresses(searchContext);
 
 		return shippingAddresses.getBaseModels();
+	}
+
+	@Override
+	public int getShippingCommerceAddressesCount(
+			long companyId, String className, long classPK, String keywords)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			new int[] {
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+				CommerceAddressConstants.ADDRESS_TYPE_SHIPPING
+			},
+			companyId, className, classPK, keywords, -1, -1, null);
+
+		BaseModelSearchResult<CommerceAddress> billingAddresses =
+			searchCommerceAddresses(searchContext);
+
+		return billingAddresses.getLength();
 	}
 
 	/**
@@ -512,7 +577,7 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setPhoneNumber(phoneNumber);
 		commerceAddress.setType(type);
 
-		commerceAddressPersistence.update(commerceAddress);
+		commerceAddress = commerceAddressPersistence.update(commerceAddress);
 
 		// Commerce orders
 

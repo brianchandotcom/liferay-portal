@@ -1,6 +1,20 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './CPOptionValuesEditor.soy';
 
@@ -10,7 +24,6 @@ import templates from './CPOptionValuesEditor.soy';
  */
 
 class CPOptionValuesEditor extends Component {
-
 	constructor(opt_config, opt_parentElement) {
 		super(opt_config, opt_parentElement);
 
@@ -40,32 +53,33 @@ class CPOptionValuesEditor extends Component {
 		url.searchParams.append(this.namespace + 'cpOptionId', this.cpOptionId);
 		url.searchParams.set('p_auth', Liferay.authToken);
 
-		fetch(
-			url,
-			{
-				credentials: 'include',
-				method: 'GET'
-			}
-		).then(
-			response => response.json()
-		).then(
-			(jsonResponse) => {
+		fetch(url, {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(jsonResponse => {
 				this._optionValues = jsonResponse;
 
-				if ((this._optionValues && this._optionValues.length > 0)) {
-					if (!this._currentOptionValue || this._currentOptionValue == null) {
+				if (this._optionValues && this._optionValues.length > 0) {
+					if (
+						!this._currentOptionValue ||
+						this._currentOptionValue == null
+					) {
 						this._currentOptionValue = this._optionValues[0].cpOptionValueId;
 					}
-				}
-				else if ((this._optionValues && this._optionValues.length == 0)) {
+				} else if (
+					this._optionValues &&
+					this._optionValues.length == 0
+				) {
 					this._newOptionValueName = '';
 					this._currentOptionValue = '0';
 				}
-			}
-		);
+			});
 	}
 
-	_handleShowChange(event) {
+	_handleShowChange(_event) {
 		this.loadOptionValues();
 	}
 
@@ -80,19 +94,18 @@ class CPOptionValuesEditor extends Component {
 
 		if (event.success) {
 			this._showNotification(this.successMessage, 'success');
-		}
-		else {
+		} else {
 			this._showNotification(event.message, 'danger');
 		}
 	}
 
-	_handleOptionValueDeleted(event) {
+	_handleOptionValueDeleted(_event) {
 		this._currentOptionValue = null;
 
 		this.loadOptionValues();
 	}
 
-	_handleCancelEditing(event) {
+	_handleCancelEditing(_event) {
 		this._currentOptionValue = null;
 
 		this.loadOptionValues();
@@ -101,32 +114,26 @@ class CPOptionValuesEditor extends Component {
 	_handleNameChange(newName) {
 		if (this._currentOptionValue == '0') {
 			this._newOptionValueName = newName;
-		}
-		else {
+		} else {
 			this._newOptionValueName = '';
 		}
 	}
 
 	_showNotification(message, type) {
-		AUI().use(
-			'liferay-notification',
-			() => {
-				new Liferay.Notification(
-					{
-						closeable: true,
-						delay: {
-							hide: 5000,
-							show: 0
-						},
-						duration: 500,
-						message: message,
-						render: true,
-						title: '',
-						type: type
-					}
-				);
-			}
-		);
+		AUI().use('liferay-notification', () => {
+			new Liferay.Notification({
+				closeable: true,
+				delay: {
+					hide: 5000,
+					show: 0
+				},
+				duration: 500,
+				message,
+				render: true,
+				title: '',
+				type
+			});
+		});
 	}
 }
 
@@ -137,15 +144,15 @@ class CPOptionValuesEditor extends Component {
  */
 
 CPOptionValuesEditor.STATE = {
+	_newOptionValueName: Config.string().value(''),
+	_optionValues: Config.array().value([]),
 	cpOptionId: Config.string().required(),
 	namespace: Config.string().required(),
-	optionValuesURL: Config.string().required(),
 	optionValueURL: Config.string().required(),
+	optionValuesURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
-	successMessage: Config.string().required(),
-	_newOptionValueName: Config.string().value(''),
-	_optionValues: Config.array().value([])
+	successMessage: Config.string().required()
 };
 
 // Register component

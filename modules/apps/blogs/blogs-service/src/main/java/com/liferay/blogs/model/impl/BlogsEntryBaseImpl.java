@@ -32,7 +32,7 @@ import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 public abstract class BlogsEntryBaseImpl
 	extends BlogsEntryModelImpl implements BlogsEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a blogs entry model instance should use the <code>BlogsEntry</code> interface instead.

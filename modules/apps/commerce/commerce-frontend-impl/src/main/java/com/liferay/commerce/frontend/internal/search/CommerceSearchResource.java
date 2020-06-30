@@ -36,14 +36,11 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +66,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -122,9 +118,13 @@ public class CommerceSearchResource {
 				searchProducts(
 					themeDisplay.getCompanyId(), layout.getGroupId(),
 					queryString, themeDisplay));
-			searchItemModels.addAll(searchAccounts(queryString, themeDisplay));
-			searchItemModels.addAll(
-				searchOrders(queryString, themeDisplay, commerceAccount));
+
+			if (themeDisplay.isSignedIn()) {
+				searchItemModels.addAll(
+					searchAccounts(queryString, themeDisplay));
+				searchItemModels.addAll(
+					searchOrders(queryString, themeDisplay, commerceAccount));
+			}
 
 			String url = _commerceSearchUtil.getSearchFriendlyURL(themeDisplay);
 
@@ -162,7 +162,9 @@ public class CommerceSearchResource {
 		List<SearchItemModel> searchItemModels = new ArrayList<>();
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			themeDisplay.getCompanyId(),
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getScopeGroupId()),
 			themeDisplay.getUserId(), 0, 0);
 
 		AccountList accountList = _commerceAccountResource.getAccountList(
@@ -180,7 +182,7 @@ public class CommerceSearchResource {
 
 		for (Account account : accountList.getAccounts()) {
 			SearchItemModel searchItemModel = new SearchItemModel(
-				"item", HtmlUtil.escape(account.getName()));
+				"item", account.getName());
 
 			searchItemModel.setImage(account.getThumbnail());
 
@@ -231,7 +233,9 @@ public class CommerceSearchResource {
 			SearchItemModel searchItemModel = new SearchItemModel(
 				"item", HtmlUtil.escape(String.valueOf(order.getId())));
 
-			searchItemModel.setImage(StringPool.BLANK);
+			searchItemModel.setIcon("document");
+
+			searchItemModel.setSubtitle(order.getAccountName());
 
 			CommerceOrder commerceOrder =
 				_commerceOrderService.getCommerceOrder(order.getId());
@@ -287,21 +291,24 @@ public class CommerceSearchResource {
 				"commerceChannelGroupId", commerceChannel.getGroupId());
 		}
 
+		CommerceAccount commerceAccount =
+			_commerceAccountHelper.getCurrentCommerceAccount(
+				commerceChannel.getGroupId(), themeDisplay.getRequest());
+
+		long[] commerceAccountGroupIds = null;
+
+		if (commerceAccount != null) {
+			commerceAccountGroupIds =
+				_commerceAccountHelper.getCommerceAccountGroupIds(
+					commerceAccount.getCommerceAccountId());
+		}
+
+		searchContext.setAttribute(
+			"commerceAccountGroupIds", commerceAccountGroupIds);
+
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);
-
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<CommerceCatalog> commerceCatalogStream =
-			commerceCatalogs.stream();
-
-		searchContext.setGroupIds(
-			commerceCatalogStream.mapToLong(
-				CommerceCatalog::getGroupId
-			).toArray());
 
 		searchContext.setKeywords(queryString);
 
@@ -401,9 +408,6 @@ public class CommerceSearchResource {
 
 	@Reference
 	private CommerceAccountResource _commerceAccountResource;
-
-	@Reference
-	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

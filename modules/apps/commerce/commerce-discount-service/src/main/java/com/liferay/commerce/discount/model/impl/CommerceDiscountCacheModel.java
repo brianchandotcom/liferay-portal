@@ -66,7 +66,7 @@ public class CommerceDiscountCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -96,6 +96,8 @@ public class CommerceDiscountCacheModel
 		sb.append(usePercentage);
 		sb.append(", maximumDiscountAmount=");
 		sb.append(maximumDiscountAmount);
+		sb.append(", level=");
+		sb.append(level);
 		sb.append(", level1=");
 		sb.append(level1);
 		sb.append(", level2=");
@@ -110,6 +112,8 @@ public class CommerceDiscountCacheModel
 		sb.append(limitationTimes);
 		sb.append(", numberOfUse=");
 		sb.append(numberOfUse);
+		sb.append(", rulesConjunction=");
+		sb.append(rulesConjunction);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append(", displayDate=");
@@ -200,6 +204,14 @@ public class CommerceDiscountCacheModel
 
 		commerceDiscountImpl.setUsePercentage(usePercentage);
 		commerceDiscountImpl.setMaximumDiscountAmount(maximumDiscountAmount);
+
+		if (level == null) {
+			commerceDiscountImpl.setLevel("");
+		}
+		else {
+			commerceDiscountImpl.setLevel(level);
+		}
+
 		commerceDiscountImpl.setLevel1(level1);
 		commerceDiscountImpl.setLevel2(level2);
 		commerceDiscountImpl.setLevel3(level3);
@@ -214,6 +226,7 @@ public class CommerceDiscountCacheModel
 
 		commerceDiscountImpl.setLimitationTimes(limitationTimes);
 		commerceDiscountImpl.setNumberOfUse(numberOfUse);
+		commerceDiscountImpl.setRulesConjunction(rulesConjunction);
 		commerceDiscountImpl.setActive(active);
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -282,6 +295,7 @@ public class CommerceDiscountCacheModel
 
 		usePercentage = objectInput.readBoolean();
 		maximumDiscountAmount = (BigDecimal)objectInput.readObject();
+		level = objectInput.readUTF();
 		level1 = (BigDecimal)objectInput.readObject();
 		level2 = (BigDecimal)objectInput.readObject();
 		level3 = (BigDecimal)objectInput.readObject();
@@ -291,6 +305,8 @@ public class CommerceDiscountCacheModel
 		limitationTimes = objectInput.readInt();
 
 		numberOfUse = objectInput.readInt();
+
+		rulesConjunction = objectInput.readBoolean();
 
 		active = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
@@ -361,6 +377,14 @@ public class CommerceDiscountCacheModel
 
 		objectOutput.writeBoolean(usePercentage);
 		objectOutput.writeObject(maximumDiscountAmount);
+
+		if (level == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(level);
+		}
+
 		objectOutput.writeObject(level1);
 		objectOutput.writeObject(level2);
 		objectOutput.writeObject(level3);
@@ -376,6 +400,8 @@ public class CommerceDiscountCacheModel
 		objectOutput.writeInt(limitationTimes);
 
 		objectOutput.writeInt(numberOfUse);
+
+		objectOutput.writeBoolean(rulesConjunction);
 
 		objectOutput.writeBoolean(active);
 		objectOutput.writeLong(displayDate);
@@ -410,6 +436,7 @@ public class CommerceDiscountCacheModel
 	public String couponCode;
 	public boolean usePercentage;
 	public BigDecimal maximumDiscountAmount;
+	public String level;
 	public BigDecimal level1;
 	public BigDecimal level2;
 	public BigDecimal level3;
@@ -417,6 +444,7 @@ public class CommerceDiscountCacheModel
 	public String limitationType;
 	public int limitationTimes;
 	public int numberOfUse;
+	public boolean rulesConjunction;
 	public boolean active;
 	public long displayDate;
 	public long expirationDate;

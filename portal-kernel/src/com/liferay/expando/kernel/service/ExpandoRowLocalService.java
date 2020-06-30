@@ -55,7 +55,7 @@ import java.util.List;
 public interface ExpandoRowLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoRowLocalServiceUtil} to access the expando row local service. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -254,6 +254,9 @@ public interface ExpandoRowLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

@@ -337,10 +337,9 @@ public class FragmentEntryPersistenceTest {
 			"FragmentEntry", "uuid", true, "fragmentEntryId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "fragmentCollectionId",
-			true, "fragmentEntryKey", true, "name", true, "css", true, "html",
-			true, "js", true, "previewFileEntryId", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			true, "fragmentEntryKey", true, "name", true, "previewFileEntryId",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test

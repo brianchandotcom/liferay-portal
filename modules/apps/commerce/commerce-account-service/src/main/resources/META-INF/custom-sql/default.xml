@@ -11,25 +11,15 @@
 				CommerceAccountUserRel ON
 					CommerceAccountUserRel.commerceAccountUserId = User_.userId
 			LEFT JOIN
-				Users_Orgs ON
-					Users_Orgs.userId = User_.userId
-			LEFT JOIN
-				Organization_ Org1 ON
-					Org1.organizationId = Users_Orgs.organizationId
-			LEFT JOIN
-				Organization_  Org2 ON
-					(Org1.treePath IS NOT NULL) AND
-					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
-			LEFT JOIN
 				CommerceAccountOrganizationRel ON
-					CommerceAccountOrganizationRel.organizationId = Org2.organizationId
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
 			LEFT JOIN
 				CommerceAccount ON
 					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
 					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
 			WHERE
 				[$PARENT_ACCOUNT_ID$]
-				(User_.userId  = [$USER_ID$]) AND
+				(User_.userId = [$USER_ID$]) AND
 				(CommerceAccount.type_ != 0) AND
 				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
@@ -37,32 +27,22 @@
 	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder.findByU_P">
 		<![CDATA[
 			SELECT
-				DISTINCT CommerceAccount.*
+				DISTINCT {CommerceAccount.*}
 			FROM
 				User_
 			LEFT JOIN
 				CommerceAccountUserRel ON
 					CommerceAccountUserRel.commerceAccountUserId = User_.userId
 			LEFT JOIN
-				Users_Orgs ON
-					Users_Orgs.userId = User_.userId
-			LEFT JOIN
-				Organization_  Org1 ON
-					Org1.organizationId = Users_Orgs.organizationId
-			LEFT JOIN
-				Organization_  Org2 ON
-					(Org1.organizationId IS NOT NULL) AND
-					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
-			LEFT JOIN
 				CommerceAccountOrganizationRel ON
-					CommerceAccountOrganizationRel.organizationId = Org2.organizationId
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
 			LEFT JOIN
 				CommerceAccount ON
 					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
 					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
 			WHERE
 				[$PARENT_ACCOUNT_ID$]
-				(User_.userId  = [$USER_ID$]) AND
+				(User_.userId = [$USER_ID$]) AND
 				(CommerceAccount.type_ != 0) AND
 				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
@@ -70,31 +50,21 @@
 	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder.findByU_C">
 		<![CDATA[
 			SELECT
-				DISTINCT CommerceAccount.*
+				DISTINCT {CommerceAccount.*}
 			FROM
 				User_
 			LEFT JOIN
 				CommerceAccountUserRel ON
 					CommerceAccountUserRel.commerceAccountUserId = User_.userId
 			LEFT JOIN
-				Users_Orgs ON
-					Users_Orgs.userId = User_.userId
-			LEFT JOIN
-				Organization_ Org1 ON
-					Org1.organizationId = Users_Orgs.organizationId
-			LEFT JOIN
-				Organization_  Org2 ON
-					(Org1.treePath IS NOT NULL) AND
-					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
-			LEFT JOIN
 				CommerceAccountOrganizationRel ON
-					CommerceAccountOrganizationRel.organizationId = Org2.organizationId
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
 			LEFT JOIN
 				CommerceAccount ON
 					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
 					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
 			WHERE
-				(User_.userId  = [$USER_ID$]) AND
+				(User_.userId = [$USER_ID$]) AND
 				(CommerceAccount.type_ != 0) AND
 				(CommerceAccount.commerceAccountId = ?)
 		]]>

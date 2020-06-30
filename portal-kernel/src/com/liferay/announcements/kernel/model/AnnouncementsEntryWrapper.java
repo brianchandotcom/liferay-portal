@@ -440,11 +440,6 @@ public class AnnouncementsEntryWrapper
 		return _announcementsEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a announcements entry model instance should use the <code>AnnouncementsEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_announcementsEntry.persist();

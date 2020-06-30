@@ -40,7 +40,7 @@ import java.io.Serializable;
 public interface SocialActivitySetModel
 	extends AttachedModel, BaseModel<SocialActivitySet>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a social activity set model instance should use the {@link SocialActivitySet} interface instead.

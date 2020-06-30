@@ -273,6 +273,10 @@ public class StagedGroupStagedModelDataHandler
 			_stagedGroupStagedModelRepository.fetchExistingGroup(
 				portletDataContext, referenceElement);
 
+		if (existingGroup == null) {
+			return;
+		}
+
 		groupIds.put(groupId, existingGroup.getGroupId());
 	}
 

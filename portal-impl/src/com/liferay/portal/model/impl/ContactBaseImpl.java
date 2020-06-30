@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 public abstract class ContactBaseImpl
 	extends ContactModelImpl implements Contact {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a contact model instance should use the <code>Contact</code> interface instead.

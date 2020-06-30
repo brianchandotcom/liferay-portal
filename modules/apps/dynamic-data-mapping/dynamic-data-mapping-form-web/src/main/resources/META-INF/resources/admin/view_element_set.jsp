@@ -58,7 +58,7 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
 							cssClass="asset-icon"
-							icon="forms"
+							icon="cards"
 						/>
 
 						<liferay-ui:search-container-column-jsp

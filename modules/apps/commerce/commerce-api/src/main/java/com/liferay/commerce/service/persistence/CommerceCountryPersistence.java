@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceCountryPersistence
 	extends BasePersistence<CommerceCountry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCountryUtil} to access the commerce country persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -4,22 +4,22 @@
 	width: 40px;
 
 	&__circle {
-		fill: #C9DAFF;
+		fill: #c9daff;
 		opacity: 1;
 		stroke-dasharray: 130;
 		stroke-dashoffset: 130;
-		transition: all .5s;
+		transition: all 0.5s;
 	}
 
 	&__tick {
-		fill:none;
-		stroke:#A7E5BE;
-		stroke-linecap:round;
-		stroke-linejoin:round;
-		stroke-width:11px;
+		fill: none;
+		stroke: #a7e5be;
 		stroke-dasharray: 100;
 		stroke-dashoffset: 100;
-		transition: stroke-dashoffset .2s ease-out;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 11px;
+		transition: stroke-dashoffset 0.2s ease-out;
 	}
 
 	&__add {
@@ -27,19 +27,19 @@
 		stroke-dasharray: 100;
 		stroke-dashoffset: 0;
 		transform-origin: 50%;
-		transition: all .2s ease-out;
+		transition: all 0.2s ease-out;
 
 		line {
-			fill:none;
-			stroke:#C9DAFF;
-			stroke-miterlimit:10;
-			stroke-width:11px
+			fill: none;
+			stroke: #c9daff;
+			stroke-miterlimit: 10;
+			stroke-width: 11px;
 		}
 	}
 
 	&:hover {
 		.commerce-add-to-tick__add line {
-			stroke: #4C83FF
+			stroke: #4c83ff;
 		}
 	}
 
@@ -51,23 +51,23 @@
 		}
 
 		.commerce-add-to-tick__circle {
-			fill: #A7E5BE;
+			fill: #a7e5be;
 
 			.user-item:hover & {
-				fill: #A7E5BE;
+				fill: #a7e5be;
 			}
 		}
 
 		&:hover .commerce-add-to-tick__tick {
-			stroke:#4BC287;
+			stroke: #4bc287;
 		}
 
 		.commerce-add-to-tick__add {
 			opacity: 0;
-			transform: scale(.2);
+			transform: scale(0.2);
 
 			.user-item:hover & line {
-				stroke: #4C83FF;
+				stroke: #4c83ff;
 			}
 		}
 	}

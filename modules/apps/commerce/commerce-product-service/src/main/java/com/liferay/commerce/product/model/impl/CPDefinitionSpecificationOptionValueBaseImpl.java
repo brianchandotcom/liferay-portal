@@ -33,7 +33,7 @@ public abstract class CPDefinitionSpecificationOptionValueBaseImpl
 	extends CPDefinitionSpecificationOptionValueModelImpl
 	implements CPDefinitionSpecificationOptionValue {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp definition specification option value model instance should use the <code>CPDefinitionSpecificationOptionValue</code> interface instead.

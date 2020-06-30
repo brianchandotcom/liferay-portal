@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 @ProviderType
 public interface MDRAction extends MDRActionModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

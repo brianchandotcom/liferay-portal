@@ -53,7 +53,7 @@ public abstract class PortletPreferencesServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, PortletPreferencesService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PortletPreferencesService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PortletPreferencesServiceUtil</code>.
@@ -556,8 +556,8 @@ public abstract class PortletPreferencesServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -76,9 +76,7 @@ public class CommerceOrderNoteLocalServiceImpl
 		commerceOrderNote.setRestricted(restricted);
 		commerceOrderNote.setExternalReferenceCode(externalReferenceCode);
 
-		commerceOrderNotePersistence.update(commerceOrderNote);
-
-		return commerceOrderNote;
+		return commerceOrderNotePersistence.update(commerceOrderNote);
 	}
 
 	@Override
@@ -159,9 +157,7 @@ public class CommerceOrderNoteLocalServiceImpl
 			commerceOrderNote.setExternalReferenceCode(externalReferenceCode);
 		}
 
-		commerceOrderNotePersistence.update(commerceOrderNote);
-
-		return commerceOrderNote;
+		return commerceOrderNotePersistence.update(commerceOrderNote);
 	}
 
 	public CommerceOrderNote upsertCommerceOrderNote(
@@ -173,22 +169,21 @@ public class CommerceOrderNoteLocalServiceImpl
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
+
+		CommerceOrderNote commerceOrderNote;
+
+		if (commerceOrderNoteId > 0) {
+			commerceOrderNote = getCommerceOrderNote(commerceOrderNoteId);
+		}
 		else {
-			CommerceOrderNote commerceOrderNote;
+			commerceOrderNote = commerceOrderNotePersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+		}
 
-			if (commerceOrderNoteId > 0) {
-				commerceOrderNote = getCommerceOrderNote(commerceOrderNoteId);
-			}
-			else {
-				commerceOrderNote = commerceOrderNotePersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
-			}
-
-			if (commerceOrderNote != null) {
-				return updateCommerceOrderNote(
-					commerceOrderNote.getCommerceOrderNoteId(), content,
-					restricted, externalReferenceCode);
-			}
+		if (commerceOrderNote != null) {
+			return updateCommerceOrderNote(
+				commerceOrderNote.getCommerceOrderNoteId(), content, restricted,
+				externalReferenceCode);
 		}
 
 		return addCommerceOrderNote(

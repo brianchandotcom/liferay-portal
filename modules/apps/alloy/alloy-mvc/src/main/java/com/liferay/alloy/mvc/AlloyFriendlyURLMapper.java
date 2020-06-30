@@ -82,13 +82,11 @@ public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		// Add mapping
 
-		friendlyURLPath = StringPool.SLASH.concat(
+		return StringPool.SLASH.concat(
 			getMapping()
 		).concat(
 			friendlyURLPath
 		);
-
-		return friendlyURLPath;
 	}
 
 	@Override

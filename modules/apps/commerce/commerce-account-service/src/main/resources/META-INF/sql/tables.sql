@@ -46,7 +46,7 @@ create table CommerceAccountGroup (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	system BOOLEAN
+	system_ BOOLEAN
 );
 
 create table CommerceAccountGroupRel (

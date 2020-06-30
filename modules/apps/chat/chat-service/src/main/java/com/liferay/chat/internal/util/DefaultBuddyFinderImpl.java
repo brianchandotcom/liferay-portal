@@ -114,9 +114,7 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			buddies = new ArrayList<>();
 		}
 
-		buddies = JabberUtil.getStatuses(companyId, userId, buddies);
-
-		return buddies;
+		return JabberUtil.getStatuses(companyId, userId, buddies);
 	}
 
 	@Activate

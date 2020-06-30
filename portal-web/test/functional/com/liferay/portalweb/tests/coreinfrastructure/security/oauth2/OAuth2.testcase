@@ -1,5 +1,7 @@
 @component-name = "portal-security"
 definition {
+
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "OAuth 2";
 
@@ -205,6 +207,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 

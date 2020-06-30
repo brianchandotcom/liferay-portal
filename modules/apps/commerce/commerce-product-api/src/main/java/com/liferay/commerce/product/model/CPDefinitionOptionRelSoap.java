@@ -52,6 +52,7 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setRequired(model.isRequired());
 		soapModel.setSkuContributor(model.isSkuContributor());
 		soapModel.setKey(model.getKey());
+		soapModel.setPriceType(model.getPriceType());
 
 		return soapModel;
 	}
@@ -270,6 +271,14 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_key = key;
 	}
 
+	public String getPriceType() {
+		return _priceType;
+	}
+
+	public void setPriceType(String priceType) {
+		_priceType = priceType;
+	}
+
 	private String _uuid;
 	private long _CPDefinitionOptionRelId;
 	private long _groupId;
@@ -288,5 +297,6 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private boolean _required;
 	private boolean _skuContributor;
 	private String _key;
+	private String _priceType;
 
 }

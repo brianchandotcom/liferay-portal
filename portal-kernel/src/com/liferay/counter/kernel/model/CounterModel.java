@@ -38,7 +38,7 @@ import java.io.Serializable;
 @ProviderType
 public interface CounterModel extends BaseModel<Counter> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a counter model instance should use the {@link Counter} interface instead.

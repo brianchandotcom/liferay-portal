@@ -21,6 +21,17 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 
+String headerTitle = null;
+
+if (commerceOrder != null) {
+	CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+	headerTitle = commerceAccount.getName();
+}
+else {
+	headerTitle = LanguageUtil.get(request, "add-order");
+}
+
 portletDisplay.setShowBackIcon(true);
 
 if (Validator.isNull(redirect)) {
@@ -29,75 +40,36 @@ if (Validator.isNull(redirect)) {
 else {
 	portletDisplay.setURLBack(redirect);
 }
-
-String title = null;
-
-if (commerceOrder != null) {
-	title = LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId());
-}
-else {
-	title = LanguageUtil.get(request, "add-order");
-}
-
-renderResponse.setTitle(title);
 %>
+
+<liferay-portlet:renderURL var="editCommerceOrderExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="editCommerceOrderExternalReferenceCode" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:header
+	actions="<%= commerceOrderEditDisplayContext.getHeaderActionModels() %>"
+	bean="<%= commerceOrder %>"
+	beanIdLabel="id"
+	externalReferenceCode="<%= commerceOrder.getExternalReferenceCode() %>"
+	externalReferenceCodeEditUrl="<%= editCommerceOrderExternalReferenceCodeURL %>"
+	model="<%= CommerceOrder.class %>"
+	thumbnailUrl="<%= commerceOrderEditDisplayContext.getCommerceAccountThumbnailURL() %>"
+	title="<%= headerTitle %>"
+	transitionPortletURL="<%= commerceOrderEditDisplayContext.getTransitionOrderPortletURL() %>"
+/>
+
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderBillingAddressException.class %>" message="the-order-selected-needs-a-billing-address" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderShippingAddressException.class %>" message="the-order-selected-needs-a-shipping-address" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderStatusException.class %>" message="this-order-cannot-be-transitioned" />
 
 <div id="<portlet:namespace />editOrderContainer">
 	<liferay-frontend:screen-navigation
-		containerCssClass="col-md-10"
+		fullContainerCssClass="col-12 pt-4"
 		key="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_GENERAL %>"
 		modelBean="<%= commerceOrder %>"
-		navCssClass="col-md-2"
 		portletURL="<%= currentURLObj %>"
 	/>
 </div>
-
-<aui:script sandbox="<%= true %>">
-	function enableFormEdit(element, enable) {
-		var form = $(element).closest('form');
-
-		var editFormButtons = form.find('.edit-form-buttons');
-		var editFormLink = form.find('.edit-form-link');
-		var fieldset = form.find('fieldset');
-
-		if (enable) {
-			editFormButtons.removeClass('hide');
-			editFormLink.addClass('hide');
-
-			fieldset.removeAttr('disabled');
-		}
-		else {
-			form[0].reset();
-
-			editFormButtons.addClass('hide');
-			editFormLink.removeClass('hide');
-
-			fieldset.attr('disabled', '');
-		}
-	}
-
-	var editOrderContainerPanels = $('#<portlet:namespace />editOrderContainer .panel-body');
-
-	editOrderContainerPanels.on(
-		'submit', 'form',
-		function(event) {
-			event.preventDefault();
-
-			submitForm(this);
-		}
-	);
-
-	editOrderContainerPanels.on(
-		'click', '.cancel-form-button',
-		function() {
-			enableFormEdit(this, false);
-		}
-	);
-
-	editOrderContainerPanels.on(
-		'click', '.edit-form-link',
-		function() {
-			enableFormEdit(this, true);
-		}
-	);
-</aui:script>

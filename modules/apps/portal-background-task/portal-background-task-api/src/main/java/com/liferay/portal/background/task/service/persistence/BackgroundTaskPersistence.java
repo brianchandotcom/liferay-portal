@@ -40,7 +40,7 @@ import java.util.Set;
 public interface BackgroundTaskPersistence
 	extends BasePersistence<BackgroundTask> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BackgroundTaskUtil} to access the background task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

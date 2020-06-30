@@ -32,7 +32,7 @@ import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalSe
 public abstract class CommerceTaxFixedRateBaseImpl
 	extends CommerceTaxFixedRateModelImpl implements CommerceTaxFixedRate {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce tax fixed rate model instance should use the <code>CommerceTaxFixedRate</code> interface instead.

@@ -28,8 +28,8 @@ import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
  */
 public class LogUtil {
 
-	public static void logActionResponse(Log log, ActionResponse actionResponse)
-		throws IOException {
+	public static void logActionResponse(
+		Log log, ActionResponse actionResponse) {
 
 		if (!log.isInfoEnabled()) {
 			return;
@@ -37,15 +37,18 @@ public class LogUtil {
 
 		StringOutputStream stringOutputStream = new StringOutputStream();
 
-		actionResponse.writeTo(
-			new OutputStreamStreamOutput(stringOutputStream));
+		try {
+			actionResponse.writeTo(
+				new OutputStreamStreamOutput(stringOutputStream));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
 		log.info(stringOutputStream);
 	}
 
-	public static void logActionResponse(Log log, BulkResponse bulkResponse)
-		throws IOException {
-
+	public static void logActionResponse(Log log, BulkResponse bulkResponse) {
 		if (bulkResponse.hasFailures()) {
 			log.error(bulkResponse.buildFailureMessage());
 		}

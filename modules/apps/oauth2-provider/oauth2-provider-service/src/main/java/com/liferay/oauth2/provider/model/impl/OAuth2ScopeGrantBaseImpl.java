@@ -32,7 +32,7 @@ import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalServiceUtil;
 public abstract class OAuth2ScopeGrantBaseImpl
 	extends OAuth2ScopeGrantModelImpl implements OAuth2ScopeGrant {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth2 scope grant model instance should use the <code>OAuth2ScopeGrant</code> interface instead.

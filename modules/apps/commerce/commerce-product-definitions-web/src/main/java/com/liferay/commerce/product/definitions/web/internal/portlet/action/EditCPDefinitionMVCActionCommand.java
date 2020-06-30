@@ -16,26 +16,28 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLink;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
+import com.liferay.commerce.product.exception.CPDefinitionNameDefaultLanguageException;
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstanceConstants;
-import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -51,19 +53,17 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -87,6 +87,36 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteAccountGroup(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		long commerceAccountGroupRelId = ParamUtil.getLong(
+			actionRequest, "commerceAccountGroupRelId");
+
+		_commerceAccountGroupRelService.deleteCommerceAccountGroupRel(
+			commerceAccountGroupRelId);
+
+		reindexCPDefinition(cpDefinitionId);
+	}
+
+	protected void deleteChannel(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		long commerceChannelRelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelRelId");
+
+		_commerceChannelRelService.deleteCommerceChannelRel(
+			commerceChannelRelId);
+
+		reindexCPDefinition(cpDefinitionId);
+	}
 
 	protected void deleteCPDefinitions(ActionRequest actionRequest)
 		throws Exception {
@@ -130,41 +160,36 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitions(actionRequest);
 			}
-			else if (cmd.equals("updateCategorization")) {
-				CPDefinition cpDefinition = updateCategorization(actionRequest);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition,
-					CPDefinitionScreenNavigationConstants.
-						CATEGORY_KEY_CATEGORIZATION);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+			else if (cmd.equals("deleteAccountGroup")) {
+				deleteAccountGroup(actionRequest);
 			}
-			else if (cmd.equals("updateAccountGroups")) {
-				Callable<Object> cpDefinitionAccountGroupsCallable =
-					new CPDefinitionAccountGroupsCallable(actionRequest);
-
-				TransactionInvokerUtil.invoke(
-					_transactionConfig, cpDefinitionAccountGroupsCallable);
-			}
-			else if (cmd.equals("updateChannels")) {
-				Callable<Object> cpDefinitionChannelsCallable =
-					new CPDefinitionChannelsCallable(actionRequest);
-
-				TransactionInvokerUtil.invoke(
-					_transactionConfig, cpDefinitionChannelsCallable);
+			else if (cmd.equals("deleteChannel")) {
+				deleteChannel(actionRequest);
 			}
 			else if (cmd.equals("updateCPDisplayLayout")) {
 				updateCPDisplayLayout(actionRequest);
 			}
-			else if (cmd.equals("updateShippingInfo")) {
-				updateShippingInfo(actionRequest);
+			else if (cmd.equals("updateConfiguration")) {
+				Callable<Object> cpDefinitionConfigurationCallable =
+					new CPDefinitionConfigurationCallable(actionRequest);
+
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, cpDefinitionConfigurationCallable);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals("updateSubscriptionInfo")) {
 				updateSubscriptionInfo(actionRequest);
 			}
-			else if (cmd.equals("updateTaxCategoryInfo")) {
-				updateTaxCategoryInfo(actionRequest);
+			else if (cmd.equals("updateVisibility")) {
+				Callable<Object> cpDefinitionVisibilityCallable =
+					new CPDefinitionVisibilityCallable(actionRequest);
+
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, cpDefinitionVisibilityCallable);
 			}
 		}
 		catch (Throwable t) {
@@ -181,8 +206,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 t instanceof CPDefinitionMetaDescriptionException ||
 					 t instanceof CPDefinitionMetaKeywordsException ||
 					 t instanceof CPDefinitionMetaTitleException ||
+					 t instanceof CPDefinitionNameDefaultLanguageException ||
 					 t instanceof CPFriendlyURLEntryException ||
-					 t instanceof NoSuchCatalogException) {
+					 t instanceof NoSuchCatalogException ||
+					 t instanceof NoSuchCPDefinitionInventoryException ||
+					 t instanceof NumberFormatException) {
 
 				SessionErrors.add(actionRequest, t.getClass(), t);
 
@@ -192,61 +220,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-	}
-
-	protected long[] getAssetCategoryIds(CPDefinition cpDefinition) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		if (assetEntry == null) {
-			return new long[0];
-		}
-
-		return assetEntry.getCategoryIds();
-	}
-
-	protected double getAssetEntryPriority(CPDefinition cpDefinition) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		if (assetEntry == null) {
-			return 0;
-		}
-
-		return assetEntry.getPriority();
-	}
-
-	protected long[] getAssetLinkEntryIds(CPDefinition cpDefinition) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		if (assetEntry == null) {
-			return new long[0];
-		}
-
-		List<Long> assetLinkEntryIds = new ArrayList<>();
-
-		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
-			assetEntry.getEntryId());
-
-		for (AssetLink assetLink : assetLinks) {
-			if (assetLink.getEntryId1() != assetEntry.getEntryId()) {
-				assetLinkEntryIds.add(assetLink.getEntryId1());
-			}
-		}
-
-		return ArrayUtil.toLongArray(assetLinkEntryIds);
-	}
-
-	protected String[] getAssetTagNames(CPDefinition cpDefinition) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
-
-		if (assetEntry == null) {
-			return new String[0];
-		}
-
-		return assetEntry.getTagNames();
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -281,87 +254,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinition.class);
 
 		indexer.reindex(cpDefinition);
-	}
-
-	protected void updateAccountGroups(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		long[] commerceAccountGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "commerceAccountGroupIds"), 0L);
-
-		boolean accountGroupFilterEnabled = ParamUtil.getBoolean(
-			actionRequest, "accountGroupFilterEnabled");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAccountGroupRel.class.getName(), actionRequest);
-
-		_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
-			CPDefinition.class.getName(), cpDefinitionId);
-
-		for (long commerceAccountGroupId : commerceAccountGroupIds) {
-			if (commerceAccountGroupId == 0) {
-				continue;
-			}
-
-			_commerceAccountGroupRelService.addCommerceAccountGroupRel(
-				CPDefinition.class.getName(), cpDefinitionId,
-				commerceAccountGroupId, serviceContext);
-		}
-
-		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
-			cpDefinitionId, accountGroupFilterEnabled);
-
-		reindexCPDefinition(cpDefinitionId);
-	}
-
-	protected CPDefinition updateCategorization(ActionRequest actionRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		return _cpDefinitionService.updateCPDefinitionCategorization(
-			cpDefinitionId, serviceContext);
-	}
-
-	protected void updateChannels(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		long[] commerceChannelIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
-
-		boolean channelFilterEnabled = ParamUtil.getBoolean(
-			actionRequest, "channelFilterEnabled");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceChannelRel.class.getName(), actionRequest);
-
-		_commerceChannelRelService.deleteCommerceChannelRels(
-			CPDefinition.class.getName(), cpDefinitionId);
-
-		for (long commerceChannelId : commerceChannelIds) {
-			if (commerceChannelId == 0) {
-				continue;
-			}
-
-			_commerceChannelRelService.addCommerceChannelRel(
-				CPDefinition.class.getName(), cpDefinitionId, commerceChannelId,
-				serviceContext);
-		}
-
-		_cpDefinitionService.updateCPDefinitionChannelFilter(
-			cpDefinitionId, channelFilterEnabled);
-
-		reindexCPDefinition(cpDefinitionId);
 	}
 
 	protected CPDefinition updateCPDefinition(ActionRequest actionRequest)
@@ -437,6 +329,20 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		CPDefinition cpDefinition = null;
 
 		if (cpDefinitionId <= 0) {
+			CommerceCatalog commerceCatalog =
+				_commerceCatalogService.fetchCommerceCatalogByGroupId(
+					commerceCatalogGroupId);
+
+			if (commerceCatalog == null) {
+				throw new NoSuchCatalogException();
+			}
+
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				commerceCatalog.getCatalogDefaultLanguageId());
+
+			if (Validator.isNull(nameMap.get(defaultLocale))) {
+				throw new CPDefinitionNameDefaultLanguageException();
+			}
 
 			// Add commerce product definition
 
@@ -449,7 +355,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire,
-				CPInstanceConstants.DEFAULT_SKU, false, 0, null, null, 0L, null,
+				CPInstanceConstants.DEFAULT_SKU, false, 1, null, null, 0L, null,
 				serviceContext);
 		}
 		else {
@@ -458,14 +364,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			CPDefinition oldCPDefinition = _cpDefinitionService.getCPDefinition(
 				cpDefinitionId);
-
-			serviceContext.setAssetCategoryIds(
-				getAssetCategoryIds(oldCPDefinition));
-			serviceContext.setAssetLinkEntryIds(
-				getAssetLinkEntryIds(oldCPDefinition));
-			serviceContext.setAssetPriority(
-				getAssetEntryPriority(oldCPDefinition));
-			serviceContext.setAssetTagNames(getAssetTagNames(oldCPDefinition));
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, nameMap, shortDescriptionMap, descriptionMap,
@@ -478,6 +376,65 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return cpDefinition;
+	}
+
+	protected void updateCPDefinitionInventory(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpDefinitionInventoryId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionInventoryId");
+
+		long cpdAvailabilityEstimateEntryId = ParamUtil.getLong(
+			actionRequest, "cpdAvailabilityEstimateEntryId");
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		String cpDefinitionInventoryEngine = ParamUtil.getString(
+			actionRequest, "CPDefinitionInventoryEngine");
+		String lowStockActivity = ParamUtil.getString(
+			actionRequest, "lowStockActivity");
+		long commerceAvailabilityEstimateId = ParamUtil.getLong(
+			actionRequest, "commerceAvailabilityEstimateId");
+		boolean displayAvailability = ParamUtil.getBoolean(
+			actionRequest, "displayAvailability");
+		boolean displayStockQuantity = ParamUtil.getBoolean(
+			actionRequest, "displayStockQuantity");
+		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
+		int minStockQuantity = ParamUtil.getInteger(
+			actionRequest, "minStockQuantity");
+		int minOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "minOrderQuantity");
+		int maxOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "maxOrderQuantity");
+		int multipleOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "multipleOrderQuantity");
+		String allowedOrderQuantities = ParamUtil.getString(
+			actionRequest, "allowedOrderQuantities");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinitionInventory.class.getName(), actionRequest);
+
+		if (cpDefinitionInventoryId <= 0) {
+			_cpDefinitionInventoryService.addCPDefinitionInventory(
+				serviceContext.getUserId(), cpDefinitionId,
+				cpDefinitionInventoryEngine, lowStockActivity,
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
+		}
+		else {
+			_cpDefinitionInventoryService.updateCPDefinitionInventory(
+				cpDefinitionInventoryId, cpDefinitionInventoryEngine,
+				lowStockActivity, displayAvailability, displayStockQuantity,
+				minStockQuantity, backOrders, minOrderQuantity,
+				maxOrderQuantity, allowedOrderQuantities,
+				multipleOrderQuantity);
+		}
+
+		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+			cpdAvailabilityEstimateEntryId, cpDefinitionId,
+			commerceAvailabilityEstimateId, serviceContext);
 	}
 
 	protected void updateCPDisplayLayout(ActionRequest actionRequest)
@@ -526,6 +483,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
+
 		boolean subscriptionEnabled = ParamUtil.getBoolean(
 			actionRequest, "subscriptionEnabled");
 		int subscriptionLength = ParamUtil.getInteger(
@@ -537,14 +495,25 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "subscriptionTypeSettings--");
 		long maxSubscriptionCycles = ParamUtil.getLong(
 			actionRequest, "maxSubscriptionCycles");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
+		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "deliverySubscriptionEnabled");
+		int deliverySubscriptionLength = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionLength");
+		String deliverySubscriptionType = ParamUtil.getString(
+			actionRequest, "deliverySubscriptionType");
+		UnicodeProperties deliverySubscriptionTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "deliverySubscriptionTypeSettings--");
+		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "deliveryMaxSubscriptionCycles");
 
 		_cpDefinitionService.updateSubscriptionInfo(
 			cpDefinitionId, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsProperties,
-			maxSubscriptionCycles, serviceContext);
+			maxSubscriptionCycles, deliverySubscriptionEnabled,
+			deliverySubscriptionLength, deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsProperties,
+			deliveryMaxSubscriptionCycles);
 	}
 
 	protected void updateTaxCategoryInfo(ActionRequest actionRequest)
@@ -563,39 +532,93 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinitionId, cpTaxCategoryId, taxExempt, telcoOrElectronics);
 	}
 
+	protected void updateVisibility(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		// Commerce account group rels
+
+		long[] commerceAccountGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "commerceAccountGroupIds"), 0L);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceAccountGroupRel.class.getName(), actionRequest);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			if (commerceAccountGroupId == 0) {
+				continue;
+			}
+
+			_commerceAccountGroupRelService.addCommerceAccountGroupRel(
+				CPDefinition.class.getName(), cpDefinitionId,
+				commerceAccountGroupId, serviceContext);
+		}
+
+		// Commerce channel rels
+
+		long[] commerceChannelIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
+
+		for (long commerceChannelId : commerceChannelIds) {
+			if (commerceChannelId == 0) {
+				continue;
+			}
+
+			_commerceChannelRelService.addCommerceChannelRel(
+				CPDefinition.class.getName(), cpDefinitionId, commerceChannelId,
+				serviceContext);
+		}
+
+		// Filters
+
+		boolean accountGroupFilterEnabled = ParamUtil.getBoolean(
+			actionRequest, "accountGroupFilterEnabled");
+		boolean channelFilterEnabled = ParamUtil.getBoolean(
+			actionRequest, "channelFilterEnabled");
+
+		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
+			cpDefinitionId, accountGroupFilterEnabled);
+		_cpDefinitionService.updateCPDefinitionChannelFilter(
+			cpDefinitionId, channelFilterEnabled);
+	}
+
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetLinkLocalService _assetLinkLocalService;
-
-	@Reference
 	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+
+	@Reference
+	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
-	private Portal _portal;
+	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
-	private class CPDefinitionAccountGroupsCallable
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+	private class CPDefinitionConfigurationCallable
 		implements Callable<Object> {
 
 		@Override
 		public Object call() throws Exception {
-			updateAccountGroups(_actionRequest);
+			updateCPDefinitionInventory(_actionRequest);
+			updateShippingInfo(_actionRequest);
+			updateTaxCategoryInfo(_actionRequest);
 
 			return null;
 		}
 
-		private CPDefinitionAccountGroupsCallable(ActionRequest actionRequest) {
+		private CPDefinitionConfigurationCallable(ActionRequest actionRequest) {
 			_actionRequest = actionRequest;
 		}
 
@@ -603,16 +626,16 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	}
 
-	private class CPDefinitionChannelsCallable implements Callable<Object> {
+	private class CPDefinitionVisibilityCallable implements Callable<Object> {
 
 		@Override
 		public Object call() throws Exception {
-			updateChannels(_actionRequest);
+			updateVisibility(_actionRequest);
 
 			return null;
 		}
 
-		private CPDefinitionChannelsCallable(ActionRequest actionRequest) {
+		private CPDefinitionVisibilityCallable(ActionRequest actionRequest) {
 			_actionRequest = actionRequest;
 		}
 

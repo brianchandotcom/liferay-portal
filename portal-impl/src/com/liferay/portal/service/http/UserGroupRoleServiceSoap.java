@@ -69,10 +69,10 @@ public class UserGroupRoleServiceSoap {
 			UserGroupRoleServiceUtil.addUserGroupRoles(
 				userId, groupId, roleIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -84,10 +84,10 @@ public class UserGroupRoleServiceSoap {
 			UserGroupRoleServiceUtil.addUserGroupRoles(
 				userIds, groupId, roleId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -99,10 +99,10 @@ public class UserGroupRoleServiceSoap {
 			UserGroupRoleServiceUtil.deleteUserGroupRoles(
 				userId, groupId, roleIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -114,10 +114,10 @@ public class UserGroupRoleServiceSoap {
 			UserGroupRoleServiceUtil.deleteUserGroupRoles(
 				userIds, groupId, roleId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -130,10 +130,10 @@ public class UserGroupRoleServiceSoap {
 			UserGroupRoleServiceUtil.updateUserGroupRoles(
 				userId, groupId, addedRoleIds, deletedRoleIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface DDLRecordVersion
 	extends DDLRecordVersionModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

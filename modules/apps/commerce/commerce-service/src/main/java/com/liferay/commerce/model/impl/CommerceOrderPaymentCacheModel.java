@@ -150,7 +150,9 @@ public class CommerceOrderPaymentCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		commerceOrderPaymentId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -164,7 +166,7 @@ public class CommerceOrderPaymentCacheModel
 
 		commerceOrderId = objectInput.readLong();
 		commercePaymentMethodKey = objectInput.readUTF();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 
 		status = objectInput.readInt();
 	}
@@ -199,10 +201,10 @@ public class CommerceOrderPaymentCacheModel
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		objectOutput.writeInt(status);

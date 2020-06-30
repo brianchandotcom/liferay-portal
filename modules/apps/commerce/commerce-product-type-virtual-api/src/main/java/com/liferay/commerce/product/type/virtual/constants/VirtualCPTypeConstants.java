@@ -23,8 +23,8 @@ public class VirtualCPTypeConstants {
 
 	public static final int[] ACTIVATION_STATUSES = {
 		CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-		CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
-		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED
+		CommerceOrderConstants.ORDER_STATUS_PENDING,
+		CommerceOrderConstants.ORDER_STATUS_PROCESSING
 	};
 
 	public static final String NAME = "virtual";

@@ -33,11 +33,6 @@ public class JournalFeedLocalServiceWrapper
 		_journalFeedLocalService = journalFeedLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link JournalFeedLocalServiceUtil} to access the journal feed local service. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.journal.model.JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,
@@ -463,6 +458,9 @@ public class JournalFeedLocalServiceWrapper
 		return _journalFeedLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.model.Country;
 public abstract class CountryBaseImpl
 	extends CountryModelImpl implements Country {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a country model instance should use the <code>Country</code> interface instead.

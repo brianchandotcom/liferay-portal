@@ -45,7 +45,7 @@ public interface ChangesetEntryModel
 	extends AttachedModel, BaseModel<ChangesetEntry>, GroupedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a changeset entry model instance should use the {@link ChangesetEntry} interface instead.

@@ -63,7 +63,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "Completed");
 
-		ManagementBar.toggleViewOrder(order = "Reverse Sort Direction");
+		ManagementBar.toggleViewOrder(order = "down");
 	}
 
 }

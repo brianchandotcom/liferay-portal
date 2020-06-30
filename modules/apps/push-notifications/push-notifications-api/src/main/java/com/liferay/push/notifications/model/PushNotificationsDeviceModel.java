@@ -42,7 +42,7 @@ import java.util.Date;
 public interface PushNotificationsDeviceModel
 	extends BaseModel<PushNotificationsDevice>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a push notifications device model instance should use the {@link PushNotificationsDevice} interface instead.

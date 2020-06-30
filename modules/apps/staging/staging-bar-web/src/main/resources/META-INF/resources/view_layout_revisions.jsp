@@ -188,7 +188,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 				success: function(event, id, obj) {
 					var parentWindow = Liferay.Util.getOpener();
 
-					parentWindow.location.reload();
+					parentWindow.location = parentWindow.location.href.split('?')[0];
 				}
 			}
 		);

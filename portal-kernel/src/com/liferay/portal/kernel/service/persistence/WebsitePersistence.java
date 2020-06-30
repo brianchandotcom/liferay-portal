@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface WebsitePersistence extends BasePersistence<Website> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteUtil} to access the website persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

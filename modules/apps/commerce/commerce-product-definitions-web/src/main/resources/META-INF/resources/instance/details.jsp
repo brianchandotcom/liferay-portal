@@ -20,60 +20,39 @@
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
-
 CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
-
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
-
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
+String commerceCurrencyCode = cpInstanceDisplayContext.getCommerceCurrencyCode();
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
 if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	neverExpire = false;
 }
-
-PortletURL productSkusURL = renderResponse.createRenderURL();
-
-productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
-productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayContext.getScreenNavigationCategoryKey());
 %>
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceActionURL" />
 
-<aui:form action="<%= editProductInstanceActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveInstance();" %>'>
+<aui:form action="<%= editProductInstanceActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveInstance();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpInstance == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<div class="lfr-form-content">
-		<liferay-ui:error-marker
-			key="<%= WebKeys.ERROR_SECTION %>"
-			value="details"
-		/>
+	<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
+	<liferay-ui:error exception="<%= CPInstanceJsonException.class %>" message="there-is-already-one-sku-with-the-selected-options" />
+	<liferay-ui:error exception="<%= CPInstanceSkuException.class %>" message="please-enter-a-valid-sku" />
 
-		<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(request, "details") %>'
+	>
+		<div class="row">
+			<div class="col-6">
+				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="sku" />
 
-		<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
-		<liferay-ui:error exception="<%= CPInstanceJsonException.class %>" message="there-is-already-one-sku-with-the-selected-options" />
-		<liferay-ui:error exception="<%= CPInstanceSkuException.class %>" message="please-enter-a-valid-sku" />
-
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input name="sku" />
-
-				<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
-
-				<aui:input name="manufacturerPartNumber" />
-
-				<aui:input checked="<%= (cpInstance == null) ? false : cpInstance.isPurchasable() %>" name="purchasable" type="toggle-switch" />
-			</aui:fieldset>
-
-			<c:if test="<%= !cpDefinition.isIgnoreSKUCombinations() %>">
-				<aui:fieldset cssClass="sku-options-panel" label="options">
+				<c:if test="<%= !cpDefinition.isIgnoreSKUCombinations() %>">
 					<c:choose>
 						<c:when test="<%= cpInstance != null %>">
 
@@ -107,41 +86,108 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 							<aui:input name="ddmFormValues" type="hidden" />
 						</c:otherwise>
 					</c:choose>
-				</aui:fieldset>
-			</c:if>
+				</c:if>
 
-			<aui:fieldset collapsible="<%= true %>" label="schedule">
-				<aui:input name="published" />
+				<aui:input checked="<%= (cpInstance == null) ? false : cpInstance.isPurchasable() %>" name="purchasable" type="toggle-switch" />
+			</div>
 
-				<aui:input formName="fm" name="displayDate" />
+			<div class="col-6">
+				<aui:input bean="<%= cpInstance %>" helpMessage="gtin-help" label="global-trade-item-number" model="<%= CPInstance.class %>" name="gtin" />
 
-				<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-			</aui:fieldset>
-		</aui:fieldset-group>
+				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="manufacturerPartNumber" />
+			</div>
+		</div>
+	</commerce-ui:panel>
 
-		<c:if test="<%= cpInstanceDisplayContext.hasCustomAttributesAvailable() %>">
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(request, "pricing") %>'
+	>
+		<div class="row">
+			<div class="col-4">
+				<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= (cpInstance == null) ? StringPool.BLANK : cpInstanceDisplayContext.round(cpInstance.getPrice()) %>">
+					<aui:validator name="min">0</aui:validator>
+					<aui:validator name="number" />
+				</aui:input>
+			</div>
+
+			<div class="col-4">
+				<aui:input name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= (cpInstance == null) ? StringPool.BLANK : cpInstanceDisplayContext.round(cpInstance.getPromoPrice()) %>">
+					<aui:validator name="min">0</aui:validator>
+					<aui:validator name="number" />
+				</aui:input>
+			</div>
+
+			<div class="col-4">
+				<aui:input name="cost" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= (cpInstance == null) ? StringPool.BLANK : cpInstanceDisplayContext.round(cpInstance.getCost()) %>">
+					<aui:validator name="min">0</aui:validator>
+					<aui:validator name="number" />
+				</aui:input>
+			</div>
+		</div>
+	</commerce-ui:panel>
+
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(request, "shipping-override") %>'
+	>
+		<div class="row">
+			<div class="col-6">
+				<aui:input name="width" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+					<aui:validator name="min">0</aui:validator>
+				</aui:input>
+
+				<aui:input name="depth" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+					<aui:validator name="min">0</aui:validator>
+				</aui:input>
+			</div>
+
+			<div class="col-6">
+				<aui:input name="height" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+					<aui:validator name="min">0</aui:validator>
+				</aui:input>
+
+				<aui:input name="weight" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT)) %>">
+					<aui:validator name="min">0</aui:validator>
+				</aui:input>
+			</div>
+		</div>
+	</commerce-ui:panel>
+
+	<commerce-ui:panel
+		title='<%= LanguageUtil.get(request, "schedule") %>'
+	>
+		<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="published" />
+
+		<aui:input bean="<%= cpInstance %>" formName="fm" model="<%= CPInstance.class %>" name="displayDate" />
+
+		<aui:input bean="<%= cpInstance %>" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" model="<%= CPInstance.class %>" name="expirationDate" />
+	</commerce-ui:panel>
+
+	<c:if test="<%= cpInstanceDisplayContext.hasCustomAttributesAvailable() %>">
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+		>
 			<liferay-expando:custom-attribute-list
 				className="<%= CPInstance.class.getName() %>"
 				classPK="<%= (cpInstance != null) ? cpInstance.getCPInstanceId() : 0 %>"
 				editable="<%= true %>"
 				label="<%= true %>"
 			/>
-		</c:if>
+		</commerce-ui:panel>
+	</c:if>
 
-		<%
-		boolean pending = false;
+	<%
+	boolean pending = false;
 
-		if (cpInstance != null) {
-			pending = cpInstance.isPending();
-		}
-		%>
+	if (cpInstance != null) {
+		pending = cpInstance.isPending();
+	}
+	%>
 
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-	</div>
+	<c:if test="<%= pending %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+		</div>
+	</c:if>
 
 	<aui:button-row cssClass="product-instance-button-row">
 
@@ -162,78 +208,70 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-		<aui:button cssClass="btn-lg" href="<%= productSkusURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script>
 	function getMetalJsFormData(metalJsForm) {
-		if(!metalJsForm) {
+		if (!metalJsForm) {
 			return [];
 		}
 
 		var renderer = Object.values(metalJsForm.refs)[0];
 
-		return Object.values(renderer.refs)
-			.map(
-				function(option) {
-					return {
-						key: option.fieldName,
-						value: option.value
-					}
-				}
-			);
+		return Object.values(renderer.refs).map(function(option) {
+			return {
+				key: option.fieldName,
+				value: option.value
+			};
+		});
 	}
 
-	Liferay.componentReady("ProductOptions<%= cpDefinition.getCPDefinitionId() %>")
-		.then(function(ddmForm) {
-			if(!ddmForm.on) {
-				return;
-			}
-			ddmForm.on(
-				'fieldEdited',
-				function() {
-					var fieldValues = getMetalJsFormData(ddmForm);
+	Liferay.componentReady(
+		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
+	).then(function(ddmForm) {
+		if (!ddmForm.on) {
+			return;
+		}
+		ddmForm.on('fieldEdited', function() {
+			var fieldValues = getMetalJsFormData(ddmForm);
 
-					var form = AUI.$(document.<portlet:namespace />fm);
-					form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
-				}
-			);
+			var form = AUI.$(document.<portlet:namespace />fm);
+			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
 		});
+	});
 
 	function <portlet:namespace />saveInstance(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var ddmForm = Liferay.component("ProductOptions<%= cpDefinition.getCPDefinitionId() %>DDMForm");
+		var ddmForm = Liferay.component(
+			'ProductOptions<%= cpDefinition.getCPDefinitionId() %>DDMForm'
+		);
 
 		if (ddmForm) {
 			var fields = ddmForm.getImmediateFields();
 
 			var fieldValues = [];
 
-			fields.forEach(
-				function(field) {
-					var fieldValue = {};
+			fields.forEach(function(field) {
+				var fieldValue = {};
 
-					fieldValue.key = field.get('fieldName');
+				fieldValue.key = field.get('fieldName');
 
-					var value = field.getValue();
+				var value = field.getValue();
 
-					var arrValue = [];
+				var arrValue = [];
 
-					if (value instanceof Array) {
-						arrValue = value;
-					}
-					else {
-						arrValue.push(value);
-					}
-
-					fieldValue.value = arrValue;
-
-					fieldValues.push(fieldValue);
+				if (value instanceof Array) {
+					arrValue = value;
+				} else {
+					arrValue.push(value);
 				}
-			);
+
+				fieldValue.value = arrValue;
+
+				fieldValues.push(fieldValue);
+			});
 
 			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
 		}
@@ -247,14 +285,11 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
 
-	publishButton.on(
-		'click',
-		function() {
-			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
+	publishButton.on('click', function() {
+		var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
 
-			if (workflowActionInput) {
-				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-			}
+		if (workflowActionInput) {
+			workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 		}
-	);
+	});
 </aui:script>

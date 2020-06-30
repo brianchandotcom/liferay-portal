@@ -32,7 +32,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 public abstract class FragmentEntryBaseImpl
 	extends FragmentEntryModelImpl implements FragmentEntry {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a fragment entry model instance should use the <code>FragmentEntry</code> interface instead.

@@ -14,41 +14,44 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.frontend.ClayMenuActionItem;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
+
+import java.math.BigDecimal;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.StringJoiner;
 
-import javax.portlet.PortletException;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -59,26 +62,23 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-public class CPInstanceDisplayContext
-	extends BaseCPDefinitionsSearchContainerDisplayContext<CPInstance> {
+public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 	public CPInstanceDisplayContext(
-			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommercePriceFormatter commercePriceFormatter,
-			CPDefinitionOptionRelService cpDefinitionOptionRelService,
-			CPInstanceService cpInstanceService,
-			CPInstanceHelper cpInstanceHelper)
-		throws PortalException {
+		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommercePriceFormatter commercePriceFormatter,
+		CPDefinitionOptionRelService cpDefinitionOptionRelService,
+		CPInstanceHelper cpInstanceHelper,
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
 
-		super(
-			actionHelper, httpServletRequest, CPInstance.class.getSimpleName());
+		super(actionHelper, httpServletRequest);
 
-		setDefaultOrderByCol("sku");
-
-		this.commercePriceFormatter = commercePriceFormatter;
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
-		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 	}
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -89,19 +89,41 @@ public class CPInstanceDisplayContext
 			return Collections.emptyMap();
 		}
 
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
-
-		return _cpInstanceHelper.getCPDefinitionOptionRelsMap(
-			cpInstance.getCPDefinitionId(), cpInstance.getJson());
+		return _cpInstanceHelper.getCPInstanceCPDefinitionOptionRelsMap(
+			cpInstanceId);
 	}
 
-	public String formatPrice(CPInstance cpInstance) throws PortalException {
-		CommerceCatalog commerceCatalog = cpInstance.getCommerceCatalog();
+	public ClayCreationMenu getClayCreationMenu() throws Exception {
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
 
-		return commercePriceFormatter.format(
-			cpInstance.getCompanyId(),
-			commerceCatalog.getCommerceCurrencyCode(), cpInstance.getPrice(),
-			cpRequestHelper.getLocale());
+		clayCreationMenu.addClayCreationMenuActionItem(
+			new ClayCreationMenuActionItem(
+				_getEditCPInstancePortletURL(),
+				LanguageUtil.get(cpRequestHelper.getRequest(), "add-sku"),
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if ((cpDefinition != null) && !cpDefinition.isIgnoreSKUCombinations()) {
+			clayCreationMenu.addClayCreationMenuActionItem(
+				new ClayCreationMenuActionItem(
+					_getAddMultipleCPInstancePortletURL(),
+					LanguageUtil.get(
+						cpRequestHelper.getRequest(),
+						"generate-all-sku-combinations")));
+		}
+
+		return clayCreationMenu;
+	}
+
+	public String getCommerceCurrencyCode() throws PortalException {
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
+
+		if (commerceCurrency != null) {
+			return commerceCurrency.getCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
@@ -134,14 +156,6 @@ public class CPInstanceDisplayContext
 		return cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 	}
 
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-			long cpDefinitionOptionValueRelId)
-		throws PortalException {
-
-		return actionHelper.getCPDefinitionOptionValueRels(
-			cpDefinitionOptionValueRelId);
-	}
-
 	public CPInstance getCPInstance() throws PortalException {
 		if (_cpInstance != null) {
 			return _cpInstance;
@@ -163,62 +177,16 @@ public class CPInstanceDisplayContext
 		return cpInstance.getCPInstanceId();
 	}
 
-	@Override
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-		throws PortalException, PortletException {
+	public String getCPMeasurementUnitName(int type) {
+		CPMeasurementUnit cpMeasurementUnit =
+			_cpMeasurementUnitLocalService.fetchPrimaryCPMeasurementUnit(
+				cpRequestHelper.getCompanyId(), type);
 
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			super.getManagementBarStatusFilterItems();
-
-		CPDefinition cpDefinition = getCPDefinition();
-
-		if (cpDefinition == null) {
-			return managementBarFilterItems;
+		if (cpMeasurementUnit != null) {
+			return cpMeasurementUnit.getName(cpRequestHelper.getLocale());
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		int workflowDefinitionLinksCount =
-			WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLinksCount(
-					themeDisplay.getCompanyId(), cpDefinition.getGroupId(),
-					CPInstance.class.getName());
-
-		if (workflowDefinitionLinksCount == 0) {
-			workflowDefinitionLinksCount =
-				WorkflowDefinitionLinkLocalServiceUtil.
-					getWorkflowDefinitionLinksCount(
-						themeDisplay.getCompanyId(),
-						WorkflowConstants.DEFAULT_GROUP_ID,
-						CPInstance.class.getName());
-		}
-
-		if (workflowDefinitionLinksCount > 0) {
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
-		}
-
-		return managementBarFilterItems;
-	}
-
-	public String getOptions(long cpDefinitionId, String json, Locale locale)
-		throws PortalException {
-
-		List<KeyValuePair> keyValuePairs = _cpInstanceHelper.getKeyValuePairs(
-			cpDefinitionId, json, locale);
-
-		StringJoiner stringJoiner = new StringJoiner(
-			StringPool.COMMA + StringPool.SPACE);
-
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			stringJoiner.add(keyValuePair.getValue());
-		}
-
-		return stringJoiner.toString();
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -246,73 +214,6 @@ public class CPInstanceDisplayContext
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
 	}
 
-	@Override
-	public SearchContainer<CPInstance> getSearchContainer()
-		throws PortalException {
-
-		if (searchContainer != null) {
-			return searchContainer;
-		}
-
-		long cpDefinitionId = getCPDefinitionId();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-skus-were-found");
-
-		OrderByComparator<CPInstance> orderByComparator =
-			CPDefinitionsPortletUtil.getCPInstanceOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		if (isSearch() || (cpDefinitionId == 0)) {
-			Sort sort = CPDefinitionsPortletUtil.getCPInstanceSort(
-				getOrderByCol(), getOrderByType());
-
-			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
-				_cpInstanceService.searchCPDefinitionInstances(
-					themeDisplay.getCompanyId(), cpDefinitionId, getKeywords(),
-					getStatus(), searchContainer.getStart(),
-					searchContainer.getEnd(), sort);
-
-			searchContainer.setTotal(
-				cpInstanceBaseModelSearchResult.getLength());
-			searchContainer.setResults(
-				cpInstanceBaseModelSearchResult.getBaseModels());
-		}
-		else {
-			int total = _cpInstanceService.getCPDefinitionInstancesCount(
-				cpDefinitionId, getStatus());
-
-			searchContainer.setTotal(total);
-
-			List<CPInstance> results =
-				_cpInstanceService.getCPDefinitionInstances(
-					cpDefinitionId, getStatus(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
-
-			searchContainer.setResults(results);
-		}
-
-		return searchContainer;
-	}
-
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels()
-		throws PortalException {
-
-		return actionHelper.getSkuContributorCPDefinitionOptionRels(
-			getCPDefinitionId());
-	}
-
 	public boolean hasCustomAttributesAvailable() throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -321,10 +222,6 @@ public class CPInstanceDisplayContext
 		return CustomAttributesUtil.hasCustomAttributes(
 			themeDisplay.getCompanyId(), CPInstance.class.getName(),
 			getCPInstanceId(), null);
-	}
-
-	public boolean hasDynamicInclude(String key) {
-		return DynamicIncludeUtil.hasDynamicInclude(key);
 	}
 
 	public String renderOptions(
@@ -338,11 +235,61 @@ public class CPInstanceDisplayContext
 			true, renderRequest, renderResponse);
 	}
 
-	protected final CommercePriceFormatter commercePriceFormatter;
+	public BigDecimal round(BigDecimal value) throws PortalException {
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
+		if (commerceCurrency == null) {
+			return value;
+		}
+
+		return commerceCurrency.round(value);
+	}
+
+	protected CommerceCurrency getCommerceCurrency() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
+
+		return _commerceCurrencyLocalService.getCommerceCurrency(
+			commerceCatalog.getCompanyId(),
+			commerceCatalog.getCommerceCurrencyCode());
+	}
+
+	private String _getAddMultipleCPInstancePortletURL() throws Exception {
+		LiferayPortletResponse liferayPortletResponse =
+			cpRequestHelper.getLiferayPortletResponse();
+
+		ActionURL portletURL = liferayPortletResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "editProductInstance");
+		portletURL.setParameter(Constants.CMD, Constants.ADD_MULTIPLE);
+		portletURL.setParameter("redirect", cpRequestHelper.getCurrentURL());
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+
+		return portletURL.toString();
+	}
+
+	private String _getEditCPInstancePortletURL() throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CPDefinition.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
+
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;
-	private final CPInstanceService _cpInstanceService;
+	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 }

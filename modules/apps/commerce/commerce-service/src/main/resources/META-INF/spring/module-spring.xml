@@ -39,6 +39,7 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentLocalServiceImpl" id="com.liferay.commerce.service.CommerceShipmentLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentServiceImpl" id="com.liferay.commerce.service.CommerceShipmentService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShipmentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShipmentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShipmentFinderImpl" id="com.liferay.commerce.service.persistence.CommerceShipmentFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceShipmentItemLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl" id="com.liferay.commerce.service.CommerceShipmentItemService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShipmentItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence" parent="basePersistence" />

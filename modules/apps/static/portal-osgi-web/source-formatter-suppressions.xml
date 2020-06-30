@@ -2,6 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaXMLSecurityCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
 	</source-check>
 </suppressions>

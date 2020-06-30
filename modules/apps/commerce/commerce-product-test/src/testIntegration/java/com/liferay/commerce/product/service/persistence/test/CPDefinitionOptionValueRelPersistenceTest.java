@@ -41,6 +41,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -155,6 +157,16 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
+		newCPDefinitionOptionValueRel.setCPInstanceUuid(
+			RandomTestUtil.randomString());
+
+		newCPDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
+
+		newCPDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
+
+		newCPDefinitionOptionValueRel.setPrice(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
 		_cpDefinitionOptionValueRels.add(
 			_persistence.update(newCPDefinitionOptionValueRel));
 
@@ -203,6 +215,18 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getKey(),
 			newCPDefinitionOptionValueRel.getKey());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getCPInstanceUuid(),
+			newCPDefinitionOptionValueRel.getCPInstanceUuid());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getCProductId(),
+			newCPDefinitionOptionValueRel.getCProductId());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getQuantity(),
+			newCPDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.getPrice(),
+			newCPDefinitionOptionValueRel.getPrice());
 	}
 
 	@Test
@@ -305,7 +329,8 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			"CPDefinitionOptionValueRelId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPDefinitionOptionRelId", true, "name", true,
-			"priority", true, "key", true);
+			"priority", true, "key", true, "CPInstanceUuid", true, "CProductId",
+			true, "quantity", true, "price", true);
 	}
 
 	@Test
@@ -621,6 +646,16 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
+
+		cpDefinitionOptionValueRel.setCPInstanceUuid(
+			RandomTestUtil.randomString());
+
+		cpDefinitionOptionValueRel.setCProductId(RandomTestUtil.nextLong());
+
+		cpDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
+
+		cpDefinitionOptionValueRel.setPrice(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		_cpDefinitionOptionValueRels.add(
 			_persistence.update(cpDefinitionOptionValueRel));

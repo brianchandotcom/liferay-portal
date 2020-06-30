@@ -633,11 +633,6 @@ public class DLFileShortcutWrapper
 		return _dlFileShortcut.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a document library file shortcut model instance should use the <code>DLFileShortcut</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_dlFileShortcut.persist();

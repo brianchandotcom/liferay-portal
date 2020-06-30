@@ -30,10 +30,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SwappedLogExecutor.class)
 public class SwappedLogExecutor {
 
-	public void execute(String bundleSymbolicName, Runnable runnable) {
+	public void execute(
+		String bundleSymbolicName, Runnable runnable,
+		String outputStreamContainerFactoryName) {
+
 		OutputStreamContainerFactory outputStreamContainerFactory =
 			_outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactory();
+				getOutputStreamContainerFactory(
+					outputStreamContainerFactoryName);
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create(

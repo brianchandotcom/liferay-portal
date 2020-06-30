@@ -69,7 +69,7 @@ public class CPFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				ps.setLong(3, cpDefinitionClassNameId);
 				ps.setLong(4, classPK);
 
-				ps.executeUpdate();
+				ps.addBatch();
 			}
 
 			ps.executeBatch();

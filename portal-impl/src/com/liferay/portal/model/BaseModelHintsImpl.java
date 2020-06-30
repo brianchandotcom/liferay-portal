@@ -171,9 +171,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 		int maxLength = GetterUtil.getInteger(
 			ModelHintsConstants.TEXT_MAX_LENGTH);
 
-		maxLength = GetterUtil.getInteger(hints.get("max-length"), maxLength);
-
-		return maxLength;
+		return GetterUtil.getInteger(hints.get("max-length"), maxLength);
 	}
 
 	public abstract ModelHintsCallback getModelHintsCallback();

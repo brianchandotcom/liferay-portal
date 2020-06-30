@@ -30,11 +30,9 @@ import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -67,11 +65,10 @@ public class CommerceShippingHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency();
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_user.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_commerceCurrency.getCode());
@@ -98,7 +95,7 @@ public class CommerceShippingHelperTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstanceWithSku();
@@ -163,7 +160,7 @@ public class CommerceShippingHelperTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstanceWithSku();
@@ -257,9 +254,6 @@ public class CommerceShippingHelperTest {
 
 	@Inject
 	private CommerceShippingHelper _commerceShippingHelper;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@DeleteAfterTestRun
 	private User _user;

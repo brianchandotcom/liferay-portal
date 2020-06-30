@@ -182,48 +182,63 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionGroupedEntries() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCPDefinitionGroupedEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCPDefinitionGroupedEntryIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editCPDefinitionGroupedEntry" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="editCPDefinitionGroupedEntry" />'
+			);
 		}
 	}
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addDefinitionGroupedEntry').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	$('#<portlet:namespace />addDefinitionGroupedEntry').on('click', function(
+		event
+	) {
+		event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'productDefinitionsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var <portlet:namespace />addCPDefinitionIds = [];
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: 'productDefinitionsSelectItem',
+			on: {
+				selectedItemChange: function(event) {
+					var <portlet:namespace />addCPDefinitionIds = [];
 
-							var selectedItems = event.newVal;
+					var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								$('#<portlet:namespace />entryCPDefinitionIds').val(selectedItems);
+					if (selectedItems) {
+						$('#<portlet:namespace />entryCPDefinitionIds').val(
+							selectedItems
+						);
 
-								var addCPDefinitionGroupedEntryFm = $('#<portlet:namespace />addCPDefinitionGroupedEntryFm');
+						var addCPDefinitionGroupedEntryFm = $(
+							'#<portlet:namespace />addCPDefinitionGroupedEntryFm'
+						);
 
-								submitForm(addCPDefinitionGroupedEntryFm);
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
-					url: '<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>'
+						submitForm(addCPDefinitionGroupedEntryFm);
+					}
 				}
-			);
+			},
+			title:
+				'<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
+			url:
+				'<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>'
+		});
 
-			itemSelectorDialog.open();
-		}
-	);
+		itemSelectorDialog.open();
+	});
 </aui:script>

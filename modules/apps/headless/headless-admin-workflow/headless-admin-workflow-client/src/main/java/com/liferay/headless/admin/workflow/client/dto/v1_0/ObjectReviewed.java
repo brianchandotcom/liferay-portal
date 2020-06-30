@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ObjectReviewed {
+public class ObjectReviewed implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -67,6 +67,11 @@ public class ObjectReviewed {
 	}
 
 	protected String resourceType;
+
+	@Override
+	public ObjectReviewed clone() throws CloneNotSupportedException {
+		return (ObjectReviewed)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

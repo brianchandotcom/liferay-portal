@@ -45,7 +45,7 @@ import java.util.Map;
 public interface BackgroundTaskModel
 	extends BaseModel<BackgroundTask>, GroupedModel, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a background task model instance should use the {@link BackgroundTask} interface instead.

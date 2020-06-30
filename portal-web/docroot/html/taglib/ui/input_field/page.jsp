@@ -289,6 +289,12 @@ if (hints != null) {
 								form.fm('<%= fieldParam %>AmPm')
 							].filter(Boolean);
 
+							var label = $('label[for="<portlet:namespace /><%= fieldParam %>"]');
+
+							if (label) {
+								label.toggleClass('disabled', checked);
+							}
+
 							elements.forEach(
 								function(element) {
 									if (checked) {

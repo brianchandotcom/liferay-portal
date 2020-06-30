@@ -39,6 +39,13 @@ components:
             description:
                 Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -149,17 +156,7 @@ components:
                     description:
                         The categories associated with this blog post.
                     items:
-                        properties:
-                            taxonomyCategoryId:
-                                description:
-                                    The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                description:
-                                    The category's name.
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/TaxonomyCategory"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -226,6 +223,13 @@ components:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -264,6 +268,13 @@ components:
             description:
                 Represents a document (binary data and metadata) associated with structured content. Properties follow the [Media Object](https://schema.org/MediaObject) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 contentType:
                     readOnly: true
                     type: string
@@ -322,6 +333,10 @@ components:
                         The field's label.
                     readOnly: true
                     type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name:
                     description:
                         The field's internal name. This is valid for comparisons and unique in the structured content.
@@ -391,6 +406,10 @@ components:
                                     type: string
                             type: object
                     type: object
+                value_i18n:
+                    additionalProperties:
+                        type: object
+                    type: object
         ContentSetElement:
             description:
                 Represents each member of a content set and can contain different types of assets.
@@ -416,6 +435,11 @@ components:
                         The content's title.
                     readOnly: true
                     type: string
+                title_i18n:
+                    additionalParameters:
+                        type: string
+                    readOnly: true
+                    type: object
         ContentStructure:
             description:
                 Represents the content structure that backs structured content. This defines which form fields are available and the possible types and values.
@@ -457,6 +481,11 @@ components:
                         The content structure's description.
                     readOnly: true
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 id:
                     description:
                         The content structure's ID.
@@ -468,6 +497,11 @@ components:
                         The content structure's name.
                     readOnly: true
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 siteId:
                     description:
                         The ID of the site to which the content structure is scoped.
@@ -494,6 +528,11 @@ components:
                         The form field's label.
                     readOnly: true
                     type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 localizable:
                     description:
                         A flag that indicates whether the content is accessible in different languages.
@@ -525,6 +564,10 @@ components:
                                 description:
                                     The option's label.
                                 type: string
+                            label_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                             value:
                                 description:
                                     The internal value of the field option.
@@ -537,6 +580,11 @@ components:
                         The form field's default value.
                     readOnly: true
                     type: string
+                predefinedValue_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 repeatable:
                     description:
                         A flag that indicates whether this content can be rendered (and answered) several times.
@@ -613,6 +661,10 @@ components:
                             description:
                                 The field's content for simple types.
                             type: object
+                        data_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         geo:
                             description:
                                 A point determined by latitude and longitude.
@@ -642,6 +694,13 @@ components:
             description:
                 Represents a Document Library file, storing binary and metadata information. Properties follow the [MediaObject](https://schema.org/MediaObject) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 adaptedImages:
                     description:
                         An array of images in several resolutions and sizes, created by the Adaptive Media framework.
@@ -758,17 +817,7 @@ components:
                     description:
                         The categories associated with this document.
                     items:
-                        properties:
-                            taxonomyCategoryId:
-                                description:
-                                    The category's ID. This can be used to retrieve more information via the `TaxonomyCategory` API.
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                description:
-                                    The category's name.
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/TaxonomyCategory"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -794,6 +843,13 @@ components:
             description:
                 Represents a document folder that can contain documents and other folders.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -862,6 +918,13 @@ components:
             description:
                 Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -968,17 +1031,7 @@ components:
                     description:
                         The categories associated with this article.
                     items:
-                        properties:
-                            taxonomyCategoryId:
-                                description:
-                                    The category's ID, which can be used to retrieve more information in the `TaxonomyCategory` API.
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                description:
-                                    The category's name.
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/TaxonomyCategory"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1043,6 +1096,13 @@ components:
             description:
                 Represents a folder for organizing Knowledge Base articles.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1165,6 +1225,13 @@ components:
             description:
                 Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1268,6 +1335,13 @@ components:
             description:
                 Represents a section/folder on a message board, used to organize messages.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1337,6 +1411,13 @@ components:
             description:
                 Represents a discussion thread in a message board.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1440,6 +1521,13 @@ components:
             description:
                 Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 bestRating:
                     description:
                         The best possible rating an asset can receive (normalized to 1.0 by default).
@@ -1507,6 +1595,13 @@ components:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1562,10 +1657,18 @@ components:
                     description:
                         The structured content's description.
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 friendlyUrlPath:
                     description:
                         A relative URL to the structured content's rendered content.
                     type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     description:
                         The structured content's ID.
@@ -1607,6 +1710,10 @@ components:
                                 description:
                                     The name of the template used to render the content.
                                 type: string
+                            templateName_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                         type: object
                     readOnly: true
                     type: array
@@ -1623,17 +1730,7 @@ components:
                     description:
                         The categories associated with this structured content.
                     items:
-                        properties:
-                            taxonomyCategoryId:
-                                description:
-                                    The category's ID, which can be used to retrieve more information via the `TaxonomyCategory` API.
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                description:
-                                    The category's name.
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/TaxonomyCategory"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1648,6 +1745,10 @@ components:
                     description:
                         The structured content's main title.
                     type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 uuid:
                     description:
                         A valid external identifier to reference this structured content.
@@ -1665,6 +1766,13 @@ components:
             description:
                 Represents a folder that can be used to organize structured content.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1729,11 +1837,38 @@ components:
             required:
                 - name
             type: object
+        TaxonomyCategory:
+            properties:
+                taxonomyCategoryId:
+                    description:
+                        The category's ID. This can be used to retrieve more information in the
+                        `TaxonomyCategory` API.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyCategoryName:
+                    description:
+                        The category's name.
+                    readOnly: true
+                    type: string
+                taxonomyCategoryName_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
+            type: object
         WikiNode:
             # @review
             description:
                 Represents a wiki node that can be used to organize wiki pages.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1792,6 +1927,13 @@ components:
             description:
                 Represents a wiki page.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1876,17 +2018,7 @@ components:
                     description:
                         The categories associated with this blog post.
                     items:
-                        properties:
-                            taxonomyCategoryId:
-                                description:
-                                    The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.
-                                format: int64
-                                type: integer
-                            taxonomyCategoryName:
-                                description:
-                                    The category's name.
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/TaxonomyCategory"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1970,6 +2102,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["BlogPostingImage"]
@@ -2012,6 +2145,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["BlogPosting"]
@@ -2195,6 +2329,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["BlogPosting"]
@@ -2299,6 +2434,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Comment"]
@@ -2563,6 +2699,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["DocumentFolder"]
@@ -2751,6 +2888,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["DocumentFolder"]
@@ -2768,6 +2906,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["DocumentFolder"]
@@ -2870,6 +3009,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Document"]
@@ -3059,6 +3199,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Document"]
@@ -3163,6 +3304,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -3329,6 +3471,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -3431,6 +3574,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -3448,6 +3592,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -3546,6 +3691,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseAttachment"]
@@ -3588,6 +3734,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseFolder"]
@@ -3842,6 +3989,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardAttachment"]
@@ -3884,6 +4032,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardMessage"]
@@ -4050,6 +4199,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardMessage"]
@@ -4152,6 +4302,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardMessage"]
@@ -4169,6 +4320,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardMessage"]
@@ -4267,6 +4419,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardSection"]
@@ -4448,6 +4601,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardSection"]
@@ -4465,6 +4619,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardSection"]
@@ -4563,6 +4718,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardThread"]
@@ -4808,6 +4964,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardThread"]
@@ -4910,6 +5067,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardThread"]
@@ -4927,6 +5085,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["MessageBoardThread"]
@@ -5105,6 +5264,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["BlogPosting"]
@@ -5122,6 +5282,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["BlogPosting"]
@@ -5524,6 +5685,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -5541,6 +5703,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
@@ -6247,6 +6410,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContentFolder"]
@@ -6440,6 +6604,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContentFolder"]
@@ -6457,6 +6622,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContentFolder"]
@@ -6474,6 +6640,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContent"]
@@ -6491,6 +6658,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContent"]
@@ -6510,6 +6678,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContent"]
@@ -6705,6 +6874,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["StructuredContent"]
@@ -6834,6 +7004,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiNode"]
@@ -6851,6 +7022,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiNode"]
@@ -6871,6 +7043,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiNode"]
@@ -7023,6 +7196,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiPageAttachment"]
@@ -7063,6 +7237,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiPage"]
@@ -7080,6 +7255,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiPage"]
@@ -7158,6 +7334,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiPage"]

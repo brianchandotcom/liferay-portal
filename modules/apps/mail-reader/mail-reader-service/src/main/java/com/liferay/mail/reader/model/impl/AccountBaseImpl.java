@@ -32,7 +32,7 @@ import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 public abstract class AccountBaseImpl
 	extends AccountModelImpl implements Account {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a account model instance should use the <code>Account</code> interface instead.

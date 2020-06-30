@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.JavaConstants;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -38,17 +37,11 @@ public class CPRequestHelper extends BaseRequestHelper {
 
 		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		_portletPreferences = _renderRequest.getPreferences();
 	}
 
 	public long getChannelGroupId() throws PortalException {
 		return CommerceChannelLocalServiceUtil.
 			getCommerceChannelGroupIdBySiteGroupId(getScopeGroupId());
-	}
-
-	public PortletPreferences getPortletPreferences() {
-		return _portletPreferences;
 	}
 
 	public RenderRequest getRenderRequest() {
@@ -59,7 +52,6 @@ public class CPRequestHelper extends BaseRequestHelper {
 		return _renderResponse;
 	}
 
-	private final PortletPreferences _portletPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

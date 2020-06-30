@@ -362,9 +362,11 @@ public abstract class BaseOrganizationResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						organization1, entityField.getName(), "Aaa");
+						organization1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						organization2, entityField.getName(), "Bbb");
+						organization2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -742,9 +744,11 @@ public abstract class BaseOrganizationResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						organization1, entityField.getName(), "Aaa");
+						organization1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						organization2, entityField.getName(), "Bbb");
+						organization2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

@@ -1,6 +1,7 @@
 @import "../compat/variables";
 
 @import "variables/_globals";
+@import "variables/_globals-z-index";
 
 @import "variables/_alerts";
 @import "variables/_badges";
@@ -14,7 +15,10 @@
 @import "variables/_forms";
 @import "variables/_links";
 
+@import "variables/_clay-color";
 @import "variables/_custom-forms";
+@import "variables/_time";
+
 @import "variables/_list-group";
 @import "variables/_loaders";
 @import "variables/_modals";

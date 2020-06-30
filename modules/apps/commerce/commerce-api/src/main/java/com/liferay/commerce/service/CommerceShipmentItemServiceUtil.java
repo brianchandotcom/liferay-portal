@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShipmentItemServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentItemServiceUtil} to access the commerce shipment item remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.commerce.model.CommerceShipmentItem
 			addCommerceShipmentItem(
@@ -55,12 +49,46 @@ public class CommerceShipmentItemServiceUtil {
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
+	 */
+	@Deprecated
 	public static void deleteCommerceShipmentItem(long commerceShipmentItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteCommerceShipmentItem(commerceShipmentItemId);
 	}
 
+	public static void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceShipmentItem(
+			commerceShipmentItemId, restoreStockQuantity);
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentItem
+			fetchCommerceShipmentItem(
+				long commerceShipmentId, long commerceOrderItemId,
+				long commerceInventoryWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommerceShipmentItem(
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId);
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentItem
+			getCommerceShipmentItem(long commerceShipmentItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceShipmentItem(commerceShipmentItemId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.model.CommerceShipmentItem>
 				getCommerceShipmentItems(long commerceOrderItemId)
@@ -82,10 +110,36 @@ public class CommerceShipmentItemServiceUtil {
 			commerceShipmentId, start, end, orderByComparator);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.model.CommerceShipmentItem>
+				getCommerceShipmentItemsByCommerceOrderItemId(
+					long commerceOrderItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceShipmentItemsByCommerceOrderItemId(
+			commerceOrderItemId);
+	}
+
 	public static int getCommerceShipmentItemsCount(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommerceShipmentItemsCount(commerceShipmentId);
+	}
+
+	public static int getCommerceShipmentItemsCountByCommerceOrderItemId(
+			long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceShipmentItemsCountByCommerceOrderItemId(
+			commerceOrderItemId);
+	}
+
+	public static int getCommerceShipmentOrderItemsQuantity(
+			long commerceShipmentId, long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceShipmentOrderItemsQuantity(
+			commerceShipmentId, commerceOrderItemId);
 	}
 
 	/**
@@ -104,6 +158,16 @@ public class CommerceShipmentItemServiceUtil {
 
 		return getService().updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentItem
+			updateCommerceShipmentItem(
+				long commerceShipmentItemId, long commerceInventoryWarehouseId,
+				int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceShipmentItem(
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	public static CommerceShipmentItemService getService() {

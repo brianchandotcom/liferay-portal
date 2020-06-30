@@ -21,99 +21,44 @@ String notificationNavigationItem = ParamUtil.getString(request, "notificationNa
 
 CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesDisplayContext = (CommerceNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+long commerceChannelId = commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId();
 PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
+
+Map<String, String> contextParams = new HashMap<>();
+
+contextParams.put("commerceChannelId", String.valueOf(commerceChannelId));
 %>
 
 <%@ include file="/navbar.jspf" %>
 
-<liferay-frontend:management-bar
-	searchContainerId="commerceNotificationQueueEntries"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+<c:choose>
+	<c:when test='<%= notificationNavigationItem.equals("view-all-notification-queue-entries") %>'>
+		<commerce-ui:dataset-display
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
+			id="<%= CommerceNotificationEntryClayTable.NAME %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
+			showManagementBar="<%= false %>"
 		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority"} %>'
+	</c:when>
+	<c:when test='<%= notificationNavigationItem.equals("view-all-notification-templates") %>'>
+		<commerce-ui:dataset-display
+			clayCreationMenu="<%= commerceNotificationQueueEntriesDisplayContext.getNotificationTemplateClayCreationMenu() %>"
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceNotificationTemplateClayTable.NAME %>"
+			id="<%= CommerceNotificationTemplateClayTable.NAME %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
+			showSearch="<%= false %>"
 		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
-
-<div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="commerceNotificationQueueEntries"
-		searchContainer="<%= commerceNotificationQueueEntriesDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"
-			keyProperty="commerceNotificationQueueEntryId"
-			modelVar="commerceNotificationQueueEntry"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="from"
-				property="fromName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="to"
-				property="toName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= HtmlUtil.escape(commerceNotificationQueueEntriesDisplayContext.getCommerceNotificationType(commerceNotificationQueueEntry.getCommerceNotificationTemplateId())) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="sent"
-			>
-				<c:choose>
-					<c:when test="<%= commerceNotificationQueueEntry.isSent() %>">
-						<liferay-ui:icon
-							cssClass="commerce-admin-icon-check"
-							icon="check"
-							markupView="lexicon"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:icon
-							cssClass="commerce-admin-icon-times"
-							icon="times"
-							markupView="lexicon"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				property="priority"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/notification_queue_entry_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</div>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>

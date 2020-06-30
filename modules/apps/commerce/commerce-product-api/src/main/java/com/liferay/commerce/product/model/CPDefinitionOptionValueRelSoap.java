@@ -16,6 +16,8 @@ package com.liferay.commerce.product.model;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +50,10 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setKey(model.getKey());
+		soapModel.setCPInstanceUuid(model.getCPInstanceUuid());
+		soapModel.setCProductId(model.getCProductId());
+		soapModel.setQuantity(model.getQuantity());
+		soapModel.setPrice(model.getPrice());
 
 		return soapModel;
 	}
@@ -209,6 +215,38 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_key = key;
 	}
 
+	public String getCPInstanceUuid() {
+		return _CPInstanceUuid;
+	}
+
+	public void setCPInstanceUuid(String CPInstanceUuid) {
+		_CPInstanceUuid = CPInstanceUuid;
+	}
+
+	public long getCProductId() {
+		return _CProductId;
+	}
+
+	public void setCProductId(long CProductId) {
+		_CProductId = CProductId;
+	}
+
+	public int getQuantity() {
+		return _quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		_quantity = quantity;
+	}
+
+	public BigDecimal getPrice() {
+		return _price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		_price = price;
+	}
+
 	private String _uuid;
 	private long _CPDefinitionOptionValueRelId;
 	private long _groupId;
@@ -221,5 +259,9 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 	private String _name;
 	private double _priority;
 	private String _key;
+	private String _CPInstanceUuid;
+	private long _CProductId;
+	private int _quantity;
+	private BigDecimal _price;
 
 }

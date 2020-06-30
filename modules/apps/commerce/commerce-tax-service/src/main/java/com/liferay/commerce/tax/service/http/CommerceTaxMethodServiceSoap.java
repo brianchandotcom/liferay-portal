@@ -67,6 +67,40 @@ public class CommerceTaxMethodServiceSoap {
 
 	public static com.liferay.commerce.tax.model.CommerceTaxMethodSoap
 			addCommerceTaxMethod(
+				long userId, long groupId, String[] nameMapLanguageIds,
+				String[] nameMapValues, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String engineKey,
+				boolean percentage, boolean active)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.commerce.tax.model.CommerceTaxMethod returnValue =
+				CommerceTaxMethodServiceUtil.addCommerceTaxMethod(
+					userId, groupId, nameMap, descriptionMap, engineKey,
+					percentage, active);
+
+			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.tax.model.CommerceTaxMethodSoap
+			addCommerceTaxMethod(
 				String[] nameMapLanguageIds, String[] nameMapValues,
 				String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, String engineKey,
@@ -89,10 +123,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -108,10 +142,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -122,10 +156,29 @@ public class CommerceTaxMethodServiceSoap {
 			CommerceTaxMethodServiceUtil.deleteCommerceTaxMethod(
 				commerceTaxMethodId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.tax.model.CommerceTaxMethodSoap
+			fetchCommerceTaxMethod(long groupId, String engineKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.tax.model.CommerceTaxMethod returnValue =
+				CommerceTaxMethodServiceUtil.fetchCommerceTaxMethod(
+					groupId, engineKey);
+
+			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -141,10 +194,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -160,10 +213,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -180,10 +233,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModels(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -199,10 +252,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 
@@ -229,10 +282,10 @@ public class CommerceTaxMethodServiceSoap {
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RemoteException(e.getMessage());
+			throw new RemoteException(exception.getMessage());
 		}
 	}
 

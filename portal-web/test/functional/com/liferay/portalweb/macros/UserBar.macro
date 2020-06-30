@@ -44,6 +44,26 @@ definition {
 		}
 	}
 
+	@description = "Navigate to Organizations via the User Bar."
+	macro gotoMyOrganizations {
+		Navigator.openURL();
+
+		if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+				ProductMenuHelper.expandCategory(category = "My Account");
+
+				ProductMenuHelper.gotoPortlet(portlet = "My Organizations");
+			}
+		}
+		else {
+			ProductMenuHelper.expandCategory(category = "My Account");
+
+			ProductMenuHelper.gotoPortlet(portlet = "My Organizations");
+		}
+	}
+
 	@description = "Navigate to My Profile."
 	macro gotoProfile {
 		Navigator.openURL();

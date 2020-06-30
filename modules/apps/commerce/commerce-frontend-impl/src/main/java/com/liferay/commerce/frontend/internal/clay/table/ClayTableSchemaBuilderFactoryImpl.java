@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.frontend.internal.clay.table;
 
-import com.liferay.commerce.frontend.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.ClayTableSchemaBuilderFactory;
+import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
+import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
 

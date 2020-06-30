@@ -299,11 +299,6 @@ public class AMImageEntryWrapper
 		return _amImageEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a am image entry model instance should use the <code>AMImageEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_amImageEntry.persist();

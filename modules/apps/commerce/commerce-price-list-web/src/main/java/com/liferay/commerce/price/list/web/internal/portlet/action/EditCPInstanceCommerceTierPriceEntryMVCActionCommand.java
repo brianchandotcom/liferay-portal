@@ -34,8 +34,6 @@ import java.math.BigDecimal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,8 +117,8 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, commerceTierPriceEntryId);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -128,57 +126,6 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 				throw e;
 			}
 		}
-	}
-
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, long commerceTierPriceEntryId)
-		throws Exception {
-
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CPPortletKeys.CP_DEFINITIONS,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCPInstanceCommerceTierPriceEntry");
-
-		long commercePriceEntryId = ParamUtil.getLong(
-			actionRequest, "commercePriceEntryId");
-
-		if (commercePriceEntryId > 0) {
-			portletURL.setParameter(
-				"commercePriceEntryId", String.valueOf(commercePriceEntryId));
-		}
-
-		long commercePriceListId = ParamUtil.getLong(
-			actionRequest, "commercePriceListId");
-
-		if (commercePriceListId > 0) {
-			portletURL.setParameter(
-				"commercePriceListId", String.valueOf(commercePriceListId));
-		}
-
-		if (commerceTierPriceEntryId > 0) {
-			portletURL.setParameter(
-				"commerceTierPriceEntryId",
-				String.valueOf(commerceTierPriceEntryId));
-		}
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		if (cpDefinitionId > 0) {
-			portletURL.setParameter(
-				"cpDefinitionId", String.valueOf(cpDefinitionId));
-		}
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-
-		if (cpInstanceId > 0) {
-			portletURL.setParameter(
-				"cpInstanceId", String.valueOf(cpInstanceId));
-		}
-
-		return portletURL.toString();
 	}
 
 	protected CommerceTierPriceEntry updateCommerceTierPriceEntry(

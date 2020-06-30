@@ -185,6 +185,10 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return _resizable;
 	}
 
+	public java.lang.String getSelectedLanguageId() {
+		return _selectedLanguageId;
+	}
+
 	public boolean getShowRequiredLabel() {
 		return _showRequiredLabel;
 	}
@@ -369,6 +373,10 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_resizable = resizable;
 	}
 
+	public void setSelectedLanguageId(java.lang.String selectedLanguageId) {
+		_selectedLanguageId = selectedLanguageId;
+	}
+
 	public void setShowRequiredLabel(boolean showRequiredLabel) {
 		_showRequiredLabel = showRequiredLabel;
 	}
@@ -443,6 +451,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_prefix = null;
 		_required = false;
 		_resizable = false;
+		_selectedLanguageId = null;
 		_showRequiredLabel = true;
 		_suffix = null;
 		_title = null;
@@ -498,6 +507,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		setNamespacedAttribute(request, "prefix", _prefix);
 		setNamespacedAttribute(request, "required", _required);
 		setNamespacedAttribute(request, "resizable", _resizable);
+		setNamespacedAttribute(request, "selectedLanguageId", _selectedLanguageId);
 		setNamespacedAttribute(request, "showRequiredLabel", _showRequiredLabel);
 		setNamespacedAttribute(request, "suffix", _suffix);
 		setNamespacedAttribute(request, "title", _title);
@@ -551,6 +561,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private java.lang.String _prefix = null;
 	private boolean _required = false;
 	private boolean _resizable = false;
+	private java.lang.String _selectedLanguageId = null;
 	private boolean _showRequiredLabel = true;
 	private java.lang.String _suffix = null;
 	private java.lang.String _title = null;

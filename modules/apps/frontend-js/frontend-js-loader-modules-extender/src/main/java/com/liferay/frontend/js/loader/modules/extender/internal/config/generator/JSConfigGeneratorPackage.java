@@ -295,9 +295,7 @@ public class JSConfigGeneratorPackage {
 	protected String removeEnclosingCurlyBraces(JSONObject jsonObject) {
 		String json = jsonObject.toString();
 
-		json = json.substring(1, json.length() - 1);
-
-		return json;
+		return json.substring(1, json.length() - 1);
 	}
 
 	protected void urlToConfiguration(URL url, BundleWiring bundleWiring) {

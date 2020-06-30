@@ -57,9 +57,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		orgLabor.setSatOpen(satOpen);
 		orgLabor.setSatClose(satClose);
 
-		orgLaborPersistence.update(orgLabor);
-
-		return orgLabor;
+		return orgLaborPersistence.update(orgLabor);
 	}
 
 	@Override
@@ -95,9 +93,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		orgLabor.setSatOpen(satOpen);
 		orgLabor.setSatClose(satClose);
 
-		orgLaborPersistence.update(orgLabor);
-
-		return orgLabor;
+		return orgLaborPersistence.update(orgLabor);
 	}
 
 	protected void validate(long typeId) throws PortalException {

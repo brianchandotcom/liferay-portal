@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"clay": "2.14.2",
-		"clay-alert": "2.14.2",
+		"clay-alert": "2.20.2",
 		"jquery": "3.4.0",
 		"liferay-amd-loader": "4.0.0-alpha.5",
 		"lodash.escape": "4.0.1",
@@ -67,5 +67,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "2.0.51"
+	"version": "2.0.53"
 }

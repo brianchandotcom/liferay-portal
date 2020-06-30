@@ -60,9 +60,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class CompanyIndexFactory implements IndexFactory {
 
 	@Override
-	public void createIndices(AdminClient adminClient, long companyId)
-		throws Exception {
-
+	public void createIndices(AdminClient adminClient, long companyId) {
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
 		String indexName = getIndexName(companyId);
@@ -75,9 +73,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	@Override
-	public void deleteIndices(AdminClient adminClient, long companyId)
-		throws Exception {
-
+	public void deleteIndices(AdminClient adminClient, long companyId) {
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
 		String indexName = getIndexName(companyId);
@@ -139,8 +135,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected void createIndex(
-			String indexName, IndicesAdminClient indicesAdminClient)
-		throws Exception {
+		String indexName, IndicesAdminClient indicesAdminClient) {
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			indicesAdminClient.prepareCreate(indexName);
@@ -166,8 +161,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected boolean hasIndex(
-			IndicesAdminClient indicesAdminClient, String indexName)
-		throws Exception {
+		IndicesAdminClient indicesAdminClient, String indexName) {
 
 		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
 			indicesAdminClient.prepareExists(indexName);

@@ -57,7 +57,7 @@ import java.util.List;
 public interface KaleoConditionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoConditionLocalServiceUtil} to access the kaleo condition local service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoConditionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -237,6 +237,9 @@ public interface KaleoConditionLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
@@ -174,6 +175,9 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
+
+		searchActionURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_request));
 
 		return searchActionURL.toString();
 	}

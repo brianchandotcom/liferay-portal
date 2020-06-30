@@ -98,11 +98,11 @@ public class SkuUtil {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<String, String> entry : options.entrySet()) {
-			JSONObject jsonObject = JSONUtil.put(
-				"key", entry.getKey()
-			).put(
-				"value", JSONUtil.put(entry.getValue())
-			);
+			JSONObject jsonObject = JSONUtil.put("key", entry.getKey());
+
+			JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
+
+			jsonObject.put("value", valueJSONArray.put(entry.getValue()));
 
 			jsonArray.put(jsonObject);
 		}

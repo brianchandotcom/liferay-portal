@@ -350,11 +350,6 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		return _lock.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a lock model instance should use the <code>Lock</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_lock.persist();

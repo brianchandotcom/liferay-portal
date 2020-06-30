@@ -14,59 +14,23 @@
 
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
+import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Alec Sloan
  */
-public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
+public class CPAttachmentFileEntryUpgradeProcess
+	extends BaseCommerceProductServiceUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addIndexes(CPAttachmentFileEntryModelImpl.TABLE_NAME);
+		addIndexes(CPAttachmentFileEntryModelImpl.TABLE_NAME);
 
 		_dropIndex(CPAttachmentFileEntryModelImpl.TABLE_NAME, "IX_6FC3897D");
-	}
-
-	private void _addIndexes(String tableName) throws Exception {
-		Class<?> clazz = getClass();
-
-		List<ObjectValuePair<String, IndexMetadata>> indexesSQL = getIndexesSQL(
-			clazz.getClassLoader(), tableName);
-
-		for (ObjectValuePair<String, IndexMetadata> indexSQL : indexesSQL) {
-			IndexMetadata indexMetadata = indexSQL.getValue();
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Adding index %s to table %s",
-						indexMetadata.getIndexName(), tableName));
-			}
-
-			if (!_tableHasIndex(tableName, indexMetadata.getIndexName())) {
-				runSQL(indexMetadata.getCreateSQL(null));
-			}
-			else if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Index %s already exists on table %s",
-						indexMetadata.getIndexName(), tableName));
-			}
-		}
 	}
 
 	private void _dropIndex(String tableName, String indexName)
@@ -78,7 +42,7 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 					"Dropping index %s from table %s", indexName, tableName));
 		}
 
-		if (_tableHasIndex(tableName, indexName)) {
+		if (tableHasIndex(tableName, indexName)) {
 			runSQL(
 				StringBundler.concat(
 					"drop index ", indexName, " on ", tableName));
@@ -91,31 +55,6 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 						indexName, tableName));
 			}
 		}
-	}
-
-	private boolean _tableHasIndex(String tableName, String indexName)
-		throws Exception {
-
-		ResultSet rs = null;
-
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getIndexInfo(null, null, tableName, false, false);
-
-			while (rs.next()) {
-				String curIndexName = rs.getString("index_name");
-
-				if (Objects.equals(indexName, curIndexName)) {
-					return true;
-				}
-			}
-		}
-		finally {
-			DataAccess.cleanUp(rs);
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

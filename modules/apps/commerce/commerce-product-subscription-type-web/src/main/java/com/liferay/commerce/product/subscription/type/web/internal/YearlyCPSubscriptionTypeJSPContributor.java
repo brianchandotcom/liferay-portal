@@ -43,10 +43,19 @@ public class YearlyCPSubscriptionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		render(object, httpServletRequest, httpServletResponse, true);
+	}
+
+	@Override
+	public void render(
+			Object object, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean payment)
+		throws Exception {
+
 		YearlyCPSubscriptionTypeDisplayContext
 			yearlyCPSubscriptionTypeDisplayContext =
 				new YearlyCPSubscriptionTypeDisplayContext(
-					object, httpServletRequest);
+					object, httpServletRequest, payment);
 
 		httpServletRequest.setAttribute(
 			"view.jsp-yearlyCPSubscriptionTypeDisplayContext",

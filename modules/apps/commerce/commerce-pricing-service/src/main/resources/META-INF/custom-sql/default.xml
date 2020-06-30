@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder.findByC_C_C_P">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceModifier.*
+			FROM
+				CommercePriceModifier
+			LEFT JOIN
+				CommercePriceModifierRel ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			WHERE
+				(CommercePriceModifier.active_ = [$TRUE$]) AND
+				(CommercePriceModifier.commercePriceListId = ?) AND
+				(
+					(
+						(CommercePriceModifierRel.classPK = ?) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					(
+						(CommercePriceModifierRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					(
+						(CommercePriceModifierRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					((CommercePriceModifier.target = ?))
+				)
+			ORDER BY
+				CommercePriceModifier.priority DESC
+		]]>
+	</sql>
+</custom-sql>

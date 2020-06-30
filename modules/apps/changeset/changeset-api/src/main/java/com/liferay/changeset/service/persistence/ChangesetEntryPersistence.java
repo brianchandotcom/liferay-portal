@@ -40,7 +40,7 @@ import java.util.Set;
 public interface ChangesetEntryPersistence
 	extends BasePersistence<ChangesetEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChangesetEntryUtil} to access the changeset entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

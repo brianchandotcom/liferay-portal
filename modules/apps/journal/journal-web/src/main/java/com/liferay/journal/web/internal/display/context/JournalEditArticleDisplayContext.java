@@ -112,11 +112,11 @@ public class JournalEditArticleDisplayContext {
 	public Map<String, Object> getChangeDefaultLanguageSoyContext() {
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("defaultLanguage", getDefaultLanguageId());
+		context.put("defaultLanguage", getDefaultArticleLanguageId());
 
 		LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
 
-		uniqueLanguageIds.add(getDefaultLanguageId());
+		uniqueLanguageIds.add(getSelectedLanguageId());
 
 		Map<String, Object> strings = new HashMap<>();
 
@@ -133,7 +133,7 @@ public class JournalEditArticleDisplayContext {
 				LanguageUtil.format(
 					_request, "default-language-x",
 					availableLocale.getDisplayName(
-						LocaleUtil.fromLanguageId(getDefaultLanguageId())),
+						LocaleUtil.fromLanguageId(getSelectedLanguageId())),
 					false));
 
 			uniqueLanguageIds.add(curLanguageId);
@@ -146,7 +146,7 @@ public class JournalEditArticleDisplayContext {
 
 			language.put(
 				"checked",
-				Objects.equals(getDefaultLanguageId(), curLanguageId));
+				Objects.equals(getSelectedLanguageId(), curLanguageId));
 			language.put(
 				"icon",
 				StringUtil.toLowerCase(
@@ -258,6 +258,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public DDMTemplate getDDMTemplate() throws PortalException {
+		if (_ddmTemplate != null) {
+			return _ddmTemplate;
+		}
+
 		long ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
 
 		if (ddmTemplateId > 0) {
@@ -312,7 +316,7 @@ public class JournalEditArticleDisplayContext {
 		return _ddmTemplateKey;
 	}
 
-	public String getDefaultLanguageId() {
+	public String getDefaultArticleLanguageId() {
 		Locale siteDefaultLocale = null;
 
 		try {
@@ -490,6 +494,22 @@ public class JournalEditArticleDisplayContext {
 		return "save";
 	}
 
+	public String getSelectedLanguageId() {
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = ParamUtil.getString(_request, "languageId");
+
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = getDefaultArticleLanguageId();
+
+		return _defaultLanguageId;
+	}
+
 	public double getVersion() {
 		if (_version != null) {
 			return _version;
@@ -539,7 +559,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_hideDefaultSuccessMessage = ParamUtil.getBoolean(
-			_request, "hideDefaultSuccessMessage", false);
+			_request, "hideDefaultSuccessMessage");
 
 		return _hideDefaultSuccessMessage;
 	}
@@ -727,6 +747,7 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmStructureKey;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
+	private String _defaultLanguageId;
 	private Long _folderId;
 	private Long _groupId;
 	private Boolean _hideDefaultSuccessMessage;

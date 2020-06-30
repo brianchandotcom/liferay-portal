@@ -32,11 +32,6 @@ public class BookmarksEntryServiceWrapper
 		_bookmarksEntryService = bookmarksEntryService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link BookmarksEntryServiceUtil} to access the bookmarks entry remote service. Add custom service methods to <code>com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry addEntry(
 			long groupId, long folderId, String name, String url,

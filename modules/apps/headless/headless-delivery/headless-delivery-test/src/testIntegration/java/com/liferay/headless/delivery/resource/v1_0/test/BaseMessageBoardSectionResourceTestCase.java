@@ -204,6 +204,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testDeleteMessageBoardSection() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection messageBoardSection =
 			testDeleteMessageBoardSection_addMessageBoardSection();
 
@@ -348,7 +349,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				randomPatchMessageBoardSection);
 
 		MessageBoardSection expectedPatchMessageBoardSection =
-			(MessageBoardSection)BeanUtils.cloneBean(postMessageBoardSection);
+			postMessageBoardSection.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchMessageBoardSection, randomPatchMessageBoardSection);
@@ -701,9 +702,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardSection1, entityField.getName(), "Aaa");
+						messageBoardSection1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardSection2, entityField.getName(), "Bbb");
+						messageBoardSection2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1040,9 +1043,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardSection1, entityField.getName(), "Aaa");
+						messageBoardSection1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardSection2, entityField.getName(), "Bbb");
+						messageBoardSection2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1507,6 +1512,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (messageBoardSection.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (messageBoardSection.getCreator() == null) {
 					valid = false;
@@ -1643,6 +1656,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardSection1.getActions(),
+						messageBoardSection2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1907,6 +1931,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(

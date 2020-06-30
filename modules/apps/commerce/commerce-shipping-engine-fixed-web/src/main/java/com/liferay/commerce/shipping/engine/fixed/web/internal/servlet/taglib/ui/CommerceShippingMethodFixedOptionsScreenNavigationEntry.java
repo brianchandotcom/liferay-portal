@@ -16,14 +16,12 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.u
 
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.ByWeightCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext;
-import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -31,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -87,13 +86,16 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceShippingScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
+		return "commerce.shipping.method";
 	}
 
 	@Override
 	public boolean isVisible(
 		User user, CommerceShippingMethod commerceShippingMethod) {
+
+		if (commerceShippingMethod == null) {
+			return false;
+		}
 
 		String engineKey = commerceShippingMethod.getEngineKey();
 
@@ -122,9 +124,9 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 		CommerceShippingFixedOptionsDisplayContext
 			commerceShippingFixedOptionsDisplayContext =
 				new CommerceShippingFixedOptionsDisplayContext(
-					_commerceCurrencyLocalService, _commercePriceFormatter,
+					_commerceCurrencyLocalService,
 					_commerceShippingMethodService,
-					_commerceShippingFixedOptionService,
+					_commerceShippingFixedOptionService, _portal,
 					_portletResourcePermission, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
@@ -140,9 +142,6 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
-
-	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 
@@ -151,6 +150,9 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"

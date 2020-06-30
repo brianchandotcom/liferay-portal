@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDMStructureLinkPersistence
 	extends BasePersistence<DDMStructureLink> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureLinkUtil} to access the ddm structure link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

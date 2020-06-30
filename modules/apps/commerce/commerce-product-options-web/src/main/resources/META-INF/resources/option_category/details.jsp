@@ -52,9 +52,6 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 			keyInput.value = titleInput.value;
 		};
 
-		titleInput.addEventListener(
-			'input',
-			debounce(handleOnTitleInput, 200)
-		);
+		titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
 	</aui:script>
 </c:if>

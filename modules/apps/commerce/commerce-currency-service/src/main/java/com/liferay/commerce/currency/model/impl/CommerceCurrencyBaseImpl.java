@@ -32,7 +32,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 public abstract class CommerceCurrencyBaseImpl
 	extends CommerceCurrencyModelImpl implements CommerceCurrency {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce currency model instance should use the <code>CommerceCurrency</code> interface instead.

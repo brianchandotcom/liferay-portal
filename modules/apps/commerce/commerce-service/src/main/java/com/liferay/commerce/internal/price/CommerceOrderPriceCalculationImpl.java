@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.internal.price;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -26,12 +24,10 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
-import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.price.CommerceOrderPriceImpl;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.math.BigDecimal;
@@ -44,7 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-@Component(service = CommerceOrderPriceCalculation.class)
+@Component(
+	property = "commerce.price.calculation.key=v1.0",
+	service = CommerceOrderPriceCalculation.class
+)
 public class CommerceOrderPriceCalculationImpl
 	implements CommerceOrderPriceCalculation {
 
@@ -53,10 +52,6 @@ public class CommerceOrderPriceCalculationImpl
 			CommerceOrder commerceOrder, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException {
-
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
 
 		if (commerceOrder == null) {
 			return _getEmptyCommerceOrderPrice(
@@ -150,10 +145,6 @@ public class CommerceOrderPriceCalculationImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
-
 		BigDecimal subtotal = BigDecimal.ZERO;
 
 		if (commerceOrder == null) {
@@ -191,10 +182,6 @@ public class CommerceOrderPriceCalculationImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
-
 		if (commerceOrder == null) {
 			return _commerceMoneyFactory.create(
 				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
@@ -223,10 +210,6 @@ public class CommerceOrderPriceCalculationImpl
 			CommerceOrder commerceOrder, boolean secure,
 			CommerceContext commerceContext)
 		throws PortalException {
-
-		if (secure && !_hasViewPricePermission(commerceContext)) {
-			return null;
-		}
 
 		if (!commerceOrder.isOpen()) {
 			return _commerceMoneyFactory.create(
@@ -271,8 +254,7 @@ public class CommerceOrderPriceCalculationImpl
 		};
 
 		BigDecimal discountPercentage = discountAmount.divide(
-			amount.add(discountAmount),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+			amount, RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 
 		discountPercentage = discountPercentage.multiply(
 			BigDecimal.valueOf(100));
@@ -360,29 +342,7 @@ public class CommerceOrderPriceCalculationImpl
 		return commerceOrderPriceImpl;
 	}
 
-	private boolean _hasViewPricePermission(CommerceContext commerceContext)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if ((commerceAccount != null) &&
-			(commerceAccount.getType() ==
-				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS)) {
-
-			return _portletResourcePermission.contains(
-				permissionChecker, commerceAccount.getCommerceAccountGroupId(),
-				CPActionKeys.VIEW_PRICE);
-		}
-
-		return _portletResourcePermission.contains(
-			permissionChecker, commerceContext.getSiteGroupId(),
-			CPActionKeys.VIEW_PRICE);
-	}
-
-	@Reference
+	@Reference(target = "(commerce.discount.calculation.key=v1.0)")
 	private CommerceDiscountCalculation _commerceDiscountCalculation;
 
 	@Reference

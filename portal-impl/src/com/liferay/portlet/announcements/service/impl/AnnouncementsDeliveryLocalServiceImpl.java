@@ -52,7 +52,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		delivery.setWebsite(true);
 
 		try {
-			announcementsDeliveryPersistence.update(delivery);
+			delivery = announcementsDeliveryPersistence.update(delivery);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -153,9 +153,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		delivery.setSms(sms);
 		delivery.setWebsite(true);
 
-		announcementsDeliveryPersistence.update(delivery);
-
-		return delivery;
+		return announcementsDeliveryPersistence.update(delivery);
 	}
 
 	/**

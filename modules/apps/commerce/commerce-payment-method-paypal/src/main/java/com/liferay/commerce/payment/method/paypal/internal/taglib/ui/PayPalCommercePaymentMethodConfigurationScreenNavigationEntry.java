@@ -19,6 +19,8 @@ import com.liferay.commerce.payment.method.paypal.internal.PayPalCommercePayment
 import com.liferay.commerce.payment.method.paypal.internal.configuration.PayPalGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,7 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -82,6 +84,10 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 	public boolean isVisible(
 		User user, CommercePaymentMethodGroupRel commercePaymentMethod) {
 
+		if (commercePaymentMethod == null) {
+			return false;
+		}
+
 		if (PayPalCommercePaymentMethod.KEY.equals(
 				commercePaymentMethod.getEngineKey())) {
 
@@ -98,13 +104,19 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 		throws IOException {
 
 		try {
+			long commerceChannelId = ParamUtil.getLong(
+				httpServletRequest, "commerceChannelId");
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannel(commerceChannelId);
+
 			PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
 					PayPalGroupServiceConfiguration.class,
 					new ParameterMapSettingsLocator(
 						httpServletRequest.getParameterMap(),
 						new GroupServiceSettingsLocator(
-							_portal.getScopeGroupId(httpServletRequest),
+							commerceChannel.getGroupId(),
 							PayPalCommercePaymentMethodConstants.
 								SERVICE_NAME)));
 
@@ -122,13 +134,13 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 	}
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.paypal)"

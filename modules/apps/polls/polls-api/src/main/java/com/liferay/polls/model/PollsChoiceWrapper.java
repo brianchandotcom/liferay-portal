@@ -408,11 +408,6 @@ public class PollsChoiceWrapper
 		return _pollsChoice.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a polls choice model instance should use the <code>PollsChoice</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_pollsChoice.persist();

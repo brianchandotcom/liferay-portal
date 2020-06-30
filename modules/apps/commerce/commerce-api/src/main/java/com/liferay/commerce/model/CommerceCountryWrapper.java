@@ -563,11 +563,6 @@ public class CommerceCountryWrapper
 		return _commerceCountry.isSubjectToVAT();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce country model instance should use the <code>CommerceCountry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceCountry.persist();

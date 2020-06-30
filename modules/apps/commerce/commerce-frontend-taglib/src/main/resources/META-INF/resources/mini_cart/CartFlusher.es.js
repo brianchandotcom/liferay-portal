@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -6,25 +20,22 @@ import template from './CartFlusher.soy';
 let notificationDidShow = false;
 
 function showNotification(message, type) {
-	!notificationDidShow && AUI().use(
-		'liferay-notification',
-		() => {
-			new Liferay.Notification(
-				{
-					closeable: true,
-					delay: {
-						hide: 5000,
-						show: 0
-					},
-					duration: 500,
-					message: message,
-					render: true,
-					title: '',
-					type: type
-				}
-			);
-		}
-	);
+	if (!notificationDidShow) {
+		AUI().use('liferay-notification', () => {
+			new Liferay.Notification({
+				closeable: true,
+				delay: {
+					hide: 5000,
+					show: 0
+				},
+				duration: 500,
+				message,
+				render: true,
+				title: '',
+				type
+			});
+		});
+	}
 
 	notificationDidShow = true;
 
@@ -45,15 +56,21 @@ class CartFlusher extends Component {
 	}
 
 	_handleConfirm() {
-		fetch(this.apiEndpoint, {method: 'DELETE'})
+		fetch(this.apiEndpoint, {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'DELETE'
+		})
 			.then(response => response.json())
-			.then(({success, products, summary}) => {
+			.then(({products, success, summary}) => {
 				this.isAsking = false;
 
 				if (success && (!products.length || !products)) {
 					this.emit('deleteAllItems', {products: null, summary});
 				} else {
-					throw new Error(Liferay.Language.get('unable-to-empty-the-cart'));
+					throw new Error(
+						Liferay.Language.get('unable-to-empty-the-cart')
+					);
 				}
 			})
 			.catch(e => {

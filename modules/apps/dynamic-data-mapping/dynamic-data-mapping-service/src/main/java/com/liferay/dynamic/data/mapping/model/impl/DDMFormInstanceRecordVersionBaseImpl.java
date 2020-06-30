@@ -33,7 +33,7 @@ public abstract class DDMFormInstanceRecordVersionBaseImpl
 	extends DDMFormInstanceRecordVersionModelImpl
 	implements DDMFormInstanceRecordVersion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm form instance record version model instance should use the <code>DDMFormInstanceRecordVersion</code> interface instead.

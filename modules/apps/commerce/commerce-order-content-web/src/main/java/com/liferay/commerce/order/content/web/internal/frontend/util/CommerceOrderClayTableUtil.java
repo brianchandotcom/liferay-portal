@@ -17,8 +17,7 @@ package com.liferay.commerce.order.content.web.internal.frontend.util;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.content.web.internal.frontend.CommercePendingOrderClayTable;
-import com.liferay.commerce.order.content.web.internal.frontend.CommercePlacedOrderClayTable;
+import com.liferay.commerce.order.content.web.internal.frontend.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,7 +68,9 @@ public class CommerceOrderClayTableUtil {
 
 		backURL.setParameter("itemsPerPage", pageSize);
 		backURL.setParameter("pageNumber", pageNumber);
-		backURL.setParameter("tableName", CommercePendingOrderClayTable.NAME);
+		backURL.setParameter(
+			"tableName",
+			CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS);
 
 		portletURL.setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
@@ -166,7 +167,9 @@ public class CommerceOrderClayTableUtil {
 
 		backURL.setParameter("itemsPerPage", pageSize);
 		backURL.setParameter("pageNumber", pageNumber);
-		backURL.setParameter("tableName", CommercePlacedOrderClayTable.NAME);
+		backURL.setParameter(
+			"tableName",
+			CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS);
 
 		portletURL.setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",

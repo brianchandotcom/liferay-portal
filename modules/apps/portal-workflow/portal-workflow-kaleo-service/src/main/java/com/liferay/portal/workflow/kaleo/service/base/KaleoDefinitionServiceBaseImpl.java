@@ -68,7 +68,7 @@ public abstract class KaleoDefinitionServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, KaleoDefinitionService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>KaleoDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil</code>.
@@ -1190,8 +1190,8 @@ public abstract class KaleoDefinitionServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

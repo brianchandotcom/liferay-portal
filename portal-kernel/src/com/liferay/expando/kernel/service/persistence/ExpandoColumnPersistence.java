@@ -40,7 +40,7 @@ import java.util.Set;
 public interface ExpandoColumnPersistence
 	extends BasePersistence<ExpandoColumn> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnUtil} to access the expando column persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

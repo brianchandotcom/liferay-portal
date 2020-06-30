@@ -18,7 +18,9 @@ import java.util.Properties;
 
 /**
  * @author Tina Tian
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public interface PortalCacheBootstrapLoaderFactory {
 
 	public PortalCacheBootstrapLoader create(Properties properties);

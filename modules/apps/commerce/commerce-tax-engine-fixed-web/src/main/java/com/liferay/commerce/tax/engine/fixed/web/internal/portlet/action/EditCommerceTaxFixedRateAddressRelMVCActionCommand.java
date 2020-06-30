@@ -14,19 +14,24 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressTypeConfiguration;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
-import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
@@ -41,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN_GROUP_INSTANCE,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_TAX_METHODS,
 		"mvc.command.name=editCommerceTaxFixedRateAddressRel"
 	},
 	service = MVCActionCommand.class
@@ -93,6 +98,9 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceTaxFixedRateAddressRels(actionRequest);
 			}
+			else if (cmd.equals("updateConfiguration")) {
+				updateConfiguration(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchTaxFixedRateAddressRelException ||
@@ -108,7 +116,7 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 
 	protected void updateCommerceTaxFixedRateAddressRel(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceTaxFixedRateAddressRelId = ParamUtil.getLong(
 			actionRequest, "commerceTaxFixedRateAddressRelId");
@@ -124,9 +132,6 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		double rate = ParamUtil.getDouble(actionRequest, "rate");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceTaxFixedRateAddressRel.class.getName(), actionRequest);
-
 		if (commerceTaxFixedRateAddressRelId > 0) {
 			_commerceTaxFixedRateAddressRelService.
 				updateCommerceTaxFixedRateAddressRel(
@@ -134,15 +139,56 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 					commerceRegionId, zip, rate);
 		}
 		else {
+			CommerceTaxMethod commerceTaxMethod =
+				_commerceTaxMethodService.getCommerceTaxMethod(
+					commerceTaxMethodId);
+
 			_commerceTaxFixedRateAddressRelService.
 				addCommerceTaxFixedRateAddressRel(
-					commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-					commerceRegionId, zip, rate, serviceContext);
+					_portal.getUserId(actionRequest),
+					commerceTaxMethod.getGroupId(),
+					commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
+					commerceCountryId, commerceRegionId, zip, rate);
 		}
+	}
+
+	protected void updateConfiguration(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceTaxMethodId = ParamUtil.getLong(
+			actionRequest, "commerceTaxMethodId");
+
+		CommerceTaxMethod commerceTaxMethod =
+			_commerceTaxMethodService.getCommerceTaxMethod(commerceTaxMethodId);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceTaxMethod.getGroupId(),
+				CommerceTaxByAddressTypeConfiguration.class.getName()));
+
+		boolean applyToShipping = ParamUtil.getBoolean(
+			actionRequest, "applyTaxTo");
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"taxAppliedToShippingAddress", String.valueOf(applyToShipping));
+
+		modifiableSettings.store();
 	}
 
 	@Reference
 	private CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
+
+	@Reference
+	private CommerceTaxMethodService _commerceTaxMethodService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

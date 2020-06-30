@@ -193,11 +193,6 @@ public class ExpandoTableWrapper
 		return _expandoTable.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a expando table model instance should use the <code>ExpandoTable</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_expandoTable.persist();

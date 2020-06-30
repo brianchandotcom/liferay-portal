@@ -68,7 +68,7 @@ public class WeDeployAuthTokenPersistenceImpl
 	extends BasePersistenceImpl<WeDeployAuthToken>
 	implements WeDeployAuthTokenPersistence {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>WeDeployAuthTokenUtil</code> to access the we deploy auth token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
@@ -103,23 +103,23 @@ public class WeDeployAuthTokenPersistenceImpl
 		WeDeployAuthToken weDeployAuthToken = fetchByT_T(token, type);
 
 		if (weDeployAuthToken == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler sb = new StringBundler(6);
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("token=");
-			msg.append(token);
+			sb.append("token=");
+			sb.append(token);
 
-			msg.append(", type=");
-			msg.append(type);
+			sb.append(", type=");
+			sb.append(type);
 
-			msg.append("}");
+			sb.append("}");
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
+				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchTokenException(msg.toString());
+			throw new NoSuchTokenException(sb.toString());
 		}
 
 		return weDeployAuthToken;
@@ -175,41 +175,41 @@ public class WeDeployAuthTokenPersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler sb = new StringBundler(4);
 
-			query.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE);
+			sb.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE);
 
 			boolean bindToken = false;
 
 			if (token.isEmpty()) {
-				query.append(_FINDER_COLUMN_T_T_TOKEN_3);
+				sb.append(_FINDER_COLUMN_T_T_TOKEN_3);
 			}
 			else {
 				bindToken = true;
 
-				query.append(_FINDER_COLUMN_T_T_TOKEN_2);
+				sb.append(_FINDER_COLUMN_T_T_TOKEN_2);
 			}
 
-			query.append(_FINDER_COLUMN_T_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_T_T_TYPE_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindToken) {
-					qPos.add(token);
+					queryPos.add(token);
 				}
 
-				qPos.add(type);
+				queryPos.add(type);
 
-				List<WeDeployAuthToken> list = q.list();
+				List<WeDeployAuthToken> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
@@ -240,12 +240,12 @@ public class WeDeployAuthTokenPersistenceImpl
 					cacheResult(weDeployAuthToken);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (useFinderCache) {
 					finderCache.removeResult(_finderPathFetchByT_T, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -294,48 +294,48 @@ public class WeDeployAuthTokenPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler sb = new StringBundler(3);
 
-			query.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
+			sb.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
 
 			boolean bindToken = false;
 
 			if (token.isEmpty()) {
-				query.append(_FINDER_COLUMN_T_T_TOKEN_3);
+				sb.append(_FINDER_COLUMN_T_T_TOKEN_3);
 			}
 			else {
 				bindToken = true;
 
-				query.append(_FINDER_COLUMN_T_T_TOKEN_2);
+				sb.append(_FINDER_COLUMN_T_T_TOKEN_2);
 			}
 
-			query.append(_FINDER_COLUMN_T_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_T_T_TYPE_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindToken) {
-					qPos.add(token);
+					queryPos.add(token);
 				}
 
-				qPos.add(type);
+				queryPos.add(type);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -375,26 +375,26 @@ public class WeDeployAuthTokenPersistenceImpl
 			clientId, token, type);
 
 		if (weDeployAuthToken == null) {
-			StringBundler msg = new StringBundler(8);
+			StringBundler sb = new StringBundler(8);
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("clientId=");
-			msg.append(clientId);
+			sb.append("clientId=");
+			sb.append(clientId);
 
-			msg.append(", token=");
-			msg.append(token);
+			sb.append(", token=");
+			sb.append(token);
 
-			msg.append(", type=");
-			msg.append(type);
+			sb.append(", type=");
+			sb.append(type);
 
-			msg.append("}");
+			sb.append("}");
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
+				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchTokenException(msg.toString());
+			throw new NoSuchTokenException(sb.toString());
 		}
 
 		return weDeployAuthToken;
@@ -456,56 +456,56 @@ public class WeDeployAuthTokenPersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler sb = new StringBundler(5);
 
-			query.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE);
+			sb.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE);
 
 			boolean bindClientId = false;
 
 			if (clientId.isEmpty()) {
-				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
+				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
 			}
 			else {
 				bindClientId = true;
 
-				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_2);
+				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_2);
 			}
 
 			boolean bindToken = false;
 
 			if (token.isEmpty()) {
-				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
+				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
 			}
 			else {
 				bindToken = true;
 
-				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_2);
+				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_2);
 			}
 
-			query.append(_FINDER_COLUMN_CI_T_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_CI_T_T_TYPE_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindClientId) {
-					qPos.add(clientId);
+					queryPos.add(clientId);
 				}
 
 				if (bindToken) {
-					qPos.add(token);
+					queryPos.add(token);
 				}
 
-				qPos.add(type);
+				queryPos.add(type);
 
-				List<WeDeployAuthToken> list = q.list();
+				List<WeDeployAuthToken> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
@@ -538,13 +538,13 @@ public class WeDeployAuthTokenPersistenceImpl
 					cacheResult(weDeployAuthToken);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (useFinderCache) {
 					finderCache.removeResult(
 						_finderPathFetchByCI_T_T, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -598,63 +598,63 @@ public class WeDeployAuthTokenPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler sb = new StringBundler(4);
 
-			query.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
+			sb.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
 
 			boolean bindClientId = false;
 
 			if (clientId.isEmpty()) {
-				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
+				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
 			}
 			else {
 				bindClientId = true;
 
-				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_2);
+				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_2);
 			}
 
 			boolean bindToken = false;
 
 			if (token.isEmpty()) {
-				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
+				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
 			}
 			else {
 				bindToken = true;
 
-				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_2);
+				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_2);
 			}
 
-			query.append(_FINDER_COLUMN_CI_T_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_CI_T_T_TYPE_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindClientId) {
-					qPos.add(clientId);
+					queryPos.add(clientId);
 				}
 
 				if (bindToken) {
-					qPos.add(token);
+					queryPos.add(token);
 				}
 
-				qPos.add(type);
+				queryPos.add(type);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -694,9 +694,9 @@ public class WeDeployAuthTokenPersistenceImpl
 
 			field.set(this, dbColumnNames);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}
@@ -954,11 +954,11 @@ public class WeDeployAuthTokenPersistenceImpl
 
 			return remove(weDeployAuthToken);
 		}
-		catch (NoSuchTokenException nsee) {
-			throw nsee;
+		catch (NoSuchTokenException noSuchEntityException) {
+			throw noSuchEntityException;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -984,8 +984,8 @@ public class WeDeployAuthTokenPersistenceImpl
 				session.delete(weDeployAuthToken);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1062,8 +1062,8 @@ public class WeDeployAuthTokenPersistenceImpl
 					weDeployAuthToken);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1168,12 +1168,12 @@ public class WeDeployAuthTokenPersistenceImpl
 						WeDeployAuthTokenImpl.class, primaryKey, nullModel);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				entityCache.removeResult(
 					WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
 					WeDeployAuthTokenImpl.class, primaryKey);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1244,32 +1244,32 @@ public class WeDeployAuthTokenPersistenceImpl
 			return map;
 		}
 
-		StringBundler query = new StringBundler(
+		StringBundler sb = new StringBundler(
 			uncachedPrimaryKeys.size() * 2 + 1);
 
-		query.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE_PKS_IN);
+		sb.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
+			sb.append((long)primaryKey);
 
-			query.append(",");
+			sb.append(",");
 		}
 
-		query.setIndex(query.index() - 1);
+		sb.setIndex(sb.index() - 1);
 
-		query.append(")");
+		sb.append(")");
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
 			for (WeDeployAuthToken weDeployAuthToken :
-					(List<WeDeployAuthToken>)q.list()) {
+					(List<WeDeployAuthToken>)query.list()) {
 
 				map.put(
 					weDeployAuthToken.getPrimaryKeyObj(), weDeployAuthToken);
@@ -1286,8 +1286,8 @@ public class WeDeployAuthTokenPersistenceImpl
 					WeDeployAuthTokenImpl.class, primaryKey, nullModel);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1385,19 +1385,19 @@ public class WeDeployAuthTokenPersistenceImpl
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					2 + (orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN);
+				sb.append(_SQL_SELECT_WEDEPLOYAUTHTOKEN);
 
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
-				sql = query.toString();
+				sql = sb.toString();
 			}
 			else {
 				sql = _SQL_SELECT_WEDEPLOYAUTHTOKEN;
@@ -1410,10 +1410,10 @@ public class WeDeployAuthTokenPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
 				list = (List<WeDeployAuthToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1421,12 +1421,12 @@ public class WeDeployAuthTokenPersistenceImpl
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (useFinderCache) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1463,18 +1463,18 @@ public class WeDeployAuthTokenPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_WEDEPLOYAUTHTOKEN);
+				Query query = session.createQuery(_SQL_COUNT_WEDEPLOYAUTHTOKEN);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);

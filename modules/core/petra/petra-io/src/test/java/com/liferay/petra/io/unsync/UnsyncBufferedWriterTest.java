@@ -100,7 +100,7 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 		unsyncBufferedWriter.write("fgh".toCharArray());
 
-		buffer = (char[])_bufferField.get(unsyncBufferedWriter);
+		_bufferField.get(unsyncBufferedWriter);
 
 		Assert.assertEquals(0, _countField.getInt(unsyncBufferedWriter));
 

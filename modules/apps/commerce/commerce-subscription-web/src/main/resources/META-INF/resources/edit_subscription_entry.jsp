@@ -20,14 +20,22 @@
 CommerceSubscriptionEntryDisplayContext commerceSubscriptionEntryDisplayContext = (CommerceSubscriptionEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceSubscriptionEntry commerceSubscriptionEntry = commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntry();
-
-renderResponse.setTitle(LanguageUtil.format(request, "subscription-x", commerceSubscriptionEntry.getCommerceSubscriptionEntryId()));
 %>
 
-<liferay-frontend:screen-navigation
-	containerCssClass="col-md-10"
-	key="<%= CommerceSubscriptionEntryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_SUBSCRIPTION_ENTRY %>"
-	modelBean="<%= commerceSubscriptionEntry %>"
-	navCssClass="col-md-2"
-	portletURL="<%= currentURLObj %>"
+<commerce-ui:header
+	actions="<%= commerceSubscriptionEntryDisplayContext.getHeaderActionModels() %>"
+	bean="<%= commerceSubscriptionEntry %>"
+	beanIdLabel="id"
+	model="<%= CommerceSubscriptionEntry.class %>"
+	thumbnailUrl="<%= commerceSubscriptionEntryDisplayContext.getCommerceAccountThumbnailURL() %>"
+	title="<%= String.valueOf(commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntryId()) %>"
 />
+
+<div id="<portlet:namespace />editSubscriptionEntryContainer">
+	<liferay-frontend:screen-navigation
+		fullContainerCssClass="col-12 pt-4"
+		key="<%= CommerceSubscriptionEntryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_SUBSCRIPTION_ENTRY %>"
+		modelBean="<%= commerceSubscriptionEntry %>"
+		portletURL="<%= currentURLObj %>"
+	/>
+</div>

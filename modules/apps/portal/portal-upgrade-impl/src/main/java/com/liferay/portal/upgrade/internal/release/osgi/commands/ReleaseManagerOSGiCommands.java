@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
@@ -138,7 +139,7 @@ public class ReleaseManagerOSGiCommands {
 			List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
 				bundleSymbolicName);
 
-			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
+			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos, null);
 		}
 		catch (Throwable t) {
 			_swappedLogExecutor.execute(
@@ -147,7 +148,8 @@ public class ReleaseManagerOSGiCommands {
 					Logger.LOG_ERROR,
 					"Failed upgrade process for module ".concat(
 						bundleSymbolicName),
-					t));
+					t),
+				null);
 		}
 
 		return null;
@@ -167,7 +169,8 @@ public class ReleaseManagerOSGiCommands {
 		_upgradeExecutor.executeUpgradeInfos(
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
-				schemaVersionString, toVersionString));
+				schemaVersionString, toVersionString),
+			null);
 
 		return null;
 	}
@@ -283,7 +286,9 @@ public class ReleaseManagerOSGiCommands {
 					List<UpgradeInfo> upgradeSteps =
 						_serviceTrackerMap.getService(bundleSymbolicName);
 
-					_upgradeExecutor.execute(bundleSymbolicName, upgradeSteps);
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeSteps,
+						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
 				}
 
 				bundleSymbolicNames = _serviceTrackerMap.keySet();
@@ -319,7 +324,7 @@ public class ReleaseManagerOSGiCommands {
 					upgradableBundleSymbolicName);
 
 				_upgradeExecutor.execute(
-					upgradableBundleSymbolicName, upgradeInfos);
+					upgradableBundleSymbolicName, upgradeInfos, null);
 			}
 			catch (Throwable t) {
 				_swappedLogExecutor.execute(
@@ -328,7 +333,8 @@ public class ReleaseManagerOSGiCommands {
 						Logger.LOG_ERROR,
 						"Failed upgrade process for module ".concat(
 							upgradableBundleSymbolicName),
-						t));
+						t),
+					null);
 
 				upgradeThrewExceptionBundleSymbolicNames.add(
 					upgradableBundleSymbolicName);
@@ -491,7 +497,7 @@ public class ReleaseManagerOSGiCommands {
 			List<UpgradeInfo> upgradeInfos) {
 
 			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled()) {
-				_upgradeExecutor.execute(key, upgradeInfos);
+				_upgradeExecutor.execute(key, upgradeInfos, null);
 			}
 		}
 

@@ -17,8 +17,6 @@
 <%@ include file="/definition_link/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 String randomNamespace = (String)row.getParameter("randomNamespace");

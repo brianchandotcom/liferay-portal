@@ -39,7 +39,7 @@ import java.util.Date;
 public interface LayoutSetBranchModel
 	extends BaseModel<LayoutSetBranch>, GroupedModel, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a layout set branch model instance should use the {@link LayoutSetBranch} interface instead.

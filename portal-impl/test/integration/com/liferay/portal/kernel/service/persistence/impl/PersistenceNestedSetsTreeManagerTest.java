@@ -676,7 +676,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 				_assetCategoryPersistence.remove(assetCategory);
 			}
 			else {
-				_assetCategoryPersistence.update(assetCategory);
+				assetCategory = _assetCategoryPersistence.update(assetCategory);
 			}
 		}
 

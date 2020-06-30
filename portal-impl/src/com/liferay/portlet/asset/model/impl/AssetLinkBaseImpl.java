@@ -32,7 +32,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 public abstract class AssetLinkBaseImpl
 	extends AssetLinkModelImpl implements AssetLink {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset link model instance should use the <code>AssetLink</code> interface instead.

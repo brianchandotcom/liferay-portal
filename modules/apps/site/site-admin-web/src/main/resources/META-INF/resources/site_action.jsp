@@ -96,7 +96,13 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		/>
 	</c:if>
 
-	<c:if test="<%= group.isActive() && (group.getPublicLayoutsPageCount() > 0) %>">
+	<%
+	GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
+
+	int publicLayoutsPageCount = groupURLProvider.getLayoutsCount(group);
+	%>
+
+	<c:if test="<%= group.isActive() && (publicLayoutsPageCount > 0) %>">
 		<liferay-ui:icon
 			message="go-to-public-pages"
 			method="get"

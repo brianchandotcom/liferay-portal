@@ -138,7 +138,9 @@ public class WebDAVPropsCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		webDavPropsId = objectInput.readLong();
@@ -150,7 +152,7 @@ public class WebDAVPropsCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		props = objectInput.readUTF();
+		props = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -168,10 +170,10 @@ public class WebDAVPropsCacheModel
 		objectOutput.writeLong(classPK);
 
 		if (props == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(props);
+			objectOutput.writeObject(props);
 		}
 	}
 

@@ -70,12 +70,11 @@ public class CPOptionCategoriesImporter {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPOptionCategory cpOptionCategory;
-
 		String key = jsonObject.getString("Key");
 
-		cpOptionCategory = _cpOptionCategoryLocalService.fetchCPOptionCategory(
-			serviceContext.getCompanyId(), key);
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryLocalService.fetchCPOptionCategory(
+				serviceContext.getCompanyId(), key);
 
 		if (cpOptionCategory != null) {
 			return cpOptionCategory;

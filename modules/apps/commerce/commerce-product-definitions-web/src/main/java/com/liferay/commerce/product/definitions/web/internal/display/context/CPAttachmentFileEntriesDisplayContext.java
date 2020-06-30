@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.frontend.ClayCreationMenu;
+import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -28,64 +30,48 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPAttachmentFileEntriesDisplayContext
-	extends BaseCPDefinitionsSearchContainerDisplayContext
-		<CPAttachmentFileEntry> {
+	extends BaseCPDefinitionsDisplayContext {
 
 	public CPAttachmentFileEntriesDisplayContext(
-			ActionHelper actionHelper,
-			AttachmentsConfiguration attachmentsConfiguration,
-			CPAttachmentFileEntryService cpAttachmentFileEntryService,
-			CPDefinitionOptionRelService cpDefinitionOptionRelService,
-			CPInstanceHelper cpInstanceHelper,
-			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-			Portal portal, PortletResourcePermission portletResourcePermission,
-			WorkflowDefinitionLinkLocalService
-				workflowDefinitionLinkLocalService)
-		throws PortalException {
+		ActionHelper actionHelper,
+		AttachmentsConfiguration attachmentsConfiguration,
+		CPAttachmentFileEntryService cpAttachmentFileEntryService,
+		CPDefinitionOptionRelService cpDefinitionOptionRelService,
+		CPInstanceHelper cpInstanceHelper,
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
-		super(
-			actionHelper, httpServletRequest,
-			CPAttachmentFileEntry.class.getSimpleName());
-
-		setDefaultOrderByCol("priority");
-		setDefaultOrderByType("asc");
+		super(actionHelper, httpServletRequest);
 
 		_attachmentsConfiguration = attachmentsConfiguration;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
@@ -93,11 +79,6 @@ public class CPAttachmentFileEntriesDisplayContext
 		_cpInstanceHelper = cpInstanceHelper;
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
-		_portal = portal;
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-
-		_type = getType();
 	}
 
 	public String getAttachmentItemSelectorUrl() {
@@ -117,6 +98,27 @@ public class CPAttachmentFileEntriesDisplayContext
 			fileItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	public ClayCreationMenu getClayCreationMenu(int type) throws Exception {
+		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+
+		RenderURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCPAttachmentFileEntry");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter("type", String.valueOf(type));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		clayCreationMenu.addClayCreationMenuActionItem(
+			new ClayCreationMenuActionItem(
+				portletURL.toString(), _getTypeLabel(type),
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
+
+		return clayCreationMenu;
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
@@ -206,41 +208,6 @@ public class CPAttachmentFileEntriesDisplayContext
 	}
 
 	@Override
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-		throws PortalException, PortletException {
-
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			super.getManagementBarStatusFilterItems();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		int workflowDefinitionLinksCount =
-			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				CPAttachmentFileEntry.class.getName());
-
-		if (workflowDefinitionLinksCount == 0) {
-			workflowDefinitionLinksCount =
-				_workflowDefinitionLinkLocalService.
-					getWorkflowDefinitionLinksCount(
-						themeDisplay.getCompanyId(),
-						WorkflowConstants.DEFAULT_GROUP_ID,
-						CPAttachmentFileEntry.class.getName());
-		}
-
-		if (workflowDefinitionLinksCount > 0) {
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
-		}
-
-		return managementBarFilterItems;
-	}
-
-	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
@@ -248,90 +215,20 @@ public class CPAttachmentFileEntriesDisplayContext
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-		portletURL.setParameter("type", String.valueOf(_type));
 
 		return portletURL;
 	}
 
 	@Override
 	public String getScreenNavigationCategoryKey() {
-		String screenNavigationCategoryKey =
-			super.getScreenNavigationCategoryKey();
-
-		if (_type == CPAttachmentFileEntryConstants.TYPE_IMAGE) {
-			screenNavigationCategoryKey =
-				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_IMAGES;
-		}
-		else if (_type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
-			screenNavigationCategoryKey =
-				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
-		}
-
-		return screenNavigationCategoryKey;
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_MEDIA;
 	}
 
-	@Override
-	public SearchContainer<CPAttachmentFileEntry> getSearchContainer()
-		throws PortalException {
-
-		if (searchContainer != null) {
-			return searchContainer;
-		}
-
-		long classNameId = _portal.getClassNameId(CPDefinition.class);
-
-		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		String emptyResultMessage = "no-attachments-were-found";
-
-		if (_type == CPAttachmentFileEntryConstants.TYPE_IMAGE) {
-			emptyResultMessage = "no-images-were-found";
-		}
-
-		searchContainer.setEmptyResultsMessage(emptyResultMessage);
-
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator =
-			CPDefinitionsPortletUtil.getCPAttachmentFileEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		if (!isSearch()) {
-			int total =
-				_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
-					classNameId, getCPDefinitionId(), _type, getStatus());
-
-			searchContainer.setTotal(total);
-
-			List<CPAttachmentFileEntry> results =
-				_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-					classNameId, getCPDefinitionId(), _type, getStatus(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
-
-			searchContainer.setResults(results);
-		}
-
-		return searchContainer;
-	}
-
-	public int getType() {
-		int type;
-
-		try {
-			type = (int)httpServletRequest.getAttribute("type");
-		}
-		catch (Exception e) {
-			type = ParamUtil.getInteger(
-				httpServletRequest, "type",
-				CPAttachmentFileEntryConstants.TYPE_IMAGE);
-		}
-
-		return type;
+	public boolean hasCustomAttributes() throws Exception {
+		return CustomAttributesUtil.hasCustomAttributes(
+			cpRequestHelper.getCompanyId(),
+			CPAttachmentFileEntry.class.getName(), getCPAttachmentFileEntryId(),
+			null);
 	}
 
 	public boolean hasOptions() throws PortalException {
@@ -384,6 +281,17 @@ public class CPAttachmentFileEntriesDisplayContext
 			getCPDefinitionId(), json, renderRequest, renderResponse);
 	}
 
+	private String _getTypeLabel(int type) {
+		if (type == CPAttachmentFileEntryConstants.TYPE_IMAGE) {
+			return LanguageUtil.get(httpServletRequest, "add-image");
+		}
+		else if (type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
+			return LanguageUtil.get(httpServletRequest, "add-attachment");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
@@ -391,9 +299,5 @@ public class CPAttachmentFileEntriesDisplayContext
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
-	private final Portal _portal;
-	private final int _type;
-	private final WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 }

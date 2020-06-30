@@ -25,8 +25,20 @@
 		<column name="CProductId" type="long" />
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
+		<column name="discountDiscovery" type="boolean" />
+		<column name="discountLevel1" type="BigDecimal" />
+		<column name="discountLevel2" type="BigDecimal" />
+		<column name="discountLevel3" type="BigDecimal" />
+		<column name="discountLevel4" type="BigDecimal" />
 		<column name="hasTierPrice" type="boolean" />
+		<column name="bulkPricing" type="boolean" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -48,6 +60,11 @@
 		<finder name="C_C" return-type="CommercePriceEntry" unique="true">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
+		</finder>
+		<finder name="C_C_S" return-type="CommercePriceEntry" unique="true">
+			<finder-column name="commercePriceListId" />
+			<finder-column name="CPInstanceUuid" />
+			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->
@@ -76,6 +93,8 @@
 
 		<column name="commerceCurrencyId" type="long" />
 		<column name="parentCommercePriceListId" type="long" />
+		<column name="catalogBasePriceList" type="boolean" />
+		<column name="type" type="String" />
 		<column name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="displayDate" type="Date" />
@@ -108,6 +127,10 @@
 		<finder name="G_C" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="CatalogBasePriceList" return-type="CommercePriceList">
+			<finder-column name="groupId" />
+			<finder-column name="catalogBasePriceList" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="displayDate" />
@@ -171,6 +194,43 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommercePriceListChannelRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CommercePriceListChannelRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceChannelId" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+			<finder-column name="commerceChannelId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommercePriceListCommerceAccountGroupRel" remote-service="true" table="CPLCommerceGroupAccountRel" uuid="true">
 
 		<!-- PK fields -->
@@ -212,6 +272,43 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommercePriceListDiscountRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceListDiscountRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceDiscountId" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListDiscountRel" unique="true">
+			<finder-column name="commerceDiscountId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
+	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -231,8 +328,19 @@
 		<column name="commercePriceEntryId" type="long" />
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
+		<column name="discountDiscovery" type="boolean" />
+		<column name="discountLevel1" type="BigDecimal" />
+		<column name="discountLevel2" type="BigDecimal" />
+		<column name="discountLevel3" type="BigDecimal" />
+		<column name="discountLevel4" type="BigDecimal" />
 		<column name="minQuantity" type="int" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -262,10 +370,15 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>
+		<exception>CommercePriceEntryDisplayDate</exception>
+		<exception>CommercePriceEntryExpirationDate</exception>
 		<exception>CommercePriceListCurrency</exception>
 		<exception>CommercePriceListDisplayDate</exception>
 		<exception>CommercePriceListExpirationDate</exception>
 		<exception>CommercePriceListParentPriceListGroupId</exception>
+		<exception>CommerceTierPriceEntryDisplayDate</exception>
+		<exception>CommerceTierPriceEntryExpirationDate</exception>
+		<exception>DuplicateCommerceBasePriceList</exception>
 		<exception>DuplicateCommercePriceEntry</exception>
 		<exception>DuplicateCommercePriceList</exception>
 		<exception>DuplicateCommerceTierPriceEntry</exception>

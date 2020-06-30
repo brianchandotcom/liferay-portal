@@ -507,11 +507,6 @@ public class DDLRecordVersionWrapper
 		return _ddlRecordVersion.isScheduled();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddl record version model instance should use the <code>DDLRecordVersion</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddlRecordVersion.persist();

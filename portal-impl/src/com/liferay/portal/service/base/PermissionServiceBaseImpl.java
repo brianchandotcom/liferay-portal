@@ -50,7 +50,7 @@ public abstract class PermissionServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, PermissionService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>PermissionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PermissionServiceUtil</code>.
@@ -392,8 +392,8 @@ public abstract class PermissionServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

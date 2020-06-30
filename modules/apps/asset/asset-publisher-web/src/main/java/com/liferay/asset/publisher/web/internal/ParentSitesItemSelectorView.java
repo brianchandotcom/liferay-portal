@@ -15,7 +15,8 @@
 package com.liferay.asset.publisher.web.internal;
 
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.display.context.ParentSitesItemSelectorViewDisplayContext;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.display.context.ParentSitesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
@@ -102,8 +103,9 @@ public class ParentSitesItemSelectorView
 		ParentSitesItemSelectorViewDisplayContext
 			parentSitesItemSelectorViewDisplayContext =
 				new ParentSitesItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL);
+					(HttpServletRequest)request, _assetPublisherHelper,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT,
@@ -123,11 +125,6 @@ public class ParentSitesItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -135,6 +132,10 @@ public class ParentSitesItemSelectorView
 					new SiteItemSelectorReturnType()
 				}));
 
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

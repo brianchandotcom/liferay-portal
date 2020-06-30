@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserIdMapperUtil} to access the user ID mapper persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

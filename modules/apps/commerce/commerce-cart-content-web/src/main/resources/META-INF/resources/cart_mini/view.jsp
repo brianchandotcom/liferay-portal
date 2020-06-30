@@ -94,13 +94,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<%
 				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-				String thumbnailSrc = commerceCartContentMiniDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem);
 				%>
 
 				<liferay-ui:search-container-column-image
 					cssClass="thumbnail-section"
-					src="<%= thumbnailSrc %>"
+					src="<%= commerceCartContentMiniDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -127,12 +125,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<div class="list-group-subtitle"><%= HtmlUtil.escape(stringJoiner.toString()) %></div>
 
 						<%
-						CPInstance cpInstance = commerceOrderItem.getCPInstance();
+						CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 						%>
 
-						<c:if test="<%= Validator.isNotNull(cpInstance.getCPSubscriptionInfo()) %>">
+						<c:if test="<%= (cpInstance != null) && Validator.isNotNull(cpInstance.getCPSubscriptionInfo()) %>">
 							<div class="list-group-subtitle">
-								<liferay-commerce:subscription-info
+								<commerce-ui:product-subscription-info
 									CPInstanceId="<%= commerceOrderItem.getCPInstanceId() %>"
 									showDuration="<%= false %>"
 								/>
@@ -271,11 +269,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</aui:script>
 
 	<aui:script>
-		Liferay.after(
-			'commerce:productAddedToCart',
-			function(event) {
-				Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-			}
-		);
+		Liferay.after('commerce:productAddedToCart', function(event) {
+			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
+		});
 	</aui:script>
 </liferay-ddm:template-renderer>

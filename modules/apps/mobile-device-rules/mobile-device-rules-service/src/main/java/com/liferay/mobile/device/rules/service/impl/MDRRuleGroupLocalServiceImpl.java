@@ -267,9 +267,7 @@ public class MDRRuleGroupLocalServiceImpl
 		ruleGroup.setNameMap(nameMap);
 		ruleGroup.setDescriptionMap(descriptionMap);
 
-		mdrRuleGroupPersistence.update(ruleGroup);
-
-		return ruleGroup;
+		return mdrRuleGroupPersistence.update(ruleGroup);
 	}
 
 }

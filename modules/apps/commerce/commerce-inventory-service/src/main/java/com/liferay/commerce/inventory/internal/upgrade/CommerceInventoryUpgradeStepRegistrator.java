@@ -15,6 +15,8 @@
 package com.liferay.commerce.inventory.internal.upgrade;
 
 import com.liferay.commerce.inventory.internal.upgrade.v1_1_0.CommerceInventoryWarehouseItemUpgradeProcess;
+import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.CommerceInventoryAuditUpgradeProcess;
+import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.MVCCUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -44,6 +46,14 @@ public class CommerceInventoryUpgradeStepRegistrator
 			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
 			new DummyUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_2_0_0,
+			new CommerceInventoryAuditUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			new MVCCUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE INVENTORY UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -54,6 +64,10 @@ public class CommerceInventoryUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
 
 	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
+
+	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
+
+	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryUpgradeStepRegistrator.class);

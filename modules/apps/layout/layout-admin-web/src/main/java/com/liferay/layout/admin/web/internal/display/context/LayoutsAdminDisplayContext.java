@@ -14,6 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -27,6 +30,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.util.GroupControlPanelLayoutUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -35,7 +39,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -47,6 +54,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -336,12 +344,17 @@ public class LayoutsAdminDisplayContext {
 		return deleteLayoutURL.toString();
 	}
 
-	public String getEditLayoutURL(Layout layout) {
+	public String getEditLayoutURL(Layout layout) throws PortalException {
 		if (!Objects.equals(layout.getType(), "content")) {
 			return StringPool.BLANK;
 		}
 
-		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+		long groupControlPanelPlid =
+			GroupControlPanelLayoutUtil.getGroupControlPanelPlid(
+				layout.getGroup());
+
+		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL(
+			groupControlPanelPlid);
 
 		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
 		editLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
@@ -397,6 +410,16 @@ public class LayoutsAdminDisplayContext {
 
 	public UnicodeProperties getGroupTypeSettings() {
 		return _groupDisplayContextHelper.getGroupTypeSettings();
+	}
+
+	public LayoutSet getGuestGroupLayoutSet(long companyId)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		return LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), isPrivateLayout());
 	}
 
 	public String getLayoutChildrenURL() {
@@ -877,9 +900,9 @@ public class LayoutsAdminDisplayContext {
 		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 	}
 
-	public boolean hasLayouts() throws PortalException {
+	public boolean hasLayouts() {
 		int privatePagesCount = LayoutLocalServiceUtil.getLayoutsCount(
-			getSelGroup(), true, StringPool.BLANK,
+			getSelGroup(), true,
 			new String[] {
 				LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
@@ -890,7 +913,7 @@ public class LayoutsAdminDisplayContext {
 			});
 
 		int publicPagesCount = LayoutLocalServiceUtil.getLayoutsCount(
-			getSelGroup(), false, StringPool.BLANK,
+			getSelGroup(), false,
 			new String[] {
 				LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
@@ -902,6 +925,23 @@ public class LayoutsAdminDisplayContext {
 
 		if ((privatePagesCount + publicPagesCount) > 0) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasRequiredVocabularies() {
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		List<AssetVocabulary> assetVocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
+				assetVocabulary.isRequired(classNameId, 0)) {
+
+				return true;
+			}
 		}
 
 		return false;
@@ -964,6 +1004,30 @@ public class LayoutsAdminDisplayContext {
 		return GroupPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), getSelGroup(),
 			ActionKeys.ADD_LAYOUT);
+	}
+
+	public boolean isShowCategorization() {
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		List<AssetVocabulary> assetVocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
+				assetVocabulary.isRequired(classNameId, 0)) {
+
+				int assetVocabularyCategoriesCount =
+					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+						assetVocabulary.getGroupId(),
+						assetVocabulary.getVocabularyId());
+
+				if (assetVocabularyCategoriesCount > 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isShowConfigureAction(Layout layout) throws PortalException {
@@ -1258,6 +1322,20 @@ public class LayoutsAdminDisplayContext {
 		return jsonObject;
 	}
 
+	private long[] _getGroupIds() {
+		try {
+			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				_themeDisplay.getScopeGroupId());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return new long[0];
+	}
+
 	private long _getHomePagePlid(boolean privateLayout) {
 		if (_homePagePlid != null) {
 			return _homePagePlid;
@@ -1416,6 +1494,9 @@ public class LayoutsAdminDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsAdminDisplayContext.class);
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;

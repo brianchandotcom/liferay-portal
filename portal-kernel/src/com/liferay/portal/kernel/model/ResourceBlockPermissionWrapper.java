@@ -219,11 +219,6 @@ public class ResourceBlockPermissionWrapper
 		return _resourceBlockPermission.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a resource block permission model instance should use the <code>ResourceBlockPermission</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_resourceBlockPermission.persist();

@@ -47,6 +47,19 @@ public class CommerceDiscountRuleServiceImpl
 	}
 
 	@Override
+	public CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String name, String type,
+			String typeSettings, ServiceContext serviceContext)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRuleLocalService.addCommerceDiscountRule(
+			commerceDiscountId, name, type, typeSettings, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceDiscountRule(long commerceDiscountRuleId)
 		throws PortalException {
 
@@ -136,6 +149,24 @@ public class CommerceDiscountRuleServiceImpl
 
 		return commerceDiscountRuleLocalService.updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);
+	}
+
+	@Override
+	public CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String name, String type,
+			String typeSettings)
+		throws PortalException {
+
+		CommerceDiscountRule commerceDiscountRule =
+			commerceDiscountRuleLocalService.getCommerceDiscountRule(
+				commerceDiscountRuleId);
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(),
+			commerceDiscountRule.getCommerceDiscountId(), ActionKeys.UPDATE);
+
+		return commerceDiscountRuleLocalService.updateCommerceDiscountRule(
+			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
 	private static volatile ModelResourcePermission<CommerceDiscount>

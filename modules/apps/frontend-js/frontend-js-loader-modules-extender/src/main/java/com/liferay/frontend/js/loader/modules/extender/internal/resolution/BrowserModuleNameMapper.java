@@ -23,28 +23,27 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.URL;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Rodolfo Roza Miranda
  */
 @Component(immediate = true, service = BrowserModuleNameMapper.class)
 public class BrowserModuleNameMapper {
+
+	public void clearCache() {
+		_browserModuleNameMapperCache.set(
+			new BrowserModuleNameMapperCache(
+				_getExactMatchMap(), _getPartialMatchMap()));
+	}
 
 	public String mapModuleName(String moduleName) {
 		return mapModuleName(moduleName, null);
@@ -59,7 +58,7 @@ public class BrowserModuleNameMapper {
 		if (browserModuleNameMapperCache.isOlderThan(
 				_jsConfigGeneratorPackagesTracker.getLastModified())) {
 
-			_clearCache();
+			clearCache();
 
 			browserModuleNameMapperCache = _browserModuleNameMapperCache.get();
 		}
@@ -90,19 +89,7 @@ public class BrowserModuleNameMapper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
-
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, stateMask, _bundleTrackerCustomizer);
-
-		_bundleTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
-
-		_bundleTracker = null;
+		clearCache();
 	}
 
 	private static String _getModuleResolvedId(
@@ -115,12 +102,6 @@ public class BrowserModuleNameMapper {
 		sb.append(moduleName);
 
 		return sb.toString();
-	}
-
-	private void _clearCache() {
-		_browserModuleNameMapperCache.set(
-			new BrowserModuleNameMapperCache(
-				_getExactMatchMap(), _getPartialMatchMap()));
 	}
 
 	private Map<String, String> _getExactMatchMap() {
@@ -194,43 +175,6 @@ public class BrowserModuleNameMapper {
 
 	private final AtomicReference<BrowserModuleNameMapperCache>
 		_browserModuleNameMapperCache = new AtomicReference<>();
-	private BundleTracker<?> _bundleTracker;
-
-	private BundleTrackerCustomizer<?> _bundleTrackerCustomizer =
-		new BundleTrackerCustomizer<Object>() {
-
-			@Override
-			public Object addingBundle(Bundle bundle, BundleEvent event) {
-				URL url = bundle.getResource("META-INF/resources/package.json");
-
-				if (url == null) {
-					return null;
-				}
-
-				_clearCache();
-
-				return null;
-			}
-
-			@Override
-			public void modifiedBundle(
-				Bundle bundle, BundleEvent event, Object object) {
-			}
-
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent event, Object object) {
-
-				URL url = bundle.getResource("META-INF/resources/package.json");
-
-				if (url == null) {
-					return;
-				}
-
-				_clearCache();
-			}
-
-		};
 
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;

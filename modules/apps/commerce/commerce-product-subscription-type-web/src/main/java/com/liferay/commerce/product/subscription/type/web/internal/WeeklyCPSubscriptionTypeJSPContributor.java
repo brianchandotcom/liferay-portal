@@ -43,10 +43,19 @@ public class WeeklyCPSubscriptionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		render(object, httpServletRequest, httpServletResponse, true);
+	}
+
+	@Override
+	public void render(
+			Object object, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean payment)
+		throws Exception {
+
 		WeeklyCPSubscriptionTypeDisplayContext
 			weeklyCPSubscriptionTypeDisplayContext =
 				new WeeklyCPSubscriptionTypeDisplayContext(
-					object, httpServletRequest);
+					object, httpServletRequest, payment);
 
 		httpServletRequest.setAttribute(
 			"view.jsp-weeklyCPSubscriptionTypeDisplayContext",

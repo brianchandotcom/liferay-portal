@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="AppendCheck" files="modules/apps/portal-language/portal-language-servlet-filter/src/main/java/com/liferay/portal/language/servlet/filter/internal/LanguageFilterTracker\.java" />
+		<suppress checks="AppendCheck" files="portal-language-servlet-filter/src/main/java/com/liferay/portal/language/servlet/filter/internal/LanguageFilterTracker\.java" />
 	</checkstyle>
 </suppressions>

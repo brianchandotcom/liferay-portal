@@ -40,7 +40,7 @@ import java.util.Set;
 public interface JournalContentSearchPersistence
 	extends BasePersistence<JournalContentSearch> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalContentSearchUtil} to access the journal content search persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
@@ -48,6 +48,149 @@ public interface JournalContentSearchPersistence
 	@Override
 	public Map<Serializable, JournalContentSearch> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys);
+
+	/**
+	 * Returns all the journal content searchs where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching journal content searchs
+	 */
+	public java.util.List<JournalContentSearch> findByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the journal content searchs where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of journal content searchs
+	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @return the range of matching journal content searchs
+	 */
+	public java.util.List<JournalContentSearch> findByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the journal content searchs where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of journal content searchs
+	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal content searchs
+	 */
+	public java.util.List<JournalContentSearch> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the journal content searchs where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of journal content searchs
+	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching journal content searchs
+	 */
+	public java.util.List<JournalContentSearch> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first journal content search in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search
+	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
+	 */
+	public JournalContentSearch findByCompanyId_First(
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<JournalContentSearch> orderByComparator)
+		throws NoSuchContentSearchException;
+
+	/**
+	 * Returns the first journal content search in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 */
+	public JournalContentSearch fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
+			orderByComparator);
+
+	/**
+	 * Returns the last journal content search in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search
+	 * @throws NoSuchContentSearchException if a matching journal content search could not be found
+	 */
+	public JournalContentSearch findByCompanyId_Last(
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<JournalContentSearch> orderByComparator)
+		throws NoSuchContentSearchException;
+
+	/**
+	 * Returns the last journal content search in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	 */
+	public JournalContentSearch fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalContentSearch>
+			orderByComparator);
+
+	/**
+	 * Returns the journal content searchs before and after the current journal content search in the ordered set where companyId = &#63;.
+	 *
+	 * @param contentSearchId the primary key of the current journal content search
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal content search
+	 * @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
+	 */
+	public JournalContentSearch[] findByCompanyId_PrevAndNext(
+			long contentSearchId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<JournalContentSearch> orderByComparator)
+		throws NoSuchContentSearchException;
+
+	/**
+	 * Removes all the journal content searchs where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public void removeByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of journal content searchs where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching journal content searchs
+	 */
+	public int countByCompanyId(long companyId);
 
 	/**
 	 * Returns all the journal content searchs where portletId = &#63;.

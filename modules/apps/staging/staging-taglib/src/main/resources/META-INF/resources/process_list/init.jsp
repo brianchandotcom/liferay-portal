@@ -18,7 +18,6 @@
 
 <%
 boolean deleteMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list:deleteMenu"));
-String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-staging:process-list:emptyResultsMessage"));
 String localTaskExecutorClassName = GetterUtil.getString(request.getAttribute("liferay-staging:process-list:localTaskExecutorClassName"));
 String mvcRenderCommandName = GetterUtil.getString(request.getAttribute("liferay-staging:process-list:mvcRenderCommandName"));
 boolean relaunchMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list:relaunchMenu"));
@@ -42,7 +41,7 @@ String processListListViewCss = "process-list";
 
 if ("list".equals(displayStyle)) {
 	processListListViewCss += " process-list-list-view";
-};
+}
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 

@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,9 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -110,8 +107,6 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
 
-		List<CPOptionValue> cpOptionValues = cpOption.getCPOptionValues();
-
 		String cpOptionDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(cpOption.getName());
 
@@ -122,18 +117,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			String description = cpOption.getDescription(languageId);
 			String name = cpOption.getName(languageId);
 
-			List<String> cpOptionValueNamesList = new ArrayList<>();
-
-			for (CPOptionValue cpOptionValue : cpOptionValues) {
-				cpOptionValueNamesList.add(cpOptionValue.getName(languageId));
-			}
-
-			String[] cpOptionValueNames = cpOptionValueNamesList.toArray(
-				new String[0]);
-
 			if (languageId.equals(cpOptionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(CPField.OPTION_VALUE_NAME, cpOptionValueNames);
 				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
@@ -148,11 +133,6 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 			document.addText(CPField.KEY, cpOption.getKey());
 			document.addText(Field.CONTENT, name);
-
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					CPField.OPTION_VALUE_NAME, languageId),
-				cpOptionValueNames);
 
 			document.addText(
 				CPField.DDM_FORM_FIELD_TYPE_NAME,

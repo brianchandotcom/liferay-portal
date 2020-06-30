@@ -48,7 +48,7 @@ public interface CommerceOrderModel
 	extends BaseModel<CommerceOrder>, GroupedModel, ShardedModel,
 			StagedAuditedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce order model instance should use the {@link CommerceOrder} interface instead.

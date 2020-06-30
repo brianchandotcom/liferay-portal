@@ -16,7 +16,8 @@ package com.liferay.commerce.channel.web.internal.display.context;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.item.selector.criterion.SimpleSiteItemSelectorCriterion;
-import com.liferay.commerce.product.channel.CommerceChannelTypeJSPContributorRegistry;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -25,11 +26,14 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
 import java.util.Collections;
 
@@ -46,20 +50,25 @@ public class SiteCommerceChannelTypeDisplayContext
 	public SiteCommerceChannelTypeDisplayContext(
 		ModelResourcePermission<CommerceChannel>
 			commerceChannelModelResourcePermission,
+		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
-		CommerceChannelTypeJSPContributorRegistry
-			commerceChannelTypeJSPContributorRegistry,
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
+		ConfigurationProvider configurationProvider,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-		Portal portal) {
+		Portal portal,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		super(
-			commerceChannelModelResourcePermission, commerceChannelService,
-			commerceChannelTypeRegistry,
-			commerceChannelTypeJSPContributorRegistry, commerceCurrencyService,
-			httpServletRequest, portal);
+			commerceChannelModelResourcePermission,
+			commerceChannelHealthStatusRegistry, commerceChannelService,
+			commerceChannelTypeRegistry, commerceCurrencyService,
+			commercePaymentMethodRegistry, configurationProvider,
+			httpServletRequest, portal, workflowDefinitionLinkLocalService,
+			workflowDefinitionManager);
 
 		_groupLocalService = groupLocalService;
 		_itemSelector = itemSelector;

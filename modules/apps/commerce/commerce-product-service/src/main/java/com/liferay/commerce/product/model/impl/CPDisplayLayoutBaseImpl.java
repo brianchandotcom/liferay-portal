@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPDisplayLayoutLocalServiceUtil;
 public abstract class CPDisplayLayoutBaseImpl
 	extends CPDisplayLayoutModelImpl implements CPDisplayLayout {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cp display layout model instance should use the <code>CPDisplayLayout</code> interface instead.

@@ -91,7 +91,8 @@ public class CommerceAccountUserRelLocalServiceImpl
 		commerceAccountUserRel.setUserId(user.getUserId());
 		commerceAccountUserRel.setUserName(user.getFullName());
 
-		commerceAccountUserRelPersistence.update(commerceAccountUserRel);
+		commerceAccountUserRel = commerceAccountUserRelPersistence.update(
+			commerceAccountUserRel);
 
 		// Default roles
 

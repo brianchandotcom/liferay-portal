@@ -45,7 +45,7 @@ public interface CommerceVirtualOrderItemModel
 	extends BaseModel<CommerceVirtualOrderItem>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce virtual order item model instance should use the {@link CommerceVirtualOrderItem} interface instead.

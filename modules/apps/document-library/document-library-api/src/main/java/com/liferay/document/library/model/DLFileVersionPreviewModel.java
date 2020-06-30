@@ -38,7 +38,7 @@ import java.io.Serializable;
 public interface DLFileVersionPreviewModel
 	extends BaseModel<DLFileVersionPreview> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a dl file version preview model instance should use the {@link DLFileVersionPreview} interface instead.

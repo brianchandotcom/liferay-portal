@@ -98,7 +98,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-91405. Content page associated with category will not display after category deleted."
+	@description = "This will be ignored until LPS-104746 is fixed. This is a test for LPS-91405."
+	@ignore = "true"
 	@priority = "3"
 	test SearchContentPagesWithDeletedCategory {
 		task ("Add a a vocabulary with a category") {

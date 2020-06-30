@@ -213,7 +213,9 @@ public class FragmentEntryLinkCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		fragmentEntryLinkId = objectInput.readLong();
@@ -234,10 +236,10 @@ public class FragmentEntryLinkCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		css = objectInput.readUTF();
-		html = objectInput.readUTF();
-		js = objectInput.readUTF();
-		editableValues = objectInput.readUTF();
+		css = (String)objectInput.readObject();
+		html = (String)objectInput.readObject();
+		js = (String)objectInput.readObject();
+		editableValues = (String)objectInput.readObject();
 
 		position = objectInput.readInt();
 		lastPropagationDate = objectInput.readLong();
@@ -281,31 +283,31 @@ public class FragmentEntryLinkCacheModel
 		objectOutput.writeLong(classPK);
 
 		if (css == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(css);
+			objectOutput.writeObject(css);
 		}
 
 		if (html == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(html);
+			objectOutput.writeObject(html);
 		}
 
 		if (js == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(js);
+			objectOutput.writeObject(js);
 		}
 
 		if (editableValues == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(editableValues);
+			objectOutput.writeObject(editableValues);
 		}
 
 		objectOutput.writeInt(position);

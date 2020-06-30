@@ -43,7 +43,7 @@ import java.util.Date;
 public interface DDLRecordModel
 	extends BaseModel<DDLRecord>, ShardedModel, StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddl record model instance should use the {@link DDLRecord} interface instead.

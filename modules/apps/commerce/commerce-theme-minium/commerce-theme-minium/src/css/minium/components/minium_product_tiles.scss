@@ -8,7 +8,7 @@
 		grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 	}
 
-	@media all and (-ms-high-contrast:none) {
+	@media all and (-ms-high-contrast: none) {
 		display: flex;
 		flex-wrap: wrap;
 

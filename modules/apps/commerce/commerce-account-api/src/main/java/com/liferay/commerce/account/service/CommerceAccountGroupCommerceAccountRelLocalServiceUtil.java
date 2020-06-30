@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceAccountGroupCommerceAccountRelLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -251,6 +251,16 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceUtil {
 			commerceAccountGroupCommerceAccountRelId);
 	}
 
+	public static
+		com.liferay.commerce.account.model.
+			CommerceAccountGroupCommerceAccountRel
+				fetchCommerceAccountGroupCommerceAccountRel(
+					long commerceAccountGroupId, long commerceAccountId) {
+
+		return getService().fetchCommerceAccountGroupCommerceAccountRel(
+			commerceAccountGroupId, commerceAccountId);
+	}
+
 	/**
 	 * Returns the commerce account group commerce account rel with the matching external reference code and company.
 	 *
@@ -366,6 +376,9 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

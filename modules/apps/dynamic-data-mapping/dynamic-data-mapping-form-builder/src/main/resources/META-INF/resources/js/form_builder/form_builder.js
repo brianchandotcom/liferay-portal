@@ -265,25 +265,27 @@ AUI.add(
 					createFieldFromContext: function(fieldContext) {
 						var instance = this;
 
-						var newFieldName = fieldContext.fieldName + Util.generateInstanceId(6);
-
 						var config = A.merge(
 							fieldContext,
 							{
-								fieldName: newFieldName,
-								name: newFieldName
+								settingsContext: undefined
 							}
 						);
 
-						delete config.settingsContext;
-
 						var field = instance.createField(FieldTypes.get(fieldContext.type), config);
+
+						var newFieldName = field.generateFieldName(fieldContext.fieldName);
+
+						field.set('fieldName', newFieldName);
+						field.set('name', newFieldName);
 
 						field.set(
 							'context',
 							A.merge(
 								config,
 								{
+									fieldName: newFieldName,
+									name: newFieldName,
 									portletNamespace: Liferay.DDM.Settings.portletNamespace
 								}
 							)
@@ -917,16 +919,6 @@ AUI.add(
 						instance.activeDropColStack = [];
 					},
 
-					_createFieldActions: function() {
-						var instance = this;
-
-						instance.eachFormBuilderField(
-							function(field) {
-								field.get('container').append(instance._getFieldActionsLayout());
-							}
-						);
-					},
-
 					_currentRowIndex: function() {
 						var instance = this;
 
@@ -1281,7 +1273,6 @@ AUI.add(
 								var row = instance.getFieldRow(field);
 
 								activeLayout.normalizeColsHeight(new A.NodeList(row));
-								field.get('container').append(instance._getFieldActionsLayout());
 								field.get('container').ancestor('.col').removeClass('col-empty');
 							}
 						);

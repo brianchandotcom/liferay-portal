@@ -63,7 +63,7 @@ import java.util.Map;
 public interface CPAttachmentFileEntryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPAttachmentFileEntryLocalServiceUtil} to access the cp attachment file entry local service. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPAttachmentFileEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -288,6 +288,12 @@ public interface CPAttachmentFileEntryLocalService
 			int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long cpDefinitionId, String serializedDDMFormValues, int type,
+			int start, int end)
+		throws Exception;
+
 	/**
 	 * Returns all the cp attachment file entries matching the UUID and company.
 	 *
@@ -367,6 +373,9 @@ public interface CPAttachmentFileEntryLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

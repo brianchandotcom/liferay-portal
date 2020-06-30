@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceInventoryAuditModel
 	extends AuditedModel, BaseModel<CommerceInventoryAudit>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce inventory audit model instance should use the {@link CommerceInventoryAudit} interface instead.
@@ -190,19 +190,34 @@ public interface CommerceInventoryAuditModel
 	public void setSku(String sku);
 
 	/**
-	 * Returns the description of this commerce inventory audit.
+	 * Returns the log type of this commerce inventory audit.
 	 *
-	 * @return the description of this commerce inventory audit
+	 * @return the log type of this commerce inventory audit
 	 */
 	@AutoEscape
-	public String getDescription();
+	public String getLogType();
 
 	/**
-	 * Sets the description of this commerce inventory audit.
+	 * Sets the log type of this commerce inventory audit.
 	 *
-	 * @param description the description of this commerce inventory audit
+	 * @param logType the log type of this commerce inventory audit
 	 */
-	public void setDescription(String description);
+	public void setLogType(String logType);
+
+	/**
+	 * Returns the log type settings of this commerce inventory audit.
+	 *
+	 * @return the log type settings of this commerce inventory audit
+	 */
+	@AutoEscape
+	public String getLogTypeSettings();
+
+	/**
+	 * Sets the log type settings of this commerce inventory audit.
+	 *
+	 * @param logTypeSettings the log type settings of this commerce inventory audit
+	 */
+	public void setLogTypeSettings(String logTypeSettings);
 
 	/**
 	 * Returns the quantity of this commerce inventory audit.

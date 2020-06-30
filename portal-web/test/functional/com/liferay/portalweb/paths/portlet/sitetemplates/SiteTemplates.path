@@ -32,7 +32,7 @@
 <!--SITE_TEMPLATE_TABLE-->
 <tr>
 	<td>SITE_TEMPLATE_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_siteTemplateName}')]/td//a</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td//a | //tr[contains(.,'${key_siteTemplateName}')]/td//span</td>
 	<td></td>
 </tr>
 <tr>

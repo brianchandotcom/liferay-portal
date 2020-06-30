@@ -14,24 +14,19 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
-import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,33 +49,14 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+		CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
+			new CPDefinitionLinkDisplayContext(
+				_actionHelper, _portal.getHttpServletRequest(renderRequest),
+				_cpDefinitionLinkService, _cpDefinitionLinkTypeSettings,
+				_itemSelector);
 
-			CPDefinitionLink cpDefinitionLink =
-				_actionHelper.getCPDefinitionLink(renderRequest);
-
-			CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
-				new CPDefinitionLinkDisplayContext(
-					_actionHelper, httpServletRequest, _cpDefinitionLinkService,
-					_itemSelector, cpDefinitionLink.getType());
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionLinkDisplayContext);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionLinkException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(e);
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionLinkDisplayContext);
 
 		return "/edit_definition_link.jsp";
 	}
@@ -90,6 +66,9 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPDefinitionLinkService _cpDefinitionLinkService;
+
+	@Reference
+	private CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
 
 	@Reference
 	private ItemSelector _itemSelector;

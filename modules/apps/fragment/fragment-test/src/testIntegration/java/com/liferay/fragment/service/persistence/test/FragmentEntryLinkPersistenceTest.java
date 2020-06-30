@@ -330,8 +330,7 @@ public class FragmentEntryLinkPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"originalFragmentEntryLinkId", true, "fragmentEntryId", true,
-			"classNameId", true, "classPK", true, "css", true, "html", true,
-			"js", true, "editableValues", true, "position", true,
+			"classNameId", true, "classPK", true, "position", true,
 			"lastPropagationDate", true, "namespace", true, "lastPublishDate",
 			true);
 	}

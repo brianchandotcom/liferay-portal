@@ -33,11 +33,6 @@ public class CommerceOrderItemServiceWrapper
 		_commerceOrderItemService = commerceOrderItemService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemServiceUtil} to access the commerce order item remote service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
@@ -49,6 +44,14 @@ public class CommerceOrderItemServiceWrapper
 		return _commerceOrderItemService.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
 			commerceContext, serviceContext);
+	}
+
+	@Override
+	public int countSubscriptionCommerceOrderItems(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.countSubscriptionCommerceOrderItems(
+			commerceOrderId);
 	}
 
 	@Override
@@ -132,6 +135,17 @@ public class CommerceOrderItemServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+			getCommerceOrderItems(
+				long groupId, long commerceAccountId, int[] orderStatuses,
+				int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.getCommerceOrderItems(
+			groupId, commerceAccountId, orderStatuses, start, end);
+	}
+
+	@Override
 	public int getCommerceOrderItemsCount(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -146,6 +160,15 @@ public class CommerceOrderItemServiceWrapper
 
 		return _commerceOrderItemService.getCommerceOrderItemsCount(
 			commerceOrderId, cpInstanceId);
+	}
+
+	@Override
+	public int getCommerceOrderItemsCount(
+			long groupId, long commerceAccountId, int[] orderStatuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.getCommerceOrderItemsCount(
+			groupId, commerceAccountId, orderStatuses);
 	}
 
 	@Override
@@ -218,6 +241,25 @@ public class CommerceOrderItemServiceWrapper
 				long commerceOrderItemId, String deliveryGroup,
 				long shippingAddressId, String printedNote,
 				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
+				int requestedDeliveryDateYear)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.updateCommerceOrderItemInfo(
+			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote,
+			requestedDeliveryDateMonth, requestedDeliveryDateDay,
+			requestedDeliveryDateYear);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemInfo(
+				long commerceOrderItemId, String deliveryGroup,
+				long shippingAddressId, String printedNote,
+				int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
 				int requestedDeliveryDateYear, int requestedDeliveryDateHour,
 				int requestedDeliveryDateMinute,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -250,7 +292,7 @@ public class CommerceOrderItemServiceWrapper
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
 	@Override

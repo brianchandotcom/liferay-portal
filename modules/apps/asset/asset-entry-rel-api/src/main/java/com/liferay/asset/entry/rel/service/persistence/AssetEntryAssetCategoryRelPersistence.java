@@ -40,7 +40,7 @@ import java.util.Set;
 public interface AssetEntryAssetCategoryRelPersistence
 	extends BasePersistence<AssetEntryAssetCategoryRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryAssetCategoryRelUtil} to access the asset entry asset category rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

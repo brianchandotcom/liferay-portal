@@ -30,11 +30,6 @@ public class UserGroupLocalServiceWrapper
 		_userGroupLocalService = userGroupLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link UserGroupLocalServiceUtil} to access the user group local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addGroupUserGroup(long groupId, long userGroupId) {
 		_userGroupLocalService.addGroupUserGroup(groupId, userGroupId);
@@ -597,6 +592,9 @@ public class UserGroupLocalServiceWrapper
 		return _userGroupLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

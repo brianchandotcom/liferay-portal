@@ -449,11 +449,6 @@ public class KaleoInstanceTokenWrapper
 		return _kaleoInstanceToken.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a kaleo instance token model instance should use the <code>KaleoInstanceToken</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_kaleoInstanceToken.persist();

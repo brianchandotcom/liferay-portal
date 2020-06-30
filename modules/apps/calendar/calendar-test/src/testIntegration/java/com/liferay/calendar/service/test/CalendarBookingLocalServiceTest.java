@@ -2448,17 +2448,16 @@ public class CalendarBookingLocalServiceTest {
 
 		int secondReminder = RandomTestUtil.randomInt(1, firstReminder);
 
-		childCalendarBooking =
-			CalendarBookingLocalServiceUtil.updateCalendarBooking(
-				_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
-				childCalendarBooking.getCalendarId(), new long[0],
-				childCalendarBooking.getTitleMap(),
-				childCalendarBooking.getDescriptionMap(),
-				childCalendarBooking.getLocation(), startTime,
-				startTime + (Time.HOUR * 10), childCalendarBooking.isAllDay(),
-				childCalendarBooking.getRecurrence(), firstReminder,
-				NotificationType.EMAIL.getValue(), secondReminder,
-				NotificationType.EMAIL.getValue(), serviceContext);
+		CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
+			childCalendarBooking.getCalendarId(), new long[0],
+			childCalendarBooking.getTitleMap(),
+			childCalendarBooking.getDescriptionMap(),
+			childCalendarBooking.getLocation(), startTime,
+			startTime + (Time.HOUR * 10), childCalendarBooking.isAllDay(),
+			childCalendarBooking.getRecurrence(), firstReminder,
+			NotificationType.EMAIL.getValue(), secondReminder,
+			NotificationType.EMAIL.getValue(), serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),

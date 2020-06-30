@@ -135,6 +135,8 @@ public class CommerceDiscountRulePersistenceTest {
 
 		newCommerceDiscountRule.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCommerceDiscountRule.setName(RandomTestUtil.randomString());
+
 		newCommerceDiscountRule.setCommerceDiscountId(
 			RandomTestUtil.nextLong());
 
@@ -169,6 +171,9 @@ public class CommerceDiscountRulePersistenceTest {
 			Time.getShortTimestamp(
 				existingCommerceDiscountRule.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceDiscountRule.getModifiedDate()));
+		Assert.assertEquals(
+			existingCommerceDiscountRule.getName(),
+			newCommerceDiscountRule.getName());
 		Assert.assertEquals(
 			existingCommerceDiscountRule.getCommerceDiscountId(),
 			newCommerceDiscountRule.getCommerceDiscountId());
@@ -217,7 +222,8 @@ public class CommerceDiscountRulePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceDiscountRule", "commerceDiscountRuleId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceDiscountId", true, "type", true);
+			"modifiedDate", true, "name", true, "commerceDiscountId", true,
+			"type", true);
 	}
 
 	@Test
@@ -468,6 +474,8 @@ public class CommerceDiscountRulePersistenceTest {
 		commerceDiscountRule.setCreateDate(RandomTestUtil.nextDate());
 
 		commerceDiscountRule.setModifiedDate(RandomTestUtil.nextDate());
+
+		commerceDiscountRule.setName(RandomTestUtil.randomString());
 
 		commerceDiscountRule.setCommerceDiscountId(RandomTestUtil.nextLong());
 

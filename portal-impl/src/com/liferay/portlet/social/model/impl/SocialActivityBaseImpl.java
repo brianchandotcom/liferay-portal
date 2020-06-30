@@ -32,7 +32,7 @@ import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 public abstract class SocialActivityBaseImpl
 	extends SocialActivityModelImpl implements SocialActivity {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social activity model instance should use the <code>SocialActivity</code> interface instead.

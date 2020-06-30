@@ -21,6 +21,10 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 
+Map<String, String> contextParams = new HashMap<>();
+
+contextParams.put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId()));
+
 PortletURL portletURL = currentURLObj;
 
 portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
@@ -28,19 +32,20 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 
 <portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
 
-<commerce-ui:table
-	dataProviderKey="<%= CommerceAccountAddressClayTable.NAME %>"
-	filter="<%= commerceAccountDisplayContext.getAccountFilter() %>"
-	itemPerPage="<%= 5 %>"
+<commerce-ui:dataset-display
+	contextParams="<%= contextParams %>"
+	dataProviderKey="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"
+	id="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"
+	itemsPerPage="<%= 10 %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	pageNumber="1"
+	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceAccountDisplayContext.getPortletURL() %>"
-	tableName="<%= CommerceAccountAddressClayTable.NAME %>"
+	style="stacked"
 />
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(commerceAccount, ActionKeys.UPDATE) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="commerce-button commerce-button--big js-add-address" onClick='<%= renderResponse.getNamespace() + "openAddressModal();" %>' value="add-address" />
+		<aui:button cssClass="btn-lg btn-primary js-add-address" onClick='<%= renderResponse.getNamespace() + "openAddressModal();" %>' value="add-address" />
 	</div>
 
 	<commerce-ui:add-address-modal
@@ -66,63 +71,61 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 	</aui:form>
 
 	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace />openAddressModal',
-			function(evt) {
-				const addressModal = Liferay.component('addressModal');
-				addressModal.resetForm();
-				addressModal.open();
-			}
-		);
+		Liferay.provide(window, '<portlet:namespace />openAddressModal', function(evt) {
+			const addressModal = Liferay.component('addressModal');
+			addressModal.resetForm();
+			addressModal.open();
+		});
 
-		Liferay.provide(
-			window,
-			'editCommerceAddress',
-			function(id) {
-				const addressModal = Liferay.component('addressModal');
-				addressModal.fetchExistingAddress(id);
-				addressModal.open();
-			}
-		);
+		Liferay.provide(window, 'editCommerceAddress', function(id) {
+			const addressModal = Liferay.component('addressModal');
+			addressModal.fetchExistingAddress(id);
+			addressModal.open();
+		});
 
-		Liferay.provide(
-			window,
-			'deleteCommerceAddress',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.DELETE %>';
-				document.querySelector('#<portlet:namespace />commerceAddressId').value = id;
+		Liferay.provide(window, 'deleteCommerceAddress', function(id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'<%= Constants.DELETE %>';
+			document.querySelector(
+				'#<portlet:namespace />commerceAddressId'
+			).value = id;
+
+			submitForm(document.<portlet:namespace />addressFm);
+		});
+
+		Liferay.componentReady('addressModal').then(function(addressModal) {
+			addressModal.on('addressModalSave', function(formData) {
+				document.querySelector('#<portlet:namespace />name').value =
+					formData.referent;
+				document.querySelector('#<portlet:namespace />street1').value =
+					formData.address;
+				document.querySelector('#<portlet:namespace />city').value =
+					formData.city;
+				document.querySelector('#<portlet:namespace />zip').value =
+					formData.zipCode;
+				document.querySelector(
+					'#<portlet:namespace />commerceCountryId'
+				).value = formData.country;
+				document.querySelector('#<portlet:namespace />commerceRegionId').value =
+					formData.region;
+				document.querySelector('#<portlet:namespace />phoneNumber').value =
+					formData.telephone;
+				document.querySelector('#<portlet:namespace />addressType').value =
+					formData.addressType;
+
+				if (formData.id) {
+					document.querySelector(
+						'#<portlet:namespace />commerceAddressId'
+					).value = formData.id;
+					document.querySelector(
+						'#<portlet:namespace /><%= Constants.CMD %>'
+					).value = '<%= Constants.UPDATE %>';
+				}
+
+				addressModal.close();
 
 				submitForm(document.<portlet:namespace />addressFm);
-			}
-		);
-
-		Liferay.componentReady('addressModal').then(
-			function(addressModal) {
-				addressModal.on(
-					'addressModalSave',
-					function(formData) {
-						document.querySelector('#<portlet:namespace />name').value = formData.referent;
-						document.querySelector('#<portlet:namespace />street1').value = formData.address;
-						document.querySelector('#<portlet:namespace />city').value = formData.city;
-						document.querySelector('#<portlet:namespace />zip').value = formData.zipCode;
-						document.querySelector('#<portlet:namespace />commerceCountryId').value = formData.country;
-						document.querySelector('#<portlet:namespace />commerceRegionId').value = formData.region;
-						document.querySelector('#<portlet:namespace />phoneNumber').value = formData.telephone;
-						document.querySelector('#<portlet:namespace />addressType').value = formData.addressType;
-
-						if (formData.id) {
-							document.querySelector('#<portlet:namespace />commerceAddressId').value = formData.id;
-							document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.UPDATE %>';
-						}
-
-						addressModal.close();
-
-						submitForm(document.<portlet:namespace />addressFm);
-					}
-				);
-			}
-		);
-
+			});
+		});
 	</aui:script>
 </c:if>

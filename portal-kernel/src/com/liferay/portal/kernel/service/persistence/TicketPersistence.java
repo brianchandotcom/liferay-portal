@@ -38,7 +38,7 @@ import java.util.Set;
 @ProviderType
 public interface TicketPersistence extends BasePersistence<Ticket> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketUtil} to access the ticket persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

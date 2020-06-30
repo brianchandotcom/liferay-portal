@@ -43,7 +43,7 @@ import java.util.Date;
 public interface CommerceDiscountRuleModel
 	extends AuditedModel, BaseModel<CommerceDiscountRule>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce discount rule model instance should use the {@link CommerceDiscountRule} interface instead.
@@ -173,6 +173,21 @@ public interface CommerceDiscountRuleModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the name of this commerce discount rule.
+	 *
+	 * @return the name of this commerce discount rule
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this commerce discount rule.
+	 *
+	 * @param name the name of this commerce discount rule
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the commerce discount ID of this commerce discount rule.

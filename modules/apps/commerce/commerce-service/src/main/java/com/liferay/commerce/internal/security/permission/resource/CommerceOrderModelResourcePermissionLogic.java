@@ -202,6 +202,14 @@ public class CommerceOrderModelResourcePermissionLogic
 				return false;
 			}
 
+			if (_hasAncestorPermission(
+					permissionChecker,
+					commerceAccount.getCommerceAccountGroupId(),
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER)) {
+
+				return true;
+			}
+
 			if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 					commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
 					CommerceOrder.class.getName(), 0,

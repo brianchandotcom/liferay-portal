@@ -56,7 +56,7 @@ import java.util.List;
 public interface CommerceAddressRestrictionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressRestrictionLocalServiceUtil} to access the commerce address restriction local service. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceAddressRestrictionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -72,6 +72,15 @@ public interface CommerceAddressRestrictionLocalService
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 		CommerceAddressRestriction commerceAddressRestriction);
 
+	public CommerceAddressRestriction addCommerceAddressRestriction(
+			long userId, long groupId, String className, long classPK,
+			long commerceCountryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			String className, long classPK, long commerceCountryId,
 			ServiceContext serviceContext)
@@ -252,6 +261,9 @@ public interface CommerceAddressRestrictionLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

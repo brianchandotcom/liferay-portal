@@ -87,13 +87,13 @@ List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(commerceCont
 	</div>
 
 	<aui:script use="aui-toggler">
-		new A.Toggler(
-			{
-				animated: true,
-				content: '#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-content',
-				expanded: true,
-				header: '#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header'
-			}
-		);
+		new A.Toggler({
+			animated: true,
+			content:
+				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-content',
+			expanded: true,
+			header:
+				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header'
+		});
 	</aui:script>
 </c:if>

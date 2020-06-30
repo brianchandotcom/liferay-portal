@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CPDefinitionOptionRelPersistence
 	extends BasePersistence<CPDefinitionOptionRel> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionRelUtil} to access the cp definition option rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -1048,7 +1048,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 	protected long[] getUserIds(ActionRequest actionRequest) {
 		long[] userIds;
 
-		long userId = ParamUtil.getLong(actionRequest, "userId", 0);
+		long userId = ParamUtil.getLong(actionRequest, "userId");
 
 		if (userId > 0) {
 			userIds = new long[] {userId};

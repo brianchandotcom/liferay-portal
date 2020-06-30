@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CalendarNotificationTemplatePersistence
 	extends BasePersistence<CalendarNotificationTemplate> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarNotificationTemplateUtil} to access the calendar notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

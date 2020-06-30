@@ -18,69 +18,21 @@
 
 <%
 CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-SearchContainer commerceCatalogSearchContainer = commerceCatalogDisplayContext.getSearchContainer();
-
-PortletURL portletURL = commerceCatalogDisplayContext.getPortletURL();
-
-portletURL.setParameter("searchContainerId", "commerceCatalogs");
 %>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="commerceCatalogs" />
-</liferay-util:include>
+<liferay-ui:error embed="<%= false %>" exception="<%= CommerceCatalogProductsException.class %>" message="you-cannot-delete-catalogs-that-have-products" />
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<div class="sidenav-content">
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="commerceCatalogIds" type="hidden" />
-
-			<liferay-ui:error exception="<%= CommerceCatalogProductsException.class %>" message="you-cannot-delete-catalogs-that-have-products" />
-			<liferay-ui:error exception="<%= CommerceCatalogSystemException.class %>" message="you-cannot-delete-master-catalog" />
-
-			<div class="products-container" id="<portlet:namespace />commerceCatalogsContainer">
-				<liferay-ui:search-container
-					emptyResultsMessage="no-catalogs-were-found"
-					id="commerceCatalogs"
-					searchContainer="<%= commerceCatalogSearchContainer %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.commerce.product.model.CommerceCatalog"
-						cssClass="entry-display-style"
-						keyProperty="commerceCatalogId"
-						modelVar="commerceCatalog"
-					>
-						<liferay-ui:search-container-column-text
-							cssClass="important table-cell-content"
-							href="<%= commerceCatalogDisplayContext.getCatalogURL(commerceCatalog) %>"
-							name="name"
-							value="<%= HtmlUtil.escape(commerceCatalog.getName()) %>"
-						/>
-
-						<liferay-ui:search-container-column-date
-							name="create-date"
-							property="createDate"
-						/>
-
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							property="modifiedDate"
-						/>
-
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action-column"
-							path="/catalog_action.jsp"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						displayStyle="list"
-						markupView="lexicon"
-					/>
-				</liferay-ui:search-container>
-			</div>
-		</aui:form>
+<div class="row">
+	<div class="col-12">
+		<commerce-ui:dataset-display
+			clayCreationMenu="<%= commerceCatalogDisplayContext.getClayCreationMenu() %>"
+			dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
+			id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= commerceCatalogDisplayContext.getPortletURL() %>"
+			style="fluid"
+		/>
 	</div>
 </div>

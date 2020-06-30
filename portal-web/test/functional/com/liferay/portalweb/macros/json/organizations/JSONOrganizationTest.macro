@@ -1,0 +1,35 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+
+		//organization
+
+		JSONOrganization.addOrganization(
+			organizationName = "organization 1",
+			organizationSite = "true");
+
+		JSONOrganization.addOrganization(organizationName = "organization 2");
+
+		//user
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization 1",
+			userEmailAddress = "test@liferay.com");
+
+		//delete
+
+		JSONOrganization.deleteOrganizationByName(organizationName = "organization 2");
+
+		//getter
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "organization 1");
+
+		if ("${organizationId}" == "0") {
+			fail("Invalid organizationId retrieved");
+		}
+
+		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
+	}
+
+}

@@ -516,11 +516,6 @@ public class CommerceNotificationQueueEntryWrapper
 		return _commerceNotificationQueueEntry.isSent();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce notification queue entry model instance should use the <code>CommerceNotificationQueueEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceNotificationQueueEntry.persist();

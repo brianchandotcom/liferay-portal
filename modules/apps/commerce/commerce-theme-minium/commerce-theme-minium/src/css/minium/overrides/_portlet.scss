@@ -20,7 +20,7 @@
 	.portlet:hover > .portlet-topper,
 	.portlet.focus > .portlet-topper {
 		align-items: center;
-		background: #B0CBFF;
+		background: #b0cbff;
 		border: 0;
 		border-radius: 0 0 8px 8px;
 		display: flex;
@@ -45,19 +45,19 @@
 	.portlet:hover > .portlet-content-editable,
 	.portlet.focus > .portlet-content-editable {
 		border-radius: 4px;
-		box-shadow: 0 0 4px 1px #B0CBFF;
+		box-shadow: 0 0 4px 1px #b0cbff;
 	}
 }
 
 .portlet-content-editable {
 	border-radius: 8px;
 	border-width: 0;
-	box-shadow: 0 0 0 1px #E5EEFF;
+	box-shadow: 0 0 0 1px #e5eeff;
 	min-height: 28px;
 }
 
 .portlet-title-default {
-	background: #B0CBFF;
+	background: #b0cbff;
 	border-radius: 8px 8px 0 0;
 	bottom: 100%;
 	color: white;
@@ -70,7 +70,7 @@
 }
 
 .portlet-topper-toolbar-wrapper {
-	background: #0B5FFF;
+	background: #0b5fff;
 	border-radius: 21px;
 	bottom: 5px;
 	color: white;

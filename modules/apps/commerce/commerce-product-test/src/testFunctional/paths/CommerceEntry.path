@@ -8,6 +8,11 @@
 <tr><td rowspan="1" colspan="3">CommerceEntry</td></tr>
 </thead>
 <tbody>
+	<tr>
+	<td>ANY_MENU_ITEM</td>
+	<td>//div[contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
 	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
@@ -265,7 +270,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[@class='workflow-status']//span[contains(.,'${key_status}')]</td>
+	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -356,6 +361,17 @@
 <tr>
 	<td>PARENT_PRICE_LIST_SELECT</td>
 	<td>//button[contains(@id,'setParentCommercePriceList')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS</td>
+	<td>//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<!--CATALOGS-->
+<tr>
+	<td>CATALOGS_FORM</td>
+	<td>//label[contains(.,'${key_title}')]/../select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 </tbody>

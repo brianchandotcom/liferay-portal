@@ -37,7 +37,7 @@
 	}
 
 	&__label {
-		color: #9D9E9E;
+		color: #9d9e9e;
 		display: block;
 		font-size: 11px;
 		font-weight: normal;
@@ -92,5 +92,9 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 20px;
+
+		.btn-monospaced {
+			border-radius: 50%;
+		}
 	}
 }

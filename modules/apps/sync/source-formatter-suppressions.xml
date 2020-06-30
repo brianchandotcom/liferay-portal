@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MissingEmptyLineCheck" files="modules/apps/sync/sync-service/src/main/java/com/liferay/sync/internal/util/SyncDLObjectUpdate\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncDLObjectUpdate\.java" />
 	</checkstyle>
 </suppressions>

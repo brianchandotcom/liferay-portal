@@ -326,11 +326,6 @@ public class ResourcePermissionWrapper
 		return _resourcePermission.isViewActionId();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a resource permission model instance should use the <code>ResourcePermission</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_resourcePermission.persist();

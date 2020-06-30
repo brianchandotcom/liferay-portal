@@ -49,7 +49,7 @@ public interface WikiPageModel
 	extends BaseModel<WikiPage>, ContainerModel, ResourcedModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a wiki page model instance should use the {@link WikiPage} interface instead.

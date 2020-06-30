@@ -56,11 +56,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
 
 	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks());
-
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks());
 	%>
 
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
@@ -158,7 +156,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						type="tabs nav-tabs-default "
 					>
 						<liferay-ui:section>
-							<div style="margin-top:1.5rem;">
+							<div style="margin-top: 1.5rem;">
 
 								<%
 								String creatorUserName = workflowDefinitionDisplayContext.getCreatorUserName(workflowDefinition);

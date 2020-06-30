@@ -294,11 +294,6 @@ public class CommerceChannelRelWrapper
 		return _commerceChannelRel.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a commerce channel rel model instance should use the <code>CommerceChannelRel</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_commerceChannelRel.persist();

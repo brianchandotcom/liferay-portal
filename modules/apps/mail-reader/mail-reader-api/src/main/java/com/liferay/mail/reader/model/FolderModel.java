@@ -43,7 +43,7 @@ import java.util.Date;
 public interface FolderModel
 	extends AuditedModel, BaseModel<Folder>, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a folder model instance should use the {@link Folder} interface instead.

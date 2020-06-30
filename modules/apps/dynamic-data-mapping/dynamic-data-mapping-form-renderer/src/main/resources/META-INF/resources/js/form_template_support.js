@@ -48,15 +48,34 @@ AUI.add(
 
 				var container = instance.get('container');
 
-				container.html(instance.getTemplate());
+				var context = instance.getTemplateContext();
 
-				instance.eachNestedField(
-					function(field) {
-						field.updateContainer();
-					}
-				);
+				if (instance._metalComponent) {
+					instance._metalComponent.setState(context, function() {
+						instance.eachNestedField(
+							function(field) {
+								field.updateContainer();
+							}
+						);
 
-				instance.fire('render');
+						instance.fire('render');
+					});
+				}
+				else {
+					container.empty();
+
+					var MetalComponent = instance.getTemplateRenderer();
+
+					instance._metalComponent = new MetalComponent(context, container.getDOM());
+
+					instance.eachNestedField(
+						function(field) {
+							field.updateContainer();
+						}
+					);
+
+					instance.fire('render');
+				}
 
 				return instance;
 			},

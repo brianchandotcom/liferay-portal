@@ -74,7 +74,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 		try {
 			commerceShippingOptions = _getCommerceShippingOptions(
-				commerceContext.getSiteGroupId(), commerceOrder, locale);
+				commerceOrder.getGroupId(), commerceOrder, locale);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

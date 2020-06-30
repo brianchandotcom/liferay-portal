@@ -44,6 +44,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionC
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
@@ -64,8 +65,6 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -79,16 +78,13 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -203,30 +199,14 @@ public class ProductResourceImpl
 
 	@Override
 	public Page<Product> getProductsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CPDefinition.class, StringPool.BLANK, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-
-				long[] getCommerceCatalogGroupIds =
-					_getCommerceCatalogGroupIds();
-
-				if ((getCommerceCatalogGroupIds != null) &&
-					(getCommerceCatalogGroupIds.length > 0)) {
-
-					searchContext.setGroupIds(getCommerceCatalogGroupIds);
-				}
-			},
+		return _productHelper.getProductsPage(
+			contextCompany.getCompanyId(), search, filter, pagination, sorts,
 			document -> _toProduct(
 				_cpDefinitionService.getCPDefinition(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -280,18 +260,6 @@ public class ProductResourceImpl
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
 				cpDefinition.getCPDefinitionId()));
-	}
-
-	private long[] _getCommerceCatalogGroupIds() throws PortalException {
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogLocalService.searchCommerceCatalogs(
-				contextCompany.getCompanyId());
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		return stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
 	}
 
 	private ProductShippingConfiguration _getProductShippingConfiguration(
@@ -395,6 +363,22 @@ public class ProductResourceImpl
 					cpDefinition);
 		}
 
+		// Images
+
+		Attachment[] images = product.getImages();
+
+		if (images != null) {
+			for (Attachment attachment : images) {
+				AttachmentUtil.upsertCPAttachmentFileEntry(
+					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_uniqueFileNameProvider, attachment,
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClassName()),
+					cpDefinition.getCPDefinitionId(),
+					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
+			}
+		}
+
 		// Attachments
 
 		Attachment[] attachments = product.getAttachments();
@@ -408,22 +392,6 @@ public class ProductResourceImpl
 						cpDefinition.getModelClassName()),
 					cpDefinition.getCPDefinitionId(),
 					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
-			}
-		}
-
-		// Images
-
-		Attachment[] images = product.getImages();
-
-		if (images != null) {
-			for (Attachment image : images) {
-				AttachmentUtil.upsertCPAttachmentFileEntry(
-					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
-					_uniqueFileNameProvider, image,
-					_classNameLocalService.getClassNameId(
-						cpDefinition.getModelClassName()),
-					cpDefinition.getCPDefinitionId(),
-					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
 			}
 		}
 
@@ -466,7 +434,7 @@ public class ProductResourceImpl
 
 		// Product options
 
-		ProductOption[] productOptions = product.getOptions();
+		ProductOption[] productOptions = product.getProductOptions();
 
 		if (productOptions != null) {
 			for (ProductOption productOption : productOptions) {
@@ -477,7 +445,7 @@ public class ProductResourceImpl
 						serviceContext);
 
 				ProductOptionValue[] productOptionValues =
-					productOption.getValues();
+					productOption.getProductOptionValues();
 
 				if (productOptionValues != null) {
 					for (ProductOptionValue productOptionValue :
@@ -613,10 +581,7 @@ public class ProductResourceImpl
 
 		// Update nested resources
 
-		cpDefinition = _updateNestedResources(
-			product, cpDefinition, serviceContext);
-
-		return cpDefinition;
+		return _updateNestedResources(product, cpDefinition, serviceContext);
 	}
 
 	private CPDefinition _upsertProduct(Product product) throws Exception {
@@ -694,13 +659,12 @@ public class ProductResourceImpl
 				shippingConfiguration.getFreeShipping(), true),
 			GetterUtil.getBoolean(
 				shippingConfiguration.getShippingSeparately(), true),
-			GetterUtil.getDouble(
-				shippingConfiguration.getShippingExtraPrice(), 0D),
-			GetterUtil.getDouble(shippingConfiguration.getWidth(), 0D),
-			GetterUtil.getDouble(shippingConfiguration.getHeight(), 0D),
-			GetterUtil.getDouble(shippingConfiguration.getDepth(), 0D),
-			GetterUtil.getDouble(shippingConfiguration.getWeight(), 0D),
-			GetterUtil.getLong(taxConfiguration.getId(), 0L),
+			GetterUtil.getDouble(shippingConfiguration.getShippingExtraPrice()),
+			GetterUtil.getDouble(shippingConfiguration.getWidth()),
+			GetterUtil.getDouble(shippingConfiguration.getHeight()),
+			GetterUtil.getDouble(shippingConfiguration.getDepth()),
+			GetterUtil.getDouble(shippingConfiguration.getWeight()),
+			GetterUtil.getLong(taxConfiguration.getId()),
 			ProductUtil.isTaxExempt(null, taxConfiguration), false, null, true,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
@@ -709,13 +673,12 @@ public class ProductResourceImpl
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.getBoolean(product.getNeverExpire(), true),
 			product.getDefaultSku(),
-			GetterUtil.getBoolean(subscriptionConfiguration.getEnable(), false),
-			GetterUtil.getInteger(subscriptionConfiguration.getLength(), 0),
+			GetterUtil.getBoolean(subscriptionConfiguration.getEnable()),
+			GetterUtil.getInteger(subscriptionConfiguration.getLength()),
 			GetterUtil.getString(
 				subscriptionConfiguration.getSubscriptionTypeAsString()),
 			null,
-			GetterUtil.getLong(
-				subscriptionConfiguration.getNumberOfLength(), 0L),
+			GetterUtil.getLong(subscriptionConfiguration.getNumberOfLength()),
 			product.getExternalReferenceCode(), serviceContext);
 
 		// Workflow
@@ -791,6 +754,9 @@ public class ProductResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ProductHelper _productHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

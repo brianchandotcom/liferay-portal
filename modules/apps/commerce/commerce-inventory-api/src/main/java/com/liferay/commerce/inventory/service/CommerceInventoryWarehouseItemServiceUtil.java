@@ -32,16 +32,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceInventoryWarehouseItemServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
-	 */
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryWarehouseItemServiceUtil} to access the commerce inventory warehouse item remote service. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
@@ -72,6 +66,13 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 		getService().deleteCommerceInventoryWarehouseItem(
 			commerceInventoryWarehouseItemId);
+	}
+
+	public static void deleteCommerceInventoryWarehouseItems(
+			long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceInventoryWarehouseItems(companyId, sku);
 	}
 
 	public static
@@ -126,6 +127,16 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 	public static java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
+				getCommerceInventoryWarehouseItems(
+					long companyId, String sku, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceInventoryWarehouseItems(
+			companyId, sku, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
 				getCommerceInventoryWarehouseItemsByCompanyId(
 					long companyId, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -134,12 +145,30 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 			companyId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
+				getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+					long companyId, String sku, int start, int end)
+			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return getService().getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+			companyId, sku, start, end);
+	}
+
 	public static int getCommerceInventoryWarehouseItemsCount(
 			long commerceInventoryWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommerceInventoryWarehouseItemsCount(
 			commerceInventoryWarehouseId);
+	}
+
+	public static int getCommerceInventoryWarehouseItemsCount(
+			long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceInventoryWarehouseItemsCount(
+			companyId, sku);
 	}
 
 	public static int getCommerceInventoryWarehouseItemsCountByCompanyId(
@@ -182,12 +211,45 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-				updateCommerceInventoryWarehouseItem(
+				increaseCommerceInventoryWarehouseItemQuantity(
 					long commerceInventoryWarehouseItemId, int quantity)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateCommerceInventoryWarehouseItem(
+		return getService().increaseCommerceInventoryWarehouseItemQuantity(
 			commerceInventoryWarehouseItemId, quantity);
+	}
+
+	public static void moveQuantitiesBetweenWarehouses(
+			long fromCommerceInventoryWarehouseId,
+			long toCommerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().moveQuantitiesBetweenWarehouses(
+			fromCommerceInventoryWarehouseId, toCommerceInventoryWarehouseId,
+			sku, quantity);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				updateCommerceInventoryWarehouseItem(
+					long commerceInventoryWarehouseItemId, int quantity,
+					int reservedQuantity, long mvccVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceInventoryWarehouseItem(
+			commerceInventoryWarehouseItemId, quantity, reservedQuantity,
+			mvccVersion);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				updateCommerceInventoryWarehouseItem(
+					long commerceInventoryWarehouseItemId, int quantity,
+					long mvccVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceInventoryWarehouseItem(
+			commerceInventoryWarehouseItemId, quantity, mvccVersion);
 	}
 
 	public static

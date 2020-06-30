@@ -232,11 +232,11 @@ AUI.add(
 
 												instance.entries.each(
 													function(item) {
-														if (key === item.value) {
+														if (key === item.categoryId) {
 															found = true;
 														}
 
-														if (key === item.value && data[key].unchecked) {
+														if (key === item.categoryId && data[key].unchecked) {
 															instance.entries.remove(item);
 														}
 													}

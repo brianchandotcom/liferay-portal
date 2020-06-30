@@ -248,11 +248,6 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		return _dlContent.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a document library content model instance should use the <code>DLContent</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_dlContent.persist();

@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.discount.rule.added.any.internal.display.context.AddedAnyCommerceDiscountRuleDisplayContext" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <%@ page import="java.util.List" %>

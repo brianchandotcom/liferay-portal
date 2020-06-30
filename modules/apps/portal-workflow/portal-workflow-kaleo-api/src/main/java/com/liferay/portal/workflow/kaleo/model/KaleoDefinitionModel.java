@@ -48,7 +48,7 @@ public interface KaleoDefinitionModel
 	extends BaseModel<KaleoDefinition>, GroupedModel, LocalizedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo definition model instance should use the {@link KaleoDefinition} interface instead.

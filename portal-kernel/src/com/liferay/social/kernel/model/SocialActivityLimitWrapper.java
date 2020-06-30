@@ -296,11 +296,6 @@ public class SocialActivityLimitWrapper
 		return _socialActivityLimit.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a social activity limit model instance should use the <code>SocialActivityLimit</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_socialActivityLimit.persist();

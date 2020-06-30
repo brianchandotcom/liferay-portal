@@ -72,26 +72,27 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 		function(event) {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'productDefinitionsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'productDefinitionsSelectItem',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItems = event.newVal;
 
-							if (selectedItems) {
-								$('#<portlet:namespace />addTypeSettings').val(selectedItems);
+						if (selectedItems) {
+							$('#<portlet:namespace />addTypeSettings').val(
+								selectedItems
+							);
 
-								var fm = $('#<portlet:namespace />fm');
+							var fm = $('#<portlet:namespace />fm');
 
-								submitForm(fm);
-							}
+							submitForm(fm);
 						}
-					},
-					title: '<liferay-ui:message arguments="product" key="select-x" />',
-					url: '<%= addedAllCommerceDiscountRuleDisplayContext.getItemSelectorUrl() %>'
-				}
-			);
+					}
+				},
+				title: '<liferay-ui:message arguments="product" key="select-x" />',
+				url:
+					'<%= addedAllCommerceDiscountRuleDisplayContext.getItemSelectorUrl() %>'
+			});
 
 			itemSelectorDialog.open();
 		}
@@ -102,22 +103,35 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 	var <portlet:namespace />addCommerceDiscountRuleCPDefinitionIds = [];
 	var <portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds = [];
 
-	function <portlet:namespace />deleteCommerceDiscountRuleCPDefinition(cpDefinitionId) {
+	function <portlet:namespace />deleteCommerceDiscountRuleCPDefinition(
+		cpDefinitionId
+	) {
 		var A = AUI();
 
-		A.Array.removeItem(<portlet:namespace />addCommerceDiscountRuleCPDefinitionIds, cpDefinitionId);
+		A.Array.removeItem(
+			<portlet:namespace />addCommerceDiscountRuleCPDefinitionIds,
+			cpDefinitionId
+		);
 
-		<portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds.push(cpDefinitionId);
+		<portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds.push(
+			cpDefinitionId
+		);
 
-		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceDiscountRuleCPDefinitionIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds.join(',');
+		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceDiscountRuleCPDefinitionIds.join(
+			','
+		);
+		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds.join(
+			','
+		);
 	}
 </aui:script>
 
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
 
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceDiscountRuleCPDefinitionSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commerceDiscountRuleCPDefinitionSearchContainer'
+	);
 
 	var searchContainerContentBox = searchContainer.get('contentBox');
 

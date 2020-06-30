@@ -143,6 +143,8 @@ public class CommerceCurrencyPersistenceTest {
 
 		newCommerceCurrency.setName(RandomTestUtil.randomString());
 
+		newCommerceCurrency.setSymbol(RandomTestUtil.randomString());
+
 		newCommerceCurrency.setRate(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -191,6 +193,9 @@ public class CommerceCurrencyPersistenceTest {
 			existingCommerceCurrency.getCode(), newCommerceCurrency.getCode());
 		Assert.assertEquals(
 			existingCommerceCurrency.getName(), newCommerceCurrency.getName());
+		Assert.assertEquals(
+			existingCommerceCurrency.getSymbol(),
+			newCommerceCurrency.getSymbol());
 		Assert.assertEquals(
 			existingCommerceCurrency.getRate(), newCommerceCurrency.getRate());
 		Assert.assertEquals(
@@ -307,10 +312,10 @@ public class CommerceCurrencyPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceCurrency", "uuid", true, "commerceCurrencyId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "code", true, "name", true, "rate",
-			true, "formatPattern", true, "maxFractionDigits", true,
-			"minFractionDigits", true, "roundingMode", true, "primary", true,
-			"priority", true, "active", true, "lastPublishDate", true);
+			true, "modifiedDate", true, "code", true, "name", true, "symbol",
+			true, "rate", true, "formatPattern", true, "maxFractionDigits",
+			true, "minFractionDigits", true, "roundingMode", true, "primary",
+			true, "priority", true, "active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -572,6 +577,8 @@ public class CommerceCurrencyPersistenceTest {
 		commerceCurrency.setCode(RandomTestUtil.randomString());
 
 		commerceCurrency.setName(RandomTestUtil.randomString());
+
+		commerceCurrency.setSymbol(RandomTestUtil.randomString());
 
 		commerceCurrency.setRate(new BigDecimal(RandomTestUtil.nextDouble()));
 

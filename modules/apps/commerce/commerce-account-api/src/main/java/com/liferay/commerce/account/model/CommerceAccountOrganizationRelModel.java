@@ -45,7 +45,7 @@ public interface CommerceAccountOrganizationRelModel
 	extends AuditedModel, BaseModel<CommerceAccountOrganizationRel>,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce account organization rel model instance should use the {@link CommerceAccountOrganizationRel} interface instead.

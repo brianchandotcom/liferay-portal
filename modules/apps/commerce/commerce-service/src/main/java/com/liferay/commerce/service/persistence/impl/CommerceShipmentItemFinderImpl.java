@@ -14,18 +14,16 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
-import com.liferay.commerce.model.CommerceShipmentItem;
-import com.liferay.commerce.model.impl.CommerceShipmentItemImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,13 +32,13 @@ public class CommerceShipmentItemFinderImpl
 	extends CommerceShipmentItemFinderBaseImpl
 	implements CommerceShipmentItemFinder {
 
-	public static final String FIND_BY_COMMERCE_ORDER_ITEM_ID =
+	public static final String GET_COMMERCE_SHIPMENT_ORDER_ITEMS_QUANTITY =
 		CommerceShipmentItemFinder.class.getName() +
-			".findByCommerceOrderItemId";
+			".getCommerceShipmentOrderItemsQuantity";
 
 	@Override
-	public List<CommerceShipmentItem> findByCommerceOrderItemId(
-		long commerceOrderItemId) {
+	public int getCommerceShipmentOrderItemsQuantity(
+		long commerceShipmentId, long commerceOrderItemId) {
 
 		Session session = null;
 
@@ -48,18 +46,28 @@ public class CommerceShipmentItemFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(
-				getClass(), FIND_BY_COMMERCE_ORDER_ITEM_ID);
+				getClass(), GET_COMMERCE_SHIPMENT_ORDER_ITEMS_QUANTITY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("CommerceShipmentItem", CommerceShipmentItemImpl.class);
+			q.addScalar("SUM_VALUE", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(commerceShipmentId);
 			qPos.add(commerceOrderItemId);
 
-			return (List<CommerceShipmentItem>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long sum = itr.next();
+
+				if (sum != null) {
+					return sum.intValue();
+				}
+			}
+
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

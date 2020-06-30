@@ -57,10 +57,8 @@ public class CommerceNotificationAttachmentLocalServiceImpl
 			fileEntry.getFileEntryId());
 		commerceNotificationAttachment.setDeleteOnSend(deleteOnSend);
 
-		commerceNotificationAttachmentPersistence.update(
+		return commerceNotificationAttachmentPersistence.update(
 			commerceNotificationAttachment);
-
-		return commerceNotificationAttachment;
 	}
 
 	@Override

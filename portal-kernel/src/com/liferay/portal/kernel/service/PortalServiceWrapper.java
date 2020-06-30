@@ -28,11 +28,6 @@ public class PortalServiceWrapper
 		_portalService = portalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link PortalServiceUtil} to access the portal remote service. Add custom service methods to <code>com.liferay.portal.service.impl.PortalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public java.lang.String getAutoDeployDirectory() {
 		return _portalService.getAutoDeployDirectory();

@@ -118,21 +118,10 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</c:if>
 
 	<%
-	PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
-	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+	PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry);
 
 	if (print) {
 		viewFullContentURL.setParameter("viewMode", Constants.PRINT);
-	}
-
-	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-		if (assetRenderer.getGroupId() != scopeGroupId) {
-			viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-		}
-
-		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
 	%>
 

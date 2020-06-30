@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Alloy MVC
 Bundle-SymbolicName: com.liferay.alloy.mvc
-Bundle-Version: 3.0.14
+Bundle-Version: 3.0.17
 Export-Package:\
 	com.liferay.alloy.mvc,\
 	com.liferay.alloy.mvc.json.web.service
 Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.3.0,8.4)",\
+	com.liferay.portal.kernel.portlet;version="[7.3.0,8.5)",\
 	\
 	*

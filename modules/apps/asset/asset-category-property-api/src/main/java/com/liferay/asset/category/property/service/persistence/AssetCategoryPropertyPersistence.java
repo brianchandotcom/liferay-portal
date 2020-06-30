@@ -40,7 +40,7 @@ import java.util.Set;
 public interface AssetCategoryPropertyPersistence
 	extends BasePersistence<AssetCategoryProperty> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyUtil} to access the asset category property persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

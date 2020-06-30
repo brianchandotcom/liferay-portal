@@ -47,7 +47,7 @@ public abstract class SiteNavigationMenuItemServiceBaseImpl
 	extends BaseServiceImpl
 	implements IdentifiableOSGiService, SiteNavigationMenuItemService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil</code>.
@@ -314,8 +314,8 @@ public abstract class SiteNavigationMenuItemServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

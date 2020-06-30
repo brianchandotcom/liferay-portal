@@ -32,7 +32,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil
 public abstract class DLFileVersionBaseImpl
 	extends DLFileVersionModelImpl implements DLFileVersion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a document library file version model instance should use the <code>DLFileVersion</code> interface instead.

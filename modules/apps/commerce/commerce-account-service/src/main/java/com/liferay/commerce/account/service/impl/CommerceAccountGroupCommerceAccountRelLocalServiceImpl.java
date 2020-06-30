@@ -84,10 +84,8 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 		commerceAccountGroupCommerceAccountRel.setExternalReferenceCode(
 			externalReferenceCode);
 
-		commerceAccountGroupCommerceAccountRelPersistence.update(
+		return commerceAccountGroupCommerceAccountRelPersistence.update(
 			commerceAccountGroupCommerceAccountRel);
-
-		return commerceAccountGroupCommerceAccountRel;
 	}
 
 	@Override
@@ -96,6 +94,15 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 
 		commerceAccountGroupCommerceAccountRelPersistence.
 			removeByCommerceAccountGroupId(commerceAccountGroupId);
+	}
+
+	@Override
+	public CommerceAccountGroupCommerceAccountRel
+		fetchCommerceAccountGroupCommerceAccountRel(
+			long commerceAccountGroupId, long commerceAccountId) {
+
+		return commerceAccountGroupCommerceAccountRelPersistence.fetchByC_C(
+			commerceAccountGroupId, commerceAccountId);
 	}
 
 	@Override

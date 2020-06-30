@@ -50,7 +50,7 @@ public interface CommerceCurrencyModel
 	extends BaseModel<CommerceCurrency>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce currency model instance should use the {@link CommerceCurrency} interface instead.
@@ -311,6 +311,21 @@ public interface CommerceCurrencyModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
+
+	/**
+	 * Returns the symbol of this commerce currency.
+	 *
+	 * @return the symbol of this commerce currency
+	 */
+	@AutoEscape
+	public String getSymbol();
+
+	/**
+	 * Sets the symbol of this commerce currency.
+	 *
+	 * @param symbol the symbol of this commerce currency
+	 */
+	public void setSymbol(String symbol);
 
 	/**
 	 * Returns the rate of this commerce currency.

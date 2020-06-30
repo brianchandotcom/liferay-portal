@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.batch.engine.service.impl.BatchEngineExportTaskLocalServiceImpl" id="com.liferay.batch.engine.service.BatchEngineExportTaskLocalService" />
+	<bean class="com.liferay.batch.engine.service.persistence.impl.BatchEngineExportTaskPersistenceImpl" id="com.liferay.batch.engine.service.persistence.BatchEngineExportTaskPersistence" parent="basePersistence" />
+	<bean class="com.liferay.batch.engine.service.impl.BatchEngineImportTaskLocalServiceImpl" id="com.liferay.batch.engine.service.BatchEngineImportTaskLocalService" />
+	<bean class="com.liferay.batch.engine.service.persistence.impl.BatchEngineImportTaskPersistenceImpl" id="com.liferay.batch.engine.service.persistence.BatchEngineImportTaskPersistence" parent="basePersistence" />
+</beans>

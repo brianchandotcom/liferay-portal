@@ -79,6 +79,10 @@ public class CheckCommerceSubscriptionEntryMessageListener
 		_commerceSubscriptionEntryHelper.checkSubscriptionEntriesStatus(
 			_commerceSubscriptionEntryLocalService.
 				getCommerceSubscriptionEntriesToRenew());
+
+		_commerceSubscriptionEntryHelper.checkDeliverySubscriptionEntriesStatus(
+			_commerceSubscriptionEntryLocalService.
+				getCommerceDeliverySubscriptionEntriesToRenew());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

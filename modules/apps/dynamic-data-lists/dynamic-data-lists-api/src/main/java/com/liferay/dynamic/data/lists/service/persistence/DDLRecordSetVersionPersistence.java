@@ -40,7 +40,7 @@ import java.util.Set;
 public interface DDLRecordSetVersionPersistence
 	extends BasePersistence<DDLRecordSetVersion> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetVersionUtil} to access the ddl record set version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -18,6 +18,8 @@ import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
@@ -28,6 +30,7 @@ import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +39,8 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 
@@ -120,6 +125,61 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
+		if (commerceOrderItem.isManuallyAdjusted()) {
+			CommerceProductPriceImpl commerceProductPriceImpl =
+				new CommerceProductPriceImpl();
+
+			commerceProductPriceImpl.setQuantity(
+				commerceOrderItem.getQuantity());
+			commerceProductPriceImpl.setFinalPrice(
+				commerceOrderItem.getFinalPriceMoney());
+			commerceProductPriceImpl.setUnitPrice(
+				commerceOrderItem.getUnitPriceMoney());
+			commerceProductPriceImpl.setUnitPromoPrice(
+				commerceOrderItem.getPromoPriceMoney());
+
+			BigDecimal[] values = {
+				commerceOrderItem.getDiscountPercentageLevel1(),
+				commerceOrderItem.getDiscountPercentageLevel2(),
+				commerceOrderItem.getDiscountPercentageLevel3(),
+				commerceOrderItem.getDiscountPercentageLevel4()
+			};
+
+			BigDecimal activePrice = commerceOrderItem.getUnitPrice();
+
+			BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
+
+			if ((promoPrice != null) &&
+				(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
+				(promoPrice.compareTo(activePrice) <= 0)) {
+
+				activePrice = promoPrice;
+			}
+
+			BigDecimal discountedAmount = activePrice.subtract(
+				commerceOrderItem.getDiscountAmount());
+
+			CommerceMoney discountAmountMoney =
+				commerceOrderItem.getDiscountAmountMoney();
+
+			CommerceCurrency commerceCurrency =
+				discountAmountMoney.getCommerceCurrency();
+
+			CommerceDiscountValue commerceDiscountValue =
+				new CommerceDiscountValue(
+					0, discountAmountMoney,
+					_getDiscountPercentage(
+						discountedAmount, activePrice,
+						RoundingMode.valueOf(
+							commerceCurrency.getRoundingMode())),
+					values);
+
+			commerceProductPriceImpl.setCommerceDiscountValue(
+				commerceDiscountValue);
+
+			return commerceProductPriceImpl;
+		}
+
 		return _commerceProductPriceCalculation.getCommerceProductPrice(
 			commerceOrderItem.getCPInstanceId(),
 			commerceOrderItem.getQuantity(), _commerceContext);
@@ -162,6 +222,27 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _commercePaymentEngine.getPaymentMethodName(
 			paymentMethodKey, locale);
 	}
+
+	private BigDecimal _getDiscountPercentage(
+		BigDecimal discountedAmount, BigDecimal amount,
+		RoundingMode roundingMode) {
+
+		double actualPrice = discountedAmount.doubleValue();
+		double originalPrice = amount.doubleValue();
+
+		double percentage = actualPrice / originalPrice;
+
+		BigDecimal discountPercentage = new BigDecimal(percentage);
+
+		discountPercentage = discountPercentage.multiply(_ONE_HUNDRED);
+
+		MathContext mathContext = new MathContext(
+			discountPercentage.precision(), roundingMode);
+
+		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
+	}
+
+	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
 
 	private final CommerceContext _commerceContext;
 	private final CommerceOrder _commerceOrder;

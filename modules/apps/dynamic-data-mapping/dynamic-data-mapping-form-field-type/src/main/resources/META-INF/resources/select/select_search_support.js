@@ -9,9 +9,13 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
-
 		var SelectFieldSearchSupport = function() {};
+
+		SelectFieldSearchSupport.ATTRS = {
+			keywords: {
+				value: ''
+			}
+		};
 
 		SelectFieldSearchSupport.prototype = {
 			initializer: function() {
@@ -26,13 +30,7 @@ AUI.add(
 			clearFilter: function() {
 				var instance = this;
 
-				var searchInputNode = instance._getInputSearch();
-
-				var options = instance.get('options');
-
-				instance._renderList(options, true);
-
-				searchInputNode.val('');
+				instance.set('keywords', '');
 			},
 
 			_afterCloseList: function() {
@@ -43,31 +41,32 @@ AUI.add(
 				}
 			},
 
+			getOptions: function() {
+				var instance = this;
+
+				var keywords = instance.get('keywords');
+				var options = instance.get('options');
+
+				if (!keywords) {
+					return options;
+				}
+
+				return AArray.filter(
+					options,
+					function(option) {
+						return instance._containsString(option.label, keywords);
+					}
+				);
+			},
+
 			_afterStartSearching: function(event) {
 				var instance = this;
 
 				var target = event.target;
 
-				var term = Lang.trim(target.get('value')).toLowerCase();
+				instance.set('keywords', Lang.trim(target.get('value')).toLowerCase())
 
-				var filteredOptions = AArray.filter(
-					instance.get('options'),
-					function(option) {
-						return instance._containsString(option.label, term);
-					}
-				);
-
-				instance._renderList(filteredOptions, false);
-
-				instance._visitDOMListItems(
-					A.bind(instance._applyFilterStyleOnItem, instance, term)
-				);
-			},
-
-			_applyFilterStyleOnItem: function(term, item) {
-				var content = item.one('a').getContent();
-
-				item.one('a').setContent(AHighlight.all(content, term));
+				instance.render();
 			},
 
 			_containsString: function(fullString, term) {
@@ -78,47 +77,6 @@ AUI.add(
 				var instance = this;
 
 				return instance.get('container').one('.' + CSS_SEARCH_INPUT);
-			},
-
-			_getTemplate: function(context) {
-				var instance = this;
-
-				var renderer = SoyTemplateUtil.getTemplateRenderer('DDMSelect.select_options');
-
-				var container = document.createDocumentFragment();
-
-				new renderer(context, container);
-
-				return container.firstChild.innerHTML;
-			},
-
-			_renderList: function(options, showPlaceholderOption) {
-				var instance = this;
-
-				var template = instance._getTemplate(
-					{
-						fixedOptions: instance.get('fixedOptions'),
-						multiple: instance.get('multiple'),
-						options: options,
-						showPlaceholderOption: showPlaceholderOption && instance.showPlaceholderOption(),
-						strings: instance.get('strings'),
-						value: instance.getValue()
-					}
-				);
-
-				var optionsList = instance.get('container').one('.dropdown-visible');
-
-				if (optionsList) {
-					optionsList.setHTML(template);
-				}
-			},
-
-			_visitDOMListItems: function(callBack) {
-				var instance = this;
-
-				instance.get('container').all('li.select-option-item.unfixed').each(callBack);
-
-				return instance;
 			}
 		};
 

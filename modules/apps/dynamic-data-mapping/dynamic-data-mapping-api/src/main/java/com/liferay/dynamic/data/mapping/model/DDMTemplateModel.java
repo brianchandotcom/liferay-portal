@@ -49,7 +49,7 @@ public interface DDMTemplateModel
 	extends AttachedModel, BaseModel<DDMTemplate>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ddm template model instance should use the {@link DDMTemplate} interface instead.

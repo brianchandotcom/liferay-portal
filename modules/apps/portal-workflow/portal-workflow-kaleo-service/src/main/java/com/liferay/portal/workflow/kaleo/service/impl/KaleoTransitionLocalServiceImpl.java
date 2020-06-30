@@ -63,7 +63,7 @@ public class KaleoTransitionLocalServiceImpl
 		kaleoTransition.setTargetKaleoNodeName(targetKaleoNode.getName());
 		kaleoTransition.setDefaultTransition(transition.isDefault());
 
-		kaleoTransitionPersistence.update(kaleoTransition);
+		kaleoTransition = kaleoTransitionPersistence.update(kaleoTransition);
 
 		// Kaleo timer
 

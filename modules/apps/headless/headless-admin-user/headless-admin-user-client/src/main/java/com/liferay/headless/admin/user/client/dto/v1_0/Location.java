@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 import com.liferay.headless.admin.user.client.serdes.v1_0.LocationSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Location {
+public class Location implements Cloneable {
 
 	public String getAddressCountry() {
 		return addressCountry;
@@ -48,6 +49,30 @@ public class Location {
 	}
 
 	protected String addressCountry;
+
+	public Map<String, String> getAddressCountry_i18n() {
+		return addressCountry_i18n;
+	}
+
+	public void setAddressCountry_i18n(
+		Map<String, String> addressCountry_i18n) {
+
+		this.addressCountry_i18n = addressCountry_i18n;
+	}
+
+	public void setAddressCountry_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			addressCountry_i18nUnsafeSupplier) {
+
+		try {
+			addressCountry_i18n = addressCountry_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> addressCountry_i18n;
 
 	public String getAddressRegion() {
 		return addressRegion;
@@ -88,6 +113,11 @@ public class Location {
 	}
 
 	protected Long id;
+
+	@Override
+	public Location clone() throws CloneNotSupportedException {
+		return (Location)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

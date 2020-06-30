@@ -32,7 +32,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 public abstract class AssetVocabularyBaseImpl
 	extends AssetVocabularyModelImpl implements AssetVocabulary {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset vocabulary model instance should use the <code>AssetVocabulary</code> interface instead.

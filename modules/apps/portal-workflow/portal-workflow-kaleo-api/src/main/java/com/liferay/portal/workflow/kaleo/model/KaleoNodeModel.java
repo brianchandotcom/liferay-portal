@@ -43,7 +43,7 @@ import java.util.Date;
 public interface KaleoNodeModel
 	extends BaseModel<KaleoNode>, GroupedModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo node model instance should use the {@link KaleoNode} interface instead.

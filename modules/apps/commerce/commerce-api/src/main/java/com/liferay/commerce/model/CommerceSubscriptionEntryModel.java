@@ -45,7 +45,7 @@ public interface CommerceSubscriptionEntryModel
 	extends BaseModel<CommerceSubscriptionEntry>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a commerce subscription entry model instance should use the {@link CommerceSubscriptionEntry} interface instead.
@@ -380,6 +380,136 @@ public interface CommerceSubscriptionEntryModel
 	 * @param startDate the start date of this commerce subscription entry
 	 */
 	public void setStartDate(Date startDate);
+
+	/**
+	 * Returns the delivery subscription length of this commerce subscription entry.
+	 *
+	 * @return the delivery subscription length of this commerce subscription entry
+	 */
+	public int getDeliverySubscriptionLength();
+
+	/**
+	 * Sets the delivery subscription length of this commerce subscription entry.
+	 *
+	 * @param deliverySubscriptionLength the delivery subscription length of this commerce subscription entry
+	 */
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength);
+
+	/**
+	 * Returns the delivery subscription type of this commerce subscription entry.
+	 *
+	 * @return the delivery subscription type of this commerce subscription entry
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionType();
+
+	/**
+	 * Sets the delivery subscription type of this commerce subscription entry.
+	 *
+	 * @param deliverySubscriptionType the delivery subscription type of this commerce subscription entry
+	 */
+	public void setDeliverySubscriptionType(String deliverySubscriptionType);
+
+	/**
+	 * Returns the delivery subscription type settings of this commerce subscription entry.
+	 *
+	 * @return the delivery subscription type settings of this commerce subscription entry
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionTypeSettings();
+
+	/**
+	 * Sets the delivery subscription type settings of this commerce subscription entry.
+	 *
+	 * @param deliverySubscriptionTypeSettings the delivery subscription type settings of this commerce subscription entry
+	 */
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings);
+
+	/**
+	 * Returns the delivery current cycle of this commerce subscription entry.
+	 *
+	 * @return the delivery current cycle of this commerce subscription entry
+	 */
+	public long getDeliveryCurrentCycle();
+
+	/**
+	 * Sets the delivery current cycle of this commerce subscription entry.
+	 *
+	 * @param deliveryCurrentCycle the delivery current cycle of this commerce subscription entry
+	 */
+	public void setDeliveryCurrentCycle(long deliveryCurrentCycle);
+
+	/**
+	 * Returns the delivery max subscription cycles of this commerce subscription entry.
+	 *
+	 * @return the delivery max subscription cycles of this commerce subscription entry
+	 */
+	public long getDeliveryMaxSubscriptionCycles();
+
+	/**
+	 * Sets the delivery max subscription cycles of this commerce subscription entry.
+	 *
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this commerce subscription entry
+	 */
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles);
+
+	/**
+	 * Returns the delivery subscription status of this commerce subscription entry.
+	 *
+	 * @return the delivery subscription status of this commerce subscription entry
+	 */
+	public int getDeliverySubscriptionStatus();
+
+	/**
+	 * Sets the delivery subscription status of this commerce subscription entry.
+	 *
+	 * @param deliverySubscriptionStatus the delivery subscription status of this commerce subscription entry
+	 */
+	public void setDeliverySubscriptionStatus(int deliverySubscriptionStatus);
+
+	/**
+	 * Returns the delivery last iteration date of this commerce subscription entry.
+	 *
+	 * @return the delivery last iteration date of this commerce subscription entry
+	 */
+	public Date getDeliveryLastIterationDate();
+
+	/**
+	 * Sets the delivery last iteration date of this commerce subscription entry.
+	 *
+	 * @param deliveryLastIterationDate the delivery last iteration date of this commerce subscription entry
+	 */
+	public void setDeliveryLastIterationDate(Date deliveryLastIterationDate);
+
+	/**
+	 * Returns the delivery next iteration date of this commerce subscription entry.
+	 *
+	 * @return the delivery next iteration date of this commerce subscription entry
+	 */
+	public Date getDeliveryNextIterationDate();
+
+	/**
+	 * Sets the delivery next iteration date of this commerce subscription entry.
+	 *
+	 * @param deliveryNextIterationDate the delivery next iteration date of this commerce subscription entry
+	 */
+	public void setDeliveryNextIterationDate(Date deliveryNextIterationDate);
+
+	/**
+	 * Returns the delivery start date of this commerce subscription entry.
+	 *
+	 * @return the delivery start date of this commerce subscription entry
+	 */
+	public Date getDeliveryStartDate();
+
+	/**
+	 * Sets the delivery start date of this commerce subscription entry.
+	 *
+	 * @param deliveryStartDate the delivery start date of this commerce subscription entry
+	 */
+	public void setDeliveryStartDate(Date deliveryStartDate);
 
 	@Override
 	public boolean isNew();

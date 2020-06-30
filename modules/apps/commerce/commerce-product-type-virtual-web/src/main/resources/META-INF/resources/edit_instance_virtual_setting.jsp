@@ -28,7 +28,7 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />
 
-<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
+<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="className" type="hidden" value="<%= CPInstance.class.getName() %>" />
@@ -132,5 +132,8 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />override', '<portlet:namespace />cpDefinitionVirtualSettingContainer');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />override',
+		'<portlet:namespace />cpDefinitionVirtualSettingContainer'
+	);
 </aui:script>

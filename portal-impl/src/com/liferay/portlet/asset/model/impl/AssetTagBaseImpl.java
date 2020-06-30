@@ -32,7 +32,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 public abstract class AssetTagBaseImpl
 	extends AssetTagModelImpl implements AssetTag {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset tag model instance should use the <code>AssetTag</code> interface instead.

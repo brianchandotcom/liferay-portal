@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -655,15 +656,17 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			calendarBooking.getCompanyId());
 
-		String calendarBookingDescription = StringUtil.replace(
-			calendarBooking.getDescription(user.getLocale()),
-			new String[] {"href=\"/", "src=\"/"},
-			new String[] {
-				"href=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
-					"/",
-				"src=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
-					"/"
-			});
+		String calendarBookingDescription = HtmlUtil.stripHtml(
+			StringUtil.replace(
+				calendarBooking.getDescription(user.getLocale()),
+				new String[] {"href=\"/", "src=\"/"},
+				new String[] {
+					"href=\"" +
+						company.getPortalURL(calendarBooking.getGroupId()) +
+							"/",
+					"src=\"" +
+						company.getPortalURL(calendarBooking.getGroupId()) + "/"
+				}));
 
 		Description description = new Description(calendarBookingDescription);
 

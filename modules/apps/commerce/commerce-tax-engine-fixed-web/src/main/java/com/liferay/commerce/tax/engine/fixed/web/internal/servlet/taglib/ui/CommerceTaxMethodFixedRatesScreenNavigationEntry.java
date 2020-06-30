@@ -16,7 +16,9 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRatesDisplayContext;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
@@ -26,6 +28,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,6 +91,10 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, CommerceTaxMethod commerceTaxMethod) {
+		if (commerceTaxMethod == null) {
+			return false;
+		}
+
 		String engineKey = commerceTaxMethod.getEngineKey();
 
 		if (engineKey.equals("fixed-tax")) {
@@ -110,6 +117,8 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 		CommerceTaxFixedRatesDisplayContext
 			commerceTaxFixedRatesDisplayContext =
 				new CommerceTaxFixedRatesDisplayContext(
+					_commerceChannelLocalService,
+					_commerceChannelModelResourcePermission,
 					_commerceCurrencyLocalService, _commerceTaxFixedRateService,
 					_commerceTaxMethodService, _cpTaxCategoryService,
 					renderRequest);
@@ -122,6 +131,15 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/tax_rates.jsp");
 	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
+	)
+	private ModelResourcePermission<CommerceChannel>
+		_commerceChannelModelResourcePermission;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

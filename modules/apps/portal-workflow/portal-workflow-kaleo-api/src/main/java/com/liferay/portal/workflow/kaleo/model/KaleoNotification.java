@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Accessor;
 public interface KaleoNotification
 	extends KaleoNotificationModel, PersistedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

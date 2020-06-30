@@ -66,7 +66,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 		if (cpInstance == null) {
 			return new CommerceOrderValidatorResult(
 				false,
-				_getLocalizedMessage(locale, "please-select-a-valid-product"));
+				_getLocalizedMessage(
+					locale, "the-product-is-no-longer-available"));
 		}
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -111,7 +112,14 @@ public class AvailabilityCommerceOrderValidatorImpl
 			Locale locale, CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CPInstance cpInstance = commerceOrderItem.getCPInstance();
+		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+		if (cpInstance == null) {
+			return new CommerceOrderValidatorResult(
+				commerceOrderItem.getCommerceOrderItemId(), false,
+				_getLocalizedMessage(
+					locale, "the-product-is-no-longer-available"));
+		}
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -153,6 +161,10 @@ public class AvailabilityCommerceOrderValidatorImpl
 	}
 
 	private String _getLocalizedMessage(Locale locale, String key) {
+		if (locale == null) {
+			return key;
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 

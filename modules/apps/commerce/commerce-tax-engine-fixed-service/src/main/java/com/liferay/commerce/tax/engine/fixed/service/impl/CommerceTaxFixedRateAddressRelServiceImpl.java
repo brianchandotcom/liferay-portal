@@ -14,15 +14,17 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateAddressRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -35,19 +37,35 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
+			long userId, long groupId, long commerceTaxMethodId,
+			long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
+			String zip, double rate)
+		throws PortalException {
+
+		_checkCommerceChannelPermissionByGroupId(groupId);
+
+		return commerceTaxFixedRateAddressRelLocalService.
+			addCommerceTaxFixedRateAddressRel(
+				userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
+				commerceCountryId, commerceRegionId, zip, rate);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 			long commerceTaxMethodId, long cpTaxCategoryId,
 			long commerceCountryId, long commerceRegionId, String zip,
 			double rate, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
-
-		return commerceTaxFixedRateAddressRelLocalService.
+		return commerceTaxFixedRateAddressRelService.
 			addCommerceTaxFixedRateAddressRel(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-				commerceRegionId, zip, rate, serviceContext);
+				commerceRegionId, zip, rate);
 	}
 
 	@Override
@@ -60,9 +78,8 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				getCommerceTaxFixedRateAddressRel(
 					commerceTaxFixedRateAddressRelId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceTaxFixedRateAddressRel.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceTaxFixedRateAddressRel.getGroupId());
 
 		commerceTaxFixedRateAddressRelLocalService.
 			deleteCommerceTaxFixedRateAddressRel(
@@ -80,10 +97,8 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 					commerceTaxFixedRateAddressRelId);
 
 		if (commerceTaxFixedRateAddressRel != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(),
-				commerceTaxFixedRateAddressRel.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+			_checkCommerceChannelPermissionByGroupId(
+				commerceTaxFixedRateAddressRel.getGroupId());
 		}
 
 		return commerceTaxFixedRateAddressRel;
@@ -97,9 +112,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRels(
@@ -111,9 +124,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 			long groupId, long commerceTaxMethodId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		_checkCommerceChannelPermissionByGroupId(groupId);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRelsCount(commerceTaxMethodId);
@@ -130,9 +141,8 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				getCommerceTaxFixedRateAddressRel(
 					commerceTaxFixedRateAddressRelId);
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), commerceTaxFixedRateAddressRel.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		_checkCommerceChannelPermissionByGroupId(
+			commerceTaxFixedRateAddressRel.getGroupId());
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			updateCommerceTaxFixedRateAddressRel(
@@ -140,10 +150,24 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				commerceRegionId, zip, rate);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
+	private void _checkCommerceChannelPermissionByGroupId(long groupId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.UPDATE);
+	}
+
+	private static volatile ModelResourcePermission<CommerceChannel>
+		_commerceChannelModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
 				CommerceTaxFixedRateAddressRelServiceImpl.class,
-				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
+				"_commerceChannelModelResourcePermission",
+				CommerceChannel.class);
+
+	@ServiceReference(type = CommerceChannelLocalService.class)
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

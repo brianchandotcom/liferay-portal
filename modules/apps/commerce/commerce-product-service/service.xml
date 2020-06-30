@@ -23,7 +23,7 @@
 		<column name="name" type="String" />
 		<column name="commerceCurrencyCode" type="String" />
 		<column name="catalogDefaultLanguageId" type="String" />
-		<column name="system" type="boolean" />
+		<column db-name="system_" name="system" type="boolean" />
 
 		<!-- Order -->
 
@@ -254,6 +254,11 @@
 		<column name="subscriptionType" type="String" />
 		<column name="subscriptionTypeSettings" type="String" />
 		<column name="maxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionEnabled" type="boolean" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="accountGroupFilterEnabled" type="boolean" />
 		<column name="channelFilterEnabled" type="boolean" />
 		<column name="version" type="int" />
@@ -403,6 +408,7 @@
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
 		<column name="key" type="String" />
+		<column name="priceType" type="String" />
 
 		<!-- Order -->
 
@@ -462,6 +468,10 @@
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
+		<column name="CPInstanceUuid" type="String" />
+		<column name="CProductId" type="long" />
+		<column name="quantity" type="int" />
+		<column name="price" type="BigDecimal" />
 
 		<!-- Order -->
 
@@ -705,7 +715,6 @@
 		<column name="gtin" type="String" />
 		<column name="manufacturerPartNumber" type="String" />
 		<column name="purchasable" type="boolean" />
-		<column name="json" type="String" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
@@ -723,6 +732,11 @@
 		<column name="subscriptionType" type="String" />
 		<column name="subscriptionTypeSettings" type="String" />
 		<column name="maxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionEnabled" type="boolean" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -779,6 +793,52 @@
 
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CPInstanceOptionValueRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPInstanceOptionValueRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionOptionRelId" type="long" />
+		<column name="CPDefinitionOptionValueRelId" type="long" />
+		<column name="CPInstanceId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionOptionRelId" return-type="Collection">
+			<finder-column name="CPDefinitionOptionRelId" />
+		</finder>
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="CDORI_CII" return-type="Collection">
+			<finder-column name="CPDefinitionOptionRelId" />
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="CDOVRI_CII" return-type="CPInstanceOptionValueRel">
+			<finder-column name="CPDefinitionOptionValueRelId" />
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="CDORI_CDOVRI_CII" return-type="CPInstanceOptionValueRel" unique="true">
+			<finder-column name="CPDefinitionOptionRelId" />
+			<finder-column name="CPDefinitionOptionValueRelId" />
+			<finder-column name="CPInstanceId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CPMeasurementUnit" remote-service="true" uuid="true">
 
@@ -1089,6 +1149,8 @@
 		<exception>CPDefinitionMetaDescription</exception>
 		<exception>CPDefinitionMetaKeywords</exception>
 		<exception>CPDefinitionMetaTitle</exception>
+		<exception>CPDefinitionNameDefaultLanguage</exception>
+		<exception>CPDefinitionOptionSKUContributor</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
@@ -1101,6 +1163,7 @@
 		<exception>CPMeasurementUnitKey</exception>
 		<exception>CPOptionCategoryKey</exception>
 		<exception>CPOptionKey</exception>
+		<exception>CPOptionSKUContributor</exception>
 		<exception>CPOptionValueKey</exception>
 		<exception>CPSpecificationOptionKey</exception>
 		<exception>CPSpecificationOptionTitle</exception>
@@ -1110,6 +1173,7 @@
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
 		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>DuplicateCProduct</exception>
+		<exception>InvalidCommerceChannelType</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>
 </service-builder>

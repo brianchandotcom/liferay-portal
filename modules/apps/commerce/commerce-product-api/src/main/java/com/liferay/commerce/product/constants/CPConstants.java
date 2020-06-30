@@ -30,6 +30,10 @@ public class CPConstants {
 
 	public static final String MONTHLY_SUBSCRIPTION_TYPE = "monthly";
 
+	public static final String PRODUCT_OPTION_PRICE_TYPE_DYNAMIC = "dynamic";
+
+	public static final String PRODUCT_OPTION_PRICE_TYPE_STATIC = "static";
+
 	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";

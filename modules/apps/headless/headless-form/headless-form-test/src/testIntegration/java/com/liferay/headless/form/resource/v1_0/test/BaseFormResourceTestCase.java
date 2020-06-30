@@ -529,6 +529,14 @@ public abstract class BaseFormResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (form.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("formRecords", additionalAssertFieldName)) {
 				if (form.getFormRecords() == null) {
 					valid = false;
@@ -547,6 +555,14 @@ public abstract class BaseFormResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (form.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (form.getName_i18n() == null) {
 					valid = false;
 				}
 
@@ -842,6 +858,17 @@ public abstract class BaseFormResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						form1.getDescription_i18n(),
+						form2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("formRecords", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						form1.getFormRecords(), form2.getFormRecords())) {
@@ -872,6 +899,16 @@ public abstract class BaseFormResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(form1.getName(), form2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						form1.getName_i18n(), form2.getName_i18n())) {
+
 					return false;
 				}
 
@@ -1326,6 +1363,11 @@ public abstract class BaseFormResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("formRecords")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1347,6 +1389,11 @@ public abstract class BaseFormResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("siteId")) {

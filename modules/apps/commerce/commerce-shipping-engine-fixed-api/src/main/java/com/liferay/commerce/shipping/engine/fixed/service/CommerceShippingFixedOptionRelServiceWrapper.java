@@ -35,11 +35,29 @@ public class CommerceShippingFixedOptionRelServiceWrapper
 			commerceShippingFixedOptionRelService;
 	}
 
+	@Override
+	public com.liferay.commerce.shipping.engine.fixed.model.
+		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
+				long userId, long groupId, long commerceShippingMethodId,
+				long commerceShippingFixedOptionId,
+				long commerceInventoryWarehouseId, long commerceCountryId,
+				long commerceRegionId, String zip, double weightFrom,
+				double weightTo, java.math.BigDecimal fixedPrice,
+				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingFixedOptionRelService.
+			addCommerceShippingFixedOptionRel(
+				userId, groupId, commerceShippingMethodId,
+				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
+				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
+				fixedPrice, rateUnitWeightPrice, ratePercentage);
+	}
+
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionRelServiceUtil} to access the commerce shipping fixed option rel remote service. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(

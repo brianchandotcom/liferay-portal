@@ -248,7 +248,9 @@ public class KBArticleCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		kbArticleId = objectInput.readLong();
@@ -275,7 +277,7 @@ public class KBArticleCacheModel
 		version = objectInput.readInt();
 		title = objectInput.readUTF();
 		urlTitle = objectInput.readUTF();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		description = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
@@ -350,10 +352,10 @@ public class KBArticleCacheModel
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		if (description == null) {

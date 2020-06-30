@@ -40,7 +40,7 @@ public interface PhoneModel
 	extends AttachedModel, BaseModel<Phone>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a phone model instance should use the {@link Phone} interface instead.

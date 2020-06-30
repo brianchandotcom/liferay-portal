@@ -40,7 +40,7 @@ public interface RepositoryEntryModel
 	extends BaseModel<RepositoryEntry>, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a repository entry model instance should use the {@link RepositoryEntry} interface instead.

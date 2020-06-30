@@ -66,7 +66,7 @@ public class CommerceCurrencyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -86,6 +86,8 @@ public class CommerceCurrencyCacheModel
 		sb.append(code);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", symbol=");
+		sb.append(symbol);
 		sb.append(", rate=");
 		sb.append(rate);
 		sb.append(", formatPattern=");
@@ -159,6 +161,13 @@ public class CommerceCurrencyCacheModel
 			commerceCurrencyImpl.setName(name);
 		}
 
+		if (symbol == null) {
+			commerceCurrencyImpl.setSymbol("");
+		}
+		else {
+			commerceCurrencyImpl.setSymbol(symbol);
+		}
+
 		commerceCurrencyImpl.setRate(rate);
 
 		if (formatPattern == null) {
@@ -210,6 +219,7 @@ public class CommerceCurrencyCacheModel
 		modifiedDate = objectInput.readLong();
 		code = objectInput.readUTF();
 		name = objectInput.readUTF();
+		symbol = objectInput.readUTF();
 		rate = (BigDecimal)objectInput.readObject();
 		formatPattern = objectInput.readUTF();
 
@@ -265,6 +275,13 @@ public class CommerceCurrencyCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (symbol == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(symbol);
+		}
+
 		objectOutput.writeObject(rate);
 
 		if (formatPattern == null) {
@@ -302,6 +319,7 @@ public class CommerceCurrencyCacheModel
 	public long modifiedDate;
 	public String code;
 	public String name;
+	public String symbol;
 	public BigDecimal rate;
 	public String formatPattern;
 	public int maxFractionDigits;

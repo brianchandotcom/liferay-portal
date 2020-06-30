@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil;
 public abstract class UserTrackerBaseImpl
 	extends UserTrackerModelImpl implements UserTracker {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user tracker model instance should use the <code>UserTracker</code> interface instead.

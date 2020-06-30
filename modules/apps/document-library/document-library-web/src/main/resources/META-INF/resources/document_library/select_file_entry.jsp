@@ -47,8 +47,13 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFileEntryFm">
+
+		<%
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		%>
+
 		<liferay-ui:breadcrumb
-			showGuestGroup="<%= false %>"
+			showGuestGroup="<%= group.isGuest() %>"
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>

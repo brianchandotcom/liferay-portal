@@ -193,17 +193,19 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 				_log.error("Unable to get live group URL: " + pe.getMessage());
 			}
-			catch (SystemException se) {
-				Throwable cause = se.getCause();
+			catch (SystemException systemException) {
+				Throwable cause = systemException.getCause();
 
 				if (!(cause instanceof ConnectException)) {
-					throw se;
+					throw systemException;
 				}
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to connect to remote live: " +
-							cause.getMessage());
+				_log.error(
+					"Unable to connect to remote live: " +
+						systemException.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(systemException, systemException);
 				}
 
 				throw new RemoteExportException(

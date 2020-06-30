@@ -28,11 +28,6 @@ public class RoleLocalServiceWrapper
 		_roleLocalService = roleLocalService;
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link RoleLocalServiceUtil} to access the role local service. Add custom service methods to <code>com.liferay.portal.service.impl.RoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
-	 */
 	@Override
 	public void addGroupRole(long groupId, long roleId) {
 		_roleLocalService.addGroupRole(groupId, roleId);
@@ -570,6 +565,9 @@ public class RoleLocalServiceWrapper
 		return _roleLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)

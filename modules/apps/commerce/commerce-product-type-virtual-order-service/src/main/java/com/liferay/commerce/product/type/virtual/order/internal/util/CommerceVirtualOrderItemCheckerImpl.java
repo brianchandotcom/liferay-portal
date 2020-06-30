@@ -19,7 +19,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
@@ -64,13 +63,9 @@ public class CommerceVirtualOrderItemCheckerImpl
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
-
 			CommerceSubscriptionEntry commerceSubscriptionEntry =
 				_commerceSubscriptionEntryLocalService.
-					fetchCommerceSubscriptionEntries(
-						cpInstance.getCPInstanceUuid(),
-						commerceOrderItem.getCProductId(),
+					fetchCommerceSubscriptionEntryByCommerceOrderItemId(
 						commerceOrderItem.getCommerceOrderItemId());
 
 			CommerceVirtualOrderItem commerceVirtualOrderItem =

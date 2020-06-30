@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalServi
 public abstract class KaleoTaskFormInstanceBaseImpl
 	extends KaleoTaskFormInstanceModelImpl implements KaleoTaskFormInstance {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo task form instance model instance should use the <code>KaleoTaskFormInstance</code> interface instead.

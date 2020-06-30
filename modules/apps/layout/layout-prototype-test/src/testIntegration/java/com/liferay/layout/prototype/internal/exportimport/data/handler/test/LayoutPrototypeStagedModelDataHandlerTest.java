@@ -15,6 +15,8 @@
 package com.liferay.layout.prototype.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,6 +41,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -67,6 +71,60 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
 				_layoutPrototype);
 		}
+	}
+
+	@Test
+	public void testImportCopyAsNew() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, dependentStagedModelsMap);
+
+		String layoutPrototypeName = _layoutPrototype.getNameCurrentValue();
+
+		_layoutPrototype.setName(
+			RandomTestUtil.randomString(),
+			LocaleUtil.fromLanguageId(
+				_layoutPrototype.getNameCurrentLanguageId()));
+
+		LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(_layoutPrototype);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		portletDataContext.setDataStrategy(
+			PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		LayoutPrototype importedLayoutPrototype =
+			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+				_layoutPrototype.getCompanyId(), layoutPrototypeName);
+
+		Assert.assertNotEquals(
+			_layoutPrototype.getUuid(), importedLayoutPrototype.getUuid());
+
+		Layout layout = _layoutPrototype.getLayout();
+
+		Layout importedLayout = importedLayoutPrototype.getLayout();
+
+		Assert.assertNotEquals(layout.getUuid(), importedLayout.getUuid());
+
+		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+			importedLayoutPrototype);
 	}
 
 	@Override

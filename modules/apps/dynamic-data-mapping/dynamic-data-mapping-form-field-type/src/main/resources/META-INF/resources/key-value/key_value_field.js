@@ -144,6 +144,12 @@ AUI.add(
 						if (keyInput) {
 							keyInput.val(key);
 						}
+
+						var key = instance.get('key');
+
+						if (!key) {
+							instance.set('key', key);
+						}
 					},
 
 					showErrorMesasage: function() {

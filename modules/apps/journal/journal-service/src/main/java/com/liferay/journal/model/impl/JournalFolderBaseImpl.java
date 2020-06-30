@@ -37,7 +37,7 @@ import java.util.List;
 public abstract class JournalFolderBaseImpl
 	extends JournalFolderModelImpl implements JournalFolder {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a journal folder model instance should use the <code>JournalFolder</code> interface instead.

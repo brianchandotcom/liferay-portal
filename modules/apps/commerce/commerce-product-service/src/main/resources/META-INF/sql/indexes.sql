@@ -75,6 +75,13 @@ create index IX_FF605F28 on CPInstance (groupId, status);
 create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_4BFAB7E7 on CPInstanceOptionValueRel (CPDefinitionOptionRelId, CPDefinitionOptionValueRelId, CPInstanceId);
+create index IX_F63695BB on CPInstanceOptionValueRel (CPDefinitionOptionRelId, CPInstanceId);
+create index IX_1F153982 on CPInstanceOptionValueRel (CPDefinitionOptionValueRelId, CPInstanceId);
+create index IX_2C714896 on CPInstanceOptionValueRel (CPInstanceId);
+create index IX_F6E24C79 on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_AF559D3B on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create unique index IX_BCD82992 on CPMeasurementUnit (companyId, key_[$COLUMN_LENGTH:75$], type_);
 create index IX_107489F5 on CPMeasurementUnit (companyId, primary_, type_);
 create index IX_1C2742A6 on CPMeasurementUnit (companyId, type_);
@@ -104,7 +111,7 @@ create index IX_39773566 on CProduct (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_9F9DD68 on CProduct (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_1198BFF9 on CommerceCatalog (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_3D14D2A7 on CommerceCatalog (companyId, system);
+create index IX_65864AFC on CommerceCatalog (companyId, system_);
 
 create index IX_690E2FE3 on CommerceChannel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_E1ECD95 on CommerceChannel (siteGroupId);

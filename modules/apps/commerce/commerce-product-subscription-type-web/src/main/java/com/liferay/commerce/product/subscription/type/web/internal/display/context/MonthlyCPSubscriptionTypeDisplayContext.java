@@ -24,14 +24,17 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
  */
 public class MonthlyCPSubscriptionTypeDisplayContext {
 
-	public MonthlyCPSubscriptionTypeDisplayContext(Object object) {
+	public MonthlyCPSubscriptionTypeDisplayContext(
+		Object object, boolean payment) {
+
 		_object = object;
+		_payment = payment;
 	}
 
 	public int getMonthDay() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if ((subscriptionTypeSettingsProperties == null) ||
 			subscriptionTypeSettingsProperties.isEmpty()) {
@@ -39,23 +42,38 @@ public class MonthlyCPSubscriptionTypeDisplayContext {
 			return 1;
 		}
 
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("monthDay"));
+		}
+
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthDay"));
+			subscriptionTypeSettingsProperties.get("deliveryMonthDay"));
 	}
 
 	public int getSelectedMonthlyMode() {
 		UnicodeProperties subscriptionTypeSettingsProperties =
 			CommerceSubscriptionTypeUtil.getSubscriptionTypeSettingsProperties(
-				_object);
+				_object, _payment);
 
 		if (subscriptionTypeSettingsProperties == null) {
 			return CPSubscriptionTypeConstants.MODE_ORDER_DATE;
 		}
 
+		if (isPayment()) {
+			return GetterUtil.getInteger(
+				subscriptionTypeSettingsProperties.get("monthlyMode"));
+		}
+
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsProperties.get("monthlyMode"));
+			subscriptionTypeSettingsProperties.get("deliveryMonthlyMode"));
+	}
+
+	public boolean isPayment() {
+		return _payment;
 	}
 
 	private final Object _object;
+	private final boolean _payment;
 
 }

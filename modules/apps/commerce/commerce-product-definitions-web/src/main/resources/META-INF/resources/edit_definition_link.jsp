@@ -20,75 +20,34 @@
 CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext = (CPDefinitionLinkDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinitionLink cpDefinitionLink = cpDefinitionLinkDisplayContext.getCPDefinitionLink();
-
-CPDefinition cpDefinition = cpDefinitionLink.getCPDefinition();
-
 long cpDefinitionLinkId = cpDefinitionLinkDisplayContext.getCPDefinitionLinkId();
 
-CProduct cProduct = cpDefinitionLink.getCProduct();
-
-CPDefinition cProductCPDefinition = CPDefinitionLocalServiceUtil.getCPDefinition(cProduct.getPublishedCPDefinitionId());
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
-
-String screenNavigationCategoryKey = cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey();
-
-PortletURL relatedProductsURL = renderResponse.createRenderURL();
-
-relatedProductsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
-relatedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-relatedProductsURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
-relatedProductsURL.setParameter("type", String.valueOf(cpDefinitionLink.getType()));
-
-String title = cProductCPDefinition.getName(languageId);
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getName(languageId), String.valueOf(cpDefinitionLinkDisplayContext.getEditProductDefinitionURL()), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), relatedProductsURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+CPDefinition cpDefinition = cpDefinitionLink.getCPDefinition();
 %>
 
-<%@ include file="/breadcrumb.jspf" %>
+<commerce-ui:modal-content>
+	<portlet:actionURL name="editCPDefinitionLink" var="editCPDefinitionLinkActionURL" />
 
-<portlet:actionURL name="editCPDefinitionLink" var="editCPDefinitionLinkActionURL" />
+	<aui:form action="<%= editCPDefinitionLinkActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+		<aui:input name="cpDefinitionLinkId" type="hidden" value="<%= cpDefinitionLinkId %>" />
+		<aui:input name="type" type="hidden" value="<%= cpDefinitionLink.getType() %>" />
 
-<aui:form action="<%= editCPDefinitionLinkActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= relatedProductsURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
-	<aui:input name="cpDefinitionLinkId" type="hidden" value="<%= cpDefinitionLinkId %>" />
-	<aui:input name="type" type="hidden" value="<%= cpDefinitionLink.getType() %>" />
+		<aui:model-context bean="<%= cpDefinitionLink %>" model="<%= CPDefinitionLink.class %>" />
 
-	<aui:model-context bean="<%= cpDefinitionLink %>" model="<%= CPDefinitionLink.class %>" />
-
-	<div class="lfr-form-content">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input name="priority" />
-			</aui:fieldset>
+		<div class="lfr-form-content">
+			<aui:input name="priority" />
 
 			<c:if test="<%= cpDefinitionLinkDisplayContext.hasCustomAttributesAvailable() %>">
-				<aui:fieldset collapsible="<%= true %>" label="custom-attribute">
-					<liferay-expando:custom-attribute-list
-						className="<%= CPDefinitionLink.class.getName() %>"
-						classPK="<%= (cpDefinitionLink != null) ? cpDefinitionLink.getCPDefinitionLinkId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
+				<liferay-expando:custom-attribute-list
+					className="<%= CPDefinitionLink.class.getName() %>"
+					classPK="<%= (cpDefinitionLink != null) ? cpDefinitionLink.getCPDefinitionLinkId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
 			</c:if>
-		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
-
-			<aui:button cssClass="btn-lg" href="<%= relatedProductsURL.toString() %>" type="cancel" />
-		</aui:button-row>
-	</div>
-</aui:form>
+		</div>
+	</aui:form>
+</commerce-ui:modal-content>

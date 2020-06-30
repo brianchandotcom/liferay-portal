@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalServiceUtil;
 public abstract class KaleoConditionBaseImpl
 	extends KaleoConditionModelImpl implements KaleoCondition {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo condition model instance should use the <code>KaleoCondition</code> interface instead.

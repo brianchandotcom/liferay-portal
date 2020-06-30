@@ -1,0 +1,45 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		//layout
+
+		JSONLayout.addPrivateLayout(
+			groupName = "${groupName}",
+			layoutName = "private 1");
+
+		JSONLayout.addPrivateLayoutByGroupName(
+			groupName = "${groupName}",
+			layoutName = "private 2");
+
+		JSONLayout.addPublicLayout(
+			groupName = "${groupName}",
+			layoutName = "public 1");
+
+		JSONLayout.addPublicLayoutByGroupName(
+			groupName = "${groupName}",
+			layoutName = "public 2");
+
+		//widget
+
+		JSONLayout.addWidgetToPrivateLayout(
+			groupName = "${groupName}",
+			layoutName = "private 1",
+			widgetName = "Asset Publisher");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "${groupName}",
+			layoutName = "public 1",
+			widgetName = "Asset Publisher");
+
+		//layout template
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "${groupName}",
+			layoutName = "public 1",
+			layoutTemplate = "1 Column");
+	}
+
+}

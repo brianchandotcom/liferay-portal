@@ -40,7 +40,7 @@ import java.util.Set;
 public interface CommerceNotificationTemplatePersistence
 	extends BasePersistence<CommerceNotificationTemplate> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateUtil} to access the commerce notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

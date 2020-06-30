@@ -24,19 +24,20 @@ import aQute.bnd.annotation.ProviderType;
 public interface CommerceAccountFinder {
 
 	public int countByU_P(
-		long userId,
+		java.util.List<Long> organizationIds, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.commerce.account.model.CommerceAccount>
 				queryDefinition);
 
 	public java.util.List<com.liferay.commerce.account.model.CommerceAccount>
 		findByU_P(
-			long userId,
+			java.util.List<Long> organizationIds, long userId,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.commerce.account.model.CommerceAccount>
 					queryDefinition);
 
 	public com.liferay.commerce.account.model.CommerceAccount findByU_C(
-		long userId, long commerceAccountId);
+		java.util.List<Long> organizationIds, long userId,
+		long commerceAccountId);
 
 }

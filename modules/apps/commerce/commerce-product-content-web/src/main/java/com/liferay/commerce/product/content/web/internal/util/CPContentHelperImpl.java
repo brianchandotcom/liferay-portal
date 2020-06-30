@@ -36,6 +36,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -51,7 +52,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -287,8 +287,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 			return null;
 		}
 
-		return _cpInstanceHelper.getCPInstance(
-			cpCatalogEntry.getCPDefinitionId(), null);
+		return _cpInstanceHelper.getDefaultCPInstance(
+			cpCatalogEntry.getCPDefinitionId());
 	}
 
 	@Override
@@ -340,11 +340,12 @@ public class CPContentHelperImpl implements CPContentHelper {
 		}
 
 		if (cpMedias.isEmpty()) {
-			Company company = themeDisplay.getCompany();
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
 			FileEntry fileEntry = FileEntryUtil.fetchByPrimaryKey(
 				_catalogCommerceMediaDefaultImage.getDefaultCatalogFileEntryId(
-					company.getGroupId()));
+					cpDefinition.getGroupId()));
 
 			if (fileEntry != null) {
 				cpMedias.add(new CPMediaImpl(fileEntry, themeDisplay));
@@ -453,10 +454,12 @@ public class CPContentHelperImpl implements CPContentHelper {
 				getCPContentRendererKey(
 					cpCatalogEntry.getProductTypeName(), renderRequest));
 
-		if (cpContentRenderer != null) {
-			cpContentRenderer.render(
-				cpCatalogEntry, httpServletRequest, httpServletResponse);
+		if (cpContentRenderer == null) {
+			return;
 		}
+
+		cpContentRenderer.render(
+			cpCatalogEntry, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -502,6 +505,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

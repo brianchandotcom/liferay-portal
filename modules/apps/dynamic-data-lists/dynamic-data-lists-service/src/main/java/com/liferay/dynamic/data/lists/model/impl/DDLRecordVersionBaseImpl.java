@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 public abstract class DDLRecordVersionBaseImpl
 	extends DDLRecordVersionModelImpl implements DDLRecordVersion {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddl record version model instance should use the <code>DDLRecordVersion</code> interface instead.

@@ -40,7 +40,7 @@ import java.util.Set;
 public interface ReadingTimeEntryPersistence
 	extends BasePersistence<ReadingTimeEntry> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReadingTimeEntryUtil} to access the reading time entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.util.GroupControlPanelLayoutUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
@@ -388,15 +390,17 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId);
 
 		if (ListUtil.isNotEmpty(portletPreferencesList)) {
+			long groupControlPanelPlid =
+				GroupControlPanelLayoutUtil.getGroupControlPanelPlid(group);
+
 			jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					_portal.getControlPanelPlid(group.getCompanyId()),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, groupControlPanelPlid,
 					portletId, defaultPreferences);
 
 			_updateLayoutPortletSetup(
-				portletPreferencesList, jxPortletPreferences);
+				portletPreferencesList, jxPortletPreferences, groupId);
 		}
 
 		Document preferencesDocument = _getDocument(
@@ -408,17 +412,32 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private void _updateLayoutPortletSetup(
-		List<com.liferay.portal.kernel.model.PortletPreferences>
-			portletPreferencesList,
-		PortletPreferences jxPortletPreferences) {
+			List<com.liferay.portal.kernel.model.PortletPreferences>
+				portletPreferencesList,
+			PortletPreferences jxPortletPreferences, long groupId)
+		throws PortalException {
 
 		String portletPreferencesXml = PortletPreferencesFactoryUtil.toXML(
 			jxPortletPreferences);
 
+		long plid = 0L;
+
+		if (jxPortletPreferences instanceof PortletPreferencesImpl) {
+			PortletPreferencesImpl portletPreferences =
+				(PortletPreferencesImpl)jxPortletPreferences;
+
+			plid = portletPreferences.getPlid();
+		}
+
 		for (com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferences : portletPreferencesList) {
 
-			if (Objects.equals(
+			long ppPlid = portletPreferences.getPlid();
+
+			Layout layout = _layoutLocalService.getLayout(ppPlid);
+
+			if ((groupId != layout.getGroupId()) || (plid != ppPlid) ||
+				Objects.equals(
 					portletPreferences.getPreferences(),
 					portletPreferencesXml)) {
 

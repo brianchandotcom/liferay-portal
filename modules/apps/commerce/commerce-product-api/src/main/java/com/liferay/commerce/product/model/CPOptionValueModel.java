@@ -48,7 +48,7 @@ public interface CPOptionValueModel
 	extends BaseModel<CPOptionValue>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp option value model instance should use the {@link CPOptionValue} interface instead.

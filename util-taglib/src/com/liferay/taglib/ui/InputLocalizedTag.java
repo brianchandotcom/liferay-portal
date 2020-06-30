@@ -113,6 +113,10 @@ public class InputLocalizedTag extends IncludeTag {
 		_placeholder = placeholder;
 	}
 
+	public void setSelectedLanguageId(String selectedLanguageId) {
+		_selectedLanguageId = selectedLanguageId;
+	}
+
 	public void setToolbarSet(String toolbarSet) {
 		_toolbarSet = toolbarSet;
 	}
@@ -148,6 +152,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_maxLength = null;
 		_name = null;
 		_placeholder = null;
+		_selectedLanguageId = null;
 		_toolbarSet = "simple";
 		_type = "input";
 		_xml = null;
@@ -222,6 +227,9 @@ public class InputLocalizedTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-localized:placeholder", _placeholder);
 		request.setAttribute(
+			"liferay-ui:input-localized:selectedLanguageId",
+			_selectedLanguageId);
+		request.setAttribute(
 			"liferay-ui:input-localized:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-localized:type", _type);
 		request.setAttribute("liferay-ui:input-localized:xml", _xml);
@@ -252,6 +260,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _maxLength;
 	private String _name;
 	private String _placeholder;
+	private String _selectedLanguageId;
 	private String _toolbarSet = "simple";
 	private String _type = "input";
 	private String _xml;

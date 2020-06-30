@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
+import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CommerceCatalogProductsException;
 import com.liferay.commerce.product.exception.CommerceCatalogSystemException;
@@ -26,6 +27,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -96,7 +101,8 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = _portal.getCurrentURL(actionRequest);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -125,15 +131,37 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceCatalog.class.getName(), actionRequest);
 
+		CommerceCatalog commerceCatalog = null;
+
 		if (commerceCatalogId <= 0) {
-			return _commerceCatalogService.addCommerceCatalog(
+			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 				name, commerceCurrencyCode, catalogDefaultLanguageId, null,
 				serviceContext);
 		}
+		else {
+			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
+				commerceCatalogId, name, commerceCurrencyCode,
+				catalogDefaultLanguageId);
+		}
 
-		return _commerceCatalogService.updateCommerceCatalog(
-			commerceCatalogId, name, commerceCurrencyCode,
-			catalogDefaultLanguageId);
+		// Catalog default image
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceCatalog.getGroupId(),
+				CommerceMediaConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"defaultFileEntryId", String.valueOf(fileEntryId));
+
+		modifiableSettings.store();
+
+		return commerceCatalog;
 	}
 
 	@Reference
@@ -141,5 +169,8 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

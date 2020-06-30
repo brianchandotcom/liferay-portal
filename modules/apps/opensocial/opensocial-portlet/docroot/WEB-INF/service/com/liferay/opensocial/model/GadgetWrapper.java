@@ -266,11 +266,6 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 		return _gadget.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a gadget model instance should use the <code>Gadget</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_gadget.persist();

@@ -35,6 +35,7 @@ definition {
 		property portal.fixpack.release = "true";
 		property portal.smoke = "false";
 		property portal.upstream = "false";
+		property test.assert.javascript.errors = "false";
 		property test.run.environment = "EE";
 
 		Pause(locator1 = "60000");

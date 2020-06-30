@@ -170,6 +170,13 @@ public class JournalContentSearchPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByPortletId() throws Exception {
 		_persistence.countByPortletId("");
 

@@ -48,7 +48,7 @@ public interface WikiNodeModel
 	extends BaseModel<WikiNode>, ContainerModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a wiki node model instance should use the {@link WikiNode} interface instead.

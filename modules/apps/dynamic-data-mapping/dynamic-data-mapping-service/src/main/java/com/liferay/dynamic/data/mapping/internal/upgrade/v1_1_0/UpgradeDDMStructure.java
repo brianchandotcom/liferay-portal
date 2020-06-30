@@ -65,6 +65,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		throws DDMExpressionException {
 
 		try {
+			visibilityExpression = removeSpaces(visibilityExpression);
+
 			DDMExpression<Boolean> ddmExpression =
 				_ddmExpressionFactory.createBooleanDDMExpression(
 					visibilityExpression);
@@ -96,6 +98,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			throw ddmee;
 		}
+	}
+
+	protected String removeSpaces(String expression) {
+		return expression.replaceAll(
+			"\\s+(?=((\\\\[\\\\\"]|[^\\\\\"])*\"(\\\\[\\\\\"]|[^\\\\\"])*\")" +
+				"*(\\\\[\\\\\"]|[^\\\\\"])*$)",
+			StringPool.BLANK);
 	}
 
 	protected String updateDefinition(String definition)

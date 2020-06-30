@@ -177,14 +177,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 <aui:script>
 	function <portlet:namespace />deleteCPOptionCategories() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-groups" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-groups" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCPOptionCategoryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCPOptionCategoryIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editProductOptionCategory" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="editProductOptionCategory" />'
+			);
 		}
 	}
 </aui:script>

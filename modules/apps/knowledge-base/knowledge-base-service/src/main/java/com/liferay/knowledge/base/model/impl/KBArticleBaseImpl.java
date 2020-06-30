@@ -32,7 +32,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 public abstract class KBArticleBaseImpl
 	extends KBArticleModelImpl implements KBArticle {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kb article model instance should use the <code>KBArticle</code> interface instead.

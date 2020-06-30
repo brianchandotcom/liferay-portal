@@ -55,6 +55,11 @@ import org.osgi.service.component.annotations.Reference;
 public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 	@Override
+	public boolean isShowInactiveRequestMessage() {
+		return _showInactiveRequestMessage;
+	}
+
+	@Override
 	public void processInactiveRequest(
 			HttpServletRequest request, HttpServletResponse response,
 			String messageKey)

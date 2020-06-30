@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -61,7 +62,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -145,7 +149,7 @@ public class CommerceAccountLocalServiceImpl
 		commerceAccount.setExternalReferenceCode(externalReferenceCode);
 		commerceAccount.setExpandoBridgeAttributes(serviceContext);
 
-		commerceAccountPersistence.update(commerceAccount);
+		commerceAccount = commerceAccountPersistence.update(commerceAccount);
 
 		// Group
 
@@ -289,9 +293,11 @@ public class CommerceAccountLocalServiceImpl
 
 	@Override
 	public CommerceAccount getCommerceAccount(
-		long userId, long commerceAccountId) {
+			long userId, long commerceAccountId)
+		throws PortalException {
 
-		return commerceAccountFinder.findByU_C(userId, commerceAccountId);
+		return commerceAccountFinder.findByU_C(
+			_getUserOrganizations(userId), userId, commerceAccountId);
 	}
 
 	@Override
@@ -364,8 +370,9 @@ public class CommerceAccountLocalServiceImpl
 
 	@Override
 	public List<CommerceAccount> getUserCommerceAccounts(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, Boolean active, int start, int end) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active, int start, int end)
+		throws PortalException {
 
 		QueryDefinition<CommerceAccount> queryDefinition =
 			_getCommerceAccountQueryDefinition(
@@ -374,13 +381,15 @@ public class CommerceAccountLocalServiceImpl
 		queryDefinition.setStart(start);
 		queryDefinition.setEnd(end);
 
-		return commerceAccountFinder.findByU_P(userId, queryDefinition);
+		return commerceAccountFinder.findByU_P(
+			_getUserOrganizations(userId), userId, queryDefinition);
 	}
 
 	@Override
 	public List<CommerceAccount> getUserCommerceAccounts(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, int start, int end) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, int start, int end)
+		throws PortalException {
 
 		return commerceAccountLocalService.getUserCommerceAccounts(
 			userId, parentCommerceAccountId, commerceSiteType, keywords, null,
@@ -389,8 +398,9 @@ public class CommerceAccountLocalServiceImpl
 
 	@Override
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords)
+		throws PortalException {
 
 		return commerceAccountLocalService.getUserCommerceAccountsCount(
 			userId, parentCommerceAccountId, commerceSiteType, keywords, null);
@@ -398,14 +408,16 @@ public class CommerceAccountLocalServiceImpl
 
 	@Override
 	public int getUserCommerceAccountsCount(
-		long userId, Long parentCommerceAccountId, int commerceSiteType,
-		String keywords, Boolean active) {
+			long userId, Long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws PortalException {
 
 		QueryDefinition<CommerceAccount> queryDefinition =
 			_getCommerceAccountQueryDefinition(
 				parentCommerceAccountId, commerceSiteType, keywords, active);
 
-		return commerceAccountFinder.countByU_P(userId, queryDefinition);
+		return commerceAccountFinder.countByU_P(
+			_getUserOrganizations(userId), userId, queryDefinition);
 	}
 
 	@Override
@@ -447,9 +459,7 @@ public class CommerceAccountLocalServiceImpl
 
 		commerceAccount.setActive(active);
 
-		commerceAccountPersistence.update(commerceAccount);
-
-		return commerceAccount;
+		return commerceAccountPersistence.update(commerceAccount);
 	}
 
 	@Override
@@ -520,7 +530,7 @@ public class CommerceAccountLocalServiceImpl
 
 		commerceAccount.setExpandoBridgeAttributes(serviceContext);
 
-		commerceAccountPersistence.update(commerceAccount);
+		commerceAccount = commerceAccountPersistence.update(commerceAccount);
 
 		// Workflow
 
@@ -618,9 +628,7 @@ public class CommerceAccountLocalServiceImpl
 
 		commerceAccount.setStatusDate(modifiedDate);
 
-		commerceAccountPersistence.update(commerceAccount);
-
-		return commerceAccount;
+		return commerceAccountPersistence.update(commerceAccount);
 	}
 
 	@Override
@@ -832,6 +840,38 @@ public class CommerceAccountLocalServiceImpl
 			"parentCommerceAccountId", parentCommerceAccountId);
 
 		return queryDefinition;
+	}
+
+	private List<Long> _getUserOrganizations(long userId)
+		throws PortalException {
+
+		List<Organization> organizations =
+			organizationLocalService.getUserOrganizations(userId);
+
+		User user = userLocalService.getUser(userId);
+
+		ListIterator<Organization> organizationListIterator =
+			organizations.listIterator();
+
+		while (organizationListIterator.hasNext()) {
+			Organization organization = organizationListIterator.next();
+
+			for (Organization curOrganization :
+					organizationLocalService.getOrganizations(
+						user.getCompanyId(),
+						organization.getTreePath() + "%")) {
+
+				organizationListIterator.add(curOrganization);
+			}
+		}
+
+		Stream<Organization> organizationStream = organizations.stream();
+
+		return organizationStream.map(
+			Organization::getOrganizationId
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

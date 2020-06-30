@@ -112,7 +112,7 @@ public class DateRangeFactory {
 		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
-		rangeString = StringUtil.replace(
+		return StringUtil.replace(
 			rangeString,
 			new String[] {
 				"past-hour", "past-24-hours", "past-week", "past-month",
@@ -126,8 +126,6 @@ public class DateRangeFactory {
 				dateFormat.format(pastYear.getTime()),
 				dateFormat.format(now.getTime())
 			});
-
-		return rangeString;
 	}
 
 	private String _normalizeRangeBoundary(String dateString, String pad) {

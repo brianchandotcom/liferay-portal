@@ -19,8 +19,6 @@
 <%
 OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-String goToConfirmation = (String)request.getAttribute("goToConfirmation");
-
 CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
 CommerceOrderPrice commerceOrderPrice = orderSummaryCheckoutStepDisplayContext.getCommerceOrderPrice();
 
@@ -44,10 +42,6 @@ String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
-
-<c:if test="${not empty goToConfirmation}">
-	<c:redirect url="${goToConfirmation}" />
-</c:if>
 
 <div class="commerce-order-summary">
 	<liferay-ui:error exception="<%= CommerceOrderBillingAddressException.class %>" message="please-select-a-valid-billing-address" />
@@ -85,14 +79,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 						<%
 						CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-						String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem);
 						%>
 
 						<liferay-ui:search-container-column-image
 							cssClass="thumbnail-section"
 							name="image"
-							src="<%= thumbnailSrc %>"
+							src="<%= orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
@@ -146,7 +138,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 						<%
 						CommerceProductPrice commerceProductPrice = orderSummaryCheckoutStepDisplayContext.getCommerceProductPrice(commerceOrderItem);
-						CPInstance cpInstance = commerceOrderItem.getCPInstance();
+						CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 						%>
 
 						<liferay-ui:search-container-column-text
@@ -180,9 +172,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 										</c:choose>
 									</span>
 
-									<c:if test="<%= Validator.isNotNull(cpInstance.getCPSubscriptionInfo()) %>">
+									<c:if test="<%= (cpInstance != null) && Validator.isNotNull(cpInstance.getCPSubscriptionInfo()) %>">
 										<span class="commerce-subscription-info">
-											<liferay-commerce:subscription-info
+											<commerce-ui:product-subscription-info
 												CPInstanceId="<%= commerceOrderItem.getCPInstanceId() %>"
 												showDuration="<%= false %>"
 											/>

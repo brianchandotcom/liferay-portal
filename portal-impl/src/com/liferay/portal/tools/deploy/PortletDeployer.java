@@ -223,9 +223,7 @@ public class PortletDeployer extends BaseDeployer {
 
 	@Override
 	public void updateDeployDirectory(File srcFile) throws Exception {
-		boolean customPortletXML = false;
-
-		customPortletXML = PropsValues.AUTO_DEPLOY_CUSTOM_PORTLET_XML;
+		boolean customPortletXML = PropsValues.AUTO_DEPLOY_CUSTOM_PORTLET_XML;
 
 		customPortletXML = GetterUtil.getBoolean(
 			System.getProperty("deployer.custom.portlet.xml"),

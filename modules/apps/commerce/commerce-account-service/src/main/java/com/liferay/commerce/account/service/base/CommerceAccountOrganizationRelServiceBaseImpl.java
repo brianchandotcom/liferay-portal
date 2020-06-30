@@ -54,7 +54,7 @@ public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 	extends BaseServiceImpl
 	implements CommerceAccountOrganizationRelService, IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountOrganizationRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.account.service.CommerceAccountOrganizationRelServiceUtil</code>.
@@ -742,8 +742,8 @@ public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -70,6 +71,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.portlet.PortletPreferences;
 
@@ -967,7 +970,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
+		List<Layout> layouts = layoutPersistence.filterFindByG_P(
+			groupId, privateLayout);
+
+		return _filterOutGroupControlPanelLayout(
+			groupId, layouts, privateLayout);
 	}
 
 	@Override
@@ -1018,15 +1025,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
-		return layoutPersistence.filterCountByG_P(groupId, privateLayout);
+		int count = layoutPersistence.filterCountByG_P(groupId, privateLayout);
+
+		return _discountGroupControlPanelLayout(
+			count, groupId, privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	@Override
 	public int getLayoutsCount(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
-		return layoutPersistence.filterCountByG_P_P(
+		int count = layoutPersistence.filterCountByG_P_P(
 			groupId, privateLayout, parentLayoutId);
+
+		return _discountGroupControlPanelLayout(
+			count, groupId, privateLayout, parentLayoutId);
 	}
 
 	@Override
@@ -1034,8 +1048,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return layoutPersistence.filterCountByG_P_P_LtP(
+		int count = layoutPersistence.filterCountByG_P_P_LtP(
 			groupId, privateLayout, parentLayoutId, priority);
+
+		return _discountGroupControlPanelLayout(
+			count, groupId, privateLayout, parentLayoutId);
 	}
 
 	@Override
@@ -2320,6 +2337,66 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			(LayoutTypePortlet)clonedLayout.getLayoutType();
 
 		return layoutTypePortlet.getPortletIds();
+	}
+
+	private int _discountGroupControlPanelLayout(
+		int count, long groupId, boolean privateLayout, long parentLayoutId) {
+
+		if ((count == 0) ||
+			(parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) ||
+			!privateLayout || ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return count;
+		}
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group.isControlPanel()) {
+			return count;
+		}
+
+		try {
+			List<Layout> groupControlPanelLayouts =
+				layoutLocalService.getLayouts(
+					groupId, true, LayoutConstants.TYPE_CONTROL_PANEL);
+
+			count -= groupControlPanelLayouts.size();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return count;
+	}
+
+	private List<Layout> _filterOutGroupControlPanelLayout(
+		long groupId, List<Layout> layouts, boolean privateLayout) {
+
+		if (!privateLayout || layouts.isEmpty() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return layouts;
+		}
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group.isControlPanel()) {
+			return layouts;
+		}
+
+		return layouts.stream(
+		).filter(
+			layout -> !Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

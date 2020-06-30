@@ -1,4 +1,5 @@
 Bundle-Name: Liferay My Subscriptions Web
 Bundle-SymbolicName: com.liferay.my.subscriptions.web
-Bundle-Version: 2.0.10
+Bundle-Version: 2.0.11
 Web-ContextPath: /my-subscriptions-web
+-dsannotations-options: inherit

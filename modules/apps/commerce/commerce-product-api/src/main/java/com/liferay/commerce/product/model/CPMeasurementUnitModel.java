@@ -48,7 +48,7 @@ public interface CPMeasurementUnitModel
 	extends BaseModel<CPMeasurementUnit>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a cp measurement unit model instance should use the {@link CPMeasurementUnit} interface instead.

@@ -34,5 +34,5 @@ String token = URLDecoder.decode(tokenAttribute, "UTF-8");
 <script>
 	window.onload = function() {
 		document.querySelector('form').submit();
-	}
+	};
 </script>

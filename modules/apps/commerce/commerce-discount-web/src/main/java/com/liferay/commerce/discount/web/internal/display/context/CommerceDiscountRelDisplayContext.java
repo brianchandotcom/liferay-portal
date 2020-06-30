@@ -24,6 +24,9 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountRelCreateDateComparator;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
+import com.liferay.commerce.item.selector.criterion.CommercePricingClassItemSelectorCriterion;
+import com.liferay.commerce.pricing.model.CommercePricingClass;
+import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -72,6 +75,7 @@ public class CommerceDiscountRelDisplayContext
 		CommerceDiscountCommerceAccountGroupRelService
 			commerceDiscountCommerceAccountGroupRelService,
 		CPDefinitionService cpDefinitionService,
+		CommercePricingClassService commercePricingClassService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(
@@ -84,6 +88,7 @@ public class CommerceDiscountRelDisplayContext
 
 		_commerceDiscountRelService = commerceDiscountRelService;
 		_cpDefinitionService = cpDefinitionService;
+		_commercePricingClassService = commercePricingClassService;
 	}
 
 	public String getAssetCategoryIds() throws PortalException {
@@ -91,6 +96,29 @@ public class CommerceDiscountRelDisplayContext
 			getCommerceDiscountId(), AssetCategory.class.getName());
 
 		return StringUtil.merge(assetCategoryIds, StringPool.COMMA);
+	}
+
+	public CommercePricingClass getCommercePricingClass(
+			CommerceDiscountRel commerceDiscountRel)
+		throws PortalException {
+
+		if (Objects.equals(
+				commerceDiscountRel.getClassName(),
+				CommercePricingClass.class.getName())) {
+
+			return _commercePricingClassService.fetchCommercePricingClass(
+				commerceDiscountRel.getClassPK());
+		}
+
+		return null;
+	}
+
+	public SearchContainer<CommerceDiscountRel>
+			getCommercePricingClassCommerceDiscountRelSearchContainer()
+		throws PortalException {
+
+		return _getCommerceDiscountRelSearchContainer(
+			CommercePricingClass.class.getName());
 	}
 
 	public CPDefinition getCPDefinition(CommerceDiscountRel commerceDiscountRel)
@@ -111,40 +139,8 @@ public class CommerceDiscountRelDisplayContext
 			getCPDefinitionCommerceDiscountRelSearchContainer()
 		throws PortalException {
 
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		_searchContainer = new SearchContainer<>(
-			commerceDiscountRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, "there-are-no-entries");
-
-		setOrderByColAndType(
-			CommerceDiscountRel.class, _searchContainer, "create-date", "desc");
-
-		OrderByComparator<CommerceDiscountRel> orderByComparator =
-			CommerceDiscountPortletUtil.getCommerceDiscountRelOrderByComparator(
-				_searchContainer.getOrderByCol(),
-				_searchContainer.getOrderByType());
-
-		_searchContainer.setOrderByComparator(orderByComparator);
-
-		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(
-				commerceDiscountRequestHelper.getLiferayPortletResponse()));
-
-		int total = _commerceDiscountRelService.getCommerceDiscountRelsCount(
-			getCommerceDiscountId(), CPDefinition.class.getName());
-
-		_searchContainer.setTotal(total);
-
-		List<CommerceDiscountRel> results = getCommerceDiscountRels(
-			_searchContainer.getStart(), _searchContainer.getEnd(),
-			orderByComparator);
-
-		_searchContainer.setResults(results);
-
-		return _searchContainer;
+		return _getCommerceDiscountRelSearchContainer(
+			CPDefinition.class.getName());
 	}
 
 	@Override
@@ -175,11 +171,63 @@ public class CommerceDiscountRelDisplayContext
 		return itemSelectorURL.toString();
 	}
 
+	public String getPricingClassItemSelectorUrl() throws PortalException {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				commerceDiscountRequestHelper.getRequest());
+
+		CommercePricingClassItemSelectorCriterion
+			commercePricingClassItemSelectorCriterion =
+				new CommercePricingClassItemSelectorCriterion();
+
+		commercePricingClassItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new UUIDItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "pricingClassSelectItem",
+			commercePricingClassItemSelectorCriterion);
+
+		String checkedCommercePricingClassIds = StringUtil.merge(
+			getCheckedCommercePricingClassIds());
+
+		itemSelectorURL.setParameter(
+			"checkedCommercePricingClassIds", checkedCommercePricingClassIds);
+		itemSelectorURL.setParameter(
+			"disabledCommercePricingClassIds", checkedCommercePricingClassIds);
+
+		return itemSelectorURL.toString();
+	}
+
+	protected long[] getCheckedCommercePricingClassIds()
+		throws PortalException {
+
+		List<Long> commercePricingClassIdsList = new ArrayList<>();
+
+		List<CommerceDiscountRel> commerceDiscountRels =
+			getCommerceDiscountRels(CommercePricingClass.class.getName());
+
+		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
+			commercePricingClassIdsList.add(commerceDiscountRel.getClassPK());
+		}
+
+		if (commercePricingClassIdsList.isEmpty()) {
+			return new long[0];
+		}
+
+		Stream<Long> stream = commercePricingClassIdsList.stream();
+
+		LongStream longStream = stream.mapToLong(l -> l);
+
+		return longStream.toArray();
+	}
+
 	protected long[] getCheckedCPDefinitionIds() throws PortalException {
 		List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 		List<CommerceDiscountRel> commerceDiscountRels =
-			getCommerceDiscountRels();
+			getCommerceDiscountRels(CPDefinition.class.getName());
 
 		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
 			cpDefinitionIdsList.add(commerceDiscountRel.getClassPK());
@@ -196,25 +244,66 @@ public class CommerceDiscountRelDisplayContext
 		return longStream.toArray();
 	}
 
-	protected List<CommerceDiscountRel> getCommerceDiscountRels()
-		throws PortalException {
-
-		return getCommerceDiscountRels(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CommerceDiscountRelCreateDateComparator());
-	}
-
 	protected List<CommerceDiscountRel> getCommerceDiscountRels(
-			int start, int end,
+			int start, int end, String className,
 			OrderByComparator<CommerceDiscountRel> orderByComparator)
 		throws PortalException {
 
 		return _commerceDiscountRelService.getCommerceDiscountRels(
-			getCommerceDiscountId(), CPDefinition.class.getName(), start, end,
+			getCommerceDiscountId(), className, start, end, orderByComparator);
+	}
+
+	protected List<CommerceDiscountRel> getCommerceDiscountRels(
+			String className)
+		throws PortalException {
+
+		return getCommerceDiscountRels(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, className,
+			new CommerceDiscountRelCreateDateComparator());
+	}
+
+	private SearchContainer<CommerceDiscountRel>
+			_getCommerceDiscountRelSearchContainer(String className)
+		throws PortalException {
+
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		_searchContainer = new SearchContainer<>(
+			commerceDiscountRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, "there-are-no-entries");
+
+		setOrderByColAndType(
+			CommerceDiscountRel.class, _searchContainer, "create-date", "desc");
+
+		OrderByComparator<CommerceDiscountRel> orderByComparator =
+			CommerceDiscountPortletUtil.getCommerceDiscountRelOrderByComparator(
+				_searchContainer.getOrderByCol(),
+				_searchContainer.getOrderByType());
+
+		_searchContainer.setOrderByComparator(orderByComparator);
+
+		_searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(
+				commerceDiscountRequestHelper.getLiferayPortletResponse()));
+
+		int total = _commerceDiscountRelService.getCommerceDiscountRelsCount(
+			getCommerceDiscountId(), className);
+
+		_searchContainer.setTotal(total);
+
+		List<CommerceDiscountRel> results = getCommerceDiscountRels(
+			_searchContainer.getStart(), _searchContainer.getEnd(), className,
 			orderByComparator);
+
+		_searchContainer.setResults(results);
+
+		return _searchContainer;
 	}
 
 	private final CommerceDiscountRelService _commerceDiscountRelService;
+	private final CommercePricingClassService _commercePricingClassService;
 	private final CPDefinitionService _cpDefinitionService;
 	private SearchContainer<CommerceDiscountRel> _searchContainer;
 

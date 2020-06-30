@@ -351,11 +351,6 @@ public class ReadingTimeEntryWrapper
 		return _readingTimeEntry.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a reading time entry model instance should use the <code>ReadingTimeEntry</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_readingTimeEntry.persist();

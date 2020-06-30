@@ -28,9 +28,10 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-	List<CPMedia> images = (List<CPMedia>)request.getAttribute("liferay-commerce:gallery:images");
-	JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-	String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_gallery") + StringPool.UNDERLINE;
+List<CPMedia> images = (List<CPMedia>)request.getAttribute("liferay-commerce:gallery:images");
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-	String galleryId = randomNamespace + "gallery";
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_gallery") + StringPool.UNDERLINE;
+
+String galleryId = randomNamespace + "gallery";
 %>

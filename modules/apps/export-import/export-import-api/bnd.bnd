@@ -1,7 +1,8 @@
 Bundle-Name: Liferay Export Import API
 Bundle-SymbolicName: com.liferay.exportimport.api
-Bundle-Version: 3.0.16
+Bundle-Version: 3.2.1
 Export-Package:\
+	com.liferay.exportimport.configuration,\
 	com.liferay.exportimport.constants,\
 	com.liferay.exportimport.content.processor,\
 	com.liferay.exportimport.controller,\
@@ -15,3 +16,4 @@ Export-Package:\
 	com.liferay.exportimport.resources.importer.provider,\
 	com.liferay.exportimport.staged.model.repository,\
 	com.liferay.exportimport.util.comparator
+-includeresource: content=../../staging/staging-lang/src/main/resources/content

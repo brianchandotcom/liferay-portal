@@ -57,13 +57,17 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 			</c:if>
 
 			<aui:col width="<%= (smallImage && (article != null)) ? 50 : 100 %>">
-				<liferay-frontend:fieldset>
+				<liferay-frontend:fieldset
+					id="smallImageURL"
+				>
 					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
 
 					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 				</liferay-frontend:fieldset>
 
-				<liferay-frontend:fieldset>
+				<liferay-frontend:fieldset
+					id="smallFile"
+				>
 					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
 
 					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />

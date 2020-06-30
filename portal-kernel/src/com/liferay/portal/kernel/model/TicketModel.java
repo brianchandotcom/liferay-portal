@@ -39,7 +39,7 @@ import java.util.Date;
 public interface TicketModel
 	extends AttachedModel, BaseModel<Ticket>, MVCCModel, ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ticket model instance should use the {@link Ticket} interface instead.

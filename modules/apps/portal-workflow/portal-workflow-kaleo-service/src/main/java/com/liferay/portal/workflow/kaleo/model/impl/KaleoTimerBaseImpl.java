@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalServiceUtil;
 public abstract class KaleoTimerBaseImpl
 	extends KaleoTimerModelImpl implements KaleoTimer {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo timer model instance should use the <code>KaleoTimer</code> interface instead.

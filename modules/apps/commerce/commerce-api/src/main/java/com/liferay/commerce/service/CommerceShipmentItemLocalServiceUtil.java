@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class CommerceShipmentItemLocalServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentItemLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
@@ -90,6 +90,17 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().deleteCommerceShipmentItem(commerceShipmentItem);
 	}
 
+	public static com.liferay.commerce.model.CommerceShipmentItem
+			deleteCommerceShipmentItem(
+				com.liferay.commerce.model.CommerceShipmentItem
+					commerceShipmentItem,
+				boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteCommerceShipmentItem(
+			commerceShipmentItem, restoreStockQuantity);
+	}
+
 	/**
 	 * Deletes the commerce shipment item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -104,8 +115,20 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().deleteCommerceShipmentItem(commerceShipmentItemId);
 	}
 
-	public static void deleteCommerceShipmentItems(long commerceShipment) {
-		getService().deleteCommerceShipmentItems(commerceShipment);
+	public static void deleteCommerceShipmentItem(
+			long commerceShipmentItemId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceShipmentItem(
+			commerceShipmentItemId, restoreStockQuantity);
+	}
+
+	public static void deleteCommerceShipmentItems(
+			long commerceShipmentId, boolean restoreStockQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommerceShipmentItems(
+			commerceShipmentId, restoreStockQuantity);
 	}
 
 	/**
@@ -210,6 +233,16 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().fetchCommerceShipmentItem(commerceShipmentItemId);
 	}
 
+	public static com.liferay.commerce.model.CommerceShipmentItem
+		fetchCommerceShipmentItem(
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceInventoryWarehouseId) {
+
+		return getService().fetchCommerceShipmentItem(
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -248,6 +281,10 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().getCommerceShipmentItems(start, end);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.model.CommerceShipmentItem>
 			getCommerceShipmentItems(long commerceOrderItemId) {
@@ -267,6 +304,29 @@ public class CommerceShipmentItemLocalServiceUtil {
 			commerceShipmentId, start, end, orderByComparator);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.model.CommerceShipmentItem>
+			getCommerceShipmentItems(
+				long commerceShipmentId, long commerceOrderItemId, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.model.CommerceShipmentItem>
+						orderByComparator) {
+
+		return getService().getCommerceShipmentItems(
+			commerceShipmentId, commerceOrderItemId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.model.CommerceShipmentItem>
+			getCommerceShipmentItemsByCommerceOrderItemId(
+				long commerceOrderItemId) {
+
+		return getService().getCommerceShipmentItemsByCommerceOrderItemId(
+			commerceOrderItemId);
+	}
+
 	/**
 	 * Returns the number of commerce shipment items.
 	 *
@@ -278,6 +338,20 @@ public class CommerceShipmentItemLocalServiceUtil {
 
 	public static int getCommerceShipmentItemsCount(long commerceShipmentId) {
 		return getService().getCommerceShipmentItemsCount(commerceShipmentId);
+	}
+
+	public static int getCommerceShipmentItemsCountByCommerceOrderItemId(
+		long commerceOrderItemId) {
+
+		return getService().getCommerceShipmentItemsCountByCommerceOrderItemId(
+			commerceOrderItemId);
+	}
+
+	public static int getCommerceShipmentOrderItemsQuantity(
+		long commerceShipmentId, long commerceOrderItemId) {
+
+		return getService().getCommerceShipmentOrderItemsQuantity(
+			commerceShipmentId, commerceOrderItemId);
 	}
 
 	public static
@@ -296,6 +370,9 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -324,6 +401,16 @@ public class CommerceShipmentItemLocalServiceUtil {
 
 		return getService().updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentItem
+			updateCommerceShipmentItem(
+				long commerceShipmentItemId, long commerceInventoryWarehouseId,
+				int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceShipmentItem(
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	public static CommerceShipmentItemLocalService getService() {

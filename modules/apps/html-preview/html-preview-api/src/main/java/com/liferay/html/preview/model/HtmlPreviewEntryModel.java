@@ -45,7 +45,7 @@ public interface HtmlPreviewEntryModel
 	extends AttachedModel, BaseModel<HtmlPreviewEntry>, GroupedModel,
 			ShardedModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a html preview entry model instance should use the {@link HtmlPreviewEntry} interface instead.

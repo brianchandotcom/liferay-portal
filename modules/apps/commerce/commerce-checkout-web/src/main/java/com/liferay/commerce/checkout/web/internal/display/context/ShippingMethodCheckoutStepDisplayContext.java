@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Andrea Di Giorgi
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class ShippingMethodCheckoutStepDisplayContext {
 
@@ -68,15 +69,11 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	public List<CommerceShippingMethod> getCommerceShippingMethods()
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
 
 		return _commerceShippingMethodLocalService.getCommerceShippingMethods(
-			themeDisplay.getScopeGroupId(),
-			shippingAddress.getCommerceCountryId(), true);
+			_commerceOrder.getGroupId(), shippingAddress.getCommerceCountryId(),
+			true);
 	}
 
 	public String getCommerceShippingOptionKey(

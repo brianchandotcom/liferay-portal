@@ -117,7 +117,7 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 			folder.getFolderId());
 
-		dlFolder.setTreePath(null);
+		dlFolder.setTreePath("/0/");
 
 		return DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 	}

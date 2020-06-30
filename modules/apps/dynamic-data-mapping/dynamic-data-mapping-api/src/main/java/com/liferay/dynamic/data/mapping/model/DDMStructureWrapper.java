@@ -815,11 +815,6 @@ public class DDMStructureWrapper
 		return _ddmStructure.isNew();
 	}
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a ddm structure model instance should use the <code>DDMStructure</code> interface instead.
-	 */
 	@Override
 	public void persist() {
 		_ddmStructure.persist();

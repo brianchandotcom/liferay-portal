@@ -15,17 +15,23 @@
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
-import com.liferay.commerce.exception.NoSuchShipmentItemException;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -33,15 +39,19 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Alec Sloan
  */
 @Component(
 	immediate = true,
@@ -72,11 +82,14 @@ public class EditCommerceShipmentItemMVCActionCommand
 				0L);
 		}
 
+		boolean restoreStockQuantity = ParamUtil.getBoolean(
+			actionRequest, "restoreStockQuantity");
+
 		for (long deleteCommerceShipmentItemId :
 				deleteCommerceShipmentItemIds) {
 
 			_commerceShipmentItemService.deleteCommerceShipmentItem(
-				deleteCommerceShipmentItemId);
+				deleteCommerceShipmentItemId, restoreStockQuantity);
 		}
 	}
 
@@ -96,23 +109,11 @@ public class EditCommerceShipmentItemMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceShipmentItemQuantityException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = getSaveAndContinueRedirect(actionRequest);
+			String redirect = getSaveAndContinueRedirect(actionRequest);
 
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else if (e instanceof NoSuchShipmentItemException ||
-					 e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw e;
-			}
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
 
@@ -146,6 +147,21 @@ public class EditCommerceShipmentItemMVCActionCommand
 				String.valueOf(commerceShipmentItemId));
 		}
 
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		if (commerceOrderItemId > 0) {
+			portletURL.setParameter(
+				"commerceOrderItemId", String.valueOf(commerceOrderItemId));
+		}
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse, wse);
+		}
+
 		return portletURL.toString();
 	}
 
@@ -153,14 +169,79 @@ public class EditCommerceShipmentItemMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceShipmentItemId = ParamUtil.getLong(
-			actionRequest, "commerceShipmentItemId");
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipmentItem.class.getName(), actionRequest);
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
 
-		return _commerceShipmentItemService.updateCommerceShipmentItem(
-			commerceShipmentItemId, quantity);
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
+
+		CommerceShipmentItem initialCommerceShipmentItem =
+			_commerceShipmentItemService.fetchCommerceShipmentItem(
+				commerceShipmentId, commerceOrderItemId, 0);
+
+		CommerceShipmentItem commerceShipmentItem = null;
+
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				commerceOrderItem.getCompanyId(),
+				commerceOrderItem.getGroupId(), true);
+
+		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
+				commerceInventoryWarehouses) {
+
+			long commerceInventoryWarehouseId =
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
+
+			commerceShipmentItem =
+				_commerceShipmentItemService.fetchCommerceShipmentItem(
+					commerceShipmentId, commerceOrderItemId,
+					commerceInventoryWarehouseId);
+
+			int quantity = ParamUtil.getInteger(
+				actionRequest, commerceInventoryWarehouseId + "_quantity");
+
+			if ((initialCommerceShipmentItem != null) && (quantity > 0)) {
+				commerceShipmentItem =
+					_commerceShipmentItemService.updateCommerceShipmentItem(
+						initialCommerceShipmentItem.getCommerceShipmentItemId(),
+						commerceInventoryWarehouseId, quantity);
+
+				initialCommerceShipmentItem = null;
+			}
+			else if ((commerceShipmentItem == null) && (quantity > 0)) {
+				commerceShipmentItem =
+					_commerceShipmentItemService.addCommerceShipmentItem(
+						commerceShipmentId, commerceOrderItemId,
+						commerceInventoryWarehouseId, quantity, serviceContext);
+			}
+			else if ((commerceShipmentItem != null) &&
+					 (quantity != commerceShipmentItem.getQuantity())) {
+
+				commerceShipmentItem =
+					_commerceShipmentItemService.updateCommerceShipmentItem(
+						commerceShipmentItem.getCommerceShipmentItemId(),
+						commerceInventoryWarehouseId, quantity);
+			}
+		}
+
+		return commerceShipmentItem;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCommerceShipmentItemMVCActionCommand.class);
+
+	@Reference
+	private CommerceInventoryWarehouseService
+		_commerceInventoryWarehouseService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

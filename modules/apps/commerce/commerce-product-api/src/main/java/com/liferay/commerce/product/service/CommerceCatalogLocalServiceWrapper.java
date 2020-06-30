@@ -369,6 +369,9 @@ public class CommerceCatalogLocalServiceWrapper
 		return _commerceCatalogLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 			java.io.Serializable primaryKeyObj)
@@ -430,6 +433,17 @@ public class CommerceCatalogLocalServiceWrapper
 		return _commerceCatalogLocalService.updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceCatalog
+			updateCommerceCatalogExternalReferenceCode(
+				long commerceCatalogId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCatalogLocalService.
+			updateCommerceCatalogExternalReferenceCode(
+				commerceCatalogId, externalReferenceCode);
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public class StepTrackerTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
+	protected void setAttributes(HttpServletRequest request) {
 		if (Validator.isNull(_spritemap)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -76,9 +76,9 @@ public class StepTrackerTag extends IncludeTag {
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
-		request.setAttribute("liferay-commerce:step-tracker:steps", _steps);
 		request.setAttribute(
-			"liferay-commerce:step-tracker_spritemap", _spritemap);
+			"liferay-commerce:step-tracker:spritemap", _spritemap);
+		request.setAttribute("liferay-commerce:step-tracker:steps", _steps);
 	}
 
 	private static final String _PAGE = "/step_tracker/page.jsp";

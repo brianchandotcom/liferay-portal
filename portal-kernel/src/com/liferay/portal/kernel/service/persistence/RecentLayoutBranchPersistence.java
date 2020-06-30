@@ -39,7 +39,7 @@ import java.util.Set;
 public interface RecentLayoutBranchPersistence
 	extends BasePersistence<RecentLayoutBranch> {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutBranchUtil} to access the recent layout branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

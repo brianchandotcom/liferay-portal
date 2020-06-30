@@ -27,6 +27,7 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -35,6 +36,7 @@ import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,6 +119,39 @@ public class PaymentProcessCommerceCheckoutStep
 				new PaymentProcessCheckoutStepDisplayContext(
 					_commerceCheckoutStepServicesTracker, commerceOrder,
 					httpServletRequest, _portal);
+
+		// Redirection only works with the original servlet response
+
+		HttpServletResponse originalHttpServletResponse = httpServletResponse;
+
+		while (originalHttpServletResponse instanceof
+					HttpServletResponseWrapper) {
+
+			HttpServletResponseWrapper httpServletResponseWrapper =
+				(HttpServletResponseWrapper)originalHttpServletResponse;
+
+			originalHttpServletResponse =
+				(HttpServletResponse)httpServletResponseWrapper.getResponse();
+		}
+
+		String paymentServletURL =
+			originalHttpServletResponse.encodeRedirectURL(
+				paymentProcessCheckoutStepDisplayContext.
+					getPaymentServletUrl());
+
+		String redirect = _portal.escapeRedirect(paymentServletURL);
+
+		if (Validator.isNotNull(redirect) &&
+			!originalHttpServletResponse.isCommitted()) {
+
+			originalHttpServletResponse.sendRedirect(redirect);
+		}
+
+		if (originalHttpServletResponse.isCommitted()) {
+			return;
+		}
+
+		// Backend redirection has failed: fall back to frontend redirect
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,

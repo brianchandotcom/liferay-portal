@@ -244,9 +244,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 
 		double popularity = maxCount - (maxCount - (frequency - minCount));
 
-		popularity = 1 + (popularity * multiplier);
-
-		return popularity;
+		return 1 + (popularity * multiplier);
 	}
 
 	protected List<TermCollector> getTermsCollectors() {

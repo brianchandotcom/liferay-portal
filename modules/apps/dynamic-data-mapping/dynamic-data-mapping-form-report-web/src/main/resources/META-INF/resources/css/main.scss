@@ -269,11 +269,6 @@ body,
 			padding: 18px 8px;
 		}
 
-		.entries-list {
-			border-top: 1px solid #e7e7ed;
-			margin-top: 15px;
-		}
-
 		.icon {
 			background: #f7f8f9;
 			border-radius: 4px;
@@ -288,8 +283,14 @@ body,
 			}
 		}
 
+		.sidebar-body {
+			margin-top: 24px;
+			padding: 0 24px;
+		}
+
 		.summary {
-			padding-top: 32px;
+			border-bottom: 1px solid #e7e7ed;
+			padding-bottom: 15px;
 		}
 
 		.tbar-item-expand {

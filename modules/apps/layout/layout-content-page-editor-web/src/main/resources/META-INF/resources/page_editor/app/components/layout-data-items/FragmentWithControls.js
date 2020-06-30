@@ -19,6 +19,7 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
+import {FRAGMENT_CONFIGURATION_ROLES} from '../../config/constants/fragmentConfigurationRoles';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
@@ -79,14 +80,25 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			}
 		}
 
-		const configuration = fragmentEntryLink.configuration;
+		const fieldSets = fragmentEntryLink.configuration?.fieldSets;
 
-		if (
-			canUpdateItemConfiguration &&
-			configuration &&
-			Array.isArray(configuration.fieldSets) &&
-			configuration.fieldSets.length
-		) {
+		const stylesFieldSets = fieldSets?.filter(
+			(fieldSet) =>
+				fieldSet.configurationRole ===
+				FRAGMENT_CONFIGURATION_ROLES.style
+		);
+
+		const configFieldSets = fieldSets?.filter(
+			(fieldSet) =>
+				fieldSet.configurationRole !==
+				FRAGMENT_CONFIGURATION_ROLES.style
+		);
+
+		if (canUpdateItemConfiguration && stylesFieldSets?.length) {
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentStyles);
+		}
+
+		if (canUpdateItemConfiguration && configFieldSets?.length) {
 			buttons.push(
 				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
 			);

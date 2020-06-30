@@ -14,6 +14,7 @@
 
 import {CollectionConfigurationPanel} from '../../../app/components/floating-toolbar/CollectionConfigurationPanel';
 import {FragmentConfigurationPanel} from '../../../app/components/floating-toolbar/FragmentConfigurationPanel';
+import {FragmentStylesPanel} from '../../../app/components/floating-toolbar/FragmentStylesPanel';
 import {ImagePropertiesPanel} from '../../../app/components/floating-toolbar/ImagePropertiesPanel';
 import {MappingPanel} from '../../../app/components/floating-toolbar/MappingPanel';
 import {RowConfigurationPanel} from '../../../app/components/floating-toolbar/RowConfigurationPanel';
@@ -28,6 +29,7 @@ const {
 	containerConfiguration,
 	containerLink,
 	fragmentConfiguration,
+	fragmentStyles,
 	rowConfiguration,
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
 
@@ -38,6 +40,7 @@ export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,
 	[containerLink.panelId]: ContainerLinkPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
+	[fragmentStyles.panelId]: FragmentStylesPanel,
 	[imageProperties.panelId]: ImagePropertiesPanel,
 	[link.panelId]: EditableLinkPanel,
 	[map.panelId]: MappingPanel,

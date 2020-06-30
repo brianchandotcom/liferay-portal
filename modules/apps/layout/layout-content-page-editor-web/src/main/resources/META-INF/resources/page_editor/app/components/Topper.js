@@ -317,13 +317,14 @@ function Topper({children, className, item, itemElement, layoutData}) {
 				</ul>
 			</div>
 			<div className="page-editor__topper__content" ref={targetRef}>
-				{notDroppableMessage
-					? React.cloneElement(children, {
-							data: {
+				{React.cloneElement(children, {
+					data: notDroppableMessage
+						? {
 								'data-not-droppable-message': notDroppableMessage,
-							},
-					  })
-					: children}
+						  }
+						: null,
+					withinTopper: true,
+				})}
 			</div>
 		</div>
 	);

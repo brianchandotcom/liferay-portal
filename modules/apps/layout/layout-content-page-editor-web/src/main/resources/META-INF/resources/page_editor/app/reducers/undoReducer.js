@@ -98,6 +98,11 @@ export default function undoReducer(state, action) {
 				redoHistory: action.redoHistory,
 			};
 		}
+		case 'UPDATE_STORE': {
+			return {
+				...action.store,
+			};
+		}
 		case UPDATE_UNDO_ACTIONS: {
 			return {
 				...state,

@@ -18,6 +18,11 @@
 	<td>//div[contains(@id,'MySubscriptions')]//td[contains(.,'${key_assetType}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//button[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

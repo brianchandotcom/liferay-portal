@@ -477,6 +477,7 @@ definition {
 	}
 
 	macro fillSLAForm {
+		var key_slaDefinitionCalendar = "${slaDefinitionCalendar}";
 		var key_slaDefinitionDays = "${slaDefinitionDays}";
 		var key_slaDefinitionHours = "${slaDefinitionHours}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
@@ -523,6 +524,14 @@ definition {
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
 			value1 = "${key_slaDefinitionHours}");
+
+		if (isSet(slaDefinitionCalendar)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_SELECT");
+
+			AssertClick(
+				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_CALENDAR_OPTION",
+				value1 = "${key_slaDefinitionCalendar}");
+		}
 	}
 
 	macro goToBulkReassignSelectNewAssignee {
@@ -957,6 +966,30 @@ definition {
 		}
 	}
 
+	macro verifyCustomCalendarExistOrNot {
+		var key_calendar = "${calendar}";
+		var key_durationMessage = "${durationMessage}";
+
+		if ("${key_calendar}" == "") {
+			AssertTextEquals(
+				locator1 = "WorkflowMetricsSLA#METRICS_SLA_DURATION_MESSAGE",
+				value1 = "${key_durationMessage}");
+
+			AssertElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_TITLE");
+		}
+		else if ("${key_calendar}" == "Calendar") {
+			AssertTextEquals(
+				locator1 = "WorkflowMetricsSLA#METRICS_SLA_DURATION_MESSAGE",
+				value1 = "${key_durationMessage}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_TITLE",
+				value1 = "Calendar");
+
+			AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_SELECT");
+		}
+	}
+
 	macro verifyDefaultUnitsForEachDateRange {
 		var key_completionVelocityDateRange = "${completionVelocityDateRange}";
 
@@ -1035,6 +1068,16 @@ definition {
 	macro verifyFiltersFromDashboard {
 		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
+		}
+	}
+
+	macro verifySLARecordHead {
+		var key_slaRecordDurationHead = "${slaRecordDurationHead}";
+
+		if (isSet(slaRecordDurationHead)) {
+			AssertTextEquals(
+				locator1 = "WorkflowMetricsSLA#SLA_RECORD_DURATION",
+				value1 = "${key_slaRecordDurationHead}");
 		}
 	}
 

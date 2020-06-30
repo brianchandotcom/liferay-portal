@@ -12,8 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
@@ -71,16 +69,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const defaultConfigurationValues =
 		fragmentEntryLink.defaultConfigurationValues;
 
-	const onRestoreButtonClick = () => {
-		dispatch(
-			updateFragmentConfiguration({
-				configurationValues: defaultConfigurationValues,
-				fragmentEntryLink,
-				segmentsExperienceId,
-			})
-		);
-	};
-
 	const onValueSelect = useCallback(
 		(name, value) => {
 			const configurationValues = getConfigurationValues(
@@ -125,7 +113,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 					/>
 				);
 			})}
-			<RestoreButton onRestoreButtonClick={onRestoreButtonClick} />
 		</>
 	);
 };
@@ -136,23 +123,6 @@ FragmentConfigurationPanel.propTypes = {
 			fragmentEntryLinkId: PropTypes.string.isRequired,
 		}).isRequired,
 	}),
-};
-
-const RestoreButton = ({onRestoreButtonClick}) => (
-	<ClayButton
-		borderless
-		className="w-100"
-		displayType="secondary"
-		onClick={onRestoreButtonClick}
-		small
-	>
-		<ClayIcon symbol="restore" />
-		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
-	</ClayButton>
-);
-
-RestoreButton.propTypes = {
-	onRestoreButtonClick: PropTypes.func.isRequired,
 };
 
 function getConfigurationValues(defaultConfigurationValues, fragmentEntryLink) {

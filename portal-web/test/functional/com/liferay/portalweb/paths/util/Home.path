@@ -674,7 +674,7 @@
 <!--SITE_LOCALIZATION-->
 <tr>
 	<td>PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE</td>
-	<td>//div[@id='portalMessageContainer']//div[1]/a[contains(.,'${key_pageLocale}')]</td>
+	<td>//div[contains(@class,'alert-info')]//div[1]/a[contains(.,'${key_pageLocale}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -684,12 +684,12 @@
 </tr>
 <tr>
 	<td>PORTAL_LOCALIZATION_PREFERRED_LANGUAGE_MESSAGE</td>
-	<td>//div[@id='portalMessageContainer']//div[2]</td>
+	<td>//div[contains(@class,'alert-info')]//div[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE</td>
-	<td>//div[@id='portalMessageContainer']/div/div/div</td>
+	<td>//div[contains(@class,'alert-info')]//div[contains(@class,'d-block')]</td>
 	<td></td>
 </tr>
 </tbody>

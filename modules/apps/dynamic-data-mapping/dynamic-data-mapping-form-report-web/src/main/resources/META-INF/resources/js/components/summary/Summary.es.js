@@ -30,13 +30,13 @@ export default ({summary}) => {
 	summary = formatSummary(summary);
 
 	const formatNumber = (number) => {
-		let formatedNumber = number.toString();
+		let formattedNumber = number.toString();
 
-		if (formatedNumber.length > 12) {
-			formatedNumber = number.toString().substring(0, 8) + '...';
+		if (formattedNumber.length > 12) {
+			formattedNumber = number.toString().substring(0, 8) + '...';
 		}
 
-		return formatedNumber;
+		return formattedNumber;
 	};
 
 	const summaryItems = Object.keys(summary).map((key, index) => {

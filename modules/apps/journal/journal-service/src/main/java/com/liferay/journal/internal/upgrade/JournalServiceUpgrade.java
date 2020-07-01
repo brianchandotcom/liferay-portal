@@ -259,6 +259,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"3.2.3", "3.2.4",
 			new com.liferay.journal.internal.upgrade.v3_2_4.
 				UpgradeJournalArticle());
+
+		registry.register(
+			"3.2.4", "3.3.0",
+			new UpgradeCTModel("JournalContentSearch", "JournalFeed"));
 	}
 
 	protected void deleteTempImages() throws Exception {

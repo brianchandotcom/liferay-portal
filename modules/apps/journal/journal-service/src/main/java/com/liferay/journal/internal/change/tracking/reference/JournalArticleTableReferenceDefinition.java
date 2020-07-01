@@ -26,6 +26,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResourceTable;
 import com.liferay.journal.model.JournalArticleTable;
+import com.liferay.journal.model.JournalContentSearchTable;
 import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
@@ -73,9 +74,12 @@ public class JournalArticleTableReferenceDefinition
 						JournalArticleTable.INSTANCE.classNameId)
 				)
 			)
-		).nonreferenceColumns(
-			JournalArticleTable.INSTANCE.treePath,
+		).nonreferenceColumn(
+			JournalArticleTable.INSTANCE.treePath
+		).singleColumnReference(
 			JournalArticleTable.INSTANCE.articleId,
+			JournalContentSearchTable.INSTANCE.articleId
+		).nonreferenceColumn(
 			JournalArticleTable.INSTANCE.version
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(

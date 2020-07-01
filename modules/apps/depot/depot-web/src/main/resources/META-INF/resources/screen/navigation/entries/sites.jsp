@@ -83,11 +83,13 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-menu
-					defaultEventHandler="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					borderless="<%= true %>"
+					displayType="secondary"
 					dropdownItems="<%= depotAdminSitesDisplayContext.getConnectedSiteDropdownItems(depotEntryGroupRel) %>"
 					icon="ellipsis-v"
-					style="secondary"
-					triggerCssClasses="btn-monospaced btn-outline-borderless btn-secondary btn-sm"
+					monospaced="<%= true %>"
+					propsTransformer="js/ConnectedSiteDropdownPropsTransformer"
+					small="<%= true %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -96,11 +98,6 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-
-	<liferay-frontend:component
-		componentId="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-		module="js/ConnectedSiteDropdownDefaultEventHandler.es"
-	/>
 
 	<aui:script require="metal-dom/src/all/dom as dom">
 		var addConnectedSiteButton = document.querySelector(

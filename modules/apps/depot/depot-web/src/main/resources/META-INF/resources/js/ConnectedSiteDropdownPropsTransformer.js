@@ -12,9 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class ConnectedSiteDropdownDefaultEventHandler extends DefaultEventHandler {
+const ACTIONS = {
 	disconnect(itemData) {
 		if (
 			confirm(
@@ -25,7 +23,25 @@ class ConnectedSiteDropdownDefaultEventHandler extends DefaultEventHandler {
 		) {
 			submitForm(document.hrefFm, itemData.disconnectSiteActionURL);
 		}
-	}
-}
+	},
+};
 
-export default ConnectedSiteDropdownDefaultEventHandler;
+export default function propsTransformer({items, ...otherProps}) {
+	return {
+		...otherProps,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
+}

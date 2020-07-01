@@ -25,6 +25,7 @@ import com.liferay.blogs.exception.EntrySmallImageNameException;
 import com.liferay.blogs.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.exception.EntryTitleException;
 import com.liferay.blogs.exception.EntryUrlTitleException;
+import com.liferay.blogs.internal.util.BlogsSubscriptionSender;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -1895,9 +1894,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				blogsGroupServiceSettings.getEmailEntryAddedBody();
 		}
 
-		SubscriptionSender subscriptionSender =
-			new GroupSubscriptionCheckSubscriptionSender(
-				BlogsConstants.RESOURCE_NAME);
+		BlogsSubscriptionSender subscriptionSender =
+			new BlogsSubscriptionSender(BlogsConstants.RESOURCE_NAME);
 
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());

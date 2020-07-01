@@ -202,12 +202,14 @@ public class AssetCategoriesDisplayContext {
 		EmptyOnClickRowChecker emptyOnClickRowChecker =
 			new EmptyOnClickRowChecker(_renderResponse);
 
+		AssetVocabulary vocabulary = getVocabulary();
+
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("^(?!.*");
 		sb.append(_renderResponse.getNamespace());
 		sb.append("redirect).*(/vocabulary/");
-		sb.append(getVocabularyId());
+		sb.append(vocabulary.getVocabularyId());
 		sb.append("/category/");
 		sb.append(getCategoryId());
 		sb.append(")");
@@ -218,8 +220,6 @@ public class AssetCategoriesDisplayContext {
 
 		List<AssetCategory> categories = null;
 		int categoriesCount = 0;
-
-		AssetVocabulary vocabulary = getVocabulary();
 
 		if (Validator.isNotNull(_getKeywords())) {
 			Sort sort = null;
@@ -234,7 +234,7 @@ public class AssetCategoriesDisplayContext {
 			AssetCategoryDisplay assetCategoryDisplay =
 				AssetCategoryServiceUtil.searchCategoriesDisplay(
 					new long[] {vocabulary.getGroupId()}, _getKeywords(),
-					new long[] {getVocabularyId()}, new long[0],
+					new long[] {vocabulary.getVocabularyId()}, new long[0],
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(), sort);
 
@@ -250,10 +250,11 @@ public class AssetCategoriesDisplayContext {
 			if (category == null) {
 				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), getVocabularyId());
+						vocabulary.getGroupId(), vocabulary.getVocabularyId());
 
 				categories = AssetCategoryServiceUtil.getVocabularyCategories(
-					getVocabularyId(), categoriesSearchContainer.getStart(),
+					vocabulary.getVocabularyId(),
+					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(),
 					AssetCategoryTreePathComparator.getInstance(orderByAsc));
 			}
@@ -261,10 +262,10 @@ public class AssetCategoriesDisplayContext {
 				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
 						vocabulary.getGroupId(), category.getCategoryId(),
-						getVocabularyId());
+						vocabulary.getVocabularyId());
 
 				categories = AssetCategoryServiceUtil.getVocabularyCategories(
-					category.getCategoryId(), getVocabularyId(),
+					category.getCategoryId(), vocabulary.getVocabularyId(),
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(),
 					AssetCategoryTreePathComparator.getInstance(orderByAsc));
@@ -276,13 +277,14 @@ public class AssetCategoriesDisplayContext {
 			categoriesCount =
 				AssetCategoryServiceUtil.getVocabularyCategoriesCount(
 					vocabulary.getGroupId(), getCategoryId(),
-					getVocabularyId());
+					vocabulary.getVocabularyId());
 
 			categoriesSearchContainer.setTotal(categoriesCount);
 
 			categories = AssetCategoryServiceUtil.getVocabularyCategories(
 				vocabulary.getGroupId(), getCategoryId(),
-				getVocabularyId(), categoriesSearchContainer.getStart(),
+				vocabulary.getVocabularyId(),
+				categoriesSearchContainer.getStart(),
 				categoriesSearchContainer.getEnd(),
 				categoriesSearchContainer.getOrderByComparator());
 		}
@@ -718,9 +720,7 @@ public class AssetCategoriesDisplayContext {
 		try {
 			AssetVocabulary vocabulary = getVocabulary();
 
-			if (vocabulary.getGroupId() !=
-					_themeDisplay.getScopeGroupId()) {
-
+			if (vocabulary.getGroupId() != _themeDisplay.getScopeGroupId()) {
 				return false;
 			}
 		}

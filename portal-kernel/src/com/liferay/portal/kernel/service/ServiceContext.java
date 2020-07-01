@@ -209,11 +209,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		String[] groupPermissions = groupPermissionsList.toArray(new String[0]);
 		String[] guestPermissions = guestPermissionsList.toArray(new String[0]);
 
-		ModelPermissions modelPermissions = getModelPermissions();
-
-		if (modelPermissions == null) {
-			modelPermissions = new ModelPermissions(modelName);
-		}
+		ModelPermissions modelPermissions = new ModelPermissions(modelName);
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);

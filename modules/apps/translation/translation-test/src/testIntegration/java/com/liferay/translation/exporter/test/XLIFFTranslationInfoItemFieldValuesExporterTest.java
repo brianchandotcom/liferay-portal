@@ -79,11 +79,12 @@ public class XLIFFTranslationInfoItemFieldValuesExporterTest {
 				"$ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
-				_xliffTranslationInfoItemFieldValuesExporter.export(
-					infoItemFieldValuesProvider.getInfoItemFieldValues(
-						journalArticle),
-					LocaleUtil.getDefault(),
-					LocaleUtil.fromLanguageId("es_ES"))));
+				_xliffTranslationInfoItemFieldValuesExporter.
+					exportInfoItemFieldValues(
+						infoItemFieldValuesProvider.getInfoItemFieldValues(
+							journalArticle),
+						LocaleUtil.getDefault(),
+						LocaleUtil.fromLanguageId("es_ES"))));
 	}
 
 	private JournalArticle _getJournalArticle() throws Exception {

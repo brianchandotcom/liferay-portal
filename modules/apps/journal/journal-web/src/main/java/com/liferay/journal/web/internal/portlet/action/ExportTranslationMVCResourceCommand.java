@@ -92,11 +92,12 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						article.getTitle(themeDisplay.getLocale()),
 						StringPool.DASH, sourceLanguageId, StringPool.DASH,
 						targetLanguageId, ".xlf"),
-					_translationInfoItemFieldValuesExporter.export(
-						infoItemFieldValuesProvider.getInfoItemFieldValues(
-							article),
-						LocaleUtil.fromLanguageId(sourceLanguageId),
-						LocaleUtil.fromLanguageId(targetLanguageId)));
+					_translationInfoItemFieldValuesExporter.
+						exportInfoItemFieldValues(
+							infoItemFieldValuesProvider.getInfoItemFieldValues(
+								article),
+							LocaleUtil.fromLanguageId(sourceLanguageId),
+							LocaleUtil.fromLanguageId(targetLanguageId)));
 			}
 
 			try (InputStream inputStream = new FileInputStream(

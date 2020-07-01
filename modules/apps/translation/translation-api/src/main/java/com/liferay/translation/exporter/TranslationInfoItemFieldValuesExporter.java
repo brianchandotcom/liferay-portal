@@ -28,7 +28,7 @@ import java.util.Locale;
  */
 public interface TranslationInfoItemFieldValuesExporter {
 
-	public InputStream export(
+	public InputStream exportInfoItemFieldValues(
 			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException;

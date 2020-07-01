@@ -63,7 +63,7 @@ public class XLIFFInfoFormTranslationExporter
 	implements TranslationInfoItemFieldValuesExporter {
 
 	@Override
-	public InputStream export(
+	public InputStream exportInfoItemFieldValues(
 			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException {

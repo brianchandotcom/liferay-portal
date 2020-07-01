@@ -24,8 +24,13 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -52,6 +57,17 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!StyleBookPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+
+			return Collections.emptyList();
+		}
+
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData(
@@ -109,6 +125,22 @@ public class StyleBookManagementToolbarDisplayContext
 		PortletURL searchActionURL = getPortletURL();
 
 		return searchActionURL.toString();
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (StyleBookPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

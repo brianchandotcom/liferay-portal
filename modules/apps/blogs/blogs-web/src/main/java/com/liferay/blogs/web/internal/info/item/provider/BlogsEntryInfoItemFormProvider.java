@@ -16,11 +16,11 @@ package com.liferay.blogs.web.internal.info.item.provider;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.info.item.BlogsEntryInfoItemFields;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
+import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -47,38 +47,18 @@ public class BlogsEntryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		InfoForm infoForm = new InfoForm(BlogsEntry.class.getName());
-
-		infoForm.addAll(_getBlogsEntryInfoFieldSetEntries());
-
-		infoForm.add(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName()));
-
-		infoForm.add(
+		return _getInfoForm(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName()));
-
-		infoForm.add(
-			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName()));
-
-		return infoForm;
 	}
 
 	@Override
 	public InfoForm getInfoForm(BlogsEntry blogsEntry) {
-		InfoForm infoForm = getInfoForm();
-
 		try {
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId());
-
-			infoForm.add(
+			return _getInfoForm(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					assetEntry));
-
-			return infoForm;
+					_assetEntryLocalService.getEntry(
+						BlogsEntry.class.getName(), blogsEntry.getEntryId())));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -101,6 +81,23 @@ public class BlogsEntryInfoItemFormProvider
 			BlogsEntryInfoItemFields.publishDateInfoField,
 			BlogsEntryInfoItemFields.displayPageUrlInfoField,
 			BlogsEntryInfoItemFields.contentInfoField);
+	}
+
+	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
+		return InfoForm.builder(
+		).addAll(
+			_getBlogsEntryInfoFieldSetEntries()
+		).add(
+			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName())
+		).add(
+			assetEntryInfoFieldSet
+		).add(
+			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName())
+		).name(
+			BlogsEntry.class.getName()
+		).build();
 	}
 
 	@Reference

@@ -358,7 +358,10 @@ public class ResourceOpenAPIParser {
 
 		Operation operation = javaMethodSignature.getOperation();
 
-		batchOperation.setOperationId(operation.getOperationId() + "Batch");
+		if (batchOperation.getOperationId() != null) {
+			batchOperation.setOperationId(operation.getOperationId() + "Batch");
+		}
+
 		batchOperation.setParameters(
 			_getBatchParameters(operation, schemaName));
 		batchOperation.setTags(operation.getTags());

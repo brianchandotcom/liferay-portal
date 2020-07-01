@@ -321,6 +321,55 @@ definition {
 			webContentTitle = "Depot WebContent Title");
 	}
 
+	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
+	@priority = "5"
+	test ApproveWCArticleWithinAL {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Depot WebContent Content",
+			webContentTitle = "Depot WebContent Title");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "Test Test");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "Depot WebContent Title");
+	}
+
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveWCInFolder {
@@ -663,6 +712,181 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.submitForPublication();
+	}
+
+	@description = "This ensures that the resubmitted web content can be approved in an asset library."
+	@priority = "5"
+	test RejectandResubmitWCArticleWithinAL {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Depot WebContent Content",
+			webContentTitle = "Depot WebContent Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Pending",
+			webContentTitle = "Depot WebContent Title");
+
+		Navigator.openURL();
+
+		Notifications.gotoNotifications();
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Your submission was rejected by Test Test, please modify and resubmit.");
+
+		Workflow.gotoPreviewEdit();
+
+		WebContent.addCP(webContentTitle = "Depot WebContent Title Edit");
+
+		Button.clickSave();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.resubmitTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title Edit",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Update");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title Edit",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title Edit",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "Depot WebContent Title Edit");
+	}
+
+	@description = "This ensures that an asset library WC article can be rejected by the content reviewer."
+	@priority = "5"
+	test RejectWCArticleByContentReviewer {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Depot.assignUserAsMember(
+			depotName = "Test Depot Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		GlobalMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignAssetLibraryRole(
+			roleTitle = "Asset Library Content Reviewer",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Depot WebContent Content",
+			webContentTitle = "Depot WebContent Title");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Pending",
+			webContentTitle = "Depot WebContent Title");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "Test Test");
+
+		Workflow.assignByDetails(user = "userfn userln");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Pending",
+			webContentTitle = "Depot WebContent Title");
 	}
 
 	@description = "This ensures that the workflow can be set in an asset library."

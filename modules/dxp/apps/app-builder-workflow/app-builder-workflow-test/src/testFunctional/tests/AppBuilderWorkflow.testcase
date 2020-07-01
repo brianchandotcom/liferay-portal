@@ -102,8 +102,8 @@ definition {
 			title = "First App");
 
 		AppBuilderAdmin.chooseMultipleFilter(
-			statusFilterOption = "Deployed",
-			deploymentFilterOption = "Product Menu");
+			deploymentFilterOption = "Product Menu",
+			statusFilterOption = "Deployed");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "First App");
 
@@ -160,7 +160,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Third App");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Fourth App");
-
 	}
 
 	@description = "Automate LPS-111262 & LPS-111681"

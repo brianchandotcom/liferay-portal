@@ -32,6 +32,9 @@ import java.util.Set;
  */
 public class ModelPermissions implements Cloneable, Serializable {
 
+	public static final String RESOURCE_NAME_ALL_RESOURCES =
+		ModelPermissions.class.getName() + "#ALL_RESOURCES";
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -143,9 +146,6 @@ public class ModelPermissions implements Cloneable, Serializable {
 		_actionIdsMap.putAll(actionIdsMap);
 		_resourceName = Objects.requireNonNull(resourceName);
 	}
-
-	private static final String _RESOURCE_NAME_ALL_RESOURCES =
-		ModelPermissions.class.getName() + "#ALL_RESOURCES";
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
 	private String _resourceName = _RESOURCE_NAME_ALL_RESOURCES;

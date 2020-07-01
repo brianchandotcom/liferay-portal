@@ -1976,7 +1976,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		String resourceName = modelPermissions.getResourceName();
 
-		if (resourceName.equals(_RESOURCE_NAME_ALL_RESOURCES) ||
+		if (resourceName.equals(ModelPermissions.RESOURCE_NAME_ALL_RESOURCES) ||
 			resourceName.equals(resourcePermissionName)) {
 
 			return true;
@@ -2104,9 +2104,6 @@ public class ResourcePermissionLocalServiceImpl
 	private static final String _FIND_MISSING_RESOURCE_PERMISSIONS =
 		ResourcePermissionLocalServiceImpl.class.getName() +
 			".findMissingResourcePermissions";
-
-	private static final String _RESOURCE_NAME_ALL_RESOURCES =
-		ModelPermissions.class.getName() + "#ALL_RESOURCES";
 
 	private static final String _UPDATE_ACTION_IDS =
 		ResourcePermissionLocalServiceImpl.class.getName() + ".updateActionIds";

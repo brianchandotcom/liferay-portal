@@ -64,7 +64,7 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "{\"option1\":\"option2\"}");
+			"field1", JSONUtil.put("option1", "option2"));
 
 		JSONObject processedFieldJSONObject =
 			_gridDDMFormFieldTypeReportProcessor.process(
@@ -98,7 +98,7 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "{\"option1\":\"option2\"}");
+			"field1", JSONUtil.put("option1", "option2"));
 
 		JSONObject processedFieldJSONObject =
 			_gridDDMFormFieldTypeReportProcessor.process(
@@ -132,7 +132,7 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "");
+			"field1", JSONFactoryUtil.createJSONObject());
 
 		JSONObject processedFieldJSONObject =
 			_gridDDMFormFieldTypeReportProcessor.process(
@@ -164,7 +164,7 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "{\"option1\":\"option2\"}");
+			"field1", JSONUtil.put("option1", "option2"));
 
 		JSONObject processedFieldJSONObject =
 			_gridDDMFormFieldTypeReportProcessor.process(
@@ -194,16 +194,18 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 	}
 
 	private void _assertStructure(JSONObject structureJSONObject) {
+		JSONArray expectedJSONArray = JSONUtil.putAll("option1", "option2");
+
 		JSONArray columnsJSONArray = structureJSONObject.getJSONArray(
 			"columns");
 
 		Assert.assertEquals(
-			"[\"option1\",\"option2\"]", columnsJSONArray.toJSONString());
+			expectedJSONArray.toJSONString(), columnsJSONArray.toJSONString());
 
 		JSONArray rowsJSONArray = structureJSONObject.getJSONArray("rows");
 
 		Assert.assertEquals(
-			"[\"option1\",\"option2\"]", rowsJSONArray.toJSONString());
+			expectedJSONArray.toJSONString(), rowsJSONArray.toJSONString());
 	}
 
 	private DDMFormFieldOptions _createDDMFormOptions() {
@@ -216,7 +218,7 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 	}
 
 	private DDMFormFieldValue _mockDDMFormFieldValue(
-		String name, String valueString) {
+		String name, JSONObject valueJSONObject) {
 
 		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
 
@@ -234,7 +236,8 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 
 		Value value = new LocalizedValue();
 
-		value.addString(value.getDefaultLocale(), valueString);
+		value.addString(
+			value.getDefaultLocale(), valueJSONObject.toJSONString());
 		value.setDefaultLocale(LocaleUtil.US);
 
 		when(

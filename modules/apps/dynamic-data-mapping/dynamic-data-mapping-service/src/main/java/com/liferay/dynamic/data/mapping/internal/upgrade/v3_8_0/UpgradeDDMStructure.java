@@ -267,7 +267,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeDecimalField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "decimal"
+			"dataType", "double"
 		).put(
 			"type", "numeric"
 		).put(
@@ -466,7 +466,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeNumberField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "decimal"
+			"dataType", "double"
 		).put(
 			"type", "numeric"
 		).put(

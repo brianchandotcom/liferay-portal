@@ -81,14 +81,22 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = _getInstance(httpServletRequest);
 
+		if (className == null) {
+			return serviceContext;
+		}
+
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
 			serviceContext.setModelPermissions(
 				ModelPermissionsFactory.create(httpServletRequest, className));
 		}
+		else {
+			ModelPermissions modelPermissions =
+				serviceContext.getModelPermissions();
 
-		_ensureValidModelPermissions(serviceContext);
+			modelPermissions.setResourceName(className);
+		}
 
 		// Expando
 
@@ -109,14 +117,22 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = _getInstance(portletRequest);
 
+		if (className == null) {
+			return serviceContext;
+		}
+
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
 			serviceContext.setModelPermissions(
 				ModelPermissionsFactory.create(portletRequest, className));
 		}
+		else {
+			ModelPermissions modelPermissions =
+				serviceContext.getModelPermissions();
 
-		_ensureValidModelPermissions(serviceContext);
+			modelPermissions.setResourceName(className);
+		}
 
 		// Expando
 

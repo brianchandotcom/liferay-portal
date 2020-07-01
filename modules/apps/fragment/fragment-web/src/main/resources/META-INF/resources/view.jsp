@@ -57,17 +57,16 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 										<ul class="navbar-nav">
 											<li>
 												<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-													<liferay-ui:icon
+													<clay:link
+														buttonStyle="borderless"
+														href="<%= editFragmentCollectionURL %>"
 														icon="plus"
-														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-														markupView="lexicon"
-														url="<%= editFragmentCollectionURL %>"
 													/>
 												</c:if>
 											</li>
 											<li>
 												<clay:dropdown-actions
-													componentId='<%= liferayPortletResponse.getNamespace() + "actionsComponent" %>'
+													defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
 												/>
 											</li>
@@ -224,7 +223,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									componentId='<%= liferayPortletResponse.getNamespace() + "emptyResultMessageComponent" %>'
+									defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
 								/>
@@ -291,6 +290,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 </aui:form>
 
 <liferay-frontend:component
+	componentId="FragmentCollectionsViewDefaultEventHandler"
 	context="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
-	module="js/FragmentCollectionsView.es"
+	module="js/FragmentCollectionsViewDefaultEventHandler.es"
 />

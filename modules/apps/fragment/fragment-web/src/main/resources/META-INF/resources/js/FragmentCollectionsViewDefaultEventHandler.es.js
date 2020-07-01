@@ -12,73 +12,33 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase, openModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	openModal,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 /**
- * @class FragmentCollectionsView
+ * @class FragmentCollectionsViewDefaultEventHandler
  */
-class FragmentCollectionsView extends PortletBase {
-
-	/**
-	 * @inheritdoc
-	 * @review
-	 */
-	created() {
-		this._fragmentCollectionsFm =
-			document[this.ns('fragmentCollectionsFm')];
-		this._handleComponentReady = this._handleComponentReady.bind(this);
-
-		Liferay.componentReady(this.ns('actionsComponent')).then(
-			this._handleComponentReady
-		);
-
-		Liferay.componentReady(this.ns('emptyResultMessageComponent')).then(
-			this._handleComponentReady
-		);
-	}
-
-	/**
-	 * Handles a componentReady event and adds a click handler to the
-	 * given fragment.
-	 * @param {{ on: function }} component
-	 * @private
-	 * @review
-	 */
-	_handleComponentReady(component) {
-		const ACTIONS = {
-			deleteCollections: this._deleteCollections,
-			exportCollections: this._exportCollections,
-			openImportView: this._openImportView,
-		};
-
-		component.on(['click', 'itemClicked'], (event, facade) => {
-			let itemData;
-
-			if (event.data && event.data.item) {
-				itemData = event.data.item.data;
-			}
-			else if (!event.data && facade && facade.target) {
-				itemData = facade.target.data;
-			}
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action].call(this);
-			}
-		});
-	}
+class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 
 	/**
 	 * Opens an item selector to remove selected collections
 	 * @private
 	 * @review
 	 */
-	_deleteCollections() {
+	deleteCollections() {
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('delete'),
 			Liferay.Language.get('delete-collection'),
 			this.viewDeleteFragmentCollectionsURL,
 			(selectedItems) => {
+				const fragmentCollectionsForm = document.getElementById(
+					this.ns('fragmentCollectionsFm')
+				);
+
 				if (
 					confirm(
 						Liferay.Language.get(
@@ -87,12 +47,14 @@ class FragmentCollectionsView extends PortletBase {
 					)
 				) {
 					selectedItems.forEach((item) => {
-						this._fragmentCollectionsFm.appendChild(item);
+						fragmentCollectionsForm.appendChild(
+							item.cloneNode(true)
+						);
 					});
 				}
 
 				submitForm(
-					this._fragmentCollectionsFm,
+					fragmentCollectionsForm,
 					this.deleteFragmentCollectionURL
 				);
 			}
@@ -104,18 +66,22 @@ class FragmentCollectionsView extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_exportCollections() {
+	exportCollections() {
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('export'),
 			Liferay.Language.get('export-collection'),
 			this.viewExportFragmentCollectionsURL,
 			(selectedItems) => {
+				const fragmentCollectionsForm = document.getElementById(
+					this.ns('fragmentCollectionsFm')
+				);
+
 				selectedItems.forEach((item) => {
-					this._fragmentCollectionsFm.append(item);
+					fragmentCollectionsForm.appendChild(item.cloneNode(true));
 				});
 
 				submitForm(
-					this._fragmentCollectionsFm,
+					fragmentCollectionsForm,
 					this.exportFragmentCollectionsURL
 				);
 			}
@@ -159,7 +125,7 @@ class FragmentCollectionsView extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_openImportView() {
+	openImportView() {
 		openModal({
 			buttons: [
 				{
@@ -182,22 +148,12 @@ class FragmentCollectionsView extends PortletBase {
 	}
 }
 
-FragmentCollectionsView.STATE = {
-
-	/**
-	 * Collections form used for updating backend
-	 * @default undefined
-	 * @instance
-	 * @memberof FragmentCollectionsView
-	 * @review
-	 * @type {HTMLFormElement|undefined}
-	 */
-	_fragmentCollectionsFm: Config.instanceOf(HTMLFormElement).internal(),
+FragmentCollectionsViewDefaultEventHandler.STATE = {
 
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentCollectionsView
+	 * @memberof FragmentCollectionsViewDefaultEventHandler
 	 * @review
 	 * @type {string}
 	 */
@@ -206,7 +162,7 @@ FragmentCollectionsView.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentCollectionsView
+	 * @memberof FragmentCollectionsViewDefaultEventHandler
 	 * @review
 	 * @type {string}
 	 */
@@ -215,7 +171,7 @@ FragmentCollectionsView.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentCollectionsView
+	 * @memberof FragmentCollectionsViewDefaultEventHandler
 	 * @review
 	 * @type {string}
 	 */
@@ -224,7 +180,7 @@ FragmentCollectionsView.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentCollectionsView
+	 * @memberof FragmentCollectionsViewDefaultEventHandler
 	 * @review
 	 * @type {string}
 	 */
@@ -233,11 +189,11 @@ FragmentCollectionsView.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof FragmentCollectionsView
+	 * @memberof FragmentCollectionsViewDefaultEventHandler
 	 * @review
 	 * @type {string}
 	 */
 	viewImportURL: Config.string().required(),
 };
 
-export default FragmentCollectionsView;
+export default FragmentCollectionsViewDefaultEventHandler;

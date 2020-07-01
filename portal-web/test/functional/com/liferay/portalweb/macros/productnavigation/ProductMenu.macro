@@ -57,6 +57,15 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
 	}
 
+	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
+	macro gotoPortletWhenDisableGlobalAppsMenu {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		ProductMenuHelper.expandCategory(category = "${category}");
+
+		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
+	}
+
 	@summary = "Navigate to Product Menu > ${category} > ${scope} > ${portlet}"
 	macro gotoScopedPortlet {
 		ProductMenuHelper.openProductMenu();

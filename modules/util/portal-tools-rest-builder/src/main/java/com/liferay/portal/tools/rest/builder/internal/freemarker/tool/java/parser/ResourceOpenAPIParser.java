@@ -494,6 +494,13 @@ public class ResourceOpenAPIParser {
 					"permissions", Permission[].class.getName()));
 		}
 
+		if (parameterNames.contains("terms")) {
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"aggregation", Aggregation.class.getName());
+
+			javaMethodParameters.add(javaMethodParameter);
+		}
+
 		if (parameterNames.contains("filter")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
 				"filter", Filter.class.getName());
@@ -513,13 +520,6 @@ public class ResourceOpenAPIParser {
 		if (parameterNames.contains("sort")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
 				"sorts", Sort[].class.getName());
-
-			javaMethodParameters.add(javaMethodParameter);
-		}
-
-		if (parameterNames.contains("terms")) {
-			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"aggregation", Aggregation.class.getName());
 
 			javaMethodParameters.add(javaMethodParameter);
 		}

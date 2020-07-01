@@ -70,14 +70,6 @@ definition {
 
 		DDLRecord.addCP();
 
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "pt-BR Categoria",
-			fieldName = "Categoria");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "pt-BR Pergunta",
-			fieldName = "Pergunta");
-
 		for (var language : list "es-ES,en-US") {
 			PortletEntry.changeLocale(locale = "${language}");
 

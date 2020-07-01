@@ -851,6 +851,7 @@ definition {
 				key_oldFriendlyURL = "${lastOldFriendlyURL}",
 				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM_LAST");
 		}
+		
 		AssertVisible(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");

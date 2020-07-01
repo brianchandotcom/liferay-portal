@@ -25,6 +25,7 @@ import {
 } from 'recharts';
 
 import colors, {NAMED_COLORS} from '../../../utils/colors.es';
+import ellipsize from '../../../utils/ellipsize.es';
 import TooltipContent from '../TooltipContent.es';
 import CustomizedAxisTick from './CustomizedAxisTick.es';
 
@@ -96,7 +97,7 @@ export default ({data, field, height, structure, width}) => {
 						</svg>
 						<span>
 							{entry.value && entry.value.length > 44
-								? `${entry.value.substring(0, 44)}...`
+								? ellipsize(entry.value, 44)
 								: entry.value}
 						</span>
 					</li>

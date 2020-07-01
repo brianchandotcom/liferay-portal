@@ -15,8 +15,9 @@
 import React from 'react';
 import {Text} from 'recharts';
 
-export default ({payload, x, y}) => {
-	return (
+import ellipsize from '../../../utils/ellipsize.es';
+
+export default ({payload, x, y}) => (
 		<Text
 			textAnchor="middle"
 			verticalAnchor="start"
@@ -25,8 +26,7 @@ export default ({payload, x, y}) => {
 			y={y}
 		>
 			{payload.value.length > 34
-				? `${payload.value.substring(0, 34)}...`
+				? ellipsize(payload.value, 34)
 				: payload.value}
 		</Text>
 	);
-};

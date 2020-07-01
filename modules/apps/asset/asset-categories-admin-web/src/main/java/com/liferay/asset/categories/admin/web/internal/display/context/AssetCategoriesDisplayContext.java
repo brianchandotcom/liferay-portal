@@ -219,7 +219,7 @@ public class AssetCategoriesDisplayContext {
 		List<AssetCategory> categories = null;
 		int categoriesCount = 0;
 
-		AssetVocabulary assetVocabulary = getVocabulary();
+		AssetVocabulary vocabulary = getVocabulary();
 
 		if (Validator.isNotNull(_getKeywords())) {
 			Sort sort = null;
@@ -233,7 +233,7 @@ public class AssetCategoriesDisplayContext {
 
 			AssetCategoryDisplay assetCategoryDisplay =
 				AssetCategoryServiceUtil.searchCategoriesDisplay(
-					new long[] {assetVocabulary.getGroupId()}, _getKeywords(),
+					new long[] {vocabulary.getGroupId()}, _getKeywords(),
 					new long[] {getVocabularyId()}, new long[0],
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(), sort);
@@ -250,7 +250,7 @@ public class AssetCategoriesDisplayContext {
 			if (category == null) {
 				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						assetVocabulary.getGroupId(), getVocabularyId());
+						vocabulary.getGroupId(), getVocabularyId());
 
 				categories = AssetCategoryServiceUtil.getVocabularyCategories(
 					getVocabularyId(), categoriesSearchContainer.getStart(),
@@ -260,7 +260,7 @@ public class AssetCategoriesDisplayContext {
 			else {
 				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						assetVocabulary.getGroupId(), category.getCategoryId(),
+						vocabulary.getGroupId(), category.getCategoryId(),
 						getVocabularyId());
 
 				categories = AssetCategoryServiceUtil.getVocabularyCategories(
@@ -275,13 +275,13 @@ public class AssetCategoriesDisplayContext {
 		else {
 			categoriesCount =
 				AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-					assetVocabulary.getGroupId(), getCategoryId(),
+					vocabulary.getGroupId(), getCategoryId(),
 					getVocabularyId());
 
 			categoriesSearchContainer.setTotal(categoriesCount);
 
 			categories = AssetCategoryServiceUtil.getVocabularyCategories(
-				assetVocabulary.getGroupId(), getCategoryId(),
+				vocabulary.getGroupId(), getCategoryId(),
 				getVocabularyId(), categoriesSearchContainer.getStart(),
 				categoriesSearchContainer.getEnd(),
 				categoriesSearchContainer.getOrderByComparator());
@@ -716,9 +716,9 @@ public class AssetCategoriesDisplayContext {
 
 	public boolean isShowCategoriesAddButton() {
 		try {
-			AssetVocabulary assetVocabulary = getVocabulary();
+			AssetVocabulary vocabulary = getVocabulary();
 
-			if (assetVocabulary.getGroupId() !=
+			if (vocabulary.getGroupId() !=
 					_themeDisplay.getScopeGroupId()) {
 
 				return false;

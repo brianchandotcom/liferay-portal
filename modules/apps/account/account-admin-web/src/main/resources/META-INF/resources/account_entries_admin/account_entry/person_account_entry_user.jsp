@@ -115,6 +115,7 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 
 <portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 	<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectPersonAccountEntryUser" %>' />
 	<portlet:param name="navigation" value="all-users" />

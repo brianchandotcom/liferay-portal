@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import moment from 'moment';
 import React, {useContext} from 'react';
 
 import Color from '../color/Color.es';
@@ -20,6 +21,14 @@ import {SidebarContext} from '../sidebar/SidebarContext.es';
 
 export default ({data, field, summary, totalEntries, type}) => {
 	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
+
+	const formatDate = (field) => {
+		moment.locale(themeDisplay.getLanguageId().split('_', 1)[0]);
+		const m = moment(field);
+		field = m.format('L');
+
+		return field;
+	};
 
 	return (
 		<div className="field-list">
@@ -29,7 +38,7 @@ export default ({data, field, summary, totalEntries, type}) => {
 						<li key={index}>
 							{type == 'color' ? (
 								<Color hexColor={field} />
-							) : (
+							) : type == 'date' ? formatDate(field) : (
 								field
 							)}
 						</li>

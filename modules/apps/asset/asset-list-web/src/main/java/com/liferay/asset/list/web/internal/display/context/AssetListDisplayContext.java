@@ -361,7 +361,6 @@ public class AssetListDisplayContext {
 			dropdownItem.putData(
 				"addAssetListEntryURL", _getAddAssetListEntryURL(type));
 			dropdownItem.putData("title", _getAddAssetListTitle(title));
-			dropdownItem.setHref("#");
 			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 		};
 	}

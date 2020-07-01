@@ -1669,15 +1669,26 @@ public abstract class BaseBuild implements Build {
 
 		@Override
 		public String getRepositoryName() {
-			String branchInformationString = _getBranchInformationString();
+			Properties buildProperties;
 
-			String regex = "[\\S\\s]*prepare.repositories.([^\\(]+)[\\S\\s]*";
-
-			if (branchInformationString.matches(regex)) {
-				return branchInformationString.replaceAll(regex, "$1");
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 
-			return null;
+			String repositoryType = _repositoryType;
+
+			if (repositoryType.equals("portal.base") ||
+				repositoryType.equals("portal.ee")) {
+
+				repositoryType = "portal";
+			}
+
+			return JenkinsResultsParserUtil.getProperty(
+				buildProperties, repositoryType + ".repository",
+				getUpstreamBranchName());
 		}
 
 		@Override
@@ -1788,6 +1799,10 @@ public abstract class BaseBuild implements Build {
 			}
 
 			int y = consoleText.indexOf("prepare.repositories.", x);
+
+			if (y == -1) {
+				y = consoleText.indexOf("Deleting:", x);
+			}
 
 			y = consoleText.indexOf("\n", y);
 

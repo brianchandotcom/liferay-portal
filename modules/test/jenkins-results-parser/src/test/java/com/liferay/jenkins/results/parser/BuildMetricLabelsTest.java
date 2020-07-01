@@ -28,6 +28,8 @@ public class BuildMetricLabelsTest extends BuildTest {
 
 	@Test
 	public void testMetricLabelGeneration() throws Exception {
+		JenkinsResultsParserUtil.getBuildProperties(false);
+
 		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
 			@Override

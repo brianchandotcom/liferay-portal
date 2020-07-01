@@ -24,9 +24,12 @@ public class HealthClusterRequest
 	implements ClusterRequest<HealthClusterResponse> {
 
 	public HealthClusterRequest() {
+		setPreferLocalCluster(true);
 	}
 
 	public HealthClusterRequest(String... indexNames) {
+		setPreferLocalCluster(true);
+
 		_indexNames = indexNames;
 	}
 

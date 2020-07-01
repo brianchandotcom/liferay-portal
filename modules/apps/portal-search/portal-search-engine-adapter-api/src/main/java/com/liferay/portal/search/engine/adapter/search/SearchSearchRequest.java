@@ -34,6 +34,10 @@ import java.util.Map;
 public class SearchSearchRequest
 	extends BaseSearchRequest implements SearchRequest<SearchSearchResponse> {
 
+	public SearchSearchRequest() {
+		setPreferLocalCluster(true);
+	}
+
 	@Override
 	public SearchSearchResponse accept(
 		SearchRequestExecutor searchRequestExecutor) {

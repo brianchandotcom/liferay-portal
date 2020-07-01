@@ -29,6 +29,10 @@ import java.util.Set;
 public class AnalyzeIndexRequest
 	extends CrossClusterRequest implements IndexRequest<AnalyzeIndexResponse> {
 
+	public AnalyzeIndexRequest() {
+		setPreferLocalCluster(true);
+	}
+
 	@Override
 	public AnalyzeIndexResponse accept(
 		IndexRequestExecutor indexRequestExecutor) {

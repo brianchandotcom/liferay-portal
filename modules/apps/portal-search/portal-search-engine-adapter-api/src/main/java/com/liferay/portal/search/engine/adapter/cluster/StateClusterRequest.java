@@ -24,6 +24,8 @@ public class StateClusterRequest
 	implements ClusterRequest<StateClusterResponse> {
 
 	public StateClusterRequest(String[] indexNames) {
+		setPreferLocalCluster(true);
+
 		_indexNames = indexNames;
 	}
 

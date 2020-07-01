@@ -24,6 +24,8 @@ public class PutFollowCCRRequest
 		String remoteClusterAlias, String leaderIndexName,
 		String followerIndexName) {
 
+		setPreferLocalCluster(true);
+
 		_remoteClusterAlias = remoteClusterAlias;
 		_leaderIndexName = leaderIndexName;
 		_followerIndexName = followerIndexName;

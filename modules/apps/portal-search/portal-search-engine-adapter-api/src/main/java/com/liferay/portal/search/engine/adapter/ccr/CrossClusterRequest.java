@@ -23,10 +23,19 @@ public class CrossClusterRequest {
 		return _connectionId;
 	}
 
+	public boolean isPreferLocalCluster() {
+		return _preferLocalCluster;
+	}
+
 	public void setConnectionId(String connectionId) {
 		_connectionId = connectionId;
 	}
 
+	public void setPreferLocalCluster(boolean preferLocalCluster) {
+		_preferLocalCluster = preferLocalCluster;
+	}
+
 	private String _connectionId;
+	private boolean _preferLocalCluster;
 
 }

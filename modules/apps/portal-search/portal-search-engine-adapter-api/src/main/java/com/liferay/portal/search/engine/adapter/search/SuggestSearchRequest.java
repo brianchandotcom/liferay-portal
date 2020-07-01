@@ -28,6 +28,8 @@ public class SuggestSearchRequest
 	implements SearchRequest<SuggestSearchResponse> {
 
 	public SuggestSearchRequest(String... indexNames) {
+		setPreferLocalCluster(true);
+
 		_indexNames = indexNames;
 	}
 

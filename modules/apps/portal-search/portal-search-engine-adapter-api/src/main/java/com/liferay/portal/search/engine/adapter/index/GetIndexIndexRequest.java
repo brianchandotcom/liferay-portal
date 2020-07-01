@@ -23,6 +23,8 @@ public class GetIndexIndexRequest
 	extends CrossClusterRequest implements IndexRequest<GetIndexIndexResponse> {
 
 	public GetIndexIndexRequest(String indexName) {
+		setPreferLocalCluster(true);
+
 		_indexName = indexName;
 	}
 

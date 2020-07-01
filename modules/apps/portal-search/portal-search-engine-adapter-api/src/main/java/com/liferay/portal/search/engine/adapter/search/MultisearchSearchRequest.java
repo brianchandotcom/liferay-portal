@@ -27,6 +27,10 @@ public class MultisearchSearchRequest
 	extends CrossClusterRequest
 	implements SearchRequest<MultisearchSearchResponse> {
 
+	public MultisearchSearchRequest() {
+		setPreferLocalCluster(true);
+	}
+
 	@Override
 	public MultisearchSearchResponse accept(
 		SearchRequestExecutor searchRequestExecutor) {

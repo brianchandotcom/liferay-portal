@@ -27,6 +27,8 @@ public class GetDocumentRequest
 			   DocumentRequest<GetDocumentResponse> {
 
 	public GetDocumentRequest(String indexName, String id) {
+		setPreferLocalCluster(true);
+
 		_indexName = indexName;
 		_id = id;
 	}

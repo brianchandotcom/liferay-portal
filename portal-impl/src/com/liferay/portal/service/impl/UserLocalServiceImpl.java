@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.SendPasswordException;
@@ -4765,8 +4766,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setPasswordEncrypted(true);
 		user.setPasswordReset(passwordReset);
 
-		if (!silentUpdate || (user.getPasswordModifiedDate() == null)) {
-			user.setPasswordModifiedDate(new Date());
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (!silentUpdate || (user.getPasswordModifiedDate() == null) ||
+			!_isPasswordUnchanged(user, password1, newEncPwd)) {
+
+			Date modifiedDate = serviceContext.getModifiedDate();
+
+			if (modifiedDate != null) {
+				user.setPasswordModifiedDate(modifiedDate);
+			}
+			else {
+				user.setPasswordModifiedDate(new Date());
+			}
 		}
 
 		user.setDigest(user.getDigest(password1));
@@ -4815,7 +4828,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!silentUpdate) {
 			sendPasswordNotification(
 				user, user.getCompanyId(), password1, null, null, null, null,
-				null, ServiceContextThreadLocal.getServiceContext());
+				null, serviceContext);
 		}
 
 		_invalidateTicket(user);
@@ -6847,6 +6860,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = MailService.class)
 	protected MailService mailService;
+
+	private static boolean _isPasswordUnchanged(
+			User user, String newPlaintextPwd, String newEncPwd)
+		throws PwdEncryptorException {
+
+		if (!user.isPasswordEncrypted()) {
+			return newPlaintextPwd.equals(user.getPassword());
+		}
+
+		return newEncPwd.equals(user.getPassword());
+	}
 
 	private User _checkPasswordPolicy(User user) throws PortalException {
 

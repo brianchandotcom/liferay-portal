@@ -32,8 +32,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 			actions = {
 				"setVisible('ddmStructureId', FALSE)",
 				"setVisible('ddmStructureLayoutId', FALSE)",
-				"setVisible('name', FALSE)", "setVisible('rows', FALSE)",
-				"setVisible('showLabel', FALSE)"
+				"setVisible('name', FALSE)", "setVisible('rows', FALSE)"
 			},
 			condition = "TRUE"
 		)

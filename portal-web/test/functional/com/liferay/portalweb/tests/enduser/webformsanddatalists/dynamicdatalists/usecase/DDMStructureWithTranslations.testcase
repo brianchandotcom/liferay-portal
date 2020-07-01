@@ -70,7 +70,7 @@ definition {
 
 		DDLRecord.addCP();
 
-		for (var language : list "es-ES,en-US") {
+		for (var language : list "es-ES,en-US,pt-BR") {
 			PortletEntry.changeLocale(locale = "${language}");
 
 			DDLRecord.populateFieldText(

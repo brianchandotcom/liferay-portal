@@ -819,6 +819,14 @@ definition {
 		AssertElementPresent(locator1 = "xpath=(//button[(@title = 'Delete') and (@disabled = 'disabled')])");
 	}
 
+	macro viewNoOldFriendlyURL {
+		for (var oldFriendlyURL : list "${oldFriendlyURLs}") {
+			AssertElementNotPresent(
+				key_oldFriendlyURL = "${oldFriendlyURL}",
+				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+		}
+	}
+
 	macro viewNoPage {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -851,7 +859,7 @@ definition {
 				key_oldFriendlyURL = "${lastOldFriendlyURL}",
 				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM_LAST");
 		}
-		
+
 		AssertVisible(
 			key_oldFriendlyURL = "${oldFriendlyURL}",
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");

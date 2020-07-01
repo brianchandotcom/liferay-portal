@@ -35,6 +35,9 @@ public class ModelPermissions implements Cloneable, Serializable {
 	public static final String RESOURCE_NAME_ALL_RESOURCES =
 		ModelPermissions.class.getName() + "#ALL_RESOURCES";
 
+	public static final String RESOURCE_NAME_FIRST_RESOURCE =
+		ModelPermissions.class.getName() + "#FIRST_RESOURCE";
+
 	public static final String RESOURCE_NAME_UNINITIALIZED =
 		ModelPermissions.class.getName() + "#UNINITIALIZED";
 
@@ -85,7 +88,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 	public Object clone() {
 		return new ModelPermissions(
 			new HashMap<>(_roleNamesMap), new HashMap<>(_actionIdsMap),
-			_resourceName);
+			_resourceName, _used);
 	}
 
 	public String[] getActionIds(String roleName) {
@@ -126,11 +129,16 @@ public class ModelPermissions implements Cloneable, Serializable {
 		return _actionIdsMap.isEmpty();
 	}
 
+	public boolean isUsed() {
+		return _used;
+	}
+
 	public void setResourceName(String resourceName) {
 		_resourceName = Objects.requireNonNull(resourceName);
 	}
 
-		_resourceName = resourceName;
+	public void setUsed(boolean used) {
+		_used = used;
 	}
 
 	protected ModelPermissions(
@@ -147,10 +155,23 @@ public class ModelPermissions implements Cloneable, Serializable {
 		_roleNamesMap.putAll(roleNamesMap);
 		_actionIdsMap.putAll(actionIdsMap);
 		_resourceName = Objects.requireNonNull(resourceName);
+		_used = false;
+	}
+
+	protected ModelPermissions(
+		Map<String, Set<String>> roleNamesMap,
+		Map<String, Set<String>> actionIdsMap, String resourceName,
+		boolean used) {
+
+		_roleNamesMap.putAll(roleNamesMap);
+		_actionIdsMap.putAll(actionIdsMap);
+		_resourceName = Objects.requireNonNull(resourceName);
+		_used = used;
 	}
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
 	private String _resourceName = RESOURCE_NAME_UNINITIALIZED;
 	private final Map<String, Set<String>> _roleNamesMap = new HashMap<>();
+	private boolean _used;
 
 }

@@ -63,6 +63,10 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions create(
 		Map<String, String[]> modelPermissionsParameterMap, String className) {
 
+		if (className == null) {
+			className = ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE;
+		}
+
 		ModelPermissions modelPermissions = null;
 
 		for (Map.Entry<String, String[]> entry :
@@ -119,6 +123,10 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions create(
 		String[] groupPermissions, String[] guestPermissions,
 		String className) {
+
+		if (className == null) {
+			className = ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE;
+		}
 
 		ModelPermissions modelPermissions = new ModelPermissions(className);
 

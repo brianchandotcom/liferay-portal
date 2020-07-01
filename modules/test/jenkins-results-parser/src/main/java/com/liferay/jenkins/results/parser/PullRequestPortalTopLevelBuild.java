@@ -48,16 +48,20 @@ public class PullRequestPortalTopLevelBuild
 			exception.printStackTrace();
 		}
 
-		BranchInformation branchInformation = getPortalBranchInformation();
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
-		sb.append(branchInformation.getReceiverUsername());
-		sb.append("/");
-		sb.append(branchInformation.getRepositoryName());
+		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
+		sb.append("/liferay-portal");
+
+		String branchName = getBranchName();
+
+		if (!branchName.equals("master")) {
+			sb.append("-ee");
+		}
+
 		sb.append("/pull/");
-		sb.append(branchInformation.getPullRequestNumber());
+		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
 
 		_pullRequest = new PullRequest(sb.toString());
 	}

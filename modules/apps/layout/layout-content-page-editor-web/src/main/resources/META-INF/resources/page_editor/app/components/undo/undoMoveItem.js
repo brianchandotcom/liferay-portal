@@ -16,8 +16,9 @@ import moveItem from '../../thunks/moveItem';
 
 function undoAction({action, store}) {
 	const {itemId, parentItemId, position} = action;
+	const {segmentsExperienceId} = store;
 
-	return moveItem({itemId, parentItemId, position, store});
+	return moveItem({itemId, parentItemId, position, segmentsExperienceId});
 }
 
 function getDerivedStateForUndo({action, state}) {

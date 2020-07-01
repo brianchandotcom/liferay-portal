@@ -71,11 +71,13 @@ export default function Layout({mainItemId}) {
 	const layoutData = useSelector((state) => state.layoutData);
 	const mainItem = layoutData.items[mainItemId];
 	const layoutRef = useRef(null);
+	const segmentsExperienceId = useSelector(
+		(state) => state.segmentsExperienceId
+	);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
 		(state) => state.sidebar.panelId && state.sidebar.open
 	);
-	const store = useSelector((state) => state);
 
 	const onClick = (event) => {
 		if (event.target === event.currentTarget) {
@@ -141,12 +143,12 @@ export default function Layout({mainItemId}) {
 						itemId,
 						parentItemId: parentId,
 						position,
-						store,
+						segmentsExperienceId,
 					})
 				);
 			}
 		},
-		[activeItemId, dispatch, layoutData.items, store]
+		[activeItemId, dispatch, layoutData.items, segmentsExperienceId]
 	);
 
 	useEffect(() => {

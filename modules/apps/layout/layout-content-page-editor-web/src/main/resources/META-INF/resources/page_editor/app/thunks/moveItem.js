@@ -15,10 +15,13 @@
 import moveItemAction from '../actions/moveItem';
 import LayoutService from '../services/LayoutService';
 
-export default function moveItem({itemId, parentItemId, position, store}) {
+export default function moveItem({
+	itemId,
+	parentItemId,
+	position,
+	segmentsExperienceId,
+}) {
 	return (dispatch) => {
-		const {segmentsExperienceId} = store;
-
 		return LayoutService.moveItem({
 			itemId,
 			onNetworkStatus: dispatch,

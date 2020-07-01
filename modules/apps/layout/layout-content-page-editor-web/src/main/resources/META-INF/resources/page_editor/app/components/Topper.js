@@ -37,9 +37,7 @@ import {
 	useDropTarget,
 } from '../utils/useDragAndDrop';
 import {
-	useActiveItemId,
 	useHoverItem,
-	useHoveredItemId,
 	useIsActive,
 	useIsHovered,
 	useSelectItem,
@@ -95,6 +93,9 @@ export default function ({children, item, ...props}) {
 function Topper({children, className, item, itemElement, layoutData}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
+	const segmentsExperienceId = useSelector(
+		(state) => state.segmentsExperienceId
+	);
 	const store = useSelector((state) => state);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
@@ -117,7 +118,7 @@ function Topper({children, className, item, itemElement, layoutData}) {
 					itemId: item.itemId,
 					parentItemId,
 					position,
-					store,
+					segmentsExperienceId,
 				})
 			)
 	);

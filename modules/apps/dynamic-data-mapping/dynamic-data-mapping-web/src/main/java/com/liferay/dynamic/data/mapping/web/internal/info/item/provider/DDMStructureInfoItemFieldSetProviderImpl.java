@@ -63,8 +63,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 					}
 				}
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.builder(
-				).addValues(
+				InfoLocalizedValue.<String>builder(
+				).putAll(
 					ddmStructure.getNameMap()
 				).build()
 			).name(

@@ -172,12 +172,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		virtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 
-		if (Validator.isNull(webId) ||
-			(companyPersistence.fetchByWebId(webId) != null)) {
-
-			throw new CompanyWebIdException();
-		}
-
+		validateWebId(webId);
 		validateVirtualHost(webId, virtualHostname);
 		validateMx(-1, mx);
 
@@ -1531,6 +1526,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						noSuchVirtualHostException, noSuchVirtualHostException);
 				}
 			}
+		}
+	}
+
+	protected void validateWebId(String webId) throws CompanyWebIdException {
+		if (Validator.isNull(webId)) {
+			throw new CompanyWebIdException("Web ID is null");
+		}
+
+		if (companyPersistence.fetchByWebId(webId) != null) {
+			throw new CompanyWebIdException("Duplicate web ID " + webId);
 		}
 	}
 

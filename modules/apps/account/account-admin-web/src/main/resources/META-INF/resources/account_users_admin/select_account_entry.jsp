@@ -60,8 +60,9 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 
 			<liferay-ui:search-container-column-text
 				cssClass="<%= cssClass %>"
-				name="parent-account"
-				property="parentAccountEntryName"
+				name="type"
+				property="type"
+				translate="<%= true %>"
 			/>
 
 			<liferay-ui:search-container-column-text>

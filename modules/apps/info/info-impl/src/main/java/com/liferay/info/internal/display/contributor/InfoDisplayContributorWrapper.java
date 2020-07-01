@@ -183,28 +183,23 @@ public class InfoDisplayContributorWrapper
 	private InfoForm _convertToInfoForm(
 		Set<InfoDisplayField> infoDisplayFields) {
 
-		Locale locale = _getLocale();
-
-		InfoForm infoForm = new InfoForm("fields");
-
-		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
-			InfoFieldType infoFieldType = _getInfoFieldTypeType(
-				infoDisplayField.getType());
-
-			InfoLocalizedValue<String> labelInfoLocalizedValue =
-				InfoLocalizedValue.builder(
-				).addValue(
-					locale, infoDisplayField.getLabel()
-				).build();
-
-			InfoField infoField = new InfoField(
-				infoFieldType, labelInfoLocalizedValue,
-				infoDisplayField.getKey());
-
-			infoForm.add(infoField);
-		}
-
-		return infoForm;
+		return InfoForm.builder(
+		).add(
+			consumer -> {
+				for (InfoDisplayField infoDisplayField : infoDisplayFields) {
+					consumer.accept(
+						new InfoField(
+							_getInfoFieldTypeType(infoDisplayField.getType()),
+							InfoLocalizedValue.builder(
+							).addValue(
+								_getLocale(), infoDisplayField.getLabel()
+							).build(),
+							infoDisplayField.getKey()));
+				}
+			}
+		).name(
+			"fields"
+		).build();
 	}
 
 	private InfoItemFieldValues _convertToInfoItemFieldValues(

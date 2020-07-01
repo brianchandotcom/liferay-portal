@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchClassTypeException;
 import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -53,23 +54,12 @@ public class JournalArticleInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		InfoForm infoForm = new InfoForm(JournalArticle.class.getName());
-
-		infoForm.addAll(_getJournalArticleFields());
-
-		infoForm.add(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName()));
-
-		infoForm.add(
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName()));
-
-		infoForm.add(
-			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName()));
-
-		return infoForm;
+		try {
+			return getInfoForm(0);
+		}
+		catch (NoSuchClassTypeException noSuchClassTypeException) {
+			throw new RuntimeException(noSuchClassTypeException);
+		}
 	}
 
 	@Override
@@ -79,16 +69,12 @@ public class JournalArticleInfoItemFormProvider
 		long ddmStructureId = ddmStructure.getStructureId();
 
 		try {
-			InfoForm infoForm = getInfoForm(String.valueOf(ddmStructureId));
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
-
-			infoForm.add(
+			return _getInfoForm(
+				ddmStructureId,
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					assetEntry));
-
-			return infoForm;
+					_assetEntryLocalService.getEntry(
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey())));
 		}
 		catch (NoSuchClassTypeException noSuchClassTypeException) {
 			throw new RuntimeException(
@@ -108,29 +94,48 @@ public class JournalArticleInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey)
 		throws NoSuchFormVariationException {
 
-		InfoForm infoForm = getInfoForm();
+		return _getInfoForm(
+			GetterUtil.getLong(formVariationKey),
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				AssetEntry.class.getName()));
+	}
 
-		long ddmStructureId = GetterUtil.getLong(formVariationKey);
-
-		if (ddmStructureId == 0) {
-			return infoForm;
-		}
+	private InfoForm _getInfoForm(
+			long ddmStructureId, InfoFieldSet assetEntryInfoFieldSet)
+		throws NoSuchFormVariationException {
 
 		try {
-			infoForm.add(
-				_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
-					ddmStructureId));
+			return InfoForm.builder(
+			).addAll(
+				_getJournalArticleFields()
+			).add(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+					JournalArticle.class.getName())
+			).add(
+				assetEntryInfoFieldSet
+			).add(
+				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
+					JournalArticle.class.getName())
+			).<NoSuchStructureException>add(
+				consumer -> {
+					if (ddmStructureId != 0) {
+						consumer.accept(
+							_ddmStructureInfoItemFieldSetProvider.
+								getInfoItemFieldSet(ddmStructureId));
 
-			infoForm.add(
-				_ddmTemplateInfoItemFieldSetProvider.getInfoItemFieldSet(
-					ddmStructureId));
+						consumer.accept(
+							_ddmTemplateInfoItemFieldSetProvider.
+								getInfoItemFieldSet(ddmStructureId));
+					}
+				}
+			).name(
+				JournalArticle.class.getName()
+			).build();
 		}
 		catch (NoSuchStructureException noSuchStructureException) {
 			throw new NoSuchFormVariationException(
 				String.valueOf(ddmStructureId), noSuchStructureException);
 		}
-
-		return infoForm;
 	}
 
 	private Collection<InfoFieldSetEntry> _getJournalArticleFields() {

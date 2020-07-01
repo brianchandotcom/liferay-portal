@@ -1,27 +1,34 @@
 $baseline: 24px;
 
-.ddm-form-builder {
-	padding-right: $sidebarMainWidth + $sidebarMiniWidth;
-	transition: padding ease 0.5s;
-
-	.col-ddm {
-		padding-left: 0;
-		padding-right: 0;
-	}
-}
-
 .data-engine-form-builder {
 	> .sheet {
 		margin-top: 0;
-		max-width: 808px;
 		padding: 0;
 	}
 
-	.container.ddm-form-builder {
-		margin-left: 0;
-		margin-right: 0;
-		max-width: 808px;
-		padding: 0;
+	&.ddm-form-builder {
+		transition: padding ease 0.5s;
+
+		&--sidebar-open {
+			padding-left: 0;
+			padding-right: $sidebarMainWidth + $sidebarMiniWidth;
+		}
+
+		.col-ddm {
+			padding: 0 1px;
+		}
+
+		.ddm-field-container {
+			background-color: #fff;
+
+			&.dragging {
+				border-radius: 0;
+			}
+		}
+	}
+
+	.ddm-form-builder.container {
+		padding: 0 24px;
 	}
 
 	.ddm-empty-page {

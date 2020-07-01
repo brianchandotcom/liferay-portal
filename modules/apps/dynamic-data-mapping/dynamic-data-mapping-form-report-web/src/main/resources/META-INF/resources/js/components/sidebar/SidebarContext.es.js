@@ -12,9 +12,9 @@
  * details.
  */
 
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 
-import useEventListener from './../../hooks/useEventListener.es';
+import isClickOutside from '../../hooks/useOnClickOutside.es';
 
 const SidebarContext = createContext({});
 
@@ -30,17 +30,24 @@ const SidebarContextProvider = ({
 		type: null,
 	});
 
-	useEventListener(window, 'click', (event) => {
-		const target = event.srcElement;
+	useEffect(() => {
+		const eventHandler = ({target}) => {
+			if (
+				isClickOutside(
+					target,
+					'#' + portletNamespace + '-sidebar-reports',
+					'#' + portletNamespace + '-see-more'
+				)
+			) {
+				setSidebarState(() => ({
+					isOpen: false,
+				}));
+			}
+		};
 
-		if (
-			!target.closest('.sidebar-reports') &&
-			!target.closest('#see-more')
-		) {
-			setSidebarState(() => ({
-				isOpen: false,
-			}));
-		}
+		window.addEventListener('click', eventHandler);
+
+		return () => window.removeEventListener('click', eventHandler);
 	});
 
 	const toggleSidebar = (field, summary, totalEntries, type) => {

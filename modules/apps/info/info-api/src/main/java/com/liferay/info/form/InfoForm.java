@@ -45,7 +45,18 @@ public class InfoForm {
 
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-			infoFieldSet.addAll(fieldSet.getInfoFieldSetEntries());
+			_entries.put(
+				fieldSet.getName(),
+				InfoFieldSet.builder(
+				).addAll(
+					infoFieldSet.getInfoFieldSetEntries()
+				).addAll(
+					fieldSet.getInfoFieldSetEntries()
+				).labelInfoLocalizedValue(
+					infoFieldSet.getLabelInfoLocalizedValue()
+				).name(
+					infoFieldSet.getName()
+				).build());
 		}
 		else {
 			_entries.put(fieldSet.getName(), fieldSet);

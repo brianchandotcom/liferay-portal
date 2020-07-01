@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.exception.XLIFFFileException;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				InfoItemFieldValues infoItemFieldValues =
-					_translationInfoItemFieldValuesExporter.
+					_translationInfoItemFieldValuesImporter.
 						importInfoItemFieldValues(
 							themeDisplay.getScopeGroupId(),
 							new InfoItemClassPKReference(
@@ -189,7 +189,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private Portal _portal;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporter
-		_translationInfoItemFieldValuesExporter;
+	private TranslationInfoItemFieldValuesImporter
+		_translationInfoItemFieldValuesImporter;
 
 }

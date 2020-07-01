@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
@@ -351,7 +351,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	private ServiceContext _serviceContext;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoItemFieldValuesExporter
+	private TranslationInfoItemFieldValuesImporter
 		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

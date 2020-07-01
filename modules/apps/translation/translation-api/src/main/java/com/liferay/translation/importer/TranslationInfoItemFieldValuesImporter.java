@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.translation.exporter;
+package com.liferay.translation.importer;
 
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Locale;
-
 /**
  * @author Alejandro Tardín
  */
-public interface TranslationInfoItemFieldValuesExporter {
+public interface TranslationInfoItemFieldValuesImporter {
 
-	public InputStream exportInfoItemFieldValues(
-			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
-			Locale targetLocale)
-		throws IOException;
+	public InfoItemFieldValues importInfoItemFieldValues(
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			InputStream inputStream)
+		throws IOException, PortalException;
 
 }

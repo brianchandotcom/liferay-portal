@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.exporter.test;
+package com.liferay.translation.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.field.InfoFieldValue;
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exception.XLIFFFileException;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.util.Collection;
@@ -114,7 +114,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 	private Group _group;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoItemFieldValuesExporter
+	private TranslationInfoItemFieldValuesImporter
 		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

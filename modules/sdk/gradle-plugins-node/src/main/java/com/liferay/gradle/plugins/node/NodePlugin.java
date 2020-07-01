@@ -588,9 +588,9 @@ public class NodePlugin implements Plugin<Project> {
 						return project.file("node_modules");
 					}
 
-					File scriptFile = executePackageManagerTask.getScriptFile();
+					Project rootProject = project.getRootProject();
 
-					return new File(scriptFile.getParent(), "node_modules");
+					return rootProject.file("node_modules");
 				}
 
 			});

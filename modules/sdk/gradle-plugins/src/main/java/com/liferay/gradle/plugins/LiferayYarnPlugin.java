@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.StringUtil;
+import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
@@ -125,16 +126,21 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			_configureTaskYarnFormatProvider(entry.getKey(), entry.getValue());
 		}
 
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
 		for (Map.Entry<TaskProvider<YarnInstallTask>, File> entry :
 				yarnInstallTaskProviders.entrySet()) {
 
-			_configureTaskYarnInstallProvider(entry.getKey(), entry.getValue());
+			_configureTaskYarnInstallProvider(
+				entry.getKey(), entry.getValue(), nodeExtension);
 		}
 
 		for (Map.Entry<TaskProvider<YarnInstallTask>, File> entry :
 				yarnLockTaskProviders.entrySet()) {
 
-			_configureTaskYarnLockProvider(entry.getKey(), entry.getValue());
+			_configureTaskYarnLockProvider(
+				entry.getKey(), entry.getValue(), nodeExtension);
 		}
 
 		TaskProvider<Task> yarnCheckFormatTaskProvider =
@@ -329,17 +335,22 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 	private void _configureTaskYarnInstallProvider(
 		TaskProvider<YarnInstallTask> yarnInstallTaskProvider,
-		final File yarnLockFile) {
+		final File yarnLockFile, final NodeExtension nodeExtension) {
 
 		yarnInstallTaskProvider.configure(
 			new Action<YarnInstallTask>() {
 
 				@Override
 				public void execute(YarnInstallTask yarnInstallTask) {
+					Project project = yarnInstallTask.getProject();
+
 					yarnInstallTask.setDescription(
 						"Installs the Node.js packages.");
 					yarnInstallTask.setFrozenLockFile(true);
 					yarnInstallTask.setWorkingDir(yarnLockFile.getParentFile());
+					yarnInstallTask.setYarnDir(
+						new File(project.getBuildDir(), "yarn"));
+					yarnInstallTask.setYarnUrl(nodeExtension.getYarnUrl());
 				}
 
 			});
@@ -371,19 +382,25 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 	private void _configureTaskYarnLockProvider(
 		TaskProvider<YarnInstallTask> yarnLockYarnInstallTaskProvider,
-		final File yarnLockFile) {
+		final File yarnLockFile, final NodeExtension nodeExtension) {
 
 		yarnLockYarnInstallTaskProvider.configure(
 			new Action<YarnInstallTask>() {
 
 				@Override
 				public void execute(YarnInstallTask yarnLockYarnInstallTask) {
+					Project project = yarnLockYarnInstallTask.getProject();
+
 					yarnLockYarnInstallTask.setDescription(
 						"Installs the Node.js packages and updates the " +
 							"yarn.lock file");
 					yarnLockYarnInstallTask.setFrozenLockFile(false);
 					yarnLockYarnInstallTask.setWorkingDir(
 						yarnLockFile.getParentFile());
+					yarnLockYarnInstallTask.setYarnDir(
+						new File(project.getBuildDir(), "yarn"));
+					yarnLockYarnInstallTask.setYarnUrl(
+						nodeExtension.getYarnUrl());
 				}
 
 			});

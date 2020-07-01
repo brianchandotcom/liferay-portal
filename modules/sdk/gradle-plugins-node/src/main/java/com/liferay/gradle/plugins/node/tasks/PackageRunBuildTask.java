@@ -76,14 +76,6 @@ public class PackageRunBuildTask extends PackageRunTask {
 		return _getExistentFile("package-lock.json");
 	}
 
-	@InputFile
-	@Optional
-	@Override
-	@PathSensitive(PathSensitivity.RELATIVE)
-	public File getScriptFile() {
-		return _getExistentFile(super.getScriptFile());
-	}
-
 	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
@@ -146,10 +138,10 @@ public class PackageRunBuildTask extends PackageRunTask {
 		_yarnWorkingDir = yarnWorkingDir;
 	}
 
-	private File _getExistentFile(Object path) {
+	private File _getExistentFile(String fileName) {
 		Project project = getProject();
 
-		File file = project.file(path);
+		File file = project.file(fileName);
 
 		if (!file.exists()) {
 			file = null;

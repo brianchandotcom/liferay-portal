@@ -44,19 +44,13 @@ public class NodePluginUtil {
 	public static File getYarnScriptFile(File projectDir) {
 		File dir = projectDir;
 
-		while (true) {
-			File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
+		File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
 
-			if ((files != null) && (files.length > 0)) {
-				return files[0];
-			}
-
-			dir = dir.getParentFile();
-
-			if (dir == null) {
-				return null;
-			}
+		if ((files != null) && (files.length > 0)) {
+			return files[0];
 		}
+
+		return null;
 	}
 
 }

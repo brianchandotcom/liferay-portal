@@ -164,9 +164,7 @@ public class NodeExtension {
 					return new File(npmDir, "bin/npm-cli.js");
 				}
 
-				File projectDir = project.getProjectDir();
-
-				return NodePluginUtil.getYarnScriptFile(projectDir);
+				return NodePluginUtil.getYarnScriptFile(getYarnDir());
 			}
 
 		};
@@ -179,15 +177,48 @@ public class NodeExtension {
 					return true;
 				}
 
-				File projectDir = project.getProjectDir();
-
-				File file = NodePluginUtil.getYarnScriptFile(projectDir);
+				File file = NodePluginUtil.getYarnScriptFile(getYarnDir());
 
 				if (file == null) {
 					return true;
 				}
 
 				return false;
+			}
+
+		};
+
+		_yarnDir = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				Project rootProject = project.getRootProject();
+
+				return new File(rootProject.getBuildDir(), "yarn");
+			}
+
+		};
+
+		_yarnUrl = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				String yarnVersion = getYarnVersion();
+
+				if (Validator.isNull(yarnVersion)) {
+					return null;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(
+					"https://github.com/yarnpkg/yarn/releases/download/v");
+				sb.append(yarnVersion);
+				sb.append("/yarn-");
+				sb.append(yarnVersion);
+				sb.append(".js");
+
+				return sb.toString();
 			}
 
 		};
@@ -219,6 +250,18 @@ public class NodeExtension {
 
 	public File getScriptFile() {
 		return GradleUtil.toFile(_project, _scriptFile);
+	}
+
+	public File getYarnDir() {
+		return GradleUtil.toFile(_project, _yarnDir);
+	}
+
+	public String getYarnUrl() {
+		return GradleUtil.toString(_yarnUrl);
+	}
+
+	public String getYarnVersion() {
+		return GradleUtil.toString(_yarnVersion);
 	}
 
 	public boolean isDownload() {
@@ -289,6 +332,18 @@ public class NodeExtension {
 		_useNpm = useNpm;
 	}
 
+	public void setYarnDir(Object yarnDir) {
+		_yarnDir = yarnDir;
+	}
+
+	public void setYarnUrl(Object yarnUrl) {
+		_yarnUrl = yarnUrl;
+	}
+
+	public void setYarnVersion(Object yarnVersion) {
+		_yarnVersion = yarnVersion;
+	}
+
 	private static final Map<String, String> _npmVersions =
 		new HashMap<String, String>() {
 			{
@@ -321,5 +376,8 @@ public class NodeExtension {
 	private final Project _project;
 	private Object _scriptFile;
 	private Object _useNpm;
+	private Object _yarnDir;
+	private Object _yarnUrl;
+	private Object _yarnVersion = "1.13.0";
 
 }

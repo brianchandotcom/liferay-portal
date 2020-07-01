@@ -22,14 +22,13 @@ export default ({
 	data,
 	fields,
 	formReportRecordsFieldValuesURL,
-	locale,
 	portletNamespace,
 }) => (
 	<SidebarContextProvider
 		formReportRecordsFieldValuesURL={formReportRecordsFieldValuesURL}
 		portletNamespace={portletNamespace}
 	>
-		<CardList data={data} fields={fields} locale={locale} />
+		<CardList data={data} fields={fields} />
 
 		<Sidebar />
 	</SidebarContextProvider>

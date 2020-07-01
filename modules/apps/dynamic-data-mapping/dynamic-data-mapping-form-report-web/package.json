@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
+		"moment": "^2.22.2",
 		"react": "16.12.0",
 		"recharts": "1.8.5"
 	},

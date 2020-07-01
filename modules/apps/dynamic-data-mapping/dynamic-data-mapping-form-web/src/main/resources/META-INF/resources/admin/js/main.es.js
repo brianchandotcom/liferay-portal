@@ -63,6 +63,9 @@ class Form extends Component {
 			published,
 			showPublishAlert,
 		} = this.props;
+
+		this.syncActiveNavItem(this.state.activeNavItem);
+
 		const {paginationMode} = this.state;
 
 		this._eventHandler = new EventHandler();
@@ -580,6 +583,12 @@ class Form extends Component {
 		if (published.newVal != null) {
 			this._updateShareFormIcon(published.newVal);
 		}
+	}
+
+	_activeNavItemValueFn() {
+		const {context} = this.props;
+
+		return context.activeNavItem || NAV_ITEMS.FORM;
 	}
 
 	_handleAddFieldButtonClicked() {
@@ -1332,13 +1341,13 @@ Form.STATE = {
 
 	/**
 	 * Current active tab index.
-	 * @default
+	 * @default _activeNavItemValueFn
 	 * @instance
 	 * @memberof Form
 	 * @type {!number}
 	 */
 
-	activeNavItem: Config.number().value(NAV_ITEMS.FORM),
+	activeNavItem: Config.number().valueFn('_activeNavItemValueFn'),
 
 	/**
 	 * Internal mirror of the pages state

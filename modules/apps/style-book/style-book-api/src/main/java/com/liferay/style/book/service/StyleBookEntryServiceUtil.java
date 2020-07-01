@@ -37,6 +37,29 @@ public class StyleBookEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addStyleBookEntry(
+			groupId, name, styleBookEntryKey, serviceContext);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			deleteStyleBookEntry(long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteStyleBookEntry(styleBookEntryId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			deleteStyleBookEntry(
+				com.liferay.style.book.model.StyleBookEntry styleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteStyleBookEntry(styleBookEntry);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,6 +68,21 @@ public class StyleBookEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntry(
+			styleBookEntryId, previewFileEntryId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntry(styleBookEntryId, name);
 	}
 
 	public static StyleBookEntryService getService() {

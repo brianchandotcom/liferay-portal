@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.style.book.model.StyleBookEntry;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +49,16 @@ public interface StyleBookEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StyleBookEntryServiceUtil} to access the style book entry remote service. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
+		throws PortalException;
+
+	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +66,13 @@ public interface StyleBookEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name)
+		throws PortalException;
 
 }

@@ -150,6 +150,10 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions createWithDefaultPermissions(
 		String className) {
 
+		if (className == null) {
+			throw new NullPointerException("className is null");
+		}
+
 		ModelPermissions modelPermissions = new ModelPermissions(className);
 
 		List<String> modelResourceGroupDefaultActions =

@@ -943,8 +943,14 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
 
-		return jsonSerializer.serializeDeep(
-			ddmFormBuilderContextResponse.getContext());
+		Map<String, Object> context =
+			ddmFormBuilderContextResponse.getContext();
+
+		context.put(
+			"activeNavItem",
+			ParamUtil.getInteger(renderRequest, "activeNavItem"));
+
+		return jsonSerializer.serializeDeep(context);
 	}
 
 	public String getSharedFormURL() {

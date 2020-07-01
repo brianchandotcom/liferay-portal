@@ -53,8 +53,9 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
-				Long messageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long messageBoardSectionId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
@@ -67,6 +68,7 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			Date dateCreated, Date dateModified, Long messageBoardSectionId,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -113,8 +115,9 @@ public interface MessageBoardThreadResource {
 		throws Exception;
 
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardThread postSiteMessageBoardThread(

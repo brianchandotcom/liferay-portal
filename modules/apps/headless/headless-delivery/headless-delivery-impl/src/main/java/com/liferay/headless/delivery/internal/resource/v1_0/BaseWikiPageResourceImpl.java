@@ -108,6 +108,8 @@ public abstract class BaseWikiPageResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
 				wikiNodeId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -454,8 +456,8 @@ public abstract class BaseWikiPageResourceImpl
 		throws Exception {
 
 		return getWikiNodeWikiPagesPage(
-			(Long)parameters.get("wikiNodeId"), search, filter, pagination,
-			sorts);
+			(Long)parameters.get("wikiNodeId"), search, null, filter,
+			pagination, sorts);
 	}
 
 	@Override

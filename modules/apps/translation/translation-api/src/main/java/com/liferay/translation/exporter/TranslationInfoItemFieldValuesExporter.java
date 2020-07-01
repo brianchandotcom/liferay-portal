@@ -26,7 +26,7 @@ import java.util.Locale;
 /**
  * @author Alejandro Tardín
  */
-public interface TranslationInfoItemFieldValuesExporter<T> {
+public interface TranslationInfoItemFieldValuesExporter {
 
 	public InputStream export(
 			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,

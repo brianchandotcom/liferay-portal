@@ -14,9 +14,15 @@
 
 package com.liferay.style.book.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.style.book.service.StyleBookEntryServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.style.book.service.StyleBookEntryServiceUtil</code> service
+ * <code>StyleBookEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,107 @@ package com.liferay.style.book.service.http;
  * @generated
  */
 public class StyleBookEntryServiceSoap {
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			addStyleBookEntry(
+				long groupId, String name, String styleBookEntryKey,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.addStyleBookEntry(
+					groupId, name, styleBookEntryKey, serviceContext);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			deleteStyleBookEntry(long styleBookEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.deleteStyleBookEntry(
+					styleBookEntryId);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			deleteStyleBookEntry(
+				com.liferay.style.book.model.StyleBookEntrySoap styleBookEntry)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.deleteStyleBookEntry(
+					com.liferay.style.book.model.impl.StyleBookEntryModelImpl.
+						toModel(styleBookEntry));
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			updateStyleBookEntry(long styleBookEntryId, long previewFileEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.updateStyleBookEntry(
+					styleBookEntryId, previewFileEntryId);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			updateStyleBookEntry(long styleBookEntryId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.updateStyleBookEntry(
+					styleBookEntryId, name);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryServiceSoap.class);
+
 }

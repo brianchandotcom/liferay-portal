@@ -32,6 +32,32 @@ public class StyleBookEntryServiceWrapper
 		_styleBookEntryService = styleBookEntryService;
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.addStyleBookEntry(
+			groupId, name, styleBookEntryKey, serviceContext);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry deleteStyleBookEntry(
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.deleteStyleBookEntry(styleBookEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry deleteStyleBookEntry(
+			com.liferay.style.book.model.StyleBookEntry styleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.deleteStyleBookEntry(styleBookEntry);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -40,6 +66,24 @@ public class StyleBookEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _styleBookEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.updateStyleBookEntry(
+			styleBookEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.updateStyleBookEntry(
+			styleBookEntryId, name);
 	}
 
 	@Override

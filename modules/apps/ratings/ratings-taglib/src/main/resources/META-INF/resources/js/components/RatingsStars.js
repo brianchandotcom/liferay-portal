@@ -282,7 +282,7 @@ const RatingsStars = ({
 
 			<div className="ratings-stacked-stars-vote">
 				<label
-					className="lfr-portal-tooltip"
+					className="lfr-portal-tooltip ratings-stacked-stars-delete"
 					htmlFor={`starDelete`}
 					title={Liferay.Language.get('delete')}
 				>
@@ -290,7 +290,7 @@ const RatingsStars = ({
 				</label>
 				<input
 					checked={score === 0}
-					className="ratings-stacked-stars-delete sr-only"
+					className="ratings-stacked-stars-delete-input sr-only"
 					id={`starDelete`}
 					name="rating"
 					onChange={() => {

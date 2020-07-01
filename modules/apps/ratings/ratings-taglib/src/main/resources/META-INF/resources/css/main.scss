@@ -187,11 +187,26 @@
 		padding: 0.1875rem;
 	}
 
-	input:checked:not(.ratings-stacked-stars-delete) ~ label {
+	input:checked:not(.ratings-stacked-stars-delete-input) ~ label {
 		color: $primary;
 	}
 
 	input:checked + label {
 		color: $primary;
+	}
+
+	label:hover:not(.ratings-stacked-stars-delete) {
+		&,
+		& ~ label {
+			color: $primary;
+		}
+	}
+
+	.ratings-stacked-stars-delete {
+		color: $secondary-l1;
+
+		&:hover {
+			color: $dark;
+		}
 	}
 }

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -81,8 +82,7 @@ public class SelectLayoutCollectionDisplayContext {
 				LanguageUtil.get(
 					_httpServletRequest, "there-are-no-collection-providers"));
 
-		List<InfoListProvider<?>> infoListProviders =
-			_infoListProviderTracker.getInfoListProviders();
+		List<InfoListProvider<?>> infoListProviders = _getInfoListProviders();
 
 		searchContainer.setResults(
 			ListUtil.subList(
@@ -201,6 +201,22 @@ public class SelectLayoutCollectionDisplayContext {
 		}
 
 		return infoItemClassNames;
+	}
+
+	private List<InfoListProvider<?>> _getInfoListProviders() {
+		List<InfoListProvider<?>> infoListProviders =
+			_infoListProviderTracker.getInfoListProviders();
+
+		DefaultInfoListProviderContext defaultInfoListProviderContext =
+			new DefaultInfoListProviderContext(
+				_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
+
+		defaultInfoListProviderContext.setLayout(_themeDisplay.getLayout());
+
+		return ListUtil.filter(
+			infoListProviders,
+			infoListProvider -> infoListProvider.isAvailable(
+				defaultInfoListProviderContext));
 	}
 
 	private NavigationItem _getNavigationItem(String label, String tabName) {

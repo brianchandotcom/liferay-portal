@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookActionKeys;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
 
@@ -48,6 +51,10 @@ public class StyleBookEntryPreviewUploadFileEntryHandler
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		_portletResourcePermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		String contentType = uploadPortletRequest.getContentType(
@@ -93,6 +100,11 @@ public class StyleBookEntryPreviewUploadFileEntryHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookEntryPreviewUploadFileEntryHandler.class);
+
+	@Reference(
+		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

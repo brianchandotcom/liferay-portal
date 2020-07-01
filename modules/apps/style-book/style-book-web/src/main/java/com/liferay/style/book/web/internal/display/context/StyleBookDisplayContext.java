@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryCreateDateComparator;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
+import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 
 import java.util.List;
 import java.util.Objects;
@@ -98,8 +100,15 @@ public class StyleBookDisplayContext {
 		styleBookEntriesSearchContainer.setOrderByComparator(orderByComparator);
 
 		styleBookEntriesSearchContainer.setOrderByType(_getOrderByType());
-		styleBookEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
+
+		if (StyleBookPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+
+			styleBookEntriesSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
+		}
 
 		List<StyleBookEntry> styleBookEntries = null;
 		int styleBookEntriesCount = 0;

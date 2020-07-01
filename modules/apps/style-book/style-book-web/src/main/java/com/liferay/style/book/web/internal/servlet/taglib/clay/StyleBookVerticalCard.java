@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
+import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryActionDropdownItemsProvider;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -53,6 +56,14 @@ public class StyleBookVerticalCard
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		if (!StyleBookPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+
+			return Collections.emptyList();
+		}
+
 		StyleBookEntryActionDropdownItemsProvider
 			styleBookEntryActionDropdownItemsProvider =
 				new StyleBookEntryActionDropdownItemsProvider(
@@ -69,6 +80,14 @@ public class StyleBookVerticalCard
 
 	@Override
 	public String getHref() {
+		if (!StyleBookPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
+
+			return null;
+		}
+
 		PortletURL editStyleBookEntryURL = _renderResponse.createRenderURL();
 
 		editStyleBookEntryURL.setParameter(

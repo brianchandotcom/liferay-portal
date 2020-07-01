@@ -1,10 +1,10 @@
-{namespace MockField}
+{namespace ReactFieldAdapter}
 
 {template .render}
-	{@param? type: string}
+	{@param? fieldType: string}
 
 	<div id="fields-rule">
-		{switch $type}
+		{switch $fieldType}
 			{case 'checkbox'}
 				{call .Checkbox /}
 			{case 'checkbox_multiple'}

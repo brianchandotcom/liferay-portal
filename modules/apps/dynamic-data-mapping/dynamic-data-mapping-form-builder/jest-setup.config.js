@@ -13,6 +13,7 @@
  */
 
 window.themeDisplay = {
+	getBCP47LanguageId: () => 'en_US',
 	getDefaultLanguageId: () => 'en_US',
 	getLanguageId: () => 'en_US',
 	getPathContext: () => '/',

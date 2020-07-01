@@ -35,9 +35,9 @@ export const Container = ({
 		</DefaultVariant.Container>
 
 		{pageIndex === activePage && (
-			<>
+			<React.Fragment>
 				{pages.length > 0 && (
-					<>
+					<React.Fragment>
 						<Pagination activePage={activePage} pages={pages} />
 						<PaginationControls
 							activePage={activePage}
@@ -47,7 +47,7 @@ export const Container = ({
 							submitLabel={submitLabel}
 							total={pages.length}
 						/>
-					</>
+					</React.Fragment>
 				)}
 
 				{!pages.length && showSubmitButton && (
@@ -58,7 +58,7 @@ export const Container = ({
 						{submitLabel}
 					</ClayButton>
 				)}
-			</>
+			</React.Fragment>
 		)}
 	</div>
 );

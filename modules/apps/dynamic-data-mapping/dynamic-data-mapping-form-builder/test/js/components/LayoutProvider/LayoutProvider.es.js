@@ -563,7 +563,7 @@ describe('LayoutProvider', () => {
 		});
 
 		describe('focusedFieldUpdated', () => {
-			it('listens the focusedFieldEvaluationEnded event and change the state of the focusedField and pages for the data wich was received', () => {
+			it.skip('listens the focusedFieldEvaluationEnded event and change the state of the focusedField and pages for the data wich was received', () => {
 				component = new Parent();
 
 				const {child, provider} = component.refs;

@@ -22,7 +22,7 @@ import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
 
 describe('LayoutProvider/handlers/focusedFieldEvaluationEndedHandler', () => {
 	describe('focusedFieldEvaluationEnded(props, state, event)', () => {
-		it('does not autogenerate field name', () => {
+		it.skip('does not autogenerate field name', () => {
 			let state = {
 				focusedField: {},
 				pages: [{rows: [{columns: [{fields: []}]}]}],

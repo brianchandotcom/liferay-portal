@@ -12,8 +12,6 @@
  * details.
  */
 
-import './MockFieldRegister.soy';
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import Config from 'metal-state/lib/Config';

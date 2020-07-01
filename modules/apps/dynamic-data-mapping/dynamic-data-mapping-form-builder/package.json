@@ -32,23 +32,15 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
-			"Calculator",
 			"Evaluator",
-			"fieldSupport",
 			"FormBuilder",
 			"FormRenderer",
-			"LayoutProvider/handlers/columnResizedHandler",
 			"LayoutProvider/handlers/fieldDeletedHandler",
-			"LayoutProvider/handlers/fieldEditedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
-			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
-			"LayoutProvider/LayoutProvider",
 			"LayoutProvider/util",
 			"PageRenderer",
 			"RuleBuilder",
-			"RuleEditor",
-			"RuleList",
-			"Sidebar.es.js"
+			"RuleEditor"
 		]
 	},
 	"main": "js/index.es.js",

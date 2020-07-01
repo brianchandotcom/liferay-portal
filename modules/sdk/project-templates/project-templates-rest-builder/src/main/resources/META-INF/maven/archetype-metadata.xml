@@ -40,6 +40,8 @@
 		</requiredProperty>
 		<requiredProperty key="author">
 		</requiredProperty>
+		<requiredProperty key="buildType">
+		</requiredProperty>
 		<requiredProperty key="clientPath">
 			<defaultValue>:${artifactId}-client</defaultValue>
 		</requiredProperty>

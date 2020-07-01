@@ -53,15 +53,15 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(AssetEntry assetEntry) {
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
+		return InfoItemFieldValues.builder(
+		).addAll(
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry)
+		).addAll(
+			_getAssetEntryInfoFieldValues(assetEntry)
+		).infoItemClassPKReference(
 			new InfoItemClassPKReference(
-				AssetEntry.class.getName(), assetEntry.getEntryId()));
-
-		infoItemFieldValues.addAll(
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry));
-		infoItemFieldValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
-
-		return infoItemFieldValues;
+				AssetEntry.class.getName(), assetEntry.getEntryId())
+		).build();
 	}
 
 	private List<InfoFieldValue<Object>> _getAssetEntryInfoFieldValues(

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
+import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -45,12 +46,14 @@ public interface DocumentResource {
 
 	public Page<Document> getDocumentFolderDocumentsPage(
 			Long documentFolderId, Boolean flatten, String search,
-			String filterString, Pagination pagination, String sortString)
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getDocumentFolderDocumentsPageHttpResponse(
 			Long documentFolderId, Boolean flatten, String search,
-			String filterString, Pagination pagination, String sortString)
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public Document postDocumentFolderDocument(
@@ -147,13 +150,15 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<Document> getSiteDocumentsPage(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteDocumentsPageHttpResponse(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public Document postSiteDocument(
@@ -231,13 +236,14 @@ public interface DocumentResource {
 
 		public Page<Document> getDocumentFolderDocumentsPage(
 				Long documentFolderId, Boolean flatten, String search,
-				String filterString, Pagination pagination, String sortString)
+				Aggregation aggregation, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDocumentFolderDocumentsPageHttpResponse(
-					documentFolderId, flatten, search, filterString, pagination,
-					sortString);
+					documentFolderId, flatten, search, aggregation,
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -262,8 +268,8 @@ public interface DocumentResource {
 		public HttpInvoker.HttpResponse
 				getDocumentFolderDocumentsPageHttpResponse(
 					Long documentFolderId, Boolean flatten, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Aggregation aggregation, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -293,6 +299,12 @@ public interface DocumentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			if (filterString != null) {
@@ -1108,13 +1120,14 @@ public interface DocumentResource {
 
 		public Page<Document> getSiteDocumentsPage(
 				Long siteId, Boolean flatten, String search,
-				String filterString, Pagination pagination, String sortString)
+				Aggregation aggregation, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteDocumentsPageHttpResponse(
-					siteId, flatten, search, filterString, pagination,
-					sortString);
+					siteId, flatten, search, aggregation, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1138,7 +1151,8 @@ public interface DocumentResource {
 
 		public HttpInvoker.HttpResponse getSiteDocumentsPageHttpResponse(
 				Long siteId, Boolean flatten, String search,
-				String filterString, Pagination pagination, String sortString)
+				Aggregation aggregation, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1168,6 +1182,12 @@ public interface DocumentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			if (filterString != null) {

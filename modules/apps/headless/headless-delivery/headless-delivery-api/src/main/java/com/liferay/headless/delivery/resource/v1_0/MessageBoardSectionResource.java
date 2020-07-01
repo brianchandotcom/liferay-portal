@@ -80,8 +80,9 @@ public interface MessageBoardSectionResource {
 
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				Long parentMessageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long parentMessageBoardSectionId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
@@ -90,8 +91,9 @@ public interface MessageBoardSectionResource {
 		throws Exception;
 
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardSection postSiteMessageBoardSection(

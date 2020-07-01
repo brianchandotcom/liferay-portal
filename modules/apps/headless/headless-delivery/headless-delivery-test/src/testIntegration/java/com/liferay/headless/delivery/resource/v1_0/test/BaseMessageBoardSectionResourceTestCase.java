@@ -469,8 +469,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
 					testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
+					RandomTestUtil.randomString(), null, null,
+					Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -488,7 +488,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			page =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
-						irrelevantParentMessageBoardSectionId, null, null,
+						irrelevantParentMessageBoardSectionId, null, null, null,
 						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -510,7 +510,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		page =
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
-					parentMessageBoardSectionId, null, null,
+					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -551,7 +551,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Page<MessageBoardSection> page =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
-						parentMessageBoardSectionId, null,
+						parentMessageBoardSectionId, null, null,
 						getFilterString(
 							entityField, "between", messageBoardSection1),
 						Pagination.of(1, 2), null);
@@ -589,7 +589,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Page<MessageBoardSection> page =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
-						parentMessageBoardSectionId, null,
+						parentMessageBoardSectionId, null, null,
 						getFilterString(
 							entityField, "eq", messageBoardSection1),
 						Pagination.of(1, 2), null);
@@ -622,7 +622,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Page<MessageBoardSection> page1 =
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
-					parentMessageBoardSectionId, null, null,
+					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(1, 2), null);
 
 		List<MessageBoardSection> messageBoardSections1 =
@@ -634,7 +634,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Page<MessageBoardSection> page2 =
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
-					parentMessageBoardSectionId, null, null,
+					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -648,7 +648,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Page<MessageBoardSection> page3 =
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
-					parentMessageBoardSectionId, null, null,
+					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
@@ -774,7 +774,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Page<MessageBoardSection> ascPage =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
-						parentMessageBoardSectionId, null, null,
+						parentMessageBoardSectionId, null, null, null,
 						Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
@@ -784,7 +784,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Page<MessageBoardSection> descPage =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
-						parentMessageBoardSectionId, null, null,
+						parentMessageBoardSectionId, null, null, null,
 						Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
@@ -850,7 +850,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Page<MessageBoardSection> page =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
 				testGetSiteMessageBoardSectionsPage_getSiteId(), null,
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
+				null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -864,7 +865,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					irrelevantSiteId, randomIrrelevantMessageBoardSection());
 
 			page = messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -883,7 +885,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				siteId, randomMessageBoardSection());
 
 		page = messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -921,7 +923,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> page =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null,
+					siteId, null, null, null,
 					getFilterString(
 						entityField, "between", messageBoardSection1),
 					Pagination.of(1, 2), null);
@@ -957,7 +959,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> page =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null,
+					siteId, null, null, null,
 					getFilterString(entityField, "eq", messageBoardSection1),
 					Pagination.of(1, 2), null);
 
@@ -987,7 +989,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Page<MessageBoardSection> page1 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, null, Pagination.of(1, 2), null);
 
 		List<MessageBoardSection> messageBoardSections1 =
 			(List<MessageBoardSection>)page1.getItems();
@@ -997,7 +999,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Page<MessageBoardSection> page2 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1009,7 +1011,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Page<MessageBoardSection> page3 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -1132,7 +1134,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> ascPage =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1141,7 +1143,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 			Page<MessageBoardSection> descPage =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

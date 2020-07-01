@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY</td>
-	<td>//a[@aria-expanded='true' and @data-qa-id='appGroup'][normalize-space(text())='${key_category}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and @data-qa-id='appGroup'][normalize-space(text())='${key_category}']</td>
 	<td></td>

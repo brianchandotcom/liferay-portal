@@ -18,15 +18,6 @@ import React, {useContext} from 'react';
 import Color from '../color/Color.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
-const listItem = (field, type) => {
-	switch (type) {
-		case 'color':
-			return <Color hexColor={field} />;
-		default:
-			return <>{field}</>;
-	}
-};
-
 export default ({data, field, totalEntries, type}) => {
 	const {toggleSidebar} = useContext(SidebarContext);
 
@@ -35,7 +26,13 @@ export default ({data, field, totalEntries, type}) => {
 			<ul className="entries-list">
 				{Array.isArray(data) &&
 					data.map((field, index) => (
-						<li key={index}>{listItem(field, type)}</li>
+						<li key={index}>
+							{type == 'color' ? (
+								<Color hexColor={field} />
+							) : (
+								field
+							)}
+						</li>
 					))}
 
 				{data.length == 5 && totalEntries > 5 ? (

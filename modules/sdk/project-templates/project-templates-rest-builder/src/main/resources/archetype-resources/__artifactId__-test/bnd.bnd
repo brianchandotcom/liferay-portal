@@ -1,4 +1,8 @@
 Bundle-Name: ${artifactId}-test
 Bundle-SymbolicName: ${package}.test
 Bundle-Version: ${version}
+#if (${buildType} != "gradle")
+-includeresource: ${package}.client.jar=../${artifactId}-client/target/${artifactId}-client-${version}.jar;lib:=true
+#else
 -includeresource: ${package}.client.jar=../${artifactId}-client/build/libs/${package}.client-${version}.jar;lib:=true
+#end

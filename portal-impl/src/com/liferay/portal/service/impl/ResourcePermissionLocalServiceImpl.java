@@ -169,20 +169,20 @@ public class ResourcePermissionLocalServiceImpl
 			// Owner permissions
 
 			if (addOwnerPermissions) {
-			Role ownerRole = roleLocalService.getRole(
-				companyId, RoleConstants.OWNER);
+				Role ownerRole = roleLocalService.getRole(
+					companyId, RoleConstants.OWNER);
 
-			List<String> ownerActionIds =
-				ResourceActionsUtil.getModelResourceActions(name);
+				List<String> ownerActionIds =
+					ResourceActionsUtil.getModelResourceActions(name);
 
-			filterOwnerActions(name, ownerActionIds);
+				filterOwnerActions(name, ownerActionIds);
 
-			String[] ownerPermissions = ownerActionIds.toArray(new String[0]);
+				String[] ownerPermissions = ownerActionIds.toArray(
+					new String[0]);
 
-			setOwnerResourcePermissions(
-				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-				ownerRole.getRoleId(), userId, ownerPermissions);
-
+				setOwnerResourcePermissions(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primKey, ownerRole.getRoleId(), userId, ownerPermissions);
 			}
 
 			if (addModelPermissions) {

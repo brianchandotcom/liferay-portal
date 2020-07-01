@@ -77,7 +77,9 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 	}
 	%>
 
-	<clay:container-fluid>
+	<clay:container-fluid
+		id='<%= liferayPortletResponse.getNamespace() + "adminSearchAdminIndexActionsPanel" %>'
+	>
 		<ul class="list-group system-action-group">
 			<li class="list-group-item list-group-item-flex">
 				<div class="autofit-col autofit-col-expand">

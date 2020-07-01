@@ -43,7 +43,6 @@ import java.text.NumberFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,21 +125,18 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 				_ddmFormFieldInfoFieldConverter.convert(
 					_ddmBeanTranslator.translate(
 						ddmFormFieldValue.getDDMFormField())),
-				InfoLocalizedValue.builder(
+				InfoLocalizedValue.<String>builder(
 				).defaultLocale(
 					value.getDefaultLocale()
-				).addValues(
-					value.getValues(
-					).entrySet(
-					).stream(
-					).collect(
-						HashMap<Locale, Object>::new,
-						(map, entry) -> map.put(
-							entry.getKey(),
-							_sanitizeDDMFormFieldValue(
-								t, ddmFormFieldValue, entry.getKey())),
-						HashMap::putAll
-					)
+				).put(
+					consumer -> {
+						for (Locale locale : value.getAvailableLocales()) {
+							consumer.accept(
+								locale,
+								(String)_sanitizeDDMFormFieldValue(
+									t, ddmFormFieldValue, locale));
+						}
+					}
 				).build()));
 	}
 

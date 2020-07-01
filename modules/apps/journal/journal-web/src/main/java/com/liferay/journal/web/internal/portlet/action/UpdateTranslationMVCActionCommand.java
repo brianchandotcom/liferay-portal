@@ -110,7 +110,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		String fieldName, Locale locale, String value) {
 
 		InfoLocalizedValue<String> infoLocalizedValue =
-			InfoLocalizedValue.builder(
+			InfoLocalizedValue.<String>builder(
 			).addValue(
 				locale, fieldName
 			).build();

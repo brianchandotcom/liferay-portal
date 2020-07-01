@@ -135,7 +135,8 @@ public class SearchPermissionCheckerFacetedSearcherTest
 	}
 
 	protected ModelPermissions createModelPermissions() {
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create();
+		ModelPermissions modelPermissions =
+			ModelPermissionsFactory.createForAllResources();
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.OWNER, ActionKeys.VIEW);

@@ -168,7 +168,8 @@ public class PermissionFilterFacetedSearcherTest
 
 		serviceContext.setAddGuestPermissions(false);
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create();
+		ModelPermissions modelPermissions =
+			ModelPermissionsFactory.createForAllResources();
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.OWNER, ActionKeys.VIEW);

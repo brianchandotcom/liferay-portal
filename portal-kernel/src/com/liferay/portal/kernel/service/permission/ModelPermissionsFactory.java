@@ -40,10 +40,6 @@ public class ModelPermissionsFactory {
 
 	public static final String MODEL_PERMISSIONS_PREFIX = "modelPermissions";
 
-	public static ModelPermissions create() {
-		return new ModelPermissions(null);
-	}
-
 	public static ModelPermissions create(
 		HttpServletRequest httpServletRequest) {
 
@@ -132,6 +128,11 @@ public class ModelPermissionsFactory {
 			RoleConstants.GUEST, guestPermissions);
 
 		return modelPermissions;
+	}
+
+	public static ModelPermissions createForAllResources() {
+		return new ModelPermissions(
+			ModelPermissions.RESOURCE_NAME_ALL_RESOURCES);
 	}
 
 	public static ModelPermissions createWithDefaultPermissions(

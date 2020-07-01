@@ -218,6 +218,61 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-115218. Can choose to a site in Product Menu when disable Global Apps Menu. Can navigate to site-scope applications in Product Menu when disable Global Apps Menu."
+	@priority = "5"
+	test NavigateToSiteAndSiteScopeApplicationsInProductMenuWhenDisableGlobalAppsMenu {
+		task ("Disable the Global Apps Menu") {
+			PortalSettings.disableGlobalAppsMenu();
+		}
+
+		task ("Assert Choose a Site is shown in Product Menu panel") {
+			ProductMenuHelper.openProductMenu();
+
+			AssertElementPresent(locator1 = "ProductMenu#CHOOSE_A_SITE");
+
+			AssertElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME");
+		}
+
+		task ("Navigate to the default site via Product Menu panel") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			ProductMenuHelper.openWorkspace();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Pause(locator1 = "3000");
+
+			Navigator.gotoNavItem(navItem = "My Sites");
+
+			SiteSelector.selectSite(site = "${siteName}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = "${siteName}");
+		}
+
+		task ("Assert site administration toggle works") {
+			Click(
+				key_panel = "site_administration",
+				locator1 = "ProductMenu#PANEL_EXPANDED");
+		}
+
+		task ("Navigate to the Pages admin via Product Menu panel") {
+			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Pages");
+		}
+
+		task ("Enable the Global Apps Menu") {
+			PortalSettings.enableGlobalAppsMenu();
+		}
+	}
+
 	@description = "This is a use case for LPS-112989. View All link will be shown in Global Menu when the total amount of Recently Visited and My Sites more than 7."
 	@priority = "5"
 	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {

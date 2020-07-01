@@ -19,6 +19,7 @@ import React from 'react';
 import {MultiStep} from '../MultiStep.es';
 import {PaginationControls} from '../PaginationControls.es';
 
+/* eslint-disable react/jsx-fragments */
 export const Container = ({
 	activePage,
 	children,

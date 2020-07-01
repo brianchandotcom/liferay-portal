@@ -19,6 +19,7 @@ import {Pagination} from '../Pagination.es';
 import {PaginationControls} from '../PaginationControls.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
+/* eslint-disable react/jsx-fragments */
 export const Container = ({
 	activePage,
 	children,

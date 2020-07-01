@@ -46,6 +46,11 @@ public class QAWebsitesTopLevelBuild
 		extends DefaultBranchInformation {
 
 		@Override
+		public String getOriginName() {
+			return "liferay";
+		}
+
+		@Override
 		public Integer getPullRequestNumber() {
 			return 0;
 		}

@@ -126,6 +126,11 @@ public class SourceFormatBuild
 		extends DefaultBranchInformation {
 
 		@Override
+		public String getOriginName() {
+			return _pullRequest.getSenderUsername();
+		}
+
+		@Override
 		public Integer getPullRequestNumber() {
 			String pullRequestNumber = _pullRequest.getNumber();
 

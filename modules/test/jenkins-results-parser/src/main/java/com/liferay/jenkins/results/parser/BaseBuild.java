@@ -1635,20 +1635,32 @@ public abstract class BaseBuild implements Build {
 		public String getCachedRemoteGitRefName() {
 			return JenkinsResultsParserUtil.combine(
 				"cache-", getReceiverUsername(), "-", getUpstreamBranchSHA(),
-				"-", getSenderUsername(), "-", getSenderBranchSHA());
+				"-", getOriginName(), "-", getSenderBranchSHA());
+		}
+
+		@Override
+		public String getOriginName() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex = "[\\S\\s]*github.origin.name=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
 		}
 
 		@Override
 		public Integer getPullRequestNumber() {
 			String branchInformationString = _getBranchInformationString();
 
-			String pullRequestNumberRegex =
+			String regex =
 				"[\\S\\s]*github.pull.request.number=(\\d+)\\n[\\S\\s]*";
 
-			if (branchInformationString.matches(pullRequestNumberRegex)) {
+			if (branchInformationString.matches(regex)) {
 				return Integer.valueOf(
-					branchInformationString.replaceAll(
-						pullRequestNumberRegex, "$1"));
+					branchInformationString.replaceAll(regex, "$1"));
 			}
 
 			return 0;

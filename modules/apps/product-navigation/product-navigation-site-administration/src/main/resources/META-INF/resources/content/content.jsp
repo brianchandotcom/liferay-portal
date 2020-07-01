@@ -74,9 +74,12 @@ ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new Cont
 
 						<clay:content-col>
 							<clay:dropdown-menu
+								borderless="<%= true %>"
+								cssClass="text-light"
+								displayType="secondary"
 								dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
 								icon="cog"
-								triggerCssClasses="dropdown-toggle icon-monospaced text-light"
+								monospaced="<%= true %>"
 							/>
 						</clay:content-col>
 					</clay:content-row>

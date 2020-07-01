@@ -397,6 +397,8 @@ definition {
 
 	@priority = "4"
 	test EditEntryFromApplication {
+		ProductMenuHelper.openProductMenu();
+
 		User.logoutPG();
 
 		User.loginUserPG(

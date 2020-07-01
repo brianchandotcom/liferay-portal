@@ -115,6 +115,11 @@
 </tr>
 <!--PRODUCT_MENU_PANEL-->
 <tr>
+	<td>CHOOSE_A_SITE</td>
+	<td>//span[contains(@class,'site-name')][normalize-space(text())='Choose a Site']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_PANEL_SCOPE</td>
 	<td>//div[contains(@class,'scope-selector')]//span[contains(@class,'scope-name')]</td>
 	<td></td>

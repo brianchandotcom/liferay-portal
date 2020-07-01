@@ -15,21 +15,19 @@
 package com.liferay.style.book.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.style.book.constants.StyleBookActionKeys;
+import com.liferay.style.book.constants.StyleBookConstants;
+import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * The implementation of the style book entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.style.book.service.StyleBookEntryService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  * @see StyleBookEntryServiceBaseImpl
  */
 @Component(
@@ -41,9 +39,76 @@ import org.osgi.service.component.annotations.Component;
 )
 public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.style.book.service.StyleBookEntryServiceUtil</code> to access the style book entry remote service.
-	 */
+	@Override
+	public StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.addStyleBookEntry(
+			getUserId(), groupId, name, styleBookEntryKey, serviceContext);
+	}
+
+	@Override
+	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		return deleteStyleBookEntry(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.deleteStyleBookEntry(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.updateStyleBookEntry(
+			styleBookEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.updateStyleBookEntry(
+			styleBookEntryId, name);
+	}
+
+	@Reference(
+		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
 }

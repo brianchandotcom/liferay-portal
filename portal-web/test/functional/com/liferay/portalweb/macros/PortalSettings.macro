@@ -531,6 +531,41 @@ definition {
 			value1 = "${virtualHostName}");
 	}
 
+	macro enableGlobalAppsMenu {
+		ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Navigation",
+			configurationName = "Global Apps Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
+
+		AssertElementNotPresent(locator1 = "GlobalMenu#TOGGLE");
+
+		FormFields.enableCheckbox(fieldName = "enableGlobalMenu");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			AssertClick(
+				locator1 = "Button#UPDATE",
+				value1 = "Update");
+		}
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+
+		AssertElementPresent(locator1 = "GlobalMenu#TOGGLE");
+	}
+
 	macro enableGoogleSSOCP {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX");
 
@@ -611,6 +646,36 @@ definition {
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
 			value1 = "${userScreenName}");
+	}
+
+	macro disableGlobalAppsMenu {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Navigation",
+			configurationName = "Global Apps Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+
+		AssertElementPresent(locator1 = "GlobalMenu#TOGGLE");
+
+		FormFields.disableCheckbox(fieldName = "enableGlobalMenu");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			AssertClick(
+				locator1 = "Button#UPDATE",
+				value1 = "Update");
+		}
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
+
+		AssertElementNotPresent(locator1 = "GlobalMenu#TOGGLE");
 	}
 
 	macro gotoConfiguration {

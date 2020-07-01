@@ -17,6 +17,8 @@ package com.liferay.info.localized;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,8 +35,8 @@ import java.util.function.Function;
  */
 public interface InfoLocalizedValue<T> {
 
-	public static Builder builder() {
-		return new Builder();
+	public static <T> Builder<T> builder() {
+		return new Builder<>();
 	}
 
 	public static InfoLocalizedValue<?> function(Function<Locale, ?> function) {
@@ -71,24 +73,33 @@ public interface InfoLocalizedValue<T> {
 
 	public static class Builder<T> {
 
-		public Builder addValue(Locale locale, T value) {
+		public InfoLocalizedValue<T> build() {
+			return new BuilderInfoLocalizedValue<>(this);
+		}
+
+		public Builder<T> defaultLocale(Locale locale) {
+			_defaultLocale = locale;
+
+			return this;
+		}
+
+		public Builder<T> put(Locale locale, T value) {
 			_values.put(locale, value);
 
 			return this;
 		}
 
-		public Builder addValues(Map<Locale, T> values) {
-			_values.putAll(values);
+		public <E extends Throwable> Builder<T> put(
+				UnsafeConsumer<UnsafeBiConsumer<Locale, T, E>, E> biConsumer)
+			throws E {
+
+			biConsumer.accept(this::put);
 
 			return this;
 		}
 
-		public InfoLocalizedValue<T> build() {
-			return new BuilderInfoLocalizedValue<>(this);
-		}
-
-		public Builder defaultLocale(Locale locale) {
-			_defaultLocale = locale;
+		public Builder<T> putAll(Map<Locale, T> values) {
+			_values.putAll(values);
 
 			return this;
 		}
@@ -114,7 +125,7 @@ public interface InfoLocalizedValue<T> {
 				return false;
 			}
 
-			BuilderInfoLocalizedValue builderInfoLocalizedValue =
+			BuilderInfoLocalizedValue<T> builderInfoLocalizedValue =
 				(BuilderInfoLocalizedValue)object;
 
 			if (Objects.equals(

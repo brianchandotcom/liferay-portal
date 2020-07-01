@@ -96,8 +96,8 @@ public class XLIFFInfoFormTranslationImporter
 
 						InfoField infoField = new InfoField(
 							TextInfoFieldType.INSTANCE,
-							InfoLocalizedValue.builder(
-							).addValue(
+							InfoLocalizedValue.<String>builder(
+							).put(
 								targetLocale, unit.getId()
 							).build(),
 							true, unit.getId());

@@ -190,8 +190,8 @@ public class InfoDisplayContributorWrapper
 					consumer.accept(
 						new InfoField(
 							_getInfoFieldTypeType(infoDisplayField.getType()),
-							InfoLocalizedValue.builder(
-							).addValue(
+							InfoLocalizedValue.<String>builder(
+							).put(
 								_getLocale(), infoDisplayField.getLabel()
 							).build(),
 							infoDisplayField.getKey()));
@@ -215,8 +215,8 @@ public class InfoDisplayContributorWrapper
 					String fieldName = entry.getKey();
 
 					InfoLocalizedValue<String> fieldLabelLocalizedValue =
-						InfoLocalizedValue.builder(
-						).addValue(
+						InfoLocalizedValue.<String>builder(
+						).put(
 							_getLocale(), fieldName
 						).build();
 
@@ -224,10 +224,8 @@ public class InfoDisplayContributorWrapper
 						TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
 						fieldName);
 
-					InfoFieldValue<Object> infoFormValue = new InfoFieldValue(
-						infoField, entry.getValue());
-
-					consumer.accept(infoFormValue);
+					consumer.accept(
+						new InfoFieldValue<>(infoField, entry.getValue()));
 				}
 			}
 		).infoItemClassPKReference(

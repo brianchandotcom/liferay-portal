@@ -127,7 +127,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 	}
 
 	@Override
-	public InfoItemFieldValues importXLIFF(
+	public InfoItemFieldValues importInfoItemFieldValues(
 			long groupId, InfoItemClassPKReference infoItemClassPKReference,
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {

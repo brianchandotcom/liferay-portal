@@ -91,12 +91,13 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				InfoItemFieldValues infoItemFieldValues =
-					_translationInfoItemFieldValuesExporter.importXLIFF(
-						themeDisplay.getScopeGroupId(),
-						new InfoItemClassPKReference(
-							JournalArticle.class.getName(),
-							articleResourcePrimKey),
-						inputStream);
+					_translationInfoItemFieldValuesExporter.
+						importInfoItemFieldValues(
+							themeDisplay.getScopeGroupId(),
+							new InfoItemClassPKReference(
+								JournalArticle.class.getName(),
+								articleResourcePrimKey),
+							inputStream);
 
 				_journalArticleInfoItemFieldValuesUpdater.
 					updateFromInfoItemFieldValues(

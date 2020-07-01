@@ -15,6 +15,7 @@
 package com.liferay.headless.portal.instances.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -42,7 +43,11 @@ public class PortalInstancePortalInstanceIdExceptionMapper
 	@Override
 	protected Problem getProblem(CompanyWebIdException companyWebIdException) {
 		return new Problem(
-			Response.Status.BAD_REQUEST, companyWebIdException.getMessage());
+			Response.Status.BAD_REQUEST,
+			StringUtil.replace(
+				companyWebIdException.getMessage(),
+				new String[] {"Web ID", "web ID"},
+				new String[] {"Portal instance ID", "portal instance ID"}));
 	}
 
 }

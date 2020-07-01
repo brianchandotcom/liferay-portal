@@ -187,7 +187,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			long companyId, String resourceName, long primKey)
 		throws PortalException {
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create();
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			resourceName);
 
 		List<ResourceAction> resourceActions =
 			_resourceActionLocalService.getResourceActions(resourceName);

@@ -68,7 +68,7 @@ public class MBUtil {
 			guestRole, roleIdsToActionIds);
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			groupPermissions, guestPermissions);
+			groupPermissions, guestPermissions, MBMessage.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 	}

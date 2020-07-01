@@ -160,7 +160,7 @@ public class DefinitionServiceTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			_DEFINITION_GROUP_PERMISSIONS, null);
+			_DEFINITION_GROUP_PERMISSIONS, null, Definition.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 
@@ -181,7 +181,8 @@ public class DefinitionServiceTest {
 		}
 
 		modelPermissions = ModelPermissionsFactory.create(
-			_DEFINITION_GROUP_PERMISSIONS, new String[] {"VIEW"});
+			_DEFINITION_GROUP_PERMISSIONS, new String[] {"VIEW"},
+			Definition.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 

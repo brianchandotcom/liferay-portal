@@ -121,7 +121,8 @@ public class MBMessageServiceTest {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW},
-			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
+			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW},
+			MBCategory.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 

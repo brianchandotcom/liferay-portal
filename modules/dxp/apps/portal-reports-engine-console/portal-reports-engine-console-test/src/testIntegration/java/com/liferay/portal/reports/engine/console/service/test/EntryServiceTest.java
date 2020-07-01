@@ -213,7 +213,7 @@ public class EntryServiceTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			_ENTRY_GROUP_PERMISSIONS, null);
+			_ENTRY_GROUP_PERMISSIONS, null, Entry.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 
@@ -228,7 +228,8 @@ public class EntryServiceTest {
 		}
 
 		modelPermissions = ModelPermissionsFactory.create(
-			_ENTRY_GROUP_PERMISSIONS, new String[] {"VIEW"});
+			_ENTRY_GROUP_PERMISSIONS, new String[] {"VIEW"},
+			Entry.class.getName());
 
 		serviceContext.setModelPermissions(modelPermissions);
 

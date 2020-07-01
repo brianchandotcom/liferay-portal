@@ -185,7 +185,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_viewCountEntryLocalService = viewCountEntryLocalService;
 
 		_dlFolderModelPermissions = ModelPermissionsFactory.create(
-			_DLFOLDER_GROUP_PERMISSIONS, _DLFOLDER_GUEST_PERMISSIONS);
+			_DLFOLDER_GROUP_PERMISSIONS, _DLFOLDER_GUEST_PERMISSIONS,
+			DLFolder.class.getName());
 
 		_dlFolderModelPermissions.addRolePermissions(
 			RoleConstants.OWNER, _DLFOLDER_OWNER_PERMISSIONS);
@@ -2284,10 +2285,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			_entryVersion = entryVersion;
 			_entryModelName = entryModelName;
 
-			_modelPermissions = ModelPermissionsFactory.create(
-				_groupPermissions, _guestPermissions);
+			_dlFileEntryModelPermissions = ModelPermissionsFactory.create(
+				_groupPermissions, _guestPermissions,
+				DLFileEntry.class.getName());
 
-			_modelPermissions.addRolePermissions(
+			_dlFileEntryModelPermissions.addRolePermissions(
 				RoleConstants.OWNER, _ownerPermissions);
 		}
 
@@ -2693,7 +2695,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				ServiceContext serviceContext = new ServiceContext();
 
-				serviceContext.setModelPermissions(_modelPermissions);
+				serviceContext.setModelPermissions(
+					_dlFileEntryModelPermissions);
 
 				_resourceLocalService.addModelResources(
 					dlFileEntry, serviceContext);
@@ -2729,13 +2732,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		private final long _companyId;
 		private final Timestamp _createDate;
+		private final ModelPermissions _dlFileEntryModelPermissions;
 		private final long _entryId;
 		private final String _entryModelName;
 		private final String _entryVersion;
 		private final long _groupId;
 		private final String[] _groupPermissions = {"ADD_DISCUSSION", "VIEW"};
 		private final String[] _guestPermissions = {"ADD_DISCUSSION", "VIEW"};
-		private final ModelPermissions _modelPermissions;
 		private final Timestamp _now = new Timestamp(
 			System.currentTimeMillis());
 		private final String[] _ownerPermissions = {

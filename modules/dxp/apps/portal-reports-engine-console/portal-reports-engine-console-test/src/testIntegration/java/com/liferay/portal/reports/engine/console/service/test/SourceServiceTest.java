@@ -175,7 +175,7 @@ public class SourceServiceTest {
 				ServiceContextTestUtil.getServiceContext();
 
 			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				_SOURCE_GROUP_PERMISSIONS, null);
+				_SOURCE_GROUP_PERMISSIONS, null, Source.class.getName());
 
 			serviceContext.setModelPermissions(modelPermissions);
 
@@ -190,7 +190,8 @@ public class SourceServiceTest {
 			}
 
 			modelPermissions = ModelPermissionsFactory.create(
-				_SOURCE_GROUP_PERMISSIONS, new String[] {"VIEW"});
+				_SOURCE_GROUP_PERMISSIONS, new String[] {"VIEW"},
+				Source.class.getName());
 
 			serviceContext.setModelPermissions(modelPermissions);
 

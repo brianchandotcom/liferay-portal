@@ -526,6 +526,14 @@ public class SyncHelperImpl implements SyncHelper {
 					FileEntry.class.getName());
 			}
 		}
+		else {
+			if (folder) {
+				modelPermissions.setResourceName(Folder.class.getName());
+			}
+			else {
+				modelPermissions.setResourceName(FileEntry.class.getName());
+			}
+		}
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, resourceActions);

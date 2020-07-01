@@ -4,6 +4,8 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:portal-remote:portal-remote-cors-api")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":core:petra:petra-lang")
 	testIntegrationCompile project(":core:petra:petra-process")

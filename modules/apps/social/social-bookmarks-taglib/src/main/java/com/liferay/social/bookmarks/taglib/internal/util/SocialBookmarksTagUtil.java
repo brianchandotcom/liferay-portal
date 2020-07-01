@@ -63,7 +63,6 @@ public class SocialBookmarksTagUtil {
 								socialBookmark.getPostURL(title, url));
 							dropdownItem.putData("type", type);
 							dropdownItem.putData("url", url);
-							dropdownItem.setHref("#");
 							dropdownItem.setLabel(
 								socialBookmark.getName(locale));
 						});

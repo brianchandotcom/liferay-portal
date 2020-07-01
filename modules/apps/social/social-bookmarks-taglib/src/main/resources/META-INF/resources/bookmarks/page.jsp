@@ -18,8 +18,6 @@
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
-
-String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu";
 %>
 
 <liferay-util:html-top
@@ -32,12 +30,14 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") || BrowserSnifferUtil.isMobile(request) %>'>
 			<clay:dropdown-menu
-				componentId="<%= dropdownMenuComponentId %>"
+				borderless="<%= true %>"
+				displayType="secondary"
 				dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), types, className, classPK, title, url) %>"
 				icon="share"
-				label='<%= BrowserSnifferUtil.isMobile(request) ? null : LanguageUtil.get(request, "share") %>'
-				style="secondary"
-				triggerCssClasses="btn-outline-borderless btn-outline-secondary btn-sm"
+				label='<%= BrowserSnifferUtil.isMobile(request) ? null : "share" %>'
+				monospaced="<%= true %>"
+				propsTransformer="bookmarks/SocialBookmarksDropdownPropsTransformer"
+				small="<%= true %>"
 			/>
 		</c:when>
 		<c:otherwise>
@@ -74,12 +74,14 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 				%>
 
 				<clay:dropdown-menu
-					componentId="<%= dropdownMenuComponentId %>"
+					borderless="<%= true %>"
+					displayType="secondary"
 					dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), remainingTypes, className, classPK, title, url) %>"
 					icon="share"
-					style="secondary"
-					triggerCssClasses="btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-					triggerTitle='<%= LanguageUtil.get(request, "share") %>'
+					label="share"
+					monospaced="<%= true %>"
+					propsTransformer="bookmarks/SocialBookmarksDropdownPropsTransformer"
+					small="<%= true %>"
 				/>
 
 			<%
@@ -88,66 +90,4 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 
 		</c:otherwise>
 	</c:choose>
-
-	<liferay-util:html-bottom
-		outputKey="social_bookmarks"
-	>
-		<aui:script>
-			function socialBookmarks_handleItemClick(
-				event,
-				className,
-				classPK,
-				type,
-				postURL,
-				url
-			) {
-				var SHARE_WINDOW_HEIGHT = 436;
-				var SHARE_WINDOW_WIDTH = 626;
-
-				var shareWindowFeatures = [
-					'left=' + (window.innerWidth / 2 - SHARE_WINDOW_WIDTH / 2),
-					'height=' + SHARE_WINDOW_HEIGHT,
-					'toolbar=0',
-					'top=' + (window.innerHeight / 2 - SHARE_WINDOW_HEIGHT / 2),
-					'status=0',
-					'width=' + SHARE_WINDOW_WIDTH,
-				];
-
-				event.preventDefault();
-				event.stopPropagation();
-
-				window.open(postURL, null, shareWindowFeatures.join()).focus();
-
-				Liferay.fire('socialBookmarks:share', {
-					className: className,
-					classPK: classPK,
-					type: type,
-					url: url,
-				});
-
-				return false;
-			}
-		</aui:script>
-	</liferay-util:html-bottom>
-
-	<aui:script sandbox="<%= true %>">
-		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(function (
-			dropdownMenu
-		) {
-			dropdownMenu.on(['itemClicked'], function (event) {
-				event.preventDefault();
-
-				var data = event.data.item.data;
-
-				socialBookmarks_handleItemClick(
-					event,
-					data.className,
-					parseInt(data.classPK),
-					data.type,
-					data.postURL,
-					data.url
-				);
-			});
-		});
-	</aui:script>
 </div>

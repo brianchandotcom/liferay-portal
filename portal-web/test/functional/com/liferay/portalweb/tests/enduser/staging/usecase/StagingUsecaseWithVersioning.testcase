@@ -877,7 +877,7 @@ definition {
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			pageName = "Página2",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/site-name-staging/page-2",
+			sitePageURL = "${portalURL}/es/web/site-name-staging/page2",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 	}
 

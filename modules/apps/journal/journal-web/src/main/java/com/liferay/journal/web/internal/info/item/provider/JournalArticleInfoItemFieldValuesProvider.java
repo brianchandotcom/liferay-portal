@@ -77,40 +77,34 @@ public class JournalArticleInfoItemFieldValuesProvider
 	public InfoItemFieldValues getInfoItemFieldValues(
 		JournalArticle journalArticle) {
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
-			new InfoItemClassPKReference(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey()));
-
-		infoItemFieldValues.addAll(
-			_getJournalArticleInfoFieldValues(journalArticle));
-
 		try {
-			infoItemFieldValues.addAll(
+			return InfoItemFieldValues.builder(
+			).addAll(
+				_getJournalArticleInfoFieldValues(journalArticle)
+			).addAll(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey()));
+					journalArticle.getResourcePrimKey())
+			).addAll(
+				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
+					JournalArticle.class.getName(), journalArticle)
+			).addAll(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
+					JournalArticle.class.getName(), journalArticle)
+			).addAll(
+				_getDDMStructureInfoFieldValues(journalArticle)
+			).addAll(
+				_getDDMTemplateInfoFieldValues(journalArticle)
+			).infoItemClassPKReference(
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey())
+			).build();
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			throw new RuntimeException(
 				"Caught unexpected exception", noSuchInfoItemException);
 		}
-
-		infoItemFieldValues.addAll(
-			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
-				JournalArticle.class.getName(), journalArticle));
-
-		infoItemFieldValues.addAll(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				JournalArticle.class.getName(), journalArticle));
-
-		infoItemFieldValues.addAll(
-			_getDDMStructureInfoFieldValues(journalArticle));
-
-		infoItemFieldValues.addAll(
-			_getDDMTemplateInfoFieldValues(journalArticle));
-
-		return infoItemFieldValues;
 	}
 
 	private String _getDateValue(Date date) {

@@ -35,7 +35,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -132,9 +131,6 @@ public class XLIFFInfoFormTranslationExporter<T>
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
-			infoItemClassPKReference);
-
 		try {
 			XLIFFDocument xliffDocument = new XLIFFDocument();
 
@@ -147,44 +143,40 @@ public class XLIFFInfoFormTranslationExporter<T>
 			Locale targetLocale = LocaleUtil.fromLanguageId(
 				startXliffData.getTargetLanguage(), true, false);
 
-			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+			return InfoItemFieldValues.builder(
+			).<XLIFFFileException>add(
+				consumer -> {
+					for (Unit unit : xliffDocument.getUnits()) {
+						if (unit.getPartCount() != 1) {
+							throw new XLIFFFileException.MustNotHaveMoreThanOne(
+								"The file only can have one unit");
+						}
 
-			for (Unit unit : xliffDocument.getUnits()) {
-				String field = unit.getId();
+						Part valuePart = unit.getPart(0);
 
-				if (unit.getPartCount() != 1) {
-					throw new XLIFFFileException.MustNotHaveMoreThanOne(
-						"The file only can have one unit");
+						Fragment value = valuePart.getTarget();
+
+						if (value == null) {
+							throw new XLIFFFileException.MustBeWellFormed(
+								"There is no translation target");
+						}
+
+						InfoField infoField = new InfoField(
+							TextInfoFieldType.INSTANCE,
+							InfoLocalizedValue.builder(
+							).addValue(
+								targetLocale, unit.getId()
+							).build(),
+							true, unit.getId());
+
+						consumer.accept(
+							new InfoFieldValue<>(
+								infoField, value.getPlainText()));
+					}
 				}
-
-				Part valuePart = unit.getPart(0);
-
-				Fragment value = valuePart.getTarget();
-
-				if (value == null) {
-					throw new XLIFFFileException.MustBeWellFormed(
-						"There is no translation target");
-				}
-
-				InfoLocalizedValue<String> infoLocalizedValue =
-					InfoLocalizedValue.builder(
-					).addValue(
-						targetLocale, field
-					).build();
-
-				InfoField infoField = new InfoField(
-					TextInfoFieldType.INSTANCE, infoLocalizedValue, true,
-					field);
-
-				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
-					infoField, value.getPlainText());
-
-				infoFieldValues.add(infoFieldValue);
-			}
-
-			infoItemFieldValues.addAll(infoFieldValues);
-
-			return infoItemFieldValues;
+			).infoItemClassPKReference(
+				infoItemClassPKReference
+			).build();
 		}
 		catch (InvalidParameterException invalidParameterException) {
 			throw new XLIFFFileException.MustHaveValidParameter(

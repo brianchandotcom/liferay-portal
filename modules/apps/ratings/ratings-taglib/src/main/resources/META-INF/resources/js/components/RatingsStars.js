@@ -280,10 +280,17 @@ const RatingsStars = ({
 				</span>
 			</ClayLayout.ContentCol>
 
-			<div>
+			<div className="ratings-stacked-stars-vote">
+				<label
+					className="lfr-portal-tooltip"
+					htmlFor={`starDelete`}
+					title={Liferay.Language.get('delete')}
+				>
+					<ClayIcon symbol="times-circle" />
+				</label>
 				<input
 					checked={score === 0}
-					className="sr-only"
+					className="ratings-stacked-stars-delete sr-only"
 					id={`starDelete`}
 					name="rating"
 					onChange={() => {
@@ -293,7 +300,7 @@ const RatingsStars = ({
 					value={0}
 				/>
 
-				{starScores.map(({label, value}, index) => {
+				{starScores.reverse().map(({label, value}, index) => {
 					const srMessage =
 						index === 0
 							? Liferay.Language.get('rate-this-x-star-out-of-x')
@@ -327,14 +334,6 @@ const RatingsStars = ({
 						</Fragment>
 					);
 				})}
-
-				<label
-					className="lfr-portal-tooltip"
-					htmlFor={`starDelete`}
-					title={Liferay.Language.get('delete')}
-				>
-					<ClayIcon symbol="times-circle" />
-				</label>
 			</div>
 		</fieldset>
 	);

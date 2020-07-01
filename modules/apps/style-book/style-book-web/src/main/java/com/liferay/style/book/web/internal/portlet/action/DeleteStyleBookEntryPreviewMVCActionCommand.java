@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -57,12 +58,14 @@ public class DeleteStyleBookEntryPreviewMVCActionCommand
 			PortletFileRepositoryUtil.deletePortletFileEntry(
 				styleBookEntry.getPreviewFileEntryId());
 
-			_styleBookEntryLocalService.updateStyleBookEntry(
-				styleBookEntryId, 0);
+			_styleBookEntryService.updateStyleBookEntry(styleBookEntryId, 0);
 		}
 	}
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
+	private StyleBookEntryService _styleBookEntryService;
 
 }

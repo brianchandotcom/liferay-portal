@@ -173,9 +173,8 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 															}
 														}
 													%>'
-													label='<%= LanguageUtil.get(request, "download") %>'
-													style="primary"
-													triggerCssClasses="btn-sm"
+													label="download"
+													small="<%= true %>"
 												/>
 											</div>
 										</c:when>

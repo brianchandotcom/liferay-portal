@@ -14,8 +14,11 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -29,6 +32,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,11 +76,31 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 
 		try {
-			AccountEntryUserRel accountEntryUserRel =
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					accountEntryId, themeDisplay.getUserId(), screenName,
-					emailAddress, LocaleUtil.fromLanguageId(languageId),
-					firstName, middleName, lastName, prefixId, suffixId);
+			AccountEntryUserRel accountEntryUserRel;
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
+
+			if ((accountEntry != null) &&
+				Objects.equals(
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+					accountEntry.getType())) {
+
+				accountEntryUserRel =
+					_accountEntryUserRelLocalService.
+						addPersonTypeAccountEntryUserRel(
+							accountEntryId, themeDisplay.getUserId(),
+							screenName, emailAddress,
+							LocaleUtil.fromLanguageId(languageId), firstName,
+							middleName, lastName, prefixId, suffixId);
+			}
+			else {
+				accountEntryUserRel =
+					_accountEntryUserRelLocalService.addAccountEntryUserRel(
+						accountEntryId, themeDisplay.getUserId(), screenName,
+						emailAddress, LocaleUtil.fromLanguageId(languageId),
+						firstName, middleName, lastName, prefixId, suffixId);
+			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -102,6 +127,9 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

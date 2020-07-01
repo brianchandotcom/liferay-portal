@@ -219,21 +219,21 @@ public class JournalArticleInfoItemFieldValuesProvider
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
 					JournalArticleInfoItemFields.titleInfoField,
-					InfoLocalizedValue.builder(
+					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).addValues(
+					).putAll(
 						journalArticle.getTitleMap()
 					).build()));
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
 					JournalArticleInfoItemFields.descriptionInfoField,
-					InfoLocalizedValue.builder(
+					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).addValues(
+					).putAll(
 						journalArticle.getDescriptionMap()
 					).build()));
 

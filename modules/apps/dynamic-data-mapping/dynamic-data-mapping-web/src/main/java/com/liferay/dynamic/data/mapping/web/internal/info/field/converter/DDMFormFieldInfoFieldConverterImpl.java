@@ -42,8 +42,8 @@ public class DDMFormFieldInfoFieldConverterImpl
 		LocalizedValue label = ddmFormField.getLabel();
 
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
-			InfoLocalizedValue.builder(
-			).addValues(
+			InfoLocalizedValue.<String>builder(
+			).putAll(
 				label.getValues()
 			).defaultLocale(
 				label.getDefaultLocale()

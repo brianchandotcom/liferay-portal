@@ -106,7 +106,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 					article.getDescription(targetLocale),
 					article.getDescription(),
 					importedLocaleDescriptionMap.get(targetLocale)));
-			
+
 			titleMap.put(
 				targetLocale,
 				_getTranslatedString(

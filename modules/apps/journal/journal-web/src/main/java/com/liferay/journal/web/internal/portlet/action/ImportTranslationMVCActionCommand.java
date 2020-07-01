@@ -14,7 +14,6 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
@@ -100,13 +98,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 							articleResourcePrimKey),
 						inputStream);
 
-				JournalArticle journalArticle =
-					_journalArticleInfoItemFieldValuesUpdater.
-						updateFromInfoItemFieldValues(
-							_journalArticleService.getArticle(
-								groupId, articleId, version),
-							infoItemFieldValues);
-
+				_journalArticleInfoItemFieldValuesUpdater.
+					updateFromInfoItemFieldValues(
+						_journalArticleService.getArticle(
+							groupId, articleId, version),
+						infoItemFieldValues);
 			}
 		}
 		catch (Exception exception) {

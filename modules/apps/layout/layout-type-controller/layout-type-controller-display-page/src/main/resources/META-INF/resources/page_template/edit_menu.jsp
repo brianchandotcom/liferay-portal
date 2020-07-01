@@ -21,7 +21,9 @@ EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = new EditDi
 %>
 
 <clay:dropdown-menu
+	borderless="<%= true %>"
+	displayType="secondary"
 	dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
 	icon="pencil"
-	triggerCssClasses="icon-monospaced"
+	monospaced="<%= true %>"
 />

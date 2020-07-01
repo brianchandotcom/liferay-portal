@@ -185,6 +185,24 @@
 	label {
 		color: $secondary-l1;
 		padding: 0.1875rem;
+
+		.ratings-stars-icon-full {
+			display: none;
+		}
+
+		.ratings-stars-icon-empty {
+			display: initial;
+		}
+
+		&.ratings-stars-star-full {
+			.ratings-stars-icon-full {
+				display: initial;
+			}
+
+			.ratings-stars-icon-empty {
+				display: none;
+			}
+		}
 	}
 
 	input:checked:not(.ratings-stacked-stars-delete-input) ~ label {
@@ -199,6 +217,14 @@
 		&,
 		& ~ label {
 			color: $primary;
+
+			.ratings-stars-icon-full {
+				display: initial;
+			}
+
+			.ratings-stars-icon-empty {
+				display: none;
+			}
 		}
 	}
 

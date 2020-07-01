@@ -322,8 +322,20 @@ const RatingsStars = ({
 								type="radio"
 								value={value}
 							/>
-							<label htmlFor={`star${label}`}>
-								<ClayIcon symbol={full ? 'star' : 'star-o'} />
+							<label
+								className={
+									full ? 'ratings-stars-star-full' : ''
+								}
+								htmlFor={`star${label}`}
+							>
+								<ClayIcon
+									className="ratings-stars-icon-full"
+									symbol={'star'}
+								/>
+								<ClayIcon
+									className="ratings-stars-icon-empty"
+									symbol={'star-o'}
+								/>
 								<span className="sr-only">
 									{Lang.sub(srMessage, [
 										label,

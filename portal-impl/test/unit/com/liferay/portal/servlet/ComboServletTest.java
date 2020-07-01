@@ -216,6 +216,14 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
+	public void testInvalidResourcePath() throws Exception {
+		Assert.assertNull(
+			_comboServlet.getResourceRequestDispatcher(
+				_mockHttpServletRequest, _mockHttpServletResponse,
+				_TEST_PORTLET_ID + ":js/javascript.js"));
+	}
+
+	@Test
 	public void testMixedExtensionsRequest() throws Exception {
 		FileUtil fileUtil = new FileUtil();
 

@@ -324,8 +324,6 @@ definition {
 	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
 	@priority = "5"
 	test ApproveWCArticleWithinAL {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
@@ -717,8 +715,6 @@ definition {
 	@description = "This ensures that the resubmitted web content can be approved in an asset library."
 	@priority = "5"
 	test RejectandResubmitWCArticleWithinAL {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(

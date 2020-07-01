@@ -22,7 +22,7 @@ import EmptyState from '../empty-state/EmptyState.es';
 import List from '../list/List.es';
 import Card from './Card.es';
 
-const chartFactory = (field, language, values, totalEntries) => {
+const chartFactory = (field, values, totalEntries) => {
 	const {options, type} = field;
 
 	switch (type) {
@@ -79,10 +79,8 @@ const chartFactory = (field, language, values, totalEntries) => {
 	}
 };
 
-export default ({data, fields, locale}) => {
+export default ({data, fields}) => {
 	let hasCards = false;
-
-	const {language} = locale;
 
 	const cards = fields.map((field, index) => {
 		const {
@@ -95,7 +93,7 @@ export default ({data, fields, locale}) => {
 			...fieldTypes[field.type],
 		};
 
-		const chart = chartFactory(field, language, values, totalEntries);
+		const chart = chartFactory(field, values, totalEntries);
 
 		if (chart === null) {
 			return null;

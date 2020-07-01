@@ -296,6 +296,10 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Text Spanish");
 
+		FormFields.viewTextMultilineValue(
+			fieldName = "TextBox",
+			fieldValue = "Text Box");
+
 		AssertEditable(
 			key_fieldName = "TextBox",
 			locator1 = "DDMField#TEXT_BOX");

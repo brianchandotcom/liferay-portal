@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -44,7 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
+import com.liferay.portal.vulcan.aggregation.FacetUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -134,9 +133,12 @@ public class SearchUtil {
 			}
 		}
 
+		Map<String, Facet> facets = searchContext.getFacets();
+
 		return Page.of(
-			actions, _getFacets(searchContext), items, pagination,
-			indexer.searchCount(searchContext));
+			actions,
+			TransformUtil.transform(facets.values(), FacetUtil::toFacet), items,
+			pagination, indexer.searchCount(searchContext));
 	}
 
 	/**
@@ -210,8 +212,7 @@ public class SearchUtil {
 			Map<String, String> terms = aggregation.getTerms();
 
 			for (Map.Entry<String, String> entry : terms.entrySet()) {
-				com.liferay.portal.kernel.search.facet.Facet facet =
-					new SimpleFacet(this);
+				Facet facet = new SimpleFacet(this);
 
 				facet.setFieldName(entry.getValue());
 
@@ -296,44 +297,6 @@ public class SearchUtil {
 
 		return BooleanClauseFactoryUtil.create(
 			booleanQuery, BooleanClauseOccur.MUST.getName());
-	}
-
-	private static List<Facet> _getFacets(SearchContext searchContext) {
-		List<Facet> facets = new ArrayList<>();
-
-		Map<String, com.liferay.portal.kernel.search.facet.Facet>
-			serviceBuilderFacetMap = searchContext.getFacets();
-
-		for (com.liferay.portal.kernel.search.facet.Facet facet :
-				serviceBuilderFacetMap.values()) {
-
-			FacetCollector facetCollector = facet.getFacetCollector();
-
-			List<Facet.FacetValue> facetValues = new ArrayList<>();
-
-			for (TermCollector termCollector :
-					facetCollector.getTermCollectors()) {
-
-				facetValues.add(
-					new Facet.FacetValue(
-						termCollector.getTerm(), termCollector.getFrequency()));
-			}
-
-			if (!facetValues.isEmpty()) {
-				FacetConfiguration facetConfiguration =
-					facet.getFacetConfiguration();
-
-				if (facetConfiguration.getLabel() != null) {
-					facets.add(
-						new Facet(facetConfiguration.getLabel(), facetValues));
-				}
-				else {
-					facets.add(new Facet(facet.getFieldName(), facetValues));
-				}
-			}
-		}
-
-		return facets;
 	}
 
 	private static Object[] _getOrderByComparatorColumns(Sort[] sorts) {

@@ -35,6 +35,9 @@ public class ModelPermissions implements Cloneable, Serializable {
 	public static final String RESOURCE_NAME_ALL_RESOURCES =
 		ModelPermissions.class.getName() + "#ALL_RESOURCES";
 
+	public static final String RESOURCE_NAME_UNINITIALIZED =
+		ModelPermissions.class.getName() + "#UNINITIALIZED";
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -124,9 +127,8 @@ public class ModelPermissions implements Cloneable, Serializable {
 	}
 
 	public void setResourceName(String resourceName) {
-		if (resourceName == null) {
-			resourceName = _RESOURCE_NAME_ALL_RESOURCES;
-		}
+		_resourceName = Objects.requireNonNull(resourceName);
+	}
 
 		_resourceName = resourceName;
 	}
@@ -135,7 +137,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap) {
 
-		this(roleNamesMap, actionIdsMap, _RESOURCE_NAME_ALL_RESOURCES);
+		this(roleNamesMap, actionIdsMap, RESOURCE_NAME_UNINITIALIZED);
 	}
 
 	protected ModelPermissions(
@@ -148,7 +150,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 	}
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
-	private String _resourceName = _RESOURCE_NAME_ALL_RESOURCES;
+	private String _resourceName = RESOURCE_NAME_UNINITIALIZED;
 	private final Map<String, Set<String>> _roleNamesMap = new HashMap<>();
 
 }

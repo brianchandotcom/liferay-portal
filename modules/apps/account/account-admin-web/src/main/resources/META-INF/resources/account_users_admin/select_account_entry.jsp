@@ -39,14 +39,27 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 			keyProperty="accountEntryId"
 			modelVar="accountEntryDisplay"
 		>
+
+			<%
+			String cssClass = "table-cell-expand";
+
+			Optional<User> userOptional = accountEntryDisplay.getPersonAccountEntryUserOptional();
+
+			boolean disabled = userOptional.isPresent();
+
+			if (disabled) {
+				cssClass += " text-muted";
+			}
+			%>
+
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-title"
+				cssClass='<%= cssClass + " table-title" %>'
 				name="name"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
+				cssClass="<%= cssClass %>"
 				name="parent-account"
 				property="parentAccountEntryName"
 			/>
@@ -63,7 +76,7 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 				).build();
 				%>
 
-				<aui:button cssClass="choose-account selector-button" data="<%= data %>" value="choose" />
+				<aui:button cssClass="choose-account selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

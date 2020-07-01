@@ -78,7 +78,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="text-center text-secondary"
+						cssClass="text-center"
 						name=""
 					>
 						<c:if test="<%= contentDashboardItem.isViewURLEnabled(request) %>">
@@ -139,7 +139,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					%>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-nowrap"
+							cssClass="table-cell-expand-smaller"
 							name="<%= assetVocabulary.getTitle(locale) %>"
 						>
 
@@ -148,8 +148,6 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							%>
 
 								<clay:label
-									cssClass="d-block"
-									dismissible="<%= true %>"
 									displayType="secondary"
 									large="<%= true %>"
 								>

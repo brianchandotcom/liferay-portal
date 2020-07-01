@@ -96,8 +96,9 @@ public interface MessageBoardMessageResource {
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				Long parentMessageBoardMessageId, Boolean flatten,
-				String search, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
@@ -107,8 +108,9 @@ public interface MessageBoardMessageResource {
 
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long messageBoardThreadId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
@@ -120,8 +122,9 @@ public interface MessageBoardMessageResource {
 		throws Exception;
 
 	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(

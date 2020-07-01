@@ -108,6 +108,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
 				blogPostingId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -343,6 +345,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("parentCommentId")
 				Long parentCommentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -403,6 +407,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
 				documentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -502,6 +508,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -622,8 +630,8 @@ public abstract class BaseCommentResourceImpl
 		throws Exception {
 
 		return getBlogPostingCommentsPage(
-			(Long)parameters.get("blogPostingId"), search, filter, pagination,
-			sorts);
+			(Long)parameters.get("blogPostingId"), search, null, filter,
+			pagination, sorts);
 	}
 
 	@Override

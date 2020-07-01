@@ -98,6 +98,8 @@ public abstract class BaseContentTemplateResourceImpl
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -167,7 +169,8 @@ public abstract class BaseContentTemplateResourceImpl
 		throws Exception {
 
 		return getSiteContentTemplatesPage(
-			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
+			(Long)parameters.get("siteId"), search, null, filter, pagination,
+			sorts);
 	}
 
 	@Override

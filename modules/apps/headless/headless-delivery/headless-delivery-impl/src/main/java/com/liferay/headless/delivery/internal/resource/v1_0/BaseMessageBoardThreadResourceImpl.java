@@ -113,6 +113,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("messageBoardSectionId") Long messageBoardSectionId,
 				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context com.liferay.portal.vulcan.aggregation.Aggregation
+					aggregation,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)
 		throws Exception {
@@ -220,6 +222,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				dateModified,
 			@Parameter(hidden = true) @QueryParam("messageBoardSectionId") Long
 				messageBoardSectionId,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -679,6 +683,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -822,7 +828,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 		return getSiteMessageBoardThreadsPage(
 			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, filter, pagination, sorts);
+			search, null, filter, pagination, sorts);
 	}
 
 	@Override

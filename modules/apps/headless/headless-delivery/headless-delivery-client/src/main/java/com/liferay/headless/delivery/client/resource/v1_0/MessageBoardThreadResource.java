@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
+import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -46,13 +47,15 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
-				Long messageBoardSectionId, String search, String filterString,
+				Long messageBoardSectionId, String search,
+				Aggregation aggregation, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardSectionMessageBoardThreadsPageHttpResponse(
-				Long messageBoardSectionId, String search, String filterString,
+				Long messageBoardSectionId, String search,
+				Aggregation aggregation, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -77,15 +80,15 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			java.util.Date dateCreated, java.util.Date dateModified,
-			Long messageBoardSectionId, Pagination pagination,
-			String sortString)
+			Long messageBoardSectionId, Aggregation aggregation,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardThreadsRankedPageHttpResponse(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Long messageBoardSectionId, Pagination pagination,
-				String sortString)
+				Long messageBoardSectionId, Aggregation aggregation,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)
@@ -179,13 +182,15 @@ public interface MessageBoardThreadResource {
 		throws Exception;
 
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteMessageBoardThreadsPageHttpResponse(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public MessageBoardThread postSiteMessageBoardThread(
@@ -272,14 +277,14 @@ public interface MessageBoardThreadResource {
 		public Page<MessageBoardThread>
 				getMessageBoardSectionMessageBoardThreadsPage(
 					Long messageBoardSectionId, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Aggregation aggregation, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardSectionMessageBoardThreadsPageHttpResponse(
-					messageBoardSectionId, search, filterString, pagination,
-					sortString);
+					messageBoardSectionId, search, aggregation, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -304,8 +309,8 @@ public interface MessageBoardThreadResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardSectionMessageBoardThreadsPageHttpResponse(
 					Long messageBoardSectionId, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Aggregation aggregation, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -331,6 +336,12 @@ public interface MessageBoardThreadResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			if (filterString != null) {
@@ -495,14 +506,14 @@ public interface MessageBoardThreadResource {
 
 		public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Long messageBoardSectionId, Pagination pagination,
-				String sortString)
+				Long messageBoardSectionId, Aggregation aggregation,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardThreadsRankedPageHttpResponse(
 					dateCreated, dateModified, messageBoardSectionId,
-					pagination, sortString);
+					aggregation, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -527,8 +538,8 @@ public interface MessageBoardThreadResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardThreadsRankedPageHttpResponse(
 					java.util.Date dateCreated, java.util.Date dateModified,
-					Long messageBoardSectionId, Pagination pagination,
-					String sortString)
+					Long messageBoardSectionId, Aggregation aggregation,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -570,6 +581,12 @@ public interface MessageBoardThreadResource {
 				httpInvoker.parameter(
 					"messageBoardSectionId",
 					String.valueOf(messageBoardSectionId));
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			if (pagination != null) {
@@ -1382,13 +1399,14 @@ public interface MessageBoardThreadResource {
 
 		public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
 				Long siteId, Boolean flatten, String search,
-				String filterString, Pagination pagination, String sortString)
+				Aggregation aggregation, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteMessageBoardThreadsPageHttpResponse(
-					siteId, flatten, search, filterString, pagination,
-					sortString);
+					siteId, flatten, search, aggregation, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1413,8 +1431,8 @@ public interface MessageBoardThreadResource {
 		public HttpInvoker.HttpResponse
 				getSiteMessageBoardThreadsPageHttpResponse(
 					Long siteId, Boolean flatten, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Aggregation aggregation, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1444,6 +1462,12 @@ public interface MessageBoardThreadResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			if (filterString != null) {

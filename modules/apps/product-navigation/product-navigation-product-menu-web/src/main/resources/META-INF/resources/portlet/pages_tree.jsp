@@ -86,6 +86,25 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									</clay:content-col>
 								</clay:content-row>
 							</li>
+							<li>
+								<clay:content-row
+									containerElement="a"
+									cssClass="dropdown-item layout-action"
+									href="<%= layoutsTreeDisplayContext.getAddChildCollectionURLTemplate() %>"
+								>
+									<clay:content-col
+										containerElement="span"
+										expand="<%= true %>"
+									>
+										<clay:content-section
+											containerElement="span"
+											cssClass="text-left"
+										>
+											<liferay-ui:message key="add-child-collection-page" />
+										</clay:content-section>
+									</clay:content-col>
+								</clay:content-row>
+							</li>
 						</c:if>
 
 						<li>

@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -32,6 +33,11 @@ function PageTypeSelector(props) {
 		},
 		[props.namespace]
 	);
+
+	const handleOnAddCollectionPageClick = useCallback(() => {
+		setActive(false);
+		Liferay.Util.navigate(props.addCollectionLayoutURL);
+	}, [props.addCollectionLayoutURL]);
 
 	const handleOnAddPageClick = useCallback(() => {
 		setActive(false);
@@ -71,7 +77,7 @@ function PageTypeSelector(props) {
 							className="dropdown-toggle"
 							displayType="unstyled"
 						>
-							<ClayIcon symbol="ellipsis-v" />
+							<ClayIcon symbol="plus" />
 						</ClayButton>
 					}
 				>
@@ -86,16 +92,36 @@ function PageTypeSelector(props) {
 								{Liferay.Language.get('add-page')}
 							</ClayDropDown.Item>
 						)}
-						<ClayDropDown.Item
-							data-value={Liferay.Language.get('configure')}
-							key={Liferay.Language.get('configure')}
-							onClick={handleOnConfigureClick}
-							title={Liferay.Language.get('configure')}
-						>
-							{Liferay.Language.get('configure')}
-						</ClayDropDown.Item>
+						{props.addCollectionLayoutURL !== '' && (
+							<ClayDropDown.Item
+								data-value={Liferay.Language.get(
+									'add-collection-page'
+								)}
+								key={Liferay.Language.get(
+									'add-collection-page'
+								)}
+								onClick={handleOnAddCollectionPageClick}
+								title={Liferay.Language.get(
+									'add-collection-page'
+								)}
+							>
+								{Liferay.Language.get('add-collection-page')}
+							</ClayDropDown.Item>
+						)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
+			</div>
+			<div className="autofit-col ml-2">
+				<ClayLink
+					borderless
+					displayType="unstyled"
+					href="javascript:;"
+					monospaced
+					onClick={handleOnConfigureClick}
+					outline
+				>
+					<ClayIcon symbol="cog" />
+				</ClayLink>
 			</div>
 		</div>
 	);

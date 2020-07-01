@@ -118,6 +118,26 @@ const EditTableView = withRouter(({history}) => {
 		dispatch({payload: {fieldName}, type: REMOVE_DATA_LIST_VIEW_FIELD});
 	};
 
+	const fields = [];
+
+	fieldNames.forEach((fieldName) => {
+		dataDefinitionFields.forEach((dataDefinitionField) => {
+			const {name, nestedDataDefinitionFields} = dataDefinitionField;
+			if (nestedDataDefinitionFields.length) {
+				const nested = nestedDataDefinitionFields.find(
+					({name: nestedName}) => nestedName === fieldName
+				);
+
+				if (nested) {
+					fields.push(nested);
+				}
+			}
+			else if (name === fieldName) {
+				fields.push(dataDefinitionField);
+			}
+		});
+	});
+
 	return (
 		<div className="app-builder-table-view">
 			<ControlMenu backURL="../" title={title} />
@@ -173,11 +193,7 @@ const EditTableView = withRouter(({history}) => {
 				>
 					<div className="container table-view-container">
 						<DropZone
-							fields={fieldNames.map((fieldName) => ({
-								...dataDefinitionFields.find(
-									({name}) => name === fieldName
-								),
-							}))}
+							fields={fields}
 							onAddFieldName={onAddFieldName}
 							onRemoveFieldName={onRemoveFieldName}
 						/>

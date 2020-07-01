@@ -88,20 +88,37 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 		},
 	] = useContext(EditTableViewContext);
 
+	const fieldTypesItems = [];
+
+	const fieldTypeModel = ({fieldType, label: {en_US: label}, name}) => ({
+		description: getFieldTypeLabel(fieldTypes, fieldType),
+		disabled: fieldNames.some((fieldName) => fieldName === name),
+		icon: fieldType,
+		label,
+		name,
+	});
+
+	dataDefinitionFields.forEach(
+		({nestedDataDefinitionFields, ...dataDefinitionField}) => {
+			if (nestedDataDefinitionFields.length) {
+				fieldTypesItems.push(
+					...nestedDataDefinitionFields.map((nestedField) =>
+						fieldTypeModel(nestedField)
+					)
+				);
+			}
+			else {
+				fieldTypesItems.push(fieldTypeModel(dataDefinitionField));
+			}
+		}
+	);
+
+	fieldTypesItems.sort((a, b) => a.label.localeCompare(b.label));
+
 	return (
 		<FieldTypeList
 			dragType={DragTypes.DRAG_FIELD_TYPE}
-			fieldTypes={dataDefinitionFields.map(
-				({fieldType, label: {en_US: label}, name}) => ({
-					description: getFieldTypeLabel(fieldTypes, fieldType),
-					disabled: fieldNames.some(
-						(fieldName) => fieldName === name
-					),
-					icon: fieldType,
-					label,
-					name,
-				})
-			)}
+			fieldTypes={fieldTypesItems}
 			keywords={keywords}
 			onDoubleClick={({name}) => onAddFieldName(name, fieldNames.length)}
 		/>

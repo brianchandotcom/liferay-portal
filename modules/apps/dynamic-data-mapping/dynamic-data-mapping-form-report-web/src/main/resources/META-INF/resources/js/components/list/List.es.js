@@ -19,7 +19,7 @@ import Color from '../color/Color.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
 export default ({data, field, summary, totalEntries, type}) => {
-	const {toggleSidebar} = useContext(SidebarContext);
+	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
 
 	return (
 		<div className="field-list">
@@ -36,7 +36,7 @@ export default ({data, field, summary, totalEntries, type}) => {
 					))}
 
 				{data.length == 5 && totalEntries > 5 ? (
-					<li id="see-more" key={'see-more'}>
+					<li id={`${portletNamespace}-see-more`} key={'see-more'}>
 						<ClayButton
 							displayType="link"
 							onClick={() =>

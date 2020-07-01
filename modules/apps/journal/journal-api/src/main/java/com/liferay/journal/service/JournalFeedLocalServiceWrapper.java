@@ -14,7 +14,10 @@
 
 package com.liferay.journal.service;
 
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link JournalFeedLocalService}.
@@ -34,7 +37,7 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed addFeed(
+	public JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,
 			String name, String description, String ddmStructureKey,
 			String ddmTemplateKey, String ddmRendererTemplateKey, int delta,
@@ -53,8 +56,8 @@ public class JournalFeedLocalServiceWrapper
 
 	@Override
 	public void addFeedResources(
-			com.liferay.journal.model.JournalFeed feed,
-			boolean addGroupPermissions, boolean addGuestPermissions)
+			JournalFeed feed, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_journalFeedLocalService.addFeedResources(
@@ -63,7 +66,7 @@ public class JournalFeedLocalServiceWrapper
 
 	@Override
 	public void addFeedResources(
-			com.liferay.journal.model.JournalFeed feed,
+			JournalFeed feed,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -88,9 +91,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the journal feed that was added
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed addJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed) {
-
+	public JournalFeed addJournalFeed(JournalFeed journalFeed) {
 		return _journalFeedLocalService.addJournalFeed(journalFeed);
 	}
 
@@ -101,7 +102,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the new journal feed
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed createJournalFeed(long id) {
+	public JournalFeed createJournalFeed(long id) {
 		return _journalFeedLocalService.createJournalFeed(id);
 	}
 
@@ -117,7 +118,7 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteFeed(com.liferay.journal.model.JournalFeed feed)
+	public void deleteFeed(JournalFeed feed)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_journalFeedLocalService.deleteFeed(feed);
@@ -144,9 +145,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the journal feed that was removed
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed deleteJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed) {
-
+	public JournalFeed deleteJournalFeed(JournalFeed journalFeed) {
 		return _journalFeedLocalService.deleteJournalFeed(journalFeed);
 	}
 
@@ -158,7 +157,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @throws PortalException if a journal feed with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed deleteJournalFeed(long id)
+	public JournalFeed deleteJournalFeed(long id)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFeedLocalService.deleteJournalFeed(id);
@@ -271,14 +270,12 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed fetchFeed(
-		long groupId, String feedId) {
-
+	public JournalFeed fetchFeed(long groupId, String feedId) {
 		return _journalFeedLocalService.fetchFeed(groupId, feedId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed fetchJournalFeed(long id) {
+	public JournalFeed fetchJournalFeed(long id) {
 		return _journalFeedLocalService.fetchJournalFeed(id);
 	}
 
@@ -290,8 +287,8 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed
-		fetchJournalFeedByUuidAndGroupId(String uuid, long groupId) {
+	public JournalFeed fetchJournalFeedByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _journalFeedLocalService.fetchJournalFeedByUuidAndGroupId(
 			uuid, groupId);
@@ -315,34 +312,31 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
+	public JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFeedLocalService.getFeed(feedId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed getFeed(
-			long groupId, String feedId)
+	public JournalFeed getFeed(long groupId, String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFeedLocalService.getFeed(groupId, feedId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds() {
+	public java.util.List<JournalFeed> getFeeds() {
 		return _journalFeedLocalService.getFeeds();
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds(
-		long groupId) {
-
+	public java.util.List<JournalFeed> getFeeds(long groupId) {
 		return _journalFeedLocalService.getFeeds(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds(
+	public java.util.List<JournalFeed> getFeeds(
 		long groupId, int start, int end) {
 
 		return _journalFeedLocalService.getFeeds(groupId, start, end);
@@ -368,7 +362,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @throws PortalException if a journal feed with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed getJournalFeed(long id)
+	public JournalFeed getJournalFeed(long id)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFeedLocalService.getJournalFeed(id);
@@ -383,8 +377,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @throws PortalException if a matching journal feed could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
-			String uuid, long groupId)
+	public JournalFeed getJournalFeedByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFeedLocalService.getJournalFeedByUuidAndGroupId(
@@ -403,9 +396,7 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the range of journal feeds
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed>
-		getJournalFeeds(int start, int end) {
-
+	public java.util.List<JournalFeed> getJournalFeeds(int start, int end) {
 		return _journalFeedLocalService.getJournalFeeds(start, end);
 	}
 
@@ -417,8 +408,8 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the matching journal feeds, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed>
-		getJournalFeedsByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _journalFeedLocalService.getJournalFeedsByUuidAndCompanyId(
 			uuid, companyId);
@@ -435,11 +426,10 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the range of matching journal feeds, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed>
-		getJournalFeedsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.journal.model.JournalFeed> orderByComparator) {
+	public java.util.List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed>
+			orderByComparator) {
 
 		return _journalFeedLocalService.getJournalFeedsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -477,21 +467,21 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed> search(
+	public java.util.List<JournalFeed> search(
 		long companyId, long groupId, String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.journal.model.JournalFeed> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed>
+			orderByComparator) {
 
 		return _journalFeedLocalService.search(
 			companyId, groupId, keywords, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalFeed> search(
+	public java.util.List<JournalFeed> search(
 		long companyId, long groupId, String feedId, String name,
 		String description, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.journal.model.JournalFeed> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed>
+			orderByComparator) {
 
 		return _journalFeedLocalService.search(
 			companyId, groupId, feedId, name, description, andOperator, start,
@@ -514,7 +504,7 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFeed updateFeed(
+	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
 			String ddmStructureKey, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
@@ -538,10 +528,28 @@ public class JournalFeedLocalServiceWrapper
 	 * @return the journal feed that was updated
 	 */
 	@Override
-	public com.liferay.journal.model.JournalFeed updateJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed) {
-
+	public JournalFeed updateJournalFeed(JournalFeed journalFeed) {
 		return _journalFeedLocalService.updateJournalFeed(journalFeed);
+	}
+
+	@Override
+	public CTPersistence<JournalFeed> getCTPersistence() {
+		return _journalFeedLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<JournalFeed> getModelClass() {
+		return _journalFeedLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<JournalFeed>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _journalFeedLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

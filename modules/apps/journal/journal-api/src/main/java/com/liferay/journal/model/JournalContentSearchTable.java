@@ -35,6 +35,9 @@ public class JournalContentSearchTable
 	public final Column<JournalContentSearchTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<JournalContentSearchTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<JournalContentSearchTable, Long> contentSearchId =
 		createColumn(
 			"contentSearchId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

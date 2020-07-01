@@ -33,6 +33,7 @@ public class JournalContentSearchSoap implements Serializable {
 		JournalContentSearchSoap soapModel = new JournalContentSearchSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setContentSearchId(model.getContentSearchId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -110,6 +111,14 @@ public class JournalContentSearchSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getContentSearchId() {
 		return _contentSearchId;
 	}
@@ -171,6 +180,7 @@ public class JournalContentSearchSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _contentSearchId;
 	private long _groupId;
 	private long _companyId;

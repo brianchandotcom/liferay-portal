@@ -64,10 +64,11 @@ public class JournalContentSearchModelImpl
 	public static final String TABLE_NAME = "JournalContentSearch";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"contentSearchId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
-		{"portletId", Types.VARCHAR}, {"articleId", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"contentSearchId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"privateLayout", Types.BOOLEAN},
+		{"layoutId", Types.BIGINT}, {"portletId", Types.VARCHAR},
+		{"articleId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -75,6 +76,7 @@ public class JournalContentSearchModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentSearchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -85,7 +87,7 @@ public class JournalContentSearchModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalContentSearch (mvccVersion LONG default 0 not null,contentSearchId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
+		"create table JournalContentSearch (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,contentSearchId LONG not null,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null,primary key (contentSearchId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalContentSearch";
@@ -265,6 +267,12 @@ public class JournalContentSearchModelImpl
 			(BiConsumer<JournalContentSearch, Long>)
 				JournalContentSearch::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", JournalContentSearch::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<JournalContentSearch, Long>)
+				JournalContentSearch::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"contentSearchId", JournalContentSearch::getContentSearchId);
 		attributeSetterBiConsumers.put(
 			"contentSearchId",
@@ -321,6 +329,16 @@ public class JournalContentSearchModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -515,6 +533,7 @@ public class JournalContentSearchModelImpl
 			new JournalContentSearchImpl();
 
 		journalContentSearchImpl.setMvccVersion(getMvccVersion());
+		journalContentSearchImpl.setCtCollectionId(getCtCollectionId());
 		journalContentSearchImpl.setContentSearchId(getContentSearchId());
 		journalContentSearchImpl.setGroupId(getGroupId());
 		journalContentSearchImpl.setCompanyId(getCompanyId());
@@ -629,6 +648,8 @@ public class JournalContentSearchModelImpl
 
 		journalContentSearchCacheModel.mvccVersion = getMvccVersion();
 
+		journalContentSearchCacheModel.ctCollectionId = getCtCollectionId();
+
 		journalContentSearchCacheModel.contentSearchId = getContentSearchId();
 
 		journalContentSearchCacheModel.groupId = getGroupId();
@@ -731,6 +752,7 @@ public class JournalContentSearchModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _contentSearchId;
 	private long _groupId;
 	private long _originalGroupId;

@@ -17,6 +17,7 @@ package com.liferay.journal.service.persistence;
 import com.liferay.journal.exception.NoSuchContentSearchException;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface JournalContentSearchPersistence
-	extends BasePersistence<JournalContentSearch> {
+	extends BasePersistence<JournalContentSearch>,
+			CTPersistence<JournalContentSearch> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

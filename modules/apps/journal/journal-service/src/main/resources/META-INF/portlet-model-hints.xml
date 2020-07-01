@@ -79,6 +79,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalContentSearch">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="contentSearchId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -91,6 +92,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalFeed">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="id" type="long" />
 		<field name="groupId" type="long" />

@@ -34,6 +34,8 @@ public class JournalFeedTable extends BaseTable<JournalFeedTable> {
 
 	public final Column<JournalFeedTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<JournalFeedTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<JournalFeedTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<JournalFeedTable, Long> id = createColumn(

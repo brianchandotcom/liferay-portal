@@ -50,16 +50,21 @@ create index IX_D83FDF25 on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], c
 create index IX_63192F1F on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_37A8A767 on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_9207CB31 on JournalContentSearch (articleId[$COLUMN_LENGTH:75$]);
-create index IX_42F51F38 on JournalContentSearch (companyId);
-create index IX_6838E427 on JournalContentSearch (groupId, articleId[$COLUMN_LENGTH:75$]);
-create index IX_7CC7D73E on JournalContentSearch (groupId, privateLayout, articleId[$COLUMN_LENGTH:75$]);
-create unique index IX_C3AA93B8 on JournalContentSearch (groupId, privateLayout, layoutId, portletId[$COLUMN_LENGTH:200$], articleId[$COLUMN_LENGTH:75$]);
-create index IX_8DAF8A35 on JournalContentSearch (portletId[$COLUMN_LENGTH:200$]);
+create index IX_5D001F8F on JournalContentSearch (articleId[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_856A8596 on JournalContentSearch (companyId, ctCollectionId);
+create index IX_213C8C85 on JournalContentSearch (groupId, articleId[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_D6C8719C on JournalContentSearch (groupId, privateLayout, articleId[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_F08C9961 on JournalContentSearch (groupId, privateLayout, ctCollectionId);
+create index IX_C1E8B73A on JournalContentSearch (groupId, privateLayout, layoutId, ctCollectionId);
+create unique index IX_49A6FA16 on JournalContentSearch (groupId, privateLayout, layoutId, portletId[$COLUMN_LENGTH:200$], articleId[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_462E9927 on JournalContentSearch (groupId, privateLayout, layoutId, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_29F15693 on JournalContentSearch (portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 
-create unique index IX_65576CBC on JournalFeed (groupId, feedId[$COLUMN_LENGTH:75$]);
-create index IX_CB37A10F on JournalFeed (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_39031F51 on JournalFeed (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_6727738D on JournalFeed (groupId, ctCollectionId);
+create unique index IX_53294B1A on JournalFeed (groupId, feedId[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_A134796D on JournalFeed (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_73FE31D7 on JournalFeed (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_800F33AF on JournalFeed (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_6ADEEEBB on JournalFolder (companyId, ctCollectionId);
 create index IX_E6C2F4A1 on JournalFolder (companyId, status, ctCollectionId);

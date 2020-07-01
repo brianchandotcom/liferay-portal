@@ -76,10 +76,12 @@ public class JournalContentSearchCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", contentSearchId=");
 		sb.append(contentSearchId);
 		sb.append(", groupId=");
@@ -105,6 +107,7 @@ public class JournalContentSearchCacheModel
 			new JournalContentSearchImpl();
 
 		journalContentSearchImpl.setMvccVersion(mvccVersion);
+		journalContentSearchImpl.setCtCollectionId(ctCollectionId);
 		journalContentSearchImpl.setContentSearchId(contentSearchId);
 		journalContentSearchImpl.setGroupId(groupId);
 		journalContentSearchImpl.setCompanyId(companyId);
@@ -134,6 +137,8 @@ public class JournalContentSearchCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		contentSearchId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -150,6 +155,8 @@ public class JournalContentSearchCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(contentSearchId);
 
@@ -177,6 +184,7 @@ public class JournalContentSearchCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long contentSearchId;
 	public long groupId;
 	public long companyId;

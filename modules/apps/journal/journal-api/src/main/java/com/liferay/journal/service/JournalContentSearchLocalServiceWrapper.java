@@ -14,7 +14,10 @@
 
 package com.liferay.journal.service;
 
+import com.liferay.journal.model.JournalContentSearch;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link JournalContentSearchLocalService}.
@@ -40,10 +43,8 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @return the journal content search that was added
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-		addJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public JournalContentSearch addJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return _journalContentSearchLocalService.addJournalContentSearch(
 			journalContentSearch);
@@ -63,8 +64,8 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @return the new journal content search
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-		createJournalContentSearch(long contentSearchId) {
+	public JournalContentSearch createJournalContentSearch(
+		long contentSearchId) {
 
 		return _journalContentSearchLocalService.createJournalContentSearch(
 			contentSearchId);
@@ -112,10 +113,8 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @return the journal content search that was removed
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-		deleteJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public JournalContentSearch deleteJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return _journalContentSearchLocalService.deleteJournalContentSearch(
 			journalContentSearch);
@@ -129,8 +128,7 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @throws PortalException if a journal content search with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-			deleteJournalContentSearch(long contentSearchId)
+	public JournalContentSearch deleteJournalContentSearch(long contentSearchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalContentSearchLocalService.deleteJournalContentSearch(
@@ -263,8 +261,8 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-		fetchJournalContentSearch(long contentSearchId) {
+	public JournalContentSearch fetchJournalContentSearch(
+		long contentSearchId) {
 
 		return _journalContentSearchLocalService.fetchJournalContentSearch(
 			contentSearchId);
@@ -278,23 +276,21 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches() {
-
+	public java.util.List<JournalContentSearch> getArticleContentSearches() {
 		return _journalContentSearchLocalService.getArticleContentSearches();
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches(long groupId, String articleId) {
+	public java.util.List<JournalContentSearch> getArticleContentSearches(
+		long groupId, String articleId) {
 
 		return _journalContentSearchLocalService.getArticleContentSearches(
 			groupId, articleId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches(String articleId) {
+	public java.util.List<JournalContentSearch> getArticleContentSearches(
+		String articleId) {
 
 		return _journalContentSearchLocalService.getArticleContentSearches(
 			articleId);
@@ -316,8 +312,7 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @throws PortalException if a journal content search with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-			getJournalContentSearch(long contentSearchId)
+	public JournalContentSearch getJournalContentSearch(long contentSearchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalContentSearchLocalService.getJournalContentSearch(
@@ -336,8 +331,8 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @return the range of journal content searches
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getJournalContentSearchs(int start, int end) {
+	public java.util.List<JournalContentSearch> getJournalContentSearchs(
+		int start, int end) {
 
 		return _journalContentSearchLocalService.getJournalContentSearchs(
 			start, end);
@@ -398,15 +393,15 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getPortletContentSearches(String portletId) {
+	public java.util.List<JournalContentSearch> getPortletContentSearches(
+		String portletId) {
 
 		return _journalContentSearchLocalService.getPortletContentSearches(
 			portletId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
+	public JournalContentSearch updateContentSearch(
 			long groupId, boolean privateLayout, long layoutId,
 			String portletId, String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -416,7 +411,7 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
+	public JournalContentSearch updateContentSearch(
 			long groupId, boolean privateLayout, long layoutId,
 			String portletId, String articleId, boolean purge)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -426,10 +421,9 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalContentSearch>
-			updateContentSearch(
-				long groupId, boolean privateLayout, long layoutId,
-				String portletId, String[] articleIds)
+	public java.util.List<JournalContentSearch> updateContentSearch(
+			long groupId, boolean privateLayout, long layoutId,
+			String portletId, String[] articleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalContentSearchLocalService.updateContentSearch(
@@ -443,13 +437,31 @@ public class JournalContentSearchLocalServiceWrapper
 	 * @return the journal content search that was updated
 	 */
 	@Override
-	public com.liferay.journal.model.JournalContentSearch
-		updateJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public JournalContentSearch updateJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return _journalContentSearchLocalService.updateJournalContentSearch(
 			journalContentSearch);
+	}
+
+	@Override
+	public CTPersistence<JournalContentSearch> getCTPersistence() {
+		return _journalContentSearchLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<JournalContentSearch> getModelClass() {
+		return _journalContentSearchLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<JournalContentSearch>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _journalContentSearchLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

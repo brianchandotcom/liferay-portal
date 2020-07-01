@@ -62,19 +62,22 @@ create table JournalArticleResource (
 
 create table JournalContentSearch (
 	mvccVersion LONG default 0 not null,
-	contentSearchId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	contentSearchId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	privateLayout BOOLEAN,
 	layoutId LONG,
 	portletId VARCHAR(200) null,
-	articleId VARCHAR(75) null
+	articleId VARCHAR(75) null,
+	primary key (contentSearchId, ctCollectionId)
 );
 
 create table JournalFeed (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	id_ LONG not null primary key,
+	id_ LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -95,7 +98,8 @@ create table JournalFeed (
 	contentField VARCHAR(75) null,
 	feedFormat VARCHAR(75) null,
 	feedVersion DOUBLE,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (id_, ctCollectionId)
 );
 
 create table JournalFolder (

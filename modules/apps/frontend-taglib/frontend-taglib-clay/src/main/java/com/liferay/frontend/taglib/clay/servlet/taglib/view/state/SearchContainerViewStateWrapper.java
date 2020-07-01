@@ -14,12 +14,12 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.view.state;
 
-import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.annotation.versioning.ConsumerType;
 
 /**
  * @author  Neil Griffin
  */
-@ProviderType
+@ConsumerType
 public abstract class SearchContainerViewStateWrapper
 	implements SearchContainerViewState {
 

@@ -24,12 +24,12 @@ import java.util.Map;
 
 import javax.portlet.RenderURL;
 
-import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.annotation.versioning.ConsumerType;
 
 /**
  * @author  Neil Griffin
  */
-@ProviderType
+@ConsumerType
 public abstract class ClayToolbarViewStateWrapper
 	implements ClayToolbarViewState {
 

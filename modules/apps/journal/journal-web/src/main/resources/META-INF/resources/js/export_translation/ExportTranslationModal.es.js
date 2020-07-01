@@ -24,6 +24,7 @@ const noop = () => {};
 
 const ExportTranslationModal = ({
 	articleIds,
+	availableExportFileFormats,
 	availableSourceLocales,
 	availableTargetLocales,
 	defaultSourceLanguageId,
@@ -32,6 +33,10 @@ const ExportTranslationModal = ({
 	onModalClose = noop,
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
+
+	const [exportFileFormat, setExportFileFormat] = useState(
+		availableExportFileFormats[0]
+	);
 
 	const [sourceLanguageId, setSourceLanguageId] = useState(
 		defaultSourceLanguageId
@@ -95,6 +100,31 @@ const ExportTranslationModal = ({
 		}
 	};
 
+	const ExportFileFormats = () => {
+		if (availableExportFileFormats.length == 1) {
+			return <ClayInput readOnly value={availableExportFileFormats[0]} />;
+		}
+		else {
+			return (
+				<ClaySelect
+					name={`_${namespace}_exportFileFormat`}
+					onChange={(e) => {
+						setExportFileFormat(e.currentTarget.value);
+					}}
+					value={exportFileFormat}
+				>
+					{availableExportFileFormats.map((exportFileFormat) => (
+						<ClaySelect.Option
+							key={exportFileFormat}
+							label={exportFileFormat}
+							value={exportFileFormat}
+						/>
+					))}
+				</ClaySelect>
+			);
+		}
+	};
+
 	const TargetLocale = ({locale}) => {
 		const languageId = locale.languageId;
 		const checked = selectedTargetLanguageIds.indexOf(languageId) != -1;
@@ -129,6 +159,12 @@ const ExportTranslationModal = ({
 				}}
 			>
 				<ClayModal.Body scrollable>
+					<h5>{Liferay.Language.get('export-file-format')}</h5>
+
+					<ClayForm.Group className="w-50">
+						<ExportFileFormats />
+					</ClayForm.Group>
+
 					<h5>{Liferay.Language.get('origin-language')}</h5>
 
 					<ClayForm.Group>
@@ -186,6 +222,7 @@ const ExportTranslationModal = ({
 
 ExportTranslationModal.propTypes = {
 	articleIds: PropTypes.array,
+	availableExportFileFormats: PropTypes.arrayOf(PropTypes.string).isRequired,
 	availableSourceLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,

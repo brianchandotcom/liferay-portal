@@ -106,6 +106,7 @@ import com.liferay.trash.TrashHelper;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -558,6 +559,9 @@ public class JournalDisplayContext {
 		).put(
 			"props",
 			HashMapBuilder.<String, Object>put(
+				"availableExportFileFormats",
+				Arrays.asList("XLIFF 1.2", "XLIFF 2.0")
+			).put(
 				"availableTargetLocales",
 				ExportTranslationUtil.getLocalesJSONJArray(
 					_themeDisplay.getLocale(),

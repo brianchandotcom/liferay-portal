@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -102,7 +102,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 
-		_styleBookEntryLocalService.updateStyleBookEntry(
+		_styleBookEntryService.updateStyleBookEntry(
 			styleBookEntryId, fileEntry.getFileEntryId());
 
 		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());
@@ -114,6 +114,6 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryService _styleBookEntryService;
 
 }

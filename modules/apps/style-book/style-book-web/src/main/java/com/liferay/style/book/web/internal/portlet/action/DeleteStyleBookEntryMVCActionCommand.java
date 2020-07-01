@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -63,7 +63,7 @@ public class DeleteStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteStyleBookEntryEntryId : deleteStyleBookEntryEntryIds) {
 			try {
-				_styleBookEntryLocalService.deleteStyleBookEntry(
+				_styleBookEntryService.deleteStyleBookEntry(
 					deleteStyleBookEntryEntryId);
 			}
 			catch (PortalException portalException) {
@@ -86,6 +86,6 @@ public class DeleteStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		DeleteStyleBookEntryMVCActionCommand.class);
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryService _styleBookEntryService;
 
 }

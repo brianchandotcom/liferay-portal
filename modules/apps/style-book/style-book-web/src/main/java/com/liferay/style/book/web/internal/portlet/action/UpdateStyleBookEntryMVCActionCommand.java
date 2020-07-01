@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
 
@@ -57,8 +57,7 @@ public class UpdateStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		try {
-			_styleBookEntryLocalService.updateStyleBookEntry(
-				styleBookEntryId, name);
+			_styleBookEntryService.updateStyleBookEntry(styleBookEntryId, name);
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {
@@ -91,6 +90,6 @@ public class UpdateStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryService _styleBookEntryService;
 
 }

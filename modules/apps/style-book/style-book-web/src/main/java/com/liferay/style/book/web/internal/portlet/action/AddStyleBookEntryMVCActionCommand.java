@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
 
@@ -64,8 +64,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest);
 
 			StyleBookEntry styleBookEntry =
-				_styleBookEntryLocalService.addStyleBookEntry(
-					serviceContext.getUserId(),
+				_styleBookEntryService.addStyleBookEntry(
 					serviceContext.getScopeGroupId(), name, StringPool.BLANK,
 					serviceContext);
 
@@ -114,6 +113,6 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryService _styleBookEntryService;
 
 }

@@ -18,6 +18,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useState} from 'react';
 
 export default ({
+	disabled,
 	onSubmit,
 	searchText = '',
 	setShowMobile,
@@ -43,6 +44,7 @@ export default ({
 					<ClayInput
 						aria-label={Liferay.Language.get('search')}
 						className="input-group-inset input-group-inset-after"
+						disabled={disabled}
 						onChange={({target: {value}}) => setValue(value)}
 						placeholder={`${Liferay.Language.get('search')}...`}
 						type="text"
@@ -53,11 +55,13 @@ export default ({
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
 							className="navbar-breakpoint-d-none"
+							disabled={disabled}
 							displayType="unstyled"
 							onClick={() => setShowMobile(false)}
 							symbol="times"
 						/>
 						<ClayButtonWithIcon
+							disabled={disabled}
 							displayType="unstyled"
 							symbol="search"
 							type="submit"

@@ -141,6 +141,10 @@ public class ModelPermissions implements Cloneable, Serializable {
 		_used = used;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected ModelPermissions(
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap) {
@@ -148,6 +152,10 @@ public class ModelPermissions implements Cloneable, Serializable {
 		this(roleNamesMap, actionIdsMap, RESOURCE_NAME_UNINITIALIZED);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected ModelPermissions(
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap, String resourceName) {

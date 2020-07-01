@@ -272,6 +272,7 @@ const ExperienceModal = ({
 };
 
 ExperienceModal.propTypes = {
+	canUpdateSegments: PropTypes.bool.isRequired,
 	errorMessage: PropTypes.string,
 	experienceId: PropTypes.string,
 	initialName: PropTypes.string,

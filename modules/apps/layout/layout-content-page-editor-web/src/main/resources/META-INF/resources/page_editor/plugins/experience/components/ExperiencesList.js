@@ -69,6 +69,7 @@ const ExperiencesList = ({
 
 ExperiencesList.propTypes = {
 	activeExperienceId: PropTypes.string.isRequired,
+	canUpdateExperiences: PropTypes.bool.isRequired,
 	defaultExperienceId: PropTypes.string.isRequired,
 	experiences: PropTypes.arrayOf(PropTypes.shape(ExperienceType)).isRequired,
 	onDeleteExperience: PropTypes.func.isRequired,

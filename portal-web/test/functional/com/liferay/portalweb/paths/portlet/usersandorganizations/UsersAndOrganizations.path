@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>USER_CONTACT_INFORMATION_PRIMARY_TABLE</td>
-	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[contains(.,'${key_contactInfoPrimaryValue}')]/td/span/span[contains(.,'PRIMARY')]</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[contains(.,'${key_contactInfoPrimaryValue}')]/td/span/span[contains(.,'Primary')]</td>
 	<td></td>
 </tr>
 </tbody>

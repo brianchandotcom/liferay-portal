@@ -73,7 +73,7 @@ public class KnowledgeBaseFolderResourceImpl
 			parentKnowledgeBaseFolderId);
 
 		return Page.of(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_KB_FOLDER",
@@ -101,7 +101,7 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return Page.of(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_KB_FOLDER", "postSiteKnowledgeBaseFolder",
@@ -198,7 +198,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
-				actions = HashMapBuilder.<String, Map<String, String>>put(
+				actions = HashMapBuilder.put(
 					"delete",
 					addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
 				).put(

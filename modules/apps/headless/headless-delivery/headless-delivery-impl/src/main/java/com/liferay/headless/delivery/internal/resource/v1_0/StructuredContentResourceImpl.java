@@ -146,8 +146,8 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			Long contentStructureId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long contentStructureId, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
@@ -172,7 +172,8 @@ public class StructuredContentResourceImpl
 						contentStructureId.toString()),
 					BooleanClauseOccur.MUST);
 			},
-			ddmStructure.getGroupId(), filter, search, pagination, sorts, null);
+			ddmStructure.getGroupId(), search, aggregation, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -228,8 +229,9 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public Page<StructuredContent> getSiteStructuredContentsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts, Aggregation aggregation)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -258,7 +260,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, filter, search, pagination, sorts, aggregation);
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -275,7 +277,8 @@ public class StructuredContentResourceImpl
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				Long structuredContentFolderId, Boolean flatten, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderService.getFolder(
@@ -311,8 +314,8 @@ public class StructuredContentResourceImpl
 					new TermFilter(field, structuredContentFolderId.toString()),
 					BooleanClauseOccur.MUST);
 			},
-			journalFolder.getGroupId(), filter, search, pagination, sorts,
-			null);
+			journalFolder.getGroupId(), search, aggregation, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -782,8 +785,8 @@ public class StructuredContentResourceImpl
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, Filter filter, String keywords, Pagination pagination,
-			Sort[] sorts, Aggregation aggregation)
+			Long siteId, String keywords, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

@@ -22,16 +22,13 @@ import {DELETE_DATA_LAYOUT_RULE} from '../../actions.es';
 import {getFieldLabel} from '../../utils/dataDefinition.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 
-const Text = ({capitalize = false, children = '', lowercase = false}) => (
-	<span
-		className={classNames('pr-1', {
-			'text-capitalize': capitalize,
-			'text-lowercase': lowercase,
-		})}
-	>
-		{children}
-	</span>
-);
+const ACTION_LABELS = {
+	autofill: Liferay.Language.get('autofill'),
+	calculate: Liferay.Language.get('calculate'),
+	enable: Liferay.Language.get('enable'),
+	require: Liferay.Language.get('require'),
+	show: Liferay.Language.get('show'),
+};
 
 const OPERATOR_LABELS = {
 	'belongs-to': Liferay.Language.get('belongs-to'),
@@ -43,13 +40,16 @@ const OPERATOR_LABELS = {
 	'not-is-empty': Liferay.Language.get('not-is-empty'),
 };
 
-const ACTION_LABELS = {
-	autofill: Liferay.Language.get('autofill'),
-	calculate: Liferay.Language.get('calculate'),
-	enable: Liferay.Language.get('enable'),
-	require: Liferay.Language.get('require'),
-	show: Liferay.Language.get('show'),
-};
+const Text = ({capitalize = false, children = '', lowercase = false}) => (
+	<span
+		className={classNames('pr-1', {
+			'text-capitalize': capitalize,
+			'text-lowercase': lowercase,
+		})}
+	>
+		{children}
+	</span>
+);
 
 export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 	const {

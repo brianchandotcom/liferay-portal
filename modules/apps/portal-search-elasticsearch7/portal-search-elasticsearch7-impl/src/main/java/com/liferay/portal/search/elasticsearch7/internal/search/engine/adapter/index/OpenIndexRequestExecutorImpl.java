@@ -88,7 +88,8 @@ public class OpenIndexRequestExecutorImpl implements OpenIndexRequestExecutor {
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				openIndexRequest.getConnectionId(), false);
+				openIndexRequest.getConnectionId(),
+				openIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

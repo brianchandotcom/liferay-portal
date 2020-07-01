@@ -72,7 +72,8 @@ public class DeleteSnapshotRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				deleteSnapshotRequest.getConnectionId(), false);
+				deleteSnapshotRequest.getConnectionId(),
+				deleteSnapshotRequest.isPreferLocalCluster());
 
 		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
 

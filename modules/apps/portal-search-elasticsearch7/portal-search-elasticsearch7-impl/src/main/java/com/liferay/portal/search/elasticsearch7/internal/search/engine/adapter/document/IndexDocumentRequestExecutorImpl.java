@@ -58,7 +58,8 @@ public class IndexDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				indexDocumentRequest.getConnectionId(), false);
+				indexDocumentRequest.getConnectionId(),
+				indexDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.index(

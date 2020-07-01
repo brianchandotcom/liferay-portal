@@ -107,7 +107,8 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				getSnapshotRepositoriesRequest.getConnectionId(), false);
+				getSnapshotRepositoriesRequest.getConnectionId(),
+				getSnapshotRepositoriesRequest.isPreferLocalCluster());
 
 		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
 

@@ -58,7 +58,8 @@ public class DeleteDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				deleteDocumentRequest.getConnectionId(), false);
+				deleteDocumentRequest.getConnectionId(),
+				deleteDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.delete(

@@ -58,7 +58,8 @@ public class UpdateDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				updateDocumentRequest.getConnectionId(), false);
+				updateDocumentRequest.getConnectionId(),
+				updateDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.update(

@@ -94,7 +94,8 @@ public class FlushIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				flushIndexRequest.getConnectionId(), false);
+				flushIndexRequest.getConnectionId(),
+				flushIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

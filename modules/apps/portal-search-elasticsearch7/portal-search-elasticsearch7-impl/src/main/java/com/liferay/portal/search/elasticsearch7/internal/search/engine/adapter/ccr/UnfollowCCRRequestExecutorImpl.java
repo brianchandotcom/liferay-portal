@@ -59,7 +59,8 @@ public class UnfollowCCRRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				unfollowCCRRequest.getConnectionId(), true);
+				unfollowCCRRequest.getConnectionId(),
+				unfollowCCRRequest.isPreferLocalCluster());
 
 		CcrClient ccrClient = restHighLevelClient.ccr();
 

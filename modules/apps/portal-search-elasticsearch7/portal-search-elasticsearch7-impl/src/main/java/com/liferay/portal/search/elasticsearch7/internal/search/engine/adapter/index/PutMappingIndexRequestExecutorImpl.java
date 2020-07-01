@@ -70,7 +70,8 @@ public class PutMappingIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				putMappingIndexRequest.getConnectionId(), false);
+				putMappingIndexRequest.getConnectionId(),
+				putMappingIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

@@ -87,7 +87,8 @@ public class RefreshIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				refreshIndexRequest.getConnectionId(), false);
+				refreshIndexRequest.getConnectionId(),
+				refreshIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

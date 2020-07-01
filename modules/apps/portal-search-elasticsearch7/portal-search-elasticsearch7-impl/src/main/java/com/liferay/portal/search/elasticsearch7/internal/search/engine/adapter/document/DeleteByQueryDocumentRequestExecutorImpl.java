@@ -81,7 +81,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				deleteByQueryDocumentRequest.getConnectionId(), false);
+				deleteByQueryDocumentRequest.getConnectionId(),
+				deleteByQueryDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.deleteByQuery(

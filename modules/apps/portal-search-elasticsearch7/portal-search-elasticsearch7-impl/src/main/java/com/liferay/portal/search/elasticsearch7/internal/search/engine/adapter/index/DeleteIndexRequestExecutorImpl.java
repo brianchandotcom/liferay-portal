@@ -71,7 +71,8 @@ public class DeleteIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				deleteIndexRequest.getConnectionId(), false);
+				deleteIndexRequest.getConnectionId(),
+				deleteIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

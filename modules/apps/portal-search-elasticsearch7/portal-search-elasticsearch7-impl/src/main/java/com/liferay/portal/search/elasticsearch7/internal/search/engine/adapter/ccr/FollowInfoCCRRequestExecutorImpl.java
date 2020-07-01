@@ -75,7 +75,8 @@ public class FollowInfoCCRRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				followInfoCCRRequest.getConnectionId(), true);
+				followInfoCCRRequest.getConnectionId(),
+				followInfoCCRRequest.isPreferLocalCluster());
 
 		CcrClient ccrClient = restHighLevelClient.ccr();
 

@@ -119,7 +119,8 @@ public class SuggestSearchRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				suggestSearchRequest.getConnectionId(), true);
+				suggestSearchRequest.getConnectionId(),
+				suggestSearchRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.search(

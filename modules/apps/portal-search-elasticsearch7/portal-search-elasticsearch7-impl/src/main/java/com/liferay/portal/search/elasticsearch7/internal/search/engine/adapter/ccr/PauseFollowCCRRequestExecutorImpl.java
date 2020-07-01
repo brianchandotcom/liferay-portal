@@ -62,7 +62,8 @@ public class PauseFollowCCRRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				pauseFollowCCRRequest.getConnectionId(), true);
+				pauseFollowCCRRequest.getConnectionId(),
+				pauseFollowCCRRequest.isPreferLocalCluster());
 
 		CcrClient ccrClient = restHighLevelClient.ccr();
 

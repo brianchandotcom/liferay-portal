@@ -90,7 +90,8 @@ public class CountSearchRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				countSearchRequest.getConnectionId(), true);
+				countSearchRequest.getConnectionId(),
+				countSearchRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.search(

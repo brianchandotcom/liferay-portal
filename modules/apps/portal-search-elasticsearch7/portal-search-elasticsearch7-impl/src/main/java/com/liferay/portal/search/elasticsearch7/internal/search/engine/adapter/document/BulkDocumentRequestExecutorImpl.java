@@ -152,7 +152,8 @@ public class BulkDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				bulkDocumentRequest.getConnectionId(), false);
+				bulkDocumentRequest.getConnectionId(),
+				bulkDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.bulk(

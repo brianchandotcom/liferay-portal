@@ -44,7 +44,8 @@ public class StateClusterRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				stateClusterRequest.getConnectionId(), true);
+				stateClusterRequest.getConnectionId(),
+				stateClusterRequest.isPreferLocalCluster());
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();
 

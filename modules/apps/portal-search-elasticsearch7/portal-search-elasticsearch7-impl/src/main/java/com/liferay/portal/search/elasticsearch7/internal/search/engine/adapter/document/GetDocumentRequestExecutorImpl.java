@@ -76,7 +76,8 @@ public class GetDocumentRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				getDocumentRequest.getConnectionId(), true);
+				getDocumentRequest.getConnectionId(),
+				getDocumentRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);

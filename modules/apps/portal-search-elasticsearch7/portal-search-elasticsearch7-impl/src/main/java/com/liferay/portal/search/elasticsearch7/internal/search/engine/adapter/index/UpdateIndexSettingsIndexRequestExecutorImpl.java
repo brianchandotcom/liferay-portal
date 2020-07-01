@@ -78,7 +78,8 @@ public class UpdateIndexSettingsIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				updateIndexSettingsIndexRequest.getConnectionId(), false);
+				updateIndexSettingsIndexRequest.getConnectionId(),
+				updateIndexSettingsIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

@@ -82,7 +82,8 @@ public class CloseIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				closeIndexRequest.getConnectionId(), false);
+				closeIndexRequest.getConnectionId(),
+				closeIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

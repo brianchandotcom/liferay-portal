@@ -82,7 +82,8 @@ public class GetMappingIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				getMappingIndexRequest.getConnectionId(), true);
+				getMappingIndexRequest.getConnectionId(),
+				getMappingIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

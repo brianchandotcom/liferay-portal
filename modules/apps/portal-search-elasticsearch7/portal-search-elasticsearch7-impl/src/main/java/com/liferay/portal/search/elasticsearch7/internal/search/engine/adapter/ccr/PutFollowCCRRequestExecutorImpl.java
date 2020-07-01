@@ -76,7 +76,8 @@ public class PutFollowCCRRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				putFollowCCRRequest.getConnectionId(), true);
+				putFollowCCRRequest.getConnectionId(),
+				putFollowCCRRequest.isPreferLocalCluster());
 
 		CcrClient ccrClient = restHighLevelClient.ccr();
 

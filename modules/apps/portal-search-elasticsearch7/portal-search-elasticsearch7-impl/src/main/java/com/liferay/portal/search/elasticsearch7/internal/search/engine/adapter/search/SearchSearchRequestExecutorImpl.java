@@ -88,7 +88,8 @@ public class SearchSearchRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				searchSearchRequest.getConnectionId(), true);
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.search(

@@ -137,7 +137,8 @@ public class AnalyzeIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				analyzeIndexRequest.getConnectionId(), true);
+				analyzeIndexRequest.getConnectionId(),
+				analyzeIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

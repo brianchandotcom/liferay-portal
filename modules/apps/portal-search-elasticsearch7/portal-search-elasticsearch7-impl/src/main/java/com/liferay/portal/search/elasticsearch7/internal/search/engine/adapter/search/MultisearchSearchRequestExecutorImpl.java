@@ -134,7 +134,8 @@ public class MultisearchSearchRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				multisearchSearchRequest.getConnectionId(), true);
+				multisearchSearchRequest.getConnectionId(),
+				multisearchSearchRequest.isPreferLocalCluster());
 
 		try {
 			return restHighLevelClient.msearch(

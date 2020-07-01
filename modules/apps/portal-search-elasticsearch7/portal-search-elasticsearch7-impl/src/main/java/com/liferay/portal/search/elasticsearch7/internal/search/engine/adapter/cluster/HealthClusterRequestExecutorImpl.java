@@ -89,7 +89,8 @@ public class HealthClusterRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				healthClusterRequest.getConnectionId(), true);
+				healthClusterRequest.getConnectionId(),
+				healthClusterRequest.isPreferLocalCluster());
 
 		ClusterClient clusterClient = restHighLevelClient.cluster();
 

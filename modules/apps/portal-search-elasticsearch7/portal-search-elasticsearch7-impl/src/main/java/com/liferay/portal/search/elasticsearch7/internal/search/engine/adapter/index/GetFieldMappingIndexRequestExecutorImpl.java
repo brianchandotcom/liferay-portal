@@ -110,7 +110,8 @@ public class GetFieldMappingIndexRequestExecutorImpl
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
-				getFieldMappingIndexRequest.getConnectionId(), true);
+				getFieldMappingIndexRequest.getConnectionId(),
+				getFieldMappingIndexRequest.isPreferLocalCluster());
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 

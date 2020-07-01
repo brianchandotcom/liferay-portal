@@ -35,6 +35,7 @@ import React, {
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 
 const DropDown = () => {
@@ -179,6 +180,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 };
 
 export default () => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [
 		{
 			dataDefinition: {dataDefinitionFields},
@@ -213,13 +215,15 @@ export default () => {
 					type:
 						DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 				});
+
+				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 			}
 		};
 
 		window.addEventListener('click', eventHandler);
 
 		return () => window.removeEventListener('click', eventHandler);
-	}, [dispatch]);
+	}, [dataLayoutBuilder, dispatch]);
 
 	const empty = dataDefinitionFields.length === 0;
 

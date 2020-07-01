@@ -124,3 +124,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		'<%= HtmlUtil.escapeJS(eventName) %>'
 	);
 </aui:script>
+
+<c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isSingleSelect() %>">
+	<liferay-frontend:component
+		componentId="<%= selectAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+		module="account_entries_admin/js/SelectAccountUsersManagementToolbarDefaultEventHandler.es"
+	/>
+</c:if>

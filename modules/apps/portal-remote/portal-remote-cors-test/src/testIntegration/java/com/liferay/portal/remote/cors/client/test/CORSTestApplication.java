@@ -40,4 +40,28 @@ public class CORSTestApplication extends Application {
 		return "get";
 	}
 
+	@GET
+	@Path("/system/only/path/whatever")
+	public String getTestPath1() {
+		return "/system/only/path/whatever";
+	}
+
+	@GET
+	@Path("/instance/only/path/whatever")
+	public String getTestPath2() {
+		return "/instance/only/path/whatever";
+	}
+
+	@GET
+	@Path("/overwritten/path/whatever")
+	public String getTestPath3() {
+		return "/overwritten/path/whatever";
+	}
+
+	@GET
+	@Path("/duplicate/path/whatever")
+	public String getTestPath4() {
+		return "/duplicate/path/whatever";
+	}
+
 }

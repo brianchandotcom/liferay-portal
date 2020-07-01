@@ -132,8 +132,6 @@ const APIGUI = () => {
 		};
 	}, [categoryKey, categories, dispatch]);
 
-	window.global = window;
-
 	const mutationObserver = new MutationObserver((mutations) => {
 		mutations.forEach(() => {
 			document

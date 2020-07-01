@@ -63,6 +63,7 @@ public class SearchSynonymSetRequest {
 
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setIndexNames(_synonymSetIndexName.getIndexName());
+		searchSearchRequest.setPreferLocalCluster(false);
 		searchSearchRequest.setQuery(_getQuery());
 		searchSearchRequest.setSize(_searchContainer.getDelta());
 		searchSearchRequest.setSorts(_getSorts());

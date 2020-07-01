@@ -55,6 +55,8 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(synonymSetIndexName.getIndexName());
 
+		indicesExistsIndexRequest.setPreferLocalCluster(false);
+
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
 			_searchEngineAdapter.execute(indicesExistsIndexRequest);
 
@@ -66,6 +68,7 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(synonymSetIndexName.getIndexName());
+		searchSearchRequest.setPreferLocalCluster(false);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
@@ -97,6 +100,7 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 
 		getDocumentRequest.setFetchSource(true);
 		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
+		getDocumentRequest.setPreferLocalCluster(false);
 
 		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
 			getDocumentRequest);

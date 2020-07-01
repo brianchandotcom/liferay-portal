@@ -38,6 +38,8 @@ public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
 			companyIndexName);
 
+		getIndexIndexRequest.setPreferLocalCluster(false);
+
 		GetIndexIndexResponse getIndexIndexResponse =
 			searchEngineAdapter.execute(getIndexIndexRequest);
 

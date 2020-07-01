@@ -206,33 +206,33 @@ public class InfoDisplayContributorWrapper
 		Map<String, Object> infoDisplayFieldsValues,
 		InfoItemClassPKReference infoItemClassPKReference) {
 
-		Locale locale = _getLocale();
+		return InfoItemFieldValues.builder(
+		).add(
+			consumer -> {
+				for (Map.Entry<String, Object> entry :
+						infoDisplayFieldsValues.entrySet()) {
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
-			infoItemClassPKReference);
+					String fieldName = entry.getKey();
 
-		for (Map.Entry<String, Object> entry :
-				infoDisplayFieldsValues.entrySet()) {
+					InfoLocalizedValue<String> fieldLabelLocalizedValue =
+						InfoLocalizedValue.builder(
+						).addValue(
+							_getLocale(), fieldName
+						).build();
 
-			String fieldName = entry.getKey();
+					InfoField infoField = new InfoField(
+						TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
+						fieldName);
 
-			InfoLocalizedValue<String> fieldLabelLocalizedValue =
-				InfoLocalizedValue.builder(
-				).addValue(
-					locale, fieldName
-				).build();
+					InfoFieldValue<Object> infoFormValue = new InfoFieldValue(
+						infoField, entry.getValue());
 
-			InfoField infoField = new InfoField(
-				TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
-				fieldName);
-
-			InfoFieldValue<Object> infoFormValue = new InfoFieldValue(
-				infoField, entry.getValue());
-
-			infoItemFieldValues.add(infoFormValue);
-		}
-
-		return infoItemFieldValues;
+					consumer.accept(infoFormValue);
+				}
+			}
+		).infoItemClassPKReference(
+			infoItemClassPKReference
+		).build();
 	}
 
 	private InfoFieldType _getInfoFieldTypeType(String infoDisplayFieldType) {

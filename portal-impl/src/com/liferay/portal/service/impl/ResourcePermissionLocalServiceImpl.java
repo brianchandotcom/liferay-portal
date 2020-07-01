@@ -145,6 +145,16 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
+		boolean addModelPermissions = true;
+
+		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
+			addModelPermissions = false;
+		}
+
+		// Unless model permissions are used insecurely we add Owner permissions
+
+		boolean addOwnerPermissions = true;
+
 		// Individual Permissions
 
 		boolean flushResourcePermissionEnabled =
@@ -158,6 +168,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			// Owner permissions
 
+			if (addOwnerPermissions) {
 			Role ownerRole = roleLocalService.getRole(
 				companyId, RoleConstants.OWNER);
 
@@ -172,7 +183,9 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (_matches(modelPermissions, name)) {
+			}
+
+			if (addModelPermissions) {
 				for (String roleName : modelPermissions.getRoleNames()) {
 					Role role = getRole(companyId, groupId, roleName);
 
@@ -1603,7 +1616,7 @@ public class ResourcePermissionLocalServiceImpl
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
-		if (!_matches(modelPermissions, name)) {
+		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
 			return;
 		}
 
@@ -1888,6 +1901,107 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
+	private boolean _checkModelPermissionsMatches(
+			ModelPermissions modelPermissions, String resourcePermissionName)
+		throws PortalException {
+
+		boolean addOwnerPermissions = false;
+		boolean addModelPermissions = false;
+
+		if ((modelPermissions == null) ||
+			ModelPermissions.RESOURCE_NAME_UNINITIALIZED.equals(
+				modelPermissions.getResourceName())) {
+
+			addOwnerPermissions = true;
+			addModelPermissions = false;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Uninitialized model permissions used for " +
+							resourcePermissionName));
+			}
+		}
+		else if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
+					modelPermissions.getResourceName())) {
+
+			if (!modelPermissions.isUsed()) {
+				addOwnerPermissions = true;
+				addModelPermissions = true;
+
+				modelPermissions.setUsed(true);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						new Exception(
+							"First model permissions used for " +
+								resourcePermissionName));
+				}
+			}
+			else {
+				addOwnerPermissions = false;
+				addModelPermissions = false;
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						new Exception(
+							"First model permissions already used for " +
+								resourcePermissionName));
+				}
+			}
+		}
+		else if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
+					modelPermissions.getResourceName())) {
+
+			addOwnerPermissions = true;
+			addModelPermissions = true;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Model permissions for all resources used for " +
+							resourcePermissionName));
+			}
+		}
+		else if (resourcePermissionName.equals(
+					modelPermissions.getResourceName())) {
+
+			addOwnerPermissions = true;
+			addModelPermissions = true;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Correct model permissions used for " +
+							resourcePermissionName));
+			}
+		}
+		else {
+			addOwnerPermissions = false;
+			addModelPermissions = false;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						StringBundler.concat(
+							"Incorrect resource name ",
+							modelPermissions.getResourceName(), " used for ",
+							resourcePermissionName)));
+			}
+		}
+
+		if (!addOwnerPermissions && !addModelPermissions) {
+			throw new PortalException(
+				StringBundler.concat(
+					"Insecure use or reuse of model permissions of ",
+					modelPermissions.getResourceName(),
+					". Please initialize it correctly or again for ",
+					resourcePermissionName));
+		}
+
+		return addModelPermissions;
+	}
+
 	private Map<Long, ResourcePermission> _getResourcePermissionsMap(
 		List<ResourcePermission> resourcePermissions) {
 
@@ -1976,18 +2090,16 @@ public class ResourcePermissionLocalServiceImpl
 
 		String resourceName = modelPermissions.getResourceName();
 
+		if (resourceName.equals(
+				ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE)) {
+
+			return !modelPermissions.isUsed();
+		}
+
 		if (resourceName.equals(ModelPermissions.RESOURCE_NAME_ALL_RESOURCES) ||
 			resourceName.equals(resourcePermissionName)) {
 
 			return true;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Model permissions resource name ", resourceName,
-					" does not match resource permission name ",
-					resourcePermissionName));
 		}
 
 		return false;

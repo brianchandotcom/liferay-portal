@@ -728,91 +728,106 @@ definition {
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+		if (isSet(inCollectionDisplay)) {
+			Select(
+				key_fieldLabel = "Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${templateOption}");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			Pause(locator1 = "3000");
 
-		if (isSet(documentandmedia)) {
-			NavItem.click(navItem = "Documents and Media");
-
-			LexiconCard.clickCard(card = "${imageFileName}");
-
-			AssertElementPresent(
-				key_contentName = "${imageFileName}",
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_imageName = "${imageFileName}",
-				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+			AssertSelectedLabel(
+				key_fieldLabel = "Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${templateOption}");
 		}
+		else {
+			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
-		if (isSet(blogs)) {
-			NavItem.click(navItem = "Blogs");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			LexiconCard.clickCard(card = "${entryTitle}");
+			if (isSet(documentandmedia)) {
+				NavItem.click(navItem = "Documents and Media");
 
-			AssertElementPresent(
-				key_contentName = "${entryTitle}",
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
-
-			AssertTextEquals(
-				locator1 = "Fragment#FRAGMENT_BODY",
-				value1 = "${entryContent}");
-		}
-
-		if (isSet(webcontent)) {
-			NavItem.click(navItem = "Web Content");
-
-			if (isSet(depotName)) {
-				var key_contentName = "${webContentTitle}";
-
-				AssertClick(
-					key_breadcrumbName = "Sites and Libraries",
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-					value1 = "Sites and Libraries");
-
-				AssertClick(
-					key_groupTab = "Asset Library",
-					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-					value1 = "Asset Library");
-
-				LexiconCard.clickCard(card = "${depotName}");
-
-				Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
-			}
-
-			else {
-				LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-				LexiconCard.clickCard(card = "${webContentTitle}");
-			}
-
-			if (isSet(customWebcontenttemplate)) {
-				Select(
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
-					value1 = "${customWebcontenttemplate}");
+				LexiconCard.clickCard(card = "${imageFileName}");
 
 				AssertElementPresent(
-					key_contentName = "${webContentTitle}",
+					key_contentName = "${imageFileName}",
 					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
 				AssertElementPresent(
-					key_contentName = "${customWebcontenttemplate}",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
-
-				AssertTextEquals(
-					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${webContentContent}");
+					key_fragmentName = "${fragmentName}",
+					key_imageName = "${imageFileName}",
+					locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
 			}
-			else {
+
+			if (isSet(blogs)) {
+				NavItem.click(navItem = "Blogs");
+
+				LexiconCard.clickCard(card = "${entryTitle}");
+
 				AssertElementPresent(
-					key_contentName = "${webContentTitle}",
+					key_contentName = "${entryTitle}",
 					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
 				AssertTextEquals(
 					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${webContentContent}");
+					value1 = "${entryContent}");
+			}
+
+			if (isSet(webcontent)) {
+				NavItem.click(navItem = "Web Content");
+
+				if (isSet(depotName)) {
+					var key_contentName = "${webContentTitle}";
+
+					AssertClick(
+						key_breadcrumbName = "Sites and Libraries",
+						locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+						value1 = "Sites and Libraries");
+
+					AssertClick(
+						key_groupTab = "Asset Library",
+						locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+						value1 = "Asset Library");
+
+					LexiconCard.clickCard(card = "${depotName}");
+
+					Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+				}
+
+				else {
+					LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+					LexiconCard.clickCard(card = "${webContentTitle}");
+				}
+
+				if (isSet(customWebcontenttemplate)) {
+					Select(
+						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+						value1 = "${customWebcontenttemplate}");
+
+					AssertElementPresent(
+						key_contentName = "${webContentTitle}",
+						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+					AssertElementPresent(
+						key_contentName = "${customWebcontenttemplate}",
+						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
+
+					AssertTextEquals(
+						locator1 = "Fragment#FRAGMENT_BODY",
+						value1 = "${webContentContent}");
+				}
+				else {
+					AssertElementPresent(
+						key_contentName = "${webContentTitle}",
+						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+					AssertTextEquals(
+						locator1 = "Fragment#FRAGMENT_BODY",
+						value1 = "${webContentContent}");
+				}
 			}
 		}
 	}

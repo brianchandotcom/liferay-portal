@@ -107,9 +107,23 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				if (Validator.isNotNull(infoFieldSetLabel)) {
 			%>
 
-					<div class="fieldset-title">
-						<%= infoFieldSetLabel %>
-					</div>
+					<clay:row>
+						<clay:col
+							md="6"
+						>
+							<div class="fieldset-title">
+								<%= infoFieldSetLabel %>
+							</div>
+						</clay:col>
+
+						<clay:col
+							md="6"
+						>
+							<div class="fieldset-title">
+								<%= infoFieldSetLabel %>
+							</div>
+						</clay:col>
+					</clay:row>
 
 				<%
 				}

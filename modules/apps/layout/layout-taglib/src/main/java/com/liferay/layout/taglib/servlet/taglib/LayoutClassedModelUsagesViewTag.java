@@ -15,15 +15,25 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.servlet.taglib.util.LayoutClassedModelUsagesTaglibUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutClassedModelUsagesViewTag<R> extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		LayoutClassedModelUsagesTaglibUtil.recordLayoutClassedModelUsage(
+			getClassName(), getClassPK());
+
+		return super.doStartTag();
+	}
 
 	public String getClassName() {
 		return _className;

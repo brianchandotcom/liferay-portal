@@ -21,11 +21,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import DragAndDrop from './DragAndDrop';
 import DragPreview from './DragPreview';
 import TabsPanel from './TabsPanel';
-
-export const LAYOUT_DATA_ITEM_TYPES = {
-	content: 'content',
-	widget: 'widget',
-};
+import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 
 const INITIAL_STATE = {
 	addContentsURLs: null,

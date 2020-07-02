@@ -70,20 +70,17 @@ const TabsContent = ({tab}) => {
 						},
 				  ]
 				: tab,
-		[tab, searchValueLowerCase]
+		[searchValueLowerCase, tab]
 	);
 
 	useEffect(() => {
 		if (searchValueLowerCase || totalItems) {
-			let body = {
+			const body = {
 				[`${namespace}keywords`]: searchValueLowerCase,
 			};
 
 			if (totalItems) {
-				body = {
-					...body,
-					[`${namespace}delta`]: totalItems,
-				};
+				body[`${namespace}delta`] = totalItems;
 			}
 
 			fetch(getContentsURL, {
@@ -92,7 +89,7 @@ const TabsContent = ({tab}) => {
 			})
 				.then((response) => response.json())
 				.then((items) => {
-					const normalizeItems = {
+					const normalizedItems = {
 						...tab,
 						collections: items.contents.length
 							? tab.collections.map((collection) => ({
@@ -104,7 +101,7 @@ const TabsContent = ({tab}) => {
 							: items.contents,
 					};
 
-					return setFilteredContent(normalizeItems);
+					return setFilteredContent(normalizedItems);
 				});
 		}
 		else {
@@ -156,8 +153,6 @@ const TabsContent = ({tab}) => {
 	);
 };
 
-export default TabsContent;
-
 TabsContent.propTypes = {
 	collections: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -169,3 +164,5 @@ TabsContent.propTypes = {
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 };
+
+export default TabsContent;

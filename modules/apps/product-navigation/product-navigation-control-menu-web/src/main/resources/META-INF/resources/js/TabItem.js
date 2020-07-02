@@ -18,12 +18,10 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {
-	AddPanelContext,
-	LAYOUT_DATA_ITEM_TYPES,
-	updateUsedWidget,
-} from './AddPanel';
-import {addPortlet, useDragSymbol} from './useDragAndDrop';
+import {AddPanelContext, updateUsedWidget} from './AddPanel';
+import {addPortlet} from './addPortlet';
+import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
+import {useDragSymbol} from './useDragAndDrop';
 
 const TabItem = ({item}) => {
 	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
@@ -79,17 +77,15 @@ const TabItem = ({item}) => {
 const addItem = ({item, plid, setWidgets, widgets}) => {
 	const targetItem = document.querySelector('.portlet-dropzone');
 
-	if (!item.used) {
-		addPortlet({item, plid, targetItem});
+	addPortlet({item, plid, targetItem});
 
-		if (!item.data.instanceable) {
-			const updatedWidgets = updateUsedWidget({
-				item,
-				widgets,
-			});
+	if (!item.data.instanceable) {
+		const updatedWidgets = updateUsedWidget({
+			item,
+			widgets,
+		});
 
-			setWidgets(updatedWidgets);
-		}
+		setWidgets(updatedWidgets);
 	}
 };
 

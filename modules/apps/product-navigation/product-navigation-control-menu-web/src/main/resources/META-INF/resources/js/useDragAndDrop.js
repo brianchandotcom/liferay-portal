@@ -12,7 +12,6 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,
@@ -24,17 +23,12 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {
-	AddPanelContext,
-	LAYOUT_DATA_ITEM_TYPES,
-	updateUsedWidget,
-} from './AddPanel';
+import {AddPanelContext, updateUsedWidget} from './AddPanel';
+import addPortlet from './addPortlet';
+import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
+import {POSITIONS} from './constants/positions';
 
 const DROP_OVER_CLASS = 'yui3-dd-drop-over';
-const POSITION = {
-	bottom: 'bottom',
-	top: 'top',
-};
 
 const initialDragDrop = {
 	dragIndicatorPosition: {},
@@ -223,50 +217,6 @@ export const useDropTarget = (targetItem) => {
 	setDropTargetRef(targetItem);
 };
 
-const addLoadingAnimation = (targetItem, targetPosition) => {
-	const itemIsDropzone = targetItem.classList.contains('portlet-dropzone');
-	const loading = document.createElement('div');
-	loading.classList.add('loading-animation');
-
-	if (itemIsDropzone) {
-		targetItem.appendChild(loading);
-	}
-	else {
-		const parent = targetItem.parentElement;
-		const item =
-			targetPosition === POSITION.top
-				? targetItem
-				: targetItem.nextSibling;
-
-		parent.insertBefore(loading, item);
-	}
-
-	return loading;
-};
-
-export const addPortlet = ({item, plid, targetItem, targetPosition}) => {
-	const loading = addLoadingAnimation(targetItem, targetPosition);
-
-	openToast({
-		message: Liferay.Language.get('the-application-was-added-to-the-page'),
-		type: 'success',
-	});
-
-	const portletData =
-		item.type === LAYOUT_DATA_ITEM_TYPES.widget
-			? ''
-			: `${item.data.classPK},${item.data.className}`;
-
-	Liferay.Portlet.add({
-		beforePortletLoaded: () => null,
-		placeHolder: loading,
-		plid,
-		portletData,
-		portletId: item.data.portletId,
-		portletItemId: '',
-	});
-};
-
 const getHoverPosition = (monitor, targetItem) => {
 	const clientOffset = monitor.getClientOffset();
 	const targetItemBoundingRect = targetItem.getBoundingClientRect();
@@ -304,5 +254,5 @@ const getDropIndicatorPosition = ({
 const getDropPosition = ({monitor, targetItem}) => {
 	const {hoverClientY, hoverTopLimit} = getHoverPosition(monitor, targetItem);
 
-	return hoverClientY < hoverTopLimit ? POSITION.top : POSITION.bottom;
+	return hoverClientY < hoverTopLimit ? POSITIONS.top : POSITIONS.bottom;
 };

@@ -34,7 +34,7 @@ const DragAndDropElements = () => {
 			'.portlet-dropzone, .portlet-dropzone .portlet-boundary'
 		)
 	);
-	const wrapper = document.body;
+	const body = document.body;
 
 	return (
 		<DragAndDropProvider
@@ -56,7 +56,7 @@ const DragAndDropElements = () => {
 			{dropItems.map((dropItem, index) => (
 				<DropTarget dropItem={dropItem} key={index} />
 			))}
-			<Wrapper item={wrapper} />
+			<Wrapper item={body} />
 		</DragAndDropProvider>
 	);
 };

@@ -264,8 +264,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			// Update vocabulary
 
 			vocabulary = _assetVocabularyService.updateVocabulary(
-				vocabularyId, StringPool.BLANK, titleMap, descriptionMap,
-				getSettings(actionRequest), serviceContext);
+				vocabularyId, titleMap, descriptionMap,
+				getSettings(actionRequest));
 		}
 
 		actionRequest.setAttribute(

@@ -24,6 +24,7 @@ const history = {
 const customObjectItems = {
 	items: [
 		{
+			contentType: 'app-builder',
 			dataDefinitionKey: '37496',
 			dateCreated: '2020-06-05T13:43:16Z',
 			dateModified: '2020-06-05T13:44:08Z',
@@ -66,11 +67,10 @@ const formViewItems = {
 			dataRules: [],
 			dateCreated: '2020-06-08T12:12:23Z',
 			dateModified: '2020-06-08T12:12:23Z',
-			defaultLanguageId: 'en_US',
 			description: {},
 			id: 37625,
 			name: {
-				en_US: 'Form 01',
+				'en-US': 'Form 01',
 			},
 			paginationMode: 'wizard',
 			siteId: 20124,
@@ -86,15 +86,29 @@ const tableViewItems = {
 			dataDefinitionId: 37497,
 			dateCreated: '2020-06-08T12:12:31Z',
 			dateModified: '2020-06-08T12:12:31Z',
-			defaultLanguageId: 'en_US',
 			fieldNames: ['Text'],
 			id: 37628,
 			name: {
-				en_US: 'Table 01',
+				'en-US': 'Table 01',
 			},
 			siteId: 20124,
 			sortField: '',
 			userId: 20126,
+		},
+	],
+};
+
+const roleItems = {
+	items: [
+		{
+			availableLanguages: ['en-US'],
+			dateCreated: '2020-07-01T13:25:25Z',
+			dateModified: '2020-07-01T13:25:25Z',
+			description:
+				'Account Managers who belong to an organization can administer all accounts associated to that organization.',
+			id: 37238,
+			name: 'Account Manager',
+			roleType: 'organization',
 		},
 	],
 };
@@ -106,6 +120,7 @@ describe('EditApp', () => {
 	});
 
 	it('renders control menu, upperToolbar and sidebar component correctly when creating a new app', async () => {
+		fetch.mockResponseOnce(JSON.stringify(roleItems));
 		fetch.mockResponseOnce(JSON.stringify(customObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(nativeObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(formViewItems));
@@ -205,7 +220,6 @@ describe('EditApp', () => {
 			name: {
 				en_US: 'Test',
 			},
-			scope: 'standard',
 			siteId: 20124,
 			userId: 20126,
 		};
@@ -232,6 +246,7 @@ describe('EditApp', () => {
 			],
 		};
 
+		fetch.mockResponseOnce(JSON.stringify(roleItems));
 		fetch.mockResponseOnce(JSON.stringify(app));
 		fetch.mockResponseOnce(JSON.stringify(workflow));
 		fetch.mockResponseOnce(JSON.stringify(customObjectItems));

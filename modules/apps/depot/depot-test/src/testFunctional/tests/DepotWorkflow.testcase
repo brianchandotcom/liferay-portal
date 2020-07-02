@@ -343,6 +343,8 @@ definition {
 			webContentContent = "Depot WebContent Content",
 			webContentTitle = "Depot WebContent Title");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
 		WorkflowAsset.gotoViaNotification(
 			assetType = "Web Content Article",
 			user = "Test Test");

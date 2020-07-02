@@ -99,6 +99,8 @@ public class ResourcePermissionLocalServiceImpl
 			serviceContext.getModelPermissions();
 
 		if (_matches(modelPermissions, auditedModel.getModelClassName())) {
+			modelPermissions.setUsed(true);
+
 			addModelResourcePermissions(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
 				auditedModel.getUserId(), auditedModel.getModelClassName(),
@@ -147,11 +149,14 @@ public class ResourcePermissionLocalServiceImpl
 
 		boolean addModelPermissions = true;
 
-		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
+		if (!_matches(modelPermissions, name)) {
 			modelPermissions = ModelPermissionsFactory.create(name);
 
 			modelPermissions.addRolePermissions(
 				RoleConstants.OWNER, new String[0]);
+		}
+		else {
+			modelPermissions.setUsed(true);
 		}
 
 		// Unless model permissions are used insecurely we add Owner permissions
@@ -1619,8 +1624,11 @@ public class ResourcePermissionLocalServiceImpl
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
-		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
+		if (!_matches(modelPermissions, name)) {
 			return;
+		}
+		else {
+			modelPermissions.setUsed(true);
 		}
 
 		for (String roleName : modelPermissions.getRoleNames()) {
@@ -1904,7 +1912,7 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
-	private boolean _checkModelPermissionsMatches(
+	private boolean _matches(
 		ModelPermissions modelPermissions, String resourcePermissionName) {
 
 		if ((modelPermissions == null) ||
@@ -1925,8 +1933,6 @@ public class ResourcePermissionLocalServiceImpl
 					modelPermissions.getResourceName())) {
 
 			if (!modelPermissions.isUsed()) {
-				modelPermissions.setUsed(true);
-
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						new Exception(
@@ -2063,30 +2069,6 @@ public class ResourcePermissionLocalServiceImpl
 				IndexWriterHelperUtil.updatePermissionFields(name, name);
 			}
 		}
-	}
-
-	private boolean _matches(
-		ModelPermissions modelPermissions, String resourcePermissionName) {
-
-		if (modelPermissions == null) {
-			return false;
-		}
-
-		String resourceName = modelPermissions.getResourceName();
-
-		if (resourceName.equals(
-				ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE)) {
-
-			return !modelPermissions.isUsed();
-		}
-
-		if (resourceName.equals(ModelPermissions.RESOURCE_NAME_ALL_RESOURCES) ||
-			resourceName.equals(resourcePermissionName)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _updateResourcePermission(

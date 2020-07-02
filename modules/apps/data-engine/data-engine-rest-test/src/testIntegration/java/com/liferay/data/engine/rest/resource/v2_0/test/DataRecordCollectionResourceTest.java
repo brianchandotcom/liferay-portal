@@ -18,12 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -35,7 +37,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -87,10 +88,17 @@ public class DataRecordCollectionResourceTest
 					dataRecordCollection.getId()));
 	}
 
-	@Ignore
 	@Override
 	@Test
-	public void testGetDataRecordCollectionPermissionsPage() {
+	public void testGetDataRecordCollectionPermissionsPage() throws Exception {
+		DataRecordCollection dataRecordCollection =
+			testGetDataRecordCollection_addDataRecordCollection();
+
+		Page<Permission> page =
+			dataRecordCollectionResource.getDataRecordCollectionPermissionsPage(
+				dataRecordCollection.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
 	}
 
 	@Override

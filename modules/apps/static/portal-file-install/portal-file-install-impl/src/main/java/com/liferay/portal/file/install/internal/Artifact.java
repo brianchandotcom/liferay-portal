@@ -18,8 +18,6 @@ import com.liferay.portal.file.install.FileInstaller;
 
 import java.io.File;
 
-import java.net.URL;
-
 /**
  * @author Matthew Tambara
  */
@@ -41,10 +39,6 @@ public class Artifact {
 		return _path;
 	}
 
-	public URL getTransformedUrl() {
-		return _transformedURL;
-	}
-
 	public void setBundleId(long bundleId) {
 		_bundleId = bundleId;
 	}
@@ -61,14 +55,9 @@ public class Artifact {
 		_path = path;
 	}
 
-	public void setTransformedUrl(URL transformedUrl) {
-		_transformedURL = transformedUrl;
-	}
-
 	private long _bundleId = -1;
 	private long _checksum;
 	private FileInstaller _fileInstaller;
 	private File _path;
-	private URL _transformedURL;
 
 }

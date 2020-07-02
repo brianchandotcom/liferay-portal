@@ -294,20 +294,6 @@ public class FileInstallImplBundleActivator
 		synchronized (_fileInstallers) {
 			_fileInstallers.put(serviceReference, fileInstaller);
 		}
-
-		Bundle bundle = serviceReference.getBundle();
-
-		long currentStamp = bundle.getLastModified();
-
-		List<DirectoryWatcher> toNotify = new ArrayList<>();
-
-		synchronized (_watchers) {
-			toNotify.addAll(_watchers.values());
-		}
-
-		for (DirectoryWatcher directoryWatcher : toNotify) {
-			directoryWatcher.addFileInstaller(fileInstaller, currentStamp);
-		}
 	}
 
 	private void _removeFileInstaller(

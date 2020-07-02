@@ -92,6 +92,10 @@ public class SlaveOfflineRule {
 		return true;
 	}
 
+	public boolean shutdown() {
+		return shutdown;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -157,6 +161,7 @@ public class SlaveOfflineRule {
 	protected Pattern consolePattern;
 	protected String name;
 	protected String notificationRecipients;
+	protected boolean shutdown;
 
 	private SlaveOfflineRule(String configurations, String ruleName) {
 		name = ruleName;
@@ -173,6 +178,13 @@ public class SlaveOfflineRule {
 
 		notificationRecipients = configurationsMap.get(
 			"notificationRecipients");
+
+		if (configurationsMap.containsKey("shutdown")) {
+			shutdown = Boolean.parseBoolean(configurationsMap.get("shutdown"));
+		}
+		else {
+			shutdown = false;
+		}
 	}
 
 	private static final Pattern _configurationsPattern = Pattern.compile(

@@ -65,7 +65,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				<li class="nav-item pr-2">
 					<c:choose>
 						<c:when test="<%= disableCopyButton %>">
-							<button class="btn btn-secondary btn-sm ddm-btn-disabled lfr-ddm-button lfr-ddm-share-url-button share-form-icon" data-original-title="<liferay-ui:message key="share" />" id="<portlet:namespace />publishIcon" title="<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : "" %>" type="button">
+							<button class="btn btn-secondary btn-sm disabled lfr-ddm-button lfr-ddm-share-url-button share-form-icon" data-original-title="<liferay-ui:message key="share" />" id="<portlet:namespace />publishIcon" title="<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : "" %>" type="button">
 								<%= LanguageUtil.get(request, "share") %>
 							</button>
 						</c:when>

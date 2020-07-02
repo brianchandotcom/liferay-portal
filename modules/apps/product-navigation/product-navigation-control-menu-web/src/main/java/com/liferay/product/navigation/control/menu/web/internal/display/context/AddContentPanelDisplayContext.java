@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -548,7 +546,7 @@ public class AddContentPanelDisplayContext {
 				PortalUtil.getPortletTitle(
 					portlet, servletContext, _themeDisplay.getLocale())
 			).put(
-				"used", _isUsed(portlet, _themeDisplay.getPlid())
+				"used", _isUsed(portlet)
 			).build()
 		).collect(
 			Collectors.toList()
@@ -607,17 +605,15 @@ public class AddContentPanelDisplayContext {
 		return _getWidgetCategories(portletCategory);
 	}
 
-	private boolean _isUsed(Portlet portlet, long plid) {
+	private boolean _isUsed(Portlet portlet) {
 		if (portlet.isInstanceable()) {
 			return false;
 		}
 
-		long count =
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
-				portlet.getPortletId());
+		LayoutTypePortlet layoutTypePortlet =
+			_themeDisplay.getLayoutTypePortlet();
 
-		if (count > 0) {
+		if (layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
 			return true;
 		}
 

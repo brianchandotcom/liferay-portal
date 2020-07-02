@@ -4,6 +4,9 @@ $toolbarDesktopHeight: 64px;
 $toolbarHeight: 110px;
 $toolbarZIndex: 971;
 
+$controlMenuHeight: 56px;
+$sidebarHeaderHeight: 104px;
+
 $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
 
@@ -187,7 +190,9 @@ $productMenuWidth: 320px;
 
 			@media (max-width: 992px) {
 				.sidebar-body {
-					height: calc(100vh - 270px);
+					height: calc(
+						100vh - #{$toolbarHeight + $controlMenuHeight +$sidebarHeaderHeight}
+					);
 				}
 			}
 		}

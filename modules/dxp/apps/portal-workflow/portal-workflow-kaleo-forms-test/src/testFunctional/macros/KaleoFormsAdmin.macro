@@ -492,7 +492,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "Icon#CLOSE");
+		Click(locator1 = "KaleoFormsAdmin#CLOSE_BUTTON");
 	}
 
 	macro reactivateInactiveWorkflowDefinition {

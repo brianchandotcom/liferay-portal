@@ -23,8 +23,30 @@ import useQuery from '../../hooks/useQuery.es';
 import {getItem} from '../../utils/client.es';
 import {errorToast} from '../../utils/toast.es';
 import {isEqualObjects} from '../../utils/utils.es';
-import FieldPreview from './FieldPreview.es';
+import FieldPreview, {SectionRenderer} from './FieldPreview.es';
 import ViewEntryUpperToolbar from './ViewEntryUpperToolbar.es';
+
+const getSections = ({dataDefinitionFields = []}) => {
+	const sections = {};
+
+	dataDefinitionFields.forEach(
+		({
+			customProperties: {collapsible},
+			name,
+			nestedDataDefinitionFields,
+		}) => {
+			if (nestedDataDefinitionFields.length) {
+				sections[name] = {
+					collapsible,
+					fields: nestedDataDefinitionFields.map(({name}) => name),
+					nestedDataDefinitionFields,
+				};
+			}
+		}
+	);
+
+	return sections;
+};
 
 export function ViewDataLayoutPageValues({
 	dataDefinition,
@@ -32,6 +54,7 @@ export function ViewDataLayoutPageValues({
 	dataRecordValues,
 }) {
 	const {dataLayoutRows} = dataLayoutPage;
+	const sections = getSections(dataDefinition);
 
 	return dataLayoutRows
 		.reduce(
@@ -44,14 +67,40 @@ export function ViewDataLayoutPageValues({
 			],
 			[]
 		)
-		.map((fieldName) => (
-			<FieldPreview
-				dataDefinition={dataDefinition}
-				dataRecordValues={dataRecordValues}
-				fieldName={fieldName}
-				key={fieldName}
-			/>
-		));
+		.map((fieldName) => {
+			const fieldGroup = sections[fieldName];
+
+			if (fieldGroup) {
+				return (
+					<SectionRenderer
+						collapsible={fieldGroup.collapsible}
+						dataDefinition={dataDefinition}
+						fieldName={fieldName}
+					>
+						{fieldGroup.fields.map((field) => (
+							<FieldPreview
+								dataDefinition={{
+									dataDefinitionFields:
+										fieldGroup.nestedDataDefinitionFields,
+								}}
+								dataRecordValues={dataRecordValues}
+								fieldName={field}
+								key={field}
+							/>
+						))}
+					</SectionRenderer>
+				);
+			}
+
+			return (
+				<FieldPreview
+					dataDefinition={dataDefinition}
+					dataRecordValues={dataRecordValues}
+					fieldName={fieldName}
+					key={fieldName}
+				/>
+			);
+		});
 }
 
 export default function ViewEntry({

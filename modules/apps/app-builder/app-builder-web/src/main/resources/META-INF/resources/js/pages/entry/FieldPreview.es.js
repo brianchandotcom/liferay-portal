@@ -14,6 +14,8 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {SheetSection} from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
@@ -146,6 +148,35 @@ const StringRenderer = ({value}) => (
 		{(Array.isArray(value) ? value.join(', ') : value) || ' - '}
 	</span>
 );
+
+export const SectionRenderer = ({
+	children,
+	collapsible,
+	dataDefinition,
+	fieldName,
+}) => {
+	const label = DataDefinitionUtils.getFieldLabel(dataDefinition, fieldName);
+
+	return (
+		<ClayPanel
+			className="data-record-section"
+			collapsable={collapsible}
+			defaultExpanded
+			displayTitle={
+				<SheetSection>
+					<div className="autofit-row sheet-subtitle">
+						<span className="autofit-col autofit-col-expand">
+							<label className="text-uppercase">{label}</label>
+						</span>
+					</div>
+				</SheetSection>
+			}
+			showCollapseIcon
+		>
+			<ClayPanel.Body>{children}</ClayPanel.Body>
+		</ClayPanel>
+	);
+};
 
 const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 	const {customProperties, fieldType} = dataDefinitionField;

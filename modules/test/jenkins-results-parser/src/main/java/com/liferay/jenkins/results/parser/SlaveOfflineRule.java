@@ -125,7 +125,13 @@ public class SlaveOfflineRule {
 		Map<String, String> configurationsMap = _parseConfigurations(
 			configurations);
 
+		_validateRequiredConfigurationParameter(configurationsMap, "console");
+
 		consolePattern = Pattern.compile(configurationsMap.get("console"));
+
+		_validateRequiredConfigurationParameter(
+			configurationsMap, "notificationRecipients");
+
 		notificationRecipients = configurationsMap.get(
 			"notificationRecipients");
 	}
@@ -156,6 +162,17 @@ public class SlaveOfflineRule {
 		}
 
 		return configurationsMap;
+	}
+
+	private void _validateRequiredConfigurationParameter(
+		Map<String, String> configurationsMap, String parameterName) {
+
+		if (!configurationsMap.containsKey(parameterName)) {
+			throw new IllegalStateException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to detect required configuration \"", parameterName,
+					" in slave offline rule \"", getName(), "\""));
+		}
 	}
 
 	private static final Pattern _configurationsPattern = Pattern.compile(

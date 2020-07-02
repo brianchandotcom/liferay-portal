@@ -154,7 +154,7 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public String getTitle() {
-		return _article.getTitle();
+		return _article.getTitle(PortalUtil.getLocale(_httpServletRequest));
 	}
 
 	public Map<String, Object> getTranslateLanguagesSelectorData() {

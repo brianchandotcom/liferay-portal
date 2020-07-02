@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -36,6 +35,8 @@ import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import java.util.Collections;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -81,12 +82,7 @@ public class ComponentTagTest {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		componentTag.setComponentId("componentId");
-
-		componentTag.setContext(
-			new HashMapBuilder().<String, Object>put(
-				"name", "value"
-			).build());
-
+		componentTag.setContext(Collections.singletonMap("name", "value"));
 		componentTag.setModule("module");
 		componentTag.setPageContext(
 			new MockPageContext(_getServletContext(), httpServletRequest));

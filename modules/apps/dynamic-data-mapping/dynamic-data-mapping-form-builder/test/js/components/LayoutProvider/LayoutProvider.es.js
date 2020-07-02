@@ -280,6 +280,7 @@ describe('LayoutProvider', () => {
 				const {child, provider} = component.refs;
 				const mockEvent = {
 					sourceFieldName: 'date',
+					sourceFieldPage: 0,
 					targetIndexes: {
 						columnIndex: 1,
 						pageIndex: 0,
@@ -302,6 +303,7 @@ describe('LayoutProvider', () => {
 				const {child, provider} = component.refs;
 				const mockEvent = {
 					sourceFieldName: 'radio',
+					sourceFieldPage: 0,
 					targetIndexes: {
 						columnIndex: 0,
 						pageIndex: 0,

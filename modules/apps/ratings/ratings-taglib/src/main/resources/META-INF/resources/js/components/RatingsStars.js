@@ -31,7 +31,7 @@ const RatingsStars = ({
 	initialTotalEntries = 0,
 	inititalTitle,
 	numberOfStars,
-	portletNamespace,
+	randomNamespace,
 	sendVoteRequest,
 	type,
 	userScore,
@@ -279,7 +279,7 @@ const RatingsStars = ({
 			>
 				<div className="ratings-stacked-stars-vote-stars">
 					{starScores.reverse().map(({label, value}, index) => {
-						const id = `${portletNamespace}star${label}`;
+						const id = `${randomNamespace}star${label}`;
 						const srMessage =
 							index === 0
 								? Liferay.Language.get(
@@ -297,7 +297,7 @@ const RatingsStars = ({
 									className="sr-only"
 									disabled={disabled}
 									id={id}
-									name="rating"
+									name={`${randomNamespace}rating`}
 									onChange={() => {
 										handleOnClick(index);
 									}}
@@ -354,8 +354,8 @@ RatingsStars.propTypes = {
 	initialTotalEntries: PropTypes.number,
 	inititalTitle: PropTypes.string,
 	numberOfStars: PropTypes.number.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
 	positiveVotes: PropTypes.number,
+	randomNamespace: PropTypes.string.isRequired,
 	sendVoteRequest: PropTypes.func.isRequired,
 	userScore: PropTypes.number,
 };

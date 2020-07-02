@@ -113,7 +113,5 @@ Ratings.propTypes = {
 };
 
 export default function (props) {
-	return (
-		<Ratings {...props} portletNamespace={`_${props.portletNamespace}_`} />
-	);
+	return <Ratings {...props} />;
 }

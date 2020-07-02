@@ -14,6 +14,7 @@
 
 package com.liferay.ratings.taglib.servlet.taglib;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -192,6 +194,10 @@ public class RatingsTag extends IncludeTag {
 					"numberOfStars", getNumberOfStars()
 				).put(
 					"positiveVotes", positiveVotes
+				).put(
+					"randomNamespace",
+					PortalUtil.generateRandomKey(request, "taglib_ratings_") +
+						StringPool.UNDERLINE
 				).put(
 					"signedIn", themeDisplay.isSignedIn()
 				).put(

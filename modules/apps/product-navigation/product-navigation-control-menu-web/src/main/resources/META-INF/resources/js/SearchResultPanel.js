@@ -15,15 +15,15 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
-import {useDisplayGridContext} from './AddPanelContext';
+import {AddPanelContext} from './AddPanel';
 import TabItem from './TabItem';
 
 const CONTENT_TAB_ID = 'content';
 
-export default function SearchResultsPanel({alertTitle, filteredTabs}) {
-	const displayGrid = useDisplayGridContext();
+const SearchResultsPanel = ({alertTitle, filteredTabs}) => {
+	const {displayGrid} = useContext(AddPanelContext);
 
 	return filteredTabs.map((tab, index) =>
 		tab.collections.length ? (
@@ -56,8 +56,9 @@ export default function SearchResultsPanel({alertTitle, filteredTabs}) {
 			</ClayAlert>
 		)
 	);
-}
+};
 
 SearchResultsPanel.proptypes = {
+	alertTitle: PropTypes.string.isRequired,
 	filteredTabs: PropTypes.object.isRequired,
 };

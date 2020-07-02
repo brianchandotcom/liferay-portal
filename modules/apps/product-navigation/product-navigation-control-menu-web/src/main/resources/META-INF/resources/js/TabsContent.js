@@ -15,14 +15,9 @@
 import classNames from 'classnames';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import {normalizeContent} from './AddPanel';
-import {
-	useDisplayGridContext,
-	useGetContentsURLContext,
-	useNamespaceContext,
-} from './AddPanelContext';
+import {AddPanelContext, normalizeContent} from './AddPanel';
 import Collapse from './Collapse';
 import ContentOptions from './ContentOptions';
 import SearchForm from './SearchForm';
@@ -33,9 +28,9 @@ const CONTENT_TAB_ID = 'content';
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
 const TabsContent = ({tab}) => {
-	const getContentsURL = useGetContentsURLContext();
-	const namespace = useNamespaceContext();
-	const displayGrid = useDisplayGridContext();
+	const {displayGrid, getContentsURL, namespace} = useContext(
+		AddPanelContext
+	);
 
 	const [filteredContent, setFilteredContent] = useState(tab);
 	const [totalItems, setTotalItems] = useState(0);

@@ -14,9 +14,9 @@
 
 import ClayTabs from '@clayui/tabs';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
-import {usePortletNamespaceContext} from './AddPanelContext';
+import {AddPanelContext} from './AddPanel';
 import TabsContent from './TabsContent';
 
 let nextId = 0;
@@ -28,7 +28,7 @@ const useId = ({portletNamespace}) => {
 };
 
 export default function TabsPanel({tabs}) {
-	const portletNamespace = usePortletNamespaceContext();
+	const {portletNamespace} = useContext(AddPanelContext);
 
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId({portletNamespace});

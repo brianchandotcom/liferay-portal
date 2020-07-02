@@ -16,14 +16,13 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
-import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
 import {
-	usePlidContext,
-	useSetWidgetsContext,
-	useWidgetsContext,
-} from './AddPanelContext';
+	AddPanelContext,
+	LAYOUT_DATA_ITEM_TYPES,
+	updateUsedWidget,
+} from './AddPanel';
 import {addPortlet, useDragSymbol} from './useDragAndDrop';
 
 const addItem = ({item, plid, setWidgets, widgets}) => {
@@ -43,9 +42,7 @@ const addItem = ({item, plid, setWidgets, widgets}) => {
 	}
 };
 export default function TabItem({item}) {
-	const setWidgets = useSetWidgetsContext();
-	const widgets = useWidgetsContext();
-	const plid = usePlidContext();
+	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
 

@@ -24,12 +24,11 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
 import {
-	usePlidContext,
-	useSetWidgetsContext,
-	useWidgetsContext,
-} from './AddPanelContext';
+	AddPanelContext,
+	LAYOUT_DATA_ITEM_TYPES,
+	updateUsedWidget,
+} from './AddPanel';
 
 const DROP_OVER_CLASS = 'yui3-dd-drop-over';
 const POSITION = {
@@ -140,10 +139,7 @@ export function useDropTarget(targetItem) {
 
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [targetPosition, setTargetPosition] = useState(null);
-
-	const setWidgets = useSetWidgetsContext();
-	const widgets = useWidgetsContext();
-	const plid = usePlidContext();
+	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
 	useEffect(() => {
 		const handleWindowScroll = () => {

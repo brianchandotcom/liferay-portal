@@ -17,14 +17,9 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
-import {
-	useAddContentsURLsContext,
-	useDisplayGridContext,
-	usePortletNamespaceContext,
-	useSetDisplayGridContext,
-} from './AddPanelContext';
+import {AddPanelContext} from './AddPanel';
 
 const OPTIONS = [
 	{
@@ -43,10 +38,12 @@ const OPTIONS = [
 ];
 
 export default function ContentOptions({onChangeSelect}) {
-	const addContentsURLs = useAddContentsURLsContext();
-	const displayGrid = useDisplayGridContext();
-	const portletNamespace = usePortletNamespaceContext();
-	const setDisplayGrid = useSetDisplayGridContext();
+	const {
+		addContentsURLs,
+		displayGrid,
+		portletNamespace,
+		setDisplayGrid,
+	} = useContext(AddPanelContext);
 
 	const [active, setActive] = useState(false);
 

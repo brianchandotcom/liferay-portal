@@ -18,7 +18,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {AddPanelContextProvider} from './AddPanelContext';
 import DragAndDrop from './DragAndDrop';
 import DragPreview from './DragPreview';
 import TabsPanel from './TabsPanel';
@@ -27,6 +26,22 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	content: 'content',
 	widget: 'widget',
 };
+
+const INITIAL_STATE = {
+	addContentsURLs: null,
+	contents: null,
+	displayGrid: false,
+	getContentsURL: null,
+	namespace: null,
+	plid: null,
+	portletNamespace: null,
+	setDisplayGrid: () => null,
+	setWidgets: () => null,
+	widgets: null,
+};
+
+export const AddPanelContext = React.createContext(INITIAL_STATE);
+const AddPanelContextProvider = AddPanelContext.Provider;
 
 export const updateUsedWidget = ({item, used = true, widgets}) => {
 	return widgets.map((collection) => {

@@ -35,7 +35,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 />
 
 <clay:container-fluid
-	id='<%= renderResponse.getNamespace() + "selectAccountUser" %>'
+	id='<%= liferayPortletResponse.getNamespace() + "selectAccountUser" %>'
 >
 	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
 		<clay:alert

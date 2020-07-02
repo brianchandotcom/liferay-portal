@@ -38,7 +38,7 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 </liferay-util:buffer>
 
 <clay:sheet-section
-	id='<%= renderResponse.getNamespace() + "personAccountUserContainer" %>'
+	id='<%= liferayPortletResponse.getNamespace() + "personAccountUserContainer" %>'
 >
 	<clay:content-row
 		containerElement="h3"
@@ -117,7 +117,7 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-	<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectPersonAccountEntryUser" %>' />
+	<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectPersonAccountEntryUser" %>' />
 	<portlet:param name="navigation" value="all-users" />
 	<portlet:param name="singleSelect" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>

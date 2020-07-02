@@ -129,12 +129,12 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 		return (
 			<ClayLayout.ContainerFluid>
-				<ClayLayout.Row justify="start">
+				<ClayLayout.Row>
 					<ClayLayout.Col size={1}>
 						<span className="small">{yAxisName}:</span>
 					</ClayLayout.Col>
 					<ClayLayout.Col>
-						<ClayLayout.Row justify="start">
+						<ClayLayout.Row>
 							{payload.map((entry) => (
 								<ClayLayout.Col
 									className="c-mb-2"

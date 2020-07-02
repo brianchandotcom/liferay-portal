@@ -1,7 +1,7 @@
 dependencies {
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.2.12"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-simple", version: "3.2.12"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.2.14"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-simple", version: "3.2.14"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.2.14"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

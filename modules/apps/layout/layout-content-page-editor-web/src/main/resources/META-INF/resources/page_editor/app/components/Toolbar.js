@@ -253,6 +253,7 @@ function ToolbarBody() {
 						onClick={() => setOpenPreviewModal(true)}
 						small
 						symbol="view"
+						title={Liferay.Language.get('preview')}
 						type="button"
 					>
 						{Liferay.Language.get('preview')}

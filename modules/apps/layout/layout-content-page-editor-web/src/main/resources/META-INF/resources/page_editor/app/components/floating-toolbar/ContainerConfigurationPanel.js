@@ -81,7 +81,9 @@ export const ContainerConfigurationPanel = ({item}) => {
 
 	const Section = ({children, label}) => (
 		<>
-			<h2 className="border-bottom h5 mt-3 pb-1">{label}</h2>
+			<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
+				<p className="mb-3 text-uppercase">{label}</p>
+			</div>
 			{children}
 		</>
 	);

@@ -58,9 +58,14 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
+
+		// Tasks
 
 		Map<TaskProvider<ExecutePackageManagerTask>, File>
 			yarnCheckFormatTaskProviders = new HashMap<>();
@@ -151,6 +156,8 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			yarnInstallTaskProvider, yarnInstallTaskProviders.keySet());
 		_configureTaskYarnLockProvider(
 			yarnLockTaskProvider, yarnLockTaskProviders.keySet());
+
+		// Other
 
 		Gradle gradle = project.getGradle();
 

@@ -1,0 +1,46 @@
+definition {
+
+	macro assertFileNameFromTempFolder {
+		var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${webContentTitle}*.zip");
+
+		echo("## translationZipFileName: ${translationZipFileName}");
+
+		if (contains("${translationZipFileName}", "en_US")) {
+			echo("This is a exported translation file.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
+	macro exportTranslation {
+		AssertElementPresent(locator1 = "Language#EXPORT_TRANSLATION_ORIGIN_LANGUAGE");
+
+		AssertElementPresent(
+			key_checkboxName = "${defaultLanguage}",
+			locator1 = "Checkbox#DISABLED_EXPORT_TRANSLATION");
+
+		AssertElementPresent(locator1 = "Button#EXPORT_MODAL_DISABLED");
+
+		for (var languageList : list "${languageList}") {
+			Check.checkNotVisible(
+				checkboxName = "${languageList}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Click(locator1 = "Button#EXPORT_MODAL");
+
+		DownloadTempFile();
+	}
+
+	macro gotoExportTranslation {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click.waitForMenuToggleJSClick(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		MenuItem.click(menuItem = "Export for Translation");
+	}
+
+}

@@ -18,31 +18,56 @@ import {
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
+import {getDefaultFieldName} from '../../../util/fieldSupport.es';
+
 export const generateFieldName = (
 	pages,
 	desiredName,
 	currentName = null,
-	blacklist = []
+	blacklist = [],
+	generateFieldNameUsingFieldLabel
 ) => {
-	let counter = 0;
-	let fieldName = normalizeFieldName(desiredName);
+	let fieldName;
+	let existingField;
 
-	let existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+	if (generateFieldNameUsingFieldLabel) {
+		let counter = 0;
 
-	while (
-		(existingField && existingField.fieldName !== currentName) ||
-		blacklist.includes(fieldName)
-	) {
-		if (counter > 0) {
-			fieldName = normalizeFieldName(desiredName) + counter;
-		}
+		fieldName = normalizeFieldName(desiredName);
 
 		existingField = FormSupport.findFieldByFieldName(pages, fieldName);
 
-		counter++;
-	}
+		while (
+			(existingField && existingField.fieldName !== currentName) ||
+			blacklist.includes(fieldName)
+		) {
+			if (counter > 0) {
+				fieldName = normalizeFieldName(desiredName) + counter;
+			}
 
-	return normalizeFieldName(fieldName);
+			existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+
+			counter++;
+		}
+
+		return normalizeFieldName(fieldName);
+	}
+	else {
+		fieldName = desiredName;
+
+		existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+
+		while (
+			(existingField && existingField.fieldName !== currentName) ||
+			blacklist.includes(fieldName)
+		) {
+			fieldName = getDefaultFieldName();
+
+			existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+		}
+
+		return fieldName;
+	}
 };
 
 export const getFieldValue = (pages, fieldName) => {

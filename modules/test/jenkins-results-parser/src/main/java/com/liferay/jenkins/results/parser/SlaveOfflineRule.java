@@ -17,7 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -120,28 +122,44 @@ public class SlaveOfflineRule {
 	private SlaveOfflineRule(String configurations, String ruleName) {
 		name = ruleName;
 
-		for (String configuration : configurations.split("\n")) {
-			int x = configuration.indexOf("=");
+		Map<String, String> configurationsMap = _parseConfigurations(
+			configurations);
 
-			String name = configuration.substring(0, x);
+		consolePattern = Pattern.compile(configurationsMap.get("console"));
+		notificationRecipients = configurationsMap.get(
+			"notificationRecipients");
+	}
 
-			String value = configuration.substring(x + 1);
+	private Map<String, String> _parseConfigurations(String configurations) {
+		String[] configurationsArray = configurations.split("\\s*\n\\s*");
 
-			value = value.trim();
+		Map<String, String> configurationsMap = new HashMap<>(
+			configurationsArray.length);
 
-			if (value.isEmpty()) {
+		for (String configuration : configurationsArray) {
+			Matcher matcher = _configurationsPattern.matcher(configuration);
+
+			if (!matcher.matches()) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to parse configuration in slave offline ",
+						"rule \"", getName(), "\"\n", configuration));
+			}
+
+			String value = matcher.group(2);
+
+			if ((value == null) || value.isEmpty()) {
 				continue;
 			}
 
-			if (name.equals("console")) {
-				consolePattern = Pattern.compile(value);
-			}
-			else if (name.equals("notificationRecipients")) {
-				notificationRecipients = value;
-			}
+			configurationsMap.put(matcher.group(1), value);
 		}
+
+		return configurationsMap;
 	}
 
+	private static final Pattern _configurationsPattern = Pattern.compile(
+		"([^=]+)=(.*)");
 	private static List<SlaveOfflineRule> _slaveOfflineRules;
 
 }

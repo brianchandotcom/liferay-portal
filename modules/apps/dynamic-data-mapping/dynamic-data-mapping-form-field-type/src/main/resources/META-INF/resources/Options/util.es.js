@@ -12,6 +12,7 @@
  * details.
  */
 
+import {getDefaultFieldName} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
 export const random = (a) => {
@@ -105,9 +106,16 @@ export const dedupValue = (fields, value, id) => {
  * 1. If the current value is null, use the label
  * 2. If the current label is null, use the string Option
  */
-export const normalizeValue = (fields, currentField) => {
+export const normalizeValue = (
+	fields,
+	currentField,
+	generateOptionValueUsingOptionLabel
+) => {
 	const {label, value: prevValue} = currentField;
-	let value = prevValue ? prevValue : label;
+	const defaultValue = generateOptionValueUsingOptionLabel
+		? label
+		: getDefaultFieldName(true);
+	let value = prevValue ? prevValue : defaultValue;
 
 	if (!value) {
 		value = Liferay.Language.get('option');
@@ -118,7 +126,10 @@ export const normalizeValue = (fields, currentField) => {
 	return normalizeFieldName(value);
 };
 
-export const normalizeFields = (fields) => {
+export const normalizeFields = (
+	fields,
+	generateOptionValueUsingOptionLabel
+) => {
 	return fields.map((field, index) => {
 		if (fields.length - 1 === index) {
 			return field;
@@ -126,7 +137,11 @@ export const normalizeFields = (fields) => {
 
 		return {
 			...field,
-			value: normalizeValue(fields, field),
+			value: normalizeValue(
+				fields,
+				field,
+				generateOptionValueUsingOptionLabel
+			),
 		};
 	});
 };

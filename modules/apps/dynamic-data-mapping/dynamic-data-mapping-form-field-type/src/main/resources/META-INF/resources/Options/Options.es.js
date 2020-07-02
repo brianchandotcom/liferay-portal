@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {getDefaultFieldName} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -30,7 +31,18 @@ import {
 	random,
 } from './util.es';
 
-const defaultOption = {label: '', value: ''};
+const getDefaultOption = (generateOptionValueUsingOptionLabel) => {
+	let defaultOption = {label: '', value: ''};
+
+	if (!generateOptionValueUsingOptionLabel) {
+		defaultOption = {
+			...defaultOption,
+			value: getDefaultFieldName(true),
+		};
+	}
+
+	return defaultOption;
+};
 
 const Option = React.forwardRef(
 	({children, className, disabled, onClick, showCloseButton, style}, ref) => (
@@ -84,9 +96,9 @@ const refreshFields = (
 			...option,
 		})),
 		{
-			...defaultOption,
 			generateKeyword: generateOptionValueUsingOptionLabel,
 			id: random(),
+			...getDefaultOption(generateOptionValueUsingOptionLabel),
 		},
 	].filter((field) => field && Object.keys(field).length > 0);
 
@@ -229,9 +241,9 @@ const Options = ({
 		fields[index][property] = value;
 
 		fields.push({
-			...defaultOption,
 			generateKeyword: generateOptionValueUsingOptionLabel,
 			id: random(),
+			...getDefaultOption(generateOptionValueUsingOptionLabel),
 		});
 
 		return [fields, index, property, value];
@@ -248,7 +260,7 @@ const Options = ({
 	};
 
 	const normalize = (fields) => {
-		return [normalizeFields(fields)];
+		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
 
 	const handleDelete = (fields, index) => {

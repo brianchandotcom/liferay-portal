@@ -106,8 +106,12 @@ export const generateInstanceId = (length) => {
 	return generateId(length);
 };
 
-export const getDefaultFieldName = () => {
-	return Liferay.Language.get('field') + generateId(8, true);
+export const getDefaultFieldName = (isOptionField = false) => {
+	const defaultFieldName = isOptionField
+		? Liferay.Language.get('option')
+		: Liferay.Language.get('field');
+
+	return defaultFieldName + generateId(8, true);
 };
 
 export const getField = (pages, fieldName) => {

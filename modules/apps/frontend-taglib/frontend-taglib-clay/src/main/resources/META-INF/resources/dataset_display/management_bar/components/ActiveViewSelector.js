@@ -28,7 +28,7 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 			trigger={
 				<ClayButtonWithIcon
 					displayType="secondary"
-					symbol={views[activeView || 0].icon}
+					symbol={views[activeView || 0].thumbnail}
 				/>
 			}
 		>
@@ -42,7 +42,7 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 							setActiveView(i);
 						}}
 					>
-						<ClayIcon className="mr-3" symbol={view.icon} />
+						<ClayIcon className="mr-3" symbol={view.thumbnail} />
 						{view.label}
 					</ClayDropDown.Item>
 				))}
@@ -56,8 +56,8 @@ ActiveViewSelector.propTypes = {
 	setActiveView: PropTypes.func.isRequired,
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
-			icon: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
+			thumbnail: PropTypes.string.isRequired,
 		})
 	),
 };

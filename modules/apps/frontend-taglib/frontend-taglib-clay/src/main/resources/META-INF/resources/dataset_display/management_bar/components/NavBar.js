@@ -62,8 +62,8 @@ NavBar.propTypes = {
 	showSearch: PropTypes.bool,
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
-			icon: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
+			thumbnail: PropTypes.string.isRequired,
 		})
 	),
 };

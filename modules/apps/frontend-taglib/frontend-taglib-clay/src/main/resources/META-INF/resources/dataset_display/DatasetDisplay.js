@@ -527,9 +527,9 @@ DatasetDisplay.propTypes = {
 			component: PropTypes.any,
 			contentRenderer: PropTypes.string,
 			contentRendererModuleUrl: PropTypes.string,
-			icon: PropTypes.string,
 			label: PropTypes.string,
 			schema: PropTypes.object,
+			thumbnail: PropTypes.string,
 		})
 	).isRequired,
 };

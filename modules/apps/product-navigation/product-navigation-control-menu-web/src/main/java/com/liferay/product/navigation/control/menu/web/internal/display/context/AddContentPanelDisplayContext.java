@@ -35,12 +35,15 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -498,6 +502,35 @@ public class AddContentPanelDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, portletCategory.getName());
 	}
 
+	private List<Map<String, Object>> _getPortletItems(Portlet portlet) {
+		List<PortletItem> portletItems =
+			PortletItemLocalServiceUtil.getPortletItems(
+				_themeDisplay.getScopeGroupId(), portlet.getPortletId(),
+				PortletPreferences.class.getName());
+
+		if (ListUtil.isEmpty(portletItems)) {
+			return Collections.emptyList();
+		}
+
+		Stream<PortletItem> stream = portletItems.stream();
+
+		return stream.map(
+			portletItem -> HashMapBuilder.<String, Object>put(
+				"instanceable", portlet.isInstanceable()
+			).put(
+				"portletId", portlet.getPortletId()
+			).put(
+				"portletItemId", portletItem.getPortletItemId()
+			).put(
+				"title", HtmlUtil.escape(portletItem.getName())
+			).put(
+				"used", _isUsed(portlet)
+			).build()
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private List<HashMap<String, Object>> _getPortlets(
 		PortletCategory portletCategory) {
 
@@ -541,6 +574,8 @@ public class AddContentPanelDisplayContext {
 				"instanceable", portlet.isInstanceable()
 			).put(
 				"portletId", portlet.getPortletId()
+			).put(
+				"portletItems", _getPortletItems(portlet)
 			).put(
 				"title",
 				PortalUtil.getPortletTitle(

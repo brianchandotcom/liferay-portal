@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -54,7 +56,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -80,9 +81,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.ServletContext;
@@ -95,9 +93,13 @@ import javax.servlet.http.HttpSession;
 public class AddContentPanelDisplayContext {
 
 	public AddContentPanelDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_assetHelper = (AssetHelper)_httpServletRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
@@ -127,18 +129,15 @@ public class AddContentPanelDisplayContext {
 		).put(
 			"getContentsURL",
 			() -> {
-				RenderResponse renderResponse =
-					(RenderResponse)_httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-				ResourceURL resourceURL = renderResponse.createResourceURL();
+				ResourceURL resourceURL =
+					_liferayPortletResponse.createResourceURL();
 
 				resourceURL.setResourceID("/add_content_panel/get_contents");
 
 				return resourceURL.toString();
 			}
 		).put(
-			"namespace", _getNamespace()
+			"namespace", _liferayPortletResponse.getNamespace()
 		).put(
 			"plid", _themeDisplay.getPlid()
 		).put(
@@ -322,18 +321,9 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getAddContentsURLs() throws Exception {
-		PortletRequest portletRequest =
-			(PortletRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
 			_assetHelper.getAssetPublisherAddItemHolders(
-				PortalUtil.getLiferayPortletRequest(portletRequest),
-				PortalUtil.getLiferayPortletResponse(portletResponse),
+				_liferayPortletRequest, _liferayPortletResponse,
 				_themeDisplay.getScopeGroupId(), _getClassNameIds(),
 				new long[0], null, null, _getRedirectURL());
 
@@ -458,14 +448,6 @@ public class AddContentPanelDisplayContext {
 		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
-	}
-
-	private String _getNamespace() {
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		return portletResponse.getNamespace();
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -666,6 +648,8 @@ public class AddContentPanelDisplayContext {
 	private Boolean _hasLayoutUpdatePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

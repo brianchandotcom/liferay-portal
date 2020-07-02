@@ -21,7 +21,7 @@
 		<c:if test="<%= layout != null %>">
 
 			<%
-			AddContentPanelDisplayContext addContentPanelDisplayContext = new AddContentPanelDisplayContext(request);
+			AddContentPanelDisplayContext addContentPanelDisplayContext = new AddContentPanelDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 			%>
 
 			<c:if test="<%= addContentPanelDisplayContext.showAddPanel() %>">

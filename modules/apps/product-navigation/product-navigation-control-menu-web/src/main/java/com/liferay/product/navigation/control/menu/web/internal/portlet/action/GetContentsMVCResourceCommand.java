@@ -48,7 +48,9 @@ public class GetContentsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		AddContentPanelDisplayContext addContentPanelDisplayContext =
 			new AddContentPanelDisplayContext(
-				_portal.getHttpServletRequest(resourceRequest));
+				_portal.getHttpServletRequest(resourceRequest),
+				_portal.getLiferayPortletRequest(resourceRequest),
+				_portal.getLiferayPortletResponse(resourceResponse));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

@@ -22,8 +22,7 @@ CKEDITOR.on('dialogDefinition', (event) => {
 
 		var onShow = dialogDefinition.onShow;
 
-		dialogDefinition.onShow = function() {
-
+		dialogDefinition.onShow = function () {
 			if (typeof onShow === 'function') {
 				onShow.apply(this, arguments);
 			}
@@ -54,9 +53,9 @@ CKEDITOR.on('dialogDefinition', (event) => {
 					window.scrollY);
 
 			dialog.move(x, y, false);
-		}
+		};
 
-		AUI().use('aui-debounce', A => {
+		AUI().use('aui-debounce', (A) => {
 			boundingWindow.on(
 				'resize',
 				A.debounce(() => {
@@ -65,7 +64,7 @@ CKEDITOR.on('dialogDefinition', (event) => {
 			);
 		});
 
-		var clearEventHandler = function() {
+		var clearEventHandler = function () {
 			Liferay.detach('resize', boundingWindow);
 		};
 

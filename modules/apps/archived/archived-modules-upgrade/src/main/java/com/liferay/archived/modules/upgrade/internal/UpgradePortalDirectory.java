@@ -105,6 +105,10 @@ public class UpgradePortalDirectory extends UpgradeProcess {
 				"delete from ResourcePermission where name = " +
 					"'com_liferay_directory_web_portlet_MySitesDirectoryPortlet'");
 		}
+
+		runSQL(
+			"delete from Release_ where servletContextName = " +
+				"'com.liferay.directory.web'");
 	}
 
 }

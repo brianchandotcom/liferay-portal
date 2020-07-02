@@ -57,6 +57,10 @@ public class UpgradeDictionary extends UpgradeProcess {
 				"delete from ResourcePermission where name = " +
 					"'com_liferay_dictionary_web_portlet_DictionaryPortlet'");
 		}
+
+		runSQL(
+			"delete from Release_ where servletContextName = " +
+				"'com.liferay.dictionary.web'");
 	}
 
 }

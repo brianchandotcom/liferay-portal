@@ -74,10 +74,7 @@ const props = {
 			options: {option: 'option'},
 			type: 'date',
 		},
-	],
-	locale: {
-		language: 'en',
-	},
+	]
 };
 
 describe('CardList', () => {

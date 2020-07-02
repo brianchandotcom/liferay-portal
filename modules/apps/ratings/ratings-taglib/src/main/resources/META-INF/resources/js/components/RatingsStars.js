@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {Fragment, useCallback, useState} from 'react';
@@ -272,7 +273,9 @@ const RatingsStars = ({
 				<span className="sr-only">{getSrAverageMessage()}</span>
 			</div>
 
-			<div className="ratings-stacked-stars-vote">
+			<div
+				className={classNames({disabled}, 'ratings-stacked-stars-vote')}
+			>
 				{score !== 0 && (
 					<>
 						<label
@@ -310,6 +313,7 @@ const RatingsStars = ({
 							<input
 								checked={label === score}
 								className="sr-only"
+								disabled={disabled}
 								id={`star${label}`}
 								name="rating"
 								onChange={() => {

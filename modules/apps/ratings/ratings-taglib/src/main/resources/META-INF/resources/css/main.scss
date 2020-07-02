@@ -180,6 +180,10 @@
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: flex-end;
+
+		&.disabled {
+			cursor: not-allowed;
+		}
 	}
 
 	label {
@@ -226,6 +230,10 @@
 				display: none;
 			}
 		}
+	}
+
+	input:disabled ~ label {
+		pointer-events: none;
 	}
 
 	.ratings-stacked-stars-delete {

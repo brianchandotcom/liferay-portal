@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.SearchStreamUtil;
@@ -80,15 +81,17 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		Organization rootOrganization = OrganizationTestUtil.addOrganization();
+		Organization rootOrganization = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), false);
 
 		_organization = OrganizationTestUtil.addOrganization(
-			rootOrganization.getOrganizationId(), RandomTestUtil.randomString(),
-			false);
+			rootOrganization.getOrganizationId(),
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), false);
 
 		Organization suborganization = OrganizationTestUtil.addOrganization(
-			_organization.getOrganizationId(), RandomTestUtil.randomString(),
-			false);
+			_organization.getOrganizationId(),
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), false);
 
 		_organizations.add(suborganization);
 

@@ -19,6 +19,7 @@ import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import Breadcrumb from '../components/Breadcrumb.es';
 import {getSectionsQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
@@ -161,6 +162,7 @@ export default withRouter(
 						)}
 					</div>
 				</div>
+				<Breadcrumb />
 			</section>
 		);
 	}

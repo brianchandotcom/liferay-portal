@@ -3,7 +3,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "javax.xml.ws", version: "2.3.0.LIFERAY-PATCHED-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.2.12"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.2.14"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.2.12"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-simple", version: "3.2.12"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.2.12"

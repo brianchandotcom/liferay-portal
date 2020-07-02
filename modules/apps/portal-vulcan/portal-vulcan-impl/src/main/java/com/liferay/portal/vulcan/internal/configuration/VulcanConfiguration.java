@@ -41,4 +41,7 @@ public interface VulcanConfiguration {
 	@Meta.AD(deflt = "true", name = "rest-api", required = false)
 	public boolean restEnabled();
 
+	@Meta.AD(name = "excluded-operation-ids", required = false)
+	public String excludedOperationIds();
+
 }

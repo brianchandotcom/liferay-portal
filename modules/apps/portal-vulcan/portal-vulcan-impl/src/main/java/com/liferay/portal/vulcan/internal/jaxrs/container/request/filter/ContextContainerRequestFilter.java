@@ -22,14 +22,20 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
@@ -45,6 +52,8 @@ import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 
+import org.osgi.service.cm.Configuration;
+
 /**
  * @author Javier Gamarra
  */
@@ -52,6 +61,7 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
+		Map<String, Configuration> configurationMap,
 		GroupLocalService groupLocalService, Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -59,6 +69,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		VulcanBatchEngineImportTaskResource
 			vulcanBatchEngineImportTaskResource) {
 
+		_configurationMap = configurationMap;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
@@ -72,19 +83,64 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext) {
-		handleMessage(PhaseInterceptorChain.getCurrentMessage());
+		handleMessage(
+			containerRequestContext, PhaseInterceptorChain.getCurrentMessage());
 	}
 
-	public void handleMessage(Message message) throws Fault {
+	public void handleMessage(
+			ContainerRequestContext containerRequestContext, Message message)
+		throws Fault {
+
 		try {
-			_handleMessage(message);
+			_handleMessage(containerRequestContext, message);
 		}
 		catch (Exception exception) {
 			throw new Fault(exception);
 		}
 	}
 
-	private void _handleMessage(Message message) throws Exception {
+	private void _filterExcludedOperationIds(
+		ContainerRequestContext containerRequestContext, Object instance,
+		Message message) {
+
+		String path = StringUtil.removeSubstring(
+			(String)message.get(Message.BASE_PATH), "/o");
+
+		path = StringUtil.replaceLast(path, '/', "");
+
+		if (_configurationMap.containsKey(path)) {
+			Configuration configuration = _configurationMap.get(path);
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			String excludedOperationIds = (String)properties.get(
+				"excludedOperationIds");
+
+			List<String> excludedOperationIdsList = Arrays.asList(
+				excludedOperationIds.split(","));
+
+			Class<?> clazz = instance.getClass();
+
+			Method[] methods = clazz.getMethods();
+
+			for (Method method : methods) {
+				if (excludedOperationIdsList.contains(method.getName())) {
+					containerRequestContext.abortWith(
+						Response.status(
+							Response.Status.CONFLICT
+						).entity(
+							"Conflict."
+						).build());
+				}
+			}
+		}
+	}
+
+	private void _handleMessage(
+			ContainerRequestContext containerRequestContext, Message message)
+		throws Exception {
+
 		Object instance = ContextProviderUtil.getMatchedResource(message);
 
 		if (instance == null) {
@@ -93,6 +149,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
+
+		_filterExcludedOperationIds(containerRequestContext, instance, message);
 
 		Class<?> clazz = instance.getClass();
 
@@ -185,6 +243,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		}
 	}
 
+	private final Map<String, Configuration> _configurationMap;
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final Portal _portal;

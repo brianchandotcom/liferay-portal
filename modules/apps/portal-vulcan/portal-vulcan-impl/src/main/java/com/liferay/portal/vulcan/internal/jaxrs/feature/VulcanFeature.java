@@ -19,6 +19,8 @@ import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -29,6 +31,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
@@ -66,11 +69,17 @@ import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterce
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -132,7 +141,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new ContextContainerRequestFilter(
-				_groupLocalService, _language, _portal,
+				_getConfigurations(), _groupLocalService, _language, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _getScopeChecker(),
 				_vulcanBatchEngineImportTaskResource));
@@ -170,6 +179,32 @@ public class VulcanFeature implements Feature {
 		}
 	}
 
+	private Map<String, Configuration> _getConfigurations() {
+		Map<String, Configuration> map = new HashMap<>();
+
+		try {
+			String filterString = String.format(
+				"(service.factoryPid=%s)", VulcanConfiguration.class.getName());
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(filterString);
+
+			for (Configuration configuration : configurations) {
+				Dictionary<String, Object> properties =
+					configuration.getProperties();
+
+				map.put((String)properties.get("path"), configuration);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return map;
+	}
+
 	private Object _getScopeChecker() {
 		ServiceReference<?> serviceReference =
 			_bundleContext.getServiceReference(
@@ -182,7 +217,12 @@ public class VulcanFeature implements Feature {
 		return null;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(VulcanFeature.class);
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private DLValidator _dlValidator;

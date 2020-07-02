@@ -68,9 +68,7 @@ describe('List', () => {
 
 		const type = 'date';
 
-		const {getByText} = render(
-			<List {...props} data={data} type={type} />
-		);
+		const {getByText} = render(<List {...props} data={data} type={type} />);
 
 		expect(getByText('12/20/2020')).toBeTruthy();
 	});

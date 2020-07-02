@@ -80,6 +80,14 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel',
 	},
 
+	rowStyles: {
+		icon: 'format',
+		id: 'row_styles',
+		panelId: 'row_styles',
+		title: Liferay.Language.get('row-styles'),
+		type: 'panel',
+	},
+
 	saveFragmentComposition: {
 		icon: 'disk',
 		id: 'save_fragment_composition',

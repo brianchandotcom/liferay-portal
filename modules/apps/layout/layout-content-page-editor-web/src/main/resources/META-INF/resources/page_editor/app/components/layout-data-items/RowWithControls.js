@@ -24,6 +24,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import {config} from '../../config/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
@@ -39,7 +40,7 @@ import hasDropZoneChild from './hasDropZoneChild';
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const {config} = layoutData.items[item.itemId];
+		const {rowConfig} = layoutData.items[item.itemId];
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
@@ -71,7 +72,10 @@ const RowWithControls = React.forwardRef(
 		);
 		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
-		const rowConfig = getResponsiveConfig(config, selectedViewportSize);
+		const rowResponsiveConfig = getResponsiveConfig(
+			rowConfig,
+			selectedViewportSize
+		);
 
 		const [setRef, itemElement] = useSetRef(ref);
 
@@ -108,10 +112,13 @@ const RowWithControls = React.forwardRef(
 		}
 
 		if (selectCanUpdateItemConfiguration) {
+			if (config.responsiveEnabled) {
+				buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowStyles);
+			}
 			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
 		}
 
-		const {verticalAlignment} = rowConfig;
+		const {verticalAlignment} = rowResponsiveConfig;
 
 		return (
 			<Topper

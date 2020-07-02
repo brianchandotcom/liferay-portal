@@ -407,7 +407,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");

@@ -2231,7 +2231,7 @@ definition {
 
 	macro resetPassword {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-			if ((isSet(syntaxCheckingEnabled)) && ("${syntaxCheckingEnabled}" == "true")) {
+			if ("${syntaxCheckingEnabled}" == "true") {
 				Type(
 					locator1 = "TextInput#PASSWORD_1",
 					value1 = "${resetPassword}");
@@ -2241,7 +2241,7 @@ definition {
 					value1 = "${resetPassword}");
 			}
 			else {
-				if ((isSet(setupWizardEnabled)) && ("${setupWizardEnabled}" == "true")) {
+				if ("${setupWizardEnabled}" == "true") {
 					Type(
 						locator1 = "TextInput#PASSWORD_1",
 						value1 = "test2");

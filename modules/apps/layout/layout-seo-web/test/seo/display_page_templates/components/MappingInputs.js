@@ -96,7 +96,7 @@ describe('MappingInputs', () => {
 		it('has an image hidden input without value', () => {
 			expect(hiddenImageInput.type).toBe('hidden');
 			expect(hiddenImageInput.name).toBe(baseProps.inputs[1].name);
-			expect(hiddenImageInput.value).toBe('');
+			expect(hiddenImageInput.value).toBe('unmapped');
 		});
 	});
 });

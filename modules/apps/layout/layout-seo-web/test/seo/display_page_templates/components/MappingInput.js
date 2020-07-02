@@ -150,7 +150,7 @@ describe('MappingInput', () => {
 				});
 
 				it('sets the new field key in the hidden input', () => {
-					expect(inputValue.value).toBe('');
+					expect(inputValue.value).toBe('unmapped');
 				});
 
 				it('sets the new field name in the user feedback input', () => {
@@ -177,7 +177,7 @@ describe('MappingInput', () => {
 		it('has a hidden input with unmapped key', () => {
 			expect(inputValue.type).toBe('hidden');
 			expect(inputValue.name).toBe('testMappingInput');
-			expect(inputValue.value).toBe('');
+			expect(inputValue.value).toBe('unmapped');
 		});
 
 		it('has a read only input for user feedback with the selected field name', () => {
@@ -210,13 +210,13 @@ describe('MappingInput', () => {
 		});
 
 		it('has the first option unmapped', () => {
-			expect(options[0].value).toBe('');
-			expect(fieldSelect.value).toBe('');
+			expect(options[0].value).toBe('unmapped');
+			expect(fieldSelect.value).toBe('unmapped');
 		});
 
 		it('has the selected field unmapped', () => {
-			expect(options[0].value).toBe('');
-			expect(fieldSelect.value).toBe('');
+			expect(options[0].value).toBe('unmapped');
+			expect(fieldSelect.value).toBe('unmapped');
 		});
 
 		it('has the image field in the second position', () => {

@@ -308,6 +308,13 @@ $productMenuWidth: 320px;
 			background-color: #fff;
 			padding: 1.5rem;
 
+			.fieldset-title {
+				font-size: 0.875rem;
+				font-weight: 700;
+				margin: 1.5em 0;
+				text-transform: uppercase;
+			}
+
 			.form-control[readonly] {
 				background-color: #fff;
 			}

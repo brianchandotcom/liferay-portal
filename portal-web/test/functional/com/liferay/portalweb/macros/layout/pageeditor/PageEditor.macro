@@ -1290,13 +1290,15 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		Click(
+		Click.clickNoWaitForVisible(
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_DELETE");
 
-		AssertElementNotPresent(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		if (!(isSet(duplicateFragment))) {
+			AssertElementNotPresent(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		PageEditor.waitForAutoSave();
 	}

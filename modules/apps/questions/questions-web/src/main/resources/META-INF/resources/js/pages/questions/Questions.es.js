@@ -297,7 +297,7 @@ export default withRouter(
 			return (
 				<div className="d-flex flex-column flex-xl-row justify-content-between">
 					<div className="align-items-center d-flex flex-grow-1">
-						<Breadcrumb section={section} />
+						{/* <Breadcrumb section={section} /> */}
 
 						{section &&
 							section.actions &&

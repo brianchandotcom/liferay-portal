@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tooltip renders tooltip for MultiBar Chart 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-tooltip"
+  >
+    <div
+      class="header"
+    >
+      <div
+        class="title"
+      >
+        Row 1
+      </div>
+    </div>
+    <ul>
+      <li>
+        <svg
+          height="12"
+          width="12"
+        >
+          <rect
+            fill="#4b9bff"
+            height="12"
+            width="12"
+          />
+        </svg>
+        <div
+          id="tooltip-label"
+        >
+          Col 1: 1 entry 
+          <b>
+            (16.6%)
+          </b>
+        </div>
+      </li>
+      <li>
+        <svg
+          height="12"
+          width="12"
+        >
+          <rect
+            fill="#af78ff"
+            height="12"
+            width="12"
+          />
+        </svg>
+        <div
+          id="tooltip-label"
+        >
+          Col 2: 2 entries 
+          <b>
+            (33.3%)
+          </b>
+        </div>
+      </li>
+      <li>
+        <svg
+          height="12"
+          width="12"
+        >
+          <rect
+            fill="#50d2a0"
+            height="12"
+            width="12"
+          />
+        </svg>
+        <div
+          id="tooltip-label"
+        >
+          Col 3: 3 entries 
+          <b>
+            (50%)
+          </b>
+        </div>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Tooltip renders tooltip for Pie chart 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-tooltip"
+  >
+    <ul>
+      <li>
+        <svg
+          height="12"
+          width="12"
+        >
+          <rect
+            fill="#4b9bff"
+            height="12"
+            width="12"
+          />
+        </svg>
+        <div
+          id="tooltip-label"
+        >
+          Option 1: 1 entry 
+          <b>
+            (100%)
+          </b>
+        </div>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

@@ -416,6 +416,23 @@ public class AssetVocabularyLocalServiceImpl
 		return searchVocabularies(searchContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetVocabulary updateVocabulary(
+			long vocabularyId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings)
+		throws PortalException {
+
+		AssetVocabulary vocabulary =
+			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
+
+		vocabulary.setTitleMap(titleMap);
+		vocabulary.setDescriptionMap(descriptionMap);
+		vocabulary.setSettings(settings);
+
+		return assetVocabularyPersistence.update(vocabulary);
+	}
+
 	@Override
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, String title, Map<Locale, String> titleMap,

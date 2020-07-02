@@ -1895,7 +1895,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		BlogsSubscriptionSender subscriptionSender =
-			new BlogsSubscriptionSender(BlogsConstants.RESOURCE_NAME);
+			new BlogsSubscriptionSender();
 
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());

@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 public class BlogsSubscriptionSender
 	extends GroupSubscriptionCheckSubscriptionSender {
 
-	public BlogsSubscriptionSender(String resourceName) {
-		super(resourceName);
+	public BlogsSubscriptionSender() {
+		super(BlogsConstants.RESOURCE_NAME);
 	}
 
 	@Override

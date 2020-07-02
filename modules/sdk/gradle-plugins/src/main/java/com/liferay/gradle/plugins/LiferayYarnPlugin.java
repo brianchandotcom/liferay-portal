@@ -41,6 +41,7 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Peter Shin
@@ -61,11 +62,22 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
-		Task yarnInstallTask = _addTaskYarnInstall(project);
+		TaskProvider<Task> yarnCheckFormatTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, YARN_CHECK_FORMAT_TASK_NAME, Task.class);
+		TaskProvider<Task> yarnFormatTaskProvider = GradleUtil.addTaskProvider(
+			project, YARN_FORMAT_TASK_NAME, Task.class);
+		final TaskProvider<Task> yarnInstallTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, YARN_INSTALL_TASK_NAME, Task.class);
+		TaskProvider<Task> yarnLockTaskProvider = GradleUtil.addTaskProvider(
+			project, YARN_LOCK_TASK_NAME, Task.class);
 
-		_addTaskYarnCheckFormat(project);
-		_addTaskYarnFormat(project);
-		_addTaskYarnLock(project);
+		_configureTaskYarnCheckFormatProvider(
+			project, yarnCheckFormatTaskProvider);
+		_configureTaskYarnFormatProvider(project, yarnFormatTaskProvider);
+		_configureTaskYarnInstallProvider(project, yarnInstallTaskProvider);
+		_configureTaskYarnLockProvider(project, yarnLockTaskProvider);
 
 		Gradle gradle = project.getGradle();
 
@@ -79,7 +91,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 						@Override
 						public void execute(Project project) {
 							_configureTasksNpmInstall(
-								subproject, yarnInstallTask);
+								subproject, yarnInstallTaskProvider);
 						}
 
 					});
@@ -107,48 +119,55 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		return executePackageManagerTask;
 	}
 
-	private Task _addTaskYarnCheckFormat(Project project) {
-		Task task = project.task(YARN_CHECK_FORMAT_TASK_NAME);
+	private void _configureTaskYarnCheckFormatProvider(
+		final Project project, TaskProvider<Task> yarnCheckFormatTaskProvider) {
 
-		task.setDescription(
-			"Runs the Yarn \"" + _CHECK_FORMAT_SCRIPT_NAME + "\" script.");
-		task.setGroup("formatting");
-
-		task.doFirst(
+		yarnCheckFormatTaskProvider.configure(
 			new Action<Task>() {
 
 				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
+				public void execute(Task yarnCheckFormatTask) {
+					yarnCheckFormatTask.setDescription(
+						"Runs the Yarn \"" + _CHECK_FORMAT_SCRIPT_NAME +
+							"\" script.");
+					yarnCheckFormatTask.setGroup("formatting");
 
-					Logger logger = project.getLogger();
+					yarnCheckFormatTask.doFirst(
+						new Action<Task>() {
 
-					if (logger.isLifecycleEnabled()) {
-						StringBuilder sb = new StringBuilder();
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
 
-						sb.append("Running the Yarn \"");
-						sb.append(_CHECK_FORMAT_SCRIPT_NAME);
-						sb.append("\" script");
+								Logger logger = project.getLogger();
 
-						logger.lifecycle(sb.toString());
+								if (logger.isLifecycleEnabled()) {
+									StringBuilder sb = new StringBuilder();
+
+									sb.append("Running the Yarn \"");
+									sb.append(_CHECK_FORMAT_SCRIPT_NAME);
+									sb.append("\" script");
+
+									logger.lifecycle(sb.toString());
+								}
+							}
+
+						});
+
+					for (File yarnLockFile : _getYarnLockFiles(project)) {
+						File packageJsonFile = new File(
+							yarnLockFile.getParentFile(), "package.json");
+
+						if (_hasPackageJsonScript(
+								_CHECK_FORMAT_SCRIPT_NAME, packageJsonFile)) {
+
+							yarnCheckFormatTask.finalizedBy(
+								_addTaskYarnCheckFormat(yarnLockFile, project));
+						}
 					}
 				}
 
 			});
-
-		for (File yarnLockFile : _getYarnLockFiles(project)) {
-			File packageJsonFile = new File(
-				yarnLockFile.getParentFile(), "package.json");
-
-			if (_hasPackageJsonScript(
-					_CHECK_FORMAT_SCRIPT_NAME, packageJsonFile)) {
-
-				task.finalizedBy(
-					_addTaskYarnCheckFormat(yarnLockFile, project));
-			}
-		}
-
-		return task;
 	}
 
 	private ExecutePackageManagerTask _addTaskYarnFormat(
@@ -171,87 +190,107 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		return executePackageManagerTask;
 	}
 
-	private Task _addTaskYarnFormat(Project project) {
-		Task task = project.task(YARN_FORMAT_TASK_NAME);
+	private void _configureTaskYarnFormatProvider(
+		final Project project, TaskProvider<Task> yarnFormatTaskProvider) {
 
-		task.setDescription(
-			"Runs the Yarn \"" + _FORMAT_SCRIPT_NAME + "\" script.");
-		task.setGroup("formatting");
-
-		task.doFirst(
+		yarnFormatTaskProvider.configure(
 			new Action<Task>() {
 
 				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
+				public void execute(Task yarnFormatTask) {
+					yarnFormatTask.setDescription(
+						"Runs the Yarn \"" + _FORMAT_SCRIPT_NAME +
+							"\" script.");
+					yarnFormatTask.setGroup("formatting");
 
-					Logger logger = project.getLogger();
+					yarnFormatTask.doFirst(
+						new Action<Task>() {
 
-					if (logger.isLifecycleEnabled()) {
-						StringBuilder sb = new StringBuilder();
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
 
-						sb.append("Running the Yarn \"");
-						sb.append(_FORMAT_SCRIPT_NAME);
-						sb.append("\" script");
+								Logger logger = project.getLogger();
 
-						logger.lifecycle(sb.toString());
+								if (logger.isLifecycleEnabled()) {
+									StringBuilder sb = new StringBuilder();
+
+									sb.append("Running the Yarn \"");
+									sb.append(_FORMAT_SCRIPT_NAME);
+									sb.append("\" script");
+
+									logger.lifecycle(sb.toString());
+								}
+							}
+
+						});
+
+					for (File yarnLockFile : _getYarnLockFiles(project)) {
+						File packageJsonFile = new File(
+							yarnLockFile.getParentFile(), "package.json");
+
+						if (_hasPackageJsonScript(
+								_FORMAT_SCRIPT_NAME, packageJsonFile)) {
+
+							yarnFormatTask.finalizedBy(
+								_addTaskYarnFormat(yarnLockFile, project));
+						}
 					}
 				}
 
 			});
-
-		for (File yarnLockFile : _getYarnLockFiles(project)) {
-			File packageJsonFile = new File(
-				yarnLockFile.getParentFile(), "package.json");
-
-			if (_hasPackageJsonScript(
-					_FORMAT_SCRIPT_NAME, packageJsonFile)) {
-
-				task.finalizedBy(_addTaskYarnFormat(yarnLockFile, project));
-			}
-		}
-
-		return task;
 	}
 
-	private Task _addTaskYarnInstall(Project project) {
-		final Task task = project.task(YARN_INSTALL_TASK_NAME);
+	private void _configureTaskYarnInstallProvider(
+		final Project project, TaskProvider<Task> yarnInstallTaskProvider) {
 
-		task.setDescription("Installs the Node.js packages.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		task.doFirst(
+		yarnInstallTaskProvider.configure(
 			new Action<Task>() {
 
 				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
+				public void execute(Task yarnInstallTask) {
+					yarnInstallTask.setDescription(
+						"Installs the Node.js packages.");
+					yarnInstallTask.setGroup(BasePlugin.BUILD_GROUP);
 
-					Logger logger = project.getLogger();
+					yarnInstallTask.doFirst(
+						new Action<Task>() {
 
-					if (logger.isLifecycleEnabled()) {
-						logger.lifecycle("Installing the Node.js packages");
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
+
+								Logger logger = project.getLogger();
+
+								if (logger.isLifecycleEnabled()) {
+									logger.lifecycle(
+										"Installing the Node.js packages");
+								}
+							}
+
+						});
+
+					for (File yarnLockFile : _getYarnLockFiles(project)) {
+						yarnInstallTask.finalizedBy(
+							_addTaskYarnInstall(
+								yarnInstallTask, yarnLockFile, true));
 					}
 				}
 
 			});
-
-		for (File yarnLockFile : _getYarnLockFiles(project)) {
-			task.finalizedBy(_addTaskYarnInstall(task, yarnLockFile, true));
-		}
-
-		return task;
 	}
 
 	private YarnInstallTask _addTaskYarnInstall(
-		Task task, File yarnLockFile, boolean frozenLockFile) {
+		Task parentYarnInstallTask, File yarnLockFile,
+		boolean frozenLockFile) {
 
 		File workingDir = yarnLockFile.getParentFile();
 
 		String suffix = StringUtil.camelCase(workingDir.getName(), true);
 
 		YarnInstallTask yarnInstallTask = GradleUtil.addTask(
-			task.getProject(), task.getName() + suffix, YarnInstallTask.class);
+			parentYarnInstallTask.getProject(),
+			parentYarnInstallTask.getName() + suffix, YarnInstallTask.class);
 
 		yarnInstallTask.setDescription("Installs the Node.js packages.");
 		yarnInstallTask.setFrozenLockFile(frozenLockFile);
@@ -260,46 +299,57 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		return yarnInstallTask;
 	}
 
-	private Task _addTaskYarnLock(Project project) {
-		final Task task = project.task(YARN_LOCK_TASK_NAME);
+	private void _configureTaskYarnLockProvider(
+		final Project project, TaskProvider<Task> yarnLockTaskProvider) {
 
-		task.setDescription(
-			"Installs the Node.js packages and updates the yarn.lock file");
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		task.doFirst(
+		yarnLockTaskProvider.configure(
 			new Action<Task>() {
 
 				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
+				public void execute(Task yarnLockTask) {
+					yarnLockTask.setDescription(
+						"Installs the Node.js packages and updates the " +
+							"yarn.lock file");
+					yarnLockTask.setGroup(BasePlugin.BUILD_GROUP);
 
-					Logger logger = project.getLogger();
+					yarnLockTask.doFirst(
+						new Action<Task>() {
 
-					if (logger.isLifecycleEnabled()) {
-						logger.lifecycle("Updating the yarn.lock file");
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
+
+								Logger logger = project.getLogger();
+
+								if (logger.isLifecycleEnabled()) {
+									logger.lifecycle(
+										"Updating the yarn.lock file");
+								}
+							}
+
+						});
+
+					for (File yarnLockFile : _getYarnLockFiles(project)) {
+						yarnLockTask.finalizedBy(
+							_addTaskYarnInstall(
+								yarnLockTask, yarnLockFile, false));
 					}
 				}
 
 			});
-
-		for (File yarnLockFile : _getYarnLockFiles(project)) {
-			task.finalizedBy(_addTaskYarnInstall(task, yarnLockFile, false));
-		}
-
-		return task;
 	}
 
 	private void _configureTaskNpmInstall(
-		NpmInstallTask npmInstallTask, Task yarnInstallTask) {
+		NpmInstallTask npmInstallTask,
+		TaskProvider<Task> yarnInstallTaskProvider) {
 
 		if (!npmInstallTask.isUseNpm()) {
-			npmInstallTask.finalizedBy(yarnInstallTask);
+			npmInstallTask.finalizedBy(yarnInstallTaskProvider);
 		}
 	}
 
 	private void _configureTasksNpmInstall(
-		Project project, final Task yarnInstallTask) {
+		Project project, final TaskProvider<Task> yarnInstallTaskProvider) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -309,7 +359,8 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskNpmInstall(npmInstallTask, yarnInstallTask);
+					_configureTaskNpmInstall(
+						npmInstallTask, yarnInstallTaskProvider);
 				}
 
 			});

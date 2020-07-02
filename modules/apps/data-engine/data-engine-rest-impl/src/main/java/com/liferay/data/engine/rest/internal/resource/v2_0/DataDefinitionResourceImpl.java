@@ -890,8 +890,10 @@ public class DataDefinitionResourceImpl
 						dataLayoutRow.setDataLayoutColumns(
 							ArrayUtil.filter(
 								dataLayoutRow.getDataLayoutColumns(),
-								column -> !ArrayUtil.isEmpty(
-									column.getFieldNames())));
+								column ->
+									!(ArrayUtil.isEmpty(
+										column.getFieldNames()) &&
+									  (column.getColumnSize() == 12))));
 					});
 
 				dataLayoutPage.setDataLayoutRows(

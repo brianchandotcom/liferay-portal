@@ -277,13 +277,6 @@ public class DataRecordResourceImpl
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		_validate(
-			DataDefinitionUtil.toDataDefinition(
-				_dataDefinitionContentTypeTracker,
-				_ddmFormFieldTypeServicesTracker, ddmStructure,
-				_spiDDMFormRuleConverter),
-			dataRecord);
-
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
 
@@ -325,13 +318,6 @@ public class DataRecordResourceImpl
 		dataRecord.setId(dataRecordId);
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-		_validate(
-			DataDefinitionUtil.toDataDefinition(
-				_dataDefinitionContentTypeTracker,
-				_ddmFormFieldTypeServicesTracker, ddmStructure,
-				_spiDDMFormRuleConverter),
-			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
 			ddmStructure.getStorageType());
@@ -470,38 +456,6 @@ public class DataRecordResourceImpl
 				id = ddlRecord.getRecordId();
 			}
 		};
-	}
-
-	private void _validate(
-		DataDefinition dataDefinition, DataRecord dataRecord) {
-
-		// Field names
-
-		Set<String> dataDefinitionFieldNames = Stream.of(
-			dataDefinition.getDataDefinitionFields()
-		).map(
-			DataDefinitionField::getName
-		).collect(
-			Collectors.toSet()
-		);
-
-		Map<String, ?> dataRecordValues = dataRecord.getDataRecordValues();
-
-		Set<String> fieldNames = dataRecordValues.keySet();
-
-		Stream<String> fieldNamesStream = fieldNames.stream();
-
-		List<String> missingFieldNames = fieldNamesStream.filter(
-			fieldName -> !dataDefinitionFieldNames.contains(fieldName)
-		).collect(
-			Collectors.toList()
-		);
-
-		if (!missingFieldNames.isEmpty()) {
-			throw new ValidationException(
-				"Missing fields: " +
-					ArrayUtil.toStringArray(missingFieldNames));
-		}
 	}
 
 	@Reference

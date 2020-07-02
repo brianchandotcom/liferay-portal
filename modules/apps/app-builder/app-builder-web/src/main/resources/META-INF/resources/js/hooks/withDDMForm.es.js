@@ -41,35 +41,47 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 			const languageId = themeDisplay.getLanguageId();
 			const visitor = new PagesVisitor(ddmReactForm.get('pages'));
 
-			visitor.mapFields(
-				({fieldName, localizable, repeatable, value, visible}) => {
-					if (!visible) {
-						value = '';
+			const setDataRecord = ({
+				fieldName,
+				localizable,
+				repeatable,
+				value,
+				visible,
+			}) => {
+				if (!visible) {
+					value = '';
+				}
+
+				if (localizable) {
+					if (!dataRecord.dataRecordValues[fieldName]) {
+						dataRecord.dataRecordValues[fieldName] = {
+							[languageId]: [],
+						};
 					}
 
-					if (localizable) {
-						if (!dataRecord.dataRecordValues[fieldName]) {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: [],
-							};
-						}
-
-						if (repeatable) {
-							dataRecord.dataRecordValues[fieldName][
-								languageId
-							].push(value);
-						}
-						else {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: value,
-							};
-						}
+					if (repeatable) {
+						dataRecord.dataRecordValues[fieldName][languageId].push(
+							value
+						);
 					}
 					else {
-						dataRecord.dataRecordValues[fieldName] = value;
+						dataRecord.dataRecordValues[fieldName] = {
+							[languageId]: value,
+						};
 					}
 				}
-			);
+				else {
+					dataRecord.dataRecordValues[fieldName] = value;
+				}
+			};
+
+			visitor.mapFields(({nestedFields, ...field}) => {
+				if (Array.isArray(nestedFields)) {
+					return nestedFields.forEach(setDataRecord);
+				}
+
+				setDataRecord(field);
+			});
 
 			onSubmitCallback(dataRecord);
 		});

@@ -178,11 +178,15 @@
 
 	.ratings-stacked-stars-vote {
 		display: flex;
-		flex-direction: row-reverse;
-		justify-content: flex-end;
 
 		&.disabled {
 			cursor: not-allowed;
+		}
+
+		.ratings-stacked-stars-vote-stars {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
 		}
 	}
 
@@ -209,7 +213,7 @@
 		}
 	}
 
-	input:checked:not(.ratings-stacked-stars-delete-input) ~ label {
+	input:checked ~ label {
 		color: $primary;
 	}
 
@@ -217,7 +221,7 @@
 		color: $primary;
 	}
 
-	label:hover:not(.ratings-stacked-stars-delete) {
+	label:hover {
 		&,
 		& ~ label {
 			color: $primary;

@@ -276,76 +276,71 @@ const RatingsStars = ({
 			<div
 				className={classNames({disabled}, 'ratings-stacked-stars-vote')}
 			>
+				<div className="ratings-stacked-stars-vote-stars">
+					{starScores.reverse().map(({label, value}, index) => {
+						const srMessage =
+							index === 0
+								? Liferay.Language.get(
+										'rate-this-x-star-out-of-x'
+								  )
+								: Liferay.Language.get(
+										'rate-this-x-stars-out-of-x'
+								  );
+						const full = label <= score;
+
+						return (
+							<Fragment key={value}>
+								<input
+									checked={label === score}
+									className="sr-only"
+									disabled={disabled}
+									id={`star${label}`}
+									name="rating"
+									onChange={() => {
+										handleOnClick(index);
+									}}
+									type="radio"
+									value={value}
+								/>
+								<label
+									className={
+										full ? 'ratings-stars-star-full' : ''
+									}
+									htmlFor={`star${label}`}
+								>
+									<ClayIcon
+										className="ratings-stars-icon-full"
+										symbol={'star'}
+									/>
+									<ClayIcon
+										className="ratings-stars-icon-empty"
+										symbol={'star-o'}
+									/>
+									<span className="sr-only">
+										{Lang.sub(srMessage, [
+											label,
+											numberOfStars,
+										])}
+									</span>
+								</label>
+							</Fragment>
+						);
+					})}
+				</div>
+
 				{score !== 0 && (
-					<>
-						<label
-							className="lfr-portal-tooltip ratings-stacked-stars-delete"
-							htmlFor={`starDelete`}
-							title={Liferay.Language.get('delete')}
-						>
-							<ClayIcon symbol="times-circle" />
-						</label>
-						<input
-							className="ratings-stacked-stars-delete-input sr-only"
-							disabled={disabled}
-							id={`starDelete`}
-							name="rating"
-							onChange={() => {
-								handleOnClick();
-							}}
-							type="radio"
-							value={0}
-						/>
-					</>
+					<ClayButton
+						className="lfr-portal-tooltip ratings-stacked-stars-delete"
+						disabled={disabled}
+						displayType="unstyled"
+						onClick={() => {
+							handleOnClick();
+						}}
+						title={Liferay.Language.get('delete')}
+					>
+						<ClayIcon symbol="times-circle" />
+					</ClayButton>
 				)}
-
-				{starScores.reverse().map(({label, value}, index) => {
-					const srMessage =
-						index === 0
-							? Liferay.Language.get('rate-this-x-star-out-of-x')
-							: Liferay.Language.get(
-									'rate-this-x-stars-out-of-x'
-							  );
-					const full = label <= score;
-
-					return (
-						<Fragment key={value}>
-							<input
-								checked={label === score}
-								className="sr-only"
-								disabled={disabled}
-								id={`star${label}`}
-								name="rating"
-								onChange={() => {
-									handleOnClick(index);
-								}}
-								type="radio"
-								value={value}
-							/>
-							<label
-								className={
-									full ? 'ratings-stars-star-full' : ''
-								}
-								htmlFor={`star${label}`}
-							>
-								<ClayIcon
-									className="ratings-stars-icon-full"
-									symbol={'star'}
-								/>
-								<ClayIcon
-									className="ratings-stars-icon-empty"
-									symbol={'star-o'}
-								/>
-								<span className="sr-only">
-									{Lang.sub(srMessage, [
-										label,
-										numberOfStars,
-									])}
-								</span>
-							</label>
-						</Fragment>
-					);
-				})}
 			</div>
 		</fieldset>
 	);

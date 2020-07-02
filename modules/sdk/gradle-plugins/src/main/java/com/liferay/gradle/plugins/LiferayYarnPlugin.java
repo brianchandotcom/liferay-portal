@@ -25,6 +25,7 @@ import groovy.json.JsonSlurper;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -135,20 +136,17 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnLockFiles = _getYarnLockFiles(project);
+		for (File yarnLockFile : _getYarnLockFiles(project)) {
+			File packageJsonFile = new File(
+				yarnLockFile.getParentFile(), "package.json");
 
-		yarnLockFiles.forEach(
-			yarnLockFile -> {
-				File packageJsonFile = new File(
-					yarnLockFile.getParentFile(), "package.json");
+			if (_hasPackageJsonScript(
+					_CHECK_FORMAT_SCRIPT_NAME, packageJsonFile)) {
 
-				if (_hasPackageJsonScript(
-						_CHECK_FORMAT_SCRIPT_NAME, packageJsonFile)) {
-
-					task.finalizedBy(
-						_addTaskYarnCheckFormat(yarnLockFile, project));
-				}
-			});
+				task.finalizedBy(
+					_addTaskYarnCheckFormat(yarnLockFile, project));
+			}
+		}
 
 		return task;
 	}
@@ -202,19 +200,16 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnLockFiles = _getYarnLockFiles(project);
+		for (File yarnLockFile : _getYarnLockFiles(project)) {
+			File packageJsonFile = new File(
+				yarnLockFile.getParentFile(), "package.json");
 
-		yarnLockFiles.forEach(
-			yarnLockFile -> {
-				File packageJsonFile = new File(
-					yarnLockFile.getParentFile(), "package.json");
+			if (_hasPackageJsonScript(
+					_FORMAT_SCRIPT_NAME, packageJsonFile)) {
 
-				if (_hasPackageJsonScript(
-						_FORMAT_SCRIPT_NAME, packageJsonFile)) {
-
-					task.finalizedBy(_addTaskYarnFormat(yarnLockFile, project));
-				}
-			});
+				task.finalizedBy(_addTaskYarnFormat(yarnLockFile, project));
+			}
+		}
 
 		return task;
 	}
@@ -241,11 +236,9 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnLockFiles = _getYarnLockFiles(project);
-
-		yarnLockFiles.forEach(
-			yarnLockFile -> task.finalizedBy(
-				_addTaskYarnInstall(task, yarnLockFile, true)));
+		for (File yarnLockFile : _getYarnLockFiles(project)) {
+			task.finalizedBy(_addTaskYarnInstall(task, yarnLockFile, true));
+		}
 
 		return task;
 	}
@@ -290,11 +283,9 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 			});
 
-		FileTree yarnLockFiles = _getYarnLockFiles(project);
-
-		yarnLockFiles.forEach(
-			yarnLockFile -> task.finalizedBy(
-				_addTaskYarnInstall(task, yarnLockFile, false)));
+		for (File yarnLockFile : _getYarnLockFiles(project)) {
+			task.finalizedBy(_addTaskYarnInstall(task, yarnLockFile, false));
+		}
 
 		return task;
 	}
@@ -324,14 +315,16 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			});
 	}
 
-	private FileTree _getYarnLockFiles(Project project) {
+	private List<File> _getYarnLockFiles(Project project) {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", project.getProjectDir());
 		args.put("excludes", _excludes);
 		args.put("includes", _includes);
 
-		return project.fileTree(args);
+		FileTree yarnLockFileTree = project.fileTree(args);
+
+		return new ArrayList<>(yarnLockFileTree.getFiles());
 	}
 
 	@SuppressWarnings("unchecked")

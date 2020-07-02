@@ -28,6 +28,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(article.getTitle());
+
+JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTranslateDisplayContext(liferayPortletRequest);
 %>
 
 <aui:form cssClass="translate-article" name="translate_fm" onSubmit="event.preventDefault();">
@@ -122,31 +124,21 @@ renderResponse.setTitle(article.getTitle());
 			InfoItemFieldValues infoItemFieldValues = (InfoItemFieldValues)request.getAttribute(InfoItemFieldValues.class.getName());
 
 			for (InfoFieldSetEntry infoFieldSetEntry : infoForm.getInfoFieldSetEntries()) {
-				TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
+				List<InfoFieldValue<Object>> infoFieldValues = journalTranslateDisplayContext.getInfoFieldValues(infoFieldSetEntry, infoItemFieldValues);
 
-				List<InfoField> infoFields = null;
+				if (ListUtil.isEmpty(infoFieldValues)) {
+					continue;
+				}
 
-				if (infoFieldSetEntry instanceof InfoFieldSet) {
-					InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+				String infoFieldSetLabel = journalTranslateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
 
-					infoFields = infoFieldSet.getAllInfoFields();
-
-					List<InfoFieldValue<Object>> infoFieldValues = infoFields.stream().filter(translationInfoFieldChecker::isTranslatable).map(InfoField::getName).map(infoItemFieldValues::getInfoFieldValue).collect(Collectors.toList());
-
-					if (ListUtil.isEmpty(infoFieldValues)) {
-						continue;
-					}
+				if (Validator.isNotNull(infoFieldSetLabel)) {
 			%>
 
-					<%= infoFieldSet.getLabel(locale) %>
+					<%= infoFieldSetLabel %>
 
 				<%
 				}
-				else {
-					infoFields = Arrays.asList((InfoField)infoFieldSetEntry);
-				}
-
-				List<InfoFieldValue<Object>> infoFieldValues = infoFields.stream().filter(translationInfoFieldChecker::isTranslatable).map(InfoField::getName).map(infoItemFieldValues::getInfoFieldValue).collect(Collectors.toList());
 
 				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 					InfoField infoField = infoFieldValue.getInfoField();

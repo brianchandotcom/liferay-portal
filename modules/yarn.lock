@@ -3462,10 +3462,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.11.7:
-  version "2.11.7"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.7.tgz#55c95d9b27a9fd628b2557d7dda7a4ea4c827502"
-  integrity sha512-GG3b3RZpVWqFyWhbAY0eSFqeDvG1HTKflpmRRcsPxLtd40SbnxkZjX8qCWWo89mD5nLLbCpmwCurqBUXHzKlUA==
+alloyeditor@2.11.9:
+  version "2.11.9"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.9.tgz#b69ca73387865b7a20d0220311815fb05f3b1015"
+  integrity sha512-lq0P9wNTNainOwWo2AK4xwVTmTV9E1eKjeJ4IHdB8kRO/F5nlbDrH6GxeUnH3nXXYoGc9FlHjqBwgn4RKJXW1Q==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"
@@ -7270,7 +7270,7 @@ discontinuous-range@1.0.0:
   resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
   integrity sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=
 
-dnd-core@10.0.1, dnd-core@^10.0.1:
+dnd-core@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-10.0.1.tgz#151d95cd3a7fa47b210905c301364c0828203029"
   integrity sha512-PokpWzFSKbpmJSWbSIfVJtIsRdx3DP5e3//agNNzV8L1k9T4/IFKtgjjwKeLKmP9qMuTXdZZGSS40w+eZ8MmUg==

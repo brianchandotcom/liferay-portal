@@ -147,21 +147,14 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
-		boolean addModelPermissions = true;
-
 		if (!_matches(modelPermissions, name)) {
 			modelPermissions = ModelPermissionsFactory.create(name);
 
 			modelPermissions.addRolePermissions(
 				RoleConstants.OWNER, new String[0]);
 		}
-		else {
-			modelPermissions.setUsed(true);
-		}
 
-		// Unless model permissions are used insecurely we add Owner permissions
-
-		boolean addOwnerPermissions = true;
+		modelPermissions.setUsed(true);
 
 		// Individual Permissions
 
@@ -176,7 +169,6 @@ public class ResourcePermissionLocalServiceImpl
 
 			// Owner permissions
 
-			if (addOwnerPermissions) {
 				Role ownerRole = roleLocalService.getRole(
 					companyId, RoleConstants.OWNER);
 
@@ -191,9 +183,7 @@ public class ResourcePermissionLocalServiceImpl
 				setOwnerResourcePermissions(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primKey, ownerRole.getRoleId(), userId, ownerPermissions);
-			}
 
-			if (addModelPermissions) {
 				for (String roleName : modelPermissions.getRoleNames()) {
 					Role role = getRole(companyId, groupId, roleName);
 
@@ -202,7 +192,6 @@ public class ResourcePermissionLocalServiceImpl
 						primKey, role.getRoleId(),
 						modelPermissions.getActionIds(roleName));
 				}
-			}
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
@@ -1627,9 +1616,8 @@ public class ResourcePermissionLocalServiceImpl
 		if (!_matches(modelPermissions, name)) {
 			return;
 		}
-		else {
-			modelPermissions.setUsed(true);
-		}
+
+		modelPermissions.setUsed(true);
 
 		for (String roleName : modelPermissions.getRoleNames()) {
 			Role role = getRole(companyId, groupId, roleName);

@@ -49,6 +49,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>SIDEBAR_DELETE</td>
+    <td>//button[*[name()='svg'][contains(@class,'lexicon-icon-times')]]</td>
+    <td></td>
+</tr>
+<tr>
     <td>SIDEBAR_TITLE</td>
     <td>//div[contains(@class,'sidebar-content-open')]//div[contains(@class,'sidebar-header') and contains(.,'${key_sidebarTitle}')]</td>
     <td></td>

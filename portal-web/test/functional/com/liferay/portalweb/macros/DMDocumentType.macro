@@ -32,6 +32,8 @@ definition {
 
 			Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_BACK");
 
+			Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_DELETE");
+
 			var rowNum = ${rowNum} + 1;
 		}
 

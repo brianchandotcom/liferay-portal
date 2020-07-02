@@ -273,24 +273,28 @@ const RatingsStars = ({
 			</div>
 
 			<div className="ratings-stacked-stars-vote">
-				<label
-					className="lfr-portal-tooltip ratings-stacked-stars-delete"
-					htmlFor={`starDelete`}
-					title={Liferay.Language.get('delete')}
-				>
-					<ClayIcon symbol="times-circle" />
-				</label>
-				<input
-					checked={score === 0}
-					className="ratings-stacked-stars-delete-input sr-only"
-					id={`starDelete`}
-					name="rating"
-					onChange={() => {
-						handleOnClick();
-					}}
-					type="radio"
-					value={0}
-				/>
+				{score !== 0 && (
+					<>
+						<label
+							className="lfr-portal-tooltip ratings-stacked-stars-delete"
+							htmlFor={`starDelete`}
+							title={Liferay.Language.get('delete')}
+						>
+							<ClayIcon symbol="times-circle" />
+						</label>
+						<input
+							className="ratings-stacked-stars-delete-input sr-only"
+							disabled={disabled}
+							id={`starDelete`}
+							name="rating"
+							onChange={() => {
+								handleOnClick();
+							}}
+							type="radio"
+							value={0}
+						/>
+					</>
+				)}
 
 				{starScores.reverse().map(({label, value}, index) => {
 					const srMessage =

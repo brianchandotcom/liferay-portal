@@ -53,13 +53,15 @@ const RatingsStars = ({
 	);
 
 	const formatAverageScore = useCallback(
-		(averageScore) => (averageScore * numberOfStars).toFixed(1),
+		(averageScore) => Math.round((averageScore * numberOfStars).toFixed(1)),
 		[numberOfStars]
 	);
 
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [score, setScore] = useState(getLabelScore(userScore));
-	const [averageScore, setAverageScore] = useState(initialAverageScore);
+	const [averageScore, setAverageScore] = useState(
+		formatAverageScore(initialAverageScore)
+	);
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
@@ -92,13 +94,13 @@ const RatingsStars = ({
 						totalEntries !== undefined
 					) {
 						setTotalEntries(totalEntries);
-						setAverageScore(averageScore);
+						setAverageScore(formatAverageScore(averageScore));
 						setScore(getLabelScore(score));
 					}
 				}
 			);
 		},
-		[getLabelScore, isMounted, sendVoteRequest]
+		[formatAverageScore, getLabelScore, isMounted, sendVoteRequest]
 	);
 
 	const getTitle = useCallback(() => {
@@ -236,15 +238,15 @@ const RatingsStars = ({
 			<ClayLayout.ContentCol title={formatAverageScore(averageScore)}>
 				<span className="ratings-stars-average">
 					<span className="inline-item inline-item-before">
-						{starScores.map(({value}, index, arr) => {
+						{starScores.map(({label: score}, index, arr) => {
 							const previousScore =
-								arr[index - 1] && arr[index - 1].value;
+								arr[index - 1] && arr[index - 1].label;
 
-							if (averageScore >= value) {
+							if (averageScore >= score) {
 								return (
 									<ClayIcon
 										className="ratings-stars-average-icon"
-										key={value}
+										key={score}
 										symbol="star"
 									/>
 								);
@@ -253,7 +255,7 @@ const RatingsStars = ({
 								return (
 									<ClayIcon
 										className="ratings-stars-average-icon"
-										key={value}
+										key={score}
 										symbol="star-half"
 									/>
 								);
@@ -262,7 +264,7 @@ const RatingsStars = ({
 							return (
 								<ClayIcon
 									className="ratings-stars-average-icon"
-									key={value}
+									key={score}
 									symbol="star-o"
 								/>
 							);

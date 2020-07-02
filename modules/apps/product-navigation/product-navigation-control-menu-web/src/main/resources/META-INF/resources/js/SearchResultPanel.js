@@ -51,7 +51,11 @@ const SearchResultsPanel = ({alertTitle, filteredTabs}) => {
 					))}
 			</ul>
 		) : (
-			<ClayAlert displayType="info" title={Liferay.Language.get('info')}>
+			<ClayAlert
+				displayType="info"
+				key={index}
+				title={Liferay.Language.get('info')}
+			>
 				{alertTitle}
 			</ClayAlert>
 		)

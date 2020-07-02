@@ -176,7 +176,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 								public void execute(
 									NpmInstallTask npmInstallTask) {
 
-									_configureTaskNpmInstall(
+									_configureTaskNpmInstallAfterEvaluate(
 										npmInstallTask,
 										yarnInstallTaskProvider);
 								}
@@ -373,7 +373,7 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskNpmInstall(
+	private void _configureTaskNpmInstallAfterEvaluate(
 		NpmInstallTask npmInstallTask,
 		TaskProvider<Task> yarnInstallTaskProvider) {
 

@@ -26,8 +26,6 @@ import {
 } from './AddPanelContext';
 import {addPortlet, useDragSymbol} from './useDragAndDrop';
 
-import 'product-navigation-control-menu/css/TabItem.scss';
-
 const addItem = ({item, plid, setWidgets, widgets}) => {
 	const targetItem = document.querySelector('.portlet-dropzone');
 

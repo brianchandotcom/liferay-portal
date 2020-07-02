@@ -23,8 +23,6 @@ import DragAndDrop from './DragAndDrop';
 import DragPreview from './DragPreview';
 import TabsPanel from './TabsPanel';
 
-import 'product-navigation-control-menu/css/AddPanel.scss';
-
 export const LAYOUT_DATA_ITEM_TYPES = {
 	content: 'content',
 	widget: 'widget',

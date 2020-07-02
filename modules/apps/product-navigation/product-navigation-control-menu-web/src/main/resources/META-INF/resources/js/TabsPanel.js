@@ -19,8 +19,6 @@ import React, {useMemo, useState} from 'react';
 import {usePortletNamespaceContext} from './AddPanelContext';
 import TabsContent from './TabsContent';
 
-import 'product-navigation-control-menu/css/TabsPanel.scss';
-
 let nextId = 0;
 
 const useId = ({portletNamespace}) => {

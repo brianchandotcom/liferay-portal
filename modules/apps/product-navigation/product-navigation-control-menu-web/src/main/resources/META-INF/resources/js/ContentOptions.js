@@ -26,8 +26,6 @@ import {
 	useSetDisplayGridContext,
 } from './AddPanelContext';
 
-import 'product-navigation-control-menu/css/ContentOptions.scss';
-
 const OPTIONS = [
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-items'), 4),

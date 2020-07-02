@@ -32,10 +32,6 @@
 				.lexicon-icon {
 					fill: $secondary-l1;
 					margin-right: 0;
-
-					.rtl & {
-						margin-left: 0;
-					}
 				}
 			}
 
@@ -62,11 +58,6 @@
 			position: absolute;
 			right: 4px;
 			top: 0;
-
-			.rtl & {
-				left: 4px;
-				right: unset;
-			}
 		}
 	}
 
@@ -116,21 +107,12 @@
 		.lexicon-icon {
 			margin-right: 16px;
 			transform: translateY(1px);
-
-			.rtl & {
-				margin-left: 16px;
-				margin-right: 0;
-			}
 		}
 
 		.text {
 			flex: 0 1 100%;
 			overflow: hidden;
 			text-align: left;
-
-			.rtl & {
-				text-align: right;
-			}
 		}
 
 		.title {

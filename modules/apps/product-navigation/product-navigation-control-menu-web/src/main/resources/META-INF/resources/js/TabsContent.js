@@ -17,8 +17,6 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import 'product-navigation-control-menu/css/TabsPanel.scss';
-
 import {normalizeContent} from './AddPanel';
 import {
 	useDisplayGridContext,

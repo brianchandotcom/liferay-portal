@@ -17,8 +17,6 @@ import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
-import 'product-navigation-control-menu/css/DragPreview.scss';
-
 const getItemStyles = (currentOffset, ref, rtl) => {
 	if (!currentOffset || !ref.current) {
 		return {

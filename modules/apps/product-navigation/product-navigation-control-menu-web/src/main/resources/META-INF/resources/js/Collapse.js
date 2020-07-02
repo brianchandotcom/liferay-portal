@@ -17,8 +17,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import 'product-navigation-control-menu/css/Collapse.scss';
-
 export default function Collapse(props) {
 	const [open, setOpen] = useState(props.open);
 	const collapseIcon = open ? 'angle-down-small' : 'angle-right-small';

@@ -19,6 +19,9 @@
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<c:if test="<%= layout != null %>">
+			<liferay-util:html-top>
+				<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/product-navigation-control-menu-web/css/App.css") %>" rel="stylesheet" />
+			</liferay-util:html-top>
 
 			<%
 			AddContentPanelDisplayContext addContentPanelDisplayContext = new AddContentPanelDisplayContext(request, liferayPortletRequest, liferayPortletResponse);

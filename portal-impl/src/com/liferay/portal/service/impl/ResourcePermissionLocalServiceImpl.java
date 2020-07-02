@@ -149,6 +149,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
 			modelPermissions = ModelPermissionsFactory.create(name);
+
 			modelPermissions.addRolePermissions(
 				RoleConstants.OWNER, new String[0]);
 		}
@@ -1904,18 +1905,11 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	private boolean _checkModelPermissionsMatches(
-			ModelPermissions modelPermissions, String resourcePermissionName)
-		throws PortalException {
-
-		boolean addOwnerPermissions = false;
-		boolean addModelPermissions = false;
+		ModelPermissions modelPermissions, String resourcePermissionName) {
 
 		if ((modelPermissions == null) ||
 			ModelPermissions.RESOURCE_NAME_UNINITIALIZED.equals(
 				modelPermissions.getResourceName())) {
-
-			addOwnerPermissions = true;
-			addModelPermissions = false;
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -1923,14 +1917,14 @@ public class ResourcePermissionLocalServiceImpl
 						"Uninitialized model permissions used for " +
 							resourcePermissionName));
 			}
+
+			return false;
 		}
-		else if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
+
+		if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
 					modelPermissions.getResourceName())) {
 
 			if (!modelPermissions.isUsed()) {
-				addOwnerPermissions = true;
-				addModelPermissions = true;
-
 				modelPermissions.setUsed(true);
 
 				if (_log.isDebugEnabled()) {
@@ -1939,24 +1933,23 @@ public class ResourcePermissionLocalServiceImpl
 							"First model permissions used for " +
 								resourcePermissionName));
 				}
+
+				return true;
 			}
 			else {
-				addOwnerPermissions = false;
-				addModelPermissions = false;
-
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						new Exception(
 							"First model permissions already used for " +
 								resourcePermissionName));
 				}
+
+				return false;
 			}
 		}
-		else if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
-					modelPermissions.getResourceName())) {
 
-			addOwnerPermissions = true;
-			addModelPermissions = true;
+		if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
+					modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -1964,12 +1957,12 @@ public class ResourcePermissionLocalServiceImpl
 						"Model permissions for all resources used for " +
 							resourcePermissionName));
 			}
-		}
-		else if (resourcePermissionName.equals(
-					modelPermissions.getResourceName())) {
 
-			addOwnerPermissions = true;
-			addModelPermissions = true;
+			return true;
+		}
+
+		if (resourcePermissionName.equals(
+					modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -1977,22 +1970,20 @@ public class ResourcePermissionLocalServiceImpl
 						"Correct model permissions used for " +
 							resourcePermissionName));
 			}
-		}
-		else {
-			addOwnerPermissions = false;
-			addModelPermissions = false;
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					new Exception(
-						StringBundler.concat(
-							"Incorrect resource name ",
-							modelPermissions.getResourceName(), " used for ",
-							resourcePermissionName)));
-			}
+			return true;
 		}
 
-		return addModelPermissions;
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				new Exception(
+					StringBundler.concat(
+						"Incorrect resource name ",
+						modelPermissions.getResourceName(), " used for ",
+						resourcePermissionName)));
+		}
+
+		return false;
 	}
 
 	private Map<Long, ResourcePermission> _getResourcePermissionsMap(

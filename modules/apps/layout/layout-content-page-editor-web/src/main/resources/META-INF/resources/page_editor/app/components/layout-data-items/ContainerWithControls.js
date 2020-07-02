@@ -107,9 +107,7 @@ const ContainerWithControls = React.forwardRef(
 				);
 			}
 
-			buttons.push(
-				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
-			);
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerStyles);
 		}
 
 		return (

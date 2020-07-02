@@ -12,9 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -37,7 +35,7 @@ const MARGIN_AUTO_OPTION = {
 	value: 'auto',
 };
 
-export const ContainerConfigurationPanel = ({item}) => {
+export const ContainerStylesPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -46,16 +44,6 @@ export const ContainerConfigurationPanel = ({item}) => {
 	const horizontalMarginOptions = isHorizontalMarginDisabled
 		? [MARGIN_AUTO_OPTION]
 		: config.marginOptions;
-
-	const restoreConfig = () => {
-		dispatch(
-			updateItemConfig({
-				itemConfig: {},
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
 
 	const handleValueSelect = (name, value) => {
 		const config = {[name]: value};
@@ -92,7 +80,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 		<ClayForm>
 			<ClayForm.Group small>
 				<h1 className="sr-only">
-					{Liferay.Language.get('container-configuration')}
+					{Liferay.Language.get('container-styles')}
 				</h1>
 
 				{config.containerItemEnabled && (
@@ -518,26 +506,11 @@ export const ContainerConfigurationPanel = ({item}) => {
 					/>
 				</Section>
 			</ClayForm.Group>
-
-			<ClayForm.Group>
-				<ClayButton
-					borderless
-					className="w-100"
-					displayType="secondary"
-					onClick={restoreConfig}
-					small
-				>
-					<ClayIcon symbol="restore" />
-					<span className="ml-2">
-						{Liferay.Language.get('restore-values')}
-					</span>
-				</ClayButton>
-			</ClayForm.Group>
 		</ClayForm>
 	);
 };
 
-ContainerConfigurationPanel.propTypes = {
+ContainerStylesPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
 			backgroundImage: BackgroundImagePropTypes,

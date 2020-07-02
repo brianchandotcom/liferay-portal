@@ -24,19 +24,19 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel',
 	},
 
-	containerConfiguration: {
-		icon: 'cog',
-		id: 'container_configuration',
-		panelId: 'container_configuration',
-		title: Liferay.Language.get('container-configuration'),
-		type: 'panel',
-	},
-
 	containerLink: {
 		icon: 'link',
 		id: 'container_link',
 		panelId: 'container_link',
 		title: Liferay.Language.get('link'),
+		type: 'panel',
+	},
+
+	containerStyles: {
+		icon: 'format',
+		id: 'container_configuration',
+		panelId: 'container_configuration',
+		title: Liferay.Language.get('container-styles'),
 		type: 'panel',
 	},
 

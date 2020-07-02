@@ -17,7 +17,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
+import {ContainerStylesPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerStylesPanel';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import updateItemConfig from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 
@@ -27,7 +27,7 @@ const renderComponent = ({itemConfig = {}, dispatch = () => {}} = {}) =>
 			dispatch={dispatch}
 			getState={() => ({segmentsExperienceId: 0})}
 		>
-			<ContainerConfigurationPanel
+			<ContainerStylesPanel
 				item={{
 					children: [],
 					config: itemConfig,
@@ -56,7 +56,7 @@ jest.mock(
 	})
 );
 
-describe('ContainerConfiguration', () => {
+describe('ContainerStyles', () => {
 	afterEach(() => {
 		cleanup();
 		updateItemConfig.mockClear();

@@ -18,16 +18,16 @@ import {FragmentStylesPanel} from '../../../app/components/floating-toolbar/Frag
 import {ImagePropertiesPanel} from '../../../app/components/floating-toolbar/ImagePropertiesPanel';
 import {MappingPanel} from '../../../app/components/floating-toolbar/MappingPanel';
 import {RowConfigurationPanel} from '../../../app/components/floating-toolbar/RowConfigurationPanel';
-import {ContainerConfigurationPanel} from '../../components/floating-toolbar/ContainerConfigurationPanel';
 import ContainerLinkPanel from '../../components/floating-toolbar/ContainerLinkPanel';
+import {ContainerStylesPanel} from '../../components/floating-toolbar/ContainerStylesPanel';
 import EditableLinkPanel from '../../components/floating-toolbar/EditableLinkPanel';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from './editableFloatingToolbarButtons';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
 const {
 	collectionConfiguration,
-	containerConfiguration,
 	containerLink,
+	containerStyles,
 	fragmentConfiguration,
 	fragmentStyles,
 	rowConfiguration,
@@ -37,7 +37,7 @@ const {imageProperties, link, map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
 
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[collectionConfiguration.panelId]: CollectionConfigurationPanel,
-	[containerConfiguration.panelId]: ContainerConfigurationPanel,
+	[containerStyles.panelId]: ContainerStylesPanel,
 	[containerLink.panelId]: ContainerLinkPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
 	[fragmentStyles.panelId]: FragmentStylesPanel,

@@ -38,6 +38,38 @@ public class InfoItemFieldValues {
 		return new Builder();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoItemFieldValues(
+		InfoItemClassPKReference infoItemClassPKReference) {
+
+		this(builder().infoItemClassPKReference(infoItemClassPKReference));
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
+		_builder.add(infoFieldValue);
+
+		return this;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoItemFieldValues addAll(
+		List<InfoFieldValue<Object>> infoFieldValues) {
+
+		_builder.addAll(infoFieldValues);
+
+		return this;
+	}
+
 	public InfoFieldValue<Object> getInfoFieldValue(String fieldName) {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			_builder._infoFieldValuesByName.get(fieldName);
@@ -82,6 +114,16 @@ public class InfoItemFieldValues {
 		}
 
 		return map;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public void setInfoItemClassPKReference(
+		InfoItemClassPKReference infoItemClassPKReference) {
+
+		_builder.infoItemClassPKReference(infoItemClassPKReference);
 	}
 
 	@Override

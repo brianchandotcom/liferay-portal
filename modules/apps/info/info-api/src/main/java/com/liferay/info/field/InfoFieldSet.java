@@ -36,6 +36,42 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		return new Builder();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoFieldSet(
+		InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
+
+		this(
+			builder(
+			).labelInfoLocalizedValue(
+				labelInfoLocalizedValue
+			).name(
+				name
+			));
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoFieldSet add(InfoFieldSetEntry fieldSetEntry) {
+		_builder.add(fieldSetEntry);
+
+		return this;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public InfoFieldSet addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
+		_builder.addAll(fieldSetEntries);
+
+		return this;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -203,9 +203,12 @@
 		background-color: $product-menu-list-group-item-bg;
 		font-weight: 600;
 		overflow: hidden;
-		padding-left: 24px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+
+		@include media-breakpoint-up(sm) {
+			padding-left: 24px;
+		}
 
 		@include overflow-wrap(normal);
 
@@ -259,7 +262,11 @@
 	.list-group .list-group-item {
 		border-width: $product-menu-list-group-item-border-width;
 		color: $product-menu-nav-link-color;
-		padding: 8px 8px 8px 24px;
+		padding: 8px 8px 8px 16px;
+
+		@include media-breakpoint-up(sm) {
+			padding-left: 24px;
+		}
 	}
 
 	.collapse,

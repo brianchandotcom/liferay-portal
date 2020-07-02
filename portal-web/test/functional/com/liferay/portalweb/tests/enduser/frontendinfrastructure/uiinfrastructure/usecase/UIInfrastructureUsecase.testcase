@@ -133,6 +133,7 @@ definition {
 	test RightToLeftSmoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RightToLeftSmoke";
+		property testray.component.names = "WYSIWYG";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

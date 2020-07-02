@@ -38,7 +38,9 @@ export default ({data, field, totalEntries, type}) => {
 						<li key={index}>
 							{type == 'color' ? (
 								<Color hexColor={field} />
-							) : type == 'date' ? formatDate(field) : (
+							) : type == 'date' ? (
+								formatDate(field)
+							) : (
 								field
 							)}
 						</li>

@@ -28,7 +28,7 @@ const props = {
 		},
 		{label: 'Field 2', name: 'field2', type: 'radio'},
 		{label: 'Field 3', name: 'field3', type: 'radio'},
-	]
+	],
 };
 
 describe('index', () => {

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 public class BlogsSubscriptionSender
 	extends GroupSubscriptionCheckSubscriptionSender {

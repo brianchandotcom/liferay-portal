@@ -78,7 +78,7 @@
 			"children": [
 			],
 			"config": {
-				"fragmentEntryLinkId": "column-1:com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+				"fragmentEntryLinkId": "column-1:${TEST_PORTLET_NAME_2}"
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0",
 			"parentId": "ROOT-CONTAINER0-ROW0-COLUMN0",

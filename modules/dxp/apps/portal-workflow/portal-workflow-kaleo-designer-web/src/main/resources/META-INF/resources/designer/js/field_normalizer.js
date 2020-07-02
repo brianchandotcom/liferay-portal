@@ -133,10 +133,6 @@ AUI.add(
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
 						if (isValue(item2)) {
-							if (index2 === 'script') {
-								item2 = Lang.trim(item2);
-							}
-
 							_put(actions, index2, item2, index1);
 						}
 					});

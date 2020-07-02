@@ -138,6 +138,35 @@ public class PageSectionDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@Schema
+	@Valid
+	public FragmentLink getLink() {
+		return link;
+	}
+
+	public void setLink(FragmentLink link) {
+		this.link = link;
+	}
+
+	@JsonIgnore
+	public void setLink(
+		UnsafeSupplier<FragmentLink, Exception> linkUnsafeSupplier) {
+
+		try {
+			link = linkUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentLink link;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -198,6 +227,16 @@ public class PageSectionDefinition {
 			sb.append("\"layout\": ");
 
 			sb.append(String.valueOf(layout));
+		}
+
+		if (link != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"link\": ");
+
+			sb.append(String.valueOf(link));
 		}
 
 		sb.append("}");

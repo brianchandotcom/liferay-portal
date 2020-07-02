@@ -96,6 +96,27 @@ public class PageSectionDefinition implements Cloneable {
 
 	protected Layout layout;
 
+	public FragmentLink getLink() {
+		return link;
+	}
+
+	public void setLink(FragmentLink link) {
+		this.link = link;
+	}
+
+	public void setLink(
+		UnsafeSupplier<FragmentLink, Exception> linkUnsafeSupplier) {
+
+		try {
+			link = linkUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentLink link;
+
 	@Override
 	public PageSectionDefinition clone() throws CloneNotSupportedException {
 		return (PageSectionDefinition)super.clone();

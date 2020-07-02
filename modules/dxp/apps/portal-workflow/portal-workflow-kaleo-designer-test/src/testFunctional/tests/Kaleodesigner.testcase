@@ -540,8 +540,6 @@ definition {
 			line = "29");
 	}
 
-	// Quarantine flaky test from investigation LRQA-59507
-
 	@priority = "5"
 	test DeleteConnectors {
 		property portal.acceptance = "true";
@@ -1283,6 +1281,8 @@ definition {
 			kdSourceXML = " ",
 			line = "14");
 
+		takeScreenshot();
+
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "EndNode");
@@ -1290,6 +1290,8 @@ definition {
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = '''</transitions>''',
 			line = "14");
+
+		takeScreenshot();
 
 		KaleoDesigner.viewViewTab();
 

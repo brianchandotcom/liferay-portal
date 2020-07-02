@@ -40,7 +40,12 @@ export default ({data, field, summary, totalEntries, type}) => {
 						<ClayButton
 							displayType="link"
 							onClick={() =>
-								toggleSidebar(field, summary, totalEntries, type)
+								toggleSidebar(
+									field,
+									summary,
+									totalEntries,
+									type
+								)
 							}
 						>
 							{Liferay.Language.get('see-all-entries')}

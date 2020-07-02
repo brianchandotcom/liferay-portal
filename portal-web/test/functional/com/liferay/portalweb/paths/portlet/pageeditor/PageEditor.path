@@ -429,12 +429,12 @@
 </tr>
 <tr>
 	<td>CONTAINER_CONFIGURATION_MARGIN_LEFT</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'ml-${key_marginLeft}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')][contains(@class,'ml-${key_marginLeft}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTAINER_CONFIGURATION_MARGIN_RIGHT</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'mr-${key_marginRight}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')][contains(@class,'mr-${key_marginRight}')]</td>
 	<td></td>
 </tr>
 <tr>

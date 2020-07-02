@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
@@ -69,6 +70,7 @@ public class PortletLayoutDisplayContext {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoItemServiceTracker infoItemServiceTracker,
 		InfoListRendererTracker infoListRendererTracker,
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
@@ -76,6 +78,7 @@ public class PortletLayoutDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_infoListRendererTracker = infoListRendererTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
@@ -489,6 +492,7 @@ public class PortletLayoutDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final InfoListRendererTracker _infoListRendererTracker;
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private LayoutStructure _layoutStructure;

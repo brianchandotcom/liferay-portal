@@ -13,17 +13,19 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page");
 
-		SitePages.addPublicPage(
-			pageName = "Announcements Page",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		Portlet.addPG(portletName = "Announcements");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page",
+			widgetName = "Announcements");
 	}
 
 	tearDown {
@@ -157,13 +159,12 @@ definition {
 	@priority = "3"
 	test ViewAnnouncementsPagination {
 		for (var entryCount : list "1,2,3,4,5,6,7") {
-			Navigator.gotoPage(pageName = "Announcements Page");
-
-			AnnouncementsEntry.addPG(
-				distributionScope = "General",
-				entryContent = "Announcements Entry Content ${entryCount}",
-				entryTitle = "Announcements Entry Title ${entryCount}",
-				entryURL = "http://www.liferay.com");
+			JSONAnnouncement.addAnnouncement(
+				announcementContent = "Announcements Entry Content ${entryCount}",
+				announcementTitle = "Announcements Entry Title ${entryCount}",
+				announcementURL = "http://www.liferay.com",
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
 		}
 
 		Navigator.gotoPage(pageName = "Announcements Page");

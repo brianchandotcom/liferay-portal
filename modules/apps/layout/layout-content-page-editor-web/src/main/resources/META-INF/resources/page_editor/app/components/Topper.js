@@ -96,8 +96,6 @@ function Topper({children, className, item, itemElement, layoutData}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
-	const activeItemId = useActiveItemId();
-	const hoveredItemId = useHoveredItemId();
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isActive = useIsActive();
@@ -135,27 +133,6 @@ function Topper({children, className, item, itemElement, layoutData}) {
 
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
-
-	const fragmentShouldBeHovered = () => {
-		const [activeItemfragmentEntryLinkId] = activeItemId
-			? activeItemId.split('-')
-			: '';
-		const [hoveredItemfragmentEntryLinkId] = hoveredItemId
-			? hoveredItemId.split('-')
-			: '';
-
-		const childIsActive =
-			Number(activeItemfragmentEntryLinkId) ===
-			item.config.fragmentEntryLinkId;
-		const childIsHovered =
-			Number(hoveredItemfragmentEntryLinkId) ===
-			item.config.fragmentEntryLinkId;
-
-		return (
-			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-			(isHovered(item.itemId) || (childIsActive && childIsHovered))
-		);
-	};
 
 	useEffect(() => {
 		const handleWindowScroll = () => {
@@ -209,7 +186,7 @@ function Topper({children, className, item, itemElement, layoutData}) {
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
 				dragged: isDraggingSource,
-				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
+				hovered: isHovered(item.itemId),
 				'not-droppable': !!notDroppableMessage,
 				'page-editor__topper--mapped': itemIsMappedCollection(item),
 			})}

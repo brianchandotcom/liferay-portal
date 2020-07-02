@@ -115,28 +115,7 @@ public class SlaveOfflineRule {
 		return sb.toString();
 	}
 
-	protected Pattern consolePattern;
-	protected String name;
-	protected String notificationRecipients;
-
-	private SlaveOfflineRule(String configurations, String ruleName) {
-		name = ruleName;
-
-		Map<String, String> configurationsMap = _parseConfigurations(
-			configurations);
-
-		_validateRequiredConfigurationParameter(configurationsMap, "console");
-
-		consolePattern = Pattern.compile(configurationsMap.get("console"));
-
-		_validateRequiredConfigurationParameter(
-			configurationsMap, "notificationRecipients");
-
-		notificationRecipients = configurationsMap.get(
-			"notificationRecipients");
-	}
-
-	private Map<String, String> _parseConfigurations(String configurations) {
+	protected Map<String, String> parseConfigurations(String configurations) {
 		String[] configurationsArray = configurations.split("\\s*\n\\s*");
 
 		Map<String, String> configurationsMap = new HashMap<>(
@@ -164,7 +143,7 @@ public class SlaveOfflineRule {
 		return configurationsMap;
 	}
 
-	private void _validateRequiredConfigurationParameter(
+	protected void validateRequiredConfigurationParameter(
 		Map<String, String> configurationsMap, String parameterName) {
 
 		if (!configurationsMap.containsKey(parameterName)) {
@@ -173,6 +152,27 @@ public class SlaveOfflineRule {
 					"Unable to detect required configuration \"", parameterName,
 					" in slave offline rule \"", getName(), "\""));
 		}
+	}
+
+	protected Pattern consolePattern;
+	protected String name;
+	protected String notificationRecipients;
+
+	private SlaveOfflineRule(String configurations, String ruleName) {
+		name = ruleName;
+
+		Map<String, String> configurationsMap = parseConfigurations(
+			configurations);
+
+		validateRequiredConfigurationParameter(configurationsMap, "console");
+
+		consolePattern = Pattern.compile(configurationsMap.get("console"));
+
+		validateRequiredConfigurationParameter(
+			configurationsMap, "notificationRecipients");
+
+		notificationRecipients = configurationsMap.get(
+			"notificationRecipients");
 	}
 
 	private static final Pattern _configurationsPattern = Pattern.compile(

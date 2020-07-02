@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-export default function Collapse(props) {
+const Collapse = (props) => {
 	const [open, setOpen] = useState(props.open);
 	const collapseIcon = open ? 'angle-down-small' : 'angle-right-small';
 	const collapseIconClassName = open ? 'open' : 'closed';
@@ -55,9 +55,11 @@ export default function Collapse(props) {
 			{open && props.children}
 		</div>
 	);
-}
+};
 
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
 	open: PropTypes.bool,
 };
+
+export default Collapse;

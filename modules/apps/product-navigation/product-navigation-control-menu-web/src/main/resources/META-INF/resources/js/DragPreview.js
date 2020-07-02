@@ -17,28 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
-const getItemStyles = (currentOffset, ref, rtl) => {
-	if (!currentOffset || !ref.current) {
-		return {
-			display: 'none',
-		};
-	}
-
-	const rect = ref.current.getBoundingClientRect();
-	const x = rtl
-		? currentOffset.x + rect.width * 0.5 - window.innerWidth
-		: currentOffset.x - rect.width * 0.5;
-	const y = currentOffset.y - rect.height * 0.5;
-
-	const transform = `translate(${x}px, ${y}px)`;
-
-	return {
-		WebkitTransform: transform,
-		transform,
-	};
-};
-
-export default function DragPreview({rtl}) {
+const DragPreview = ({rtl}) => {
 	const ref = useRef();
 
 	const {currentOffset, isDragging, item} = useDragLayer((monitor) => ({
@@ -67,8 +46,31 @@ export default function DragPreview({rtl}) {
 			</div>
 		</div>
 	);
-}
+};
+
+const getItemStyles = (currentOffset, ref, rtl) => {
+	if (!currentOffset || !ref.current) {
+		return {
+			display: 'none',
+		};
+	}
+
+	const rect = ref.current.getBoundingClientRect();
+	const x = rtl
+		? currentOffset.x + rect.width * 0.5 - window.innerWidth
+		: currentOffset.x - rect.width * 0.5;
+	const y = currentOffset.y - rect.height * 0.5;
+
+	const transform = `translate(${x}px, ${y}px)`;
+
+	return {
+		WebkitTransform: transform,
+		transform,
+	};
+};
 
 DragPreview.propTypes = {
 	rtl: PropTypes.bool,
 };
+
+export default DragPreview;

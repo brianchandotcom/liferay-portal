@@ -62,3 +62,5 @@ SearchResultsPanel.proptypes = {
 	alertTitle: PropTypes.string.isRequired,
 	filteredTabs: PropTypes.object.isRequired,
 };
+
+export default SearchResultsPanel;

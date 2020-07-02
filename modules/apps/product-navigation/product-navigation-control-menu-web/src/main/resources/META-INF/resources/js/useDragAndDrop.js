@@ -48,7 +48,7 @@ const initialDragDrop = {
 const DragAndDropContext = React.createContext(initialDragDrop);
 export const DragAndDropProvider = DragAndDropContext.Provider;
 
-export function useDragItem(sourceItem) {
+export const useDragItem = (sourceItem) => {
 	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
 	const sourceRef = useRef(null);
 
@@ -77,9 +77,9 @@ export function useDragItem(sourceItem) {
 		isDraggingSource,
 		sourceRef,
 	};
-}
+};
 
-export function useDragSymbol({data, icon, label, portletId, type}) {
+export const useDragSymbol = ({data, icon, label, portletId, type}) => {
 	const sourceItem = useMemo(
 		() => ({
 			data,
@@ -103,9 +103,9 @@ export function useDragSymbol({data, icon, label, portletId, type}) {
 		isDraggingSource,
 		sourceRef: symbolRef,
 	};
-}
+};
 
-export function useDropClear(targetItem) {
+export const useDropClear = (targetItem) => {
 	const {dropTargetColumn, setDropTargetColumn} = useContext(
 		DragAndDropContext
 	);
@@ -126,9 +126,9 @@ export function useDropClear(targetItem) {
 	});
 
 	setDropClearRef(targetItem);
-}
+};
 
-export function useDropTarget(targetItem) {
+export const useDropTarget = (targetItem) => {
 	const {
 		dropTargetColumn,
 		dropTargetItem,
@@ -221,7 +221,7 @@ export function useDropTarget(targetItem) {
 	});
 
 	setDropTargetRef(targetItem);
-}
+};
 
 const addLoadingAnimation = (targetItem, targetPosition) => {
 	const itemIsDropzone = targetItem.classList.contains('portlet-dropzone');

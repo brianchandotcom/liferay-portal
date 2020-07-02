@@ -37,7 +37,7 @@ const OPTIONS = [
 	},
 ];
 
-export default function ContentOptions({onChangeSelect}) {
+const ContentOptions = ({onChangeSelect}) => {
 	const {
 		addContentsURLs,
 		displayGrid,
@@ -105,8 +105,10 @@ export default function ContentOptions({onChangeSelect}) {
 			</ClayDropDown>
 		</div>
 	);
-}
+};
 
 ContentOptions.propTypes = {
 	onChangeSelect: PropTypes.func,
 };
+
+export default ContentOptions;

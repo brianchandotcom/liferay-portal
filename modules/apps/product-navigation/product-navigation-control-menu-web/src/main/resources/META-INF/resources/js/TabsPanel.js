@@ -27,7 +27,7 @@ const useId = ({portletNamespace}) => {
 	]);
 };
 
-export default function TabsPanel({tabs}) {
+const TabsPanel = ({tabs}) => {
 	const {portletNamespace} = useContext(AddPanelContext);
 
 	const [activeTabId, setActiveTabId] = useState(0);
@@ -70,7 +70,7 @@ export default function TabsPanel({tabs}) {
 			</ClayTabs.Content>
 		</>
 	);
-}
+};
 
 TabsPanel.propTypes = {
 	tabs: PropTypes.arrayOf(
@@ -81,3 +81,5 @@ TabsPanel.propTypes = {
 		})
 	).isRequired,
 };
+
+export default TabsPanel;

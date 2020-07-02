@@ -43,21 +43,7 @@ const INITIAL_STATE = {
 export const AddPanelContext = React.createContext(INITIAL_STATE);
 const AddPanelContextProvider = AddPanelContext.Provider;
 
-export const updateUsedWidget = ({item, used = true, widgets}) => {
-	return widgets.map((collection) => {
-		return {
-			...collection,
-			portlets: collection.portlets.map((portlet) => {
-				return portlet.portletId === item.itemId &&
-					!portlet.instanceable
-					? {...portlet, used}
-					: portlet;
-			}),
-		};
-	});
-};
-
-export default function AddPanel({
+const AddPanel = ({
 	addContentsURLs,
 	contents,
 	getContentsURL,
@@ -67,7 +53,7 @@ export default function AddPanel({
 	plid,
 	portletNamespace,
 	widgets: widgetsItems,
-}) {
+}) => {
 	const [displayGrid, setDisplayGrid] = useState(false);
 	const [widgets, setWidgets] = useState(widgetsItems);
 
@@ -146,7 +132,21 @@ export default function AddPanel({
 			</AddPanelContextProvider>
 		</div>
 	);
-}
+};
+
+export const updateUsedWidget = ({item, used = true, widgets}) => {
+	return widgets.map((collection) => {
+		return {
+			...collection,
+			portlets: collection.portlets.map((portlet) => {
+				return portlet.portletId === item.itemId &&
+					!portlet.instanceable
+					? {...portlet, used}
+					: portlet;
+			}),
+		};
+	});
+};
 
 const normalizeWidget = (widget) => {
 	return {
@@ -191,3 +191,5 @@ AddPanel.propTypes = {
 	portletNamespace: PropTypes.string.isRequired,
 	widgets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
+
+export default AddPanel;

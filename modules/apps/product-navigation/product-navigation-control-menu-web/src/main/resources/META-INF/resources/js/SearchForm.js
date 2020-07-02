@@ -18,7 +18,7 @@ import React from 'react';
 
 let nextInputId = 0;
 
-export default function SearchForm({onChange, value}) {
+const SearchForm = ({onChange, value}) => {
 	const id = `sidebarPanelSearchFormInput${nextInputId++}`;
 
 	return (
@@ -38,9 +38,11 @@ export default function SearchForm({onChange, value}) {
 			/>
 		</ClayForm.Group>
 	);
-}
+};
 
 SearchForm.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	value: PropTypes.string.isRequired,
 };
+
+export default SearchForm;

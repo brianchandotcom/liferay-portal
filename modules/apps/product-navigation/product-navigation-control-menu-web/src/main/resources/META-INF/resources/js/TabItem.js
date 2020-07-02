@@ -25,23 +25,7 @@ import {
 } from './AddPanel';
 import {addPortlet, useDragSymbol} from './useDragAndDrop';
 
-const addItem = ({item, plid, setWidgets, widgets}) => {
-	const targetItem = document.querySelector('.portlet-dropzone');
-
-	if (!item.used) {
-		addPortlet({item, plid, targetItem});
-
-		if (!item.data.instanceable) {
-			const updatedWidgets = updateUsedWidget({
-				item,
-				widgets,
-			});
-
-			setWidgets(updatedWidgets);
-		}
-	}
-};
-export default function TabItem({item}) {
+const TabItem = ({item}) => {
 	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
@@ -90,7 +74,24 @@ export default function TabItem({item}) {
 			)}
 		</li>
 	);
-}
+};
+
+const addItem = ({item, plid, setWidgets, widgets}) => {
+	const targetItem = document.querySelector('.portlet-dropzone');
+
+	if (!item.used) {
+		addPortlet({item, plid, targetItem});
+
+		if (!item.data.instanceable) {
+			const updatedWidgets = updateUsedWidget({
+				item,
+				widgets,
+			});
+
+			setWidgets(updatedWidgets);
+		}
+	}
+};
 
 TabItem.propTypes = {
 	item: PropTypes.shape({
@@ -100,3 +101,5 @@ TabItem.propTypes = {
 		type: PropTypes.string.isRequired,
 	}).isRequired,
 };
+
+export default TabItem;

@@ -69,7 +69,10 @@ page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationE
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationException" %><%@
 page import="com.liferay.exportimport.kernel.exception.ExportImportContentValidationException" %><%@
 page import="com.liferay.info.field.InfoField" %><%@
+page import="com.liferay.info.field.InfoFieldSet" %><%@
+page import="com.liferay.info.field.InfoFieldSetEntry" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
+page import="com.liferay.info.form.InfoForm" %><%@
 page import="com.liferay.info.item.InfoItemFieldValues" %><%@
 page import="com.liferay.info.localized.InfoLocalizedValue" %><%@
 page import="com.liferay.journal.configuration.JournalFileUploadsConfiguration" %><%@
@@ -220,13 +223,15 @@ page import="com.liferay.translation.info.field.TranslationInfoFieldChecker" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Arrays" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
-page import="java.util.Set" %>
+page import="java.util.Set" %><%@
+page import="java.util.stream.Collectors" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletRequest" %><%@

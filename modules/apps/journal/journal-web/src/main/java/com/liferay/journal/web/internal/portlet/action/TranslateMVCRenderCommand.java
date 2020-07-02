@@ -14,9 +14,11 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -71,6 +73,14 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			JournalArticle article = _journalArticleLocalService.getArticle(
 				themeDisplay.getScopeGroupId(),
 				ParamUtil.getString(renderRequest, "articleId"));
+
+			InfoItemFormProvider<JournalArticle> infoItemFormProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, JournalArticle.class.getName());
+
+			renderRequest.setAttribute(
+				InfoForm.class.getName(),
+				infoItemFormProvider.getInfoForm(article));
 
 			InfoItemFieldValuesProvider<JournalArticle>
 				infoItemFieldValuesProvider =

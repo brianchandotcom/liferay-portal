@@ -118,18 +118,43 @@ renderResponse.setTitle(article.getTitle());
 			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLanguageId);
 			Locale targetLocale = LocaleUtil.fromLanguageId(targetLanguageId);
 
+			InfoForm infoForm = (InfoForm)request.getAttribute(InfoForm.class.getName());
 			InfoItemFieldValues infoItemFieldValues = (InfoItemFieldValues)request.getAttribute(InfoItemFieldValues.class.getName());
 
-			for (InfoFieldValue<Object> infoFieldValue : infoItemFieldValues.getInfoFieldValues()) {
+			for (InfoFieldSetEntry infoFieldSetEntry : infoForm.getInfoFieldSetEntries()) {
 				TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
 
-				InfoField infoField = infoFieldValue.getInfoField();
+				List<InfoField> infoFields = null;
 
-				if (translationInfoFieldChecker.isTranslatable(infoField)) {
+				if (infoFieldSetEntry instanceof InfoFieldSet) {
+					InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+					infoFields = infoFieldSet.getAllInfoFields();
+
+					List<InfoFieldValue<Object>> infoFieldValues = infoFields.stream().filter(translationInfoFieldChecker::isTranslatable).map(InfoField::getName).map(infoItemFieldValues::getInfoFieldValue).collect(Collectors.toList());
+
+					if (ListUtil.isEmpty(infoFieldValues)) {
+						continue;
+					}
+			%>
+
+					<%= infoFieldSet.getLabel(locale) %>
+
+				<%
+				}
+				else {
+					infoFields = Arrays.asList((InfoField)infoFieldSetEntry);
+				}
+
+				List<InfoFieldValue<Object>> infoFieldValues = infoFields.stream().filter(translationInfoFieldChecker::isTranslatable).map(InfoField::getName).map(infoItemFieldValues::getInfoFieldValue).collect(Collectors.toList());
+
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+					InfoField infoField = infoFieldValue.getInfoField();
+
 					InfoLocalizedValue<String> labelInfoLocalizedValue = infoField.getLabelInfoLocalizedValue();
 
 					String label = labelInfoLocalizedValue.getValue(sourceLocale);
-			%>
+				%>
 
 					<clay:row>
 						<clay:col

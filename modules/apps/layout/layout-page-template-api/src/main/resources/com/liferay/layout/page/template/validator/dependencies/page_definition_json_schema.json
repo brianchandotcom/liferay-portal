@@ -1008,6 +1008,11 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
+				},
+				"link": {
+					"$ref": "#/definitions/FragmentLink",
+					"title": "The link Schema",
+					"type": "object"
 				}
 			},
 			"title": "The SectionDefinition Schema",

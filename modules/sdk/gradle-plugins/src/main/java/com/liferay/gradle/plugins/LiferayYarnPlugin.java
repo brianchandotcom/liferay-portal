@@ -156,19 +156,35 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		StartParameter startParameter = gradle.getStartParameter();
 
-		if (!startParameter.isParallelProjectExecutionEnabled()) {
-			for (final Project subproject : project.getSubprojects()) {
-				subproject.afterEvaluate(
-					new Action<Project>() {
+		if (startParameter.isParallelProjectExecutionEnabled()) {
+			return;
+		}
 
-						@Override
-						public void execute(Project project) {
-							_configureTasksNpmInstall(
-								subproject, yarnInstallTaskProvider);
-						}
+		for (Project subproject : project.getSubprojects()) {
+			subproject.afterEvaluate(
+				new Action<Project>() {
 
-					});
-			}
+					@Override
+					public void execute(Project project) {
+						TaskContainer taskContainer = project.getTasks();
+
+						taskContainer.withType(
+							NpmInstallTask.class,
+							new Action<NpmInstallTask>() {
+
+								@Override
+								public void execute(
+									NpmInstallTask npmInstallTask) {
+
+									_configureTaskNpmInstall(
+										npmInstallTask,
+										yarnInstallTaskProvider);
+								}
+
+							});
+					}
+
+				});
 		}
 	}
 
@@ -364,24 +380,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		if (!npmInstallTask.isUseNpm()) {
 			npmInstallTask.finalizedBy(yarnInstallTaskProvider);
 		}
-	}
-
-	private void _configureTasksNpmInstall(
-		Project project, final TaskProvider<Task> yarnInstallTaskProvider) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			NpmInstallTask.class,
-			new Action<NpmInstallTask>() {
-
-				@Override
-				public void execute(NpmInstallTask npmInstallTask) {
-					_configureTaskNpmInstall(
-						npmInstallTask, yarnInstallTaskProvider);
-				}
-
-			});
 	}
 
 	private List<File> _getYarnLockFiles(Project project) {

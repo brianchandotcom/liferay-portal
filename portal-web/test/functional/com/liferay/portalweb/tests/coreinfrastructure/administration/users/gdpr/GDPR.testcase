@@ -470,9 +470,9 @@ definition {
 			widgetName = "Announcements");
 
 		JSONAnnouncement.addAnnouncement(
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com",
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 

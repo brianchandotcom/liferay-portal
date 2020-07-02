@@ -84,6 +84,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 						<c:if test="<%= contentDashboardItem.isViewURLEnabled(request) %>">
 							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-content-has-a-display-page") %>">
 								<clay:icon
+									cssClass="text-secondary"
 									symbol="page"
 								/>
 							</span>

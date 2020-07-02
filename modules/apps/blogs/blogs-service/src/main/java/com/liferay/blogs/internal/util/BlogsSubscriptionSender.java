@@ -19,7 +19,6 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
@@ -61,7 +60,7 @@ public class BlogsSubscriptionSender
 
 	private BlogsGroupServiceConfiguration _getBlogsGroupServiceConfiguration(
 			long groupId)
-		throws ConfigurationException {
+		throws Exception {
 
 		return ConfigurationProviderUtil.getConfiguration(
 			BlogsGroupServiceConfiguration.class,

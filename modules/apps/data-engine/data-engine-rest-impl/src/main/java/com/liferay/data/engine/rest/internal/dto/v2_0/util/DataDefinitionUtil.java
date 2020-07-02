@@ -187,7 +187,7 @@ public class DataDefinitionUtil {
 	}
 
 	private static DDMFormFieldOptions _getDDMFormFieldOptions(
-		Map<String, ?> options) {
+		Locale locale, Map<String, ?> options) {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
@@ -251,6 +251,8 @@ public class DataDefinitionUtil {
 				}
 			}
 		}
+
+		ddmFormFieldOptions.setDefaultLocale(locale);
 
 		return ddmFormFieldOptions;
 	}
@@ -462,6 +464,7 @@ public class DataDefinitionUtil {
 					ddmFormField.setProperty(
 						entry.getKey(),
 						_getDDMFormFieldOptions(
+							LocaleUtil.fromLanguageId(languageId),
 							(Map<String, ?>)entry.getValue()));
 				}
 				else if (Objects.equals(

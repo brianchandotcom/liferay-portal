@@ -68,6 +68,9 @@ definition {
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Home");
@@ -108,6 +111,9 @@ definition {
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on admin page level after page refresh."
 	@priority = "5"
 	test RefreshWebContent {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
@@ -131,6 +137,9 @@ definition {
 
 	@priority = "5"
 	test RightToLeftSmoke {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RightToLeftSmoke";
 		property testray.component.names = "WYSIWYG";
@@ -179,6 +188,9 @@ definition {
 	@description = "Ensure that a user can access portlet options and drag and drop portlets."
 	@priority = "5"
 	test Smoke {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
@@ -274,6 +286,9 @@ definition {
 	@description = "Checks for each portlet having defined boundaries."
 	@priority = "5"
 	test ViewPortletBoundaries {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(

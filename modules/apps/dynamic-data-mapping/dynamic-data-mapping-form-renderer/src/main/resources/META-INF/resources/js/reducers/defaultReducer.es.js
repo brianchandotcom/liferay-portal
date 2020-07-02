@@ -30,15 +30,27 @@ export default (state, action) => {
 				return {
 					...action.payload,
 					pages: visitor.mapFields(
-						({localizedValue}) => ({
-							value:
-								localizedValue &&
-								localizedValue[editingLanguageId]
-									? localizedValue[editingLanguageId]
-									: localizedValue[defaultLanguageId]
-									? localizedValue[defaultLanguageId]
-									: null,
-						}),
+						({localizedValue}) => {
+							let value;
+
+							if (localizedValue) {
+								if (localizedValue[editingLanguageId.newVal]) {
+									value =
+										localizedValue[
+											editingLanguageId.newVal
+										];
+								}
+								else if (localizedValue[defaultLanguageId]) {
+									value = localizedValue[defaultLanguageId];
+								}
+							}
+
+							return {
+								value,
+							};
+						},
+						true,
+						true,
 						true
 					),
 				};

@@ -54,6 +54,7 @@ export default ({data, height, totalEntries, width}) => {
 			>
 				<XAxis
 					axisLine={{stroke: gray}}
+					tick={{fontSize: 14}}
 					tickLine={false}
 					type="number"
 				/>
@@ -61,6 +62,7 @@ export default ({data, height, totalEntries, width}) => {
 				<YAxis
 					dataKey="label"
 					stroke={blueDark}
+					tick={{fontSize: 14}}
 					tickLine={false}
 					tickMargin={16}
 					type="category"
@@ -100,6 +102,7 @@ export default ({data, height, totalEntries, width}) => {
 					<LabelList
 						dataKey="count"
 						fill={white}
+						fontSize={14}
 						offset={16}
 						position="insideRight"
 					/>

@@ -82,15 +82,18 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public String getItemSelectedEventName(String itemSelectorURL) {
-		String itemSelectedEventName = StringPool.BLANK;
-
 		Matcher matcher = _itemSelectorURLPattern.matcher(itemSelectorURL);
 
 		if (matcher.find()) {
-			itemSelectedEventName = matcher.group(2);
+			return matcher.group(1);
 		}
 
-		return itemSelectedEventName;
+		String namespace = _portal.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		return _http.getParameter(
+			itemSelectorURL,
+			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME), false);
 	}
 
 	@Override
@@ -467,7 +470,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private static final Pattern _itemSelectorURLPattern = Pattern.compile(
-		"select\\/(.+)\\/(.+)\\?");
+		"select\\/[^/]+\\/([^/]+)\\?");
 
 	@Reference
 	private Http _http;

@@ -410,10 +410,9 @@ public class JournalDisplayContext {
 	}
 
 	public Map<String, Object> getComponentContext() throws Exception {
-		return HashMapBuilder.<String, Object>put(
+		return Collections.singletonMap(
 			"trashEnabled",
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
-		).build();
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
 	}
 
 	public String getDDMStructureKey() {

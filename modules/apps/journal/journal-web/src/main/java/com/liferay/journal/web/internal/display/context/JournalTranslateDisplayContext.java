@@ -18,16 +18,29 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alejandro Tardín
@@ -37,11 +50,41 @@ public class JournalTranslateDisplayContext {
 	public JournalTranslateDisplayContext(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		_liferayPortletRequest = liferayPortletRequest;
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
+
+		_article = (JournalArticle)_httpServletRequest.getAttribute(
+			JournalWebKeys.JOURNAL_ARTICLES);
+		_infoForm = (InfoForm)_httpServletRequest.getAttribute(
+			InfoForm.class.getName());
+		_infoItemFieldValues =
+			(InfoItemFieldValues)_httpServletRequest.getAttribute(
+				InfoItemFieldValues.class.getName());
+
+		_sourceLanguageId = (String)_httpServletRequest.getAttribute(
+			JournalWebConstants.SOURCE_LANGUAGE_ID);
+
+		_sourceLocale = LocaleUtil.fromLanguageId(_sourceLanguageId);
+
+		_targetLanguageId = (String)_httpServletRequest.getAttribute(
+			JournalWebConstants.TARGET_LANGUAGE_ID);
+
+		_targetLocale = LocaleUtil.fromLanguageId(_targetLanguageId);
 
 		_translationInfoFieldChecker =
-			(TranslationInfoFieldChecker)liferayPortletRequest.getAttribute(
+			(TranslationInfoFieldChecker)_httpServletRequest.getAttribute(
 				TranslationInfoFieldChecker.class.getName());
+	}
+
+	public String getInfoFieldLabel(InfoField infoField) {
+		InfoLocalizedValue<String> labelInfoLocalizedValue =
+			infoField.getLabelInfoLocalizedValue();
+
+		return labelInfoLocalizedValue.getValue(getSourceLocale());
+	}
+
+	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
+		return _infoForm.getInfoFieldSetEntries();
 	}
 
 	public String getInfoFieldSetLabel(
@@ -57,15 +100,15 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
-		InfoFieldSetEntry infoFieldSetEntry,
-		InfoItemFieldValues infoItemFieldValues) {
+		InfoFieldSetEntry infoFieldSetEntry) {
 
 		if (infoFieldSetEntry instanceof InfoField) {
 			InfoField infoField = (InfoField)infoFieldSetEntry;
 
 			if (_translationInfoFieldChecker.isTranslatable(infoField)) {
 				return Arrays.asList(
-					infoItemFieldValues.getInfoFieldValue(infoField.getName()));
+					_infoItemFieldValues.getInfoFieldValue(
+						infoField.getName()));
 			}
 		}
 		else if (infoFieldSetEntry instanceof InfoFieldSet) {
@@ -80,7 +123,7 @@ public class JournalTranslateDisplayContext {
 			).map(
 				InfoField::getName
 			).map(
-				infoItemFieldValues::getInfoFieldValue
+				_infoItemFieldValues::getInfoFieldValue
 			).collect(
 				Collectors.toList()
 			);
@@ -89,7 +132,57 @@ public class JournalTranslateDisplayContext {
 		return Collections.emptyList();
 	}
 
-	private final LiferayPortletRequest _liferayPortletRequest;
+	public String getLanguageIdTitle(String languageId) {
+		return StringUtil.replace(
+			languageId, CharPool.UNDERLINE, CharPool.DASH);
+	}
+
+	public String getSourceLanguageId() {
+		return _sourceLanguageId;
+	}
+
+	public Locale getSourceLocale() {
+		return _sourceLocale;
+	}
+
+	public String getTargetLanguageId() {
+		return _targetLanguageId;
+	}
+
+	public Locale getTargetLocale() {
+		return _targetLocale;
+	}
+
+	public String getTitle() {
+		return _article.getTitle();
+	}
+
+	public Map<String, Object> getTranslateLanguagesSelectorData() {
+		return HashMapBuilder.<String, Object>put(
+			"currentUrl", PortalUtil.getCurrentCompleteURL(_httpServletRequest)
+		).put(
+			"sourceAvailableLanguages",
+			_httpServletRequest.getAttribute(
+				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS)
+		).put(
+			"sourceLanguageId", _sourceLanguageId
+		).put(
+			"targetAvailableLanguages",
+			_httpServletRequest.getAttribute(
+				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS)
+		).put(
+			"targetLanguageId", _targetLanguageId
+		).build();
+	}
+
+	private final JournalArticle _article;
+	private final HttpServletRequest _httpServletRequest;
+	private final InfoForm _infoForm;
+	private final InfoItemFieldValues _infoItemFieldValues;
+	private final String _sourceLanguageId;
+	private final Locale _sourceLocale;
+	private final String _targetLanguageId;
+	private final Locale _targetLocale;
 	private final TranslationInfoFieldChecker _translationInfoFieldChecker;
 
 }

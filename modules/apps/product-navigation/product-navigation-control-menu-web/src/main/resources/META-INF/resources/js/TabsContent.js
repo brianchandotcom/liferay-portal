@@ -154,15 +154,17 @@ const TabsContent = ({tab}) => {
 };
 
 TabsContent.propTypes = {
-	collections: PropTypes.arrayOf(
-		PropTypes.shape({
-			children: PropTypes.arrayOf().isRequired,
-			collectionId: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-		})
-	),
-	id: PropTypes.string.isRequired,
-	label: PropTypes.string.isRequired,
+	tab: PropTypes.shape({
+		collections: PropTypes.arrayOf(
+			PropTypes.shape({
+				children: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+				collectionId: PropTypes.string.isRequired,
+				label: PropTypes.string.isRequired,
+			})
+		),
+		id: PropTypes.string.isRequired,
+		label: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 export default TabsContent;

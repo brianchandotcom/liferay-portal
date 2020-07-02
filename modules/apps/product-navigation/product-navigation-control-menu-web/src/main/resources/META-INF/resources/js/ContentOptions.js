@@ -32,7 +32,6 @@ const OPTIONS = [
 	},
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-items'), 10),
-		selected: true,
 		value: 10,
 	},
 ];
@@ -53,6 +52,7 @@ const ContentOptions = ({onChangeSelect}) => {
 				<ClaySelectWithOption
 					aria-label="Select Label"
 					className="btn-monospaced sidebar-body__add-panel__content-options-select"
+					defaultValue={10}
 					id={`${portletNamespace}_contentDropdown`}
 					onChange={(event) => onChangeSelect(event.target.value)}
 					options={OPTIONS}

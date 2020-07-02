@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,7 +33,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -198,24 +198,21 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 		sb.append(".default(");
 
-		Map<String, Object> context = getContext();
-
-		if (context == null) {
-			context = new HashMap<>();
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		context.put("namespace", portletDisplay.getNamespace());
-
-		context.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-
-		sb.append(_jsonSerializer.serializeDeep(context));
+		sb.append(
+			_jsonSerializer.serializeDeep(
+				new HashMapBuilder<>().putAll(
+					getContext()
+				).put(
+					"namespace", portletDisplay.getNamespace()
+				).put(
+					"spritemap",
+					themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+				).build()));
 
 		String containerId = getContainerId();
 

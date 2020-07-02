@@ -31,14 +31,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BlogsGroupServiceConfiguration {
 
-	@Meta.AD(
-		deflt = "false", name = "send-notifications-to-blogs-entry-creator",
-		required = false
-	)
-	public default boolean sendNotificationsToBlogsEntryCreator() {
-		return false;
-	}
-
 	@Meta.AD(deflt = "true", name = "enable-rss", required = false)
 	public boolean enableRss();
 
@@ -59,6 +51,14 @@ public interface BlogsGroupServiceConfiguration {
 		name = "rss-feed-type", required = false
 	)
 	public String rssFeedType();
+
+	@Meta.AD(
+		deflt = "false", name = "send-notifications-to-blogs-entry-creator",
+		required = false
+	)
+	public default boolean sendNotificationsToBlogsEntryCreator() {
+		return false;
+	}
 
 	@Meta.AD(deflt = "300", name = "small-image-width", required = false)
 	public int smallImageWidth();

@@ -112,4 +112,8 @@ Ratings.propTypes = {
 	url: PropTypes.string.isRequired,
 };
 
-export default Ratings;
+export default function (props) {
+	return (
+		<Ratings {...props} portletNamespace={`_${props.portletNamespace}_`} />
+	);
+}

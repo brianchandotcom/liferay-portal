@@ -31,6 +31,7 @@ const RatingsStars = ({
 	initialTotalEntries = 0,
 	inititalTitle,
 	numberOfStars,
+	portletNamespace,
 	sendVoteRequest,
 	type,
 	userScore,
@@ -278,6 +279,7 @@ const RatingsStars = ({
 			>
 				<div className="ratings-stacked-stars-vote-stars">
 					{starScores.reverse().map(({label, value}, index) => {
+						const id = `${portletNamespace}star${label}`;
 						const srMessage =
 							index === 0
 								? Liferay.Language.get(
@@ -294,7 +296,7 @@ const RatingsStars = ({
 									checked={label === score}
 									className="sr-only"
 									disabled={disabled}
-									id={`star${label}`}
+									id={id}
 									name="rating"
 									onChange={() => {
 										handleOnClick(index);
@@ -306,7 +308,7 @@ const RatingsStars = ({
 									className={
 										full ? 'ratings-stars-star-full' : ''
 									}
-									htmlFor={`star${label}`}
+									htmlFor={id}
 								>
 									<ClayIcon
 										className="ratings-stars-icon-full"
@@ -352,6 +354,7 @@ RatingsStars.propTypes = {
 	initialTotalEntries: PropTypes.number,
 	inititalTitle: PropTypes.string,
 	numberOfStars: PropTypes.number.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
 	positiveVotes: PropTypes.number,
 	sendVoteRequest: PropTypes.func.isRequired,
 	userScore: PropTypes.number,

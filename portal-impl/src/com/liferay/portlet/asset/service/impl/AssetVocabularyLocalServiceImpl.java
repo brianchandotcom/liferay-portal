@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
@@ -138,6 +140,13 @@ public class AssetVocabularyLocalServiceImpl
 		// Vocabulary
 
 		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(name)) {
+			name = _generateVocabularyName(
+				groupId, titleMap.get(LocaleUtil.getSiteDefault()));
+		}
+
+		name = _getVocabularyName(name);
 
 		validate(groupId, name);
 
@@ -538,6 +547,38 @@ public class AssetVocabularyLocalServiceImpl
 				"A category vocabulary with the name " + name +
 					" already exists");
 		}
+	}
+
+	private String _generateVocabularyName(long groupId, String name) {
+		String vocabularyName = _getVocabularyName(name);
+
+		vocabularyName = StringUtil.replace(
+			vocabularyName, CharPool.SPACE, CharPool.DASH);
+
+		String curVocabularyName = vocabularyName;
+
+		int count = 0;
+
+		while (true) {
+			AssetVocabulary vocabulary = assetVocabularyPersistence.fetchByG_N(
+				groupId, curVocabularyName);
+
+			if (vocabulary == null) {
+				return curVocabularyName;
+			}
+
+			curVocabularyName = curVocabularyName + CharPool.DASH + count++;
+		}
+	}
+
+	private String _getVocabularyName(String vocabularyName) {
+		if (vocabularyName != null) {
+			vocabularyName = vocabularyName.trim();
+
+			return StringUtil.toLowerCase(vocabularyName);
+		}
+
+		return StringPool.BLANK;
 	}
 
 }

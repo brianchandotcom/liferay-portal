@@ -84,8 +84,8 @@ public class LPKGLicensedBundleTrackerCustomizer
 
 					File tempFile = tempFilePath.toFile();
 
-					if (_licenseInstaller.canInstall(tempFile)) {
-						_licenseInstaller.install(tempFile);
+					if (_licenseInstaller.canTransformURL(tempFile)) {
+						_licenseInstaller.transformURL(tempFile);
 
 						hasLicense = true;
 					}

@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.File;
 
+import java.net.URL;
+
 /**
  * @author Amos Fong
  */
 public class LicenseInstaller implements FileInstaller {
 
 	@Override
-	public boolean canInstall(File artifact) {
+	public boolean canTransformURL(File artifact) {
 		String extension = FileUtil.getExtension(artifact.getName());
 
 		if (!extension.equals("xml")) {
@@ -60,20 +62,14 @@ public class LicenseInstaller implements FileInstaller {
 	}
 
 	@Override
-	public void install(File file) throws Exception {
+	public URL transformURL(File file) throws Exception {
 		String content = FileUtil.read(file);
 
 		JSONObject jsonObject = JSONUtil.put("licenseXML", content);
 
 		LicenseManagerUtil.registerLicense(jsonObject);
-	}
 
-	@Override
-	public void uninstall(File file) throws Exception {
-	}
-
-	@Override
-	public void update(File file) throws Exception {
+		return null;
 	}
 
 }

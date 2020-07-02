@@ -25,7 +25,6 @@ import com.liferay.portal.file.install.internal.version.VersionTable;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -623,11 +622,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		for (File file : files) {
-			boolean exists = file.exists();
-
 			Artifact artifact = _getArtifact(file);
 
-			if (!exists) {
+			if (!file.exists()) {
 				if (artifact != null) {
 					deleted.add(artifact);
 				}
@@ -705,9 +702,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		File artifact, List<FileInstaller> fileInstallers) {
 
 		for (FileInstaller fileInstaller : fileInstallers) {
-			if (fileInstaller.canInstall(artifact) ||
-				fileInstaller.canTransformURL(artifact)) {
-
+			if (fileInstaller.canTransformURL(artifact)) {
 				return fileInstaller;
 			}
 		}
@@ -919,26 +914,21 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			long checksum = artifact.getChecksum();
 
-			if (fileInstaller.canInstall(path)) {
-				fileInstaller.install(path);
+			Artifact badArtifact = _installationFailures.get(path);
+
+			if ((badArtifact != null) &&
+				(badArtifact.getChecksum() == checksum)) {
+
+				return null;
 			}
-			else if (fileInstaller.canTransformURL(path)) {
-				Artifact badArtifact = _installationFailures.get(path);
 
-				if ((badArtifact != null) &&
-					(badArtifact.getChecksum() == checksum)) {
+			URL url = fileInstaller.transformURL(path);
 
-					return null;
-				}
-
-				URI uri = path.toURI();
-
-				URL transformed = fileInstaller.transform(uri.toURL());
-
-				String location = transformed.toString();
+			if (url != null) {
+				String location = url.toString();
 
 				try (BufferedInputStream inputStream = new BufferedInputStream(
-						transformed.openStream())) {
+						url.openStream())) {
 
 					bundle = _installOrUpdateBundle(
 						location, inputStream, checksum, modified);
@@ -1323,12 +1313,13 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			FileInstaller fileInstaller = artifact.getFileInstaller();
 
+			if ((fileInstaller != null) && fileInstaller.uninstall(path)) {
+				return null;
+			}
+
 			long bundleId = artifact.getBundleId();
 
-			if (fileInstaller.canInstall(path)) {
-				fileInstaller.uninstall(path);
-			}
-			else if (bundleId != 0) {
+			if (bundleId != 0) {
 				bundle = _bundleContext.getBundle(bundleId);
 
 				if (bundle == null) {
@@ -1396,55 +1387,43 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			artifact.setFileInstaller(fileInstaller);
 
-			long checksum = artifact.getChecksum();
+			URL url = fileInstaller.transformURL(path);
+
+			if (url == null) {
+				return null;
+			}
 
 			long bundleId = artifact.getBundleId();
 
-			if (fileInstaller.canInstall(path)) {
-				fileInstaller.update(path);
+			bundle = _bundleContext.getBundle(bundleId);
+
+			if (bundle == null) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Failed to update bundle: ");
+				sb.append(path);
+				sb.append(" with ID ");
+				sb.append(bundleId);
+				sb.append(". The bundle has been uninstalled");
+
+				_log(Util.Logger.LOG_WARNING, sb.toString(), null);
+
+				return null;
 			}
-			else if (fileInstaller.canTransformURL(path)) {
-				bundle = _bundleContext.getBundle(bundleId);
 
-				if (bundle == null) {
-					StringBundler sb = new StringBundler(5);
+			Util.log(
+				_bundleContext, Util.Logger.LOG_INFO,
+				StringBundler.concat(
+					"Updating bundle ", bundle.getSymbolicName(), " / ",
+					bundle.getVersion()),
+				null);
 
-					sb.append("Failed to update bundle: ");
-					sb.append(path);
-					sb.append(" with ID ");
-					sb.append(bundleId);
-					sb.append(". The bundle has been uninstalled");
+			_stopTransient(bundle);
 
-					_log(Util.Logger.LOG_WARNING, sb.toString(), null);
+			Util.storeChecksum(bundle, artifact.getChecksum(), _bundleContext);
 
-					return null;
-				}
-
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					StringBundler.concat(
-						"Updating bundle ", bundle.getSymbolicName(), " / ",
-						bundle.getVersion()),
-					null);
-
-				_stopTransient(bundle);
-
-				Util.storeChecksum(bundle, checksum, _bundleContext);
-
-				URI uri = path.toURI();
-
-				URL url = fileInstaller.transform(uri.toURL());
-
-				if (url != null) {
-					try (InputStream inputStream = url.openStream()) {
-						bundle.update(inputStream);
-					}
-				}
-				else {
-					try (InputStream inputStream = new FileInputStream(path)) {
-						bundle.update(inputStream);
-					}
-				}
+			try (InputStream inputStream = url.openStream()) {
+				bundle.update(inputStream);
 			}
 		}
 		catch (Throwable throwable) {

@@ -23,25 +23,12 @@ import java.net.URL;
  */
 public interface FileInstaller {
 
-	public default boolean canInstall(File file) {
+	public boolean canTransformURL(File file);
+
+	public URL transformURL(File file) throws Exception;
+
+	public default boolean uninstall(File file) throws Exception {
 		return false;
-	}
-
-	public default boolean canTransformURL(File file) {
-		return false;
-	}
-
-	public default void install(File file) throws Exception {
-	}
-
-	public default URL transform(URL url) throws Exception {
-		return url;
-	}
-
-	public default void uninstall(File file) throws Exception {
-	}
-
-	public default void update(File file) throws Exception {
 	}
 
 }

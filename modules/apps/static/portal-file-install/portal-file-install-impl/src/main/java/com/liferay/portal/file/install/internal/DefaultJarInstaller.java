@@ -19,6 +19,7 @@ import com.liferay.portal.file.install.FileInstaller;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.jar.Attributes;
@@ -59,8 +60,10 @@ public class BundleInstaller implements FileInstaller {
 	}
 
 	@Override
-	public URL transform(URL url) {
-		return url;
+	public URL transformURL(File file) throws Exception {
+		URI uri = file.toURI();
+
+		return uri.toURL();
 	}
 
 }

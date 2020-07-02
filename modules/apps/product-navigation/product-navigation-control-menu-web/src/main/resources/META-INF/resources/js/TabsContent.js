@@ -27,7 +27,7 @@ import TabItem from './TabItem';
 const CONTENT_TAB_ID = 'content';
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
-const TabsContent = ({tab}) => {
+const TabsContent = ({tab, tabIndex}) => {
 	const {displayGrid, getContentsURL, namespace} = useContext(
 		AddPanelContext
 	);
@@ -111,7 +111,11 @@ const TabsContent = ({tab}) => {
 
 	return (
 		<>
-			<SearchForm onChange={setSearchValue} value={searchValue} />
+			<SearchForm
+				onChange={setSearchValue}
+				tabIndex={tabIndex}
+				value={searchValue}
+			/>
 			{isContentTab && <ContentOptions onChangeSelect={setTotalItems} />}
 			{searchValue ? (
 				<SearchResultsPanel
@@ -165,6 +169,7 @@ TabsContent.propTypes = {
 		id: PropTypes.string.isRequired,
 		label: PropTypes.string.isRequired,
 	}).isRequired,
+	tabIndex: PropTypes.number.isRequired,
 };
 
 export default TabsContent;

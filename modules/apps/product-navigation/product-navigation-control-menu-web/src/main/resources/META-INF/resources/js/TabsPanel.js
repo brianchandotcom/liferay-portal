@@ -14,27 +14,18 @@
 
 import ClayTabs from '@clayui/tabs';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {AddPanelContext} from './AddPanel';
 import TabsContent from './TabsContent';
-
-let nextId = 0;
-
-const useId = ({portletNamespace}) => {
-	return useMemo(() => `${portletNamespace}_useId_${nextId++}`, [
-		portletNamespace,
-	]);
-};
 
 const TabsPanel = ({tabs}) => {
 	const {portletNamespace} = useContext(AddPanelContext);
 
 	const [activeTabId, setActiveTabId] = useState(0);
-	const tabIdNamespace = useId({portletNamespace});
 
-	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
-	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
+	const getTabId = (tabId) => `${portletNamespace}_tab_${tabId}`;
+	const getTabPanelId = (tabId) => `${portletNamespace}_tabPanel_${tabId}`;
 
 	return (
 		<>
@@ -64,7 +55,7 @@ const TabsPanel = ({tabs}) => {
 						id={getTabPanelId(index)}
 						key={index}
 					>
-						<TabsContent tab={tab} />
+						<TabsContent tab={tab} tabIndex={index} />
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>

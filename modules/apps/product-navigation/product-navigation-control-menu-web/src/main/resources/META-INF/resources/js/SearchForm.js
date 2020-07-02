@@ -16,10 +16,8 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-let nextInputId = 0;
-
-const SearchForm = ({onChange, value}) => {
-	const id = `sidebarPanelSearchFormInput${nextInputId++}`;
+const SearchForm = ({onChange, tabIndex, value}) => {
+	const id = `sidebarAddPanelSearchFormInput${tabIndex}`;
 
 	return (
 		<ClayForm.Group className="mb-3" role="search">
@@ -42,6 +40,7 @@ const SearchForm = ({onChange, value}) => {
 
 SearchForm.propTypes = {
 	onChange: PropTypes.func.isRequired,
+	tabIndex: PropTypes.number.isRequired,
 	value: PropTypes.string.isRequired,
 };
 

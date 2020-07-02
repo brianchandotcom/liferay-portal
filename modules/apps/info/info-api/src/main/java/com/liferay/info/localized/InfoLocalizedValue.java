@@ -73,6 +73,22 @@ public interface InfoLocalizedValue<T> {
 
 	public static class Builder<T> {
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x)
+		 */
+		@Deprecated
+		public Builder<T> addValue(Locale locale, T value) {
+			return put(locale, value);
+		}
+
+		/**
+		 * @deprecated As of Athanasius (7.3.x)
+		 */
+		@Deprecated
+		public Builder<T> addValues(Map<Locale, T> values) {
+			return putAll(values);
+		}
+
 		public InfoLocalizedValue<T> build() {
 			return new BuilderInfoLocalizedValue<>(this);
 		}

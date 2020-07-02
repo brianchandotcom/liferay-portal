@@ -83,6 +83,10 @@ export const ContainerStylesPanel = ({item}) => {
 					{Liferay.Language.get('container-styles')}
 				</h1>
 
+				<div className="page-editor__floating-toolbar__panel-header">
+					<p>{Liferay.Language.get('styles')}</p>
+				</div>
+
 				{config.containerItemEnabled && (
 					<SelectField
 						field={{

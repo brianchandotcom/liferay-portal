@@ -26,6 +26,7 @@ import TabItem from './TabItem';
 
 const CONTENT_TAB_ID = 'content';
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
+const EMPTY_COLLECTIONS = {collections: []};
 
 const TabsContent = ({tab, tabIndex}) => {
 	const {displayGrid, getContentsURL, namespace} = useContext(
@@ -102,6 +103,9 @@ const TabsContent = ({tab, tabIndex}) => {
 					};
 
 					return setFilteredContent(normalizedItems);
+				})
+				.catch(() => {
+					return setFilteredContent([EMPTY_COLLECTIONS]);
 				});
 		}
 		else {

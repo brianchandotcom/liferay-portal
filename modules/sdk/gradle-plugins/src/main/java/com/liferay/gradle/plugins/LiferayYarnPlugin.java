@@ -188,6 +188,15 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		}
 	}
 
+	private void _configureTaskNpmInstallAfterEvaluate(
+		NpmInstallTask npmInstallTask,
+		TaskProvider<Task> yarnInstallTaskProvider) {
+
+		if (!npmInstallTask.isUseNpm()) {
+			npmInstallTask.finalizedBy(yarnInstallTaskProvider);
+		}
+	}
+
 	private void _configureTaskYarnCheckFormatProvider(
 		TaskProvider<ExecutePackageManagerTask> yarnCheckFormatTaskProvider,
 		final File yarnLockFile) {
@@ -330,26 +339,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskYarnLockProvider(
-		TaskProvider<YarnInstallTask> yarnLockYarnInstallTaskProvider,
-		final File yarnLockFile) {
-
-		yarnLockYarnInstallTaskProvider.configure(
-			new Action<YarnInstallTask>() {
-
-				@Override
-				public void execute(YarnInstallTask yarnLockYarnInstallTask) {
-					yarnLockYarnInstallTask.setDescription(
-						"Installs the Node.js packages and updates the " +
-							"yarn.lock file");
-					yarnLockYarnInstallTask.setFrozenLockFile(false);
-					yarnLockYarnInstallTask.setWorkingDir(
-						yarnLockFile.getParentFile());
-				}
-
-			});
-	}
-
-	private void _configureTaskYarnLockProvider(
 		TaskProvider<Task> yarnLockTaskProvider,
 		final Set<TaskProvider<YarnInstallTask>> yarnLockTaskProviders) {
 
@@ -373,13 +362,24 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskNpmInstallAfterEvaluate(
-		NpmInstallTask npmInstallTask,
-		TaskProvider<Task> yarnInstallTaskProvider) {
+	private void _configureTaskYarnLockProvider(
+		TaskProvider<YarnInstallTask> yarnLockYarnInstallTaskProvider,
+		final File yarnLockFile) {
 
-		if (!npmInstallTask.isUseNpm()) {
-			npmInstallTask.finalizedBy(yarnInstallTaskProvider);
-		}
+		yarnLockYarnInstallTaskProvider.configure(
+			new Action<YarnInstallTask>() {
+
+				@Override
+				public void execute(YarnInstallTask yarnLockYarnInstallTask) {
+					yarnLockYarnInstallTask.setDescription(
+						"Installs the Node.js packages and updates the " +
+							"yarn.lock file");
+					yarnLockYarnInstallTask.setFrozenLockFile(false);
+					yarnLockYarnInstallTask.setWorkingDir(
+						yarnLockFile.getParentFile());
+				}
+
+			});
 	}
 
 	private List<File> _getYarnLockFiles(Project project) {

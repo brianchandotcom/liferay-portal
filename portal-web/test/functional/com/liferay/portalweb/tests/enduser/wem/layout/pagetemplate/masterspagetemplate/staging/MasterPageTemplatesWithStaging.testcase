@@ -1,0 +1,171 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Page Templates";
+	property testray.main.component.name = "Page Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
+
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name-staging");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-111549. Redo can make the master page editor rollback the previous undo state up to X that is the number of undo interactions in Staging site."
+	@priority = "4"
+	test UndoMasterPageChangesInStagingSite {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertElementPresent(
+			key_text = "redo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			dropTarget = "Footer",
+			fragmentName = "Container",
+			scope = "Master");
+
+		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
+			key_fragmentName = "Heading",
+			key_position = "1",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#CONTAINER_CONTAINER",
+			value1 = "");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "New editable fragment text");
+
+		PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+		PageEditor.configureFragment(alignment = "Center");
+
+		PageEditor.gotoDuplicate(fragmentName = "Container");
+
+		PageEditor.removeFragmentViaPageStructure(
+			duplicateFragment = "true",
+			fragmentName = "Container");
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "redo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		for (var i : list "1,2,3,4,5,6") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
+
+		PageEditor.viewNoFragment(fragmentName = "Container");
+
+		AssertVisible(
+			key_text = "redo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Container");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(
+			key_fragmentName = "Heading",
+			key_inFragmentName = "Container",
+			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "New editable fragment text");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "heading");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewDuplicateFragment(fragmentName = "Heading");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Container",
+			locator1 = "Fragment#FRAGMENT_HEADER_2");
+
+		PageEditor.viewFragment(fragmentName = "Container");
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "redo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
+}

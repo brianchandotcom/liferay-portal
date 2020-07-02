@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -379,7 +380,8 @@ public class AssetVocabularyServiceTest {
 				serviceContext);
 
 		Assert.assertEquals(
-			titleMap.get(LocaleUtil.SPAIN), vocabulary.getName());
+			StringUtil.toLowerCase(titleMap.get(LocaleUtil.SPAIN)),
+			vocabulary.getName());
 		Assert.assertEquals(
 			titleMap.get(LocaleUtil.SPAIN),
 			vocabulary.getTitle(LocaleUtil.GERMANY, true));
@@ -415,7 +417,8 @@ public class AssetVocabularyServiceTest {
 				title, serviceContext);
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
-		Assert.assertEquals(title, vocabulary.getName());
+		Assert.assertEquals(
+			StringUtil.toLowerCase(title), vocabulary.getName());
 	}
 
 	@Test(expected = DuplicateVocabularyException.class)

@@ -148,7 +148,9 @@ public class ResourcePermissionLocalServiceImpl
 		boolean addModelPermissions = true;
 
 		if (!_checkModelPermissionsMatches(modelPermissions, name)) {
-			addModelPermissions = false;
+			modelPermissions = ModelPermissionsFactory.create(name);
+			modelPermissions.addRolePermissions(
+				RoleConstants.OWNER, new String[0]);
 		}
 
 		// Unless model permissions are used insecurely we add Owner permissions
@@ -1988,15 +1990,6 @@ public class ResourcePermissionLocalServiceImpl
 							modelPermissions.getResourceName(), " used for ",
 							resourcePermissionName)));
 			}
-		}
-
-		if (!addOwnerPermissions && !addModelPermissions) {
-			throw new PortalException(
-				StringBundler.concat(
-					"Insecure use or reuse of model permissions of ",
-					modelPermissions.getResourceName(),
-					". Please initialize it correctly or again for ",
-					resourcePermissionName));
 		}
 
 		return addModelPermissions;

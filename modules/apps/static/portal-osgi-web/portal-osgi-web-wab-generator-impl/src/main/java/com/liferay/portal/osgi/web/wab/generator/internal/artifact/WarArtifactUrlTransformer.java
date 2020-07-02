@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Properties;
@@ -56,8 +57,10 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 	}
 
 	@Override
-	public URL transform(URL artifact) throws Exception {
-		return ArtifactURLUtil.transform(artifact);
+	public URL transformURL(File artifact) throws Exception {
+		URI uri = artifact.toURI();
+
+		return ArtifactURLUtil.transform(uri.toURL());
 	}
 
 	private boolean _hasResources(File artifact) {

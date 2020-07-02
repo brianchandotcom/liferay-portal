@@ -30,6 +30,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -61,14 +63,24 @@ import org.osgi.service.url.URLStreamHandlerService;
 public class LPKGArtifactInstaller implements FileInstaller {
 
 	@Override
-	public boolean canInstall(File file) {
+	public boolean canTransformURL(File file) {
 		String name = StringUtil.toLowerCase(file.getName());
 
 		return name.endsWith(".lpkg");
 	}
 
 	@Override
-	public void install(File file) throws Exception {
+	public URL transformURL(File file) throws Exception {
+		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
+
+		Bundle bundle = _bundleContext.getBundle(canonicalPath);
+
+		if (bundle != null) {
+			_update(file, _readMarketplaceProperties(file));
+
+			return null;
+		}
+
 		Properties properties = new Properties();
 
 		List<File> lpkgFiles = ContainerLPKGUtil.deploy(
@@ -77,7 +89,7 @@ public class LPKGArtifactInstaller implements FileInstaller {
 		if (lpkgFiles == null) {
 			_install(file, properties);
 
-			return;
+			return null;
 		}
 
 		try (SafeClosable safeCloseable =
@@ -85,21 +97,20 @@ public class LPKGArtifactInstaller implements FileInstaller {
 
 			_batchInstall(lpkgFiles);
 		}
+
+		return null;
 	}
 
 	@Override
-	public void uninstall(File file) throws Exception {
+	public boolean uninstall(File file) throws Exception {
 		Bundle bundle = _bundleContext.getBundle(
 			LPKGLocationUtil.getLPKGLocation(file));
 
 		if (bundle != null) {
 			bundle.uninstall();
 		}
-	}
 
-	@Override
-	public void update(File file) throws Exception {
-		_update(file, _readMarketplaceProperties(file));
+		return true;
 	}
 
 	@Activate

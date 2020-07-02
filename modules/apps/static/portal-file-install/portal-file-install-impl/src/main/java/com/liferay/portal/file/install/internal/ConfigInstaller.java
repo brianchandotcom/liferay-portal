@@ -37,6 +37,7 @@ import java.io.Reader;
 import java.io.Writer;
 
 import java.net.URI;
+import java.net.URL;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -73,8 +74,8 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 	}
 
 	@Override
-	public boolean canInstall(File artifact) {
-		String name = artifact.getName();
+	public boolean canTransformURL(File file) {
+		String name = file.getName();
 
 		if (name.endsWith(".cfg") || name.endsWith(".config")) {
 			return true;
@@ -262,18 +263,17 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 	}
 
 	@Override
-	public void install(File artifact) throws Exception {
-		_setConfig(artifact);
+	public URL transformURL(File file) throws Exception {
+		_setConfig(file);
+
+		return null;
 	}
 
 	@Override
-	public void uninstall(File artifact) throws Exception {
-		_deleteConfig(artifact);
-	}
+	public boolean uninstall(File file) throws Exception {
+		_deleteConfig(file);
 
-	@Override
-	public void update(File artifact) throws Exception {
-		_setConfig(artifact);
+		return true;
 	}
 
 	private static boolean _equals(

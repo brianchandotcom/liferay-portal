@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_EXPORT_TRANSLATION</td>
+	<td>//label[contains(.,'${key_checkboxName}')]/input[@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_ADDITIONAL_ACTIVITY_COUNTERS</td>
 	<td>//label[contains(.,'Display Additional Activity Counters')]/input[@type='checkbox']</td>
 	<td></td>

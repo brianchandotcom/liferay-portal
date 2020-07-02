@@ -309,6 +309,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_MODAL</td>
+	<td>//div[contains(@class,'btn-group-item')]/button[contains(@class,'btn') and contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_MODAL_DISABLED</td>
+	<td>//div[contains(@class,'btn-group-item')]/button[@disabled and contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_FILTER_APPLY</td>
 	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
 	<td></td>

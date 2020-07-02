@@ -301,6 +301,19 @@ public class PortletLayoutDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public String getContainerLinkTarget(
+		ContainerLayoutStructureItem containerLayoutStructureItem) {
+
+		JSONObject linkJSONObject =
+			containerLayoutStructureItem.getLinkJSONObject();
+
+		if (linkJSONObject == null) {
+			return StringPool.BLANK;
+		}
+
+		return linkJSONObject.getString("target");
+	}
+
 	public String getCssClass(
 		ContainerLayoutStructureItem containerLayoutStructureItem) {
 

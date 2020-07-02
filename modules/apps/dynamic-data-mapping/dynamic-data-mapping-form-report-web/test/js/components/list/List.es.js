@@ -66,12 +66,12 @@ describe('List', () => {
 	it('renders dates according to the language', () => {
 		const data = ['12-20-2020'];
 
-		const language = 'ko';
+		const type = 'date';
 
 		const {getByText} = render(
-			<List {...props} data={data} language={language} />
+			<List {...props} data={data} type={type} />
 		);
 
-		expect(getByText('2020.12.20.')).toBeTruthy();
+		expect(getByText('12/20/2020')).toBeTruthy();
 	});
 });

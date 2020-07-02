@@ -3,7 +3,7 @@ Liferay.Loader.require('null/module', function(nullModule) {
 try {
 (function() {
 var module = nullModule;
-Liferay.component('componentId', new module.default({"spritemap":"\/lexicon\/icons.svg","name":"value","namespace":"namespace"}), { destroyOnNavigate: true, portletId: ''});
+Liferay.component('componentId', new module.default({"name":"value","namespace":"namespace","spritemap":"\/lexicon\/icons.svg"}), { destroyOnNavigate: true, portletId: ''});
 })();
 } catch (err) {
 	console.error(err);

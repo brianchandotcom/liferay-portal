@@ -457,17 +457,15 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private Map<String, String> _getLanguageDirection() {
-		Map<String, String> languageDirection = new HashMap<>();
-		long groupId = ParamUtil.getLong(
-			_httpServletRequest, "groupId", _themeDisplay.getScopeGroupId());
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+			_themeDisplay.getScopeGroupId());
 
-		for (Locale curLocale : LanguageUtil.getAvailableLocales(groupId)) {
-			languageDirection.put(
-				LocaleUtil.toLanguageId(curLocale),
-				LanguageUtil.get(curLocale, "lang.dir"));
-		}
+		Stream<Locale> stream = locales.stream();
 
-		return languageDirection;
+		return stream.collect(
+			Collectors.toMap(
+				LocaleUtil::toLanguageId,
+				locale -> LanguageUtil.get(locale, "lang.dir")));
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

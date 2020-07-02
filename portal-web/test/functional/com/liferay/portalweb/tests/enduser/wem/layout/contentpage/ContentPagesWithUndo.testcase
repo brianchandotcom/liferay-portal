@@ -133,6 +133,123 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111549. Redo can make the page editor rollback the previous undo state up to X that is the number of undo interactions."
+	@priority = "5"
+	test UndoAndRedoPagechanges {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
+			key_fragmentName = "Heading",
+			key_index = "2",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+			value1 = "");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "New editable fragment text");
+
+		PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+		PageEditor.configureFragment(alignment = "Center");
+
+		PageEditor.gotoDuplicate(fragmentName = "Tabs");
+
+		PageEditor.removeFragment(
+			duplicateFragment = "true",
+			fragmentName = "Tabs");
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "redo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		for (var i : list "1,2,3,4,5,6") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
+
+		PageEditor.viewNoFragment(fragmentName = "Tabs");
+
+		AssertVisible(
+			key_text = "redo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Tabs");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(
+			key_fragmentName = "Heading",
+			key_inFragmentName = "Tabs",
+			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "New editable fragment text");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "heading");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewDuplicateFragment(fragmentName = "Tabs");
+
+		Click(
+			key_text = "redo",
+			locator1 = "Icon#ANY");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#FRAGMENT_HEADER_2");
+
+		PageEditor.viewFragment(fragmentName = "Tabs");
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		AssertElementPresent(
+			key_text = "redo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
 	@priority = "5"
 	test UndoDeletedFragmentAndWidgetInPage {

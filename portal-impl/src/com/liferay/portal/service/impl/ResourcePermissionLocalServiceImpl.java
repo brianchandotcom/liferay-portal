@@ -169,29 +169,28 @@ public class ResourcePermissionLocalServiceImpl
 
 			// Owner permissions
 
-				Role ownerRole = roleLocalService.getRole(
-					companyId, RoleConstants.OWNER);
+			Role ownerRole = roleLocalService.getRole(
+				companyId, RoleConstants.OWNER);
 
-				List<String> ownerActionIds =
-					ResourceActionsUtil.getModelResourceActions(name);
+			List<String> ownerActionIds =
+				ResourceActionsUtil.getModelResourceActions(name);
 
-				filterOwnerActions(name, ownerActionIds);
+			filterOwnerActions(name, ownerActionIds);
 
-				String[] ownerPermissions = ownerActionIds.toArray(
-					new String[0]);
+			String[] ownerPermissions = ownerActionIds.toArray(new String[0]);
 
-				setOwnerResourcePermissions(
+			setOwnerResourcePermissions(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+				ownerRole.getRoleId(), userId, ownerPermissions);
+
+			for (String roleName : modelPermissions.getRoleNames()) {
+				Role role = getRole(companyId, groupId, roleName);
+
+				setResourcePermissions(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-					primKey, ownerRole.getRoleId(), userId, ownerPermissions);
-
-				for (String roleName : modelPermissions.getRoleNames()) {
-					Role role = getRole(companyId, groupId, roleName);
-
-					setResourcePermissions(
-						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						primKey, role.getRoleId(),
-						modelPermissions.getActionIds(roleName));
-				}
+					primKey, role.getRoleId(),
+					modelPermissions.getActionIds(roleName));
+			}
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
@@ -1900,86 +1899,6 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
-	private boolean _matches(
-		ModelPermissions modelPermissions, String resourcePermissionName) {
-
-		if ((modelPermissions == null) ||
-			ModelPermissions.RESOURCE_NAME_UNINITIALIZED.equals(
-				modelPermissions.getResourceName())) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					new Exception(
-						"Uninitialized model permissions used for " +
-							resourcePermissionName));
-			}
-
-			return false;
-		}
-
-		if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
-					modelPermissions.getResourceName())) {
-
-			if (!modelPermissions.isUsed()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						new Exception(
-							"First model permissions used for " +
-								resourcePermissionName));
-				}
-
-				return true;
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						new Exception(
-							"First model permissions already used for " +
-								resourcePermissionName));
-				}
-
-				return false;
-			}
-		}
-
-		if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
-					modelPermissions.getResourceName())) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					new Exception(
-						"Model permissions for all resources used for " +
-							resourcePermissionName));
-			}
-
-			return true;
-		}
-
-		if (resourcePermissionName.equals(
-					modelPermissions.getResourceName())) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					new Exception(
-						"Correct model permissions used for " +
-							resourcePermissionName));
-			}
-
-			return true;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				new Exception(
-					StringBundler.concat(
-						"Incorrect resource name ",
-						modelPermissions.getResourceName(), " used for ",
-						resourcePermissionName)));
-		}
-
-		return false;
-	}
-
 	private Map<Long, ResourcePermission> _getResourcePermissionsMap(
 		List<ResourcePermission> resourcePermissions) {
 
@@ -2057,6 +1976,83 @@ public class ResourcePermissionLocalServiceImpl
 				IndexWriterHelperUtil.updatePermissionFields(name, name);
 			}
 		}
+	}
+
+	private boolean _matches(
+		ModelPermissions modelPermissions, String resourcePermissionName) {
+
+		if ((modelPermissions == null) ||
+			ModelPermissions.RESOURCE_NAME_UNINITIALIZED.equals(
+				modelPermissions.getResourceName())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Uninitialized model permissions used for " +
+							resourcePermissionName));
+			}
+
+			return false;
+		}
+
+		if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
+				modelPermissions.getResourceName())) {
+
+			if (!modelPermissions.isUsed()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						new Exception(
+							"First model permissions used for " +
+								resourcePermissionName));
+				}
+
+				return true;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"First model permissions already used for " +
+							resourcePermissionName));
+			}
+
+			return false;
+		}
+
+		if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
+				modelPermissions.getResourceName())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Model permissions for all resources used for " +
+							resourcePermissionName));
+			}
+
+			return true;
+		}
+
+		if (resourcePermissionName.equals(modelPermissions.getResourceName())) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new Exception(
+						"Correct model permissions used for " +
+							resourcePermissionName));
+			}
+
+			return true;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				new Exception(
+					StringBundler.concat(
+						"Incorrect resource name ",
+						modelPermissions.getResourceName(), " used for ",
+						resourcePermissionName)));
+		}
+
+		return false;
 	}
 
 	private boolean _updateResourcePermission(

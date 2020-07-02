@@ -40,14 +40,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel',
 	},
 
-	duplicateItem: {
-		icon: 'paste',
-		id: 'duplicate_item',
-		panelId: '',
-		title: Liferay.Language.get('duplicate'),
-		type: 'panel',
-	},
-
 	fragmentBackgroundImage: {
 		icon: 'pencil',
 		id: 'fragment_background_image',
@@ -85,14 +77,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		id: 'row_styles',
 		panelId: 'row_styles',
 		title: Liferay.Language.get('row-styles'),
-		type: 'panel',
-	},
-
-	saveFragmentComposition: {
-		icon: 'disk',
-		id: 'save_fragment_composition',
-		panelId: 'save_fragment_compositionn',
-		title: Liferay.Language.get('save-as-fragment'),
 		type: 'panel',
 	},
 };

@@ -16,7 +16,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
@@ -28,20 +28,17 @@ import {config} from '../../config/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
-import {useDispatch, useSelector} from '../../store/index';
-import duplicateItem from '../../thunks/duplicateItem';
+import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
 import Row from './Row';
-import hasDropZoneChild from './hasDropZoneChild';
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const {rowConfig} = layoutData.items[item.itemId];
-		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
@@ -64,9 +61,6 @@ const RowWithControls = React.forwardRef(
 			},
 		});
 
-		const segmentsExperienceId = useSelector(
-			(state) => state.segmentsExperienceId
-		);
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
@@ -79,37 +73,7 @@ const RowWithControls = React.forwardRef(
 
 		const [setRef, itemElement] = useSetRef(ref);
 
-		const handleButtonClick = useCallback(
-			(id) => {
-				if (
-					id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id
-				) {
-					dispatch(
-						duplicateItem({
-							itemId: item.itemId,
-							segmentsExperienceId,
-						})
-					);
-				}
-				else if (
-					id ===
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
-						.id
-				) {
-					setOpenSaveFragmentCompositionModal(true);
-				}
-			},
-			[dispatch, item.itemId, segmentsExperienceId]
-		);
-
 		const buttons = [];
-
-		if (canUpdatePageStructure && !hasDropZoneChild(item, layoutData)) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
-			buttons.push(
-				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
-			);
-		}
 
 		if (selectCanUpdateItemConfiguration) {
 			if (config.responsiveEnabled) {
@@ -152,7 +116,6 @@ const RowWithControls = React.forwardRef(
 								buttons={buttons}
 								item={item}
 								itemElement={itemElement}
-								onButtonClick={handleButtonClick}
 							/>
 						)}
 						{children}

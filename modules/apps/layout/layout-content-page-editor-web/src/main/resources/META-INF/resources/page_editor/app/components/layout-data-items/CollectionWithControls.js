@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
@@ -21,59 +21,29 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
-import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
-import {useDispatch, useSelector} from '../../store/index';
-import duplicateItem from '../../thunks/duplicateItem';
-import {useSelectItem} from '../Controls';
+import {useSelector} from '../../store/index';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
 
 const CollectionWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const canUpdatePageStructure = useSelector(
-			selectCanUpdatePageStructure
-		);
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
 		);
-		const dispatch = useDispatch();
-		const selectItem = useSelectItem();
-		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
 		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
 		const [setRef, itemElement] = useSetRef(ref);
 
 		const buttons = [];
 
-		if (canUpdatePageStructure) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
-		}
-
 		if (canUpdateItemConfiguration) {
 			buttons.push(
 				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
 			);
 		}
-
-		const handleButtonClick = useCallback(
-			(id) => {
-				if (
-					id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id
-				) {
-					dispatch(
-						duplicateItem({
-							itemId: item.itemId,
-							segmentsExperienceId,
-							selectItem,
-						})
-					);
-				}
-			},
-			[dispatch, item.itemId, segmentsExperienceId, selectItem]
-		);
 
 		return (
 			<Topper
@@ -91,7 +61,6 @@ const CollectionWithControls = React.forwardRef(
 							buttons={buttons}
 							item={item}
 							itemElement={itemElement}
-							onButtonClick={handleButtonClick}
 						/>
 					)}
 				</>

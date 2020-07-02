@@ -35,7 +35,7 @@ const SaveFragmentCompositionModal = ({
 	itemId,
 	observer,
 	onClose,
-	onErrorDismiss,
+	onErrorDismiss = () => true,
 }) => {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
@@ -183,7 +183,7 @@ const SaveFragmentCompositionModal = ({
 										<ClayIcon
 											className="mr-2"
 											focusable="false"
-											monospaced
+											monospaced="true"
 											role="presentation"
 											symbol="upload"
 										/>

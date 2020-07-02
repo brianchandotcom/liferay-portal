@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -28,7 +28,6 @@ import {config} from '../config/index';
 import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../store/index';
-import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 import {
@@ -44,7 +43,7 @@ import {
 	useIsHovered,
 	useSelectItem,
 } from './Controls';
-import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
+import ItemActions from './ItemActions';
 
 const TOPPER_BAR_HEIGHT = 24;
 
@@ -122,11 +121,6 @@ function Topper({children, className, item, itemElement, layoutData}) {
 					store,
 				})
 			)
-	);
-
-	const itemIsRemovable = useMemo(
-		() => canUpdatePageStructure && isRemovable(item, layoutData),
-		[canUpdatePageStructure, item, layoutData]
 	);
 
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
@@ -290,29 +284,9 @@ function Topper({children, className, item, itemElement, layoutData}) {
 							</ClayButton>
 						</TopperListItem>
 					)}
-					{itemIsRemovable && (
+					{canUpdatePageStructure && (
 						<TopperListItem>
-							<ClayButton
-								displayType="unstyled"
-								onClick={(event) => {
-									event.stopPropagation();
-
-									dispatch(
-										deleteItem({
-											itemId: item.itemId,
-											selectItem,
-											store,
-										})
-									);
-								}}
-								small
-								title={Liferay.Language.get('remove')}
-							>
-								<ClayIcon
-									className="page-editor__topper__icon"
-									symbol="times-circle"
-								/>
-							</ClayButton>
+							<ItemActions item={item}></ItemActions>
 						</TopperListItem>
 					)}
 				</ul>
@@ -336,14 +310,3 @@ Topper.propTypes = {
 	itemElement: PropTypes.object,
 	layoutData: LayoutDataPropTypes.isRequired,
 };
-
-function isRemovable(item, layoutData) {
-	if (
-		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.column
-	) {
-		return false;
-	}
-
-	return !hasDropZoneChild(item, layoutData);
-}

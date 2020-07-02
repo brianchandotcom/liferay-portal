@@ -17,43 +17,21 @@ package com.liferay.portal.file.install.internal;
 import com.liferay.portal.file.install.FileInstaller;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URI;
 import java.net.URL;
 
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
-
 /**
  * @author Matthew Tambara
  */
-public class BundleInstaller implements FileInstaller {
+public class DefaultJarInstaller implements FileInstaller {
 
 	@Override
 	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
-		if (name.endsWith(".lpkg") || name.endsWith(".txt") ||
-			name.endsWith(".xml") || name.endsWith(".properties") ||
-			name.endsWith(".cfg") || !artifact.canRead()) {
-
-			return false;
-		}
-
-		try (JarFile jarFile = new JarFile(artifact)) {
-			Manifest manifest = jarFile.getManifest();
-
-			if (manifest != null) {
-				Attributes attributes = manifest.getMainAttributes();
-
-				if (attributes.getValue("Bundle-SymbolicName") != null) {
-					return true;
-				}
-			}
-		}
-		catch (IOException ioException) {
+		if (name.endsWith(".jar")) {
+			return true;
 		}
 
 		return false;

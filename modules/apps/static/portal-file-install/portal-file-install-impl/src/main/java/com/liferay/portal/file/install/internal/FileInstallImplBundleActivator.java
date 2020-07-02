@@ -333,7 +333,8 @@ public class FileInstallImplBundleActivator
 	}
 
 	private BundleContext _bundleContext;
-	private final BundleInstaller _bundleTransformer = new BundleInstaller();
+	private final DefaultJarInstaller _bundleTransformer =
+		new DefaultJarInstaller();
 	private Runnable _cmSupport;
 	private final Map<ServiceReference<FileInstaller>, FileInstaller>
 		_fileInstallers = new TreeMap<>();

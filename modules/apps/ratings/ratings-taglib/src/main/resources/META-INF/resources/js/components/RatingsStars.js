@@ -235,52 +235,42 @@ const RatingsStars = ({
 		</ClayLayout.ContentRow>
 	) : (
 		<fieldset className="rating ratings-stacked-stars ratings-stars">
-			<ClayLayout.ContentCol title={formatAverageScore(averageScore)}>
-				<span className="ratings-stars-average">
-					<span className="inline-item inline-item-before">
-						{starScores.map(({label: score}, index, arr) => {
-							const previousScore =
-								arr[index - 1] && arr[index - 1].label;
+			<div
+				className="ratings-stars-average"
+				title={formatAverageScore(averageScore)}
+			>
+				<span className="inline-item inline-item-before">
+					{starScores.map(({label: score}, index, arr) => {
+						const previousScore =
+							arr[index - 1] && arr[index - 1].label;
+						let symbol = 'star-o';
 
-							if (averageScore >= score) {
-								return (
-									<ClayIcon
-										className="ratings-stars-average-icon"
-										key={score}
-										symbol="star"
-									/>
-								);
-							}
-							else if (averageScore > previousScore) {
-								return (
-									<ClayIcon
-										className="ratings-stars-average-icon"
-										key={score}
-										symbol="star-half"
-									/>
-								);
-							}
+						if (averageScore >= score) {
+							symbol = 'star';
+						}
+						else if (averageScore > previousScore) {
+							symbol = 'star-half';
+						}
 
-							return (
-								<ClayIcon
-									className="ratings-stars-average-icon"
-									key={score}
-									symbol="star-o"
-								/>
-							);
-						})}
-					</span>
-					<span className="inline-item ratings-stars-average-text">
-						{!!totalEntries &&
-							` (${totalEntries} ${
-								totalEntries === 1
-									? Liferay.Language.get('vote')
-									: Liferay.Language.get('votes')
-							})`}
-					</span>
-					<span className="sr-only">{getSrAverageMessage()}</span>
+						return (
+							<ClayIcon
+								className="ratings-stars-average-icon"
+								key={score}
+								symbol={symbol}
+							/>
+						);
+					})}
 				</span>
-			</ClayLayout.ContentCol>
+				<span className="inline-item ratings-stars-average-text">
+					{!!totalEntries &&
+						` (${totalEntries} ${
+							totalEntries === 1
+								? Liferay.Language.get('vote')
+								: Liferay.Language.get('votes')
+						})`}
+				</span>
+				<span className="sr-only">{getSrAverageMessage()}</span>
+			</div>
 
 			<div className="ratings-stacked-stars-vote">
 				<label

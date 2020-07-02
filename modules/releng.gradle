@@ -1420,7 +1420,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 				String version = array[2]
 
 				String[] urls = [
-					"https://repository-cdn.liferay.com/nexus/service/local/groups/public/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
+					"https://repository-cdn.liferay.com/nexus/content/groups/public/${groupPath}/${name}/${version}/${name}-${version}.jar"
 				]
 
 				artifactURLs.add(_downloadFile(cacheDir, urls))

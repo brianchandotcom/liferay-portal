@@ -91,7 +91,7 @@ public class SearchEngineInitializer implements Runnable {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Reindexing Lucene started");
+			_log.info("Reindexing started");
 		}
 
 		if (delay < 0) {
@@ -176,7 +176,7 @@ public class SearchEngineInitializer implements Runnable {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Reindexing Lucene completed in " +
+					"Reindexing completed in " +
 						(stopWatch.getTime() / Time.SECOND) + " seconds");
 			}
 		}
@@ -184,7 +184,7 @@ public class SearchEngineInitializer implements Runnable {
 			_log.error("Error encountered while reindexing", exception);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Reindexing Lucene failed");
+				_log.info("Reindexing failed");
 			}
 		}
 

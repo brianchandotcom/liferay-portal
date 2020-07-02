@@ -78,16 +78,7 @@ const props = {
 			options: {option: 'option'},
 			type: 'date',
 		},
-		{
-			label: 'Field 6',
-			name: 'field6',
-			options: {option: 'option'},
-			type: 'numeric',
-		},
-	],
-	locale: {
-		language: 'en',
-	},
+	]
 };
 
 describe('CardList', () => {

@@ -104,11 +104,10 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(workingDir.getName(), true);
-
 		ExecutePackageManagerTask executePackageManagerTask =
 			GradleUtil.addTask(
-				project, YARN_CHECK_FORMAT_TASK_NAME + suffix,
+				project,
+				_getYarnTaskName(YARN_CHECK_FORMAT_TASK_NAME, yarnLockFile),
 				ExecutePackageManagerTask.class);
 
 		executePackageManagerTask.args(_CHECK_FORMAT_SCRIPT_NAME);
@@ -175,11 +174,9 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(workingDir.getName(), true);
-
 		ExecutePackageManagerTask executePackageManagerTask =
 			GradleUtil.addTask(
-				project, YARN_FORMAT_TASK_NAME + suffix,
+				project, _getYarnTaskName(YARN_FORMAT_TASK_NAME, yarnLockFile),
 				ExecutePackageManagerTask.class);
 
 		executePackageManagerTask.args(_FORMAT_SCRIPT_NAME);
@@ -286,11 +283,10 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		File workingDir = yarnLockFile.getParentFile();
 
-		String suffix = StringUtil.camelCase(workingDir.getName(), true);
-
 		YarnInstallTask yarnInstallTask = GradleUtil.addTask(
 			parentYarnInstallTask.getProject(),
-			parentYarnInstallTask.getName() + suffix, YarnInstallTask.class);
+			_getYarnTaskName(parentYarnInstallTask.getName(), yarnLockFile),
+			YarnInstallTask.class);
 
 		yarnInstallTask.setDescription("Installs the Node.js packages.");
 		yarnInstallTask.setFrozenLockFile(frozenLockFile);
@@ -376,6 +372,14 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		FileTree yarnLockFileTree = project.fileTree(args);
 
 		return new ArrayList<>(yarnLockFileTree.getFiles());
+	}
+
+	private String _getYarnTaskName(String parentTaskName, File yarnLockFile) {
+		File workingDir = yarnLockFile.getParentFile();
+
+		String suffix = StringUtil.camelCase(workingDir.getName(), true);
+
+		return parentTaskName + suffix;
 	}
 
 	@SuppressWarnings("unchecked")

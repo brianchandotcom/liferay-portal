@@ -1128,6 +1128,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Page Structure");
 
 		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
 			Click(
 				key_nodeName = "${fragmentName}",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
@@ -1263,7 +1266,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click(locator1 = "Fragment#FRAGMENT_BODY");
 		}
 
 		Click(

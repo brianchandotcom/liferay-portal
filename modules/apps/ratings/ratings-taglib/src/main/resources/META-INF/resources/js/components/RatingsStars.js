@@ -249,7 +249,7 @@ const RatingsStars = ({
 									/>
 								);
 							}
-							else if (averageScore >= previousScore) {
+							else if (averageScore > previousScore) {
 								return (
 									<ClayIcon
 										className="ratings-stars-average-icon"

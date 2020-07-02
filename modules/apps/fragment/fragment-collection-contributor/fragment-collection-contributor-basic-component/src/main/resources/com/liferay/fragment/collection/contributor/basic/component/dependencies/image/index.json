@@ -1,6 +1,7 @@
 {
 	"fieldSets": [
 		{
+			"configurationRole": "style",
 			"fields": [
 				{
 					"dataType": "string",

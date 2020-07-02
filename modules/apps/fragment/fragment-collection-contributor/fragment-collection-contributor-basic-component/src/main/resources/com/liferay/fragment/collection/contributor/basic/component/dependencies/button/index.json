@@ -27,7 +27,12 @@
 							}
 						]
 					}
-				},
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "nm",

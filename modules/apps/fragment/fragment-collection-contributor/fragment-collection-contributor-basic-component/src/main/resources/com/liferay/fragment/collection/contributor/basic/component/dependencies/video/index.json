@@ -9,6 +9,35 @@
 					"type": "text"
 				},
 				{
+					"defaultValue": false,
+					"label": "Autoplay",
+					"name": "autoPlay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Loop",
+					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "Mute",
+					"name": "mute",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Hide controls",
+					"name": "hideControls",
+					"type": "checkbox"
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
 					"defaultValue": "",
 					"label": "Width",
 					"name": "width",
@@ -71,30 +100,6 @@
 							}
 						]
 					}
-				},
-				{
-					"defaultValue": false,
-					"label": "Autoplay",
-					"name": "autoPlay",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Loop",
-					"name": "loop",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": true,
-					"label": "Mute",
-					"name": "mute",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Hide controls",
-					"name": "hideControls",
-					"type": "checkbox"
 				}
 			]
 		}

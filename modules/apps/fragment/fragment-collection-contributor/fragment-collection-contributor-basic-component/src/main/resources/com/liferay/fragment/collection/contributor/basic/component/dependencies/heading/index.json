@@ -24,7 +24,12 @@
 							}
 						]
 					}
-				},
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "left",

@@ -1305,7 +1305,11 @@ Array [
                 "visible": true,
               },
             ],
-            "size": 12,
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
           },
         ],
       },

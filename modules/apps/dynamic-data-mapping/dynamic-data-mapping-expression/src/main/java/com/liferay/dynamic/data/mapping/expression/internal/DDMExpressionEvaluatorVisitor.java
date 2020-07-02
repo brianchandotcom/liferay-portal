@@ -511,6 +511,10 @@ public class DDMExpressionEvaluatorVisitor
 	}
 
 	protected BigDecimal getBigDecimal(Comparable<?> comparable) {
+		if (comparable == null) {
+			return BigDecimal.ZERO;
+		}
+
 		if (comparable instanceof BigDecimal) {
 			return (BigDecimal)comparable;
 		}

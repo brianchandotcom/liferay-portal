@@ -370,7 +370,7 @@ definition {
 			oldFriendlyURL = "/new-test-page");
 	}
 
-	@description = "This ensures that both the active URL and the old friendlyURL can be viewed by default language from the history after localization without friendlyURL."
+	@description = "This ensures that only the active URL can be viewed by default language from the history after localization without friendlyURL."
 	@priority = "5"
 	test ViewURLsAfterLocalizationWithoutFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -403,7 +403,7 @@ definition {
 
 		Page.viewActiveURL(activeURL = "/new-test-page");
 
-		Page.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
+		Page.viewNoOldFriendlyURL(oldFriendlyURLs = "/test-page");
 	}
 
 }

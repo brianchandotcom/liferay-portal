@@ -31,7 +31,7 @@ export default function Collapse(props) {
 	};
 
 	return (
-		<div className="page-editor__collapse panel-group panel-group-flush">
+		<div className="panel-group panel-group-flush sidebar__collapse">
 			<button
 				aria-expanded={open}
 				className={classNames(

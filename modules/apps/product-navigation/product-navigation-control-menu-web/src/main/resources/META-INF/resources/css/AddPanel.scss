@@ -2,18 +2,13 @@
 
 @import 'variables';
 
-.sidebar-content {
-	border-left: 1px solid $secondary-l3;
-	height: calc(100% - 56px);
+.sidebar-body__add-panel {
+	height: 100%;
+	overflow: auto;
+	padding: 16px;
 
-	&__add-panel {
-		height: 100%;
-		overflow: auto;
-		padding: 16px;
-
-		.form-control-sm {
-			padding-left: 12px;
-			padding-right: 12px;
-		}
+	.form-control-sm {
+		padding-left: 12px;
+		padding-right: 12px;
 	}
 }

@@ -2,7 +2,7 @@
 
 @import 'variables';
 
-.page-editor__drag-preview {
+.sidebar__drag-preview {
 	cursor: grabbing;
 	height: 100%;
 	left: 0;
@@ -19,7 +19,7 @@
 		color: $secondary-d2;
 		cursor: grabbing;
 		display: block;
-		font-size: 12px;
+		font-size: 0.75rem;
 		font-weight: 600;
 		height: 32px;
 		padding: 8px;
@@ -30,7 +30,7 @@
 		word-wrap: break-word;
 
 		.lexicon-icon {
-			font-size: 14px;
+			font-size: 0.875rem;
 		}
 	}
 }

@@ -1,14 +1,14 @@
 @import 'atlas-variables';
 
-.page-editor__collapse {
+.sidebar__collapse {
 	cursor: pointer;
 
 	.collapse-icon {
 		background: none;
 		border: 0;
 		color: $gray-600;
-		font-size: 11px;
-		height: 32px;
+		font-size: 0.7rem;
+		height: 2rem;
 		margin-bottom: 4px;
 		padding-left: 0;
 		text-align: left;
@@ -22,6 +22,6 @@
 	}
 
 	.sheet-subtitle {
-		line-height: unset;
+		line-height: inherit;
 	}
 }

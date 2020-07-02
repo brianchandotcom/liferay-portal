@@ -52,9 +52,9 @@ export default function DragPreview({rtl}) {
 	}
 
 	return (
-		<div className="page-editor__drag-preview">
+		<div className="sidebar__drag-preview">
 			<div
-				className="page-editor__drag-preview__content text-truncate"
+				className="sidebar__drag-preview__content text-truncate"
 				ref={ref}
 				style={getItemStyles(currentOffset, ref, rtl)}
 			>

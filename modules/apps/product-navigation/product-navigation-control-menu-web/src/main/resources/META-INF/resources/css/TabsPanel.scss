@@ -2,7 +2,7 @@
 
 @import 'variables';
 
-.sidebar-content__add-panel {
+.sidebar-body__add-panel {
 	&__tab-content {
 		ul.grid {
 			display: flex;
@@ -14,7 +14,7 @@
 	&__tabs {
 		border-bottom: 1px solid $gray-300;
 		color: $dark;
-		font-size: 12px;
+		font-size: 0.75rem;
 		margin-bottom: 16px;
 
 		.nav-item {

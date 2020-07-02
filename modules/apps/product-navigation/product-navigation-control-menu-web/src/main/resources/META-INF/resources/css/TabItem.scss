@@ -1,12 +1,12 @@
 @import 'atlas-variables';
 
-.sidebar__add-panel__tab-item {
+.sidebar-body__add-panel__tab-item {
 	align-items: center;
 	border-radius: 4px;
 	color: $secondary-d2;
 	cursor: grab;
 	display: flex;
-	height: 32px;
+	height: 2rem;
 	margin-bottom: 4px;
 	padding: 0 4px 0 12px;
 
@@ -42,19 +42,19 @@
 		}
 
 		&.multiline {
-			height: 136px;
+			height: 8.5rem;
 
-			.sidebar__add-panel__tab-item-add {
+			.sidebar-body__add-panel__tab-item-add {
 				right: 0;
 			}
 		}
 	}
 
 	&.multiline {
-		height: 50px;
+		height: 3.125rem;
 		position: relative;
 
-		.sidebar__add-panel__tab-item-add {
+		.sidebar-body__add-panel__tab-item-add {
 			position: absolute;
 			right: 4px;
 			top: 0;
@@ -62,7 +62,7 @@
 	}
 
 	&-add {
-		font-size: 14px;
+		font-size: 0.875rem;
 		opacity: 0;
 
 		&:focus {
@@ -78,7 +78,7 @@
 	&:hover {
 		background-color: $gray-100;
 
-		.sidebar__add-panel__tab-item-add {
+		.sidebar-body__add-panel__tab-item-add {
 			opacity: 1;
 		}
 	}
@@ -95,9 +95,9 @@
 	&-body {
 		align-items: center;
 		display: flex;
-		font-size: 14px;
+		font-size: 0.875rem;
 		text-align: center;
-		width: calc(100% - 24px);
+		width: calc(100% - 1.5rem);
 
 		.icon {
 			align-self: flex-start;
@@ -116,14 +116,14 @@
 		}
 
 		.title {
-			font-size: 12px;
+			font-size: 0.75rem;
 			font-weight: 600;
 		}
 
 		.subtitle {
 			color: $gray-600;
 			flex-basis: 100%;
-			font-size: 12px;
+			font-size: 0.75rem;
 		}
 	}
 }

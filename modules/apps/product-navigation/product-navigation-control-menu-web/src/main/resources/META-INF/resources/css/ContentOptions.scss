@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-.sidebar-content__add-panel__content-options {
+.sidebar-body__add-panel__content-options {
 	display: flex;
 
 	&-add {
@@ -16,7 +16,7 @@
 		border: 0;
 		color: $gray-600;
 		font-weight: 600;
-		min-width: 120px;
+		width: 140px;
 	}
 
 	&-add,

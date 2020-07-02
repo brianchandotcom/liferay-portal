@@ -51,11 +51,11 @@ export default function ContentOptions({onChangeSelect}) {
 	const [active, setActive] = useState(false);
 
 	return (
-		<div className="sidebar-content__add-panel__content-options">
+		<div className="sidebar-body__add-panel__content-options">
 			<ClayForm.Group small>
 				<ClaySelectWithOption
 					aria-label="Select Label"
-					className="btn-monospaced sidebar-content__add-panel__content-options-select"
+					className="btn-monospaced sidebar-body__add-panel__content-options-select"
 					id={`${portletNamespace}_contentDropdown`}
 					onChange={(event) => onChangeSelect(event.target.value)}
 					options={OPTIONS}
@@ -63,7 +63,7 @@ export default function ContentOptions({onChangeSelect}) {
 				/>
 			</ClayForm.Group>
 			<ClayButton
-				className="btn-monospaced sidebar-content__add-panel__content-options-list"
+				className="btn-monospaced sidebar-body__add-panel__content-options-list"
 				displayType="unstyled"
 				onClick={() => setDisplayGrid(!displayGrid)}
 				small
@@ -80,7 +80,7 @@ export default function ContentOptions({onChangeSelect}) {
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
-						className="btn-monospaced sidebar-content__add-panel__content-options-add"
+						className="btn-monospaced sidebar-body__add-panel__content-options-add"
 						displayType="unstyled"
 						small
 						title={Liferay.Language.get('add-new')}

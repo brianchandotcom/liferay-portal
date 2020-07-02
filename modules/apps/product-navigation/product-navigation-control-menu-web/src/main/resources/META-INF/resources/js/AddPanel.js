@@ -105,7 +105,7 @@ export default function AddPanel({
 
 	return (
 		<div
-			className={classNames('sidebar-content__add-panel', {
+			className={classNames('sidebar-body__add-panel', {
 				rtl,
 			})}
 		>

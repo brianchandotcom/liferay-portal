@@ -78,12 +78,15 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 	%>
 
 	<clay:container-fluid
+		cssClass="container-form-lg search-admin-index-actions-container sheet-lg"
 		id='<%= liferayPortletResponse.getNamespace() + "adminSearchAdminIndexActionsPanel" %>'
 	>
-		<ul class="list-group system-action-group">
+		<ul class="list-group">
 			<li class="list-group-item list-group-item-flex">
 				<div class="autofit-col autofit-col-expand">
-					<liferay-ui:message key="reindex-all-search-indexes" />
+					<p class="list-group-title">
+						<liferay-ui:message key="reindex-all-search-indexes" />
+					</p>
 				</div>
 
 				<%
@@ -115,7 +118,9 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 			</li>
 			<li class="list-group-item list-group-item-flex">
 				<div class="autofit-col autofit-col-expand">
-					<liferay-ui:message key="reindex-all-spell-check-indexes" />
+					<p class="list-group-title">
+						<liferay-ui:message key="reindex-all-spell-check-indexes" />
+					</p>
 				</div>
 
 				<div class="autofit-col">
@@ -134,7 +139,9 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col autofit-col-expand">
-						<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
+						<p class="list-group-title">
+							<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
+						</p>
 					</div>
 
 					<div class="autofit-col index-action-wrapper" data-type="<%= indexer.getClassName() %>">

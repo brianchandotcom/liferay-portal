@@ -1,9 +1,5 @@
-.search-admin-actions-panel {
-	.float-left {
-		color: #272833;
-	}
-
-	.panel-body {
-		padding: 0;
+.search-admin-index-actions-container {
+	.list-group-item-flex .autofit-col .list-group-title:only-child {
+		min-height: 40px;
 	}
 }

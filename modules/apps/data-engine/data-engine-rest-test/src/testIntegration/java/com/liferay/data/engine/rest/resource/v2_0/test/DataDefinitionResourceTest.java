@@ -118,11 +118,11 @@ public class DataDefinitionResourceTest
 		DataDefinition postDataDefinition =
 			testGetDataDefinition_addDataDefinition();
 
-		Page<Permission> pagePermissions =
+		Page<Permission> page =
 			dataDefinitionResource.getDataDefinitionPermissionsPage(
 				postDataDefinition.getId(), RoleConstants.GUEST);
 
-		Assert.assertNotNull(pagePermissions);
+		Assert.assertNotNull(page);
 	}
 
 	@Override

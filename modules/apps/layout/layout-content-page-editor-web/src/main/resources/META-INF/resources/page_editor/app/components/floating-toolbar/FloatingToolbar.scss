@@ -66,6 +66,15 @@
 		position: fixed;
 		z-index: $floatingToolbarPanelZIndex;
 
+		&-header {
+			align-items: center;
+			border-bottom: 1px solid $secondary-l3;
+			display: flex;
+			font-weight: bold;
+			justify-content: space-between;
+			margin-bottom: 0.5rem;
+		}
+
 		& > .popover {
 			max-height: 250px;
 			min-width: $floatingToolbarPanelMinWidth;

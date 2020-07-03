@@ -78,13 +78,6 @@ public class ArchivedModulesUpgradeTest {
 	}
 
 	@Test
-	public void testDeprecatedModulesInvitation() throws Exception {
-		_testDeprecatedModulesUpgrade(
-			"removeInvitationModuleData", "com.liferay.invitation.web", null,
-			"com_liferay_invitation_web_portlet_InvitationPortlet");
-	}
-
-	@Test
 	public void testDeprecatedModulesUpgradeChat() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"removeChatModuleData", "com.liferay.chat.service",
@@ -99,18 +92,25 @@ public class ArchivedModulesUpgradeTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradeDirectory() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"removeDirectoryModuleData", "com.liferay.directory.web", null,
+			"com_liferay_directory_web_portlet_DirectoryPortlet");
+	}
+
+	@Test
+	public void testDeprecatedModulesUpgradeInvitation() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"removeInvitationModuleData", "com.liferay.invitation.web", null,
+			"com_liferay_invitation_web_portlet_InvitationPortlet");
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeMailReader() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"removeMailReaderModuleData", "com.liferay.mail.reader.service",
 			"dependencies/mail-reader-tables.sql",
 			"com_liferay_mail_reader_web_portlet_MailPortlet");
-	}
-
-	@Test
-	public void testDeprecatedModulesUpgradeDirectory() throws Exception {
-		_testDeprecatedModulesUpgrade(
-			"removeDirectoryModuleData", "com.liferay.directory.web",
-			null, "com_liferay_directory_web_portlet_DirectoryPortlet");
 	}
 
 	@Test

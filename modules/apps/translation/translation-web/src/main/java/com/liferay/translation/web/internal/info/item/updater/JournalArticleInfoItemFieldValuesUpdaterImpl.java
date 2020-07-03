@@ -71,9 +71,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			for (Locale locale :
 					labelInfoLocalizedValue.getAvailableLocales()) {
 
-				translatedLocales.add(locale);
+				if ((infoFieldValue.getValue(locale) != null) &&
+					(infoFieldValue.getValue(locale) instanceof String)) {
 
-				if (infoFieldValue.getValue(locale) instanceof String) {
+					translatedLocales.add(locale);
+
 					String fieldName = infoField.getName();
 
 					String valueString = String.valueOf(
@@ -142,7 +144,9 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
 			Field field = ddmFields.get(entry.getKey());
 
-			field.setValue(targetLocale, entry.getValue());
+			if (field != null) {
+				field.setValue(targetLocale, entry.getValue());
+			}
 		}
 
 		return _journalConverter.getContent(ddmStructure, ddmFields);

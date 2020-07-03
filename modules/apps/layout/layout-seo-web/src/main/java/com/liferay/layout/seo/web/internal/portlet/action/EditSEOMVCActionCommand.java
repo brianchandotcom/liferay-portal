@@ -117,14 +117,21 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
 		if (draftLayout != null) {
-			_layoutService.updateLayout(
+			draftLayout = _layoutService.updateLayout(
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				draftLayout.getParentLayoutId(), draftLayout.getNameMap(),
 				titleMap, descriptionMap, keywordsMap, robotsMap,
 				draftLayout.getType(), draftLayout.isHidden(),
 				draftLayout.getFriendlyURLMap(), draftLayout.isIconImage(),
 				null, serviceContext);
+
+			draftLayout = _updateTypeSettings(
+				draftLayout, formTypeSettingsUnicodeProperties);
 
 			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, draftLayout.getLayoutId(),
@@ -135,10 +142,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		UnicodeProperties layoutTypeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
-
-		UnicodeProperties formTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -193,6 +196,48 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, portletResource + "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	private Layout _updateTypeSettings(
+			Layout layout, UnicodeProperties formTypeSettingsUnicodeProperties)
+		throws Exception {
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String type = layout.getType();
+
+		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
+			layoutTypeSettingsUnicodeProperties.putAll(
+				formTypeSettingsUnicodeProperties);
+
+			boolean layoutCustomizable = GetterUtil.getBoolean(
+				layoutTypeSettingsUnicodeProperties.get(
+					LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+			if (!layoutCustomizable) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				layoutTypePortlet.removeCustomization(
+					layoutTypeSettingsUnicodeProperties);
+			}
+
+			return _layoutService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(),
+				layoutTypeSettingsUnicodeProperties.toString());
+		}
+
+		layoutTypeSettingsUnicodeProperties.putAll(
+			formTypeSettingsUnicodeProperties);
+
+		layoutTypeSettingsUnicodeProperties.putAll(
+			layout.getTypeSettingsProperties());
+
+		return _layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layoutTypeSettingsUnicodeProperties.toString());
 	}
 
 	@Reference

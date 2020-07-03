@@ -10,8 +10,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
-import * as toast from 'app-builder-web/js/utils/toast.es';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import EditEntry from '../../../src/main/resources/META-INF/resources/js/pages/entry/EditEntry.es';
@@ -19,15 +18,29 @@ import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import PermissionsContextProviderWrapper from '../../PermissionsContextProviderWrapper.es';
 
 const context = {
-	addEntryURL: 'http://liferay.com/',
 	appId: 1,
 	basePortletURL: 'portlet_url',
-	namespace: 'app_builder',
 };
 
 const mockNavigate = jest.fn();
 const mockSubmit = jest.fn();
 const mockToast = jest.fn();
+
+jest.mock('frontend-js-web', () => ({
+	createResourceURL: jest.fn(() => 'http://resource_url?'),
+	fetch: jest.fn().mockResolvedValue(),
+}));
+
+jest.mock('app-builder-web/js/utils/client.es', () => ({
+	getItem: jest.fn().mockResolvedValue({}),
+	updateItem: jest.fn().mockResolvedValue({}),
+}));
+
+jest.mock('app-builder-web/js/utils/toast.es', () => ({
+	__esModule: true,
+	errorToast: (title) => mockToast(title),
+	successToast: (title) => mockToast(title),
+}));
 
 jest.mock('app-builder-web/js/hooks/withDDMForm.es', () => ({
 	__esModule: true,
@@ -49,15 +62,11 @@ window.Liferay.Util = {
 describe('EditEntry', () => {
 	afterEach(cleanup);
 
-	beforeAll(() => {
-		jest.spyOn(toast, 'successToast').mockImplementation((message) =>
-			mockToast(message)
-		);
+	afterAll(() => {
+		jest.restoreAllMocks();
 	});
 
 	it('renders on create mode', async () => {
-		fetch.mockResponse();
-
 		const {container, queryAllByRole} = render(
 			<AppContextProviderWrapper appContext={context}>
 				<EditEntry dataRecordId="0" />
@@ -75,7 +84,9 @@ describe('EditEntry', () => {
 		expect(buttons[0]).toHaveTextContent('submit');
 		expect(buttons[1]).toHaveTextContent('cancel');
 
-		await fireEvent.click(buttons[0]);
+		await act(async () => {
+			await fireEvent.click(buttons[0]);
+		});
 
 		expect(mockSubmit.mock.calls.length).toBe(1);
 		expect(mockToast).toHaveBeenCalledWith('an-entry-was-added');
@@ -83,8 +94,6 @@ describe('EditEntry', () => {
 	});
 
 	it('renders on edit mode', async () => {
-		fetch.mockResponse();
-
 		const {container, queryAllByRole} = render(
 			<AppContextProviderWrapper appContext={context}>
 				<EditEntry dataRecordId="1" redirect="/home" />
@@ -102,8 +111,12 @@ describe('EditEntry', () => {
 		expect(buttons[0]).toHaveTextContent('submit');
 		expect(buttons[1]).toHaveTextContent('cancel');
 
-		await fireEvent.click(buttons[0]);
+		await act(async () => {
+			await fireEvent.click(buttons[0]);
+		});
 
 		expect(mockSubmit.mock.calls.length).toBe(2);
+		expect(mockToast).toHaveBeenCalledWith('an-entry-was-updated');
+		expect(mockNavigate).toHaveBeenCalledWith('/home');
 	});
 });

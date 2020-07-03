@@ -24,6 +24,18 @@ import AppContextProviderWrapper from '../../../AppContextProviderWrapper.es';
 
 const mockToast = jest.fn();
 
+jest.mock('frontend-js-web', () => ({
+	createResourceURL: jest.fn(() => 'http://resource_url?'),
+	fetch: jest.fn().mockResolvedValue(),
+}));
+
+jest.mock('app-builder-web/js/utils/client.es', () => ({
+	parseResponse: jest
+		.fn()
+		.mockReturnValueOnce({app: {appDeployments: [{type: 'standalone'}]}})
+		.mockRejectedValue({title: 'App name can not be null'}),
+}));
+
 jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: (title) => mockToast(title),
@@ -84,8 +96,6 @@ describe('DeployAppModal', () => {
 
 	describe('Add', () => {
 		it('renders correctly and submit', async () => {
-			fetch.mockResponse();
-
 			const {baseElement, getByText} = render(
 				<DeployAppModal onCancel={mockOnCancel} />,
 				{wrapper: EditAppContextProviderWrapper}
@@ -144,9 +154,6 @@ describe('DeployAppModal', () => {
 			expect(deployButton).toBeEnabled();
 			expect(toggleSwitches.length).toBe(3);
 			expect(toggleSwitches[1].checked).toBeTruthy();
-
-			fetch.mockResponseOnce();
-			fetch.mockReject({title: 'App name can not be null'});
 
 			await act(async () => {
 				await fireEvent.click(deployButton);

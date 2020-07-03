@@ -24,6 +24,7 @@ const baseProps = {
 	classPK: 'classPK',
 	enabled: true,
 	numberOfStars: 5,
+	randomNamespace: '_random_namespace_',
 	signedIn: true,
 	type: 'stars',
 	url: 'http://url',

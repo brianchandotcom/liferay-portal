@@ -2001,7 +2001,7 @@ definition {
 				key_colPosition = "${n}",
 				key_entryContent = "${description}",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
 		}
@@ -2076,7 +2076,7 @@ definition {
 				key_colPosition = "${n}",
 				key_entryContent = "${title}",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
 		}
@@ -2404,7 +2404,7 @@ definition {
 				key_colPosition = "${n}",
 				key_entryContent = "${content}",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
 		}

@@ -97,7 +97,7 @@ export default function multipleUndo({numberOfActions, store, type}) {
 				return promise.then(() => {
 					return undoAction({
 						action: undo,
-						store: {...updatedStore},
+						store: updatedStore,
 					})(multipleUndoDispatch(undo.originalType || undo.type));
 				});
 			}, Promise.resolve())

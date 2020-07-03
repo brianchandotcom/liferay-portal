@@ -35,16 +35,23 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.version.VersionService;
+import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.model.StyleBookEntryVersion;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
+import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersistence;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
@@ -63,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class StyleBookEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AopService, IdentifiableOSGiService, StyleBookEntryLocalService {
+	implements AopService, IdentifiableOSGiService, StyleBookEntryLocalService,
+			   VersionService<StyleBookEntry, StyleBookEntryVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -86,15 +94,22 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new style book entry with the primary key. Does not add the style book entry to the database.
+	 * Creates a new style book entry. Does not add the style book entry to the database.
 	 *
-	 * @param styleBookEntryId the primary key for the new style book entry
 	 * @return the new style book entry
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public StyleBookEntry createStyleBookEntry(long styleBookEntryId) {
-		return styleBookEntryPersistence.create(styleBookEntryId);
+	public StyleBookEntry create() {
+		long primaryKey = counterLocalService.increment(
+			StyleBookEntry.class.getName());
+
+		StyleBookEntry draftStyleBookEntry = styleBookEntryPersistence.create(
+			primaryKey);
+
+		draftStyleBookEntry.setHeadId(primaryKey);
+
+		return draftStyleBookEntry;
 	}
 
 	/**
@@ -109,7 +124,14 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
 		throws PortalException {
 
-		return styleBookEntryPersistence.remove(styleBookEntryId);
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByPrimaryKey(styleBookEntryId);
+
+		if (styleBookEntry != null) {
+			delete(styleBookEntry);
+		}
+
+		return styleBookEntry;
 	}
 
 	/**
@@ -124,7 +146,9 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
 		throws PortalException {
 
-		return styleBookEntryPersistence.remove(styleBookEntry);
+		delete(styleBookEntry);
+
+		return styleBookEntry;
 	}
 
 	@Override
@@ -349,8 +373,11 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public StyleBookEntry updateStyleBookEntry(StyleBookEntry styleBookEntry) {
-		return styleBookEntryPersistence.update(styleBookEntry);
+	public StyleBookEntry updateStyleBookEntry(
+			StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
+
+		return updateDraft(draftStyleBookEntry);
 	}
 
 	@Override
@@ -365,6 +392,413 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		styleBookEntryLocalService = (StyleBookEntryLocalService)aopProxy;
 	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public StyleBookEntry checkout(
+			StyleBookEntry publishedStyleBookEntry, int version)
+		throws PortalException {
+
+		if (!publishedStyleBookEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+					publishedStyleBookEntry.getHeadId());
+		}
+
+		StyleBookEntry draftStyleBookEntry =
+			styleBookEntryPersistence.fetchByHeadId(
+				publishedStyleBookEntry.getPrimaryKey());
+
+		if (draftStyleBookEntry != null) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+					publishedStyleBookEntry.getPrimaryKey());
+		}
+
+		StyleBookEntryVersion styleBookEntryVersion = getVersion(
+			publishedStyleBookEntry, version);
+
+		draftStyleBookEntry = _createDraft(publishedStyleBookEntry);
+
+		styleBookEntryVersion.populateVersionedModel(draftStyleBookEntry);
+
+		draftStyleBookEntry = styleBookEntryPersistence.update(
+			draftStyleBookEntry);
+
+		for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterCheckout(draftStyleBookEntry, version);
+		}
+
+		return draftStyleBookEntry;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public StyleBookEntry delete(StyleBookEntry publishedStyleBookEntry)
+		throws PortalException {
+
+		if (!publishedStyleBookEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"StyleBookEntry is a draft " +
+					publishedStyleBookEntry.getPrimaryKey());
+		}
+
+		StyleBookEntry draftStyleBookEntry =
+			styleBookEntryPersistence.fetchByHeadId(
+				publishedStyleBookEntry.getPrimaryKey());
+
+		if (draftStyleBookEntry != null) {
+			deleteDraft(draftStyleBookEntry);
+		}
+
+		for (StyleBookEntryVersion styleBookEntryVersion :
+				getVersions(publishedStyleBookEntry)) {
+
+			styleBookEntryVersionPersistence.remove(styleBookEntryVersion);
+		}
+
+		styleBookEntryPersistence.remove(publishedStyleBookEntry);
+
+		for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDelete(publishedStyleBookEntry);
+		}
+
+		return publishedStyleBookEntry;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public StyleBookEntry deleteDraft(StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
+
+		if (draftStyleBookEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"StyleBookEntry is not a draft " +
+					draftStyleBookEntry.getPrimaryKey());
+		}
+
+		styleBookEntryPersistence.remove(draftStyleBookEntry);
+
+		for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDeleteDraft(draftStyleBookEntry);
+		}
+
+		return draftStyleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntryVersion deleteVersion(
+			StyleBookEntryVersion styleBookEntryVersion)
+		throws PortalException {
+
+		StyleBookEntryVersion latestStyleBookEntryVersion =
+			styleBookEntryVersionPersistence.findByStyleBookEntryId_First(
+				styleBookEntryVersion.getVersionedModelId(), null);
+
+		if (latestStyleBookEntryVersion.getVersion() ==
+				styleBookEntryVersion.getVersion()) {
+
+			throw new IllegalArgumentException(
+				"Unable to delete latest version " +
+					styleBookEntryVersion.getVersion());
+		}
+
+		styleBookEntryVersion = styleBookEntryVersionPersistence.remove(
+			styleBookEntryVersion);
+
+		for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDeleteVersion(styleBookEntryVersion);
+		}
+
+		return styleBookEntryVersion;
+	}
+
+	@Override
+	public StyleBookEntry fetchDraft(StyleBookEntry styleBookEntry) {
+		if (styleBookEntry.isHead()) {
+			return styleBookEntryPersistence.fetchByHeadId(
+				styleBookEntry.getPrimaryKey());
+		}
+
+		return styleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntry fetchDraft(long primaryKey) {
+		return styleBookEntryPersistence.fetchByHeadId(primaryKey);
+	}
+
+	@Override
+	public StyleBookEntryVersion fetchLatestVersion(
+		StyleBookEntry styleBookEntry) {
+
+		long primaryKey = styleBookEntry.getHeadId();
+
+		if (styleBookEntry.isHead()) {
+			primaryKey = styleBookEntry.getPrimaryKey();
+		}
+
+		return styleBookEntryVersionPersistence.fetchByStyleBookEntryId_First(
+			primaryKey, null);
+	}
+
+	@Override
+	public StyleBookEntry fetchPublished(StyleBookEntry styleBookEntry) {
+		if (styleBookEntry.isHead()) {
+			return styleBookEntry;
+		}
+
+		if (styleBookEntry.getHeadId() == styleBookEntry.getPrimaryKey()) {
+			return null;
+		}
+
+		return styleBookEntryPersistence.fetchByPrimaryKey(
+			styleBookEntry.getHeadId());
+	}
+
+	@Override
+	public StyleBookEntry fetchPublished(long primaryKey) {
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByPrimaryKey(primaryKey);
+
+		if ((styleBookEntry == null) ||
+			(styleBookEntry.getHeadId() == styleBookEntry.getPrimaryKey())) {
+
+			return null;
+		}
+
+		return styleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntry getDraft(StyleBookEntry styleBookEntry)
+		throws PortalException {
+
+		if (!styleBookEntry.isHead()) {
+			return styleBookEntry;
+		}
+
+		StyleBookEntry draftStyleBookEntry =
+			styleBookEntryPersistence.fetchByHeadId(
+				styleBookEntry.getPrimaryKey());
+
+		if (draftStyleBookEntry == null) {
+			draftStyleBookEntry = styleBookEntryLocalService.updateDraft(
+				_createDraft(styleBookEntry));
+		}
+
+		return draftStyleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntry getDraft(long primaryKey) throws PortalException {
+		StyleBookEntry draftStyleBookEntry =
+			styleBookEntryPersistence.fetchByHeadId(primaryKey);
+
+		if (draftStyleBookEntry == null) {
+			StyleBookEntry styleBookEntry =
+				styleBookEntryPersistence.findByPrimaryKey(primaryKey);
+
+			draftStyleBookEntry = styleBookEntryLocalService.updateDraft(
+				_createDraft(styleBookEntry));
+		}
+
+		return draftStyleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntryVersion getVersion(
+			StyleBookEntry styleBookEntry, int version)
+		throws PortalException {
+
+		long primaryKey = styleBookEntry.getHeadId();
+
+		if (styleBookEntry.isHead()) {
+			primaryKey = styleBookEntry.getPrimaryKey();
+		}
+
+		return styleBookEntryVersionPersistence.findByStyleBookEntryId_Version(
+			primaryKey, version);
+	}
+
+	@Override
+	public List<StyleBookEntryVersion> getVersions(
+		StyleBookEntry styleBookEntry) {
+
+		long primaryKey = styleBookEntry.getPrimaryKey();
+
+		if (!styleBookEntry.isHead()) {
+			if (styleBookEntry.getHeadId() == styleBookEntry.getPrimaryKey()) {
+				return Collections.emptyList();
+			}
+
+			primaryKey = styleBookEntry.getHeadId();
+		}
+
+		return styleBookEntryVersionPersistence.findByStyleBookEntryId(
+			primaryKey);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public StyleBookEntry publishDraft(StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
+
+		if (draftStyleBookEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Can only publish drafts " +
+					draftStyleBookEntry.getPrimaryKey());
+		}
+
+		StyleBookEntry headStyleBookEntry = null;
+
+		int version = 1;
+
+		if (draftStyleBookEntry.getHeadId() ==
+				draftStyleBookEntry.getPrimaryKey()) {
+
+			headStyleBookEntry = create();
+
+			draftStyleBookEntry.setHeadId(headStyleBookEntry.getPrimaryKey());
+		}
+		else {
+			headStyleBookEntry = styleBookEntryPersistence.findByPrimaryKey(
+				draftStyleBookEntry.getHeadId());
+
+			StyleBookEntryVersion latestStyleBookEntryVersion =
+				styleBookEntryVersionPersistence.findByStyleBookEntryId_First(
+					draftStyleBookEntry.getHeadId(), null);
+
+			version = latestStyleBookEntryVersion.getVersion() + 1;
+		}
+
+		StyleBookEntryVersion styleBookEntryVersion =
+			styleBookEntryVersionPersistence.create(
+				counterLocalService.increment(
+					StyleBookEntryVersion.class.getName()));
+
+		styleBookEntryVersion.setVersion(version);
+		styleBookEntryVersion.setVersionedModelId(
+			headStyleBookEntry.getPrimaryKey());
+
+		draftStyleBookEntry.populateVersionModel(styleBookEntryVersion);
+
+		styleBookEntryVersionPersistence.update(styleBookEntryVersion);
+
+		styleBookEntryVersion.populateVersionedModel(headStyleBookEntry);
+
+		headStyleBookEntry.setHeadId(-headStyleBookEntry.getPrimaryKey());
+
+		headStyleBookEntry = styleBookEntryPersistence.update(
+			headStyleBookEntry);
+
+		for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterPublishDraft(
+				draftStyleBookEntry, version);
+		}
+
+		deleteDraft(draftStyleBookEntry);
+
+		return headStyleBookEntry;
+	}
+
+	@Override
+	public void registerListener(
+		VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+			versionServiceListener) {
+
+		_versionServiceListeners.add(versionServiceListener);
+	}
+
+	@Override
+	public void unregisterListener(
+		VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+			versionServiceListener) {
+
+		_versionServiceListeners.remove(versionServiceListener);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public StyleBookEntry updateDraft(StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
+
+		if (draftStyleBookEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Can only update draft entries " +
+					draftStyleBookEntry.getPrimaryKey());
+		}
+
+		StyleBookEntry previousStyleBookEntry =
+			styleBookEntryPersistence.fetchByPrimaryKey(
+				draftStyleBookEntry.getPrimaryKey());
+
+		draftStyleBookEntry = styleBookEntryPersistence.update(
+			draftStyleBookEntry);
+
+		if (previousStyleBookEntry == null) {
+			for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+					versionServiceListener : _versionServiceListeners) {
+
+				versionServiceListener.afterCreateDraft(draftStyleBookEntry);
+			}
+		}
+		else {
+			for (VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>
+					versionServiceListener : _versionServiceListeners) {
+
+				versionServiceListener.afterUpdateDraft(draftStyleBookEntry);
+			}
+		}
+
+		return draftStyleBookEntry;
+	}
+
+	private StyleBookEntry _createDraft(StyleBookEntry publishedStyleBookEntry)
+		throws PortalException {
+
+		StyleBookEntry draftStyleBookEntry = create();
+
+		draftStyleBookEntry.setHeadId(publishedStyleBookEntry.getPrimaryKey());
+		draftStyleBookEntry.setGroupId(publishedStyleBookEntry.getGroupId());
+		draftStyleBookEntry.setCompanyId(
+			publishedStyleBookEntry.getCompanyId());
+		draftStyleBookEntry.setUserId(publishedStyleBookEntry.getUserId());
+		draftStyleBookEntry.setUserName(publishedStyleBookEntry.getUserName());
+		draftStyleBookEntry.setCreateDate(
+			publishedStyleBookEntry.getCreateDate());
+		draftStyleBookEntry.setDefaultStyleBookEntry(
+			publishedStyleBookEntry.getDefaultStyleBookEntry());
+		draftStyleBookEntry.setName(publishedStyleBookEntry.getName());
+		draftStyleBookEntry.setPreviewFileEntryId(
+			publishedStyleBookEntry.getPreviewFileEntryId());
+		draftStyleBookEntry.setStyleBookEntryKey(
+			publishedStyleBookEntry.getStyleBookEntryKey());
+		draftStyleBookEntry.setTokensValues(
+			publishedStyleBookEntry.getTokensValues());
+
+		draftStyleBookEntry.resetOriginalValues();
+
+		return draftStyleBookEntry;
+	}
+
+	private final Set
+		<VersionServiceListener<StyleBookEntry, StyleBookEntryVersion>>
+			_versionServiceListeners = Collections.newSetFromMap(
+				new ConcurrentHashMap
+					<VersionServiceListener
+						<StyleBookEntry, StyleBookEntryVersion>,
+					 Boolean>());
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -420,5 +854,8 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
+
+	@Reference
+	protected StyleBookEntryVersionPersistence styleBookEntryVersionPersistence;
 
 }

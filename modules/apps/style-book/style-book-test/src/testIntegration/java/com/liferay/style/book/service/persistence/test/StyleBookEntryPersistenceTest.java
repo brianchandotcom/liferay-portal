@@ -126,6 +126,8 @@ public class StyleBookEntryPersistenceTest {
 
 		newStyleBookEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newStyleBookEntry.setHeadId(RandomTestUtil.nextLong());
+
 		newStyleBookEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newStyleBookEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -155,6 +157,8 @@ public class StyleBookEntryPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntry.getMvccVersion(),
 			newStyleBookEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingStyleBookEntry.getHeadId(), newStyleBookEntry.getHeadId());
 		Assert.assertEquals(
 			existingStyleBookEntry.getStyleBookEntryId(),
 			newStyleBookEntry.getStyleBookEntryId());
@@ -196,11 +200,29 @@ public class StyleBookEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId_Head() throws Exception {
+		_persistence.countByGroupId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByGroupId_Head(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_D() throws Exception {
 		_persistence.countByG_D(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_D(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_D_Head() throws Exception {
+		_persistence.countByG_D_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_D_Head(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -213,12 +235,43 @@ public class StyleBookEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_LikeN_Head() throws Exception {
+		_persistence.countByG_LikeN_Head(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_LikeN_Head(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_LikeN_Head(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_SBEK() throws Exception {
 		_persistence.countByG_SBEK(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByG_SBEK(0L, "null");
 
 		_persistence.countByG_SBEK(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_SBEK_Head() throws Exception {
+		_persistence.countByG_SBEK_Head(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_SBEK_Head(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_SBEK_Head(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByHeadId() throws Exception {
+		_persistence.countByHeadId(RandomTestUtil.nextLong());
+
+		_persistence.countByHeadId(0L);
 	}
 
 	@Test
@@ -246,10 +299,11 @@ public class StyleBookEntryPersistenceTest {
 
 	protected OrderByComparator<StyleBookEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"StyleBookEntry", "mvccVersion", true, "styleBookEntryId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "defaultStyleBookEntry", true, "name",
-			true, "previewFileEntryId", true, "styleBookEntryKey", true);
+			"StyleBookEntry", "mvccVersion", true, "headId", true,
+			"styleBookEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"defaultStyleBookEntry", true, "name", true, "previewFileEntryId",
+			true, "styleBookEntryKey", true, "tokensValues", true);
 	}
 
 	@Test
@@ -485,6 +539,11 @@ public class StyleBookEntryPersistenceTest {
 				ReflectionTestUtil.invoke(
 					existingStyleBookEntry, "getOriginalStyleBookEntryKey",
 					new Class<?>[0])));
+
+		Assert.assertEquals(
+			Long.valueOf(existingStyleBookEntry.getHeadId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingStyleBookEntry, "getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected StyleBookEntry addStyleBookEntry() throws Exception {
@@ -493,6 +552,8 @@ public class StyleBookEntryPersistenceTest {
 		StyleBookEntry styleBookEntry = _persistence.create(pk);
 
 		styleBookEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		styleBookEntry.setHeadId(RandomTestUtil.nextLong());
 
 		styleBookEntry.setGroupId(RandomTestUtil.nextLong());
 

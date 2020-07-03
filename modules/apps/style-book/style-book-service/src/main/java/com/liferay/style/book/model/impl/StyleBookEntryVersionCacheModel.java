@@ -17,8 +17,7 @@ package com.liferay.style.book.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.model.StyleBookEntryVersion;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -28,13 +27,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing StyleBookEntry in entity cache.
+ * The cache model class for representing StyleBookEntryVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class StyleBookEntryCacheModel
-	implements CacheModel<StyleBookEntry>, Externalizable, MVCCModel {
+public class StyleBookEntryVersionCacheModel
+	implements CacheModel<StyleBookEntryVersion>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -42,15 +41,15 @@ public class StyleBookEntryCacheModel
 			return true;
 		}
 
-		if (!(object instanceof StyleBookEntryCacheModel)) {
+		if (!(object instanceof StyleBookEntryVersionCacheModel)) {
 			return false;
 		}
 
-		StyleBookEntryCacheModel styleBookEntryCacheModel =
-			(StyleBookEntryCacheModel)object;
+		StyleBookEntryVersionCacheModel styleBookEntryVersionCacheModel =
+			(StyleBookEntryVersionCacheModel)object;
 
-		if ((styleBookEntryId == styleBookEntryCacheModel.styleBookEntryId) &&
-			(mvccVersion == styleBookEntryCacheModel.mvccVersion)) {
+		if (styleBookEntryVersionId ==
+				styleBookEntryVersionCacheModel.styleBookEntryVersionId) {
 
 			return true;
 		}
@@ -60,29 +59,17 @@ public class StyleBookEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, styleBookEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, styleBookEntryVersionId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", headId=");
-		sb.append(headId);
+		sb.append("{styleBookEntryVersionId=");
+		sb.append(styleBookEntryVersionId);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", styleBookEntryId=");
 		sb.append(styleBookEntryId);
 		sb.append(", groupId=");
@@ -111,68 +98,70 @@ public class StyleBookEntryCacheModel
 	}
 
 	@Override
-	public StyleBookEntry toEntityModel() {
-		StyleBookEntryImpl styleBookEntryImpl = new StyleBookEntryImpl();
+	public StyleBookEntryVersion toEntityModel() {
+		StyleBookEntryVersionImpl styleBookEntryVersionImpl =
+			new StyleBookEntryVersionImpl();
 
-		styleBookEntryImpl.setMvccVersion(mvccVersion);
-		styleBookEntryImpl.setHeadId(headId);
-		styleBookEntryImpl.setHead(head);
-		styleBookEntryImpl.setStyleBookEntryId(styleBookEntryId);
-		styleBookEntryImpl.setGroupId(groupId);
-		styleBookEntryImpl.setCompanyId(companyId);
-		styleBookEntryImpl.setUserId(userId);
+		styleBookEntryVersionImpl.setStyleBookEntryVersionId(
+			styleBookEntryVersionId);
+		styleBookEntryVersionImpl.setVersion(version);
+		styleBookEntryVersionImpl.setStyleBookEntryId(styleBookEntryId);
+		styleBookEntryVersionImpl.setGroupId(groupId);
+		styleBookEntryVersionImpl.setCompanyId(companyId);
+		styleBookEntryVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			styleBookEntryImpl.setUserName("");
+			styleBookEntryVersionImpl.setUserName("");
 		}
 		else {
-			styleBookEntryImpl.setUserName(userName);
+			styleBookEntryVersionImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			styleBookEntryImpl.setCreateDate(null);
+			styleBookEntryVersionImpl.setCreateDate(null);
 		}
 		else {
-			styleBookEntryImpl.setCreateDate(new Date(createDate));
+			styleBookEntryVersionImpl.setCreateDate(new Date(createDate));
 		}
 
-		styleBookEntryImpl.setDefaultStyleBookEntry(defaultStyleBookEntry);
+		styleBookEntryVersionImpl.setDefaultStyleBookEntry(
+			defaultStyleBookEntry);
 
 		if (name == null) {
-			styleBookEntryImpl.setName("");
+			styleBookEntryVersionImpl.setName("");
 		}
 		else {
-			styleBookEntryImpl.setName(name);
+			styleBookEntryVersionImpl.setName(name);
 		}
 
-		styleBookEntryImpl.setPreviewFileEntryId(previewFileEntryId);
+		styleBookEntryVersionImpl.setPreviewFileEntryId(previewFileEntryId);
 
 		if (styleBookEntryKey == null) {
-			styleBookEntryImpl.setStyleBookEntryKey("");
+			styleBookEntryVersionImpl.setStyleBookEntryKey("");
 		}
 		else {
-			styleBookEntryImpl.setStyleBookEntryKey(styleBookEntryKey);
+			styleBookEntryVersionImpl.setStyleBookEntryKey(styleBookEntryKey);
 		}
 
 		if (tokensValues == null) {
-			styleBookEntryImpl.setTokensValues("");
+			styleBookEntryVersionImpl.setTokensValues("");
 		}
 		else {
-			styleBookEntryImpl.setTokensValues(tokensValues);
+			styleBookEntryVersionImpl.setTokensValues(tokensValues);
 		}
 
-		styleBookEntryImpl.resetOriginalValues();
+		styleBookEntryVersionImpl.resetOriginalValues();
 
-		return styleBookEntryImpl;
+		return styleBookEntryVersionImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 
-		headId = objectInput.readLong();
+		styleBookEntryVersionId = objectInput.readLong();
 
-		head = objectInput.readBoolean();
+		version = objectInput.readInt();
 
 		styleBookEntryId = objectInput.readLong();
 
@@ -189,16 +178,14 @@ public class StyleBookEntryCacheModel
 
 		previewFileEntryId = objectInput.readLong();
 		styleBookEntryKey = objectInput.readUTF();
-		tokensValues = objectInput.readUTF();
+		tokensValues = (String)objectInput.readObject();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
+		objectOutput.writeLong(styleBookEntryVersionId);
 
-		objectOutput.writeLong(headId);
-
-		objectOutput.writeBoolean(head);
+		objectOutput.writeInt(version);
 
 		objectOutput.writeLong(styleBookEntryId);
 
@@ -236,16 +223,15 @@ public class StyleBookEntryCacheModel
 		}
 
 		if (tokensValues == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(tokensValues);
+			objectOutput.writeObject(tokensValues);
 		}
 	}
 
-	public long mvccVersion;
-	public long headId;
-	public boolean head;
+	public long styleBookEntryVersionId;
+	public int version;
 	public long styleBookEntryId;
 	public long groupId;
 	public long companyId;

@@ -17,7 +17,6 @@ package com.liferay.style.book.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -36,6 +35,10 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 
 	public final Column<StyleBookEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<StyleBookEntryTable, Long> headId = createColumn(
+		"headId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, Boolean> head = createColumn(
+		"head", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Long> styleBookEntryId =
 		createColumn(
 			"styleBookEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
@@ -63,8 +66,9 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		createColumn(
 			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<StyleBookEntryTable, Clob> tokensValues = createColumn(
-		"tokensValues", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, String> tokensValues =
+		createColumn(
+			"tokensValues", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private StyleBookEntryTable() {
 		super("StyleBookEntry", StyleBookEntryTable::new);

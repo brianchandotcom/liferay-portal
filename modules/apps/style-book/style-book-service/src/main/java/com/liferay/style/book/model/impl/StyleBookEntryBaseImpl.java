@@ -14,6 +14,8 @@
 
 package com.liferay.style.book.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -43,7 +45,12 @@ public abstract class StyleBookEntryBaseImpl
 			StyleBookEntryLocalServiceUtil.addStyleBookEntry(this);
 		}
 		else {
-			StyleBookEntryLocalServiceUtil.updateStyleBookEntry(this);
+			try {
+				StyleBookEntryLocalServiceUtil.updateStyleBookEntry(this);
+			}
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
+			}
 		}
 	}
 

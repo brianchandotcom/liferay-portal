@@ -43,6 +43,7 @@ public class StyleBookEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("headId", getHeadId());
 		attributes.put("styleBookEntryId", getStyleBookEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -64,6 +65,12 @@ public class StyleBookEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long headId = (Long)attributes.get("headId");
+
+		if (headId != null) {
+			setHeadId(headId);
 		}
 
 		Long styleBookEntryId = (Long)attributes.get("styleBookEntryId");
@@ -172,6 +179,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the head ID of this style book entry.
+	 *
+	 * @return the head ID of this style book entry
+	 */
+	@Override
+	public long getHeadId() {
+		return model.getHeadId();
 	}
 
 	@Override
@@ -345,6 +362,16 @@ public class StyleBookEntryWrapper
 	}
 
 	/**
+	 * Sets the head ID of this style book entry.
+	 *
+	 * @param headId the head ID of this style book entry
+	 */
+	@Override
+	public void setHeadId(long headId) {
+		model.setHeadId(headId);
+	}
+
+	/**
 	 * Sets the mvcc version of this style book entry.
 	 *
 	 * @param mvccVersion the mvcc version of this style book entry
@@ -442,6 +469,18 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public boolean isHead() {
+		return model.isHead();
+	}
+
+	@Override
+	public void populateVersionModel(
+		StyleBookEntryVersion styleBookEntryVersion) {
+
+		model.populateVersionModel(styleBookEntryVersion);
 	}
 
 	@Override

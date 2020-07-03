@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryService;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
+import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersistence;
 
 import javax.sql.DataSource;
 
@@ -124,5 +125,8 @@ public abstract class StyleBookEntryServiceBaseImpl
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
+
+	@Reference
+	protected StyleBookEntryVersionPersistence styleBookEntryVersionPersistence;
 
 }

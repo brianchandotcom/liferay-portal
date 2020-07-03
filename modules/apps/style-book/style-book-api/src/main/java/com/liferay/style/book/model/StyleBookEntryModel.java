@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.version.VersionedModel;
 
 import java.util.Date;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface StyleBookEntryModel
-	extends BaseModel<StyleBookEntry>, MVCCModel, ShardedModel {
+	extends BaseModel<StyleBookEntry>, MVCCModel, ShardedModel,
+			VersionedModel<StyleBookEntryVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -49,6 +51,7 @@ public interface StyleBookEntryModel
 	 *
 	 * @return the primary key of this style book entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,6 +59,7 @@ public interface StyleBookEntryModel
 	 *
 	 * @param primaryKey the primary key of this style book entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -73,6 +77,22 @@ public interface StyleBookEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the head ID of this style book entry.
+	 *
+	 * @return the head ID of this style book entry
+	 */
+	@Override
+	public long getHeadId();
+
+	/**
+	 * Sets the head ID of this style book entry.
+	 *
+	 * @param headId the head ID of this style book entry
+	 */
+	@Override
+	public void setHeadId(long headId);
 
 	/**
 	 * Returns the style book entry ID of this style book entry.

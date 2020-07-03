@@ -21,18 +21,21 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.style.book.service.http.StyleBookEntryServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class StyleBookEntrySoap implements Serializable {
+public class StyleBookEntryVersionSoap implements Serializable {
 
-	public static StyleBookEntrySoap toSoapModel(StyleBookEntry model) {
-		StyleBookEntrySoap soapModel = new StyleBookEntrySoap();
+	public static StyleBookEntryVersionSoap toSoapModel(
+		StyleBookEntryVersion model) {
 
-		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setHeadId(model.getHeadId());
+		StyleBookEntryVersionSoap soapModel = new StyleBookEntryVersionSoap();
+
+		soapModel.setStyleBookEntryVersionId(
+			model.getStyleBookEntryVersionId());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setStyleBookEntryId(model.getStyleBookEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -48,8 +51,11 @@ public class StyleBookEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static StyleBookEntrySoap[] toSoapModels(StyleBookEntry[] models) {
-		StyleBookEntrySoap[] soapModels = new StyleBookEntrySoap[models.length];
+	public static StyleBookEntryVersionSoap[] toSoapModels(
+		StyleBookEntryVersion[] models) {
+
+		StyleBookEntryVersionSoap[] soapModels =
+			new StyleBookEntryVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,17 +64,17 @@ public class StyleBookEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static StyleBookEntrySoap[][] toSoapModels(
-		StyleBookEntry[][] models) {
+	public static StyleBookEntryVersionSoap[][] toSoapModels(
+		StyleBookEntryVersion[][] models) {
 
-		StyleBookEntrySoap[][] soapModels = null;
+		StyleBookEntryVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
 			soapModels =
-				new StyleBookEntrySoap[models.length][models[0].length];
+				new StyleBookEntryVersionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new StyleBookEntrySoap[0][0];
+			soapModels = new StyleBookEntryVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -78,44 +84,45 @@ public class StyleBookEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static StyleBookEntrySoap[] toSoapModels(
-		List<StyleBookEntry> models) {
+	public static StyleBookEntryVersionSoap[] toSoapModels(
+		List<StyleBookEntryVersion> models) {
 
-		List<StyleBookEntrySoap> soapModels = new ArrayList<StyleBookEntrySoap>(
-			models.size());
+		List<StyleBookEntryVersionSoap> soapModels =
+			new ArrayList<StyleBookEntryVersionSoap>(models.size());
 
-		for (StyleBookEntry model : models) {
+		for (StyleBookEntryVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new StyleBookEntrySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new StyleBookEntryVersionSoap[soapModels.size()]);
 	}
 
-	public StyleBookEntrySoap() {
+	public StyleBookEntryVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _styleBookEntryId;
+		return _styleBookEntryVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setStyleBookEntryId(pk);
+		setStyleBookEntryVersionId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
+	public long getStyleBookEntryVersionId() {
+		return _styleBookEntryVersionId;
 	}
 
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
+	public void setStyleBookEntryVersionId(long styleBookEntryVersionId) {
+		_styleBookEntryVersionId = styleBookEntryVersionId;
 	}
 
-	public long getHeadId() {
-		return _headId;
+	public int getVersion() {
+		return _version;
 	}
 
-	public void setHeadId(long headId) {
-		_headId = headId;
+	public void setVersion(int version) {
+		_version = version;
 	}
 
 	public long getStyleBookEntryId() {
@@ -210,8 +217,8 @@ public class StyleBookEntrySoap implements Serializable {
 		_tokensValues = tokensValues;
 	}
 
-	private long _mvccVersion;
-	private long _headId;
+	private long _styleBookEntryVersionId;
+	private int _version;
 	private long _styleBookEntryId;
 	private long _groupId;
 	private long _companyId;

@@ -1,0 +1,271 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-114438. Only can edit inline content, mapped content and comments of elements when select Content Edition."
+	@priority = "5"
+	test OnlyCanEditContentWhenSelectContentEdition {
+		task ("Add a Web Content Article, a Blogs Entry and a Document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Assert Edit Mode is Page Design") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "Page Design");
+		}
+
+		task ("Add a Heading, Paragraph, Image and Asset Publisher to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Paragraph");
+
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Image");
+		}
+
+		task ("Edit inline content of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("Add a comment for Heading") {
+			PageEditor.addComment(
+				content = "New editable fragment text",
+				fragmentClass = "content",
+				fragmentComment = "This is a fragment comment.",
+				fragmentName = "Heading",
+				position = "1");
+		}
+
+		task ("Map title of Web Content Article to Paragraph") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				id = "element-text",
+				key_fragmentName = "Paragraph",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Web Content Title");
+		}
+
+		task ("Select document as inline content of Image") {
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageFileName = "Document Title");
+		}
+
+		task ("Select Blogs Entry in Asset Publisher") {
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+		}
+
+		task ("Select Content Edition") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+
+			MenuItem.click(menuItem = "Content Edition");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "Content Edition");
+		}
+
+		task ("Assert only Contents and Comments are shown in sidebar") {
+			for (var tabName : list "Contents,Comments") {
+				AssertVisible(
+					key_tabName = "${tabName}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			}
+
+			for (var tabName : list "Fragments and Widgets,Page Structure,Look and Feel") {
+				AssertElementNotPresent(
+					key_tabName = "${tabName}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			}
+		}
+
+		task ("Assert topper of elements are hidden") {
+			for (var elementName : list "Heading,Paragraph,Image,Asset Publisher") {
+				AssertElementNotPresent(
+					key_fragmentName = "${elementName}",
+					locator1 = "Fragment#FRAGMENT_HEADER");
+			}
+		}
+
+		task ("Assert floating toolbar of editable field is shown when select the editable field") {
+			for (var fragmentName : list "heading,paragraph,image") {
+				if ("${fragmentName}" == "image") {
+					Click(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+
+					AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
+				}
+				else {
+					Click(
+						id = "element-text",
+						key_fragmentName = "${fragmentName}",
+						locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
+
+					AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+				}
+
+				Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+			}
+		}
+
+		task ("Assert ellipsis button of Asset Publisher present") {
+			MouseOver.mouseOverNotVisible(locator1 = "//div[contains(@class,'portlet-options')]/a[contains(@id,'AssetPublisher')]");
+		}
+
+		task ("Edit Web Content Article and Blogs Entry via Contents panel") {
+			for (var title : list "Web Content Title,Blogs Entry Title") {
+				PageEditor.gotoTab(tabName = "Contents");
+
+				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+					menuItem = "Edit",
+					rowEntry = "${title}");
+
+				if ("${title}" == "Web Content Title") {
+					WebContent.addCP(webContentTitle = "Web Content Title Edit");
+
+					AlloyEditor.addContent(content = "Web Content Content Edit");
+
+					PortletEntry.publish();
+				}
+
+				if ("${title}" == "Blogs Entry Title") {
+					BlogsEntry.editEntryContent(
+						entryContent = "Blogs Entry Content",
+						entryContentEdit = "Blogs Entry Content Edit",
+						entryTitle = "Blogs Entry Title",
+						entryTitleEdit = "Blogs Entry Title Edit");
+
+					PortletEntry.publish();
+				}
+
+				PageEditor.assertFragmentSidebarLoaded();
+
+				Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+
+				MenuItem.click(menuItem = "Content Edition");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Assert Edited Web Content") {
+			AssertTextEquals(
+				id = "element-text",
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER",
+				value1 = "Web Content Title Edit");
+		}
+
+		task ("Assert Edited Blogs Entry") {
+			AssertTextEquals(
+				key_assetTitle = "Blogs Entry Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "Blogs Entry Title Edit");
+		}
+
+		task ("View comment of Heading in Comments panel") {
+			PageEditor.gotoTab(tabName = "Comments");
+
+			PageEditor.viewCommentList(
+				commentCount = "1 Comment",
+				fragmentName = "Heading",
+				openComment = "true");
+		}
+
+		task ("Reply to comment of Heading") {
+			PageEditor.replyToComment(commentReply = "This is a reply");
+
+			PageEditor.viewCommentReply(
+				commentReply = "This is a reply",
+				user = "Test Test");
+		}
+	}
+
+}

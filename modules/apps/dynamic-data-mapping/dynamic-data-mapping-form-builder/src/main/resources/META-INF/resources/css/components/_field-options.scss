@@ -43,6 +43,10 @@ $c: '.ddm-field-options';
 				color: #6b6c7e;
 				display: inline-block;
 				outline: none;
+
+				&.disabled {
+					cursor: not-allowed;
+				}
 			}
 
 			label,

@@ -19,7 +19,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
-export default function deleteItem({itemId, store}) {
+export default function deleteItem({itemId, selectItem = () => {}, store}) {
 	return (dispatch) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} = store;
 
@@ -49,6 +49,8 @@ export default function deleteItem({itemId, store}) {
 					if (deletedWidgets.length) {
 						dispatch(deleteWidgets(deletedWidgets));
 					}
+
+					selectItem(null);
 
 					dispatch(
 						deleteItemAction({

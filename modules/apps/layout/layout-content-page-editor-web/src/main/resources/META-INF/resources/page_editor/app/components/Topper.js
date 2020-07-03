@@ -300,6 +300,7 @@ function Topper({children, className, item, itemElement, layoutData}) {
 									dispatch(
 										deleteItem({
 											itemId: item.itemId,
+											selectItem,
 											store,
 										})
 									);

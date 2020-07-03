@@ -15,9 +15,9 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--liferay-version", "7.2", "--name", "foo"
+	args "--liferay-version", "7.2", "--name", "guestbook"
 
 	doFirst {
-		delete "${buildDir}/foo"
+		delete "${buildDir}/guestbook"
 	}
 }

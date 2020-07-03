@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>NAV_NESTED_PLUS</td>
-	<td>//ul[contains(@class,'nav-nested')]//span[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td>//ul[contains(@class,'nav-nested')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

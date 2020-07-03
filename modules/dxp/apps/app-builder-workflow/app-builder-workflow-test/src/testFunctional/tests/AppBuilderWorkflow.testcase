@@ -30,6 +30,7 @@ definition {
 	@description = "Filter and order the apps created using App Builder"
 	@priority = "5"
 	test FilterAndOrderApps {
+		property portal.acceptance = "true";
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
@@ -82,24 +83,60 @@ definition {
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Third App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Second App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "Fourth App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "4",
+			title = "First App");
 
 		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Create Date");
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Fourth App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Third App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "Second App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "4",
+			title = "First App");
 
 		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Modified Date");
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Fourth App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Third App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "Second App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "4",
+			title = "First App");
 
 		AppBuilderAdmin.filterListAscendAndDescend();
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "First App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Second App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "Third App");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "4",
+			title = "Fourth App");
 
 		AppBuilderAdmin.chooseMultipleFilter(
 			deploymentFilterOption = "Product Menu",

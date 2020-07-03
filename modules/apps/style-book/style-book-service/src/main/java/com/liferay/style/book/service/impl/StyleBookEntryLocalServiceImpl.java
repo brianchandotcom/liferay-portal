@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.service.impl;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,13 +24,16 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryNameKeyException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -115,8 +119,13 @@ public class StyleBookEntryLocalServiceImpl
 
 		String name = sb.toString();
 
-		return addStyleBookEntry(
+		StyleBookEntry copyStyleBookEntry = addStyleBookEntry(
 			userId, groupId, name, StringPool.BLANK, serviceContext);
+
+		_copyStyleBookEntryPreviewFileEntry(
+			userId, groupId, styleBookEntry, copyStyleBookEntry);
+
+		return copyStyleBookEntry;
 	}
 
 	@Override
@@ -246,6 +255,50 @@ public class StyleBookEntryLocalServiceImpl
 		}
 	}
 
+	private void _copyStyleBookEntryPreviewFileEntry(
+			long userId, long groupId, StyleBookEntry styleBookEntry,
+			StyleBookEntry copyStyleBookEntry)
+		throws PortalException {
+
+		if (styleBookEntry.getPreviewFileEntryId() == 0) {
+			return;
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			styleBookEntry.getPreviewFileEntryId());
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, StyleBookPortletKeys.STYLE_BOOK);
+
+		if (repository == null) {
+			ServiceContext addPortletRepositoryServiceContext =
+				new ServiceContext();
+
+			addPortletRepositoryServiceContext.setAddGroupPermissions(true);
+			addPortletRepositoryServiceContext.setAddGuestPermissions(true);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				groupId, StyleBookPortletKeys.STYLE_BOOK,
+				addPortletRepositoryServiceContext);
+		}
+
+		String fileName =
+			copyStyleBookEntry.getStyleBookEntryId() + "_preview." +
+				fileEntry.getExtension();
+
+		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, StyleBookEntry.class.getName(),
+			copyStyleBookEntry.getStyleBookEntryId(),
+			StyleBookPortletKeys.STYLE_BOOK, repository.getDlFolderId(),
+			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
+			false);
+
+		updateStyleBookEntry(
+			copyStyleBookEntry.getStyleBookEntryId(),
+			fileEntry.getFileEntryId());
+	}
+
 	private String _generateStyleBookEntryKey(long groupId, String name) {
 		String styleBookEntryKey = _getStyleBookEntryKey(name);
 
@@ -281,5 +334,8 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 }

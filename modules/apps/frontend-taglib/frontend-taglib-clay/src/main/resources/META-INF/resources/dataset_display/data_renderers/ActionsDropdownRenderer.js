@@ -30,8 +30,8 @@ import {
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
-export function isNotALink(target, onClick) {
-	return Boolean((target && target !== 'link') || onClick);
+export function isLink(target, onClick) {
+	return !(target && target !== 'link') && !onClick;
 }
 
 export function handleAction(
@@ -125,12 +125,12 @@ function ActionItem({
 		closeMenu();
 	}
 
-	const notALink = isNotALink(target, onClick);
+	const link = isLink(target, onClick);
 
 	return (
 		<ClayDropDown.Item
-			href={notALink ? null : href}
-			onClick={notALink ? handleClickOnLink : null}
+			href={link ? href : null}
+			onClick={link ? null : handleClickOnLink}
 		>
 			{icon && (
 				<span className="pr-2">
@@ -199,7 +199,15 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			action.label
 		);
 
-		return isNotALink(action.target, action.onClick) ? (
+		return isLink(action.target, action.onClick) ? (
+			<ClayLink
+				className="btn btn-secondary btn-sm"
+				href={formattedHref}
+				monospaced={Boolean(action.icon)}
+			>
+				{content}
+			</ClayLink>
+		) : (
 			<ClayLink
 				className="btn btn-secondary btn-sm"
 				data-senna-off
@@ -218,14 +226,6 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 						context
 					);
 				}}
-			>
-				{content}
-			</ClayLink>
-		) : (
-			<ClayLink
-				className="btn btn-secondary btn-sm"
-				href={formattedHref}
-				monospaced={Boolean(action.icon)}
 			>
 				{content}
 			</ClayLink>

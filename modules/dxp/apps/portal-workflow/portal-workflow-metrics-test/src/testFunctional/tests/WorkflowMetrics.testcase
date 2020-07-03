@@ -1309,6 +1309,8 @@ definition {
 	@description = "LRQA-53660 Automate LPS-105495 single-task work"
 	@priority = "5"
 	test SingleTaskWorkflowTransition {
+		property test.name.skip.portal.instance = "WorkflowMetrics#SingleTaskWorkflowTransition";
+		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

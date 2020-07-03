@@ -54,6 +54,19 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
+	public StyleBookEntry copyStyleBookEntry(
+			long groupId, long styleBookEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.copyStyleBookEntry(
+			getUserId(), groupId, styleBookEntryId, serviceContext);
+	}
+
+	@Override
 	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
 		throws PortalException {
 

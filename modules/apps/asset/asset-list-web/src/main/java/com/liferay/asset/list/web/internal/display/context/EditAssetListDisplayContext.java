@@ -948,14 +948,23 @@ public class EditAssetListDisplayContext {
 	}
 
 	public Boolean isAnyAssetType() {
-		if (_anyAssetType != null) {
-			return _anyAssetType;
+		String anyAssetType = _unicodeProperties.getProperty("anyAssetType");
+
+		if (Validator.isNull(anyAssetType)) {
+			return false;
 		}
 
-		_anyAssetType = GetterUtil.getBoolean(
-			_unicodeProperties.getProperty("anyAssetType", null), true);
+		return GetterUtil.getBoolean(anyAssetType, true);
+	}
 
-		return _anyAssetType;
+	public Boolean isNoAssetTypeSelected() {
+		String anyAssetType = _unicodeProperties.getProperty("anyAssetType");
+
+		if (Validator.isNull(anyAssetType)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowSubtypeFieldsFilter() {
@@ -1155,7 +1164,6 @@ public class EditAssetListDisplayContext {
 
 	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
 
-	private Boolean _anyAssetType;
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
 	private List<AssetListEntrySegmentsEntryRel>

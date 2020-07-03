@@ -44,7 +44,7 @@
 			<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<p><liferay-ui:message key="displayed-assets-must-match-these-rules" /></p>
+		<p><liferay-ui:message key="displayed-items-must-match-these-rules" /></p>
 
 		<div id="<portlet:namespace />ConditionForm"></div>
 

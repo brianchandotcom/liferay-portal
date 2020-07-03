@@ -258,11 +258,11 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 
 			return (
 				<ActionItem
-					key={i}
 					{...item}
 					closeMenu={() => setActive(false)}
 					handleAction={handleAction}
 					href={item.href && formatActionUrl(item.href, itemData)}
+					key={i}
 				/>
 			);
 		});

@@ -94,6 +94,12 @@ public class CalendarResourceUtil {
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
+		if (serviceContext != null) {
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setModelPermissions(null);
+		}
+
 		return CalendarResourceLocalServiceUtil.addCalendarResource(
 			userId, groupId, PortalUtil.getClassNameId(Group.class), groupId,
 			null, null,
@@ -137,6 +143,12 @@ public class CalendarResourceUtil {
 		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		if (serviceContext != null) {
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setModelPermissions(null);
+		}
 
 		return CalendarResourceLocalServiceUtil.addCalendarResource(
 			userId, userGroup.getGroupId(),

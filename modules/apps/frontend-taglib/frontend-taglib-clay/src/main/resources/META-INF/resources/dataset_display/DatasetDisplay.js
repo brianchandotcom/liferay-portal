@@ -12,10 +12,9 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import DatasetDisplayContext from './DatasetDisplayContext';
 import EmptyResultMessage from './EmptyResultMessage';
@@ -411,8 +410,6 @@ function DatasetDisplay({
 		});
 	}
 
-	const spritemap = useContext(ClayIconSpriteContext);
-
 	return (
 		<DatasetDisplayContext.Provider
 			value={{
@@ -449,7 +446,6 @@ function DatasetDisplay({
 				<SidePanel
 					id={datasetDisplaySupportSidePanelId}
 					onAfterSubmit={refreshData}
-					spritemap={spritemap}
 				/>
 			)}
 

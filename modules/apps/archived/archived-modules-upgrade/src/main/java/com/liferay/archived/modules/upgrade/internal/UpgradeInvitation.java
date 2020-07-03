@@ -14,30 +14,18 @@
 
 package com.liferay.archived.modules.upgrade.internal;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
 /**
  * @author Adolfo Pérez
  */
-
-public class UpgradeInvitation extends UpgradeProcess {
+public class UpgradeInvitation extends BaseUpgradeNoninstanceablePortlet {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, "com_liferay_invitation_web_portlet_InvitationPortlet");
-
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_invitation_web_portlet_InvitationPortlet'");
-
-		runSQL(
-			"delete from PortletPreferences where portletId =" +
-				"'com_liferay_invitation_web_portlet_InvitationPortlet'");
-
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.invitation.web'");
+		removePortlet(
+			"com.liferay.invitation.web", null,
+			new String[] {
+				"com_liferay_invitation_web_portlet_InvitationPortlet"
+			});
 	}
 
 }

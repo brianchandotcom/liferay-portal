@@ -1312,6 +1312,15 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
+		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		AssertClick(
+			key_dropdownItem = "Shared Content",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+			value1 = "Shared Content");
+
+		ProductMenuHelper.openProductMenu();
+
 		AssertTextPresent(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM",
 			value1 = "Site Name H");

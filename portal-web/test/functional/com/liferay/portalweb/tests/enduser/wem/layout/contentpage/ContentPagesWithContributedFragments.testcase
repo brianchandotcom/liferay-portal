@@ -1069,7 +1069,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -1104,7 +1104,7 @@ definition {
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_entryTitle = "Document_1.jpg",
+				key_entryTitle = "Document Title",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1141,7 +1141,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -1180,7 +1180,7 @@ definition {
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_entryTitle = "Document_1.jpg",
+				key_entryTitle = "Document Title",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1217,7 +1217,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -1246,7 +1246,7 @@ definition {
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
-				assetName = "Document_1.jpg",
+				assetName = "Document Title",
 				assetType = "Basic Document");
 		}
 
@@ -1281,7 +1281,7 @@ definition {
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_entryTitle = "Document_1.jpg",
+				key_entryTitle = "Document Title",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "3",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1411,7 +1411,7 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitle = "Document Title",
 			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
@@ -1427,7 +1427,7 @@ definition {
 		PageEditor.editContentDisplay(
 			documentandmedia = "true",
 			fragmentName = "Content Display",
-			imageFileName = "Document_1.jpg");
+			imageFileName = "Document Title");
 
 		PageEditor.clickPublish();
 
@@ -1436,7 +1436,7 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertVisible(
-			key_imageFileName = "Document_1.jpg",
+			key_imageFileName = "Document Title",
 			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 	}
 
@@ -1496,7 +1496,7 @@ definition {
 		task ("Add a document with an image") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -1524,7 +1524,7 @@ definition {
 
 		task ("Assert only Documents and Media entry shown") {
 			AssertElementPresent(
-				key_card = "DM Document Title",
+				key_card = "Document Title",
 				locator1 = "LexiconCard#CARD");
 
 			AssertElementNotPresent(
@@ -1537,11 +1537,11 @@ definition {
 		}
 
 		task ("Assert fragment display correctly") {
-			LexiconCard.clickCard(card = "DM Document Title");
+			LexiconCard.clickCard(card = "Document Title");
 
 			AssertTextEquals(
 				locator1 = "//div[contains(@class,'fragment_dm')]",
-				value1 = "DM Document Title");
+				value1 = "Document Title");
 		}
 	}
 
@@ -2044,7 +2044,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -2074,7 +2074,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
-				entryTitle = "Document_1.jpg",
+				entryTitle = "Document Title",
 				fragmentName = "Content Display");
 
 			PageEditor.editContentDisplay(
@@ -2145,7 +2145,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -2168,12 +2168,12 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
-				entryTitle = "Document_1.jpg",
+				entryTitle = "Document Title",
 				fragmentName = "Content Display");
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_entryContent = "Document_1.jpg",
+				key_entryContent = "Document Title",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
@@ -2201,7 +2201,7 @@ definition {
 
 		AssertVisible(
 			key_colPosition = "1",
-			key_entryContent = "Document_1.jpg",
+			key_entryContent = "Document Title",
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
@@ -2325,7 +2325,7 @@ definition {
 		for (var i : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document ${i} JPG",
+				dmDocumentTitle = "Document Title ${i}",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_${i}.jpg");
@@ -2357,7 +2357,7 @@ definition {
 			if ("${i}" == "1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "DM Document 3 JPG",
+					key_entryTitle = "Document Title 3",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -2365,7 +2365,7 @@ definition {
 			if ("${i}" == "2") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "DM Document ${i} JPG",
+					key_entryTitle = "Document Title ${i}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -2373,7 +2373,7 @@ definition {
 			if ("${i}" == "3") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "DM Document 1 JPG",
+					key_entryTitle = "Document Title 1",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -2382,14 +2382,14 @@ definition {
 
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
-			entryTitle = "DM Document 3 JPG",
+			entryTitle = "Document Title 3",
 			fragmentName = "Content Display");
 
 		for (var i : list "1,2,3") {
 			if ("${i}" == "1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryImage = "DM+Document+3+JPG.jpg",
+					key_entryImage = "Document+Title+3.jpg",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
@@ -2397,7 +2397,7 @@ definition {
 			if ("${i}" == "2") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryImage = "DM+Document+${i}+JPG.jpg",
+					key_entryImage = "Document+Title+${i}.jpg",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
@@ -2405,7 +2405,7 @@ definition {
 			if ("${i}" == "3") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryImage = "DM+Document+1+JPG.jpg",
+					key_entryImage = "Document+Title+1.jpg",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${i}",
 					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
@@ -2539,7 +2539,7 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
@@ -2562,7 +2562,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
-				entryTitle = "Document_1.jpg",
+				entryTitle = "Document Title",
 				fragmentName = "Content Display");
 
 			PageEditor.editContentDisplay(
@@ -2572,7 +2572,7 @@ definition {
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_element = "//img[contains(@src,'Document_1.jpg')]",
+				key_element = "//img[contains(@src,'Document+Title.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
@@ -2600,7 +2600,7 @@ definition {
 
 		AssertVisible(
 			key_colPosition = "1",
-			key_image = "Document_1.jpg",
+			key_image = "Document+Title.jpg",
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
 

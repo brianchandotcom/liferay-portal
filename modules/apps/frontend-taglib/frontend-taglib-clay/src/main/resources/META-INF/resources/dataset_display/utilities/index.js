@@ -17,10 +17,10 @@ import {fetch} from 'frontend-js-web';
 import createOdataFilter from './odata';
 
 export function getData(apiUrl, query) {
-	let url = apiUrl;
+	const url = new URL(apiUrl);
 
 	if (query) {
-		url += (url.includes('?') ? '&' : '?') + `search=${query}`;
+		url.searchParams.append('search', query);
 	}
 
 	return fetch(url, {
@@ -103,22 +103,27 @@ export function loadData(
 	page = 1,
 	sorting = []
 ) {
-	const authString = `p_auth=${window.Liferay.authToken}`;
-	const currentUrlString = `&currentUrl=${encodeURIComponent(currentUrl)}`;
-	const paginationString = `&pageSize=${delta}&page=${page}`;
-	const searchParamString = searchParam ? `&search=${searchParam}` : '';
-	const sortingString = sorting.length
-		? `&sort=${sorting
-				.map((item) => `${item.key}:${item.direction}`)
-				.join(',')}`
-		: ``;
-	const filtersString = filters.length
-		? `&filter=${createOdataFilter(filters)}`
-		: '';
+	const url = new URL(apiUrl);
 
-	const url = `${apiUrl}${
-		apiUrl.indexOf('?') > -1 ? '&' : '?'
-	}${authString}${currentUrlString}${paginationString}${sortingString}${filtersString}${searchParamString}`;
+	url.searchParams.append('currentUrl', currentUrl);
+
+	if (filters.length) {
+		url.searchParams.append('filter', createOdataFilter(filters));
+	}
+
+	url.searchParams.append('page', page);
+	url.searchParams.append('pageSize', delta);
+
+	if (searchParam) {
+		url.searchParams.append('search', searchParam);
+	}
+
+	if (sorting.length) {
+		url.searchParams.append(
+			'sort',
+			sorting.map((item) => `${item.key}:${item.direction}`).join(',')
+		);
+	}
 
 	return executeAsyncAction(url, 'GET').then((response) => response.json());
 }

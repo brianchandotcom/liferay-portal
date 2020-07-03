@@ -18,9 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -39,10 +37,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -53,9 +49,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Before;
@@ -80,303 +73,227 @@ public class SearchCTTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CTCollection ctCollection = addCTCollection();
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			SearchCTTest.class.getName(), SearchCTTest.class.getName());
 
-		Group group = GroupTestUtil.addGroup();
-
-		_ctCollection = ctCollection;
-		_group = group;
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
 	public void testCollectionVersusProduction() throws Exception {
-		JournalArticle addJournalArticle = null;
+		JournalArticle addedArticle = null;
 
-		JournalArticle delJournalArticle = addJournalArticle();
-		JournalArticle modJournalArticle = addJournalArticle();
+		JournalArticle deletedArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		JournalArticle modifiedArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
-		Layout addLayout = null;
+		Layout addedLayout = null;
 
-		Layout delLayout = addLayout();
-		Layout modLayout = addLayout();
+		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			addJournalArticle = addJournalArticle();
-			delJournalArticle = deleteJournalArticle(delJournalArticle);
-			modJournalArticle = modifyJournalArticle(modJournalArticle);
+			addedArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
-			addLayout = addLayout();
-			delLayout = deleteLayout(delLayout);
-			modLayout = modifyLayout(modLayout);
+			deletedArticle = _journalArticleLocalService.deleteJournalArticle(
+				deletedArticle);
+
+			modifiedArticle.setTitle("testModifyJournalArticle");
+
+			modifiedArticle = _journalArticleLocalService.updateJournalArticle(
+				modifiedArticle);
+
+			addedLayout = LayoutTestUtil.addLayout(_group);
+
+			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
+
+			modifiedLayout.setFriendlyURL("/testModifyLayout");
+
+			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
 		}
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			delJournalArticle, modJournalArticle);
+			deletedArticle, modifiedArticle);
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			delLayout, modLayout);
+			deletedLayout, modifiedLayout);
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _ALL_INDEXER_CLASSES,
-			delJournalArticle, delLayout, modJournalArticle, modLayout);
+			deletedArticle, deletedLayout, modifiedArticle, modifiedLayout);
 
 		assertCollectionHits(
 			_ctCollection.getCtCollectionId(), _LEGACY_INDEXER_CLASSES,
-			addJournalArticle, modJournalArticle);
+			addedArticle, modifiedArticle);
 
 		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES, addLayout,
-			modLayout);
+			_ctCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES,
+			addedLayout, modifiedLayout);
 
 		assertCollectionHits(
 			_ctCollection.getCtCollectionId(), _ALL_INDEXER_CLASSES,
-			addJournalArticle, addLayout, modJournalArticle, modLayout);
+			addedArticle, addedLayout, modifiedArticle, modifiedLayout);
 
 		assertAllHits(
 			_ALL_INDEXER_CLASSES,
-			getUIDList(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, delJournalArticle,
-				delLayout, modJournalArticle, modLayout),
-			getUIDList(
-				_ctCollection.getCtCollectionId(), addJournalArticle, addLayout,
-				modJournalArticle, modLayout));
+			getUIDs(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedArticle,
+				deletedLayout, modifiedArticle, modifiedLayout),
+			getUIDs(
+				_ctCollection.getCtCollectionId(), addedArticle, addedLayout,
+				modifiedArticle, modifiedLayout));
 	}
 
 	@Test
 	public void testPublishAndUndo() throws Exception {
-		Layout addLayout = null;
+		Layout addedLayout = null;
 
-		Layout delLayout = addLayout();
-		Layout modLayout = addLayout();
+		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			addLayout = addLayout();
-			delLayout = deleteLayout(delLayout);
-			modLayout = modifyLayout(modLayout);
+			addedLayout = LayoutTestUtil.addLayout(_group);
+			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
+			modifiedLayout.setFriendlyURL("/testModifyLayout");
+
+			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
 		}
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			delLayout, modLayout);
+			deletedLayout, modifiedLayout);
 
-		publish(_ctCollection);
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			addLayout, modLayout);
+			addedLayout, modifiedLayout);
 
 		assertAllHits(
 			_NEW_INDEXER_CLASSES,
-			getUIDList(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, addLayout, modLayout),
-			getUIDList(
-				_ctCollection.getCtCollectionId(), addLayout, modLayout));
+			getUIDs(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
+				modifiedLayout),
+			getUIDs(
+				_ctCollection.getCtCollectionId(), addedLayout,
+				modifiedLayout));
 
-		_undoCTCollection = undo(_ctCollection);
+		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
+			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			addLayout, modLayout);
+			addedLayout, modifiedLayout);
 
 		assertCollectionHits(
 			_undoCTCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES,
-			delLayout, modLayout);
+			deletedLayout, modifiedLayout);
 
 		assertAllHits(
 			_NEW_INDEXER_CLASSES,
-			getUIDList(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, addLayout, modLayout),
-			getUIDList(_ctCollection.getCtCollectionId(), addLayout, modLayout),
-			getUIDList(
-				_undoCTCollection.getCtCollectionId(), delLayout, modLayout));
+			getUIDs(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
+				modifiedLayout),
+			getUIDs(
+				_ctCollection.getCtCollectionId(), addedLayout, modifiedLayout),
+			getUIDs(
+				_undoCTCollection.getCtCollectionId(), deletedLayout,
+				modifiedLayout));
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected CTCollection addCTCollection() throws Exception {
-		long ctCollectionId = _counterLocalService.increment(
-			CTCollection.class.getName());
-
-		CTCollection ctCollection =
-			_ctCollectionLocalService.createCTCollection(ctCollectionId);
-
-		ctCollection.setUserId(TestPropsValues.getUserId());
-		ctCollection.setName(String.valueOf(ctCollectionId));
-		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		return _ctCollectionLocalService.updateCTCollection(ctCollection);
-	}
-
-	protected JournalArticle addJournalArticle() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		_journalArticles.add(journalArticle);
-
-		return journalArticle;
-	}
-
-	protected Layout addLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
-
-		_layouts.add(layout);
-
-		return layout;
-	}
-
-	protected void assertAllHits(Class<?>[] classes, List<String>... uidLists) {
-		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-			classes);
-
+	protected void assertAllHits(Class<?>[] classes, String[]... uids) {
 		assertHits(
-			_searcher.search(
-				searchRequestBuilder.withSearchContext(
-					searchContext -> searchContext.setAttribute(
-						"com.liferay.change.tracking.filter.ctCollectionId",
-						"ALL")
-				).build()),
-			ListUtil.concat(uidLists));
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, classes,
+			ArrayUtil.append(uids), true);
 	}
 
 	protected void assertCollectionHits(
-		long ctCollectionId, Class<?>[] classes, CTModel... ctModels) {
-
-		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-			classes);
+		long ctCollectionId, Class<?>[] classes, CTModel<?>... ctModels) {
 
 		assertHits(
-			search(ctCollectionId, searchRequestBuilder.build()),
-			getUIDList(ctCollectionId, ctModels));
+			ctCollectionId, classes, getUIDs(ctCollectionId, ctModels), false);
 	}
 
 	protected void assertHits(
-		SearchResponse searchResponse, List<String> uids) {
+		long ctCollectionId, Class<?>[] classes, String[] uids, boolean all) {
 
-		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), Field.UID, uids.stream());
-	}
+		String[] classNames = new String[classes.length];
 
-	protected JournalArticle deleteJournalArticle(JournalArticle journalArticle)
-		throws Exception {
-
-		return _journalArticleLocalService.deleteJournalArticle(journalArticle);
-	}
-
-	protected Layout deleteLayout(Layout layout) throws Exception {
-		return _layoutLocalService.deleteLayout(layout);
-	}
-
-	protected String getClassName(CTModel<?> ctModel) {
-		if (ctModel instanceof Layout) {
-			return Layout.class.getName();
+		for (int i = 0; i < classes.length; i++) {
+			classNames[i] = classes[i].getName();
 		}
 
-		if (ctModel instanceof JournalArticle) {
-			return JournalArticle.class.getName();
-		}
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				classNames
+			).groupIds(
+				_group.getGroupId()
+			).modelIndexerClasses(
+				classes
+			).withSearchContext(
+				searchContext -> {
+					if (all) {
+						searchContext.setAttribute(
+							"com.liferay.change.tracking.filter.ctCollectionId",
+							"ALL");
+					}
 
-		throw new IllegalStateException();
-	}
-
-	protected String[] getClassNames(Class<?>... classes) {
-		return Stream.of(
-			classes
-		).map(
-			Class::getName
-		).toArray(
-			String[]::new
-		);
-	}
-
-	protected SearchRequestBuilder getSearchRequestBuilder(
-		Class<?>... classes) {
-
-		return _searchRequestBuilderFactory.builder(
-		).companyId(
-			_group.getCompanyId()
-		).emptySearchEnabled(
-			true
-		).entryClassNames(
-			getClassNames(classes)
-		).groupIds(
-			_group.getGroupId()
-		).modelIndexerClasses(
-			classes
-		).withSearchContext(
-			searchContext -> {
-				searchContext.setAttribute(Field.GROUP_ID, _group.getGroupId());
-				searchContext.setAttribute(
-					Field.TYPE, new String[] {LayoutConstants.TYPE_PORTLET});
-				searchContext.setUserId(_group.getCreatorUserId());
-			}
-		);
-	}
-
-	protected String getUID(long ctCollectionId, CTModel<?> ctModel) {
-		return _uidFactory.getUID(
-			getClassName(ctModel), ctModel.getPrimaryKey(), ctCollectionId);
-	}
-
-	protected List<String> getUIDList(
-		long ctCollectionId, CTModel<?>... ctModels) {
-
-		return Stream.of(
-			ctModels
-		).map(
-			ctModel -> getUID(ctCollectionId, ctModel)
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	protected JournalArticle modifyJournalArticle(
-		JournalArticle journalArticle) {
-
-		journalArticle.setTitle("testModifyJournalArticle");
-
-		return _journalArticleLocalService.updateJournalArticle(journalArticle);
-	}
-
-	protected Layout modifyLayout(Layout layout) {
-		layout.setFriendlyURL("/testModifyLayout");
-
-		return _layoutLocalService.updateLayout(layout);
-	}
-
-	protected void publish(CTCollection ctCollection) throws Exception {
-		_ctProcessLocalService.addCTProcess(
-			ctCollection.getUserId(), ctCollection.getCtCollectionId());
-	}
-
-	protected SearchResponse search(
-		long ctCollectionId, SearchRequest searchRequest) {
-
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return _searcher.search(searchRequest);
-		}
+					searchContext.setAttribute(
+						Field.GROUP_ID, _group.getGroupId());
+					searchContext.setAttribute(
+						Field.TYPE,
+						new String[] {LayoutConstants.TYPE_PORTLET});
+					searchContext.setUserId(_group.getCreatorUserId());
+				}
+			);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
-			return _searcher.search(searchRequest);
+			SearchResponse searchResponse = _searcher.search(
+				searchRequestBuilder.build());
+
+			DocumentsAssert.assertValuesIgnoreRelevance(
+				searchResponse.getRequestString(),
+				searchResponse.getDocumentsStream(), Field.UID,
+				Stream.of(uids));
 		}
 	}
 
-	protected CTCollection undo(CTCollection ctCollection) throws Exception {
-		return _ctCollectionLocalService.undoCTCollection(
-			ctCollection.getCtCollectionId(), ctCollection.getUserId(),
-			"(undo) " + ctCollection.getName(), StringPool.BLANK);
+	protected String[] getUIDs(long ctCollectionId, CTModel<?>... ctModels) {
+		String[] uids = new String[ctModels.length];
+
+		for (int i = 0; i < ctModels.length; i++) {
+			uids[i] = _uidFactory.getUID(
+				ctModels[i].getModelClassName(), ctModels[i].getPrimaryKey(),
+				ctCollectionId);
+		}
+
+		return uids;
 	}
 
 	private static final Class<?>[] _ALL_INDEXER_CLASSES = {
@@ -390,13 +307,7 @@ public class SearchCTTest {
 	private static final Class<?>[] _NEW_INDEXER_CLASSES = {Layout.class};
 
 	@Inject
-	private static CounterLocalService _counterLocalService;
-
-	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
 
 	@Inject
 	private static CTProcessLocalService _ctProcessLocalService;
@@ -421,9 +332,6 @@ public class SearchCTTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private final List<JournalArticle> _journalArticles = new ArrayList<>();
-	private final List<Layout> _layouts = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CTCollection _undoCTCollection;

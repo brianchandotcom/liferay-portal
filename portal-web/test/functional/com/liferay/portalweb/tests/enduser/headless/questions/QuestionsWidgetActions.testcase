@@ -402,6 +402,175 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can subscribe and unsubscribe from the question."
+	@priority = "5"
+	test SubscribeAndUnsubscribeFromQuestion {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.openUsersAdmin();
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Content AddQuestion",
+			categoryName = "Questions Test Category",
+			titleField = "Title AddQuestion");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoTab(questionTabField = "My Subscriptions");
+
+		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.subscribeQuestion();
+
+		Questions.gotoTab(questionTabField = "My Subscriptions");
+
+		Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
+
+		Questions.unSubscribeQuestion(questionTitle = "Title AddQuestion");
+
+		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.subscribeQuestion();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "Title AddQuestion");
+
+		AssertVisible(
+			key_answerBodyContent = "This is my answer",
+			locator1 = "Questions#ANSWER_BODY");
+	}
+
+	@description = "Validate if the user can subscribe and unsubscribe from the topic."
+	@priority = "5"
+	test SubscribeAndUnsubscribeFromTopic {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.openUsersAdmin();
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoTab(questionTabField = "My Subscriptions");
+
+		Questions.viewSubscribedTopic(noSubscribedTopic = "true");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.subscribeTopic();
+
+		Questions.gotoTab(questionTabField = "My Subscriptions");
+
+		Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Category");
+
+		Questions.unSubscribeTopic(topicName = "Questions Test Category");
+
+		Questions.viewSubscribedTopic(noSubscribedTopic = "true");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.subscribeTopic();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Content AddQuestion",
+			titleField = "Title AddQuestion");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "Title AddQuestion");
+
+		AssertVisible(
+			key_questionTitle = "Title AddQuestion",
+			locator1 = "Questions#QUESTIONS_TITLE");
+	}
+
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
 	test ValidateIfTheMyActivityAppears {

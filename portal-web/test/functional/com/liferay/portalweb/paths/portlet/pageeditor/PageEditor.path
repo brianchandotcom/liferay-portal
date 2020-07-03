@@ -398,7 +398,7 @@
 </tr>
 <tr>
 	<td>ROW_COLUMN_RESIZER</td>
-	<td>xpath=(//button[contains(@class,'page-editor__col__resizer')])[${key_position}]</td>
+	<td>//div[contains(@class,'page-editor__topper col')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
 	<td></td>
 </tr>
 <tr>

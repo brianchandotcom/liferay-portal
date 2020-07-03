@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -33,6 +34,8 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -175,11 +178,9 @@ public class ExportImportPerformanceTest {
 
 		Map<String, Serializable> importLayoutSettingsMap =
 			_exportImportConfigurationSettingsMapFactory.
-				buildExportLayoutSettingsMap(
+				buildImportLayoutSettingsMap(
 					TestPropsValues.getUser(), _importGroup.getGroupId(), false,
 					_layoutIds, new HashMap<>());
-
-		importLayoutSettingsMap.put("targetGroupId", _importGroup.getGroupId());
 
 		_exportImportConfiguration =
 			_exportImportConfigurationLocalService.
@@ -202,6 +203,47 @@ public class ExportImportPerformanceTest {
 
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
+
+		stopWatch.stop();
+	}
+
+	@Test
+	public void testStagingPublication() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Map<String, Serializable> stagingSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					TestPropsValues.getUser(), stagingGroup.getGroupId(),
+					_group.getGroupId(), false, _layoutIds, new HashMap<>());
+
+		_exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "publish-group",
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL,
+					stagingSettingsMap);
+
+		long backgroundTaskId = _staging.publishLayouts(
+			TestPropsValues.getUserId(), _exportImportConfiguration);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
+
+		while (backgroundTask.isInProgress()) {
+			backgroundTask = _backgroundTaskManager.getBackgroundTask(
+				backgroundTaskId);
+
+			Thread.sleep(1000);
+		}
 
 		stopWatch.stop();
 	}
@@ -382,6 +424,9 @@ public class ExportImportPerformanceTest {
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@Inject
+	private BackgroundTaskManager _backgroundTaskManager;
+
 	@DeleteAfterTestRun
 	private ExportImportConfiguration _exportImportConfiguration;
 
@@ -425,6 +470,9 @@ public class ExportImportPerformanceTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private Staging _staging;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;

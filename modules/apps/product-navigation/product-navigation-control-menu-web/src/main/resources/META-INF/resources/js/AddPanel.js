@@ -39,6 +39,21 @@ const INITIAL_STATE = {
 export const AddPanelContext = React.createContext(INITIAL_STATE);
 const AddPanelContextProvider = AddPanelContext.Provider;
 
+const normalizeCollections = (collection) => {
+	const normalizedElement = {
+		children: collection.portlets.map(normalizeWidget),
+		collectionId: collection.path,
+		label: collection.title,
+	};
+
+	return collection.categories?.length
+		? {
+				...normalizedElement,
+				collections: collection.categories.map(normalizeCollections),
+		  }
+		: normalizedElement;
+};
+
 const AddPanel = ({
 	addContentsURLs,
 	contents,
@@ -77,11 +92,9 @@ const AddPanel = ({
 	const tabs = useMemo(
 		() => [
 			{
-				collections: widgets.map((collection) => ({
-					children: collection.portlets.map(normalizeWidget),
-					collectionId: collection.path,
-					label: collection.title,
-				})),
+				collections: widgets.map((collection) =>
+					normalizeCollections(collection)
+				),
 				id: 'widgets',
 				label: Liferay.Language.get('widgets'),
 			},

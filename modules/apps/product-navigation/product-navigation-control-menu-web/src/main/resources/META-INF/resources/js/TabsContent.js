@@ -29,9 +29,7 @@ const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 const EMPTY_COLLECTIONS = {collections: []};
 
 const TabsContent = ({tab, tabIndex}) => {
-	const {displayGrid, getContentsURL, namespace} = useContext(
-		AddPanelContext
-	);
+	const {getContentsURL, namespace} = useContext(AddPanelContext);
 
 	const [filteredContent, setFilteredContent] = useState(tab);
 	const [totalItems, setTotalItems] = useState(0);
@@ -138,34 +136,55 @@ const TabsContent = ({tab, tabIndex}) => {
 				/>
 			) : (
 				<ul className="list-unstyled">
-					{collections.map((collection, index) => (
-						<Collapse
-							key={collection.collectionId}
-							label={collection.label}
-							open={index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
-						>
-							<ul
-								className={classNames('list-unstyled', {
-									grid: isContentTab && displayGrid,
-								})}
-							>
-								{collection.children.map((item) => (
-									<React.Fragment key={item.itemId}>
-										<TabItem item={item} />
-										{item.portletItems?.length && (
-											<TabPortletItem
-												items={item.portletItems}
-											/>
-										)}
-									</React.Fragment>
-								))}
-							</ul>
-						</Collapse>
-					))}
+					<Collections
+						collections={collections}
+						isContentTab={isContentTab}
+						open
+					/>
 				</ul>
 			)}
 		</>
 	);
+};
+
+const Collections = ({
+	collections,
+	indentation = false,
+	isContentTab,
+	open,
+}) => {
+	const {displayGrid} = useContext(AddPanelContext);
+
+	return collections.map((collection, index) => (
+		<Collapse
+			indentation
+			key={collection.collectionId}
+			label={collection.label}
+			open={open && index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
+		>
+			{collection.collections && (
+				<Collections
+					collections={collection.collections}
+					indentation={indentation}
+				/>
+			)}
+
+			<ul
+				className={classNames('list-unstyled', {
+					grid: isContentTab && displayGrid,
+				})}
+			>
+				{collection.children.map((item) => (
+					<React.Fragment key={item.itemId}>
+						<TabItem item={item} />
+						{item.portletItems?.length && (
+							<TabPortletItem items={item.portletItems} />
+						)}
+					</React.Fragment>
+				))}
+			</ul>
+		</Collapse>
+	));
 };
 
 const TabPortletItem = ({items}) => (

@@ -237,8 +237,6 @@ definition {
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test ViewFriendlyURLs {
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
@@ -295,8 +293,6 @@ definition {
 	@description = "This ensures that both the localized active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test ViewLocalizedFriendlyURLs {
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
@@ -345,8 +341,6 @@ definition {
 	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history. This test also covers the first old friendlyURL is the last one."
 	@priority = "5"
 	test ViewMultipleOldFriendlyURLs {
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
@@ -373,8 +367,6 @@ definition {
 	@description = "This ensures that only the active URL can be viewed by default language from the history after localization without friendlyURL."
 	@priority = "5"
 	test ViewURLsAfterLocalizationWithoutFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");

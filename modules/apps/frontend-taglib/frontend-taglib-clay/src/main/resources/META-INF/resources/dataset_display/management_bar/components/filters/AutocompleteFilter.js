@@ -17,6 +17,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useIsMounted} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -90,24 +91,35 @@ function AutocompleteFilter(props) {
 		setSearch(query);
 	}, [query, search]);
 
+	const isMounted = useIsMounted();
+
 	useEffect(() => {
 		setLoading(true);
 		fetchData(props.apiUrl, search, currentPage)
 			.then((data) => {
+				if (!isMounted()) {
+					return;
+				}
+
 				setLoading(false);
+
 				if (currentPage === 1) {
 					updateItems(data.items);
 				}
 				else {
 					updateItems((items) => [...items, ...data.items]);
 				}
+
 				updateTotal(data.total);
 			})
 			.catch((error) => {
 				logError(error);
-				setLoading(false);
+
+				if (isMounted()) {
+					setLoading(false);
+				}
 			});
-	}, [currentPage, props.apiUrl, search]);
+	}, [currentPage, isMounted, props.apiUrl, search]);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingArea.current = node;

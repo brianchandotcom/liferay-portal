@@ -17,6 +17,8 @@ package com.liferay.change.tracking.internal.search.spi.model.query.contributor;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -34,18 +36,14 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Preston Crary
@@ -64,7 +62,7 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 
 		String className = modelSearchSettings.getClassName();
 
-		if (!_ctModelClassNames.contains(className)) {
+		if (!_serviceTrackerMap.containsKey(className)) {
 			return;
 		}
 
@@ -83,7 +81,9 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 			if (!GetterUtil.getBoolean(
 					searchContext.getAttribute("relatedClassName"))) {
 
-				addProductionFilter(booleanFilter);
+				booleanFilter.add(
+					_CT_COLLECTION_ID_EXISTS_FILTER,
+					BooleanClauseOccur.MUST_NOT);
 			}
 		}
 		else {
@@ -91,12 +91,10 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 
 			List<Long> excludeModelClassPKs = new ArrayList<>();
 
-			Long modelClassNameId = _ctModelClassNameIds.computeIfAbsent(
-				className, k -> _classNameLocalService.getClassNameId(k));
-
 			for (CTEntry ctEntry :
 					_ctEntryLocalService.getCTEntries(
-						ctCollectionId, modelClassNameId)) {
+						ctCollectionId,
+						_classNameLocalService.getClassNameId(className))) {
 
 				int changeType = ctEntry.getChangeType();
 
@@ -119,7 +117,9 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 					BooleanClauseOccur.MUST);
 			}
 			else {
-				addProductionFilter(booleanFilter);
+				booleanFilter.add(
+					_CT_COLLECTION_ID_EXISTS_FILTER,
+					BooleanClauseOccur.MUST_NOT);
 			}
 
 			if (!excludeModelClassPKs.isEmpty()) {
@@ -137,39 +137,29 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addCTService(CTService ctService) {
-		String className = getModelClassName(ctService);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class, null,
+			(serviceReference, emitter) -> {
+				CTService<?> ctService = bundleContext.getService(
+					serviceReference);
 
-		_ctModelClassNames.add(className);
+				Class<?> modelClass = ctService.getModelClass();
+
+				emitter.emit(modelClass.getName());
+			});
 	}
 
-	protected void addProductionFilter(BooleanFilter booleanFilter) {
-		booleanFilter.add(
-			_COLLECTION_EXISTS_FILTER, BooleanClauseOccur.MUST_NOT);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
-
-	protected String getModelClassName(CTService ctService) {
-		Class<?> modelClass = ctService.getModelClass();
-
-		return modelClass.getName();
-	}
-
-	protected void removeCTService(CTService ctService) {
-		String className = getModelClassName(ctService);
-
-		_ctModelClassNames.remove(className);
-		_ctModelClassNameIds.remove(className);
-	}
-
-	private static final Filter _COLLECTION_EXISTS_FILTER = new ExistsFilter(
-		CTModelPreFilterContributor._CT_COLLECTION_ID);
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
+
+	private static final Filter _CT_COLLECTION_ID_EXISTS_FILTER =
+		new ExistsFilter(_CT_COLLECTION_ID);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -177,10 +167,7 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
-	private final Map<String, Long> _ctModelClassNameIds =
-		new ConcurrentHashMap<>();
-	private final Set<String> _ctModelClassNames = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
+	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 
 	@Reference
 	private UIDFactory _uidFactory;

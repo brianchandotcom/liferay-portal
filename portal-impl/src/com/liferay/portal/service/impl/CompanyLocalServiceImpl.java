@@ -570,7 +570,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get the company id for user " + userId,
+						"Unable to get the company ID for user " + userId,
 						exception);
 				}
 			}

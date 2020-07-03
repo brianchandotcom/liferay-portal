@@ -300,6 +300,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON</td>
+	<td>//*[contains(@class,'sidebar-header-actions')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_VERTICAL_ELLIPSIS</td>
 	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

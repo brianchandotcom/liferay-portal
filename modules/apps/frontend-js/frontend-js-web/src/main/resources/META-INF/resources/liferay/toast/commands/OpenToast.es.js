@@ -17,7 +17,7 @@ import {render} from 'frontend-js-react-web';
 import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
-const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
+const DEFAULT_ALERT_CONTAINER_ID = 'ToastAlertContainer';
 
 const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID',

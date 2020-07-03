@@ -66,6 +66,16 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro answerQuestion {
+		CKEditor.addContent(content = "${contentField}");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		AssertVisible(
+			key_answerBodyContent = "${contentField}",
+			locator1 = "Questions#ANSWER_BODY");
+	}
+
 	macro askQuestionFillingTheMandatoryFields {
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
 
@@ -232,6 +242,10 @@ definition {
 		}
 	}
 
+	macro subscribeQuestion {
+		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+	}
+
 	macro subscribeTopic {
 		AssertClick(
 			locator1 = "Button#SUBSCRIBE",
@@ -246,6 +260,14 @@ definition {
 		}
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
+	}
+
+	macro unSubscribeQuestion {
+		Click.waitForMenuToggleJSClick(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Unsubscribe");
 	}
 
 	macro unSubscribeTopic {
@@ -305,6 +327,20 @@ definition {
 				key_questionTitle = "${questionTitle}",
 				locator1 = "Questions#QUESTIONS_TITLE",
 				value1 = "${questionTitle}");
+		}
+	}
+
+	macro viewSubscribedQuestion {
+		if (isSet(subscribedQuestion)) {
+			AssertTextEquals(
+				key_questionTitle = "${subscribedQuestion}",
+				locator1 = "Questions#QUESTIONS_TITLE",
+				value1 = "${subscribedQuestion}");
+		}
+		else if (isSet(noSubscribedQuestion)) {
+			AssertTextEquals(
+				locator1 = "Questions#QUESTIONS_DEFAULT_SUBSCRIPTION_QUESTIONS",
+				value1 = "There are no results.");
 		}
 	}
 

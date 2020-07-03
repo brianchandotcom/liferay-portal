@@ -80,9 +80,7 @@ function List({
 						symbol &&
 						item[symbol] && (
 							<ClayList.ItemField>
-								<ClaySticker
-									{...((sticker && item[sticker]) ?? {})}
-								>
+								<ClaySticker {...(sticker && item[sticker])}>
 									{item[symbol] && (
 										<ClayIcon symbol={item[symbol]} />
 									)}

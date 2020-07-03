@@ -114,6 +114,7 @@ public class UpgradeLayout extends UpgradeProcess {
 					fragmentEntryLink.setClassNameId(
 						PortalUtil.getClassNameId(Layout.class));
 					fragmentEntryLink.setClassPK(plid);
+					fragmentEntryLink.setPlid(plid);
 
 					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 						fragmentEntryLink);

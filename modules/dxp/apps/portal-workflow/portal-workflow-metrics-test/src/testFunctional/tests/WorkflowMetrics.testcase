@@ -1581,6 +1581,8 @@ definition {
 	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"
 	@priority = "5"
 	test VerifySLACustomCalendar {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#VerifySLACustomCalendar";
 
 		var appName = "com.liferay.portal.workflow.metrics.calendar.integration";
 
@@ -1591,6 +1593,10 @@ definition {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_FORM_DURATION_FIELD",
+			value1 = "DURATION");
 
 		WorkflowMetrics.verifyCustomCalendarExistOrNot(
 			calendar = "",
@@ -1640,8 +1646,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-
-		WorkflowMetrics.verifySLARecordHead(slaRecordDurationHead = "Duration");
 
 		AssertElementPresent(
 			key_slaTitle = "SLA Name",

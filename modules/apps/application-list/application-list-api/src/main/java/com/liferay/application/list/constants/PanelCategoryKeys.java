@@ -82,6 +82,9 @@ public interface PanelCategoryKeys {
 	public static final String SITE_ADMINISTRATION_CONTENT =
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 
+	public static final String SITE_ADMINISTRATION_DESIGN =
+		"site_administration.design";
+
 	public static final String SITE_ADMINISTRATION_MEMBERS =
 		PortletCategoryKeys.SITE_ADMINISTRATION_MEMBERS;
 

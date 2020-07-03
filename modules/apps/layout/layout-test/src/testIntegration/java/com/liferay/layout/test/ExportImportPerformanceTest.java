@@ -17,6 +17,11 @@ package com.liferay.layout.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -43,6 +48,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -52,6 +58,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -110,6 +118,35 @@ public class ExportImportPerformanceTest {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_createLayouts();
+
+		_layoutIds = ListUtil.toLongArray(
+			_layoutLocalService.getLayouts(_group.getGroupId(), false),
+			Layout::getLayoutId);
+	}
+
+	@Test
+	public void testExportGroupToLAR() throws Exception {
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUser(), _group.getGroupId(), false,
+					_layoutIds, new HashMap<>());
+
+		_exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "export-group",
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		_exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfiguration);
+
+		stopWatch.stop();
 	}
 
 	@Test
@@ -300,6 +337,20 @@ public class ExportImportPerformanceTest {
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@DeleteAfterTestRun
+	private ExportImportConfiguration _exportImportConfiguration;
+
+	@Inject
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@Inject
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
+
+	@Inject
+	private ExportImportLocalService _exportImportLocalService;
+
 	@Inject
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
@@ -312,6 +363,8 @@ public class ExportImportPerformanceTest {
 
 	@Inject
 	private LayoutCopyHelper _layoutCopyHelper;
+
+	private long[] _layoutIds;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

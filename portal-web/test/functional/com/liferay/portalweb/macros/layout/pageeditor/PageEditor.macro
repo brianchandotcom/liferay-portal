@@ -417,7 +417,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_BODY");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 	}
 
@@ -721,7 +721,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_BODY");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(
@@ -1136,10 +1136,10 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		if (IsNotVisible(key_fragmentName = "${fragmentName}", locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_BODY");
+		key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		if (!(isSet(elementType))) {
@@ -1218,10 +1218,10 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		if (IsNotVisible(key_fragmentName = "${fragmentName}", locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_BODY");
+		key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_SAVE_AS_FRAGMENT_BUTTON");
@@ -1266,7 +1266,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_BODY");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click(

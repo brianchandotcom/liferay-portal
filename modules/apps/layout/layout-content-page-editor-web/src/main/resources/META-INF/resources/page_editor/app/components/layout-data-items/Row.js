@@ -72,7 +72,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	);
 
 	return shouldAddContainer ? (
-		<ClayLayout.ContainerFluid className="p-0">
+		<ClayLayout.ContainerFluid className="p-0" size={false}>
 			{rowContent}
 		</ClayLayout.ContainerFluid>
 	) : (

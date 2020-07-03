@@ -44,11 +44,6 @@ function PageTypeSelector(props) {
 		Liferay.Util.navigate(props.addLayoutURL);
 	}, [props.addLayoutURL]);
 
-	const handleOnConfigureClick = useCallback(() => {
-		setActive(false);
-		Liferay.Util.navigate(props.configureLayoutSetURL);
-	}, [props.configureLayoutSetURL]);
-
 	return (
 		<div className="align-items-center d-flex page-type-selector">
 			<div>
@@ -82,7 +77,7 @@ function PageTypeSelector(props) {
 					}
 				>
 					<ClayDropDown.ItemList>
-						{props.addLayoutURL !== '' && (
+						{props.addLayoutURL && (
 							<ClayDropDown.Item
 								data-value={Liferay.Language.get('add-page')}
 								key={Liferay.Language.get('add-page')}
@@ -92,36 +87,41 @@ function PageTypeSelector(props) {
 								{Liferay.Language.get('add-page')}
 							</ClayDropDown.Item>
 						)}
-						{props.addCollectionLayoutURL !== '' && (
-							<ClayDropDown.Item
-								data-value={Liferay.Language.get(
-									'add-collection-page'
-								)}
-								key={Liferay.Language.get(
-									'add-collection-page'
-								)}
-								onClick={handleOnAddCollectionPageClick}
-								title={Liferay.Language.get(
-									'add-collection-page'
-								)}
-							>
-								{Liferay.Language.get('add-collection-page')}
-							</ClayDropDown.Item>
-						)}
+						{props.showAddCollectionPages &&
+							props.addCollectionLayoutURL && (
+								<ClayDropDown.Item
+									data-value={Liferay.Language.get(
+										'add-collection-page'
+									)}
+									key={Liferay.Language.get(
+										'add-collection-page'
+									)}
+									onClick={handleOnAddCollectionPageClick}
+									title={Liferay.Language.get(
+										'add-collection-page'
+									)}
+								>
+									{Liferay.Language.get(
+										'add-collection-page'
+									)}
+								</ClayDropDown.Item>
+							)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>
 			<div className="autofit-col ml-2">
-				<ClayLink
-					borderless
-					displayType="unstyled"
-					href="javascript:;"
-					monospaced
-					onClick={handleOnConfigureClick}
-					outline
-				>
-					<ClayIcon symbol="cog" />
-				</ClayLink>
+				{props.configureLayoutSetURL && (
+					<ClayLink
+						borderless
+						className="configure-link"
+						displayType="unstyled"
+						href={props.configureLayoutSetURL}
+						monospaced
+						outline
+					>
+						<ClayIcon symbol="cog" />
+					</ClayLink>
+				)}
 			</div>
 		</div>
 	);

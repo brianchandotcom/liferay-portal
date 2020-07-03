@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
+import com.liferay.product.navigation.product.menu.web.internal.configuration.util.CollectionLayoutsConfigurationUtil;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
 
 import java.util.Map;
@@ -256,6 +257,9 @@ public class LayoutsTreeDisplayContext {
 			"namespace", getNamespace()
 		).put(
 			"privateLayout", isPrivateLayout()
+		).put(
+			"showAddCollectionPages",
+			CollectionLayoutsConfigurationUtil.enabled()
 		).build();
 	}
 

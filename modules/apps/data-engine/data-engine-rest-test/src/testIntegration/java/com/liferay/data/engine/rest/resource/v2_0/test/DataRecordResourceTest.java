@@ -74,14 +74,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			404,
 			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
 				RandomTestUtil.randomLong(), randomDataRecord()));
-
-		DataRecord dataRecord = _createDataRecord(
-			RandomTestUtil.randomString());
-
-		assertHttpResponseStatusCode(
-			400,
-			dataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
-				dataRecord.getDataRecordCollectionId(), dataRecord));
 	}
 
 	@Override

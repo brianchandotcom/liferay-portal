@@ -107,9 +107,9 @@ public class ArchivedModulesUpgradeTest {
 	}
 
 	@Test
-	public void testDeprecatedModulesUpgradePortalDirectory() throws Exception {
+	public void testDeprecatedModulesUpgradeDirectory() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removePortalDirectoryModuleData", "com.liferay.directory.web",
+			"removeDirectoryModuleData", "com.liferay.directory.web",
 			null, "com_liferay_directory_web_portlet_DirectoryPortlet");
 	}
 

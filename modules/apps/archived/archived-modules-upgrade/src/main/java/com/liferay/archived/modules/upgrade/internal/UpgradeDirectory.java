@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 /**
  * @author Sam Ziemer
  */
-public class UpgradePortalDirectory extends UpgradeProcess {
+public class UpgradeDirectory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

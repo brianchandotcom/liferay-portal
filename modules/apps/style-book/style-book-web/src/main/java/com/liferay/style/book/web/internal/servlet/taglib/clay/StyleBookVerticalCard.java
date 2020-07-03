@@ -17,12 +17,16 @@ package com.liferay.style.book.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryActionDropdownItemsProvider;
@@ -109,6 +113,33 @@ public class StyleBookVerticalCard
 	@Override
 	public String getImageSrc() {
 		return _styleBookEntry.getImagePreviewURL(_themeDisplay);
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		StyleBookEntry draftStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
+
+		if (_styleBookEntry.isHead() && (draftStyleBookEntry != null)) {
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(
+					WorkflowConstants.STATUS_APPROVED)
+			).add(
+				labelItem -> labelItem.setStatus(WorkflowConstants.STATUS_DRAFT)
+			).build();
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				int status = WorkflowConstants.STATUS_APPROVED;
+
+				if (!_styleBookEntry.isHead()) {
+					status = WorkflowConstants.STATUS_DRAFT;
+				}
+
+				labelItem.setStatus(status);
+			}
+		).build();
 	}
 
 	@Override

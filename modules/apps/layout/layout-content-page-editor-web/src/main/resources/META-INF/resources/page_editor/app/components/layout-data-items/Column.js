@@ -23,49 +23,44 @@ import {useSelector} from '../../store/index';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
-const Column = React.forwardRef(
-	({children, className, item, ...props}, ref) => {
-		const canUpdateItemConfiguration = useSelector(
-			selectCanUpdateItemConfiguration
-		);
-		const canUpdatePageStructure = useSelector(
-			selectCanUpdatePageStructure
-		);
-		const selectedViewportSize = useSelector(
-			(state) => state.selectedViewportSize
-		);
-		const updatedLayoutData = useUpdatedLayoutDataContext();
+const Column = React.forwardRef(({children, className, item}, ref) => {
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+	const updatedLayoutData = useUpdatedLayoutDataContext();
 
-		const itemConfig = updatedLayoutData
-			? updatedLayoutData.items[item.itemId].config
-			: item.config;
+	const itemConfig = updatedLayoutData
+		? updatedLayoutData.items[item.itemId].config
+		: item.config;
 
-		const columnSize = getResponsiveColumnSize(
-			itemConfig,
-			selectedViewportSize
+	const columnSize = getResponsiveColumnSize(
+		itemConfig,
+		selectedViewportSize
+	);
+
+	const columnContent =
+		canUpdatePageStructure || canUpdateItemConfiguration ? (
+			<div className="page-editor__col__border">{children}</div>
+		) : (
+			children
 		);
 
-		const columnContent =
-			canUpdatePageStructure || canUpdateItemConfiguration ? (
-				<div className="page-editor__col__border">{children}</div>
-			) : (
-				children
-			);
-
-		return (
-			<div
-				{...props}
-				className={classNames(className, 'col', {
-					[`col-${columnSize}`]: columnSize,
-					empty: !item.children.length,
-				})}
-				ref={ref}
-			>
-				{columnContent}
-			</div>
-		);
-	}
-);
+	return (
+		<div
+			className={classNames(className, 'col', {
+				[`col-${columnSize}`]: columnSize,
+				empty: !item.children.length,
+			})}
+			ref={ref}
+		>
+			{columnContent}
+		</div>
+	);
+});
 
 Column.propTypes = {
 	item: getLayoutDataItemPropTypes({

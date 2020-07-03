@@ -20,6 +20,10 @@ import {
 import {Config} from 'metal-state';
 
 class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
+	copyStyleBookEntry(itemData) {
+		this._send(itemData.copyStyleBookEntryURL);
+	}
+
 	deleteStyleBookEntry(itemData) {
 		if (
 			confirm(

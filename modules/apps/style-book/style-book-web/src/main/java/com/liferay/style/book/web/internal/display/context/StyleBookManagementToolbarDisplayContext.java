@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -32,6 +33,7 @@ import com.liferay.style.book.web.internal.security.permissions.resource.StyleBo
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -76,6 +78,13 @@ public class StyleBookManagementToolbarDisplayContext
 				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "copySelectedStyleBookEntries");
+				dropdownItem.setIcon("paste");
+				dropdownItem.setLabel(LanguageUtil.get(request, "make-a-copy"));
+				dropdownItem.setQuickAction(true);
+			}
 		).build();
 	}
 
@@ -86,6 +95,27 @@ public class StyleBookManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return HashMapBuilder.<String, Object>put(
+			"copyStyleBookEntryURL",
+			() -> {
+				PortletURL copyStyleBookEntryURL =
+					liferayPortletResponse.createActionURL();
+
+				copyStyleBookEntryURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/style_book/copy_style_book_entry");
+				copyStyleBookEntryURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return copyStyleBookEntryURL.toString();
+			}
+		).build();
 	}
 
 	@Override

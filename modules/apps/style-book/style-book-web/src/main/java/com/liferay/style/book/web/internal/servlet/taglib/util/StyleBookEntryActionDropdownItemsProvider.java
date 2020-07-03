@@ -65,6 +65,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		).add(
 			_getRenameStyleBookEntrytActionUnsafeConsumer()
 		).add(
+			_getCopyStyleBookEntryActionUnsafeConsumer()
+		).add(
 			_getUpdateStyleBookEntryPreviewActionUnsafeConsumer()
 		).add(
 			() -> _styleBookEntry.getPreviewFileEntryId() > 0,
@@ -72,6 +74,29 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		).add(
 			_getDeleteStyleBookEntryActionUnsafeConsumer()
 		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getCopyStyleBookEntryActionUnsafeConsumer() {
+
+		PortletURL copyStyleBookEntryURL = _renderResponse.createActionURL();
+
+		copyStyleBookEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/style_book/copy_style_book_entry");
+
+		copyStyleBookEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		copyStyleBookEntryURL.setParameter(
+			"styleBookEntryIds",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "copyStyleBookEntry");
+			dropdownItem.putData(
+				"copyStyleBookEntryURL", copyStyleBookEntryURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

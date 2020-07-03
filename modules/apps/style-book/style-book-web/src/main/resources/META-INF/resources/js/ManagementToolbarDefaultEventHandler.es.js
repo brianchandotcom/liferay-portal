@@ -28,6 +28,15 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		});
 	}
 
+	copySelectedStyleBookEntries() {
+		this.one('#styleBookEntryIds').value = Liferay.Util.listCheckedExcept(
+			this.one('#fm'),
+			this.ns('allRowIds')
+		);
+
+		submitForm(this.one('#styleBookEntryFm'), this.copyStyleBookEntryURL);
+	}
+
 	deleteSelectedStyleBookEntries() {
 		if (
 			confirm(
@@ -40,6 +49,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
+	copyStyleBookEntryURL: Config.string(),
 	spritemap: Config.string(),
 };
 

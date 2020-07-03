@@ -60,6 +60,10 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 	</aui:form>
 </clay:container-fluid>
 
+<aui:form name="styleBookEntryFm">
+	<aui:input name="styleBookEntryIds" type="hidden" />
+</aui:form>
+
 <portlet:actionURL name="/style_book/update_style_book_entry_preview" var="styleBookEntryPreviewURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
@@ -76,5 +80,6 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 
 <liferay-frontend:component
 	componentId="<%= styleBookManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= styleBookManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />

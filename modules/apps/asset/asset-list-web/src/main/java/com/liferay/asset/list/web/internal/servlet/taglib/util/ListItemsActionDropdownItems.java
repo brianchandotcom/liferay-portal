@@ -15,30 +15,20 @@
 package com.liferay.asset.list.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -99,8 +89,6 @@ public class ListItemsActionDropdownItems {
 			_getViewDisplayPageActionUnsafeConsumer(objectClassName, classPK)
 		).add(
 			_getEditContentActionUnsafeConsumer(objectClassName, classPK)
-		).add(
-			_getEditDisplayPageActionUnsafeConsumer(objectClassName, classPK)
 		).build();
 	}
 
@@ -124,83 +112,6 @@ public class ListItemsActionDropdownItems {
 
 		return HttpUtil.setParameter(
 			editContentURL, "redirect", _getRedirect());
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-			_getEditDisplayPageActionUnsafeConsumer(
-				String className, long classPK)
-		throws Exception {
-
-		String editDisplayPageTemplateURL = _getEditDisplayPageTemplateURL(
-			className, classPK);
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "editDisplayPageTemplate");
-			dropdownItem.putData(
-				"editDisplayPageTemplateURL", editDisplayPageTemplateURL);
-			dropdownItem.setDisabled(
-				Validator.isNull(editDisplayPageTemplateURL));
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_httpServletRequest, "edit-display-page-template"));
-		};
-	}
-
-	private String _getEditDisplayPageTemplateURL(
-			String className, long classPK)
-		throws Exception {
-
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
-
-		if (infoDisplayContributor == null) {
-			return null;
-		}
-
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
-
-		if (infoDisplayObjectProvider == null) {
-			return null;
-		}
-
-		LayoutPageTemplateEntry assetDisplayPageLayoutPageTemplateEntry =
-			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-				_themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(className), classPK,
-				infoDisplayObjectProvider.getClassTypeId());
-
-		if (assetDisplayPageLayoutPageTemplateEntry == null) {
-			return null;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			assetDisplayPageLayoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return null;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if ((draftLayout == null) ||
-			!LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), draftLayout,
-				ActionKeys.UPDATE)) {
-
-			return null;
-		}
-
-		String editDisplayPageTemplateURL = PortalUtil.getLayoutFullURL(
-			draftLayout, _themeDisplay);
-
-		editDisplayPageTemplateURL = HttpUtil.setParameter(
-			editDisplayPageTemplateURL, "p_l_back_url", _getRedirect());
-
-		editDisplayPageTemplateURL = HttpUtil.setParameter(
-			editDisplayPageTemplateURL, "p_l_mode", Constants.EDIT);
-
-		return editDisplayPageTemplateURL;
 	}
 
 	private String _getRedirect() {

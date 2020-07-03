@@ -119,8 +119,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SLA_RECORD_DURATION</td>
-	<td>//tr//th[@data-testid='slaDurationHead']</td>
+	<td>SLA_FORM_DURATION_FIELD</td>
+	<td>//label[contains(@data-testid,'duration')]</td>
 	<td></td>
 </tr>
 <tr>

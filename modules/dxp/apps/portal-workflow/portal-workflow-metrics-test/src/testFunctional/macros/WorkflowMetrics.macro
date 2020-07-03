@@ -1071,16 +1071,6 @@ definition {
 		}
 	}
 
-	macro verifySLARecordHead {
-		var key_slaRecordDurationHead = "${slaRecordDurationHead}";
-
-		if (isSet(slaRecordDurationHead)) {
-			AssertTextEquals(
-				locator1 = "WorkflowMetricsSLA#SLA_RECORD_DURATION",
-				value1 = "${key_slaRecordDurationHead}");
-		}
-	}
-
 	macro viewItemFilterByOnAllItemsPage {
 		var key_allItemsFilterName = "${allItemsFilterName}";
 		var key_assigneeName = "${assigneeName}";

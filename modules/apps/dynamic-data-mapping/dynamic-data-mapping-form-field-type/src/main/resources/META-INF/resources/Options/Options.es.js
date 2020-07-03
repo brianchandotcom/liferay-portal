@@ -288,6 +288,7 @@ const Main = ({
 	defaultLanguageId = themeDisplay.getLanguageId(),
 	editingLanguageId = themeDisplay.getLanguageId(),
 	onChange,
+	keywordReadOnly,
 	placeholder = Liferay.Language.get('enter-an-option'),
 	readOnly,
 	required,
@@ -314,7 +315,7 @@ const Main = ({
 					<KeyValue
 						generateKeyword={option.generateKeyword}
 						keyword={option.value}
-						keywordReadOnly={false}
+						keywordReadOnly={keywordReadOnly}
 						name={`option${index}`}
 						onBlur={handleBlur}
 						onChange={(event) =>

@@ -160,7 +160,12 @@ class Sidebar extends Component {
 	}
 
 	getSettingsFormContext() {
-		const {defaultLanguageId, editingLanguageId, focusedField} = this.props;
+		const {
+			defaultLanguageId,
+			editingLanguageId,
+			focusedField,
+			readOnlyFieldName,
+		} = this.props;
 		const {settingsContext} = focusedField;
 		const visitor = new PagesVisitor(settingsContext.pages);
 
@@ -171,7 +176,14 @@ class Sidebar extends Component {
 					...field,
 					defaultLanguageId,
 					editingLanguageId,
-					readOnly: false,
+					keywordReadOnly:
+						field.fieldName == 'columns' ||
+						field.fieldName == 'options' ||
+						field.fieldName == 'rows'
+							? readOnlyFieldName
+							: false,
+					readOnly:
+						field.fieldName == 'name' ? readOnlyFieldName : false,
 				};
 
 				return {
@@ -1339,6 +1351,15 @@ Sidebar.PROPS = {
 	 */
 
 	portletNamespace: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?bool}
+	 */
+
+	readOnlyFieldName: Config.bool().value(true),
 
 	/**
 	 * @default undefined

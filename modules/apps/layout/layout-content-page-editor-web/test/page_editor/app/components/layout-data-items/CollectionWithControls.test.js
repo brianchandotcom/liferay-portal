@@ -87,29 +87,18 @@ describe('CollectionWithControls', () => {
 	it('hides FloatingToolbar if item is not active', async () => {
 		const {queryByTitle} = renderCollection({isActive: false});
 
-		expect(queryByTitle('duplicate')).toBe(null);
 		expect(queryByTitle('collection-display-configuration')).toBe(null);
 	});
 
 	it('removes all buttons if user has no permissions', () => {
 		const {queryByTitle} = renderCollection({hasUpdatePermission: false});
 
-		expect(queryByTitle('duplicate')).toBe(null);
 		expect(queryByTitle('collection-display-configuration')).toBe(null);
 	});
 
 	it('removes all buttons if experience is locked', () => {
 		const {queryByTitle} = renderCollection({lockedSegment: true});
 
-		expect(queryByTitle('duplicate')).toBe(null);
 		expect(queryByTitle('collection-display-configuration')).toBe(null);
-	});
-
-	it('removes duplicate button if viewport is not desktop', () => {
-		const {queryByTitle} = renderCollection({
-			viewportSize: "Sandro's Phone",
-		});
-
-		expect(queryByTitle('duplicate')).toBe(null);
 	});
 });

@@ -321,7 +321,7 @@ function DatasetDisplay({
 				setActiveView={setActiveView}
 				showSearch={showSearch}
 				sidePanelId={datasetDisplaySupportSidePanelId}
-				total={items ? items.length : 0}
+				total={items?.length ?? 0}
 				views={views}
 			/>
 		</div>

@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
 
 import javax.portlet.ActionRequest;

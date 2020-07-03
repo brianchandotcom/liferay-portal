@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

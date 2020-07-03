@@ -15,7 +15,7 @@
 package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

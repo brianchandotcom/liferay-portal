@@ -103,6 +103,20 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
+	public StyleBookEntry publishDraft(long styleBookEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.publishDraft(styleBookEntry);
+	}
+
+	@Override
 	public StyleBookEntry updateDefaultStyleBookEntry(
 			long styleBookEntryId, boolean defaultStyleBookEntry)
 		throws PortalException {

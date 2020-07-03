@@ -94,10 +94,7 @@ public class StyleBookEntryLocalServiceImpl
 
 		_validateStyleBookEntryKey(groupId, styleBookEntryKey);
 
-		long styleBookEntryId = counterLocalService.increment();
-
-		StyleBookEntry styleBookEntry = styleBookEntryPersistence.create(
-			styleBookEntryId);
+		StyleBookEntry styleBookEntry = create();
 
 		styleBookEntry.setGroupId(groupId);
 		styleBookEntry.setCompanyId(companyId);
@@ -109,7 +106,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 		styleBookEntry.setTokensValues(tokensValue);
 
-		return styleBookEntryPersistence.update(styleBookEntry);
+		return publishDraft(styleBookEntry);
 	}
 
 	@Override
@@ -151,10 +148,6 @@ public class StyleBookEntryLocalServiceImpl
 	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
 		throws PortalException {
 
-		// Style book entry
-
-		styleBookEntryPersistence.remove(styleBookEntry);
-
 		// Portlet file entry
 
 		if (styleBookEntry.getPreviewFileEntryId() > 0) {
@@ -162,20 +155,21 @@ public class StyleBookEntryLocalServiceImpl
 				styleBookEntry.getPreviewFileEntryId());
 		}
 
-		return styleBookEntry;
+		return delete(styleBookEntry);
 	}
 
 	@Override
 	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
-		return styleBookEntryPersistence.fetchByG_D_First(groupId, true, null);
+		return styleBookEntryPersistence.fetchByG_D_Head_First(
+			groupId, true, true, null);
 	}
 
 	@Override
 	public StyleBookEntry fetchStyleBookEntry(
 		long groupId, String styleBookEntryKey) {
 
-		return styleBookEntryPersistence.fetchByG_SBEK(
-			groupId, _getStyleBookEntryKey(styleBookEntryKey));
+		return styleBookEntryPersistence.fetchByG_SBEK_First(
+			groupId, _getStyleBookEntryKey(styleBookEntryKey), null);
 	}
 
 	@Override
@@ -190,9 +184,8 @@ public class StyleBookEntryLocalServiceImpl
 		int count = 0;
 
 		while (true) {
-			StyleBookEntry styleBookEntry =
-				styleBookEntryPersistence.fetchByG_SBEK(
-					groupId, curStyleBookEntryKey);
+			StyleBookEntry styleBookEntry = fetchStyleBookEntry(
+				groupId, curStyleBookEntryKey);
 
 			if (styleBookEntry == null) {
 				return curStyleBookEntryKey;
@@ -207,8 +200,8 @@ public class StyleBookEntryLocalServiceImpl
 		long groupId, int start, int end,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		return styleBookEntryPersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
+		return styleBookEntryPersistence.findByGroupId_Head(
+			groupId, true, start, end, orderByComparator);
 	}
 
 	@Override
@@ -216,21 +209,21 @@ public class StyleBookEntryLocalServiceImpl
 		long groupId, String name, int start, int end,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		return styleBookEntryPersistence.findByG_LikeN(
+		return styleBookEntryPersistence.findByG_LikeN_Head(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-			start, end, orderByComparator);
+			true, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getStyleBookEntriesCount(long groupId) {
-		return styleBookEntryPersistence.countByGroupId(groupId);
+		return styleBookEntryPersistence.countByGroupId_Head(groupId, true);
 	}
 
 	@Override
 	public int getStyleBookEntriesCount(long groupId, String name) {
-		return styleBookEntryPersistence.countByG_LikeN(
-			groupId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+		return styleBookEntryPersistence.countByG_LikeN_Head(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			true);
 	}
 
 	@Override
@@ -253,15 +246,12 @@ public class StyleBookEntryLocalServiceImpl
 
 			oldDefaultStyleBookEntry.setDefaultStyleBookEntry(false);
 
-			styleBookEntryLocalService.updateStyleBookEntry(
-				oldDefaultStyleBookEntry);
+			styleBookEntryPersistence.update(oldDefaultStyleBookEntry);
 		}
 
 		styleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
 
-		styleBookEntryLocalService.updateStyleBookEntry(styleBookEntry);
-
-		return styleBookEntry;
+		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
 	@Override
@@ -401,7 +391,7 @@ public class StyleBookEntryLocalServiceImpl
 
 		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
 
-		StyleBookEntry styleBookEntry = styleBookEntryPersistence.fetchByG_SBEK(
+		StyleBookEntry styleBookEntry = fetchStyleBookEntry(
 			groupId, styleBookEntryKey);
 
 		if (styleBookEntry != null) {

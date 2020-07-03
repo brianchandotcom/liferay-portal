@@ -16,19 +16,16 @@ package com.liferay.change.tracking.internal.search;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEventException;
+import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeClosable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -51,13 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
@@ -76,7 +68,7 @@ public class CTSearchEventListener implements CTEventListener {
 						CTCollectionThreadLocal.setCTCollectionId(
 							targetCTCollection.getCtCollectionId())) {
 
-					for (Map.Entry<String, List<CTEntry>> ctEntryEntry :
+					for (Map.Entry<CTService<?>, List<CTEntry>> ctEntryEntry :
 							_getCTEntryEntries(
 								targetCTCollection.getCtCollectionId())) {
 
@@ -104,13 +96,13 @@ public class CTSearchEventListener implements CTEventListener {
 						CTCollectionThreadLocal.setCTCollectionId(
 							CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
-					for (Map.Entry<String, List<CTEntry>> ctEntryEntry :
+					for (Map.Entry<CTService<?>, List<CTEntry>> ctEntryEntry :
 							_getCTEntryEntries(ctCollectionId)) {
 
-						String className = ctEntryEntry.getKey();
+						CTService<?> ctService = ctEntryEntry.getKey();
 
 						Indexer<?> indexer = _indexerRegistry.getIndexer(
-							className);
+							ctService.getModelClass());
 
 						if (indexer == null) {
 							continue;
@@ -123,7 +115,8 @@ public class CTSearchEventListener implements CTEventListener {
 						for (CTEntry ctEntry : ctEntries) {
 							uids.add(
 								_uidFactory.getUID(
-									className, ctEntry.getModelClassPK(),
+									indexer.getClassName(),
+									ctEntry.getModelClassPK(),
 									CTConstants.CT_COLLECTION_ID_PRODUCTION));
 						}
 
@@ -152,12 +145,13 @@ public class CTSearchEventListener implements CTEventListener {
 			return;
 		}
 
-		for (Map.Entry<String, List<CTEntry>> ctEntryEntry :
+		for (Map.Entry<CTService<?>, List<CTEntry>> ctEntryEntry :
 				_getCTEntryEntries(ctCollectionId)) {
 
-			String className = ctEntryEntry.getKey();
+			CTService<?> ctService = ctEntryEntry.getKey();
 
-			Indexer<?> indexer = _indexerRegistry.getIndexer(className);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(
+				ctService.getModelClass());
 
 			if (indexer == null) {
 				continue;
@@ -173,7 +167,7 @@ public class CTSearchEventListener implements CTEventListener {
 
 					uids.add(
 						_uidFactory.getUID(
-							className, ctEntry.getModelClassPK(),
+							indexer.getClassName(), ctEntry.getModelClassPK(),
 							ctEntry.getCtCollectionId()));
 				}
 			}
@@ -189,84 +183,56 @@ public class CTSearchEventListener implements CTEventListener {
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CTService.class, null,
-			(serviceReference, emitter) -> {
-				try {
-					CTService<?> ctService = bundleContext.getService(
-						serviceReference);
+	private Collection<Map.Entry<CTService<?>, List<CTEntry>>>
+		_getCTEntryEntries(long ctCollectionId) {
 
-					Class<?> clazz = ctService.getModelClass();
-
-					emitter.emit(clazz.getName());
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			},
-			new CTServiceServiceTrackerCustomizer(bundleContext));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	private Collection<Map.Entry<String, List<CTEntry>>> _getCTEntryEntries(
-		long ctCollectionId) {
-
-		Map<Long, Map.Entry<String, List<CTEntry>>> ctEntryMap =
+		Map<Long, Map.Entry<CTService<?>, List<CTEntry>>> ctEntryMap =
 			new HashMap<>();
 
 		for (CTEntry ctEntry :
 				_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId)) {
 
-			Map.Entry<String, List<CTEntry>> entry = ctEntryMap.computeIfAbsent(
-				ctEntry.getModelClassNameId(),
-				classNameId -> {
-					try {
-						ClassName className =
-							_classNameLocalService.getClassName(classNameId);
+			Map.Entry<CTService<?>, List<CTEntry>> entry =
+				ctEntryMap.computeIfAbsent(
+					ctEntry.getModelClassNameId(),
+					classNameId -> {
+						CTService<?> ctService =
+							_ctServiceRegistry.getCTService(classNameId);
+
+						if (ctService == null) {
+							return null;
+						}
 
 						return new AbstractMap.SimpleImmutableEntry<>(
-							className.getValue(), new ArrayList<>());
-					}
-					catch (PortalException portalException) {
-						throw new SystemException(portalException);
-					}
-				});
+							ctService, new ArrayList<>());
+					});
 
-			List<CTEntry> ctEntries = entry.getValue();
+			if (entry == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No CTService found for classNameId " +
+							ctEntry.getModelClassNameId());
+				}
+			}
+			else {
+				List<CTEntry> ctEntries = entry.getValue();
 
-			ctEntries.add(ctEntry);
+				ctEntries.add(ctEntry);
+			}
 		}
 
 		return ctEntryMap.values();
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T extends CTModel<T>> void _reindex(
-			String className, List<CTEntry> ctEntries)
+			CTService<T> ctService, List<CTEntry> ctEntries)
 		throws SearchException {
 
-		Indexer<T> indexer = _indexerRegistry.getIndexer(className);
+		Indexer<T> indexer = _indexerRegistry.getIndexer(
+			ctService.getModelClass());
 
 		if (indexer == null) {
 			return;
-		}
-
-		CTServiceHolder<T> ctServiceHolder =
-			(CTServiceHolder<T>)_serviceTrackerMap.getService(
-				indexer.getClassName());
-
-		CTService<T> ctService = ctServiceHolder._ctService;
-
-		if (ctService == null) {
-			throw new SystemException(
-				StringBundler.concat(
-					"Service for ", indexer.getClassName(), " is missing"));
 		}
 
 		Set<Serializable> primaryKeys = new HashSet<>();
@@ -294,6 +260,9 @@ public class CTSearchEventListener implements CTEventListener {
 			});
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTSearchEventListener.class);
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -304,59 +273,15 @@ public class CTSearchEventListener implements CTEventListener {
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
+	private CTServiceRegistry _ctServiceRegistry;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
-	private ServiceTrackerMap<String, CTServiceHolder<?>> _serviceTrackerMap;
-
 	@Reference
 	private UIDFactory _uidFactory;
-
-	private static class CTServiceHolder<T extends CTModel<T>> {
-
-		private CTServiceHolder(CTService<T> ctService) {
-			_ctService = ctService;
-		}
-
-		private final CTService<T> _ctService;
-
-	}
-
-	private class CTServiceServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<CTService, CTServiceHolder<?>> {
-
-		@Override
-		public CTServiceHolder<?> addingService(
-			ServiceReference<CTService> serviceReference) {
-
-			CTService<?> ctService = _bundleContext.getService(
-				serviceReference);
-
-			return new CTServiceHolder<>(ctService);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<CTService> serviceReference,
-			CTServiceHolder<?> ctServiceHolder) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<CTService> serviceReference,
-			CTServiceHolder<?> ctServiceHolder) {
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private CTServiceServiceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		private final BundleContext _bundleContext;
-
-	}
 
 }

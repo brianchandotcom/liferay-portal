@@ -22,28 +22,24 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.SystemEventTable;
-import com.liferay.portal.kernel.model.UserTable;
 
-import java.util.Date;
 import java.util.function.Function;
 
 /**
  * @author Preston Crary
  */
-public interface TableReferenceInfoBuilder<T extends Table<T>> {
+public interface ChildTableReferenceInfoBuilder<T extends Table<T>> {
 
-	public default TableReferenceInfoBuilder<T> assetEntryReference(
+	public default ChildTableReferenceInfoBuilder<T> assetEntryReference(
 		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
 
 		return classNameReference(
 			pkColumn, AssetEntryTable.INSTANCE.classPK, modelClass);
 	}
 
-	public default TableReferenceInfoBuilder<T> classNameReference(
+	public default ChildTableReferenceInfoBuilder<T> classNameReference(
 		Column<T, Long> pkColumn, Column<?, Long> classPKColumn,
 		Class<? extends BaseModel<?>> modelClass) {
 
@@ -69,75 +65,12 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			));
 	}
 
-	public default TableReferenceInfoBuilder<T> groupedModel(T table) {
-		singleColumnReference(
-			table.getColumn("groupId", Long.class), GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			table.getColumn("companyId", Long.class),
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			table.getColumn("userId", Long.class), UserTable.INSTANCE.userId
-		);
-
-		Column<T, String> userNameColumn = table.getColumn(
-			"userName", String.class);
-
-		if (userNameColumn != null) {
-			nonreferenceColumn(userNameColumn);
-		}
-
-		Column<T, Date> createDateColumn = table.getColumn(
-			"createDate", Date.class);
-
-		if (createDateColumn != null) {
-			nonreferenceColumn(createDateColumn);
-		}
-
-		Column<T, Date> modifiedDateColumn = table.getColumn(
-			"modifiedDate", Date.class);
-
-		if (modifiedDateColumn != null) {
-			nonreferenceColumn(modifiedDateColumn);
-		}
-
-		return this;
-	}
-
-	public TableReferenceInfoBuilder<T> nonreferenceColumn(Column<T, ?> column);
-
-	@SuppressWarnings("unchecked")
-	public default TableReferenceInfoBuilder<T> nonreferenceColumns(
-		Column<?, ?>... columns) {
-
-		for (Column<?, ?> column : columns) {
-			nonreferenceColumn((Column<T, ?>)column);
-		}
-
-		return this;
-	}
-
-	public default <C> TableReferenceInfoBuilder<T> parentColumnReference(
-		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
-
-		if (!pkColumn.isPrimaryKey()) {
-			throw new IllegalArgumentException(pkColumn + " is not primary");
-		}
-
-		T parentTable = pkColumn.getTable();
-
-		T aliasParentTable = parentTable.as("aliasParentTable");
-
-		Column<T, C> aliasPKColumn = aliasParentTable.getColumn(
-			pkColumn.getName(), pkColumn.getJavaType());
-
-		return singleColumnReference(parentPKColumn, aliasPKColumn);
-	}
-
-	public TableReferenceInfoBuilder<T> referenceInnerJoin(
+	public ChildTableReferenceInfoBuilder<T> referenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction);
 
-	public default TableReferenceInfoBuilder<T> resourcePermissionReference(
-		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
+	public default ChildTableReferenceInfoBuilder<T>
+		resourcePermissionReference(
+			Column<T, Long> pkColumn, Class<?> modelClass) {
 
 		T table = pkColumn.getTable();
 
@@ -160,7 +93,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			));
 	}
 
-	public default <C> TableReferenceInfoBuilder<T> singleColumnReference(
+	public default <C> ChildTableReferenceInfoBuilder<T> singleColumnReference(
 		Column<T, C> column1, Column<?, C> column2) {
 
 		if (column1.getTable() == column2.getTable()) {
@@ -177,7 +110,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			));
 	}
 
-	public default TableReferenceInfoBuilder<T> systemEventReference(
+	public default ChildTableReferenceInfoBuilder<T> systemEventReference(
 		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
 
 		if (!pkColumn.isPrimaryKey()) {

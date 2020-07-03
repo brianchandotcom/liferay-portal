@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.builder;
+package com.liferay.change.tracking.internal.reference;
 
-import com.liferay.change.tracking.internal.reference.TableJoinHolder;
-import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
-import com.liferay.change.tracking.internal.reference.TableUtil;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
@@ -33,17 +29,13 @@ import com.liferay.petra.sql.dsl.spi.query.Join;
 import com.liferay.petra.sql.dsl.spi.query.JoinType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -52,64 +44,11 @@ import java.util.function.Function;
 /**
  * @author Preston Crary
  */
-public class TableReferenceInfoBuilderImpl<T extends Table<T>>
-	implements TableReferenceInfoBuilder<T> {
+public class TableJoinHolderFactory {
 
-	public TableReferenceInfoBuilderImpl(
+	public static <T extends Table<T>> TableJoinHolder create(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, Long> primaryKeyColumn) {
-
-		_tableReferenceDefinition = tableReferenceDefinition;
-		_primaryKeyColumn = primaryKeyColumn;
-	}
-
-	public TableReferenceInfo<T> build() {
-		T table = _tableReferenceDefinition.getTable();
-
-		List<Column<T, ?>> undefinedColumns = null;
-
-		for (Column<T, ?> column : table.getColumns()) {
-			if (!Objects.equals(column.getName(), "mvccVersion") &&
-				!column.isPrimaryKey() && !_definedColumns.contains(column)) {
-
-				if (undefinedColumns == null) {
-					undefinedColumns = new ArrayList<>();
-				}
-
-				undefinedColumns.add(column);
-			}
-		}
-
-		if (undefinedColumns != null) {
-			_log.error(
-				StringBundler.concat(
-					_tableReferenceDefinition, " did not define columns ",
-					undefinedColumns));
-
-			return null;
-		}
-
-		return new TableReferenceInfo<>(
-			_tableReferenceDefinition, _parentTableJoinHoldersMap,
-			_childTableJoinHoldersMap);
-	}
-
-	@Override
-	public TableReferenceInfoBuilder<T> nonreferenceColumn(
-		Column<T, ?> column) {
-
-		if (_tableReferenceDefinition.getTable() != column.getTable()) {
-			throw new IllegalArgumentException(
-				"Invalid table for column " + column);
-		}
-
-		_definedColumns.add(column);
-
-		return this;
-	}
-
-	@Override
-	public TableReferenceInfoBuilder<T> referenceInnerJoin(
+		Column<T, Long> primaryKeyColumn,
 		Function<FromStep, JoinStep> joinFunction) {
 
 		JoinStep joinStep = joinFunction.apply(_validationFromStep);
@@ -119,8 +58,8 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 				StringBundler.concat("Missing join in \"", joinStep, "\""));
 		}
 
-		JoinStepASTNodeListener joinStepASTNodeListener =
-			new JoinStepASTNodeListener();
+		JoinStepASTNodeListener<T> joinStepASTNodeListener =
+			new JoinStepASTNodeListener<>(tableReferenceDefinition.getTable());
 
 		joinStep.toSQL(_emptyStringConsumer, joinStepASTNodeListener);
 
@@ -134,7 +73,7 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 		if (!joinStepASTNodeListener._hasRequiredTable) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Required table \"", _tableReferenceDefinition.getTable(),
+					"Required table \"", tableReferenceDefinition.getTable(),
 					"\" is unused in join step \"", joinStep, "\""));
 		}
 
@@ -199,38 +138,19 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 			joinStepASTNodeListener._aliasPrimaryKeyColumn;
 
 		if (joinPKColumn == null) {
-			joinPKColumn = _primaryKeyColumn;
+			joinPKColumn = primaryKeyColumn;
 		}
 
 		if (fromPKColumn == joinPKColumn) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"From table should be a different table than \"",
-					_tableReferenceDefinition.getTable(), "\" for join step \"",
+					tableReferenceDefinition.getTable(), "\" for join step \"",
 					joinStep, "\""));
 		}
 
-		List<TableJoinHolder> tableJoinHolders = null;
-
-		if (joinStepASTNodeListener._parentJoinFunction) {
-			tableJoinHolders = _parentTableJoinHoldersMap.computeIfAbsent(
-				joinStepASTNodeListener._fromTable,
-				fromTable -> new ArrayList<>());
-		}
-		else {
-			tableJoinHolders = _childTableJoinHoldersMap.computeIfAbsent(
-				joinStepASTNodeListener._fromTable,
-				fromTable -> new ArrayList<>());
-		}
-
-		tableJoinHolders.add(
-			new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction));
-
-		return this;
+		return new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TableReferenceInfoBuilderImpl.class);
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
 	};
@@ -244,46 +164,8 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 		}
 	};
 
-	private final Map<Table<?>, List<TableJoinHolder>>
-		_childTableJoinHoldersMap = new HashMap<>();
-	private final Set<Column<?, ?>> _definedColumns = new HashSet<>();
-	private final Map<Table<?>, List<TableJoinHolder>>
-		_parentTableJoinHoldersMap = new HashMap<>();
-	private final Column<T, Long> _primaryKeyColumn;
-	private final TableReferenceDefinition<T> _tableReferenceDefinition;
-
-	private static class ValidationFromStep implements FromStep {
-
-		@Override
-		public Table<?> as(String name) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public JoinStep from(Table<?> table) {
-			return new From(this, table);
-		}
-
-		@Override
-		public void toSQL(
-			Consumer<String> consumer, ASTNodeListener astNodeListener) {
-
-			consumer.accept(StringPool.TRIPLE_PERIOD);
-		}
-
-		@Override
-		public DSLQuery union(DSLQuery dslQuery) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public DSLQuery unionAll(DSLQuery dslQuery) {
-			throw new UnsupportedOperationException();
-		}
-
-	}
-
-	private class JoinStepASTNodeListener implements ASTNodeListener {
+	private static class JoinStepASTNodeListener<T extends Table<T>>
+		implements ASTNodeListener {
 
 		@Override
 		public void process(ASTNode astNode) {
@@ -292,20 +174,10 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 
 				_columnTables.add(column.getTable());
 
-				_definedColumns.add(column);
-
 				if (!_hasRequiredTable &&
-					Objects.equals(
-						_tableReferenceDefinition.getTable(),
-						column.getTable())) {
+					Objects.equals(_table, column.getTable())) {
 
 					_hasRequiredTable = true;
-				}
-
-				if (column.isPrimaryKey() &&
-					(_fromTable == column.getTable())) {
-
-					_parentJoinFunction = true;
 				}
 			}
 			else if (astNode instanceof DefaultPredicate) {
@@ -345,22 +217,19 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 					_invalidJoin = join;
 				}
 
-				if (table.equals(_primaryKeyColumn.getTable())) {
-					T primaryKeyTable = _primaryKeyColumn.getTable();
+				if (table.equals(_table) &&
+					!Objects.equals(table.getName(), _table.getName())) {
 
-					if (!Objects.equals(
-							table.getName(), primaryKeyTable.getName())) {
-
-						_aliasPrimaryKeyColumn = TableUtil.getPrimaryKeyColumn(
-							(T)table);
-					}
+					_aliasPrimaryKeyColumn = TableUtil.getPrimaryKeyColumn(
+						(T)table);
 				}
 
 				_tables.add(table);
 			}
 		}
 
-		private JoinStepASTNodeListener() {
+		private JoinStepASTNodeListener(T table) {
+			_table = table;
 		}
 
 		private Column<T, Long> _aliasPrimaryKeyColumn;
@@ -371,9 +240,40 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 		private Join _invalidJoin;
 		private JoinType _invalidJoinType;
 		private Operand _invalidOperand;
-		private boolean _parentJoinFunction;
+		private final T _table;
 		private Set<Table<?>> _tables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
+
+	}
+
+	private static class ValidationFromStep implements FromStep {
+
+		@Override
+		public Table<?> as(String name) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public JoinStep from(Table<?> table) {
+			return new From(this, table);
+		}
+
+		@Override
+		public void toSQL(
+			Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+			consumer.accept(StringPool.TRIPLE_PERIOD);
+		}
+
+		@Override
+		public DSLQuery union(DSLQuery dslQuery) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public DSLQuery unionAll(DSLQuery dslQuery) {
+			throw new UnsupportedOperationException();
+		}
 
 	}
 

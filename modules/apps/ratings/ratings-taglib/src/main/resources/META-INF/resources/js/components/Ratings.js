@@ -16,17 +16,11 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
+import {TYPES} from '../constants';
 import {errorToast} from '../utils/toast';
 import RatingsLike from './RatingsLike';
 import RatingsStars from './RatingsStars';
 import RatingsThumbs from './RatingsThumbs';
-
-const TYPES = {
-	LIKE: 'like',
-	STACKED_STARS: 'stacked-stars',
-	STARS: 'stars',
-	THUMBS: 'thumbs',
-};
 
 const Ratings = ({
 	className,

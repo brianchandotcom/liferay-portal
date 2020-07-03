@@ -21,6 +21,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {Fragment, useCallback, useState} from 'react';
 
+import {TYPES} from '../constants';
 import Lang from '../utils/lang';
 
 const SCORE_UNVOTE = -1;
@@ -139,7 +140,7 @@ const RatingsStars = ({
 		return Lang.sub(srAverageMessage, [averageScore, numberOfStars]);
 	};
 
-	return type === 'stars' ? (
+	return type !== TYPES.STACKED_STARS ? (
 		<ClayLayout.ContentRow
 			className="ratings ratings-stars"
 			noGutters

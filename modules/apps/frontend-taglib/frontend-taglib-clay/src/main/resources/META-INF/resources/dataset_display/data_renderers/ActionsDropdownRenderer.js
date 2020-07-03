@@ -51,17 +51,15 @@ export function handleAction(
 	if (target?.includes('modal')) {
 		event.preventDefault();
 
-		switch (target) {
-			case MODAL_PERMISSIONS:
-				openPermissionsModal(url);
-				break;
-			default:
-				openModal({
-					size: resolveModalSize(target),
-					title,
-					url,
-				});
-				break;
+		if (target === MODAL_PERMISSIONS) {
+			openPermissionsModal(url);
+		}
+		else {
+			openModal({
+				size: resolveModalSize(target),
+				title,
+				url,
+			});
 		}
 	}
 	else if (target === 'sidePanel') {

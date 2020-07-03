@@ -28,7 +28,7 @@ const parseJSON = (response, resolve, reject) =>
 		.then((text) => resolve(text ? JSON.parse(text) : {}))
 		.catch((error) => reject(error));
 
-const parseResponse = (response) =>
+export const parseResponse = (response) =>
 	new Promise((resolve, reject) => {
 		if (response.ok) {
 			parseJSON(response, resolve, reject);

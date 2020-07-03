@@ -28,9 +28,13 @@
 			).put(
 				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 			).put(
+				"baseResourceURL", String.valueOf(renderResponse.createResourceURL())
+			).put(
 				"defaultDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
 			).put(
 				"deltaValues", PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
 			).put(

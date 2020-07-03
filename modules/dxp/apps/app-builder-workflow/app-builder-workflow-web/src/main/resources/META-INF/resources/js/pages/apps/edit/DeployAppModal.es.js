@@ -16,8 +16,9 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {DeploySettings} from 'app-builder-web/js/pages/apps/edit/DeployApp.es';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {addItem, updateItem} from 'app-builder-web/js/utils/client.es';
+import {parseResponse} from 'app-builder-web/js/utils/client.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
+import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
 export default ({onCancel}) => {
@@ -28,7 +29,9 @@ export default ({onCancel}) => {
 		setModalVisible,
 		state: {app},
 	} = useContext(EditAppContext);
-	const {getStandaloneURL} = useContext(AppContext);
+	const {baseResourceURL, getStandaloneURL, namespace} = useContext(
+		AppContext
+	);
 	const [isDeploying, setDeploying] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -56,7 +59,7 @@ export default ({onCancel}) => {
 		);
 	};
 
-	const onSuccess = (app) => {
+	const onSuccess = ({app}) => {
 		onClose();
 		successToast(
 			<>
@@ -85,27 +88,42 @@ export default ({onCancel}) => {
 		};
 
 		if (appId) {
-			updateItem(`/o/app-builder/v1.0/apps/${appId}`, app)
-				.then(() =>
-					updateItem(
-						`/o/app-builder-workflow/v1.0/apps/${appId}/app-workflows`,
-						workflowApp
-					).then(() => app)
-				)
+			fetch(
+				createResourceURL(baseResourceURL, {
+					p_p_resource_id: '/app_builder/update_workflow_app',
+				}),
+				{
+					body: new URLSearchParams(
+						Liferay.Util.ns(namespace, {
+							app: JSON.stringify(app),
+							appBuilderAppId: appId,
+							appWorkflow: JSON.stringify(workflowApp),
+						})
+					),
+					method: 'POST',
+				}
+			)
+				.then((response) => parseResponse(response))
 				.then(onSuccess)
 				.catch(onError);
 		}
 		else {
-			addItem(
-				`/o/app-builder/v1.0/data-definitions/${dataObject.id}/apps`,
-				app
+			fetch(
+				createResourceURL(baseResourceURL, {
+					p_p_resource_id: '/app_builder/add_workflow_app',
+				}),
+				{
+					body: new URLSearchParams(
+						Liferay.Util.ns(namespace, {
+							app: JSON.stringify(app),
+							appWorkflow: JSON.stringify(workflowApp),
+							dataDefinitionId: dataObject.id,
+						})
+					),
+					method: 'POST',
+				}
 			)
-				.then(({id}) =>
-					addItem(
-						`/o/app-builder-workflow/v1.0/apps/${id}/app-workflows`,
-						workflowApp
-					).then(() => app)
-				)
+				.then((response) => parseResponse(response))
 				.then(onSuccess)
 				.catch(onError);
 		}

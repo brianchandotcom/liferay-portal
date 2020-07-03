@@ -17,7 +17,7 @@ import FormURL from '../../../src/main/resources/META-INF/resources/admin/js/uti
 const formInstanceId = 1;
 
 describe('FormURL', () => {
-	it('gets a blank url', () => {
+	it('gets a preview url', () => {
 		const published = false;
 		const requireAuthentication = false;
 
@@ -27,7 +27,9 @@ describe('FormURL', () => {
 			requireAuthentication
 		);
 
-		expect(formURL.create()).toBe('');
+		expect(formURL.create()).toBe(
+			Liferay.DDM.FormSettings.sharedFormURL + formInstanceId
+		);
 	});
 
 	it('gets a valid restricted url', () => {

@@ -59,10 +59,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.apache.commons.lang.time.StopWatch;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -107,6 +110,18 @@ public class ExportImportPerformanceTest {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_createLayouts();
+	}
+
+	@Test
+	public void testInitialStagingPublication() throws Exception {
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
+
+		stopWatch.stop();
 	}
 
 	private void _createFragments(Layout layout) throws Exception {

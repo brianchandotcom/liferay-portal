@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.product.navigation.product.menu.display.context.ProductMenuDisplayContext" %><%@
+page import="com.liferay.product.navigation.product.menu.web.internal.configuration.util.CollectionLayoutsConfigurationUtil" %><%@
 page import="com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys" %><%@
 page import="com.liferay.product.navigation.product.menu.web.internal.display.context.LayoutsTreeDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@

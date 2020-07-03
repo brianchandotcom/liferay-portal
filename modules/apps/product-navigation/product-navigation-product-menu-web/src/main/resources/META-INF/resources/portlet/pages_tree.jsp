@@ -45,6 +45,20 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		>
 			<clay:content-col
 				containerElement="span"
+				cssClass="mr-2 list-icon {type}-layout"
+			>
+				<aui:icon image="list" markupView="lexicon" />
+			</clay:content-col>
+
+			<clay:content-col
+				containerElement="span"
+				cssClass="mr-2 page-icon {type}-layout"
+			>
+				<aui:icon image="page" markupView="lexicon" />
+			</clay:content-col>
+
+			<clay:content-col
+				containerElement="span"
 			>
 				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
 					{label}
@@ -86,25 +100,28 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									</clay:content-col>
 								</clay:content-row>
 							</li>
-							<li>
-								<clay:content-row
-									containerElement="a"
-									cssClass="dropdown-item layout-action"
-									href="<%= layoutsTreeDisplayContext.getAddChildCollectionURLTemplate() %>"
-								>
-									<clay:content-col
-										containerElement="span"
-										expand="<%= true %>"
+
+							<c:if test="<%= CollectionLayoutsConfigurationUtil.enabled() %>">
+								<li>
+									<clay:content-row
+										containerElement="a"
+										cssClass="dropdown-item layout-action"
+										href="<%= layoutsTreeDisplayContext.getAddChildCollectionURLTemplate() %>"
 									>
-										<clay:content-section
+										<clay:content-col
 											containerElement="span"
-											cssClass="text-left"
+											expand="<%= true %>"
 										>
-											<liferay-ui:message key="add-child-collection-page" />
-										</clay:content-section>
-									</clay:content-col>
-								</clay:content-row>
-							</li>
+											<clay:content-section
+												containerElement="span"
+												cssClass="text-left"
+											>
+												<liferay-ui:message key="add-child-collection-page" />
+											</clay:content-section>
+										</clay:content-col>
+									</clay:content-row>
+								</li>
+							</c:if>
 						</c:if>
 
 						<li>

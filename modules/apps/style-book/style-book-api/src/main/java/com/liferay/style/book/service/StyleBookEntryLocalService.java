@@ -76,6 +76,11 @@ public interface StyleBookEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry addStyleBookEntry(StyleBookEntry styleBookEntry);
 
+	public StyleBookEntry copyStyleBookEntry(
+			long userId, long groupId, long styleBookEntryId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

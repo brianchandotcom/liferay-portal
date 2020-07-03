@@ -94,6 +94,49 @@ public class StyleBookEntryServiceHttp {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
+			copyStyleBookEntry(
+				HttpPrincipal httpPrincipal, long groupId,
+				long styleBookEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				StyleBookEntryServiceUtil.class, "copyStyleBookEntry",
+				_copyStyleBookEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, styleBookEntryId, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.style.book.model.StyleBookEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
 			deleteStyleBookEntry(
 				HttpPrincipal httpPrincipal, long styleBookEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -101,7 +144,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "deleteStyleBookEntry",
-				_deleteStyleBookEntryParameterTypes1);
+				_deleteStyleBookEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId);
@@ -143,7 +186,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "deleteStyleBookEntry",
-				_deleteStyleBookEntryParameterTypes2);
+				_deleteStyleBookEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntry);
@@ -185,7 +228,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updateStyleBookEntry",
-				_updateStyleBookEntryParameterTypes3);
+				_updateStyleBookEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, previewFileEntryId);
@@ -226,7 +269,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updateStyleBookEntry",
-				_updateStyleBookEntryParameterTypes4);
+				_updateStyleBookEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, name);
@@ -267,13 +310,18 @@ public class StyleBookEntryServiceHttp {
 			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteStyleBookEntryParameterTypes1 =
-		new Class[] {long.class};
+	private static final Class<?>[] _copyStyleBookEntryParameterTypes1 =
+		new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 	private static final Class<?>[] _deleteStyleBookEntryParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _deleteStyleBookEntryParameterTypes3 =
 		new Class[] {com.liferay.style.book.model.StyleBookEntry.class};
-	private static final Class<?>[] _updateStyleBookEntryParameterTypes3 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _updateStyleBookEntryParameterTypes4 =
+		new Class[] {long.class, long.class};
+	private static final Class<?>[] _updateStyleBookEntryParameterTypes5 =
 		new Class[] {long.class, String.class};
 
 }

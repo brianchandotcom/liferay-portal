@@ -58,6 +58,16 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().addStyleBookEntry(styleBookEntry);
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry
+			copyStyleBookEntry(
+				long userId, long groupId, long styleBookEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().copyStyleBookEntry(
+			userId, groupId, styleBookEntryId, serviceContext);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

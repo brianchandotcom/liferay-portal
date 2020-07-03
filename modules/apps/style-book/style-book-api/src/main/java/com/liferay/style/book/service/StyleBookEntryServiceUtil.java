@@ -47,6 +47,16 @@ public class StyleBookEntryServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
+			copyStyleBookEntry(
+				long groupId, long styleBookEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().copyStyleBookEntry(
+			groupId, styleBookEntryId, serviceContext);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
 			deleteStyleBookEntry(long styleBookEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

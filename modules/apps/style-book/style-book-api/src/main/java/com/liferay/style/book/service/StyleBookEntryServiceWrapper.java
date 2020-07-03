@@ -43,6 +43,16 @@ public class StyleBookEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry copyStyleBookEntry(
+			long groupId, long styleBookEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.copyStyleBookEntry(
+			groupId, styleBookEntryId, serviceContext);
+	}
+
+	@Override
 	public com.liferay.style.book.model.StyleBookEntry deleteStyleBookEntry(
 			long styleBookEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

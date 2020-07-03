@@ -56,6 +56,16 @@ public class StyleBookEntryLocalServiceWrapper
 		return _styleBookEntryLocalService.addStyleBookEntry(styleBookEntry);
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry copyStyleBookEntry(
+			long userId, long groupId, long styleBookEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.copyStyleBookEntry(
+			userId, groupId, styleBookEntryId, serviceContext);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

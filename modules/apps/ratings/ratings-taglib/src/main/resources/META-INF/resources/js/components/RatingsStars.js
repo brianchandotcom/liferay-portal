@@ -56,7 +56,7 @@ const RatingsStars = ({
 	);
 
 	const formatAverageScore = useCallback(
-		(averageScore) => Math.round((averageScore * numberOfStars).toFixed(1)),
+		(averageScore) => Number((averageScore * numberOfStars).toFixed(1)),
 		[numberOfStars]
 	);
 
@@ -224,7 +224,7 @@ const RatingsStars = ({
 						/>
 					</span>
 					<span className="inline-item ratings-stars-average-text">
-						{formatAverageScore(averageScore)}
+						{averageScore.toFixed(1)}
 						{!!totalEntries &&
 							` (${totalEntries} ${
 								totalEntries === 1
@@ -240,7 +240,7 @@ const RatingsStars = ({
 		<fieldset className="rating ratings-stacked-stars ratings-stars">
 			<div
 				className="ratings-stars-average"
-				title={formatAverageScore(averageScore)}
+				title={averageScore.toFixed(1)}
 			>
 				<span className="inline-item inline-item-before">
 					{starScores.map(({label: score}, index, arr) => {

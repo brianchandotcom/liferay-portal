@@ -140,42 +140,10 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		themeDisplay.clearLayoutFriendlyURL(layout);
 
-		UnicodeProperties layoutTypeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
+		layout = _updateTypeSettings(layout, formTypeSettingsUnicodeProperties);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
-
-		String type = layout.getType();
-
-		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-			layoutTypeSettingsUnicodeProperties.putAll(
-				formTypeSettingsUnicodeProperties);
-
-			boolean layoutCustomizable = GetterUtil.getBoolean(
-				layoutTypeSettingsUnicodeProperties.get(
-					LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
-			if (!layoutCustomizable) {
-				layoutTypePortlet.removeCustomization(
-					layoutTypeSettingsUnicodeProperties);
-			}
-
-			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				layoutTypeSettingsUnicodeProperties.toString());
-		}
-		else {
-			layoutTypeSettingsUnicodeProperties.putAll(
-				formTypeSettingsUnicodeProperties);
-
-			layoutTypeSettingsUnicodeProperties.putAll(
-				layout.getTypeSettingsProperties());
-
-			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				layoutTypeSettingsUnicodeProperties.toString());
-		}
 
 		EventsProcessorUtil.process(
 			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,

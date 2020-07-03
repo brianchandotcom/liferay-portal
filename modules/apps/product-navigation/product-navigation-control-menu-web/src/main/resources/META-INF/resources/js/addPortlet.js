@@ -36,7 +36,7 @@ const addPortlet = ({item, plid, targetItem, targetPosition}) => {
 		plid,
 		portletData,
 		portletId: item.data.portletId,
-		portletItemId: '',
+		portletItemId: item.data.portletItemId || '',
 	});
 };
 

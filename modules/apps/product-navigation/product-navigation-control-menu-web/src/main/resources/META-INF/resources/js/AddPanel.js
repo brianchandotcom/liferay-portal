@@ -149,12 +149,16 @@ const normalizeWidget = (widget) => {
 		data: {
 			instanceable: widget.instanceable,
 			portletId: widget.portletId,
+			portletItemId: widget.portletItemId || null,
 			used: widget.used,
 		},
 		disabled: !widget.instanceable && widget.used,
 		icon: widget.instanceable ? 'cards2' : 'square-hole',
 		itemId: widget.portletId,
 		label: widget.title,
+		portletItems: widget.portletItems?.length
+			? widget.portletItems.map(normalizeWidget)
+			: null,
 		type: LAYOUT_DATA_ITEM_TYPES.widget,
 	};
 };

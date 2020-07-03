@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {AddPanelContext, updateUsedWidget} from './AddPanel';
-import {addPortlet} from './addPortlet';
+import addPortlet from './addPortlet';
 import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 import {useDragSymbol} from './useDragAndDrop';
 
@@ -41,6 +41,8 @@ const TabItem = ({item}) => {
 			className={classNames('sidebar-body__add-panel__tab-item', {
 				disabled: item.disabled,
 				multiline: isContent,
+				'sidebar-body__add-panel__tab-portlet-item':
+					item.data.portletItemId,
 			})}
 			ref={item.disabled ? null : sourceRef}
 		>

@@ -150,7 +150,14 @@ const TabsContent = ({tab, tabIndex}) => {
 								})}
 							>
 								{collection.children.map((item) => (
-									<TabItem item={item} key={item.itemId} />
+									<React.Fragment key={item.itemId}>
+										<TabItem item={item} />
+										{item.portletItems?.length && (
+											<TabPortletItem
+												items={item.portletItems}
+											/>
+										)}
+									</React.Fragment>
 								))}
 							</ul>
 						</Collapse>
@@ -160,6 +167,14 @@ const TabsContent = ({tab, tabIndex}) => {
 		</>
 	);
 };
+
+const TabPortletItem = ({items}) => (
+	<ul className="list-unstyled">
+		{items.map((item) => (
+			<TabItem item={item} key={item.data.portletItemId} />
+		))}
+	</ul>
+);
 
 TabsContent.propTypes = {
 	tab: PropTypes.shape({

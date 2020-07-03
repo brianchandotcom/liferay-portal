@@ -207,7 +207,10 @@ class Form extends Component {
 			}
 		}
 
-		if (!this._pageHasFields(store.getPages(), store.state.activePage)) {
+		if (
+			this.state.activeNavItem == NAV_ITEMS.FORM &&
+			!this._pageHasFields(store.getPages(), store.state.activePage)
+		) {
 			this.openSidebar();
 		}
 

@@ -1098,17 +1098,9 @@ definition {
 		}
 
 		task ("Assert assets are available to Collection Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collections");
-
-			LexiconCard.clickCard(card = "Dynamic Collection");
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
 
 			AssertVisible(
 				key_colPosition = "1",
@@ -1182,17 +1174,9 @@ definition {
 		}
 
 		task ("Assert assets are available to Collection Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collections");
-
-			LexiconCard.clickCard(card = "Dynamic Collection");
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
 
 			AssertVisible(
 				key_colPosition = "1",
@@ -1277,17 +1261,9 @@ definition {
 		}
 
 		task ("Assert manual collection is unavailable to Collection Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collections");
-
-			LexiconCard.clickCard(card = "Manual Collection");
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
 
 			AssertVisible(
 				key_colPosition = "1",
@@ -1388,53 +1364,17 @@ definition {
 		}
 
 		task ("Add a Heading fragment to the first cell") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_entryTitle = "Third Web Content",
-				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#COLLECTION_CELL",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Web Content",
+				fragmentName = "Heading");
 		}
 
 		task ("Map Title of collection items to editable field") {
-			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
-
-			Click.clickNoWaitForVisible(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			Click(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
-
-			Pause(locator1 = "3000");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Title");
-
-			PageEditor.waitForAutoSave();
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Title");
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
@@ -1838,19 +1778,10 @@ definition {
 		}
 
 		task ("Add a Heading fragment to the first cell") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_entryTitle = "Third Document",
-				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#COLLECTION_CELL",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Document",
+				fragmentName = "Heading");
 		}
 
 		task ("Edit inline Content of Heading in the first column") {
@@ -2137,34 +2068,19 @@ definition {
 		}
 
 		task ("Assert assets' title are displayed in Collection Display with Content Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collection Providers");
-
-			LexiconCard.clickCard(card = "Recent Content");
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
 				entryTitle = "Document_1.jpg",
 				fragmentName = "Content Display");
 
-			PageEditor.gotoConfiguration(fragmentName = "Content Display");
-
-			Select(
-				key_fieldLabel = "Template",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Abstract");
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Template",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Abstract");
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				inCollectionDisplay = "true",
+				templateOption = "Abstract");
 
 			AssertVisible(
 				key_colPosition = "1",
@@ -2246,17 +2162,9 @@ definition {
 		}
 
 		task ("Assert assets' title are displayed in Collection Display with Content Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collection Providers");
-
-			LexiconCard.clickCard(card = "Highest Rated Assets");
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
@@ -2648,34 +2556,19 @@ definition {
 		}
 
 		task ("Assert assets' title are displayed in Collection Display with Content Display") {
-			Click.clickNoMouseOver(
-				key_elementType = "Collection Display",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
-			NavItem.click(navItem = "Collection Providers");
-
-			LexiconCard.clickCard(card = "Most Viewed Assets");
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Asset");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
 				entryTitle = "Document_1.jpg",
 				fragmentName = "Content Display");
 
-			PageEditor.gotoConfiguration(fragmentName = "Content Display");
-
-			Select(
-				key_fieldLabel = "Template",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Full Content");
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Template",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Full Content");
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				inCollectionDisplay = "true",
+				templateOption = "Full Content");
 
 			AssertVisible(
 				key_colPosition = "1",

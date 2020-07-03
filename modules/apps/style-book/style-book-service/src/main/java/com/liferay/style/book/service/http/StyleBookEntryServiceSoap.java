@@ -83,6 +83,27 @@ public class StyleBookEntryServiceSoap {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntrySoap
+			copyStyleBookEntry(
+				long groupId, long styleBookEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.copyStyleBookEntry(
+					groupId, styleBookEntryId, serviceContext);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
 			deleteStyleBookEntry(long styleBookEntryId)
 		throws RemoteException {
 

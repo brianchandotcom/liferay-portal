@@ -1287,6 +1287,8 @@ definition {
 				value1 = "${siteName}");
 		}
 
+		GlobalMenu.gotoSiteViaViewAll(site = "Site Name H");
+
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

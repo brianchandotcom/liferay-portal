@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gabriel Albuquerque
  */
-@Component(immediate = true, service = DataEnginePortalExecutor.class)
-public class DataEnginePortalExecutor {
+@Component(immediate = true, service = DataEngineNativeObjectPortalExecutor.class)
+public class DataEngineNativeObjectPortalExecutor {
 
 	public <T extends Throwable> void execute(
 		UnsafeRunnable<T> unsafeRunnable) {
@@ -71,7 +71,7 @@ public class DataEnginePortalExecutor {
 		_registerPortalExecutorConfig(bundleContext);
 
 		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
-			DataEnginePortalExecutor.class.getName());
+			DataEngineNativeObjectPortalExecutor.class.getName());
 	}
 
 	@Deactivate
@@ -83,10 +83,10 @@ public class DataEnginePortalExecutor {
 
 	private void _registerPortalExecutorConfig(BundleContext bundleContext) {
 		PortalExecutorConfig portalExecutorConfig = new PortalExecutorConfig(
-			DataEnginePortalExecutor.class.getName(), 1, 1, 60,
+			DataEngineNativeObjectPortalExecutor.class.getName(), 1, 1, 60,
 			TimeUnit.SECONDS, Integer.MAX_VALUE,
 			new NamedThreadFactory(
-				DataEnginePortalExecutor.class.getName(), Thread.NORM_PRIORITY,
+				DataEngineNativeObjectPortalExecutor.class.getName(), Thread.NORM_PRIORITY,
 				PortalClassLoaderUtil.getClassLoader()),
 			new ThreadPoolExecutor.AbortPolicy(),
 			new ThreadPoolHandlerAdapter() {
@@ -105,7 +105,7 @@ public class DataEnginePortalExecutor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DataEnginePortalExecutor.class);
+		DataEngineNativeObjectPortalExecutor.class);
 
 	private NoticeableExecutorService _noticeableExecutorService;
 

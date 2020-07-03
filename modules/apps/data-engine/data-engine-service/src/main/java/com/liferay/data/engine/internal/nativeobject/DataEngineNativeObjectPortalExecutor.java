@@ -39,7 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gabriel Albuquerque
  */
-@Component(immediate = true, service = DataEngineNativeObjectPortalExecutor.class)
+@Component(
+	immediate = true, service = DataEngineNativeObjectPortalExecutor.class
+)
 public class DataEngineNativeObjectPortalExecutor {
 
 	public <T extends Throwable> void execute(
@@ -86,8 +88,8 @@ public class DataEngineNativeObjectPortalExecutor {
 			DataEngineNativeObjectPortalExecutor.class.getName(), 1, 1, 60,
 			TimeUnit.SECONDS, Integer.MAX_VALUE,
 			new NamedThreadFactory(
-				DataEngineNativeObjectPortalExecutor.class.getName(), Thread.NORM_PRIORITY,
-				PortalClassLoaderUtil.getClassLoader()),
+				DataEngineNativeObjectPortalExecutor.class.getName(),
+				Thread.NORM_PRIORITY, PortalClassLoaderUtil.getClassLoader()),
 			new ThreadPoolExecutor.AbortPolicy(),
 			new ThreadPoolHandlerAdapter() {
 

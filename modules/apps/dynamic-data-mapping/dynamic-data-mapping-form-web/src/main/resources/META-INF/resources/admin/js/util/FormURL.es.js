@@ -24,10 +24,6 @@ class FormURL {
 	}
 
 	create() {
-		if (!this.published) {
-			return '';
-		}
-
 		let formURL;
 
 		if (this.requireAuthentication) {

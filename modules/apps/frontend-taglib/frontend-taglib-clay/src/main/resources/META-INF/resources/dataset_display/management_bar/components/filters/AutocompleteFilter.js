@@ -168,18 +168,10 @@ function AutocompleteFilter(props) {
 			return true;
 		}
 
-		let changed = false;
+		const prevValues = prevValue.map((element) => element.value).sort();
+		const newValues = newValue.map((element) => element.value).sort();
 
-		const prevValues = prevValue.map((el) => el.value).sort();
-		const newValues = newValue.map((el) => el.value).sort();
-
-		prevValues.forEach((element, i) => {
-			if (element !== newValues[i]) {
-				changed = true;
-			}
-		});
-
-		return changed;
+		return prevValues.some((element, i) => element !== newValues[i]);
 	}
 
 	return (

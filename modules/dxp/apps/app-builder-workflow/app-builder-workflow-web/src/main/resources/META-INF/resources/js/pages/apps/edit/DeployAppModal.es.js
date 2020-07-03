@@ -103,7 +103,7 @@ export default ({onCancel}) => {
 					method: 'POST',
 				}
 			)
-				.then((response) => parseResponse(response))
+				.then(parseResponse)
 				.then(onSuccess)
 				.catch(onError);
 		}
@@ -123,7 +123,7 @@ export default ({onCancel}) => {
 					method: 'POST',
 				}
 			)
-				.then((response) => parseResponse(response))
+				.then(parseResponse)
 				.then(onSuccess)
 				.catch(onError);
 		}

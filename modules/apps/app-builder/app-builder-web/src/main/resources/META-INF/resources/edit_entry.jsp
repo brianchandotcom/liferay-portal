@@ -53,12 +53,9 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 							%>
 
 							<div id="<portlet:namespace />-edit-entry-app">
-								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/app_builder/add_data_record" var="addEntryURL" />
 
 								<%
 								Map<String, Object> data = HashMapBuilder.<String, Object>put(
-									"addEntryURL", String.valueOf(addEntryURL)
-								).put(
 									"appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE)
 								).put(
 									"appId", appBuilderApp.getAppBuilderAppId()
@@ -66,6 +63,8 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 									"appTab", request.getAttribute(AppBuilderWebKeys.APP_TAB)
 								).put(
 									"basePortletURL", String.valueOf(renderResponse.createRenderURL())
+								).put(
+									"baseResourceURL", String.valueOf(renderResponse.createResourceURL())
 								).put(
 									"containerElementId", liferayPortletResponse.getNamespace() + "container"
 								).put(

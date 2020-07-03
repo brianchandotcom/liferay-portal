@@ -19,13 +19,13 @@ import withDDMForm, {
 } from 'app-builder-web/js/hooks/withDDMForm.es';
 import {updateItem} from 'app-builder-web/js/utils/client.es';
 import {successToast} from 'app-builder-web/js/utils/toast.es';
-import {fetch} from 'frontend-js-web';
+import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useCallback, useContext} from 'react';
 
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
 
 export function EditEntry({dataRecordId, ddmForm, redirect}) {
-	const {addEntryURL, appId, basePortletURL, namespace} = useContext(
+	const {appId, basePortletURL, baseResourceURL, namespace} = useContext(
 		AppContext
 	);
 
@@ -57,15 +57,20 @@ export function EditEntry({dataRecordId, ddmForm, redirect}) {
 					});
 				}
 				else {
-					fetch(addEntryURL, {
-						body: new URLSearchParams(
-							Liferay.Util.ns(namespace, {
-								appBuilderAppId: appId,
-								dataRecord: JSON.stringify(dataRecord),
-							})
-						),
-						method: 'POST',
-					}).then(() => {
+					fetch(
+						createResourceURL(baseResourceURL, {
+							p_p_resource_id: '/app_builder/add_data_record',
+						}),
+						{
+							body: new URLSearchParams(
+								Liferay.Util.ns(namespace, {
+									appBuilderAppId: appId,
+									dataRecord: JSON.stringify(dataRecord),
+								})
+							),
+							method: 'POST',
+						}
+					).then(() => {
 						successToast(
 							Liferay.Language.get('an-entry-was-added')
 						);
@@ -73,7 +78,7 @@ export function EditEntry({dataRecordId, ddmForm, redirect}) {
 					});
 				}
 			},
-			[addEntryURL, appId, dataRecordId, namespace, onCancel]
+			[appId, baseResourceURL, dataRecordId, namespace, onCancel]
 		)
 	);
 

@@ -52,10 +52,9 @@ public interface ArchivedModulesUpgradeConfiguration {
 	public boolean removeMailReaderModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-portal-directory-module-data",
-		required = false
+		deflt = "false", name = "remove-directory-module-data", required = false
 	)
-	public boolean removePortalDirectoryModuleData();
+	public boolean removeDirectoryModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-shopping-module-data", required = false

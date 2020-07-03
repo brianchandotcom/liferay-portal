@@ -64,9 +64,8 @@ public class ArchivedModulesUpgrade implements UpgradeStepRegistrator {
 				"com.liferay.mail.reader.service", UpgradeMailReader::new);
 
 			_removeModuleData(
-				_archivedModulesUpgradeConfiguration::
-					removePortalDirectoryModuleData,
-				"com.liferay.directory.web", UpgradePortalDirectory::new);
+				_archivedModulesUpgradeConfiguration::removeDirectoryModuleData,
+				"com.liferay.directory.web", UpgradeDirectory::new);
 
 			_removeModuleData(
 				_archivedModulesUpgradeConfiguration::

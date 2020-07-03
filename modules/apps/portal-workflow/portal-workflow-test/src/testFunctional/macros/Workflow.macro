@@ -415,6 +415,24 @@ definition {
 		AssertElementNotPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
 	}
 
+	macro deleteWorkflowDefinitionExtra {
+		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_DEFINITION_UNPUBLISHED_EXTRA_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertTextEquals(
+			locator1 = "IFrame#DIALOG_BOX",
+			value1 = "Delete workflow?");
+
+		AssertTextEquals(
+			locator1 = "WorkflowDefinition#DIALOG_BOX_BODY",
+			value1 = "A deleted workflow cannot be recovered.");
+
+		Button.clickDelete();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro duplicateSingleApproverWorkflow {
 
 		GlobalMenu.gotoPortlet(
@@ -735,17 +753,19 @@ definition {
 	}
 
 	macro tearDownWorkflowDefinitions {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE")) {
-			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
+		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_EXTRA")) {
 
-			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
+			if (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_DEFINITION_EXTRA_ELLIPSIS")) {
+				Workflow.unpublishWorkflowDefinitionExtra();
+			}
+
+			Workflow.deleteWorkflowDefinitionExtra();
 		}
 	}
 
@@ -753,6 +773,14 @@ definition {
 		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Unpublish");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro unpublishWorkflowDefinitionExtra {
+		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_DEFINITION_EXTRA_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Unpublish");
 

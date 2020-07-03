@@ -15,23 +15,6 @@ definition {
 
 		Navigator.openURL();
 
-		if ("${testPortalInstance}" != "true") {
-
-			GlobalMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Search");
-
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-		}
-
-		GlobalMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
-
-		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
-
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -61,7 +44,7 @@ definition {
 
 		WorkflowMetrics.tearDown();
 
-		Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Single Approver Alternative");
+		Workflow.tearDownWorkflowDefinitions();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

@@ -59,6 +59,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -111,6 +112,7 @@ public class ExportImportPerformanceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+		_importGroup = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -145,6 +147,49 @@ public class ExportImportPerformanceTest {
 
 		_exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
+
+		stopWatch.stop();
+	}
+
+	@Test
+	public void testImportGroupFromLAR() throws Exception {
+		Map<String, Serializable> exportLayoutSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUser(), _group.getGroupId(), false,
+					_layoutIds, new HashMap<>());
+
+		_exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "export-group",
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		File file = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfiguration);
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		Map<String, Serializable> importLayoutSettingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUser(), _importGroup.getGroupId(), false,
+					_layoutIds, new HashMap<>());
+
+		importLayoutSettingsMap.put("targetGroupId", _importGroup.getGroupId());
+
+		_exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(), "import-group",
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
+
+		_exportImportLocalService.importLayouts(
+			_exportImportConfiguration, file);
 
 		stopWatch.stop();
 	}
@@ -360,6 +405,9 @@ public class ExportImportPerformanceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Group _importGroup;
 
 	@Inject
 	private LayoutCopyHelper _layoutCopyHelper;

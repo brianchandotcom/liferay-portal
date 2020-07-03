@@ -140,103 +140,59 @@ const RatingsStars = ({
 		return Lang.sub(srAverageMessage, [averageScore, numberOfStars]);
 	};
 
-	return type !== TYPES.STACKED_STARS ? (
-		<ClayLayout.ContentRow
-			className="ratings ratings-stars"
-			noGutters
-			verticalAlign="center"
-		>
-			<ClayLayout.ContentCol>
-				<ClayDropDown
-					active={isDropdownOpen}
-					menuElementAttrs={{
-						className: 'ratings-stars-dropdown',
-					}}
-					onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
-					trigger={
-						<ClayButton
-							aria-pressed={!!score}
-							borderless
-							className="ratings-stars-dropdown-toggle"
-							disabled={disabled}
-							displayType="secondary"
-							small
-							title={getTitle()}
-							value={score}
-						>
-							<span className="inline-item inline-item-before">
-								<ClayIcon symbol={score ? 'star' : 'star-o'} />
-							</span>
-							<span className="inline-item ratings-stars-button-text">
-								{score || '-'}
-							</span>
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						{starScores.map(({label}, index) => {
-							const srMessage =
-								index === 0
-									? Liferay.Language.get(
-											'rate-this-x-star-out-of-x'
-									  )
-									: Liferay.Language.get(
-											'rate-this-x-stars-out-of-x'
-									  );
+	return type !== TYPES.STACKED_STARS
+		? RatingsSelectStars({
+				averageScore,
+				disabled,
+				getSrAverageMessage,
+				getTitle,
+				handleOnClick,
+				isDropdownOpen,
+				numberOfStars,
+				score,
+				setIsDropdownOpen,
+				starScores,
+				totalEntries,
+		  })
+		: RatingsStackedStars({
+				averageScore,
+				disabled,
+				getSrAverageMessage,
+				handleOnClick,
+				numberOfStars,
+				randomNamespace,
+				score,
+				starScores,
+				totalEntries,
+		  });
+};
 
-							return (
-								<ClayDropDown.Item
-									active={label === score}
-									key={index}
-									onClick={() => {
-										handleOnClick(index);
-									}}
-								>
-									{label}
-									<span className="sr-only">
-										{Lang.sub(srMessage, [
-											index + 1,
-											numberOfStars,
-										])}
-									</span>
-								</ClayDropDown.Item>
-							);
-						})}
+RatingsStars.propTypes = {
+	disabled: PropTypes.bool,
+	initialAverageScore: PropTypes.number,
+	initialTotalEntries: PropTypes.number,
+	inititalTitle: PropTypes.string,
+	numberOfStars: PropTypes.number.isRequired,
+	positiveVotes: PropTypes.number,
+	randomNamespace: PropTypes.string.isRequired,
+	sendVoteRequest: PropTypes.func.isRequired,
+	userScore: PropTypes.number,
+};
 
-						<ClayDropDown.Item
-							disabled={score === 0}
-							onClick={() => {
-								handleOnClick();
-							}}
-						>
-							{Liferay.Language.get('delete')}
-						</ClayDropDown.Item>
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
-			</ClayLayout.ContentCol>
+export default RatingsStars;
 
-			<ClayLayout.ContentCol>
-				<span className="ratings-stars-average">
-					<span className="inline-item inline-item-before">
-						<ClayIcon
-							className="ratings-stars-average-icon"
-							symbol="star"
-						/>
-					</span>
-					<span className="inline-item ratings-stars-average-text">
-						{averageScore.toFixed(1)}
-						{!!totalEntries &&
-							` (${totalEntries} ${
-								totalEntries === 1
-									? Liferay.Language.get('vote')
-									: Liferay.Language.get('votes')
-							})`}
-					</span>
-					<span className="sr-only">{getSrAverageMessage()}</span>
-				</span>
-			</ClayLayout.ContentCol>
-		</ClayLayout.ContentRow>
-	) : (
+function RatingsStackedStars({
+	averageScore,
+	disabled,
+	getSrAverageMessage,
+	handleOnClick,
+	numberOfStars,
+	randomNamespace,
+	score,
+	starScores,
+	totalEntries,
+}) {
+	return (
 		<fieldset className="rating ratings-stacked-stars ratings-stars">
 			<div
 				className="ratings-stars-average"
@@ -347,18 +303,116 @@ const RatingsStars = ({
 			</div>
 		</fieldset>
 	);
-};
+}
 
-RatingsStars.propTypes = {
-	disabled: PropTypes.bool,
-	initialAverageScore: PropTypes.number,
-	initialTotalEntries: PropTypes.number,
-	inititalTitle: PropTypes.string,
-	numberOfStars: PropTypes.number.isRequired,
-	positiveVotes: PropTypes.number,
-	randomNamespace: PropTypes.string.isRequired,
-	sendVoteRequest: PropTypes.func.isRequired,
-	userScore: PropTypes.number,
-};
+function RatingsSelectStars({
+	averageScore,
+	disabled,
+	getSrAverageMessage,
+	getTitle,
+	handleOnClick,
+	isDropdownOpen,
+	numberOfStars,
+	score,
+	setIsDropdownOpen,
+	starScores,
+	totalEntries,
+}) {
+	return (
+		<ClayLayout.ContentRow
+			className="ratings ratings-stars"
+			noGutters
+			verticalAlign="center"
+		>
+			<ClayLayout.ContentCol>
+				<ClayDropDown
+					active={isDropdownOpen}
+					menuElementAttrs={{
+						className: 'ratings-stars-dropdown',
+					}}
+					onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
+					trigger={
+						<ClayButton
+							aria-pressed={!!score}
+							borderless
+							className="ratings-stars-dropdown-toggle"
+							disabled={disabled}
+							displayType="secondary"
+							small
+							title={getTitle()}
+							value={score}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol={score ? 'star' : 'star-o'} />
+							</span>
+							<span className="inline-item ratings-stars-button-text">
+								{score || '-'}
+							</span>
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						{starScores.map(({label}, index) => {
+							const srMessage =
+								index === 0
+									? Liferay.Language.get(
+											'rate-this-x-star-out-of-x'
+									  )
+									: Liferay.Language.get(
+											'rate-this-x-stars-out-of-x'
+									  );
 
-export default RatingsStars;
+							return (
+								<ClayDropDown.Item
+									active={label === score}
+									key={index}
+									onClick={() => {
+										handleOnClick(index);
+									}}
+								>
+									{label}
+									<span className="sr-only">
+										{Lang.sub(srMessage, [
+											index + 1,
+											numberOfStars,
+										])}
+									</span>
+								</ClayDropDown.Item>
+							);
+						})}
+
+						<ClayDropDown.Item
+							disabled={score === 0}
+							onClick={() => {
+								handleOnClick();
+							}}
+						>
+							{Liferay.Language.get('delete')}
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</ClayLayout.ContentCol>
+
+			<ClayLayout.ContentCol>
+				<span className="ratings-stars-average">
+					<span className="inline-item inline-item-before">
+						<ClayIcon
+							className="ratings-stars-average-icon"
+							symbol="star"
+						/>
+					</span>
+					<span className="inline-item ratings-stars-average-text">
+						{averageScore.toFixed(1)}
+						{!!totalEntries &&
+							` (${totalEntries} ${
+								totalEntries === 1
+									? Liferay.Language.get('vote')
+									: Liferay.Language.get('votes')
+							})`}
+					</span>
+					<span className="sr-only">{getSrAverageMessage()}</span>
+				</span>
+			</ClayLayout.ContentCol>
+		</ClayLayout.ContentRow>
+	);
+}

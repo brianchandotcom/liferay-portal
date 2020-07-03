@@ -69,6 +69,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_DEFAULT_SUBSCRIPTION_TOPICS</td>
+	<td>//div[contains(@class,'questions-container')]/div[contains(.,'Topics')]/div[contains(@class,'c-empty-state')]//span/span[contains(.,'There are no results.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SUBSCRIBED_BUTTON</td>
+	<td>//button[@type='button' and @title='Subscribed']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SUBSCRIBED_TOPIC</td>
+	<td>//div[contains(@class,'questions-container')]/div[contains(.,'Topics')]//div[contains(@class,'card-title')]/span[contains(.,'${key_subscribedTopic}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_TOPIC_DROPDOWN_MENU</td>
 	<td>//div[contains(@class,'questions-container')]//div[contains(@class,'dropdown')]/button</td>
 	<td></td>

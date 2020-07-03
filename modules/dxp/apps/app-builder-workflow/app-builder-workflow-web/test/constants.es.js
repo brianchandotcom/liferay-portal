@@ -155,7 +155,7 @@ export const ENTRY = {
 			dataRecordCollectionId: id,
 			dataRecordValues: {
 				Text: {
-					'en-US': `Name Test ${id}`,
+					en_US: `Name Test ${id}`,
 				},
 			},
 			id,

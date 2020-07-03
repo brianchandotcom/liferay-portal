@@ -181,6 +181,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 
 export default () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+
 	const [
 		{
 			dataDefinition: {dataDefinitionFields},
@@ -207,7 +208,8 @@ export default () => {
 				isClickOutside(
 					target,
 					'.data-layout-builder-sidebar',
-					'.dropdown-menu'
+					'.dropdown-menu',
+					'#ddm-actionable-fields-container'
 				)
 			) {
 				dispatch({

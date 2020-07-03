@@ -24,14 +24,12 @@ import {logError} from '../../utilities/logError';
 import {getOpenedSidePanel} from '../../utilities/sidePanels';
 
 function submit({action, data, formId, formRef}) {
-	let form;
+	let form = formRef.current;
 
-	if (formId) {
+	if (!form && formId) {
 		form = document.getElementById(formId);
 	}
-	if (formRef.current) {
-		form = formRef.current;
-	}
+
 	if (form) {
 		Liferay.Util.postForm(form, {data, url: action || form.action});
 	}

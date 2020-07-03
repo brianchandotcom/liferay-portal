@@ -14,8 +14,8 @@
 
 package com.liferay.data.engine.internal.instance.lifecycle;
 
-import com.liferay.data.engine.internal.nativeobject.tracker.DataEngineNativeObjectObserver;
-import com.liferay.data.engine.internal.nativeobject.tracker.DataEnginePortalExecutor;
+import com.liferay.data.engine.internal.nativeobject.DataEngineNativeObjectObserver;
+import com.liferay.data.engine.internal.nativeobject.DataEnginePortalExecutor;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;

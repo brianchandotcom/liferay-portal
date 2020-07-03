@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -418,12 +418,7 @@ export default class SidePanel extends React.Component {
 			</>
 		);
 
-		return ReactDOM.createPortal(
-			<ClayIconSpriteContext.Provider value={this.props.spritemap}>
-				{content}
-			</ClayIconSpriteContext.Provider>,
-			this.state.wrapper
-		);
+		return ReactDOM.createPortal(content, this.state.wrapper);
 	}
 }
 
@@ -431,7 +426,6 @@ SidePanel.propTypes = {
 	id: PropTypes.string,
 	items: PropTypes.any,
 	size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', 'full']),
-	spritemap: PropTypes.string.isRequired,
 	topAnchorSelector: PropTypes.any,
 	wrapperSelector: PropTypes.string,
 };

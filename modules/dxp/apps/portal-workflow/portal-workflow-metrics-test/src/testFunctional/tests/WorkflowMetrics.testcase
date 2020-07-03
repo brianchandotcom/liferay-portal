@@ -1386,6 +1386,10 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry Title 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
 		Navigator.gotoBack();
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
@@ -1463,6 +1467,13 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry Title 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry Title 2",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver Edited");
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
@@ -1522,6 +1533,10 @@ definition {
 			workflowFilterOption = "COMPLETED",
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver Edited");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry Title 3",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 
 		Navigator.gotoBack();
 

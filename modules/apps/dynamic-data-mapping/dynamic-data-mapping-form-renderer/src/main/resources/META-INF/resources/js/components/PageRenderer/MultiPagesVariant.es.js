@@ -22,6 +22,7 @@ import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import {Placeholder} from './DefaultVariant.es';
 
+/* eslint-disable react/jsx-fragments */
 export const Container = ({children, empty, page, pageIndex, pages}) => {
 	const {editingLanguageId, successPageSettings} = usePage();
 	const dispatch = useForm();
@@ -74,7 +75,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 	};
 
 	return (
-		<>
+		<React.Fragment>
 			{pageIndex === 0 && <div className="horizontal-line" />}
 
 			<ClayTooltipProvider>
@@ -177,7 +178,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 					)}
 				</div>
 			</ClayTooltipProvider>
-		</>
+		</React.Fragment>
 	);
 };
 

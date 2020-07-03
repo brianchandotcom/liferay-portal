@@ -323,7 +323,7 @@ class Sidebar extends Component {
 		const {evaluableForm} = this.refs;
 		const {focusedField} = this.props;
 
-		if (evaluableForm) {
+		if (evaluableForm && evaluableForm.reactComponentRef.current) {
 			evaluableForm.reactComponentRef.current
 				.evaluate()
 				.then((pages) => {
@@ -716,7 +716,11 @@ class Sidebar extends Component {
 	}
 
 	_handleSettingsFormAttached() {
-		this.refs.evaluableForm.reactComponentRef.current.evaluate();
+		const reactForm = this.refs.evaluableForm.reactComponentRef.current;
+
+		if (reactForm) {
+			reactForm.evaluate();
+		}
 	}
 
 	_handleTabItemClicked(event) {

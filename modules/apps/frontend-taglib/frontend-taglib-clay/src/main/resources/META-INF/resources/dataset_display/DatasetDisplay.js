@@ -340,7 +340,7 @@ function DatasetDisplay({
 						value={selectedItemsValue.join(',')}
 					/>
 				)}
-				{items?.length > 0 && (
+				{items?.length > 0 ? (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
 						items={items}
@@ -348,8 +348,9 @@ function DatasetDisplay({
 						style={style}
 						{...currentViewProps}
 					/>
+				) : (
+					<EmptyResultMessage />
 				)}
-				{items?.length === 0 && <EmptyResultMessage />}
 			</div>
 		) : (
 			<span aria-hidden="true" className="loading-animation my-7" />

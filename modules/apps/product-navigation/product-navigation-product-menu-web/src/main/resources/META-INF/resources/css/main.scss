@@ -65,6 +65,14 @@ $product-menu-pages-administration-link-height: 72px;
 		}
 	}
 
+	.list-icon:not(.collection-layout) {
+		display: none;
+	}
+
+	.page-icon.collection-layout {
+		display: none;
+	}
+
 	.pages-administration-link {
 		align-items: center;
 		background-color: $dark;
@@ -87,6 +95,10 @@ $product-menu-pages-administration-link-height: 72px;
 		font-size: 14px;
 		margin-top: 20px;
 		padding-top: 16px;
+
+		.configure-link {
+			color: $secondary-l1;
+		}
 
 		.form-control {
 			background-color: $dark;

@@ -136,7 +136,10 @@ export default ({
 									!app.dataLayoutId ||
 									!app.dataListViewId ||
 									!app.name.en_US ||
-									config.steps.some(({name}) => !name)
+									config.steps.some(
+										({name}) =>
+											!name || name.trim().length === 0
+									)
 								}
 								onClick={() => setModalVisible(true)}
 							>

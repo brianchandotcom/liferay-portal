@@ -37,13 +37,13 @@ export function isNotALink(target, onClick) {
 export function handleAction(
 	{
 		event,
+		itemId = '',
 		method,
 		onClick = '',
+		setLoading = () => {},
 		size = '',
 		target = '',
 		title = '',
-		itemId = '',
-		setLoading = () => {},
 		url = '',
 	},
 	{executeAsyncItemAction, highlightItems, openModal, openSidePanel}

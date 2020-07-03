@@ -79,7 +79,7 @@ const PreviewModal = ({observer}) => {
 			size="full-screen"
 		>
 			<ClayModal.Header>
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayModal.Title className="pb-3 pt-3">
 						<div
 							className={classNames(

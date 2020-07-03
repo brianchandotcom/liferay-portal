@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 
 import {
 	handleAction,
-	isNotALink,
+	isLink,
 } from '../../data_renderers/ActionsDropdownRenderer';
 
 function Cards({datasetDisplayContext, items, schema}) {
@@ -50,12 +50,12 @@ function Cards({datasetDisplayContext, items, schema}) {
 								actions={item.actionDropdownItems.map(
 									({href, ...action}) => ({
 										...action,
-										href: isNotALink(
+										href: isLink(
 											action.target,
 											action.onClick
 										)
-											? null
-											: href,
+											? href
+											: null,
 										onClick: (event) => {
 											handleAction(
 												{

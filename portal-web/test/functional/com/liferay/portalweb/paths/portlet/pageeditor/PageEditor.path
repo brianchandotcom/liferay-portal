@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_MODE_SELECTOR</td>
+	<td>//button[contains(@class,'edit-mode-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_MESSAGE</td>
 	<td>//div[contains(@class,'empty-result-message')]</td>
 	<td></td>

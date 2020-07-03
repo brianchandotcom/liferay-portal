@@ -143,7 +143,7 @@ public class DataEngineNativeObjectObserver {
 					bundleContext.getService(serviceReference);
 
 				try {
-					_dataEnginePortalExecutor.execute(
+					_dataEngineNativeObjectPortalExecutor.execute(
 						() -> _createDataEngineNativeObjects(
 							dataEngineNativeObject));
 
@@ -301,7 +301,8 @@ public class DataEngineNativeObjectObserver {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private DataEnginePortalExecutor _dataEnginePortalExecutor;
+	private DataEngineNativeObjectPortalExecutor
+		_dataEngineNativeObjectPortalExecutor;
 
 	@Reference
 	private Portal _portal;

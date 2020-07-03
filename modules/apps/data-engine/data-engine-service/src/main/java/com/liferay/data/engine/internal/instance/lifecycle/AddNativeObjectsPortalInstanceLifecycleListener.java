@@ -15,7 +15,7 @@
 package com.liferay.data.engine.internal.instance.lifecycle;
 
 import com.liferay.data.engine.internal.nativeobject.DataEngineNativeObjectObserver;
-import com.liferay.data.engine.internal.nativeobject.DataEnginePortalExecutor;
+import com.liferay.data.engine.internal.nativeobject.DataEngineNativeObjectPortalExecutor;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -42,7 +42,7 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 			_dataEngineNativeObjectTracker.getDataEngineNativeObjects();
 
 		dataEngineNativeObjects.forEach(
-			dataEngineNativeObject -> _dataEnginePortalExecutor.execute(
+			dataEngineNativeObject -> _dataEngineNativeObjectPortalExecutor.execute(
 				() ->
 					_dataEngineNativeObjectObserver.
 						createDataEngineNativeObject(
@@ -61,7 +61,8 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
-	private DataEnginePortalExecutor _dataEnginePortalExecutor;
+	private DataEngineNativeObjectPortalExecutor
+		_dataEngineNativeObjectPortalExecutor;
 
 	@Reference
 	private Portal _portal;

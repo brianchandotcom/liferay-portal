@@ -61,33 +61,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
 
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -122,33 +106,17 @@ definition {
 				value1 = "Report");
 		}
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		var n = "1";
 
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+			var n = ${n} + 1;
 		}
 
 		PageEditor.gotoContentConfiguration(
@@ -262,29 +230,17 @@ definition {
 				collectionName = "Basic Components",
 				entryTitle = "Third Web Content",
 				fragmentName = "Button");
-
-			AssertElementPresent(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 		}
 
 		task ("Assert the Button fragment is also added to other cells") {
-			AssertElementPresent(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
-
-			AssertElementPresent(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+			for (var n : list "1,2,3") {
+				AssertElementPresent(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+			}
 		}
 	}
 
@@ -1102,26 +1058,18 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Document Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Blogs Entry Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1178,26 +1126,18 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Document Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Blogs Entry Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1265,26 +1205,18 @@ definition {
 				assetListName = "Manual Collection",
 				fragmentName = "Collection Display");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Blogs Entry Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Document Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1378,29 +1310,19 @@ definition {
 		}
 
 		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Third Web Content");
+			var n = "1";
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Second Web Content");
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
 
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "First Web Content");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -1812,32 +1734,18 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
-
-			AssertTextEquals(
-				key_colPosition = "1",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Modified Text");
 		}
 
 		task ("Assert propagate changes of inline content to other cells") {
-			AssertTextEquals(
-				key_colPosition = "2",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Modified Text");
-
-			AssertTextEquals(
-				key_colPosition = "3",
-				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Modified Text");
+			for (var n : list "1,2,3") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "1",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "Modified Text");
+			}
 		}
 	}
 
@@ -1955,27 +1863,19 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Assert the title of three Web Content Articles is shown as a list in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Third Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("Assert the title of three Web Content Articles are shown as a list in Collection Display") {
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Second Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "First Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 
 		task ("Select the manual collection") {
@@ -1984,27 +1884,19 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Assert the title of three Web Content Articles is shown as a list in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "First Blogs Entry",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		task ("Assert the title of three Blogs Entry are shown as a list in Collection Display") {
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Second Blogs Entry",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "First Blogs Entry,Second Blogs Entry,Third Blogs Entry") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Third Blogs Entry",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 	}
 
@@ -2082,26 +1974,18 @@ definition {
 				inCollectionDisplay = "true",
 				templateOption = "Abstract");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Blogs Entry Custom Abstract",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "DM Document Description",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${description}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Web Content Discription",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+				var n = ${n} + 1;
+			}
 		}
 
 		PageEditor.clickPublish();
@@ -2110,23 +1994,17 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertVisible(
-			key_colPosition = "1",
-			key_entryContent = "Blogs Entry Custom Abstract",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		var n = "1";
 
-		AssertVisible(
-			key_colPosition = "2",
-			key_entryContent = "DM Document Description",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
+			AssertVisible(
+				key_colPosition = "${n}",
+				key_entryContent = "${description}",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
-		AssertVisible(
-			key_colPosition = "3",
-			key_entryContent = "Web Content Discription",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			var n = ${n} + 1;
+		}
 	}
 
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display title of asset entries in Collection Provider."
@@ -2171,26 +2049,18 @@ definition {
 				entryTitle = "Document Title",
 				fragmentName = "Content Display");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Document Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Blogs Entry Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Web Content Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+				var n = ${n} + 1;
+			}
 		}
 
 		PageEditor.clickPublish();
@@ -2199,23 +2069,17 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertVisible(
-			key_colPosition = "1",
-			key_entryContent = "Document Title",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		var n = "1";
 
-		AssertVisible(
-			key_colPosition = "2",
-			key_entryContent = "Blogs Entry Title",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+			AssertVisible(
+				key_colPosition = "${n}",
+				key_entryContent = "${title}",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
-		AssertVisible(
-			key_colPosition = "3",
-			key_entryContent = "Web Content Title",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			var n = ${n} + 1;
+		}
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
@@ -2250,31 +2114,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Blogs Entry Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Blogs Entry Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Blogs Entry Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "Blogs Entry Title 3,Blogs Entry Title 2,Blogs Entry Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2282,31 +2132,17 @@ definition {
 			entryTitle = "Blogs Entry Title 3",
 			fragmentName = "Content Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "Blogs Entry Content 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "Blogs Entry Content ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "Blogs Entry Content 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		var n = "1";
+
+		for (var content : list "Blogs Entry Content 3,Blogs Entry Content 2,Blogs Entry Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.waitForAutoSave();
@@ -2353,31 +2189,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Document Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Document Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Document Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "Document Title 3,Document Title 2,Document Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2385,31 +2207,17 @@ definition {
 			entryTitle = "Document Title 3",
 			fragmentName = "Content Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryImage = "Document+Title+3.jpg",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryImage = "Document+Title+${i}.jpg",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryImage = "Document+Title+1.jpg",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
-			}
+		var n = "1";
+
+		for (var image : list "Document+Title+3.jpg,Document+Title+2.jpg,Document+Title+1.jpg") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryImage = "${image}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.waitForAutoSave();
@@ -2454,31 +2262,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2577,19 +2371,18 @@ definition {
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Blogs Entry Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			var n = "2";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Web Content Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+				var n = ${n} + 1;
+			}
 		}
 
 		PageEditor.clickPublish();
@@ -2604,17 +2397,17 @@ definition {
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
 
-		AssertVisible(
-			key_colPosition = "2",
-			key_entryContent = "Blogs Entry Content",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		var n = "2";
 
-		AssertVisible(
-			key_colPosition = "3",
-			key_entryContent = "Web Content Content",
-			key_rowPosition = "1",
-			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		for (var content : list "Blogs Entry Content,Web Content Content") {
+			AssertVisible(
+				key_colPosition = "${n}",
+				key_entryContent = "${content}",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+
+			var n = ${n} + 1;
+		}
 	}
 
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
@@ -2649,31 +2442,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2695,32 +2474,20 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "1");
+		var n = "1";
 
-		AssertTextEquals(
-			key_text = "Content",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 3");
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			PageEditor.gotoContentConfiguration(
+				fragmentName = "Content Ratings",
+				rowPosition = "${n}");
 
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "2");
+			AssertTextEquals(
+				key_text = "Content",
+				locator1 = "TextInput#ANY",
+				value1 = "${title}");
 
-		AssertTextEquals(
-			key_text = "Content",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 2");
-
-		PageEditor.gotoContentConfiguration(
-			fragmentName = "Content Ratings",
-			rowPosition = "3");
-
-		AssertTextEquals(
-			key_text = "Content",
-			locator1 = "TextInput#ANY",
-			value1 = "WC WebContent Title 1");
+			var n = ${n} + 1;
+		}
 	}
 
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
@@ -2755,31 +2522,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2787,31 +2540,17 @@ definition {
 			entryTitle = "WC WebContent Title 3",
 			fragmentName = "Content Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Content 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		var n = "1";
+
+		for (var content : list "WC WebContent Content 3,WC WebContent Content 2,WC WebContent Content 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.waitForAutoSave();
@@ -2889,31 +2628,17 @@ definition {
 			assetListName = "Dynamic Asset List Test",
 			fragmentName = "Collection Display");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "${title}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.addFragmentToCollectionDisplay(
@@ -2930,31 +2655,17 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 		}
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Text 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Text ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Text 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		var n = "1";
+
+		for (var content : list "WC WebContent Text 3,WC WebContent Text 2,WC WebContent Text 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${content}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
 		}
 
 		PageEditor.waitForAutoSave();
@@ -2976,31 +2687,17 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
 
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Title 3",
-					key_fragmentName = "Content Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Title ${i}",
-					key_fragmentName = "Content Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryContent = "WC WebContent Title 1",
-					key_fragmentName = "Content Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
-			}
+		var n = "1";
+
+		for (var title : list "WC WebContent Title 3,WC WebContent Title 2,WC WebContent Title 1") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "${title}",
+				key_fragmentName = "Content Display",
+				key_rowPosition = "${n}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			var n = ${n} + 1;
 		}
 	}
 

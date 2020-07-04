@@ -55,7 +55,7 @@ export default () => {
 	return (
 		<>
 			<div className="sidebar-backdrop"></div>
-			<div className="open sidebar-container">
+			<div className="open sidebar-container sidebar-reports">
 				<div className="sidebar sidebar-light">
 					<nav className="component-tbar tbar">
 						<div className="container-fluid">

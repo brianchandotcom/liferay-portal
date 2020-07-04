@@ -279,6 +279,16 @@ body,
 			text-align: left;
 		}
 	}
+
+	.sidebar-reports {
+		top: 56px;
+
+		.component-tbar {
+			background: #fff;
+			position: sticky;
+			top: 0;
+		}
+	}
 }
 
 .legend-container {

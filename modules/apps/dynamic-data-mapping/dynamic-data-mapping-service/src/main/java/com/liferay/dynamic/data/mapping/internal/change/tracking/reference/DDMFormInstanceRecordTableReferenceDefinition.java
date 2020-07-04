@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMContentTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordTable;
@@ -23,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,21 +37,11 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 	implements TableReferenceDefinition<DDMFormInstanceRecordTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMFormInstanceRecordTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMFormInstanceRecordTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMFormInstanceRecordTable.INSTANCE
-		).singleColumnReference(
-			DDMFormInstanceRecordTable.INSTANCE.versionUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumn(
-			DDMFormInstanceRecordTable.INSTANCE.versionUserName
-		).singleColumnReference(
-			DDMFormInstanceRecordTable.INSTANCE.formInstanceId,
-			DDMFormInstanceTable.INSTANCE.formInstanceId
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMFormInstanceRecordVersionTable.INSTANCE
 			).innerJoinON(
@@ -78,14 +68,25 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 		).singleColumnReference(
 			DDMFormInstanceRecordTable.INSTANCE.storageId,
 			DDMContentTable.INSTANCE.contentId
-		).nonreferenceColumn(
-			DDMFormInstanceRecordTable.INSTANCE.lastPublishDate
 		).assetEntryReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class
 		).systemEventReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMFormInstanceRecordTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMFormInstanceRecordTable.INSTANCE
+		).singleColumnReference(
+			DDMFormInstanceRecordTable.INSTANCE.formInstanceId,
+			DDMFormInstanceTable.INSTANCE.formInstanceId
 		);
 	}
 

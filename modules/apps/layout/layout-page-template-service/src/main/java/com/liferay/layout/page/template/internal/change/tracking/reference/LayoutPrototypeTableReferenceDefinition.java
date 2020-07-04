@@ -15,10 +15,10 @@
 package com.liferay.layout.page.template.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.LayoutPrototypeTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence;
 
@@ -33,26 +33,19 @@ public class LayoutPrototypeTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutPrototypeTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutPrototypeTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutPrototypeTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			LayoutPrototypeTable.INSTANCE.uuid
-		).singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutPrototypeTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			LayoutPrototypeTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			LayoutPrototypeTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			LayoutPrototypeTable.INSTANCE.userName,
-			LayoutPrototypeTable.INSTANCE.createDate,
-			LayoutPrototypeTable.INSTANCE.modifiedDate,
-			LayoutPrototypeTable.INSTANCE.name,
-			LayoutPrototypeTable.INSTANCE.description,
-			LayoutPrototypeTable.INSTANCE.settings,
-			LayoutPrototypeTable.INSTANCE.active
-		);
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

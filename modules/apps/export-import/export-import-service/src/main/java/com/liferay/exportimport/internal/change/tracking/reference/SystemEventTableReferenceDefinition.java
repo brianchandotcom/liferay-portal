@@ -15,7 +15,8 @@
 package com.liferay.exportimport.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.SystemEventTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
@@ -31,22 +32,21 @@ public class SystemEventTableReferenceDefinition
 	implements TableReferenceDefinition<SystemEventTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<SystemEventTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<SystemEventTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<SystemEventTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			SystemEventTable.INSTANCE
-		).nonreferenceColumns(
-			SystemEventTable.INSTANCE.classNameId,
-			SystemEventTable.INSTANCE.classPK,
-			SystemEventTable.INSTANCE.classUuid,
-			SystemEventTable.INSTANCE.referrerClassNameId
 		).parentColumnReference(
 			SystemEventTable.INSTANCE.systemEventId,
 			SystemEventTable.INSTANCE.parentSystemEventId
-		).nonreferenceColumns(
-			SystemEventTable.INSTANCE.systemEventSetKey,
-			SystemEventTable.INSTANCE.type, SystemEventTable.INSTANCE.extraData
 		);
 	}
 

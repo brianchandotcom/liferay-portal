@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMContentTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -31,15 +32,17 @@ public class DDMContentTableReferenceDefinintion
 	implements TableReferenceDefinition<DDMContentTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMContentTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMContentTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMContentTable.INSTANCE
-		).nonreferenceColumns(
-			DDMContentTable.INSTANCE.uuid, DDMContentTable.INSTANCE.name,
-			DDMContentTable.INSTANCE.description, DDMContentTable.INSTANCE.data
-		);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMContentTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(DDMContentTable.INSTANCE);
 	}
 
 	@Override

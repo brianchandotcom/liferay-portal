@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
@@ -31,14 +32,15 @@ public class CountryTableReferenceDefinition
 	implements TableReferenceDefinition<CountryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<CountryTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<CountryTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			CountryTable.INSTANCE.name, CountryTable.INSTANCE.a2,
-			CountryTable.INSTANCE.a3, CountryTable.INSTANCE.number,
-			CountryTable.INSTANCE.idd, CountryTable.INSTANCE.zipRequired,
-			CountryTable.INSTANCE.active);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<CountryTable>
+			parentTableReferenceInfoBuilder) {
 	}
 
 	@Override

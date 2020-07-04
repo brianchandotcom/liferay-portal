@@ -15,13 +15,13 @@
 package com.liferay.portal.security.permission.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ResourceActionTable;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.RoleTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 
@@ -36,23 +36,11 @@ public class ResourcePermissionTableReferenceDefinition
 	implements TableReferenceDefinition<ResourcePermissionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<ResourcePermissionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<ResourcePermissionTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			ResourcePermissionTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			ResourcePermissionTable.INSTANCE.name,
-			ResourcePermissionTable.INSTANCE.scope,
-			ResourcePermissionTable.INSTANCE.primKey,
-			ResourcePermissionTable.INSTANCE.primKeyId
-		).singleColumnReference(
-			ResourcePermissionTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
-		).singleColumnReference(
-			ResourcePermissionTable.INSTANCE.ownerId, UserTable.INSTANCE.userId
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourceActionTable.INSTANCE
 			).innerJoinON(
@@ -63,9 +51,19 @@ public class ResourcePermissionTableReferenceDefinition
 				).eq(
 					ResourceActionTable.INSTANCE.bitwiseValue
 				)
-			)
-		).nonreferenceColumns(
-			ResourcePermissionTable.INSTANCE.viewActionId
+			));
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<ResourcePermissionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			ResourcePermissionTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId
+		).singleColumnReference(
+			ResourcePermissionTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
 		);
 	}
 

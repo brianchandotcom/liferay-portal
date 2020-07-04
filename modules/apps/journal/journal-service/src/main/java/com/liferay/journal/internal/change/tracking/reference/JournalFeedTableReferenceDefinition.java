@@ -15,7 +15,8 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
@@ -39,15 +40,38 @@ public class JournalFeedTableReferenceDefinition
 	implements TableReferenceDefinition<JournalFeedTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalFeedTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalFeedTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DDMStructureLinkTable.INSTANCE
+			).innerJoinON(
+				JournalFeedTable.INSTANCE,
+				JournalFeedTable.INSTANCE.id.eq(
+					DDMStructureLinkTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.value.eq(
+					JournalFeed.class.getName()
+				).and(
+					ClassNameTable.INSTANCE.classNameId.eq(
+						DDMStructureLinkTable.INSTANCE.classNameId)
+				)
+			)
+		).resourcePermissionReference(
+			JournalFeedTable.INSTANCE.id, JournalFeed.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalFeedTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			JournalFeedTable.INSTANCE
-		).nonreferenceColumns(
-			JournalFeedTable.INSTANCE.uuid, JournalFeedTable.INSTANCE.feedId,
-			JournalFeedTable.INSTANCE.name,
-			JournalFeedTable.INSTANCE.description
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMStructureTable.INSTANCE
@@ -108,37 +132,9 @@ public class JournalFeedTableReferenceDefinition
 						DDMTemplateTable.INSTANCE.classNameId)
 				)
 			)
-		).nonreferenceColumns(
-			JournalFeedTable.INSTANCE.delta,
-			JournalFeedTable.INSTANCE.orderByCol,
-			JournalFeedTable.INSTANCE.orderByType,
-			JournalFeedTable.INSTANCE.targetLayoutFriendlyUrl
 		).singleColumnReference(
 			JournalFeedTable.INSTANCE.targetPortletId,
 			PortletTable.INSTANCE.portletId
-		).nonreferenceColumns(
-			JournalFeedTable.INSTANCE.contentField,
-			JournalFeedTable.INSTANCE.feedFormat,
-			JournalFeedTable.INSTANCE.feedVersion,
-			JournalFeedTable.INSTANCE.lastPublishDate
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStructureLinkTable.INSTANCE
-			).innerJoinON(
-				JournalFeedTable.INSTANCE,
-				JournalFeedTable.INSTANCE.id.eq(
-					DDMStructureLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					JournalFeed.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMStructureLinkTable.INSTANCE.classNameId)
-				)
-			)
-		).resourcePermissionReference(
-			JournalFeedTable.INSTANCE.id, JournalFeed.class
 		);
 	}
 

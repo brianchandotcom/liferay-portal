@@ -15,13 +15,12 @@
 package com.liferay.friendly.url.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,22 +34,11 @@ public class FriendlyURLEntryTableReferenceDefinition
 	implements TableReferenceDefinition<FriendlyURLEntryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<FriendlyURLEntryTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<FriendlyURLEntryTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			FriendlyURLEntryTable.INSTANCE.uuid,
-			FriendlyURLEntryTable.INSTANCE.defaultLanguageId
-		).singleColumnReference(
-			FriendlyURLEntryTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			FriendlyURLEntryTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			FriendlyURLEntryTable.INSTANCE.createDate,
-			FriendlyURLEntryTable.INSTANCE.modifiedDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				FriendlyURLEntryMappingTable.INSTANCE
 			).innerJoinON(
@@ -75,6 +63,15 @@ public class FriendlyURLEntryTableReferenceDefinition
 				)
 			)
 		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<FriendlyURLEntryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			FriendlyURLEntryTable.INSTANCE);
 	}
 
 	@Override

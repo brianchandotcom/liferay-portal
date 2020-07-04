@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.PortletPreferencesTable;
@@ -34,16 +35,19 @@ public class PortletPreferenceTableReferenceDefinition
 	implements TableReferenceDefinition<PortletPreferencesTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<PortletPreferencesTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<PortletPreferencesTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<PortletPreferencesTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			PortletPreferencesTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			PortletPreferencesTable.INSTANCE.ownerId,
-			PortletPreferencesTable.INSTANCE.ownerType
 		).singleColumnReference(
 			PortletPreferencesTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
 		).referenceInnerJoin(
@@ -58,8 +62,6 @@ public class PortletPreferenceTableReferenceDefinition
 						PortletTable.INSTANCE.portletId)
 				)
 			)
-		).nonreferenceColumn(
-			PortletPreferencesTable.INSTANCE.preferences
 		);
 	}
 

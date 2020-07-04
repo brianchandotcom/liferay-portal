@@ -18,7 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetLinkTable;
 import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -34,21 +35,24 @@ public class AssetLinkTableReferenceDefinition
 	implements TableReferenceDefinition<AssetLinkTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<AssetLinkTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<AssetLinkTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<AssetLinkTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			AssetLinkTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			AssetLinkTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			AssetLinkTable.INSTANCE.userName, AssetLinkTable.INSTANCE.createDate
 		).singleColumnReference(
 			AssetLinkTable.INSTANCE.entryId1, AssetEntryTable.INSTANCE.entryId
 		).singleColumnReference(
 			AssetLinkTable.INSTANCE.entryId2, AssetEntryTable.INSTANCE.entryId
-		).nonreferenceColumns(
-			AssetLinkTable.INSTANCE.type, AssetLinkTable.INSTANCE.weight
 		);
 	}
 

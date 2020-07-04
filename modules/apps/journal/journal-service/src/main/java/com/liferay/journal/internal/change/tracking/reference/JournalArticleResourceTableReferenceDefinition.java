@@ -15,13 +15,12 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.journal.model.JournalArticleResourceTable;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,19 +34,11 @@ public class JournalArticleResourceTableReferenceDefinition
 	implements TableReferenceDefinition<JournalArticleResourceTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalArticleResourceTable>
-			tableTableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalArticleResourceTable>
+			childTableReferenceInfoBuilder) {
 
-		tableTableReferenceInfoBuilder.nonreferenceColumn(
-			JournalArticleResourceTable.INSTANCE.uuid
-		).singleColumnReference(
-			JournalArticleResourceTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			JournalArticleResourceTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				JournalArticleTable.INSTANCE
 			).innerJoinON(
@@ -58,7 +49,16 @@ public class JournalArticleResourceTableReferenceDefinition
 					JournalArticleTable.INSTANCE.articleId.eq(
 						JournalArticleResourceTable.INSTANCE.articleId)
 				)
-			)
+			));
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalArticleResourceTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			JournalArticleResourceTable.INSTANCE
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				JournalFolderTable.INSTANCE

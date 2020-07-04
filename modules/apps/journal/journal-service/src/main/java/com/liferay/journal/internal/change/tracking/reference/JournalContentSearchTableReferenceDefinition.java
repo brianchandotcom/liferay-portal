@@ -15,11 +15,10 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.journal.model.JournalContentSearchTable;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -35,16 +34,18 @@ public class JournalContentSearchTableReferenceDefinition
 	implements TableReferenceDefinition<JournalContentSearchTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalContentSearchTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalContentSearchTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			JournalContentSearchTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			JournalContentSearchTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalContentSearchTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			JournalContentSearchTable.INSTANCE
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				LayoutTable.INSTANCE
@@ -63,8 +64,6 @@ public class JournalContentSearchTableReferenceDefinition
 		).singleColumnReference(
 			JournalContentSearchTable.INSTANCE.portletId,
 			PortletTable.INSTANCE.portletId
-		).nonreferenceColumn(
-			JournalContentSearchTable.INSTANCE.articleId
 		);
 	}
 

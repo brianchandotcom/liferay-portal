@@ -15,7 +15,8 @@
 package com.liferay.portal.security.permission.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ResourceActionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
@@ -31,14 +32,15 @@ public class ResourceActionTableReferenceDefinition
 	implements TableReferenceDefinition<ResourceActionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<ResourceActionTable>
-			tableTableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<ResourceActionTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableTableReferenceInfoBuilder.nonreferenceColumns(
-			ResourceActionTable.INSTANCE.name,
-			ResourceActionTable.INSTANCE.actionId,
-			ResourceActionTable.INSTANCE.bitwiseValue);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<ResourceActionTable>
+			parentTableReferenceInfoBuilder) {
 	}
 
 	@Override

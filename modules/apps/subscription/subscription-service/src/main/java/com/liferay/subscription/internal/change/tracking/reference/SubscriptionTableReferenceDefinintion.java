@@ -15,7 +15,8 @@
 package com.liferay.subscription.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.subscription.model.SubscriptionTable;
 import com.liferay.subscription.service.persistence.SubscriptionPersistence;
@@ -31,17 +32,18 @@ public class SubscriptionTableReferenceDefinintion
 	implements TableReferenceDefinition<SubscriptionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<SubscriptionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<SubscriptionTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
-			SubscriptionTable.INSTANCE
-		).nonreferenceColumns(
-			SubscriptionTable.INSTANCE.classNameId,
-			SubscriptionTable.INSTANCE.classPK,
-			SubscriptionTable.INSTANCE.frequency
-		);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<SubscriptionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			SubscriptionTable.INSTANCE);
 	}
 
 	@Override

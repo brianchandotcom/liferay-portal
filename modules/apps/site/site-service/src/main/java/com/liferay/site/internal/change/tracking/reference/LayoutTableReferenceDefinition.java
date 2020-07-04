@@ -15,7 +15,8 @@
 package com.liferay.site.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.model.ClassNameTable;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 
@@ -40,72 +40,12 @@ public class LayoutTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			LayoutTable.INSTANCE
-		).parentColumnReference(
-			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.parentPlid
-		).nonreferenceColumn(
-			LayoutTable.INSTANCE.privateLayout
-		).referenceInnerJoin(
-			fromStep -> {
-				LayoutTable aliasLayoutTable = LayoutTable.INSTANCE.as(
-					"aliasLayoutTable");
-
-				return fromStep.from(
-					aliasLayoutTable
-				).innerJoinON(
-					LayoutTable.INSTANCE,
-					LayoutTable.INSTANCE.parentLayoutId.eq(
-						aliasLayoutTable.layoutId)
-				);
-			}
-		).referenceInnerJoin(
-			fromStep -> {
-				LayoutTable aliasLayoutTable = LayoutTable.INSTANCE.as(
-					"aliasLayoutTable");
-
-				return fromStep.from(
-					aliasLayoutTable
-				).innerJoinON(
-					LayoutTable.INSTANCE,
-					LayoutTable.INSTANCE.classPK.eq(aliasLayoutTable.plid)
-				).innerJoinON(
-					ClassNameTable.INSTANCE,
-					ClassNameTable.INSTANCE.value.eq(
-						Layout.class.getName()
-					).and(
-						LayoutTable.INSTANCE.classNameId.eq(
-							ClassNameTable.INSTANCE.classNameId)
-					)
-				);
-			}
-		).nonreferenceColumns(
-			LayoutTable.INSTANCE.name, LayoutTable.INSTANCE.title,
-			LayoutTable.INSTANCE.description, LayoutTable.INSTANCE.keywords,
-			LayoutTable.INSTANCE.robots, LayoutTable.INSTANCE.type,
-			LayoutTable.INSTANCE.typeSettings, LayoutTable.INSTANCE.hidden,
-			LayoutTable.INSTANCE.system, LayoutTable.INSTANCE.friendlyURL
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.singleColumnReference(
 			LayoutTable.INSTANCE.iconImageId, ImageTable.INSTANCE.imageId
-		).nonreferenceColumns(
-			LayoutTable.INSTANCE.themeId, LayoutTable.INSTANCE.colorSchemeId,
-			LayoutTable.INSTANCE.css, LayoutTable.INSTANCE.priority
-		).parentColumnReference(
-			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.masterLayoutPlid
-		).nonreferenceColumns(
-			LayoutTable.INSTANCE.layoutPrototypeUuid,
-			LayoutTable.INSTANCE.layoutPrototypeLinkEnabled,
-			LayoutTable.INSTANCE.sourcePrototypeLayoutUuid,
-			LayoutTable.INSTANCE.publishDate,
-			LayoutTable.INSTANCE.lastPublishDate, LayoutTable.INSTANCE.status
-		).singleColumnReference(
-			LayoutTable.INSTANCE.statusByUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			LayoutTable.INSTANCE.statusByUserName,
-			LayoutTable.INSTANCE.statusDate
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
@@ -147,6 +87,53 @@ public class LayoutTableReferenceDefinition
 			LayoutTable.INSTANCE.plid, Layout.class
 		).systemEventReference(
 			LayoutTable.INSTANCE.plid, Layout.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutTable.INSTANCE
+		).parentColumnReference(
+			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.parentPlid
+		).parentColumnReference(
+			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.masterLayoutPlid
+		).referenceInnerJoin(
+			fromStep -> {
+				LayoutTable aliasLayoutTable = LayoutTable.INSTANCE.as(
+					"aliasLayoutTable");
+
+				return fromStep.from(
+					aliasLayoutTable
+				).innerJoinON(
+					LayoutTable.INSTANCE,
+					LayoutTable.INSTANCE.parentLayoutId.eq(
+						aliasLayoutTable.layoutId)
+				);
+			}
+		).referenceInnerJoin(
+			fromStep -> {
+				LayoutTable aliasLayoutTable = LayoutTable.INSTANCE.as(
+					"aliasLayoutTable");
+
+				return fromStep.from(
+					aliasLayoutTable
+				).innerJoinON(
+					LayoutTable.INSTANCE,
+					LayoutTable.INSTANCE.classPK.eq(aliasLayoutTable.plid)
+				).innerJoinON(
+					ClassNameTable.INSTANCE,
+					ClassNameTable.INSTANCE.value.eq(
+						Layout.class.getName()
+					).and(
+						LayoutTable.INSTANCE.classNameId.eq(
+							ClassNameTable.INSTANCE.classNameId)
+					)
+				);
+			}
 		);
 	}
 

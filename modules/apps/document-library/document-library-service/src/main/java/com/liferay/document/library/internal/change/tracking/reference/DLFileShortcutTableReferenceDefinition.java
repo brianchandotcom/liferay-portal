@@ -15,14 +15,14 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence;
 import com.liferay.portal.kernel.model.RepositoryTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,14 +36,24 @@ public class DLFileShortcutTableReferenceDefinition
 	implements TableReferenceDefinition<DLFileShortcutTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFileShortcutTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFileShortcutTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
+		).resourcePermissionReference(
+			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFileShortcutTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			DLFileShortcutTable.INSTANCE
-		).nonreferenceColumn(
-			DLFileShortcutTable.INSTANCE.uuid
 		).singleColumnReference(
 			DLFileShortcutTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
@@ -53,21 +63,6 @@ public class DLFileShortcutTableReferenceDefinition
 		).singleColumnReference(
 			DLFileShortcutTable.INSTANCE.toFileEntryId,
 			DLFileEntryTable.INSTANCE.fileEntryId
-		).nonreferenceColumns(
-			DLFileShortcutTable.INSTANCE.treePath,
-			DLFileShortcutTable.INSTANCE.active,
-			DLFileShortcutTable.INSTANCE.lastPublishDate,
-			DLFileShortcutTable.INSTANCE.status
-		).singleColumnReference(
-			DLFileShortcutTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DLFileShortcutTable.INSTANCE.statusByUserName,
-			DLFileShortcutTable.INSTANCE.statusDate
-		).assetEntryReference(
-			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
-		).resourcePermissionReference(
-			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
 		);
 	}
 

@@ -15,7 +15,8 @@
 package com.liferay.layout.page.template.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionTable;
@@ -25,7 +26,6 @@ import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEn
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.LayoutPrototypeTable;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,46 +39,11 @@ public class LayoutPageTemplateEntryTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutPageTemplateEntryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutPageTemplateEntryTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutPageTemplateEntryTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			LayoutPageTemplateEntryTable.INSTANCE
-		).nonreferenceColumn(
-			LayoutPageTemplateEntryTable.INSTANCE.uuid
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.
-				layoutPageTemplateCollectionId,
-			LayoutPageTemplateCollectionTable.INSTANCE.
-				layoutPageTemplateCollectionId
-		).nonreferenceColumns(
-			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryKey,
-			LayoutPageTemplateEntryTable.INSTANCE.classNameId,
-			LayoutPageTemplateEntryTable.INSTANCE.classTypeId,
-			LayoutPageTemplateEntryTable.INSTANCE.name,
-			LayoutPageTemplateEntryTable.INSTANCE.type
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.previewFileEntryId,
-			DLFileEntryTable.INSTANCE.fileEntryId
-		).nonreferenceColumn(
-			LayoutPageTemplateEntryTable.INSTANCE.defaultTemplate
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.layoutPrototypeId,
-			LayoutPrototypeTable.INSTANCE.layoutPrototypeId
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.plid,
-			LayoutTable.INSTANCE.plid
-		).nonreferenceColumns(
-			LayoutPageTemplateEntryTable.INSTANCE.lastPublishDate,
-			LayoutPageTemplateEntryTable.INSTANCE.status
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			LayoutPageTemplateEntryTable.INSTANCE.statusByUserName,
-			LayoutPageTemplateEntryTable.INSTANCE.statusDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMStructureLinkTable.INSTANCE
 			).innerJoinON(
@@ -103,6 +68,30 @@ public class LayoutPageTemplateEntryTableReferenceDefinition
 			LayoutPageTemplateEntryTable.INSTANCE.
 				layoutPageTemplateCollectionId,
 			LayoutPageTemplateEntry.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutPageTemplateEntryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutPageTemplateEntryTable.INSTANCE
+		).singleColumnReference(
+			LayoutPageTemplateEntryTable.INSTANCE.
+				layoutPageTemplateCollectionId,
+			LayoutPageTemplateCollectionTable.INSTANCE.
+				layoutPageTemplateCollectionId
+		).singleColumnReference(
+			LayoutPageTemplateEntryTable.INSTANCE.previewFileEntryId,
+			DLFileEntryTable.INSTANCE.fileEntryId
+		).singleColumnReference(
+			LayoutPageTemplateEntryTable.INSTANCE.layoutPrototypeId,
+			LayoutPrototypeTable.INSTANCE.layoutPrototypeId
+		).singleColumnReference(
+			LayoutPageTemplateEntryTable.INSTANCE.plid,
+			LayoutTable.INSTANCE.plid
 		);
 	}
 

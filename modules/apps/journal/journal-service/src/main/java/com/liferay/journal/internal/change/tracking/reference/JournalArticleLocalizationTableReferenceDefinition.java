@@ -15,7 +15,8 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.journal.model.JournalArticleLocalizationTable;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
@@ -33,20 +34,22 @@ public class JournalArticleLocalizationTableReferenceDefinition
 	implements TableReferenceDefinition<JournalArticleLocalizationTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalArticleLocalizationTable>
-			tableTableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalArticleLocalizationTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableTableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalArticleLocalizationTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			JournalArticleLocalizationTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			JournalArticleLocalizationTable.INSTANCE.articlePK,
 			JournalArticleTable.INSTANCE.id
-		).nonreferenceColumns(
-			JournalArticleLocalizationTable.INSTANCE.title,
-			JournalArticleLocalizationTable.INSTANCE.description,
-			JournalArticleLocalizationTable.INSTANCE.languageId
 		);
 	}
 

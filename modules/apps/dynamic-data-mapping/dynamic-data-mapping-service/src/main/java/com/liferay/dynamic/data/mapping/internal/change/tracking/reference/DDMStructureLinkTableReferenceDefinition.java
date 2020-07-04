@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
@@ -33,16 +34,19 @@ public class DDMStructureLinkTableReferenceDefinition
 	implements TableReferenceDefinition<DDMStructureLinkTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMStructureLinkTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMStructureLinkTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMStructureLinkTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			DDMStructureLinkTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			DDMStructureLinkTable.INSTANCE.classNameId,
-			DDMStructureLinkTable.INSTANCE.classPK
 		).singleColumnReference(
 			DDMStructureLinkTable.INSTANCE.structureId,
 			DDMStructureTable.INSTANCE.structureId

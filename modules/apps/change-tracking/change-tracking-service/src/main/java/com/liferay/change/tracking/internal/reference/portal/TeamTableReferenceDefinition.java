@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.TeamTable;
@@ -33,19 +34,23 @@ public class TeamTableReferenceDefinition
 	implements TableReferenceDefinition<TeamTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<TeamTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<TeamTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			TeamTable.INSTANCE
-		).nonreferenceColumns(
-			TeamTable.INSTANCE.uuid, TeamTable.INSTANCE.name,
-			TeamTable.INSTANCE.description, TeamTable.INSTANCE.lastPublishDate
-		).resourcePermissionReference(
+		childTableReferenceInfoBuilder.resourcePermissionReference(
 			TeamTable.INSTANCE.teamId, Team.class
 		).classNameReference(
 			TeamTable.INSTANCE.teamId, RoleTable.INSTANCE.classPK, Team.class
 		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<TeamTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(TeamTable.INSTANCE);
 	}
 
 	@Override

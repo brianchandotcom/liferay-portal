@@ -18,7 +18,8 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,17 +33,20 @@ public class AssetTagTableReferenceDefinition
 	implements TableReferenceDefinition<AssetTagTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<AssetTagTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<AssetTagTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			AssetTagTable.INSTANCE
-		).nonreferenceColumns(
-			AssetTagTable.INSTANCE.name, AssetTagTable.INSTANCE.assetCount,
-			AssetTagTable.INSTANCE.lastPublishDate
-		).systemEventReference(
-			AssetTagTable.INSTANCE.tagId, AssetTag.class
-		);
+		childTableReferenceInfoBuilder.systemEventReference(
+			AssetTagTable.INSTANCE.tagId, AssetTag.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<AssetTagTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(AssetTagTable.INSTANCE);
 	}
 
 	@Override

@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.VirtualHostTable;
@@ -33,19 +34,21 @@ public class VirtualHostTableReferenceDefinition
 	implements TableReferenceDefinition<VirtualHostTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<VirtualHostTable>
-			tableTableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<VirtualHostTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableTableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<VirtualHostTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			VirtualHostTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			VirtualHostTable.INSTANCE.layoutSetId,
 			LayoutSetTable.INSTANCE.layoutSetId
-		).nonreferenceColumns(
-			VirtualHostTable.INSTANCE.hostname,
-			VirtualHostTable.INSTANCE.defaultVirtualHost,
-			VirtualHostTable.INSTANCE.languageId
 		);
 	}
 

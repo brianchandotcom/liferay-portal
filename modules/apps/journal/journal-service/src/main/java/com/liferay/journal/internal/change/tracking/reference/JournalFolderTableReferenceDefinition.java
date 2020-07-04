@@ -15,11 +15,11 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,34 +33,29 @@ public class JournalFolderTableReferenceDefinition
 	implements TableReferenceDefinition<JournalFolderTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalFolderTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalFolderTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			JournalFolderTable.INSTANCE
-		).parentColumnReference(
-			JournalFolderTable.INSTANCE.folderId,
-			JournalFolderTable.INSTANCE.parentFolderId
-		).nonreferenceColumns(
-			JournalFolderTable.INSTANCE.treePath,
-			JournalFolderTable.INSTANCE.name,
-			JournalFolderTable.INSTANCE.description,
-			JournalFolderTable.INSTANCE.restrictionType,
-			JournalFolderTable.INSTANCE.lastPublishDate,
-			JournalFolderTable.INSTANCE.status
-		).singleColumnReference(
-			JournalFolderTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			JournalFolderTable.INSTANCE.statusByUserName,
-			JournalFolderTable.INSTANCE.statusDate
-		).assetEntryReference(
+		childTableReferenceInfoBuilder.assetEntryReference(
 			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
 		).resourcePermissionReference(
 			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
 		).systemEventReference(
 			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalFolderTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			JournalFolderTable.INSTANCE
+		).parentColumnReference(
+			JournalFolderTable.INSTANCE.folderId,
+			JournalFolderTable.INSTANCE.parentFolderId
 		);
 	}
 

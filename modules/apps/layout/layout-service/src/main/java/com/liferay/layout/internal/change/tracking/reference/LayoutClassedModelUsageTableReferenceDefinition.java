@@ -15,11 +15,10 @@
 package com.liferay.layout.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.model.LayoutClassedModelUsageTable;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -34,31 +33,21 @@ public class LayoutClassedModelUsageTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutClassedModelUsageTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutClassedModelUsageTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutClassedModelUsageTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			LayoutClassedModelUsageTable.INSTANCE.uuid
-		).singleColumnReference(
-			LayoutClassedModelUsageTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			LayoutClassedModelUsageTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			LayoutClassedModelUsageTable.INSTANCE.createDate,
-			LayoutClassedModelUsageTable.INSTANCE.modifiedDate,
-			LayoutClassedModelUsageTable.INSTANCE.classNameId,
-			LayoutClassedModelUsageTable.INSTANCE.classPK,
-			LayoutClassedModelUsageTable.INSTANCE.containerKey,
-			LayoutClassedModelUsageTable.INSTANCE.containerType
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutClassedModelUsageTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutClassedModelUsageTable.INSTANCE
 		).singleColumnReference(
 			LayoutClassedModelUsageTable.INSTANCE.plid,
 			LayoutTable.INSTANCE.plid
-		).nonreferenceColumns(
-			LayoutClassedModelUsageTable.INSTANCE.type,
-			LayoutClassedModelUsageTable.INSTANCE.lastPublishDate
 		);
 	}
 

@@ -15,11 +15,11 @@
 package com.liferay.site.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 
@@ -34,34 +34,28 @@ public class GroupTableReferenceDefinition
 	implements TableReferenceDefinition<GroupTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<GroupTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<GroupTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			GroupTable.INSTANCE.uuid
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			GroupTable.INSTANCE.groupId, Group.class
+		).resourcePermissionReference(
+			GroupTable.INSTANCE.groupId, Group.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<GroupTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			GroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			GroupTable.INSTANCE.creatorUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			GroupTable.INSTANCE.classNameId, GroupTable.INSTANCE.classPK
 		).parentColumnReference(
 			GroupTable.INSTANCE.groupId, GroupTable.INSTANCE.parentGroupId
 		).parentColumnReference(
 			GroupTable.INSTANCE.groupId, GroupTable.INSTANCE.liveGroupId
-		).nonreferenceColumns(
-			GroupTable.INSTANCE.treePath, GroupTable.INSTANCE.groupKey,
-			GroupTable.INSTANCE.name, GroupTable.INSTANCE.description,
-			GroupTable.INSTANCE.type, GroupTable.INSTANCE.typeSettings,
-			GroupTable.INSTANCE.manualMembership,
-			GroupTable.INSTANCE.membershipRestriction,
-			GroupTable.INSTANCE.friendlyURL, GroupTable.INSTANCE.site,
-			GroupTable.INSTANCE.remoteStagingGroupCount,
-			GroupTable.INSTANCE.inheritContent, GroupTable.INSTANCE.active
-		).assetEntryReference(
-			GroupTable.INSTANCE.groupId, Group.class
-		).resourcePermissionReference(
-			GroupTable.INSTANCE.groupId, Group.class
 		);
 	}
 

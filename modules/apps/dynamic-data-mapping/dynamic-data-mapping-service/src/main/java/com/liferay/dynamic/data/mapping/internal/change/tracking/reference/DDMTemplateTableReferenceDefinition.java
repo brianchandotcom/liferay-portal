@@ -15,14 +15,14 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,26 +36,11 @@ public class DDMTemplateTableReferenceDefinition
 	implements TableReferenceDefinition<DDMTemplateTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMTemplateTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMTemplateTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMTemplateTable.INSTANCE
-		).singleColumnReference(
-			DDMTemplateTable.INSTANCE.versionUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DDMTemplateTable.INSTANCE.versionUserName,
-			DDMTemplateTable.INSTANCE.classNameId,
-			DDMTemplateTable.INSTANCE.classPK,
-			DDMTemplateTable.INSTANCE.resourceClassNameId,
-			DDMTemplateTable.INSTANCE.templateKey,
-			DDMTemplateTable.INSTANCE.version, DDMTemplateTable.INSTANCE.name,
-			DDMTemplateTable.INSTANCE.description,
-			DDMTemplateTable.INSTANCE.type, DDMTemplateTable.INSTANCE.mode,
-			DDMTemplateTable.INSTANCE.language,
-			DDMTemplateTable.INSTANCE.script,
-			DDMTemplateTable.INSTANCE.cacheable
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ImageTable.INSTANCE
 			).innerJoinON(
@@ -66,9 +51,6 @@ public class DDMTemplateTableReferenceDefinition
 					DDMTemplateTable.INSTANCE.smallImage.eq(Boolean.TRUE)
 				)
 			)
-		).nonreferenceColumns(
-			DDMTemplateTable.INSTANCE.smallImageURL,
-			DDMTemplateTable.INSTANCE.lastPublishDate
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
@@ -108,6 +90,14 @@ public class DDMTemplateTableReferenceDefinition
 		).systemEventReference(
 			DDMTemplateTable.INSTANCE.templateId, DDMTemplate.class
 		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMTemplateTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(DDMTemplateTable.INSTANCE);
 	}
 
 	@Override

@@ -15,11 +15,11 @@
 package com.liferay.portal.security.permission.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 
@@ -34,24 +34,21 @@ public class RoleTableReferenceDefinition
 	implements TableReferenceDefinition<RoleTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<RoleTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<RoleTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			RoleTable.INSTANCE.uuid
-		).singleColumnReference(
-			RoleTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			RoleTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			RoleTable.INSTANCE.userName, RoleTable.INSTANCE.createDate,
-			RoleTable.INSTANCE.modifiedDate, RoleTable.INSTANCE.classNameId,
-			RoleTable.INSTANCE.classPK, RoleTable.INSTANCE.name,
-			RoleTable.INSTANCE.title, RoleTable.INSTANCE.description,
-			RoleTable.INSTANCE.type, RoleTable.INSTANCE.subtype
-		).systemEventReference(
-			RoleTable.INSTANCE.roleId, Role.class
-		);
+		childTableReferenceInfoBuilder.systemEventReference(
+			RoleTable.INSTANCE.roleId, Role.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<RoleTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			RoleTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

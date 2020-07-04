@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
@@ -33,25 +34,25 @@ public class DDMStructureLayoutTableReferenceDefinition
 	implements TableReferenceDefinition<DDMStructureLayoutTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMStructureLayoutTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMStructureLayoutTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
+		childTableReferenceInfoBuilder.systemEventReference(
+			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
+			DDMStructureLayout.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMStructureLayoutTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			DDMStructureLayoutTable.INSTANCE
-		).nonreferenceColumns(
-			DDMStructureLayoutTable.INSTANCE.classNameId,
-			DDMStructureLayoutTable.INSTANCE.structureLayoutKey
 		).singleColumnReference(
 			DDMStructureLayoutTable.INSTANCE.structureVersionId,
 			DDMStructureVersionTable.INSTANCE.structureVersionId
-		).nonreferenceColumns(
-			DDMStructureLayoutTable.INSTANCE.name,
-			DDMStructureLayoutTable.INSTANCE.description,
-			DDMStructureLayoutTable.INSTANCE.definition
-		).systemEventReference(
-			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
-			DDMStructureLayout.class
 		);
 	}
 

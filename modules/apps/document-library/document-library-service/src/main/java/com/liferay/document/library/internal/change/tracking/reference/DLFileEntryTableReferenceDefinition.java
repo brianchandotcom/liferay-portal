@@ -15,9 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.change.tracking.store.model.CTSContentTable;
-import com.liferay.document.library.content.model.DLContentTable;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
@@ -38,33 +37,11 @@ public class DLFileEntryTableReferenceDefinition
 	implements TableReferenceDefinition<DLFileEntryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFileEntryTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFileEntryTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DLFileEntryTable.INSTANCE
-		).nonreferenceColumns(
-			DLFileEntryTable.INSTANCE.uuid,
-			DLFileEntryTable.INSTANCE.classNameId,
-			DLFileEntryTable.INSTANCE.classPK
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.folderId, DLFolderTable.INSTANCE.folderId
-		).nonreferenceColumns(
-			DLFileEntryTable.INSTANCE.treePath, DLFileEntryTable.INSTANCE.name,
-			DLFileEntryTable.INSTANCE.fileName,
-			DLFileEntryTable.INSTANCE.extension,
-			DLFileEntryTable.INSTANCE.mimeType, DLFileEntryTable.INSTANCE.title,
-			DLFileEntryTable.INSTANCE.description,
-			DLFileEntryTable.INSTANCE.extraSettings
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.fileEntryTypeId,
-			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
-		).nonreferenceColumns(
-			DLFileEntryTable.INSTANCE.version, DLFileEntryTable.INSTANCE.size
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.singleColumnReference(
 			DLFileEntryTable.INSTANCE.smallImageId, ImageTable.INSTANCE.imageId
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.largeImageId, ImageTable.INSTANCE.imageId
@@ -74,43 +51,28 @@ public class DLFileEntryTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.custom2ImageId,
 			ImageTable.INSTANCE.imageId
-		).nonreferenceColumns(
-			DLFileEntryTable.INSTANCE.manualCheckInRequired,
-			DLFileEntryTable.INSTANCE.lastPublishDate
 		).assetEntryReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
 		).resourcePermissionReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				CTSContentTable.INSTANCE
-			).innerJoinON(
-				DLFileEntryTable.INSTANCE,
-				DLFileEntryTable.INSTANCE.companyId.eq(
-					CTSContentTable.INSTANCE.companyId
-				).and(
-					DLFileEntryTable.INSTANCE.repositoryId.eq(
-						CTSContentTable.INSTANCE.repositoryId)
-				).and(
-					DLFileEntryTable.INSTANCE.name.eq(
-						CTSContentTable.INSTANCE.path)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DLContentTable.INSTANCE
-			).innerJoinON(
-				DLFileEntryTable.INSTANCE,
-				DLFileEntryTable.INSTANCE.companyId.eq(
-					DLContentTable.INSTANCE.companyId
-				).and(
-					DLFileEntryTable.INSTANCE.repositoryId.eq(
-						DLContentTable.INSTANCE.repositoryId)
-				).and(
-					DLFileEntryTable.INSTANCE.name.eq(
-						DLContentTable.INSTANCE.path)
-				)
-			)
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFileEntryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DLFileEntryTable.INSTANCE
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.repositoryId,
+			RepositoryTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.folderId, DLFolderTable.INSTANCE.folderId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.fileEntryTypeId,
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
 		);
 	}
 

@@ -15,9 +15,8 @@
 package com.liferay.site.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetTable;
@@ -36,17 +35,11 @@ public class LayoutSetTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutSetTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutSetTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutSetTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			LayoutSetTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			LayoutSetTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			LayoutSetTable.INSTANCE.createDate,
-			LayoutSetTable.INSTANCE.modifiedDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				LayoutTable.INSTANCE
 			).innerJoinON(
@@ -60,15 +53,17 @@ public class LayoutSetTableReferenceDefinition
 			)
 		).singleColumnReference(
 			LayoutSetTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
-		).nonreferenceColumns(
-			LayoutSetTable.INSTANCE.themeId,
-			LayoutSetTable.INSTANCE.colorSchemeId, LayoutSetTable.INSTANCE.css,
-			LayoutSetTable.INSTANCE.settings,
-			LayoutSetTable.INSTANCE.layoutSetPrototypeUuid,
-			LayoutSetTable.INSTANCE.layoutSetPrototypeLinkEnabled
 		).systemEventReference(
 			LayoutSetTable.INSTANCE.layoutSetId, LayoutSet.class
 		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutSetTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(LayoutSetTable.INSTANCE);
 	}
 
 	@Override

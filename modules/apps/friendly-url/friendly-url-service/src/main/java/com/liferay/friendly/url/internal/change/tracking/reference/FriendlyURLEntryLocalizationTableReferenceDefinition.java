@@ -15,12 +15,11 @@
 package com.liferay.friendly.url.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,25 +33,21 @@ public class FriendlyURLEntryLocalizationTableReferenceDefinition
 	implements TableReferenceDefinition<FriendlyURLEntryLocalizationTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<FriendlyURLEntryLocalizationTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<FriendlyURLEntryLocalizationTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			FriendlyURLEntryLocalizationTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<FriendlyURLEntryLocalizationTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			FriendlyURLEntryLocalizationTable.INSTANCE
 		).singleColumnReference(
 			FriendlyURLEntryLocalizationTable.INSTANCE.friendlyURLEntryId,
 			FriendlyURLEntryTable.INSTANCE.friendlyURLEntryId
-		).nonreferenceColumns(
-			FriendlyURLEntryLocalizationTable.INSTANCE.languageId,
-			FriendlyURLEntryLocalizationTable.INSTANCE.urlTitle
-		).singleColumnReference(
-			FriendlyURLEntryLocalizationTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).nonreferenceColumns(
-			FriendlyURLEntryLocalizationTable.INSTANCE.classNameId,
-			FriendlyURLEntryLocalizationTable.INSTANCE.classPK
 		);
 	}
 

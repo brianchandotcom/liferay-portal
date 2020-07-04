@@ -15,7 +15,8 @@
 package com.liferay.ratings.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -34,25 +35,24 @@ public class RatingsEntryTableReferenceDefinition
 	implements TableReferenceDefinition<RatingsEntryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<RatingsEntryTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<RatingsEntryTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			RatingsEntryTable.INSTANCE.uuid
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.systemEventReference(
+			RatingsEntryTable.INSTANCE.entryId, RatingsEntry.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<RatingsEntryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			RatingsEntryTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			RatingsEntryTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			RatingsEntryTable.INSTANCE.userName,
-			RatingsEntryTable.INSTANCE.createDate,
-			RatingsEntryTable.INSTANCE.modifiedDate,
-			RatingsEntryTable.INSTANCE.classNameId,
-			RatingsEntryTable.INSTANCE.classPK, RatingsEntryTable.INSTANCE.score
-		).systemEventReference(
-			RatingsEntryTable.INSTANCE.entryId, RatingsEntry.class
 		);
 	}
 

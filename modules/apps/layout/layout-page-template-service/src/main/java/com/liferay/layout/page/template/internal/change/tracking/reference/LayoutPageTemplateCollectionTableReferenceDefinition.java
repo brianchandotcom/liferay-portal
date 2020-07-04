@@ -15,7 +15,8 @@
 package com.liferay.layout.page.template.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
@@ -32,24 +33,23 @@ public class LayoutPageTemplateCollectionTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutPageTemplateCollectionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutPageTemplateCollectionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutPageTemplateCollectionTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			LayoutPageTemplateCollectionTable.INSTANCE
-		).nonreferenceColumns(
-			LayoutPageTemplateCollectionTable.INSTANCE.uuid,
-			LayoutPageTemplateCollectionTable.INSTANCE.
-				layoutPageTemplateCollectionKey,
-			LayoutPageTemplateCollectionTable.INSTANCE.name,
-			LayoutPageTemplateCollectionTable.INSTANCE.description,
-			LayoutPageTemplateCollectionTable.INSTANCE.lastPublishDate
-		).resourcePermissionReference(
+		childTableReferenceInfoBuilder.resourcePermissionReference(
 			LayoutPageTemplateCollectionTable.INSTANCE.
 				layoutPageTemplateCollectionId,
-			LayoutPageTemplateCollection.class
-		);
+			LayoutPageTemplateCollection.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutPageTemplateCollectionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutPageTemplateCollectionTable.INSTANCE);
 	}
 
 	@Override

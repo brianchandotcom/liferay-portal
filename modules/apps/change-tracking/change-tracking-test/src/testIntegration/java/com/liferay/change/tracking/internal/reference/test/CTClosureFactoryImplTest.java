@@ -18,7 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.change.tracking.reference.closure.CTClosure;
 import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -609,18 +610,25 @@ public class CTClosureFactoryImplTest {
 		implements TableReferenceDefinition<ChildTable> {
 
 		@Override
-		public void defineTableReferences(
-			TableReferenceInfoBuilder<ChildTable> tableReferenceInfoBuilder) {
+		public void defineChildTableReferences(
+			ChildTableReferenceInfoBuilder<ChildTable>
+				childTableReferenceInfoBuilder) {
+		}
 
-			tableReferenceInfoBuilder.referenceInnerJoin(
+		@Override
+		public void defineParentTableReferences(
+			ParentTableReferenceInfoBuilder<ChildTable>
+				parentTableReferenceInfoBuilder) {
+
+			parentTableReferenceInfoBuilder.referenceInnerJoin(
 				fromStep -> fromStep.from(
 					GrandParentTable.INSTANCE
 				).innerJoinON(
 					ChildTable.INSTANCE,
 					ChildTable.INSTANCE.grandParentId.eq(
 						GrandParentTable.INSTANCE.grandParentId)
-				));
-			tableReferenceInfoBuilder.referenceInnerJoin(
+				)
+			).referenceInnerJoin(
 				fromStep -> {
 					ChildTable aliasChildTable = ChildTable.INSTANCE.as(
 						"aliasChildTable");
@@ -632,10 +640,8 @@ public class CTClosureFactoryImplTest {
 						ChildTable.INSTANCE.parentChildId.eq(
 							aliasChildTable.childId)
 					);
-				});
-
-			tableReferenceInfoBuilder.nonreferenceColumn(
-				ChildTable.INSTANCE.parentName);
+				}
+			);
 		}
 
 		@Override
@@ -680,11 +686,26 @@ public class CTClosureFactoryImplTest {
 		implements TableReferenceDefinition<GrandParentTable> {
 
 		@Override
-		public void defineTableReferences(
-			TableReferenceInfoBuilder<GrandParentTable>
-				tableReferenceInfoBuilder) {
+		public void defineChildTableReferences(
+			ChildTableReferenceInfoBuilder<GrandParentTable>
+				childTableReferenceInfoBuilder) {
 
-			tableReferenceInfoBuilder.referenceInnerJoin(
+			childTableReferenceInfoBuilder.referenceInnerJoin(
+				fromStep -> fromStep.from(
+					ChildTable.INSTANCE
+				).innerJoinON(
+					GrandParentTable.INSTANCE,
+					GrandParentTable.INSTANCE.grandParentId.eq(
+						ChildTable.INSTANCE.grandParentId)
+				));
+		}
+
+		@Override
+		public void defineParentTableReferences(
+			ParentTableReferenceInfoBuilder<GrandParentTable>
+				parentTableReferenceInfoBuilder) {
+
+			parentTableReferenceInfoBuilder.referenceInnerJoin(
 				fromStep -> {
 					GrandParentTable aliasGrandParentTable =
 						GrandParentTable.INSTANCE.as("aliasGrandParentTable");
@@ -697,14 +718,6 @@ public class CTClosureFactoryImplTest {
 							GrandParentTable.INSTANCE.grandParentId)
 					);
 				});
-			tableReferenceInfoBuilder.referenceInnerJoin(
-				fromStep -> fromStep.from(
-					ChildTable.INSTANCE
-				).innerJoinON(
-					GrandParentTable.INSTANCE,
-					GrandParentTable.INSTANCE.grandParentId.eq(
-						ChildTable.INSTANCE.grandParentId)
-				));
 		}
 
 		@Override
@@ -750,18 +763,11 @@ public class CTClosureFactoryImplTest {
 		implements TableReferenceDefinition<ParentTable> {
 
 		@Override
-		public void defineTableReferences(
-			TableReferenceInfoBuilder<ParentTable> tableReferenceInfoBuilder) {
+		public void defineChildTableReferences(
+			ChildTableReferenceInfoBuilder<ParentTable>
+				childTableReferenceInfoBuilder) {
 
-			tableReferenceInfoBuilder.referenceInnerJoin(
-				fromStep -> fromStep.from(
-					GrandParentTable.INSTANCE
-				).innerJoinON(
-					ParentTable.INSTANCE,
-					ParentTable.INSTANCE.grandParentId.eq(
-						GrandParentTable.INSTANCE.grandParentId)
-				));
-			tableReferenceInfoBuilder.referenceInnerJoin(
+			childTableReferenceInfoBuilder.referenceInnerJoin(
 				fromStep -> fromStep.from(
 					ChildTable.INSTANCE
 				).innerJoinON(
@@ -772,6 +778,21 @@ public class CTClosureFactoryImplTest {
 						ParentTable.INSTANCE.name.eq(
 							ChildTable.INSTANCE.parentName)
 					)
+				));
+		}
+
+		@Override
+		public void defineParentTableReferences(
+			ParentTableReferenceInfoBuilder<ParentTable>
+				parentTableReferenceInfoBuilder) {
+
+			parentTableReferenceInfoBuilder.referenceInnerJoin(
+				fromStep -> fromStep.from(
+					GrandParentTable.INSTANCE
+				).innerJoinON(
+					ParentTable.INSTANCE,
+					ParentTable.INSTANCE.grandParentId.eq(
+						GrandParentTable.INSTANCE.grandParentId)
 				));
 		}
 

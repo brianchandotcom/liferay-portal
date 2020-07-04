@@ -15,7 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.document.library.content.model.DLContentTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
@@ -25,7 +26,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.portal.kernel.model.RepositoryTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,48 +39,11 @@ public class DLFileVersionTableReferenceDefinition
 	implements TableReferenceDefinition<DLFileVersionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFileVersionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFileVersionTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DLFileVersionTable.INSTANCE
-		).nonreferenceColumn(
-			DLFileVersionTable.INSTANCE.uuid
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.folderId,
-			DLFolderTable.INSTANCE.folderId
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.fileEntryId,
-			DLFileEntryTable.INSTANCE.fileEntryId
-		).nonreferenceColumns(
-			DLFileVersionTable.INSTANCE.treePath,
-			DLFileVersionTable.INSTANCE.fileName,
-			DLFileVersionTable.INSTANCE.extension,
-			DLFileVersionTable.INSTANCE.mimeType,
-			DLFileVersionTable.INSTANCE.title,
-			DLFileVersionTable.INSTANCE.description,
-			DLFileVersionTable.INSTANCE.changeLog,
-			DLFileVersionTable.INSTANCE.extraSettings
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.fileEntryTypeId,
-			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
-		).nonreferenceColumns(
-			DLFileVersionTable.INSTANCE.version,
-			DLFileVersionTable.INSTANCE.size,
-			DLFileVersionTable.INSTANCE.checksum,
-			DLFileVersionTable.INSTANCE.lastPublishDate,
-			DLFileVersionTable.INSTANCE.status
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DLFileVersionTable.INSTANCE.statusByUserName,
-			DLFileVersionTable.INSTANCE.statusDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				CTSContentTable.INSTANCE
 			).innerJoinON(
@@ -152,6 +115,28 @@ public class DLFileVersionTableReferenceDefinition
 						DLContentTable.INSTANCE.version)
 				)
 			)
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFileVersionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DLFileVersionTable.INSTANCE
+		).singleColumnReference(
+			DLFileVersionTable.INSTANCE.repositoryId,
+			RepositoryTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			DLFileVersionTable.INSTANCE.folderId,
+			DLFolderTable.INSTANCE.folderId
+		).singleColumnReference(
+			DLFileVersionTable.INSTANCE.fileEntryId,
+			DLFileEntryTable.INSTANCE.fileEntryId
+		).singleColumnReference(
+			DLFileVersionTable.INSTANCE.fileEntryTypeId,
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
 		);
 	}
 

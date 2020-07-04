@@ -15,7 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
@@ -37,18 +38,23 @@ public class DLFileEntryMetadataTableReferenceDefinition
 	implements TableReferenceDefinition<DLFileEntryMetadataTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFileEntryMetadataTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFileEntryMetadataTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			DLFileEntryMetadataTable.INSTANCE.uuid
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.classNameReference(
+			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
+			DDMStorageLinkTable.INSTANCE.classPK, DDMContent.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFileEntryMetadataTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).classNameReference(
-			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
-			DDMStorageLinkTable.INSTANCE.classPK, DDMContent.class
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
 			DDMStructureTable.INSTANCE.structureId

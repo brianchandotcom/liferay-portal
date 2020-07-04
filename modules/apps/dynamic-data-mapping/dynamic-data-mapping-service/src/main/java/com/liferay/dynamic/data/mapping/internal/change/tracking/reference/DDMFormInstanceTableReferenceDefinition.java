@@ -15,14 +15,14 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLinkTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -37,21 +37,11 @@ public class DDMFormInstanceTableReferenceDefinition
 	implements TableReferenceDefinition<DDMFormInstanceTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMFormInstanceTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMFormInstanceTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMFormInstanceTable.INSTANCE
-		).singleColumnReference(
-			DDMFormInstanceTable.INSTANCE.versionUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumn(
-			DDMFormInstanceTable.INSTANCE.versionUserName
-		).singleColumnReference(
-			DDMFormInstanceTable.INSTANCE.structureId,
-			DDMStructureTable.INSTANCE.structureId
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMFormInstanceVersionTable.INSTANCE
 			).innerJoinON(
@@ -63,11 +53,6 @@ public class DDMFormInstanceTableReferenceDefinition
 						DDMFormInstanceVersionTable.INSTANCE.version)
 				)
 			)
-		).nonreferenceColumns(
-			DDMFormInstanceTable.INSTANCE.name,
-			DDMFormInstanceTable.INSTANCE.description,
-			DDMFormInstanceTable.INSTANCE.settings,
-			DDMFormInstanceTable.INSTANCE.lastPublishDate
 		).resourcePermissionReference(
 			DDMFormInstanceTable.INSTANCE.formInstanceId, DDMFormInstance.class
 		).systemEventReference(
@@ -95,6 +80,19 @@ public class DDMFormInstanceTableReferenceDefinition
 						DDMFormInstance.class.getName())
 				)
 			)
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMFormInstanceTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMFormInstanceTable.INSTANCE
+		).singleColumnReference(
+			DDMFormInstanceTable.INSTANCE.structureId,
+			DDMStructureTable.INSTANCE.structureId
 		);
 	}
 

@@ -15,13 +15,13 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,29 +35,11 @@ public class DDMStructureTableReferenceDefinition
 	implements TableReferenceDefinition<DDMStructureTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMStructureTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMStructureTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMStructureTable.INSTANCE
-		).singleColumnReference(
-			DDMStructureTable.INSTANCE.versionUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumn(
-			DDMStructureTable.INSTANCE.versionUserName
-		).parentColumnReference(
-			DDMStructureTable.INSTANCE.structureId,
-			DDMStructureTable.INSTANCE.parentStructureId
-		).nonreferenceColumns(
-			DDMStructureTable.INSTANCE.classNameId,
-			DDMStructureTable.INSTANCE.structureKey,
-			DDMStructureTable.INSTANCE.version, DDMStructureTable.INSTANCE.name,
-			DDMStructureTable.INSTANCE.description,
-			DDMStructureTable.INSTANCE.definition,
-			DDMStructureTable.INSTANCE.storageType,
-			DDMStructureTable.INSTANCE.type,
-			DDMStructureTable.INSTANCE.lastPublishDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -95,6 +77,19 @@ public class DDMStructureTableReferenceDefinition
 			)
 		).systemEventReference(
 			DDMStructureTable.INSTANCE.structureId, DDMStructure.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMStructureTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMStructureTable.INSTANCE
+		).parentColumnReference(
+			DDMStructureTable.INSTANCE.structureId,
+			DDMStructureTable.INSTANCE.parentStructureId
 		);
 	}
 

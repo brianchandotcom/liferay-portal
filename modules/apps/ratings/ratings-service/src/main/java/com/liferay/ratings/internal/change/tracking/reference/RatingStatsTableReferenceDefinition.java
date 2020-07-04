@@ -15,7 +15,8 @@
 package com.liferay.ratings.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
@@ -33,17 +34,11 @@ public class RatingStatsTableReferenceDefinition
 	implements TableReferenceDefinition<RatingsStatsTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<RatingsStatsTable>
-			tableTableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<RatingsStatsTable>
+			childTableReferenceInfoBuilder) {
 
-		tableTableReferenceInfoBuilder.singleColumnReference(
-			RatingsStatsTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			RatingsStatsTable.INSTANCE.createDate,
-			RatingsStatsTable.INSTANCE.modifiedDate
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				RatingsEntryTable.INSTANCE
 			).innerJoinON(
@@ -54,12 +49,17 @@ public class RatingStatsTableReferenceDefinition
 					RatingsStatsTable.INSTANCE.classPK.eq(
 						RatingsEntryTable.INSTANCE.classPK)
 				)
-			)
-		).nonreferenceColumns(
-			RatingsStatsTable.INSTANCE.totalEntries,
-			RatingsStatsTable.INSTANCE.totalScore,
-			RatingsStatsTable.INSTANCE.averageScore
-		);
+			));
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<RatingsStatsTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			RatingsStatsTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

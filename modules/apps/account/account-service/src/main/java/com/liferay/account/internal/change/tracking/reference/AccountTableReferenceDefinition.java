@@ -15,10 +15,10 @@
 package com.liferay.account.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -33,25 +33,21 @@ public class AccountTableReferenceDefinition
 	implements TableReferenceDefinition<AccountTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<AccountTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<AccountTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<AccountTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			AccountTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			AccountTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			AccountTable.INSTANCE.userName, AccountTable.INSTANCE.createDate,
-			AccountTable.INSTANCE.modifiedDate
 		).parentColumnReference(
 			AccountTable.INSTANCE.accountId,
 			AccountTable.INSTANCE.parentAccountId
-		).nonreferenceColumns(
-			AccountTable.INSTANCE.name, AccountTable.INSTANCE.legalName,
-			AccountTable.INSTANCE.legalId, AccountTable.INSTANCE.legalType,
-			AccountTable.INSTANCE.sicCode, AccountTable.INSTANCE.tickerSymbol,
-			AccountTable.INSTANCE.industry, AccountTable.INSTANCE.type,
-			AccountTable.INSTANCE.size
 		);
 	}
 

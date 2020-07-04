@@ -18,7 +18,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,23 +33,21 @@ public class AssetVocabularyTableReferenceDefinition
 	implements TableReferenceDefinition<AssetVocabularyTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<AssetVocabularyTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<AssetVocabularyTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			AssetVocabularyTable.INSTANCE
-		).nonreferenceColumns(
-			AssetVocabularyTable.INSTANCE.uuid,
-			AssetVocabularyTable.INSTANCE.externalReferenceCode,
-			AssetVocabularyTable.INSTANCE.name,
-			AssetVocabularyTable.INSTANCE.title,
-			AssetVocabularyTable.INSTANCE.description,
-			AssetVocabularyTable.INSTANCE.settings,
-			AssetVocabularyTable.INSTANCE.lastPublishDate
-		).systemEventReference(
-			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class
-		);
+		childTableReferenceInfoBuilder.systemEventReference(
+			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<AssetVocabularyTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			AssetVocabularyTable.INSTANCE);
 	}
 
 	@Override

@@ -15,10 +15,8 @@
 package com.liferay.social.activity.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.model.SocialActivitySetTable;
 import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
@@ -34,26 +32,18 @@ public class SocialActivitySetTableReferenceDefinition
 	implements TableReferenceDefinition<SocialActivitySetTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<SocialActivitySetTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<SocialActivitySetTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			SocialActivitySetTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			SocialActivitySetTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			SocialActivitySetTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			SocialActivitySetTable.INSTANCE.createDate,
-			SocialActivitySetTable.INSTANCE.modifiedDate,
-			SocialActivitySetTable.INSTANCE.classNameId,
-			SocialActivitySetTable.INSTANCE.classPK,
-			SocialActivitySetTable.INSTANCE.type,
-			SocialActivitySetTable.INSTANCE.extraData,
-			SocialActivitySetTable.INSTANCE.activityCount
-		);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<SocialActivitySetTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			SocialActivitySetTable.INSTANCE);
 	}
 
 	@Override

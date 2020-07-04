@@ -15,17 +15,13 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.dynamic.data.mapping.model.DDMContentTable;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,22 +35,18 @@ public class DDMFormInstanceRecordVersionTableReferenceDefinition
 	implements TableReferenceDefinition<DDMFormInstanceRecordVersionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMFormInstanceRecordVersionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMFormInstanceRecordVersionTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.userId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DDMFormInstanceRecordVersionTable.INSTANCE.userName,
-			DDMFormInstanceRecordVersionTable.INSTANCE.createDate
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMFormInstanceRecordVersionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMFormInstanceRecordVersionTable.INSTANCE
 		).singleColumnReference(
 			DDMFormInstanceRecordVersionTable.INSTANCE.formInstanceId,
 			DDMFormInstanceTable.INSTANCE.formInstanceId
@@ -74,23 +66,6 @@ public class DDMFormInstanceRecordVersionTableReferenceDefinition
 		).singleColumnReference(
 			DDMFormInstanceRecordVersionTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId
-		).nonreferenceColumn(
-			DDMFormInstanceRecordVersionTable.INSTANCE.version
-		).singleColumnReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.storageId,
-			DDMContentTable.INSTANCE.contentId
-		).nonreferenceColumn(
-			DDMFormInstanceRecordVersionTable.INSTANCE.status
-		).singleColumnReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DDMFormInstanceRecordVersionTable.INSTANCE.statusByUserName,
-			DDMFormInstanceRecordVersionTable.INSTANCE.statusDate
-		).assetEntryReference(
-			DDMFormInstanceRecordVersionTable.INSTANCE.
-				formInstanceRecordVersionId,
-			DDMFormInstanceRecord.class
 		);
 	}
 

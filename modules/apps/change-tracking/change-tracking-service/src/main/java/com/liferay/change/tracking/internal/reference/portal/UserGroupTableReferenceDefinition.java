@@ -15,12 +15,12 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 
@@ -35,33 +35,30 @@ public class UserGroupTableReferenceDefinition
 	implements TableReferenceDefinition<UserGroupTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<UserGroupTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<UserGroupTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			UserGroupTable.INSTANCE.uuid,
-			UserGroupTable.INSTANCE.externalReferenceCode
-		).singleColumnReference(
-			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			UserGroupTable.INSTANCE.userName,
-			UserGroupTable.INSTANCE.createDate,
-			UserGroupTable.INSTANCE.modifiedDate
-		).parentColumnReference(
-			UserGroupTable.INSTANCE.userGroupId,
-			UserGroupTable.INSTANCE.parentUserGroupId
-		).nonreferenceColumns(
-			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
-			UserGroupTable.INSTANCE.addedByLDAPImport
-		).classNameReference(
+		childTableReferenceInfoBuilder.classNameReference(
 			UserGroupTable.INSTANCE.userGroupId, GroupTable.INSTANCE.classPK,
 			UserGroup.class
 		).resourcePermissionReference(
 			UserGroupTable.INSTANCE.userGroupId, UserGroup.class
 		).systemEventReference(
 			UserGroupTable.INSTANCE.userGroupId, UserGroup.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<UserGroupTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
+		).parentColumnReference(
+			UserGroupTable.INSTANCE.userGroupId,
+			UserGroupTable.INSTANCE.parentUserGroupId
 		);
 	}
 

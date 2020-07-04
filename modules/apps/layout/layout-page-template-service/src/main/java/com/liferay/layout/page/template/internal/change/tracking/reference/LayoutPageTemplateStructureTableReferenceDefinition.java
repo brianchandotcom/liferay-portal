@@ -15,7 +15,8 @@
 package com.liferay.layout.page.template.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureTable;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructurePersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -31,17 +32,18 @@ public class LayoutPageTemplateStructureTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutPageTemplateStructureTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutPageTemplateStructureTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutPageTemplateStructureTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
-			LayoutPageTemplateStructureTable.INSTANCE
-		).nonreferenceColumns(
-			LayoutPageTemplateStructureTable.INSTANCE.uuid,
-			LayoutPageTemplateStructureTable.INSTANCE.classNameId,
-			LayoutPageTemplateStructureTable.INSTANCE.classPK
-		);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutPageTemplateStructureTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			LayoutPageTemplateStructureTable.INSTANCE);
 	}
 
 	@Override

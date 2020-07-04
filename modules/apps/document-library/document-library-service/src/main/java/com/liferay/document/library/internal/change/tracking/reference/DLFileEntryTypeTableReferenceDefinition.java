@@ -15,7 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
@@ -34,27 +35,28 @@ public class DLFileEntryTypeTableReferenceDefinition
 	implements TableReferenceDefinition<DLFileEntryTypeTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFileEntryTypeTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFileEntryTypeTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DLFileEntryTypeTable.INSTANCE
-		).nonreferenceColumns(
-			DLFileEntryTypeTable.INSTANCE.uuid,
-			DLFileEntryTypeTable.INSTANCE.name,
-			DLFileEntryTypeTable.INSTANCE.description
-		).singleColumnReference(
-			DLFileEntryTypeTable.INSTANCE.dataDefinitionId,
-			DDMStructureTable.INSTANCE.structureId
-		).nonreferenceColumns(
-			DLFileEntryTypeTable.INSTANCE.fileEntryTypeKey,
-			DLFileEntryTypeTable.INSTANCE.lastPublishDate
-		).classNameReference(
+		childTableReferenceInfoBuilder.classNameReference(
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId,
 			DDMStructureLinkTable.INSTANCE.classPK, DLFileEntryType.class
 		).resourcePermissionReference(
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId, DLFileEntryType.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFileEntryTypeTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DLFileEntryTypeTable.INSTANCE
+		).singleColumnReference(
+			DLFileEntryTypeTable.INSTANCE.dataDefinitionId,
+			DDMStructureTable.INSTANCE.structureId
 		);
 	}
 

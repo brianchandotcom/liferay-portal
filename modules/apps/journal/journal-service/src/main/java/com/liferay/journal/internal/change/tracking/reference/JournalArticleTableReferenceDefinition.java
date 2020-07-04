@@ -15,7 +15,8 @@
 package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
@@ -32,7 +33,6 @@ import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,41 +46,13 @@ public class JournalArticleTableReferenceDefinition
 	implements TableReferenceDefinition<JournalArticleTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<JournalArticleTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<JournalArticleTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			JournalArticleTable.INSTANCE
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey,
-			JournalArticleResourceTable.INSTANCE.resourcePrimKey
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.folderId,
-			JournalFolderTable.INSTANCE.folderId
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStructureTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.classPK.eq(
-					DDMStructureTable.INSTANCE.structureId)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					DDMStructure.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						JournalArticleTable.INSTANCE.classNameId)
-				)
-			)
-		).nonreferenceColumn(
-			JournalArticleTable.INSTANCE.treePath
-		).singleColumnReference(
+		childTableReferenceInfoBuilder.singleColumnReference(
 			JournalArticleTable.INSTANCE.articleId,
 			JournalContentSearchTable.INSTANCE.articleId
-		).nonreferenceColumn(
-			JournalArticleTable.INSTANCE.version
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				FriendlyURLEntryTable.INSTANCE
@@ -101,9 +73,51 @@ public class JournalArticleTableReferenceDefinition
 						ClassNameTable.INSTANCE.classNameId)
 				)
 			)
-		).nonreferenceColumns(
-			JournalArticleTable.INSTANCE.urlTitle,
-			JournalArticleTable.INSTANCE.content
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStructureLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStorageLinkTable.INSTANCE.classPK, JournalArticle.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ImageTable.INSTANCE
+			).innerJoinON(
+				JournalArticleTable.INSTANCE,
+				JournalArticleTable.INSTANCE.smallImageId.eq(
+					ImageTable.INSTANCE.imageId
+				).and(
+					JournalArticleTable.INSTANCE.smallImage.eq(Boolean.TRUE)
+				)
+			)
+		).assetEntryReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).resourcePermissionReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).systemEventReference(
+			JournalArticleTable.INSTANCE.id, JournalArticle.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<JournalArticleTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			JournalArticleTable.INSTANCE
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey,
+			JournalArticleResourceTable.INSTANCE.resourcePrimKey
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.folderId,
+			JournalFolderTable.INSTANCE.folderId
+		).classNameReference(
+			JournalArticleTable.INSTANCE.classPK,
+			DDMStructureTable.INSTANCE.structureId, DDMStructure.class
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMStructureTable.INSTANCE
@@ -144,8 +158,6 @@ public class JournalArticleTableReferenceDefinition
 						DDMTemplateTable.INSTANCE.classNameId)
 				)
 			)
-		).nonreferenceColumn(
-			JournalArticleTable.INSTANCE.defaultLanguageId
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				LayoutTable.INSTANCE
@@ -158,47 +170,6 @@ public class JournalArticleTableReferenceDefinition
 						LayoutTable.INSTANCE.groupId)
 				)
 			)
-		).nonreferenceColumns(
-			JournalArticleTable.INSTANCE.displayDate,
-			JournalArticleTable.INSTANCE.expirationDate,
-			JournalArticleTable.INSTANCE.reviewDate,
-			JournalArticleTable.INSTANCE.indexable
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ImageTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.smallImageId.eq(
-					ImageTable.INSTANCE.imageId
-				).and(
-					JournalArticleTable.INSTANCE.smallImage.eq(Boolean.TRUE)
-				)
-			)
-		).nonreferenceColumns(
-			JournalArticleTable.INSTANCE.smallImageURL,
-			JournalArticleTable.INSTANCE.lastPublishDate,
-			JournalArticleTable.INSTANCE.status
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			JournalArticleTable.INSTANCE.statusByUserName,
-			JournalArticleTable.INSTANCE.statusDate
-		).classNameReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMStorageLinkTable.INSTANCE.classPK, JournalArticle.class
-		).classNameReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMStructureLinkTable.INSTANCE.classPK, JournalArticle.class
-		).classNameReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
-		).assetEntryReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
-		).resourcePermissionReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
-		).systemEventReference(
-			JournalArticleTable.INSTANCE.id, JournalArticle.class
 		);
 	}
 

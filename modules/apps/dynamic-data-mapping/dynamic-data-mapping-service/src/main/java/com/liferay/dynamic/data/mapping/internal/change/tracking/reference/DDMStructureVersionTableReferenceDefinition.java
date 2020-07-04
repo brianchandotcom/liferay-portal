@@ -15,13 +15,11 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,42 +33,24 @@ public class DDMStructureVersionTableReferenceDefinition
 	implements TableReferenceDefinition<DDMStructureVersionTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMStructureVersionTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMStructureVersionTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			DDMStructureVersionTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			DDMStructureVersionTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DDMStructureVersionTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DDMStructureVersionTable.INSTANCE.userName,
-			DDMStructureVersionTable.INSTANCE.createDate
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMStructureVersionTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMStructureVersionTable.INSTANCE
 		).singleColumnReference(
 			DDMStructureVersionTable.INSTANCE.structureId,
 			DDMStructureTable.INSTANCE.structureId
-		).nonreferenceColumn(
-			DDMStructureVersionTable.INSTANCE.version
 		).singleColumnReference(
 			DDMStructureVersionTable.INSTANCE.parentStructureId,
 			DDMStructureTable.INSTANCE.structureId
-		).nonreferenceColumns(
-			DDMStructureVersionTable.INSTANCE.name,
-			DDMStructureVersionTable.INSTANCE.description,
-			DDMStructureVersionTable.INSTANCE.definition,
-			DDMStructureVersionTable.INSTANCE.storageType,
-			DDMStructureVersionTable.INSTANCE.type,
-			DDMStructureVersionTable.INSTANCE.status
-		).singleColumnReference(
-			DDMStructureVersionTable.INSTANCE.statusByUserId,
-			UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DDMStructureVersionTable.INSTANCE.statusByUserName,
-			DDMStructureVersionTable.INSTANCE.statusDate
 		);
 	}
 

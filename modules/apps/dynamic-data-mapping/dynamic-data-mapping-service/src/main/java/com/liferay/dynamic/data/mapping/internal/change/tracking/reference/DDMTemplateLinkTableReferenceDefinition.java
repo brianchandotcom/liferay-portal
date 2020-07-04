@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
@@ -33,16 +34,19 @@ public class DDMTemplateLinkTableReferenceDefinition
 	implements TableReferenceDefinition<DDMTemplateLinkTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMTemplateLinkTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMTemplateLinkTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMTemplateLinkTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			DDMTemplateLinkTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			DDMTemplateLinkTable.INSTANCE.classNameId,
-			DDMTemplateLinkTable.INSTANCE.classPK
 		).singleColumnReference(
 			DDMTemplateLinkTable.INSTANCE.templateId,
 			DDMTemplateTable.INSTANCE.templateId

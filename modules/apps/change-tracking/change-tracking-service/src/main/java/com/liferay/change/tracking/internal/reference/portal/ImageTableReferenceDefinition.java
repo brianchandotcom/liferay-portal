@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -32,16 +33,18 @@ public class ImageTableReferenceDefinition
 	implements TableReferenceDefinition<ImageTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<ImageTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<ImageTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			ImageTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			ImageTable.INSTANCE.modifiedDate, ImageTable.INSTANCE.type,
-			ImageTable.INSTANCE.height, ImageTable.INSTANCE.width,
-			ImageTable.INSTANCE.size
-		);
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<ImageTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			ImageTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

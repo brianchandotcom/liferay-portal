@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.store.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
@@ -33,18 +34,21 @@ public class CTSContentTableReferenceDefinition
 	implements TableReferenceDefinition<CTSContentTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<CTSContentTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<CTSContentTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<CTSContentTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			CTSContentTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			CTSContentTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
-		).nonreferenceColumns(
-			CTSContentTable.INSTANCE.path, CTSContentTable.INSTANCE.version,
-			CTSContentTable.INSTANCE.data, CTSContentTable.INSTANCE.size,
-			CTSContentTable.INSTANCE.storeType
 		);
 	}
 

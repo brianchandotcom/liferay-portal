@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstancePersistence;
@@ -32,23 +33,22 @@ public class DDMDataProviderInstanceTableReferenceDefinintion
 	implements TableReferenceDefinition<DDMDataProviderInstanceTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMDataProviderInstanceTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMDataProviderInstanceTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DDMDataProviderInstanceTable.INSTANCE
-		).nonreferenceColumns(
-			DDMDataProviderInstanceTable.INSTANCE.uuid,
-			DDMDataProviderInstanceTable.INSTANCE.name,
-			DDMDataProviderInstanceTable.INSTANCE.description,
-			DDMDataProviderInstanceTable.INSTANCE.definition,
-			DDMDataProviderInstanceTable.INSTANCE.type,
-			DDMDataProviderInstanceTable.INSTANCE.lastPublishDate
-		).resourcePermissionReference(
+		childTableReferenceInfoBuilder.resourcePermissionReference(
 			DDMDataProviderInstanceTable.INSTANCE.dataProviderInstanceId,
-			DDMDataProviderInstance.class
-		);
+			DDMDataProviderInstance.class);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMDataProviderInstanceTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMDataProviderInstanceTable.INSTANCE);
 	}
 
 	@Override

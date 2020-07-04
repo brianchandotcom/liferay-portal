@@ -15,7 +15,8 @@
 package com.liferay.friendly.url.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
@@ -33,16 +34,19 @@ public class FriendlyURLEntryMappingTableReferenceDefinition
 	implements TableReferenceDefinition<FriendlyURLEntryMappingTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<FriendlyURLEntryMappingTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<FriendlyURLEntryMappingTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<FriendlyURLEntryMappingTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			FriendlyURLEntryMappingTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			FriendlyURLEntryMappingTable.INSTANCE.classNameId,
-			FriendlyURLEntryMappingTable.INSTANCE.classPK
 		).singleColumnReference(
 			FriendlyURLEntryMappingTable.INSTANCE.friendlyURLEntryId,
 			FriendlyURLEntryTable.INSTANCE.friendlyURLEntryId

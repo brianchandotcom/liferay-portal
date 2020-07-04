@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ContactTable;
@@ -34,34 +35,25 @@ public class ContactTableReferenceDefinition
 	implements TableReferenceDefinition<ContactTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<ContactTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<ContactTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<ContactTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			ContactTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			ContactTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			ContactTable.INSTANCE.userName, ContactTable.INSTANCE.createDate,
-			ContactTable.INSTANCE.modifiedDate,
-			ContactTable.INSTANCE.classNameId, ContactTable.INSTANCE.classPK
 		).singleColumnReference(
 			ContactTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
 		).parentColumnReference(
 			ContactTable.INSTANCE.contactId,
 			ContactTable.INSTANCE.parentContactId
-		).nonreferenceColumns(
-			ContactTable.INSTANCE.emailAddress, ContactTable.INSTANCE.firstName,
-			ContactTable.INSTANCE.middleName, ContactTable.INSTANCE.lastName,
-			ContactTable.INSTANCE.prefixId, ContactTable.INSTANCE.suffixId,
-			ContactTable.INSTANCE.male, ContactTable.INSTANCE.birthday,
-			ContactTable.INSTANCE.smsSn, ContactTable.INSTANCE.facebookSn,
-			ContactTable.INSTANCE.jabberSn, ContactTable.INSTANCE.skypeSn,
-			ContactTable.INSTANCE.twitterSn,
-			ContactTable.INSTANCE.employeeStatusId,
-			ContactTable.INSTANCE.employeeNumber,
-			ContactTable.INSTANCE.jobTitle, ContactTable.INSTANCE.jobClass,
-			ContactTable.INSTANCE.hoursOfOperation
 		);
 	}
 

@@ -15,7 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
@@ -33,21 +34,22 @@ public class RepositoryTableReferenceDefinition
 	implements TableReferenceDefinition<RepositoryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<RepositoryTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<RepositoryTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<RepositoryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			RepositoryTable.INSTANCE
-		).nonreferenceColumns(
-			RepositoryTable.INSTANCE.uuid, RepositoryTable.INSTANCE.classNameId,
-			RepositoryTable.INSTANCE.name, RepositoryTable.INSTANCE.description,
-			RepositoryTable.INSTANCE.typeSettings
 		).singleColumnReference(
 			RepositoryTable.INSTANCE.portletId, PortletTable.INSTANCE.portletId
 		).singleColumnReference(
 			RepositoryTable.INSTANCE.dlFolderId, DLFolderTable.INSTANCE.folderId
-		).nonreferenceColumn(
-			RepositoryTable.INSTANCE.lastPublishDate
 		);
 	}
 

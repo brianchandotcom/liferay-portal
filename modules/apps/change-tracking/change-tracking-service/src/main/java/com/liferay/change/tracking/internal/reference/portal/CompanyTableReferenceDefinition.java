@@ -15,7 +15,8 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ImageTable;
@@ -33,20 +34,21 @@ public class CompanyTableReferenceDefinition
 	implements TableReferenceDefinition<CompanyTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<CompanyTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<CompanyTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.singleColumnReference(
+		childTableReferenceInfoBuilder.singleColumnReference(
 			CompanyTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
-		).nonreferenceColumns(
-			CompanyTable.INSTANCE.webId, CompanyTable.INSTANCE.mx,
-			CompanyTable.INSTANCE.homeURL
 		).singleColumnReference(
 			CompanyTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
-		).nonreferenceColumns(
-			CompanyTable.INSTANCE.system, CompanyTable.INSTANCE.maxUsers,
-			CompanyTable.INSTANCE.active
 		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<CompanyTable>
+			parentTableReferenceInfoBuilder) {
 	}
 
 	@Override

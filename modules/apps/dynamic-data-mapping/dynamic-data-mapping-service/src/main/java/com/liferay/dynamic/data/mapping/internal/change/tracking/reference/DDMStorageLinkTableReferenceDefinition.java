@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
@@ -34,18 +35,19 @@ public class DDMStorageLinkTableReferenceDefinition
 	implements TableReferenceDefinition<DDMStorageLinkTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMStorageLinkTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMStorageLinkTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.nonreferenceColumn(
-			DDMStorageLinkTable.INSTANCE.uuid
-		).singleColumnReference(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMStorageLinkTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
 			DDMStorageLinkTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			DDMStorageLinkTable.INSTANCE.classNameId,
-			DDMStorageLinkTable.INSTANCE.classPK
 		).singleColumnReference(
 			DDMStorageLinkTable.INSTANCE.structureId,
 			DDMStructureTable.INSTANCE.structureId

@@ -15,13 +15,13 @@
 package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.portal.kernel.model.RepositoryTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,42 +35,33 @@ public class DLFolderTableReferenceDefinition
 	implements TableReferenceDefinition<DLFolderTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DLFolderTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DLFolderTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			DLFolderTable.INSTANCE
-		).nonreferenceColumn(
-			DLFolderTable.INSTANCE.uuid
-		).singleColumnReference(
-			DLFolderTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
-		).nonreferenceColumn(
-			DLFolderTable.INSTANCE.mountPoint
-		).parentColumnReference(
-			DLFolderTable.INSTANCE.folderId,
-			DLFolderTable.INSTANCE.parentFolderId
-		).nonreferenceColumns(
-			DLFolderTable.INSTANCE.treePath, DLFolderTable.INSTANCE.name,
-			DLFolderTable.INSTANCE.description,
-			DLFolderTable.INSTANCE.lastPostDate
-		).singleColumnReference(
-			DLFolderTable.INSTANCE.defaultFileEntryTypeId,
-			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
-		).nonreferenceColumns(
-			DLFolderTable.INSTANCE.hidden,
-			DLFolderTable.INSTANCE.restrictionType,
-			DLFolderTable.INSTANCE.lastPublishDate,
-			DLFolderTable.INSTANCE.status
-		).singleColumnReference(
-			DLFolderTable.INSTANCE.statusByUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumns(
-			DLFolderTable.INSTANCE.statusByUserName,
-			DLFolderTable.INSTANCE.statusDate
-		).assetEntryReference(
+		childTableReferenceInfoBuilder.assetEntryReference(
 			DLFolderTable.INSTANCE.folderId, DLFolder.class
 		).resourcePermissionReference(
 			DLFolderTable.INSTANCE.folderId, DLFolder.class
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DLFolderTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DLFolderTable.INSTANCE
+		).singleColumnReference(
+			DLFolderTable.INSTANCE.repositoryId,
+			RepositoryTable.INSTANCE.repositoryId
+		).parentColumnReference(
+			DLFolderTable.INSTANCE.folderId,
+			DLFolderTable.INSTANCE.parentFolderId
+		).singleColumnReference(
+			DLFolderTable.INSTANCE.defaultFileEntryTypeId,
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
 		);
 	}
 

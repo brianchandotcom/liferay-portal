@@ -18,7 +18,8 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.model.LayoutClassedModelUsageTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.LayoutTable;
@@ -39,12 +40,11 @@ public class AssetEntryTableReferenceDefinition
 	implements TableReferenceDefinition<AssetEntryTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<AssetEntryTable> tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<AssetEntryTable>
+			childTableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.groupedModel(
-			AssetEntryTable.INSTANCE
-		).referenceInnerJoin(
+		childTableReferenceInfoBuilder.referenceInnerJoin(
 			fromStep -> fromStep.from(
 				AssetDisplayPageEntryTable.INSTANCE
 			).innerJoinON(
@@ -68,32 +68,6 @@ public class AssetEntryTableReferenceDefinition
 						RatingsStatsTable.INSTANCE.classPK)
 				)
 			)
-		).nonreferenceColumns(
-			AssetEntryTable.INSTANCE.classUuid,
-			AssetEntryTable.INSTANCE.classTypeId,
-			AssetEntryTable.INSTANCE.listable, AssetEntryTable.INSTANCE.visible,
-			AssetEntryTable.INSTANCE.startDate,
-			AssetEntryTable.INSTANCE.endDate,
-			AssetEntryTable.INSTANCE.publishDate,
-			AssetEntryTable.INSTANCE.expirationDate,
-			AssetEntryTable.INSTANCE.mimeType, AssetEntryTable.INSTANCE.title,
-			AssetEntryTable.INSTANCE.description,
-			AssetEntryTable.INSTANCE.summary, AssetEntryTable.INSTANCE.url
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				LayoutTable.INSTANCE
-			).innerJoinON(
-				AssetEntryTable.INSTANCE,
-				AssetEntryTable.INSTANCE.layoutUuid.eq(
-					LayoutTable.INSTANCE.uuid
-				).and(
-					AssetEntryTable.INSTANCE.groupId.eq(
-						LayoutTable.INSTANCE.groupId)
-				)
-			)
-		).nonreferenceColumns(
-			AssetEntryTable.INSTANCE.height, AssetEntryTable.INSTANCE.width,
-			AssetEntryTable.INSTANCE.priority
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				LayoutClassedModelUsageTable.INSTANCE
@@ -141,6 +115,28 @@ public class AssetEntryTableReferenceDefinition
 				).and(
 					AssetEntryTable.INSTANCE.classPK.eq(
 						SubscriptionTable.INSTANCE.classPK)
+				)
+			)
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<AssetEntryTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			AssetEntryTable.INSTANCE
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				LayoutTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.layoutUuid.eq(
+					LayoutTable.INSTANCE.uuid
+				).and(
+					AssetEntryTable.INSTANCE.groupId.eq(
+						LayoutTable.INSTANCE.groupId)
 				)
 			)
 		);

@@ -15,9 +15,8 @@
 package com.liferay.social.activity.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.model.SocialActivitySetTable;
@@ -35,32 +34,24 @@ public class SocialActivityTableReferenceDefinition
 	implements TableReferenceDefinition<SocialActivityTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<SocialActivityTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<SocialActivityTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			SocialActivityTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			SocialActivityTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			SocialActivityTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).nonreferenceColumn(
-			SocialActivityTable.INSTANCE.createDate
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<SocialActivityTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			SocialActivityTable.INSTANCE
 		).singleColumnReference(
 			SocialActivityTable.INSTANCE.activitySetId,
 			SocialActivitySetTable.INSTANCE.activitySetId
 		).parentColumnReference(
 			SocialActivityTable.INSTANCE.activityId,
 			SocialActivityTable.INSTANCE.mirrorActivityId
-		).nonreferenceColumns(
-			SocialActivityTable.INSTANCE.classNameId,
-			SocialActivityTable.INSTANCE.classPK,
-			SocialActivityTable.INSTANCE.parentClassNameId,
-			SocialActivityTable.INSTANCE.parentClassPK,
-			SocialActivityTable.INSTANCE.type,
-			SocialActivityTable.INSTANCE.extraData
 		).singleColumnReference(
 			SocialActivityTable.INSTANCE.receiverUserId,
 			UserTable.INSTANCE.userId

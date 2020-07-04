@@ -15,12 +15,11 @@
 package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReportTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,24 +33,21 @@ public class DDMFormInstanceReportTableReferenceDefinition
 	implements TableReferenceDefinition<DDMFormInstanceReportTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<DDMFormInstanceReportTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<DDMFormInstanceReportTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			DDMFormInstanceReportTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			DDMFormInstanceReportTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).nonreferenceColumns(
-			DDMFormInstanceReportTable.INSTANCE.createDate,
-			DDMFormInstanceReportTable.INSTANCE.modifiedDate
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMFormInstanceReportTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMFormInstanceReportTable.INSTANCE
 		).singleColumnReference(
 			DDMFormInstanceReportTable.INSTANCE.formInstanceId,
 			DDMFormInstanceTable.INSTANCE.formInstanceId
-		).nonreferenceColumn(
-			DDMFormInstanceReportTable.INSTANCE.data
 		);
 	}
 

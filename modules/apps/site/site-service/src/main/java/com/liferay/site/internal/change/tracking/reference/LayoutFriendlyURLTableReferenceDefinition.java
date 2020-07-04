@@ -15,7 +15,8 @@
 package com.liferay.site.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -32,21 +33,20 @@ public class LayoutFriendlyURLTableReferenceDefinition
 	implements TableReferenceDefinition<LayoutFriendlyURLTable> {
 
 	@Override
-	public void defineTableReferences(
-		TableReferenceInfoBuilder<LayoutFriendlyURLTable>
-			tableReferenceInfoBuilder) {
+	public void defineChildTableReferences(
+		ChildTableReferenceInfoBuilder<LayoutFriendlyURLTable>
+			childTableReferenceInfoBuilder) {
+	}
 
-		tableReferenceInfoBuilder.groupedModel(
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<LayoutFriendlyURLTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(
 			LayoutFriendlyURLTable.INSTANCE
-		).nonreferenceColumns(
-			LayoutFriendlyURLTable.INSTANCE.uuid
 		).singleColumnReference(
 			LayoutFriendlyURLTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		).nonreferenceColumns(
-			LayoutFriendlyURLTable.INSTANCE.privateLayout,
-			LayoutFriendlyURLTable.INSTANCE.friendlyURL,
-			LayoutFriendlyURLTable.INSTANCE.languageId,
-			LayoutFriendlyURLTable.INSTANCE.lastPublishDate
 		);
 	}
 

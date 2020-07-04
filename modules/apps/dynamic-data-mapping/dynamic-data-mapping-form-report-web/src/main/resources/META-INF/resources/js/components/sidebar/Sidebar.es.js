@@ -83,7 +83,9 @@ export default () => {
 
 								<li className="tbar-item">
 									<ClayButton
-										displayType="unstyled"
+										className="close-sidebar"
+										displayType="secondary"
+										monospaced
 										onClick={() => toggleSidebar()}
 									>
 										<ClayIcon

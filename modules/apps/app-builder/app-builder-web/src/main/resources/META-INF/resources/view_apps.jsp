@@ -21,6 +21,8 @@
 </liferay-util:html-top>
 
 <div id="<portlet:namespace />-app-builder-root">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 	<react:component
 		data='<%=
 			HashMapBuilder.<String, Object>put(
@@ -28,7 +30,7 @@
 			).put(
 				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 			).put(
-				"baseResourceURL", String.valueOf(renderResponse.createResourceURL())
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"defaultDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
 			).put(

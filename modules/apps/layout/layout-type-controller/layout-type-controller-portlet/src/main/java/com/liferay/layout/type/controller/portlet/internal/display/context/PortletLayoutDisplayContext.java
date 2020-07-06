@@ -14,11 +14,15 @@
 
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
@@ -42,6 +46,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -482,12 +489,69 @@ public class PortletLayoutDisplayContext {
 			collectionJSONObject);
 	}
 
+	private String _getMappedCollectionValue(
+		String collectionFieldId, Object displayObject) {
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return StringPool.BLANK;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		// LPS-111037
+
+		String className = classedModel.getModelClassName();
+
+		if (classedModel instanceof FileEntry) {
+			className = FileEntry.class.getName();
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item field values provider for class " +
+						className);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				displayObject, collectionFieldId);
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
+
+			return contentAccessor.getContent();
+		}
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private long[] _getSegmentsExperienceIds() {
 		return GetterUtil.getLongValues(
 			_httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletLayoutDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

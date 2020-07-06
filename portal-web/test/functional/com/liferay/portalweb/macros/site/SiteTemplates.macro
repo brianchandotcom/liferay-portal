@@ -255,6 +255,8 @@ definition {
 	}
 
 	macro resetPageChanges {
+		WaitForElementPresent(locator1 = "ControlMenu#INFO");
+
 		Click(locator1 = "ControlMenu#INFO");
 
 		AssertTextEquals.assertPartialText(

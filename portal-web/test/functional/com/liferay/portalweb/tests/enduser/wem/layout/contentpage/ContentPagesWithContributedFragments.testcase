@@ -246,7 +246,7 @@ definition {
 
 	@description = "This is a use case for LPS-109298. Each tab of Tabs fragment is able to contain any elements in content page."
 	@priority = "5"
-	test AddFrgamentToIndividualTabOfTabsFragment {
+	test AddFragmentToIndividualTabOfTabsFragment {
 		property test.assert.warning.exceptions = "true";
 
 		ContentPagesNavigator.openEditContentPage(
@@ -351,7 +351,7 @@ definition {
 
 	@description = "This is a use case for LPS-109298. Can add elements above and below Tabs fragment to page."
 	@priority = "4"
-	test AddFrgamentWithTabsFragmentInTheMiddle {
+	test AddFragmentWithTabsFragmentInTheMiddle {
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");

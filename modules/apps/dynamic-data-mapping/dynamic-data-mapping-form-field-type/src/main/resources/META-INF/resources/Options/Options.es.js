@@ -225,7 +225,8 @@ const Options = ({
 			value = dedupValue(
 				fields,
 				value ? value : Liferay.Language.get('option'),
-				id
+				id,
+				generateOptionValueUsingOptionLabel
 			);
 		}
 

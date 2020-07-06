@@ -77,34 +77,58 @@ export const isOptionValueGenerated = (
  * value in the fields, always incrementing an integer
  * in front of the value to be friendly for the user.
  */
-export const dedupValue = (fields, value, id) => {
-	let counter = 0;
+export const dedupValue = (
+	fields,
+	value,
+	id,
+	generateOptionValueUsingOptionLabel
+) => {
+	if (generateOptionValueUsingOptionLabel) {
+		let counter = 0;
 
-	const recursive = (fields, currentValue) => {
-		const field = fields.find((field) => field.value === currentValue);
+		const recursive = (fields, currentValue) => {
+			const field = fields.find((field) => field.value === currentValue);
 
-		if (field && field.id !== id) {
-			counter += 1;
-			recursive(fields, value + counter);
-		}
-		else {
-			value = currentValue;
-		}
-	};
+			if (field && field.id !== id) {
+				counter += 1;
+				recursive(fields, value + counter);
+			}
+			else {
+				value = currentValue;
+			}
+		};
 
-	recursive(fields, value);
+		recursive(fields, value);
 
-	return value;
+		return value;
+	}
+	else {
+		const recursive = (fields, currentValue) => {
+			const field = fields.find((field) => field.value === currentValue);
+
+			if (field && field.id !== id) {
+				recursive(fields, getDefaultFieldName(true));
+			}
+			else {
+				value = currentValue;
+			}
+		};
+
+		recursive(fields, value);
+
+		return value;
+	}
 };
 
 /**
- * O normalize value impede que value seja nulo ou undefined.
  * If the value is null or undefined, normalize follows a
  * verification order and the final stage of normalization
  * is to deduplicate the value if necessary.
  *
- * 1. If the current value is null, use the label
- * 2. If the current label is null, use the string Option
+ * 1. If the current value is null, use the default value that can be the label
+ * or the default option name, the parameter generateOptionValueUsingOptionLabel
+ * decides which of these two values will be used.
+ * 2. If the default value is null, use the string Option.
  */
 export const normalizeValue = (
 	fields,
@@ -121,7 +145,12 @@ export const normalizeValue = (
 		value = Liferay.Language.get('option');
 	}
 
-	value = dedupValue(fields, value, currentField.id);
+	value = dedupValue(
+		fields,
+		value,
+		currentField.id,
+		generateOptionValueUsingOptionLabel
+	);
 
 	return normalizeFieldName(value);
 };

@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -32,6 +33,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -39,6 +41,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -47,6 +51,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,6 +66,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -127,6 +133,9 @@ public class ExportImportPerformanceTest {
 		_layoutIds = ListUtil.toLongArray(
 			_layoutLocalService.getLayouts(_group.getGroupId(), false),
 			Layout::getLayoutId);
+
+		_layoutSetPrototype = LayoutTestUtil.addLayoutSetPrototype(
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -203,6 +212,46 @@ public class ExportImportPerformanceTest {
 
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
+
+		stopWatch.stop();
+	}
+
+	@Test
+	public void testSiteTemplatePropagation() throws Exception {
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
+		for (long layoutId : _layoutIds) {
+			Layout layout = _layoutLocalService.getLayout(
+				_group.getGroupId(), false, layoutId);
+
+			LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+				RandomTestUtil.randomString());
+
+			Layout prototypeLayout = layoutPrototype.getLayout();
+
+			prototypeLayout.setType(layout.getType());
+
+			_layoutLocalService.updateLayout(prototypeLayout);
+			_layoutCopyHelper.copyLayout(layout, prototypeLayout);
+
+			layout.setLayoutPrototypeLinkEnabled(true);
+			layout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
+
+			_layoutLocalService.updateLayout(layout);
+		}
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			true);
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
+		SitesUtil.mergeLayoutSetPrototypeLayouts(
+			_group, _group.getPublicLayoutSet());
 
 		stopWatch.stop();
 	}
@@ -465,6 +514,9 @@ public class ExportImportPerformanceTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@DeleteAfterTestRun
+	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject
 	private Portal _portal;

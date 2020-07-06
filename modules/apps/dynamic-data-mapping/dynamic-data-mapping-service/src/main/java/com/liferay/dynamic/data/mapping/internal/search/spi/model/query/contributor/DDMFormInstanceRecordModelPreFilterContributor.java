@@ -103,10 +103,11 @@ public class DDMFormInstanceRecordModelPreFilterContributor
 						locale -> notEmptyFieldBooleanFilter.addTerm(
 							ddmIndexer.encodeName(
 								structureId, notEmptyField, locale),
-							StringPool.BLANK, BooleanClauseOccur.MUST_NOT));
+							StringPool.BLANK, BooleanClauseOccur.MUST));
 
 					booleanFilter.add(
-						notEmptyFieldBooleanFilter, BooleanClauseOccur.SHOULD);
+						notEmptyFieldBooleanFilter,
+						BooleanClauseOccur.MUST_NOT);
 				}
 			);
 		}

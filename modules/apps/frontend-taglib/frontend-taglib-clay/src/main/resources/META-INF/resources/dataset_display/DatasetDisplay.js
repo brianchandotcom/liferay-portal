@@ -49,6 +49,7 @@ function DatasetDisplay({
 	namespace,
 	nestedItemsKey,
 	nestedItemsReferenceKey,
+	overrideEmptyResultView,
 	pagination,
 	selectedItems,
 	selectedItemsKey,
@@ -141,7 +142,7 @@ function DatasetDisplay({
 
 	const formRef = useRef(null);
 
-	function updateDataset(dataSetData) {
+	function updateDatasetItems(dataSetData) {
 		setTotal(dataSetData.total || 0);
 		updateItems(dataSetData.items);
 	}
@@ -167,7 +168,7 @@ function DatasetDisplay({
 			pageNumber,
 			sorting
 		)
-			.then(updateDataset)
+			.then(updateDatasetItems)
 			.then(() => {
 				const {message, showSuccessNotification} = successNotification;
 
@@ -193,16 +194,18 @@ function DatasetDisplay({
 	}
 
 	useEffect(() => {
-		getData(
-			apiUrl,
-			currentUrl,
-			filters.filter((filter) => filter.value),
-			searchParam,
-			delta,
-			pageNumber,
-			sorting,
-			false
-		);
+		if (apiUrl) {
+			getData(
+				apiUrl,
+				currentUrl,
+				filters.filter((filter) => filter.value),
+				searchParam,
+				delta,
+				pageNumber,
+				sorting,
+				false
+			);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		apiUrl,
@@ -214,6 +217,14 @@ function DatasetDisplay({
 		sorting,
 		refreshData,
 	]);
+
+	useEffect(() => {
+		const itemsAreInjected = !apiUrl && itemsProp?.length !== items.length;
+
+		if (itemsAreInjected) {
+			updateDatasetItems({items: itemsProp});
+		}
+	}, [items, apiUrl, itemsProp]);
 
 	function selectItems(value) {
 		if (Array.isArray(value)) {
@@ -340,7 +351,7 @@ function DatasetDisplay({
 						value={selectedItemsValue.join(',')}
 					/>
 				)}
-				{items?.length ?? 0 ? (
+				{(items?.length ?? 0) || overrideEmptyResultView ? (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
 						items={items}
@@ -437,6 +448,7 @@ function DatasetDisplay({
 				sidePanelId: datasetDisplaySupportSidePanelId,
 				sorting,
 				style,
+				updateDatasetItems,
 				updateSearchParam,
 				updateSorting,
 			}}
@@ -481,7 +493,7 @@ function DatasetDisplay({
 
 DatasetDisplay.propTypes = {
 	activeViewId: PropTypes.string,
-	apiUrl: PropTypes.string.isRequired,
+	apiUrl: PropTypes.string,
 	bulkActions: PropTypes.array,
 	creationMenu: PropTypes.shape({
 		primaryItems: PropTypes.array,
@@ -496,6 +508,7 @@ DatasetDisplay.propTypes = {
 	namespace: PropTypes.string,
 	nestedItemsKey: PropTypes.string,
 	nestedItemsReferenceKey: PropTypes.string,
+	overrideEmptyResultView: PropTypes.bool,
 	pagination: PropTypes.shape({
 		deltas: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -536,6 +549,9 @@ DatasetDisplay.defaultProps = {
 	filters: [],
 	items: null,
 	itemsActions: null,
+	pagination: {
+		initialDelta: 10,
+	},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showManagementBar: true,

@@ -9,6 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {sub} from 'app-builder-web/js/utils/lang.es';
+
+export const ADD_STEP = 'ADD_STEP';
 export const UPDATE_DATA_OBJECT = 'UPDATE_DATA_OBJECT';
 export const UPDATE_FORM_VIEW = 'UPDATE_FORM_VIEW';
 export const UPDATE_STEP = 'UPDATE_STEP';
@@ -44,6 +47,41 @@ export const getInitialConfig = () => {
 
 export default (state, action) => {
 	switch (action.type) {
+		case ADD_STEP: {
+			const workflowSteps = [...state.steps];
+			const finalStep = workflowSteps.pop();
+
+			const stepIndex = action.stepIndex + 1;
+			const currentStep = {
+				appWorkflowDataLayoutLinks: [
+					{dataLayoutId: state.formView.id, readOnly: true},
+				],
+				appWorkflowRoleAssignments: [],
+				appWorkflowTransitions: [
+					{
+						name: Liferay.Language.get('submit'),
+						primary: true,
+						transitionTo: finalStep.name,
+					},
+				],
+
+				name: sub(Liferay.Language.get('step-x'), [
+					state.steps.length - 1,
+				]),
+			};
+			workflowSteps.splice(stepIndex, 0, currentStep);
+			workflowSteps[
+				action.stepIndex
+			].appWorkflowTransitions[0].transitionTo = currentStep.name;
+
+			return {
+				...state,
+				currentStep,
+				stepIndex,
+				steps: [...workflowSteps, finalStep],
+			};
+		}
+
 		case UPDATE_DATA_OBJECT: {
 			return {
 				...state,
@@ -51,24 +89,40 @@ export default (state, action) => {
 			};
 		}
 		case UPDATE_FORM_VIEW: {
+			let workflowSteps = [...state.steps];
+
+			const initialStep = workflowSteps.shift();
+			const finalStep = workflowSteps.pop();
+
+			if (workflowSteps.length > 0) {
+				workflowSteps = workflowSteps.map((step) => ({
+					...step,
+					appWorkflowDataLayoutLinks: [
+						{dataLayoutId: action.formView.id, readOnly: true},
+					],
+				}));
+			}
+
 			return {
 				...state,
 				formView: action.formView,
+				steps: [initialStep, ...workflowSteps, finalStep],
 			};
 		}
 		case UPDATE_STEP: {
-			const {step: currentStep, stepIndex} = action;
+			const {step, stepIndex} = {...action};
 
-			if (stepIndex === 1) {
-				state.steps[0].appWorkflowTransitions[0].transitionTo =
-					currentStep.name;
+			if (stepIndex > 0) {
+				state.steps[
+					stepIndex - 1
+				].appWorkflowTransitions[0].transitionTo = step.name;
 			}
 
-			state.steps[stepIndex] = currentStep;
+			state.steps[stepIndex] = step;
 
 			return {
 				...state,
-				currentStep,
+				currentStep: step,
 			};
 		}
 		case UPDATE_STEP_INDEX: {
@@ -85,7 +139,7 @@ export default (state, action) => {
 			};
 		}
 		case UPDATE_WORKFLOW_APP: {
-			const {appWorkflowStates = []} = action;
+			const {appWorkflowStates = [], appWorkflowTasks = []} = action;
 
 			const initialState = appWorkflowStates.find(({initial}) => initial);
 			const finalState = appWorkflowStates.find(({initial}) => !initial);
@@ -93,7 +147,7 @@ export default (state, action) => {
 			return {
 				...state,
 				currentStep: initialState,
-				steps: [initialState, finalState],
+				steps: [initialState, ...appWorkflowTasks, finalState],
 			};
 		}
 		default: {

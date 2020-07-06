@@ -16,17 +16,38 @@ $navbarHeight: 120px;
 	&__builder {
 		display: flex;
 		flex-flow: column;
-		flex-wrap: wrap;
 		height: calc(100vh - #{$navbarHeight} + 56px);
+		overflow: auto;
+		padding-bottom: 55px;
 		padding-top: 56px;
 		width: calc(100vw - #{$sidebarWidth});
 
 		.arrow {
 			display: flex;
 			justify-content: center;
-			min-height: 120px;
+			min-height: 45px;
 			padding-left: 80.25px;
 			position: relative;
+
+			.arrow-plus-button {
+				align-self: center;
+				background: #fff;
+				border: 1px solid #cdced9;
+				border-radius: 50%;
+				box-sizing: border-box;
+				cursor: pointer;
+				display: flex;
+				font-size: 1rem;
+				height: 2rem;
+				justify-content: center;
+				padding: 10px 0;
+				position: absolute;
+				width: 2rem;
+
+				&:hover {
+					border: 1px solid #80acff;
+				}
+			}
 
 			.arrow-body {
 				display: flex;
@@ -54,6 +75,10 @@ $navbarHeight: 120px;
 				color: #6b6c7e;
 				position: absolute;
 			}
+
+			&.selected {
+				min-height: 120px;
+			}
 		}
 
 		.step {
@@ -66,12 +91,16 @@ $navbarHeight: 120px;
 			height: 32px;
 			margin-top: 16px;
 			padding: 0.25rem 0.625rem;
+
+			&.index-badge {
+				margin-left: 2rem;
+			}
 		}
 
 		.step-card {
 			background-clip: border-box;
 			background-color: #fff;
-			border: 1px solid #e7e7ed;
+			border: 2px solid #e7e7ed;
 			border-radius: 0.25rem;
 			cursor: pointer;
 			display: block;
@@ -109,10 +138,6 @@ $navbarHeight: 120px;
 		.step-wrapper {
 			display: flex;
 			margin: auto;
-
-			&.no-badge {
-				padding-left: 64.25px;
-			}
 		}
 	}
 

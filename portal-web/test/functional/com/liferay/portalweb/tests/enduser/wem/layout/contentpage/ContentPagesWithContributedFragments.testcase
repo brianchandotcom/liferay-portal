@@ -915,6 +915,38 @@ definition {
 			}
 		}
 
+		task ("Get modified date of Web Content Articles") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "First Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Second Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Third Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var thirdModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+		}
+
 		task ("Add a Collection Display to page and Select Recent Content Collection Providers") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -957,6 +989,34 @@ definition {
 			}
 		}
 
+		task ("Add a Paragraph to Collection Display and Map Modified Date of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Modified Date",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${thirdModifiedDate},${secondModifiedDate},${firstModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//*[contains(@class,'paragraph') and contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${modifiedDate}");
+
+				var n = ${n} + 1;
+			}
+		}
+
 		task ("Assert the display order of collection items") {
 			PageEditor.clickPublish();
 
@@ -978,6 +1038,21 @@ definition {
 			}
 		}
 
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${thirdModifiedDate},${secondModifiedDate},${firstModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${modifiedDate}");
+
+				var n = ${n} + 1;
+			}
+		}
+
 		task ("Modify the First Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -987,6 +1062,18 @@ definition {
 				webContentContentEdit = "New Web Content Content",
 				webContentTitle = "First Web Content",
 				webContentTitleEdit = "First Web Content");
+		}
+
+		task ("Get modified date of the First Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "First Web Content",
+				menuItem = "View History");
+
+			Pause(locator1 = "3000");
+
+			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
 
 		task ("Assert the display order of collection items") {
@@ -1003,6 +1090,21 @@ definition {
 					key_rowPosition = "1",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert modified date of collection items are shown in Paragraph") {
+			var n = "1";
+
+			for (var modifiedDate : list "${firstModifiedDate},${thirdModifiedDate},${secondModifiedDate}") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${modifiedDate}");
 
 				var n = ${n} + 1;
 			}

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	property = "item.class.name=com.liferay.journal.model.JournalArticle",
 	service = InfoItemFieldValuesUpdater.class
 )
 public class JournalArticleInfoItemFieldValuesUpdaterImpl

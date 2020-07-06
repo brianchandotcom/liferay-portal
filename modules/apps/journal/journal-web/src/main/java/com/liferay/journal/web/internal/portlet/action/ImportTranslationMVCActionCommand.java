@@ -177,7 +177,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+		target = "(item.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private InfoItemFieldValuesUpdater<JournalArticle>
 		_journalArticleInfoItemFieldValuesUpdater;

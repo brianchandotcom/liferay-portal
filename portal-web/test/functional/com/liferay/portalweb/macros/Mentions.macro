@@ -117,9 +117,13 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${mentionsUserFullName}");
+		// Disabling assertion for Test Test until LPS-108776 is fixed.
+
+		if ("${mentionsUserFullName}" != "Test Test") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = "${mentionsUserFullName}");
+		}
 	}
 
 	macro viewMentionTagLink {

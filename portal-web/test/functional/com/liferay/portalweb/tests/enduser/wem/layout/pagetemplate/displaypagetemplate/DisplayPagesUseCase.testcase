@@ -167,19 +167,16 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "This is static text.",
 				key_fragmentClass = "static-text",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -205,19 +202,16 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title Edit",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content Edit",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "This is static text.",
 				key_fragmentClass = "static-text",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -344,13 +338,11 @@ definition {
 			AssertVisible(
 				key_content = "Test Test",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "",
 				key_fragmentClass = "image",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			SikuliAssertElementPresent(locator1 = "Fragment#MARKETPLACE_ICON_PNG");
@@ -610,13 +602,11 @@ definition {
 			AssertVisible(
 				key_content = "Test Test",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "",
 				key_fragmentClass = "image",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -642,13 +632,11 @@ definition {
 			AssertVisible(
 				key_content = "Userfn Userln",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "",
 				key_fragmentClass = "image",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			SikuliAssertElementPresent(locator1 = "Fragment#DOCUMENT_4_PNG");
@@ -958,13 +946,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -983,13 +969,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

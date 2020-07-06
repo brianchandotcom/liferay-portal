@@ -98,7 +98,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -106,7 +105,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -114,13 +112,11 @@ definition {
 			AssertVisible(
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Cancel",
 				key_fragmentClass = "footer",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -148,7 +144,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment text",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -175,13 +170,11 @@ definition {
 			AssertVisible(
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Cancel",
 				key_fragmentClass = "footer",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -189,7 +182,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -801,8 +793,7 @@ definition {
 				content = "Lorem ipsum dolor sit amet",
 				fragmentClass = "header",
 				fragmentComment = "This is a fragment comment.",
-				fragmentName = "Title",
-				position = "1");
+				fragmentName = "Title");
 
 			PageEditor.changeExperience(newExperience = "Default");
 
@@ -844,7 +835,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment en-US text",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			Click(locator1 = "PageEditor#DROPDOWN");
@@ -854,7 +844,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment zh-CN text",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -864,13 +853,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
@@ -886,13 +873,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title Edit",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content Edit",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -1290,7 +1275,6 @@ definition {
 		Click(
 			key_content = "This is static text.",
 			key_fragmentClass = "static-text",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment");
@@ -1309,8 +1293,7 @@ definition {
 			content = "This is static text.",
 			fragmentClass = "static-text",
 			fragmentComment = "This is a new fragment comment",
-			fragmentName = "Static Text",
-			position = "1");
+			fragmentName = "Static Text");
 
 		PageEditor.replyToComment(commentReply = "Fragment Comment 2");
 
@@ -1325,7 +1308,6 @@ definition {
 		Click(
 			key_content = "This is static text.",
 			key_fragmentClass = "static-text",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.viewComment(fragmentComment = "This is a new fragment comment");
@@ -2149,7 +2131,6 @@ definition {
 			AssertVisible(
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			for (var button : list "Submit,Cancel") {
@@ -2163,7 +2144,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
@@ -2194,13 +2174,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title 1",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content 1",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-2");
@@ -2208,13 +2186,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Content 2",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 

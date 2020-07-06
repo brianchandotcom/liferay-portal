@@ -62,7 +62,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment text",
 				key_fragmentClass = "body",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -193,7 +192,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment en-US text",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			Click(locator1 = "PageEditor#DROPDOWN");
@@ -203,7 +201,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment ca-ES text",
 				key_fragmentClass = "rich-text",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

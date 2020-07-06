@@ -611,7 +611,6 @@ definition {
 		AssertVisible(
 			key_content = "New editable fragment text",
 			key_fragmentClass = "rich-text",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 	}
 
@@ -721,7 +720,6 @@ definition {
 		AssertVisible(
 			key_content = "Webcontent Title",
 			key_fragmentClass = "rich-text",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 	}
 

@@ -92,8 +92,7 @@ definition {
 			content = "Lorem ipsum dolor sit amet",
 			fragmentClass = "header",
 			fragmentComment = "Comment by User 2",
-			fragmentName = "Title",
-			position = "1");
+			fragmentName = "Title");
 
 		User.logoutPG();
 
@@ -134,8 +133,7 @@ definition {
 			content = "Lorem ipsum dolor sit amet",
 			fragmentClass = "header",
 			fragmentComment = "Comment By User 1",
-			fragmentName = "Title",
-			position = "1");
+			fragmentName = "Title");
 
 		User.logoutPG();
 
@@ -152,7 +150,6 @@ definition {
 		Click(
 			key_content = "Lorem ipsum dolor sit amet",
 			key_fragmentClass = "header",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
@@ -172,7 +169,6 @@ definition {
 		Click(
 			key_content = "Lorem ipsum dolor sit amet",
 			key_fragmentClass = "header",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.replyToComment(commentReply = "Reply from User Test");
@@ -218,8 +214,7 @@ definition {
 			content = "Lorem ipsum dolor sit amet",
 			fragmentClass = "header",
 			fragmentComment = "Comment By User 1",
-			fragmentName = "Title",
-			position = "1");
+			fragmentName = "Title");
 
 		User.logoutPG();
 
@@ -236,7 +231,6 @@ definition {
 		Click(
 			key_content = "Lorem ipsum dolor sit amet",
 			key_fragmentClass = "header",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
@@ -286,8 +280,7 @@ definition {
 			fragmentComment = "Comment by Test",
 			fragmentName = "Title",
 			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "user2",
-			position = "1");
+			mentionsUserScreenName = "user2");
 
 		User.logoutPG();
 

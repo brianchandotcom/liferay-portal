@@ -166,6 +166,18 @@ definition {
 			key_mappedField = "${mappedField}",
 			locator1 = "TextInput#SEO_MAPPED_FIELD",
 			value1 = "${mappedFieldValue}");
+
+		if ("${mappedFieldValue}" == "-- Unmapped --") {
+			AssertElementPresent(
+				key_mappedField = "${mappedField}",
+				locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_UNMAPPED_BUTTON");
+		}
+
+		else {
+			AssertElementPresent(
+				key_mappedField = "${mappedField}",
+				locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAPPED_BUTTON");
+		}
 	}
 
 	macro viewNoOpenGraphProperties {

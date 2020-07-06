@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -31,8 +30,6 @@ public class BorderRadiusConverter {
 			"Circle", "rounded-circle"
 		).put(
 			"Large", "rounded-lg"
-		).put(
-			"None", StringPool.BLANK
 		).put(
 			"Pill", "rounded-pill"
 		).put(

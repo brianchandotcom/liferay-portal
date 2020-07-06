@@ -23,6 +23,7 @@ import {
 	CartesianGrid,
 	Legend,
 	Text,
+	Tooltip,
 	XAxis,
 	YAxis,
 } from 'recharts';
@@ -179,6 +180,8 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		(i) => checkboxes[i] === false
 	);
 
+	const [tooltip, setTooltip] = useState(null);
+
 	return (
 		<>
 			{Object.keys(checkboxes).length > 0 && noCheckboxesChecked && (
@@ -235,6 +238,11 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						tickLine={false}
 						width={45}
 					/>
+					<Tooltip
+						content={<CustomTooltip />}
+						cursor={{fill: 'transparent'}}
+						tooltip={tooltip}
+					/>
 					{bars.length &&
 						bars.map((bar, index) => {
 							return (
@@ -250,6 +258,12 @@ export default function AuditBarChart({rtl, vocabularies}) {
 									key={index}
 									legendType="square"
 									name={bar.name}
+									onMouseOut={() => {
+										setTooltip(null);
+									}}
+									onMouseOver={() => {
+										setTooltip(bar.dataKey);
+									}}
 								/>
 							);
 						})}
@@ -258,12 +272,47 @@ export default function AuditBarChart({rtl, vocabularies}) {
 							barSize={BAR_CHART.barHeight}
 							dataKey="value"
 							fill={COLORS[0]}
+							onMouseOut={() => {
+								setTooltip(null);
+							}}
+							onMouseOver={() => {
+								setTooltip('value');
+							}}
 						/>
 					)}
 				</BarChart>
 			</div>
 		</>
 	);
+}
+
+function CustomTooltip(props) {
+	const {active, label, payload, tooltip} = props;
+
+	if (!active || !tooltip) {
+		return null;
+	}
+
+	for (var i = 0; i <= payload.length; i++) {
+		if (payload[i].dataKey === tooltip) {
+			return (
+				<ClayLayout.ContentRow
+					className="bg-white custom-tooltip p-1 rounded small text-secondary"
+					padded
+					style={{width: 150}}
+				>
+					<ClayLayout.ContentCol expand>
+						{tooltip === 'value' ? label : payload[i].name}
+					</ClayLayout.ContentCol>
+					<ClayLayout.ContentCol>
+						{payload[i].value}
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
+			);
+		}
+	}
+
+	return null;
 }
 
 function CustomXAxisTick(props) {

@@ -31,6 +31,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 
 		_backgroundImageJSONObject = JSONFactoryUtil.createJSONObject();
+		_linkJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	@Override
@@ -63,6 +64,9 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 			!Objects.equals(
 				_contentDisplay,
 				containerLayoutStructureItem._contentDisplay) ||
+			!Objects.equals(
+				_linkJSONObject.toJSONString(),
+				containerLayoutStructureItem._linkJSONObject.toJSONString()) ||
 			!Objects.equals(
 				_marginBottom, containerLayoutStructureItem._marginBottom) ||
 			!Objects.equals(
@@ -148,6 +152,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		).put(
 			"justify", _justify
 		).put(
+			"link", _linkJSONObject
+		).put(
 			"marginBottom", _marginBottom
 		).put(
 			"marginLeft", _marginLeft
@@ -183,6 +189,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public String getJustify() {
 		return _justify;
+	}
+
+	public JSONObject getLinkJSONObject() {
+		return _linkJSONObject;
 	}
 
 	public int getMarginBottom() {
@@ -286,6 +296,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_justify = justify;
 	}
 
+	public void setLinkJSONObject(JSONObject linkJSONObject) {
+		_linkJSONObject = linkJSONObject;
+	}
+
 	public void setMarginBottom(int marginBottom) {
 		_marginBottom = marginBottom;
 	}
@@ -387,6 +401,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 			setJustify(itemConfigJSONObject.getString("justify"));
 		}
 
+		if (itemConfigJSONObject.has("link")) {
+			setLinkJSONObject(itemConfigJSONObject.getJSONObject("link"));
+		}
+
 		if (itemConfigJSONObject.has("marginBottom")) {
 			setMarginBottom(itemConfigJSONObject.getInt("marginBottom"));
 		}
@@ -460,6 +478,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	private int _borderWidth;
 	private String _contentDisplay = "block";
 	private String _justify = "";
+	private JSONObject _linkJSONObject;
 	private int _marginBottom;
 	private int _marginLeft;
 	private int _marginRight;

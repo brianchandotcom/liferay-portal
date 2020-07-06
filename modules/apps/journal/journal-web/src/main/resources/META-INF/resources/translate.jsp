@@ -27,7 +27,7 @@ JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTrans
 renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 %>
 
-<aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm" onSubmit='<%= "event.preventDefault();" + liferayPortletResponse.getNamespace() %>'>
+<aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
@@ -160,11 +160,3 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		</div>
 	</clay:container-fluid>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />translateFields() {
-		var form = document.getElementById('<portlet:namespace />translate_fm');
-
-		submitForm(form);
-	}
-</aui:script>

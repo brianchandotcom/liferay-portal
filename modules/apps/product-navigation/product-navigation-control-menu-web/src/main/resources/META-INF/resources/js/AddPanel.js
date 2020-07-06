@@ -216,6 +216,7 @@ export const normalizeContent = (content) => {
 			instanceable: content.instanceable,
 			portletId: content.portletId,
 		},
+		disabled: !content.draggable,
 		icon: content.icon,
 		itemId: `${content.portletId}_${content.classPK}`,
 		label: content.title,

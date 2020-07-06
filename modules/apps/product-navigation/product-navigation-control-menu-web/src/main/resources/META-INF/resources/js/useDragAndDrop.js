@@ -188,7 +188,10 @@ export const useDropTarget = (targetItem) => {
 					dropTargetColumn.classList.remove(DROP_OVER_CLASS);
 				}
 				setDropTargetColumn(parentTargetItem);
-				parentTargetItem.classList.add(DROP_OVER_CLASS);
+
+				if (itemIsDropzone) {
+					parentTargetItem.classList.add(DROP_OVER_CLASS);
+				}
 			}
 
 			const dropPosition = getDropPosition({

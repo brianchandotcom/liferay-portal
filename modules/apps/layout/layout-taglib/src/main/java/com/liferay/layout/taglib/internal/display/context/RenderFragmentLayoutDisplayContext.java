@@ -15,11 +15,14 @@
 package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
@@ -475,6 +479,60 @@ public class RenderFragmentLayoutDisplayContext {
 
 		return listObjectReferenceFactory.getListObjectReference(
 			collectionJSONObject);
+	}
+
+	private String _getMappedCollectionValue(
+		String collectionFieldId, Object displayObject) {
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return StringPool.BLANK;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		// LPS-111037
+
+		String className = classedModel.getModelClassName();
+
+		if (classedModel instanceof FileEntry) {
+			className = FileEntry.class.getName();
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item field values provider for class " +
+						className);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				displayObject, collectionFieldId);
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue();
+
+		if (value instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
+
+			return contentAccessor.getContent();
+		}
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private List<Portlet> _getPortlets() {

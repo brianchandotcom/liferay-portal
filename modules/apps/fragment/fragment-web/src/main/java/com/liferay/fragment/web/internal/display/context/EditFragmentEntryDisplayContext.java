@@ -304,16 +304,6 @@ public class EditFragmentEntryDisplayContext {
 
 		if (fragmentEntry != null) {
 			_htmlContent = fragmentEntry.getHtml();
-
-			if (Validator.isNull(_htmlContent)) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("<div class=\"fragment_");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append("\">\n</div>");
-
-				_htmlContent = sb.toString();
-			}
 		}
 
 		return _htmlContent;

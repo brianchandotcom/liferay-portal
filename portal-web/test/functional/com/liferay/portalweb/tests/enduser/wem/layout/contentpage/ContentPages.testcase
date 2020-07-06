@@ -730,7 +730,7 @@ definition {
 		PortletEntry.publish();
 
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(

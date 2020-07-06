@@ -27,7 +27,7 @@ definition {
 			var displayDateMonth = DateUtil.getCurrentMonth();
 			var displayDateYear = DateUtil.getCurrentYear();
 
-			var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
+			var displayDate = "${displayDateYear}%2D${displayDateMonth}%2D${displayDateDay}";
 		}
 
 		if (!(isSet(expirationDate))) {
@@ -38,7 +38,7 @@ definition {
 				var expirationMonth = "${expirationMonth} - 12";
 			}
 
-			var expirationDate = "${displayDateYear}-${expirationMonth}-${displayDateDay}";
+			var expirationDate = "${displayDateYear}%2D${expirationMonth}%2D${displayDateDay}";
 		}
 
 		JSONAnnouncementAPI._addAnnouncement(

@@ -54,7 +54,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
@@ -77,7 +77,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
@@ -100,7 +100,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
@@ -123,7 +123,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -1535,7 +1535,7 @@ definition {
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
 			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",

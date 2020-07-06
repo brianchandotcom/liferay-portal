@@ -25,6 +25,7 @@ import com.liferay.layout.page.template.util.ShadowConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -210,6 +211,38 @@ public class ContainerLayoutStructureItemImporter
 					containerLayoutStructureItem.setWidthType(containerType);
 				}
 			}
+
+			Map<String, Object> fragmentLinkMap =
+				(Map<String, Object>)definitionMap.get("fragmentLink");
+
+			if (fragmentLinkMap != null) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				Map<String, Object> hrefMap =
+					(Map<String, Object>)fragmentLinkMap.get("href");
+
+				if (hrefMap != null) {
+					String hrefValue = (String)hrefMap.get("value");
+
+					if (hrefValue != null) {
+						jsonObject.put("href", hrefValue);
+					}
+
+					_processMapping(
+						jsonObject,
+						(Map<String, Object>)hrefMap.get("mapping"));
+				}
+
+				String target = (String)fragmentLinkMap.get("target");
+
+				if (target != null) {
+					jsonObject.put(
+						"target",
+						StringPool.UNDERLINE + StringUtil.toLowerCase(target));
+				}
+
+				containerLayoutStructureItem.setLinkJSONObject(jsonObject);
+			}
 		}
 
 		return containerLayoutStructureItem;
@@ -261,6 +294,15 @@ public class ContainerLayoutStructureItemImporter
 		}
 
 		String contextSource = (String)itemReferenceMap.get("contextSource");
+
+		if (Objects.equals(
+				ContextReference.ContextSource.COLLECTION_ITEM.getValue(),
+				contextSource)) {
+
+			jsonObject.put("collectionFieldId", fieldKey);
+
+			return;
+		}
 
 		if (Objects.equals(
 				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),

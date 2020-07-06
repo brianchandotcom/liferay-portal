@@ -13,6 +13,7 @@
  */
 
 const DEFAULT_CONFIG = {
+	containerItemEnabled: true,
 	toolbarId: 'pageEditorToolbar',
 };
 

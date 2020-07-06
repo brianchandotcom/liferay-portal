@@ -143,19 +143,34 @@ const AddPanel = ({
 	);
 };
 
-export const updateUsedWidget = ({item, used = true, widgets}) => {
-	return widgets.map((collection) => {
+export const updateUsedWidget = ({item, used = true, widgets}) =>
+	widgets.map((collection) => {
 		return {
 			...collection,
 			portlets: collection.portlets.map((portlet) => {
-				return portlet.portletId === item.itemId &&
+				if (
+					portlet.portletId === item.itemId &&
 					!portlet.instanceable
-					? {...portlet, used}
-					: portlet;
+				) {
+					const updatedPortletItems = portlet.portletItems?.length
+						? portlet.portletItems.map((portletItem) => ({
+								...portletItem,
+								used,
+						  }))
+						: portlet.portletItems;
+
+					return {
+						...portlet,
+						portletItems: updatedPortletItems,
+						used,
+					};
+				}
+				else {
+					return portlet;
+				}
 			}),
 		};
 	});
-};
 
 const normalizeWidget = (widget) => {
 	return {

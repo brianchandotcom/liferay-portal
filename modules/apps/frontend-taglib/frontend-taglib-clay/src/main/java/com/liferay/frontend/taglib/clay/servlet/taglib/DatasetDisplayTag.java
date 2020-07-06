@@ -67,8 +67,8 @@ public class DatasetDisplayTag extends IncludeTag {
 				_creationMenu = new CreationMenu();
 			}
 
-			_setPagination();
-			_setTableContext();
+			_setClayDataSetDisplayViewsContext();
+			_setClayPaginationEntries();
 
 			StringBundler sb = new StringBundler(
 				11 + (_contextParams.size() * 4));
@@ -112,8 +112,8 @@ public class DatasetDisplayTag extends IncludeTag {
 		return _actionParameterName;
 	}
 
-	public List<DropdownItem> getBulkActions() {
-		return _bulkActions;
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return _bulkActionDropdownItems;
 	}
 
 	public Map<String, String> getContextParams() {
@@ -200,8 +200,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		_actionParameterName = actionParameterName;
 	}
 
-	public void setBulkActions(List<DropdownItem> bulkActions) {
-		_bulkActions = bulkActions;
+	public void setBulkActionDropdownItems(
+		List<DropdownItem> bulkActionDropdownItems) {
+
+		_bulkActionDropdownItems = bulkActionDropdownItems;
 	}
 
 	public void setContextParams(Map<String, String> contextParams) {
@@ -295,9 +297,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		super.cleanUp();
 
 		_actionParameterName = null;
-		_bulkActions = new ArrayList<>();
+		_bulkActionDropdownItems = new ArrayList<>();
 		_clayDataSetDisplayViewsContext = null;
 		_clayDataSetDisplayViewSerializer = null;
+		_clayPaginationEntries = null;
 		_contextParams = new HashMap<>();
 		_creationMenu = new CreationMenu();
 		_dataProviderKey = null;
@@ -311,7 +314,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		_nestedItemsKey = null;
 		_nestedItemsReferenceKey = null;
 		_pageNumber = 0;
-		_paginationEntries = null;
 		_paginationSelectedEntry = 0;
 		_portletURL = null;
 		_selectedItems = null;
@@ -346,10 +348,15 @@ public class DatasetDisplayTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute(
 			"clay:dataset-display:actionParameterName", _actionParameterName);
-		request.setAttribute("clay:dataset-display:bulkActions", _bulkActions);
+		request.setAttribute(
+			"clay:dataset-display:bulkActionDropdownItems",
+			_bulkActionDropdownItems);
 		request.setAttribute(
 			"clay:dataset-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
+		request.setAttribute(
+			"clay:dataset-display:clayPaginationEntries",
+			_clayPaginationEntries);
 		request.setAttribute(
 			"clay:dataset-display:creationMenu", _creationMenu);
 		request.setAttribute(
@@ -369,8 +376,6 @@ public class DatasetDisplayTag extends IncludeTag {
 			_nestedItemsReferenceKey);
 		request.setAttribute("clay:dataset-display:pageNumber", _pageNumber);
 		request.setAttribute(
-			"clay:dataset-display:paginationEntries", _paginationEntries);
-		request.setAttribute(
 			"clay:dataset-display:paginationSelectedEntry",
 			_paginationSelectedEntry);
 		request.setAttribute("clay:dataset-display:portletURL", _portletURL);
@@ -388,10 +393,16 @@ public class DatasetDisplayTag extends IncludeTag {
 		request.setAttribute("clay:dataset-display:style", _style);
 	}
 
-	private void _setPagination() {
-		_paginationEntries = getClayPaginationEntries();
+	private void _setClayDataSetDisplayViewsContext() {
+		_clayDataSetDisplayViewsContext =
+			_clayDataSetDisplayViewSerializer.serialize(
+				_id, PortalUtil.getLocale(request));
+	}
 
-		Stream<ClayPaginationEntry> stream = _paginationEntries.stream();
+	private void _setClayPaginationEntries() {
+		_clayPaginationEntries = getClayPaginationEntries();
+
+		Stream<ClayPaginationEntry> stream = _clayPaginationEntries.stream();
 
 		ClayPaginationEntry clayPaginationEntry = stream.filter(
 			entry -> entry.getLabel() == _itemsPerPage
@@ -400,14 +411,8 @@ public class DatasetDisplayTag extends IncludeTag {
 			null
 		);
 
-		_paginationSelectedEntry = _paginationEntries.indexOf(
+		_paginationSelectedEntry = _clayPaginationEntries.indexOf(
 			clayPaginationEntry);
-	}
-
-	private void _setTableContext() {
-		_clayDataSetDisplayViewsContext =
-			_clayDataSetDisplayViewSerializer.serialize(
-				_id, PortalUtil.getLocale(request));
 	}
 
 	private static final String _PAGE = "/dataset_display/page.jsp";
@@ -416,9 +421,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		DatasetDisplayTag.class);
 
 	private String _actionParameterName;
-	private List<DropdownItem> _bulkActions = new ArrayList<>();
+	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private Object _clayDataSetDisplayViewsContext;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
+	private List<ClayPaginationEntry> _clayPaginationEntries;
 	private Map<String, String> _contextParams = new HashMap<>();
 	private CreationMenu _creationMenu = new CreationMenu();
 	private String _dataProviderKey;
@@ -432,7 +438,6 @@ public class DatasetDisplayTag extends IncludeTag {
 	private String _nestedItemsKey;
 	private String _nestedItemsReferenceKey;
 	private int _pageNumber;
-	private List<ClayPaginationEntry> _paginationEntries;
 	private int _paginationSelectedEntry;
 	private PortletURL _portletURL;
 	private List<String> _selectedItems;

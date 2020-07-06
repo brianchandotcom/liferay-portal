@@ -633,7 +633,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>bulkActions</name>
+			<name>bulkActionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.List</type>

@@ -29,7 +29,7 @@
 		{
 			actionParameterName: '<%= actionParameterName %>',
 			apiUrl: '<%= dataSetAPI %>',
-			bulkActions: <%= jsonSerializer.serializeDeep(bulkActions) %>,
+			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
 			componentId: '<%= containerId %>',
 			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,
 			currentUrl: '<%= PortalUtil.getCurrentURL(request) %>',
@@ -56,7 +56,7 @@
 			%>
 
 			pagination: {
-				deltas: <%= jsonSerializer.serializeDeep(paginationEntries) %>,
+				deltas: <%= jsonSerializer.serializeDeep(clayPaginationEntries) %>,
 				initialDelta: <%= itemsPerPage %>,
 				initialPageNumber: <%= pageNumber %>,
 			},

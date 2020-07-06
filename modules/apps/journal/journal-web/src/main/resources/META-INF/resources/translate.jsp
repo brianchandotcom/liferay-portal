@@ -19,25 +19,15 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalArticle article = (JournalArticle)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLES);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
-
-JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTranslateDisplayContext(liferayPortletRequest);
+JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTranslateDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 %>
 
-<portlet:actionURL name="/journal/update_translation" var="updateTranslationURL">
-	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= updateTranslationURL %>" cssClass="translate-article" name="translate_fm" onSubmit='<%= "event.preventDefault();" + liferayPortletResponse.getNamespace() + "translateFields();" %>'>
+<aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm" onSubmit='<%= "event.preventDefault();" + liferayPortletResponse.getNamespace() %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
@@ -57,9 +47,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
+						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalTranslateDisplayContext.getSaveButtonLabel() %>" />
 
-						<aui:button cssClass="btn-sm" disabled="<%= journalEditArticleDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
+						<aui:button cssClass="btn-sm" disabled="<%= journalTranslateDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalTranslateDisplayContext.getPublishButtonLabel() %>" />
 					</div>
 				</li>
 			</ul>

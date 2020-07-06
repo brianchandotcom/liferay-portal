@@ -56,27 +56,16 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/main.css")))
-		).put(
-			"contentsLangDirection",
-			HtmlUtil.escapeJS(
-				getContentsLanguageDir(inputEditorTaglibAttributes))
-		).put(
-			"contextmenu_contentsCss",
-			JSONUtil.putAll(
-				HtmlUtil.escape(
-					PortalUtil.getStaticResourceURL(
-						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/clay.css")),
-				HtmlUtil.escape(
-					PortalUtil.getStaticResourceURL(
-						themeDisplay.getRequest(),
 						themeDisplay.getPathThemeCss() + "/main.css")),
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
 						"/o/frontend-editor-ckeditor-web/ckeditor/skins" +
 							"/moono-lexicon/editor.css")))
+		).put(
+			"contentsLangDirection",
+			HtmlUtil.escapeJS(
+				getContentsLanguageDir(inputEditorTaglibAttributes))
 		);
 
 		String contentsLanguageId = getContentsLanguageId(

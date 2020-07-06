@@ -290,13 +290,13 @@ definition {
 			fragmentName = "Row");
 
 		Click(
-			key_position = "2",
+			key_position = "3",
 			locator1 = "PageEditor#ROW_COLUMN_RESIZER");
 
 		DragAndDrop.DragAndDropObject(
-			key_position = "2",
+			key_position = "3",
 			locator1 = "PageEditor#ROW_COLUMN_RESIZER",
-			position = "530,-20");
+			position = "530,0");
 
 		AssertVisible(locator1 = "PageEditor#ROW_COLUMN_FIRST_RESIZER");
 

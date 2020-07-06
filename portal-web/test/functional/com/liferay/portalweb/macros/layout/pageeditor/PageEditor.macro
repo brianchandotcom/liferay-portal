@@ -11,7 +11,6 @@ definition {
 			Click(
 				key_content = "${content}",
 				key_fragmentClass = "${fragmentClass}",
-				key_position = "${position}",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -1105,7 +1104,6 @@ definition {
 			Click(
 				key_content = "${content}",
 				key_fragmentClass = "${fragmentClass}",
-				key_position = "${position}",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -1117,7 +1115,6 @@ definition {
 			Click(
 				key_content = "${content}",
 				key_fragmentClass = "${fragmentClass}",
-				key_position = "${position}",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

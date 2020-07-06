@@ -97,13 +97,11 @@ definition {
 			AssertVisible(
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Cancel",
 				key_fragmentClass = "footer",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertElementPresent(locator1 = "Button#SUBMIT");

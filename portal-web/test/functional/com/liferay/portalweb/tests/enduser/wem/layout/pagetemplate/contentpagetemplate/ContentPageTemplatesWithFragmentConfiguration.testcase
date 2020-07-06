@@ -145,7 +145,6 @@ definition {
 			AssertVisible(
 				key_content = "WC WebContent Content",
 				key_fragmentClass = "configuration",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -243,7 +242,6 @@ definition {
 			AssertVisible(
 				key_content = "Updated fragment text",
 				key_fragmentClass = "configuration",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

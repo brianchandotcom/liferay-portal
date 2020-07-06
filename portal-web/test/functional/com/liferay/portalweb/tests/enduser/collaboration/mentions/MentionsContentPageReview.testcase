@@ -162,8 +162,7 @@ definition {
 			fragmentComment = "Comment by Test",
 			fragmentName = "Title",
 			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "user2",
-			position = "1");
+			mentionsUserScreenName = "user2");
 
 		PageEditor.viewComment(
 			fragmentComment = "Comment by Test ",
@@ -213,8 +212,7 @@ definition {
 			fragmentComment = "Comment by Test",
 			fragmentName = "Title",
 			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "user2",
-			position = "1");
+			mentionsUserScreenName = "user2");
 
 		PageEditor.viewComment(
 			fragmentComment = "Comment by Test ",

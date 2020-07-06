@@ -411,7 +411,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -419,7 +418,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -439,7 +437,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -447,7 +444,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -477,7 +473,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -485,7 +480,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -533,7 +527,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -541,7 +534,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment text",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -549,7 +541,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -563,7 +554,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -571,7 +561,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -579,7 +568,6 @@ definition {
 			AssertElementNotPresent(
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -599,7 +587,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -607,7 +594,6 @@ definition {
 			AssertVisible(
 				key_content = "New editable fragment text",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -615,7 +601,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -724,7 +709,6 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -732,7 +716,6 @@ definition {
 			AssertVisible(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

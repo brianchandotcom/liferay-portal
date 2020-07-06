@@ -118,13 +118,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -162,13 +160,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -190,13 +186,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -242,13 +236,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -270,13 +262,11 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}
@@ -336,19 +326,16 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -358,19 +345,16 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertElementNotPresent(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 
@@ -386,19 +370,16 @@ definition {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
-				key_position = "1",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Content",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "body",
-				key_position = "3",
 				locator1 = "Fragment#FRAGMENT");
 		}
 	}

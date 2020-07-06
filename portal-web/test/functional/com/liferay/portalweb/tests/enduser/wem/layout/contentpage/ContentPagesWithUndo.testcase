@@ -498,7 +498,6 @@ definition {
 		AssertVisible(
 			key_content = "WC WebContent Title",
 			key_fragmentClass = "content",
-			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
 	}
 

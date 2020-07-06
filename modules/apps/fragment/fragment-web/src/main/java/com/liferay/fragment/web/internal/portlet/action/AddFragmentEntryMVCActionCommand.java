@@ -77,15 +77,21 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 					null, name, 0, type, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
-			StringBundler sb = new StringBundler(3);
+			StringBundler cssSB = new StringBundler(3);
 
-			sb.append("<div class=\"fragment_");
-			sb.append(fragmentEntry.getFragmentEntryId());
-			sb.append("\">\n</div>");
+			cssSB.append(".fragment_");
+			cssSB.append(fragmentEntry.getFragmentEntryId());
+			cssSB.append(" {\n}");
+
+			StringBundler htmlSB = new StringBundler(3);
+
+			htmlSB.append("<div class=\"fragment_");
+			htmlSB.append(fragmentEntry.getFragmentEntryId());
+			htmlSB.append("\">\n</div>");
 
 			fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 				fragmentEntry.getFragmentEntryId(), fragmentEntry.getName(),
-				StringPool.BLANK, sb.toString(), StringPool.BLANK,
+				cssSB.toString(), htmlSB.toString(), StringPool.BLANK,
 				StringPool.BLANK, WorkflowConstants.STATUS_DRAFT);
 
 			JSONObject jsonObject = JSONUtil.put(

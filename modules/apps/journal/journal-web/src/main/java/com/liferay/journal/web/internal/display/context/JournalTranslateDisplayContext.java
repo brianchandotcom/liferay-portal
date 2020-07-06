@@ -92,7 +92,8 @@ public class JournalTranslateDisplayContext {
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			infoField.getLabelInfoLocalizedValue();
 
-		return labelInfoLocalizedValue.getValue(getSourceLocale());
+		return labelInfoLocalizedValue.getValue(
+			PortalUtil.getLocale(_httpServletRequest));
 	}
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {

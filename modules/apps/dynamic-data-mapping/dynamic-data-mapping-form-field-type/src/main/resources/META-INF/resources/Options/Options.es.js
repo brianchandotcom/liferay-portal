@@ -68,6 +68,7 @@ const Option = React.forwardRef(
 const refreshFields = (defaultLanguageId, editingLanguageId, options) =>
 	[
 		...options.map((option) => ({
+			id: random(),
 			...option,
 			generateKeyword: isOptionValueGenerated(
 				defaultLanguageId,
@@ -75,7 +76,6 @@ const refreshFields = (defaultLanguageId, editingLanguageId, options) =>
 				options,
 				option
 			),
-			id: random(),
 		})),
 		{...defaultOption, generateKeyword: true, id: random()},
 	].filter((field) => field && Object.keys(field).length > 0);
@@ -114,7 +114,6 @@ const Options = ({
 	});
 
 	useEffect(() => {
-		if (prevEditingLanguageId !== editingLanguageId) {
 			const options =
 				normalizedValue[editingLanguageId] ||
 				normalizedValue[defaultLanguageId] ||
@@ -123,12 +122,10 @@ const Options = ({
 			setFields(
 				refreshFields(defaultLanguageId, editingLanguageId, options)
 			);
-		}
 	}, [
 		defaultLanguageId,
 		editingLanguageId,
 		normalizedValue,
-		prevEditingLanguageId,
 	]);
 
 	const defaultOptionRef = useRef(

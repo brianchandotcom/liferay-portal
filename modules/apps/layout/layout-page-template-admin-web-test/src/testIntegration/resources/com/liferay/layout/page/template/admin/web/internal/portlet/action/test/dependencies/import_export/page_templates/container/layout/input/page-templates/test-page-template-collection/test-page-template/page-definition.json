@@ -10,7 +10,7 @@
 						"borderRadius": "Circle",
 						"borderWidth": 99,
 						"contentDisplay": "Block",
-						"justify": "None",
+						"justify": "Center",
 						"marginBottom": 6,
 						"marginLeft": 1,
 						"marginRight": 2,

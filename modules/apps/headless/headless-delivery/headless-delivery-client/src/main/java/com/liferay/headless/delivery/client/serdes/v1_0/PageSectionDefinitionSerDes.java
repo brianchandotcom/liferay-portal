@@ -80,6 +80,16 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getFragmentLink() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentLink\": ");
+
+			sb.append(String.valueOf(pageSectionDefinition.getFragmentLink()));
+		}
+
 		if (pageSectionDefinition.getLayout() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -129,6 +139,15 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getFragmentLink() == null) {
+			map.put("fragmentLink", null);
+		}
+		else {
+			map.put(
+				"fragmentLink",
+				String.valueOf(pageSectionDefinition.getFragmentLink()));
+		}
+
 		if (pageSectionDefinition.getLayout() == null) {
 			map.put("layout", null);
 		}
@@ -169,6 +188,12 @@ public class PageSectionDefinitionSerDes {
 					pageSectionDefinition.setBackgroundImage(
 						FragmentImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setFragmentLink(
+						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "layout")) {

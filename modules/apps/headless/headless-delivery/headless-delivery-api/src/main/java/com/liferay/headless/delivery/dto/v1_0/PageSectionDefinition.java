@@ -111,6 +111,35 @@ public class PageSectionDefinition {
 
 	@Schema
 	@Valid
+	public FragmentLink getFragmentLink() {
+		return fragmentLink;
+	}
+
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
+	}
+
+	@JsonIgnore
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+
+		try {
+			fragmentLink = fragmentLinkUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentLink fragmentLink;
+
+	@Schema
+	@Valid
 	public Layout getLayout() {
 		return layout;
 	}
@@ -188,6 +217,16 @@ public class PageSectionDefinition {
 			sb.append("\"backgroundImage\": ");
 
 			sb.append(String.valueOf(backgroundImage));
+		}
+
+		if (fragmentLink != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentLink\": ");
+
+			sb.append(String.valueOf(fragmentLink));
 		}
 
 		if (layout != null) {

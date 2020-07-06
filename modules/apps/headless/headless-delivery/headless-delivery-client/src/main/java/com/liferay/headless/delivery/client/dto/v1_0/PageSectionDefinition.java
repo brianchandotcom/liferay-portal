@@ -75,6 +75,27 @@ public class PageSectionDefinition implements Cloneable {
 
 	protected FragmentImage backgroundImage;
 
+	public FragmentLink getFragmentLink() {
+		return fragmentLink;
+	}
+
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
+	}
+
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+
+		try {
+			fragmentLink = fragmentLinkUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentLink fragmentLink;
+
 	public Layout getLayout() {
 		return layout;
 	}

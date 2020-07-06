@@ -205,10 +205,6 @@ definition {
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		AssertElementNotPresent(
-			key_parentCategoryTitle = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE");
-
-		AssertElementNotPresent(
 			key_categoryItem = "Questions Test Category",
 			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
 
@@ -251,10 +247,6 @@ definition {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		AssertVisible(
-			key_parentCategoryTitle = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE");
 
 		AssertVisible(
 			key_categoryItem = "Questions Test Category",

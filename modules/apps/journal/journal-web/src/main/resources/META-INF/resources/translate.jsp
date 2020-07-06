@@ -19,16 +19,25 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTranslateDisplayContext(liferayPortletRequest);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+
+JournalTranslateDisplayContext journalTranslateDisplayContext = new JournalTranslateDisplayContext(liferayPortletRequest);
 
 renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 %>
 
-<aui:form cssClass="translate-article" name="translate_fm" onSubmit="event.preventDefault();">
+<portlet:actionURL name="/journal/update_translation" var="updateTranslationURL">
+	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= updateTranslationURL %>" cssClass="translate-article" name="translate_fm" onSubmit='<%= "event.preventDefault();" + liferayPortletResponse.getNamespace() + "translateFields();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar">
 		<clay:container-fluid>
@@ -45,9 +54,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
 
-						<aui:button cssClass="btn-sm" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+						<aui:button cssClass="btn-sm" disabled="<%= journalEditArticleDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 					</div>
 				</li>
 			</ul>
@@ -129,7 +138,11 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				}
 
 				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoFieldValue.getInfoField());
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
+
+					String id = "infoField--" + infoField.getName();
 				%>
 
 					<clay:row>
@@ -142,7 +155,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getTargetLocale())) %>" />
+							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getTargetLocale())) %>" />
 						</clay:col>
 					</clay:row>
 
@@ -154,3 +167,11 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		</div>
 	</clay:container-fluid>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />translateFields() {
+		var form = document.getElementById('<portlet:namespace />translate_fm');
+
+		submitForm(form);
+	}
+</aui:script>

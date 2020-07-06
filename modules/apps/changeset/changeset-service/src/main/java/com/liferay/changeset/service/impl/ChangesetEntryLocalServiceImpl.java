@@ -19,13 +19,19 @@ import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.base.ChangesetEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -97,21 +103,29 @@ public class ChangesetEntryLocalServiceImpl
 			return;
 		}
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		DB db = DBManagerUtil.getDB();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.in(
-					"changesetEntryId", changesetEntryIds)));
+		if (db.getDBType() != DBType.SQLSERVER) {
+			_deleteChangesetEntries(changesetEntryIds);
 
-		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
-				changesetEntry ->
-					changesetEntryLocalService.deleteChangesetEntry(
-						changesetEntry));
+			return;
+		}
 
-		actionableDynamicQuery.performActions();
+		List<Long> changesetEntryIdsChunk = new LinkedList<>();
+
+		for (Long changesetEntryId : changesetEntryIds) {
+			if (changesetEntryIdsChunk.size() >= 2000) {
+				_deleteChangesetEntries(changesetEntryIdsChunk);
+
+				changesetEntryIdsChunk = new LinkedList<>();
+			}
+
+			changesetEntryIdsChunk.add(changesetEntryId);
+		}
+
+		if (!ListUtil.isEmpty(changesetEntryIdsChunk)) {
+			_deleteChangesetEntries(changesetEntryIdsChunk);
+		}
 	}
 
 	@Override
@@ -208,6 +222,27 @@ public class ChangesetEntryLocalServiceImpl
 
 		return changesetEntryPersistence.findByC_C_C(
 			changesetCollectionId, classNameId, classPK);
+	}
+
+	private void _deleteChangesetEntries(
+			Collection<Long> changesetEntryIdsChunk)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.in(
+					"changesetEntryId", changesetEntryIdsChunk)));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
+				changesetEntry ->
+					changesetEntryLocalService.deleteChangesetEntry(
+						changesetEntry));
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

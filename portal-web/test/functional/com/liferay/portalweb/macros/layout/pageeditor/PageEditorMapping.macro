@@ -6,40 +6,6 @@ definition {
 		Button.viewNotPresent(button = "Select");
 	}
 
-	macro createNewContent {
-		Click(
-			key_text = "Create New Content",
-			locator1 = "Button#ANY");
-
-		Type(
-			key_fieldName = "Content Name",
-			locator1 = "PageEditor#CONTENT_NAME_FIELD",
-			value1 = "${contentName}");
-
-		Select(
-			key_fieldLabel = "Structure Type",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${structureType}");
-
-		Select(
-			key_fieldLabel = "Structure Name",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${structureName}");
-
-		Click(locator1 = "Button#NEXT");
-
-		AssertValue(
-			locator1 = "PageEditor#CONTENT_VALUE_FIELD",
-			value1 = "${contentValue}");
-
-		Select(
-			key_fieldLabel = "Structure Field",
-			locator1 = "PageEditor#STRUCTURE_FIELD_SELECT",
-			value1 = "${structureField}");
-
-		Button.clickSave();
-	}
-
 	macro gotoEditableFieldMapping {
 		PageEditor.clickEditableField(
 			contributed = "${contributed}",

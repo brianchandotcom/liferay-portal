@@ -112,6 +112,22 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerDefault()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"container/default/expected", null);
+
+		File inputFile = _generateZipFile("container/default/input", null);
+
+		File outputFile = _importExportLayoutPageTemplateEntry(
+			inputFile, _group.getGroupId(), false,
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		_validateFile(expectedFile, outputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerLayout()
 		throws Exception {
 

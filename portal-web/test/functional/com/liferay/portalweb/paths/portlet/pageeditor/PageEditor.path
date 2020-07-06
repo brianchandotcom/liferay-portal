@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">PageEditor</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>LIST_GROUP_ITEM</td>
-	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
-	<td></td>
-</tr>
 <!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>
@@ -22,22 +17,6 @@
 <tr>
 	<td>PORTLET_INHERITED_FROM_CUSTOM_MASTERS</td>
 	<td>//div[contains(@class,'fragment-content--master')]//section[contains(.,'${key_portletName}')]</td>
-	<td></td>
-</tr>
-<!--CREATE_NEW_CONTENT_FORM-->
-<tr>
-	<td>CONTENT_NAME_FIELD</td>
-	<td>//div[contains(@class,'form-group') and label[contains(.,'${key_fieldName}')]]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_VALUE_FIELD</td>
-	<td>//div[h3[contains(.,'Content Value')]]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STRUCTURE_FIELD_SELECT</td>
-	<td>//div[contains(.,'Structure Field')]//select</td>
 	<td></td>
 </tr>
 <!--COLLECTION_DISPLAY-->

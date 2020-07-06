@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOSAVE_MESSAGE</td>
+	<td>//span[contains(@class,'navbar-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HTML_EDITOR</td>
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'html')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>

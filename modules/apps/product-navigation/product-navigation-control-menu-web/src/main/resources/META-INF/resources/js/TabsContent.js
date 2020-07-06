@@ -15,7 +15,13 @@
 import classNames from 'classnames';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import {AddPanelContext, normalizeContent} from './AddPanel';
 import Collapse from './Collapse';
@@ -45,6 +51,19 @@ const TabsContent = ({tab, tabIndex}) => {
 		searchValue,
 	]);
 
+	const collectionFilter = useCallback((collection) => {
+		return collection.collections.reduce((acc, item) => {
+			return item.collections?.length > 0
+				? acc.concat(item.children, collectionFilter(item))
+				: acc.concat(item.children);
+		}, []);
+	}, []);
+
+	const itemFilter = useCallback(
+		(item) => item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1,
+		[searchValueLowerCase]
+	);
+
 	const filteredWidgets = useMemo(
 		() =>
 			searchValueLowerCase
@@ -52,24 +71,31 @@ const TabsContent = ({tab, tabIndex}) => {
 						{
 							...tab,
 							collections: tab.collections
-								.map((collection) => ({
-									...collection,
-									children: collection.children.filter(
-										(item) =>
-											item.label
-												.toLowerCase()
-												.indexOf(
-													searchValueLowerCase
-												) !== -1
-									),
-								}))
+								.map((collection) => {
+									let filteredChildren = collection.children;
+
+									if (collection.collections) {
+										filteredChildren = filteredChildren.concat(
+											collection.collections
+												.map(collectionFilter)
+												.flat()
+										);
+									}
+
+									return {
+										...collection,
+										children: filteredChildren.filter(
+											itemFilter
+										),
+									};
+								})
 								.filter(
 									(collection) => collection.children.length
 								),
 						},
 				  ]
 				: tab,
-		[searchValueLowerCase, tab]
+		[collectionFilter, itemFilter, searchValueLowerCase, tab]
 	);
 
 	useEffect(() => {

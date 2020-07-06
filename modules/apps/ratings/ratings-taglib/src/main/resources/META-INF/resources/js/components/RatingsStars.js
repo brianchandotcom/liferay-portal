@@ -67,7 +67,7 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
-	const handleOnClick = (index) => {
+	const handleVote = (index) => {
 		let value, label;
 		const starScore = starScores[index];
 
@@ -145,7 +145,7 @@ const RatingsStars = ({
 				getSrAverageMessage,
 				getTitle,
 				numberOfStars,
-				onClick: handleOnClick,
+				onVote: handleVote,
 				score,
 				starScores,
 				totalEntries,
@@ -154,8 +154,8 @@ const RatingsStars = ({
 				averageScore,
 				disabled,
 				getSrAverageMessage,
-				handleOnClick,
 				numberOfStars,
+				onVote: handleVote,
 				randomNamespace,
 				score,
 				starScores,
@@ -181,8 +181,8 @@ function RatingsStackedStars({
 	averageScore,
 	disabled,
 	getSrAverageMessage,
-	handleOnClick,
 	numberOfStars,
+	onVote,
 	randomNamespace,
 	score,
 	starScores,
@@ -252,7 +252,7 @@ function RatingsStackedStars({
 									id={id}
 									name={`${randomNamespace}rating`}
 									onChange={() => {
-										handleOnClick(index);
+										onVote(index);
 									}}
 									type="radio"
 									value={value}
@@ -288,9 +288,7 @@ function RatingsStackedStars({
 						className="lfr-portal-tooltip ratings-stacked-stars-delete"
 						disabled={disabled}
 						displayType="unstyled"
-						onClick={() => {
-							handleOnClick();
-						}}
+						onClick={onVote}
 						title={Liferay.Language.get('delete')}
 					>
 						<ClayIcon symbol="times-circle" />
@@ -307,7 +305,7 @@ function RatingsSelectStars({
 	getSrAverageMessage,
 	getTitle,
 	numberOfStars,
-	onClick,
+	onVote,
 	score,
 	starScores,
 	totalEntries,
@@ -316,7 +314,7 @@ function RatingsSelectStars({
 
 	const handleOnClick = (index) => {
 		setIsDropdownOpen(false);
-		onClick(index);
+		onVote(index);
 	};
 
 	return (
@@ -384,9 +382,7 @@ function RatingsSelectStars({
 
 						<ClayDropDown.Item
 							disabled={score === 0}
-							onClick={() => {
-								handleOnClick();
-							}}
+							onClick={handleOnClick}
 						>
 							{Liferay.Language.get('delete')}
 						</ClayDropDown.Item>

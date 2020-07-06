@@ -36,7 +36,7 @@ function _renderCheckinComponent({checkedOut = true} = {}) {
 		<Checkin
 			checkedOut={checkedOut}
 			dlVersionNumberIncreaseValues={dlVersionNumberIncreaseValues}
-			portletNamespace="portletNamespace"
+			portletNamespace="_portletNamespace_"
 		/>,
 		{
 			baseElement: document.body,

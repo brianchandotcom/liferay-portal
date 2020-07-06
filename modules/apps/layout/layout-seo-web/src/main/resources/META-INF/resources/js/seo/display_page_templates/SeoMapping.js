@@ -18,7 +18,7 @@ import React from 'react';
 import MappingInputs from './components/MappingInputs';
 import lang from './utils/lang';
 
-function SeoMapping({
+export default function SeoMapping({
 	description,
 	fields,
 	portletNamespace,
@@ -75,12 +75,3 @@ SeoMapping.propTypes = {
 	}).isRequired,
 	title: PropTypes.string,
 };
-
-export default function (props) {
-	return (
-		<SeoMapping
-			{...props}
-			portletNamespace={`_${props.portletNamespace}_`}
-		/>
-	);
-}

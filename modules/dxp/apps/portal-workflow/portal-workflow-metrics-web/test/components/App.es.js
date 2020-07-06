@@ -67,7 +67,7 @@ const mockProps = {
 	getClient: jest.fn(() => client),
 	isAmPm: false,
 	maxPages: 15,
-	portletNamespace: 'workflow',
+	portletNamespace: '_workflow_',
 	reindexStatuses: [],
 };
 

@@ -272,10 +272,5 @@ PreviewSeoContainer.propTypes = {
 };
 
 export default function (props) {
-	return (
-		<PreviewSeoContainer
-			{...props}
-			portletNamespace={`_${props.portletNamespace}_`}
-		/>
-	);
+	return <PreviewSeoContainer {...props} />;
 }

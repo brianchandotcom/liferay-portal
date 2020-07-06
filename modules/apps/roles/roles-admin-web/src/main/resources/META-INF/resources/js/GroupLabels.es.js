@@ -17,7 +17,11 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import React, {useEffect, useState} from 'react';
 
-function GroupLabels({itemSelectorURL, portletNamespace, target}) {
+export default function GroupLabels({
+	itemSelectorURL,
+	portletNamespace,
+	target,
+}) {
 	const [groupIds, setGroupIds] = useState([]);
 	const [groupNames, setGroupNames] = useState([]);
 
@@ -128,7 +132,3 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 		</>
 	);
 }
-
-export default (props) => (
-	<GroupLabels {...props} portletNamespace={`_${props.portletNamespace}_`} />
-);

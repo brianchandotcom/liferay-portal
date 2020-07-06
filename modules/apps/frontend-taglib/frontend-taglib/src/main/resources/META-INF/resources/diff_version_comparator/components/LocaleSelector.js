@@ -24,7 +24,7 @@ export default function LocaleSelector({
 	return (
 		<ClayForm.Group>
 			<ClaySelect
-				name={`_${portletNamespace}_languageId`}
+				name={`${portletNamespace}languageId`}
 				onChange={onChange}
 				value={selectedLanguageId}
 			>

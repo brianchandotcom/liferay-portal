@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 
 import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 
-function FriendlyURLHistory({portletNamespace, ...restProps}) {
+export default function FriendlyURLHistory({portletNamespace, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState();
 
@@ -65,12 +65,3 @@ function FriendlyURLHistory({portletNamespace, ...restProps}) {
 FriendlyURLHistory.propTypes = {
 	portletNamespace: PropTypes.string.isRequired,
 };
-
-export default function (props) {
-	return (
-		<FriendlyURLHistory
-			{...props}
-			portletNamespace={`_${props.portletNamespace}_`}
-		/>
-	);
-}

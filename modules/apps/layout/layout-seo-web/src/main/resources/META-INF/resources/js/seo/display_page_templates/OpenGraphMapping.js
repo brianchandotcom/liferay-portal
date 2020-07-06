@@ -18,7 +18,7 @@ import React from 'react';
 import MappingInputs from './components/MappingInputs';
 import lang from './utils/lang';
 
-function OpenGraphMapping({
+export default function OpenGraphMapping({
 	fields,
 	openGraphDescription,
 	openGraphImage,
@@ -107,12 +107,3 @@ OpenGraphMapping.propTypes = {
 		classTypeLabel: PropTypes.string,
 	}).isRequired,
 };
-
-export default function (props) {
-	return (
-		<OpenGraphMapping
-			{...props}
-			portletNamespace={`_${props.portletNamespace}_`}
-		/>
-	);
-}

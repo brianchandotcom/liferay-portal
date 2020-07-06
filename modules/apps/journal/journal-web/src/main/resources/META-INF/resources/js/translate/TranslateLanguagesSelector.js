@@ -24,7 +24,7 @@ const TranslateLanguagesSelector = ({
 	targetAvailableLanguages,
 	targetLanguageId,
 }) => {
-	const namespace = `_${portletNamespace}_`;
+	const namespace = `${portletNamespace}`;
 
 	const refreshPage = (sourceId, targetId) => {
 		const url = new URL(currentUrl);

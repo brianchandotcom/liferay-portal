@@ -60,12 +60,12 @@ function Comparator({
 			const diffURL = new URL(resourceURL);
 
 			diffURL.searchParams.append(
-				`_${portletNamespace}_filterSourceVersion`,
+				`${portletNamespace}filterSourceVersion`,
 				sourceVersion
 			);
 
 			diffURL.searchParams.append(
-				`_${portletNamespace}_filterTargetVersion`,
+				`${portletNamespace}filterTargetVersion`,
 				filterTargetVersion
 			);
 
@@ -155,13 +155,13 @@ function Comparator({
 			ref={formRef}
 		>
 			<ClayInput
-				name={`_${portletNamespace}_sourceVersion`}
+				name={`${portletNamespace}sourceVersion`}
 				type="hidden"
 				value={sourceVersion}
 			/>
 
 			<ClayInput
-				name={`_${portletNamespace}_targetVersion`}
+				name={`${portletNamespace}targetVersion`}
 				type="hidden"
 				value={targetVersion}
 			/>

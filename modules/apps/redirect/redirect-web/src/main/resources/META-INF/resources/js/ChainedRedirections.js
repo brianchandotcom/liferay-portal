@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 
 import ChainedRedirectionsModal from './ChainedRedirectionsModal';
 
-function ChainedRedirections({portletNamespace, ...restProps}) {
+export default function ChainedRedirections({portletNamespace, ...restProps}) {
 	const [redirectEntryChainCause, setRedirectEntryChainCause] = useState(
 		null
 	);
@@ -68,12 +68,3 @@ function ChainedRedirections({portletNamespace, ...restProps}) {
 ChainedRedirections.propTypes = {
 	portletNamespace: PropTypes.string.isRequired,
 };
-
-export default function (props) {
-	return (
-		<ChainedRedirections
-			{...props}
-			portletNamespace={`_${props.portletNamespace}_`}
-		/>
-	);
-}

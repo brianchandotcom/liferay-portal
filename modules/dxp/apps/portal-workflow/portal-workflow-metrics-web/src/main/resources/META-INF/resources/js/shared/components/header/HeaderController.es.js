@@ -21,7 +21,7 @@ const HeaderController = ({basePath}) => {
 
 	const container = useMemo(() => {
 		const header = document.getElementById(
-			`_${portletNamespace}_controlMenu`
+			`${portletNamespace}controlMenu`
 		);
 
 		if (!header) {

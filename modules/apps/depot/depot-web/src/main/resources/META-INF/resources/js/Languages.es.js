@@ -109,7 +109,7 @@ const Languages = ({
 	return (
 		<div className="mt-5">
 			<ClayRadioGroup
-				name={`_${portletNamespace}_TypeSettingsProperties--inheritLocales--`}
+				name={`${portletNamespace}TypeSettingsProperties--inheritLocales--`}
 				onSelectedValueChange={setCurrentInheritLocales}
 				selectedValue={currentInheritLocales}
 			>
@@ -136,13 +136,13 @@ const Languages = ({
 			) : (
 				<>
 					<input
-						name={`_${portletNamespace}_TypeSettingsProperties--languageId--`}
+						name={`${portletNamespace}TypeSettingsProperties--languageId--`}
 						type="hidden"
 						value={customDefaultLocaleId}
 					/>
 
 					<input
-						name={`_${portletNamespace}_TypeSettingsProperties--locales--`}
+						name={`${portletNamespace}TypeSettingsProperties--locales--`}
 						type="hidden"
 						value={localesInputValue}
 					/>

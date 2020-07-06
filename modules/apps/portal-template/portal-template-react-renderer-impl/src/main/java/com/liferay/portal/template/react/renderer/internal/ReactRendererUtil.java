@@ -55,7 +55,7 @@ public class ReactRendererUtil {
 
 	private static Map<String, Object> _prepareProps(
 		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Portal portal) {
 
 		Map<String, Object> modifiedProps = null;
 
@@ -76,24 +76,25 @@ public class ReactRendererUtil {
 			modifiedProps.put("locale", LocaleUtil.getMostRelevantLocale());
 		}
 
-		if (!props.containsKey("portletId")) {
+		String portletId = (String)props.get("portletId");
+
+		if (portletId == null) {
 			if (modifiedProps == null) {
 				modifiedProps = new HashMap<>(props);
 			}
 
-			modifiedProps.put(
-				"portletId",
-				httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
+			portletId = portal.getPortletId(httpServletRequest);
+
+			modifiedProps.put("portletId", portletId);
 		}
 
-		if (!props.containsKey("portletNamespace")) {
+		if ((portletId != null) && !props.containsKey("portletNamespace")) {
 			if (modifiedProps == null) {
 				modifiedProps = new HashMap<>(props);
 			}
 
 			modifiedProps.put(
-				"portletNamespace",
-				httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
+				"portletNamespace", portal.getPortletNamespace(portletId));
 		}
 
 		if (modifiedProps == null) {
@@ -110,7 +111,7 @@ public class ReactRendererUtil {
 			Writer writer)
 		throws IOException {
 
-		StringBundler dependenciesSB = new StringBundler();
+		StringBundler dependenciesSB = new StringBundler(11);
 
 		dependenciesSB.append(npmResolvedPackageName);
 		dependenciesSB.append("/render.es as render");
@@ -131,7 +132,7 @@ public class ReactRendererUtil {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		StringBundler javascriptSB = new StringBundler();
+		StringBundler javascriptSB = new StringBundler(13);
 
 		javascriptSB.append("render");
 		javascriptSB.append(placeholderId);
@@ -146,14 +147,16 @@ public class ReactRendererUtil {
 			javascriptSB.append(
 				jsonSerializer.serializeDeep(
 					_prepareProps(
-						componentDescriptor, props, httpServletRequest)));
+						componentDescriptor, props, httpServletRequest,
+						portal)));
 			javascriptSB.append(")");
 		}
 		else {
 			javascriptSB.append(
 				jsonSerializer.serializeDeep(
 					_prepareProps(
-						componentDescriptor, props, httpServletRequest)));
+						componentDescriptor, props, httpServletRequest,
+						portal)));
 		}
 
 		javascriptSB.append(", '");

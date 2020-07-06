@@ -17,7 +17,7 @@ import React, {useState} from 'react';
 
 import CheckinModal from './CheckinModal.es';
 
-function Checkin({
+export default function Checkin({
 	checkedOut,
 	dlVersionNumberIncreaseValues,
 	portletNamespace,
@@ -63,11 +63,5 @@ function Checkin({
 				/>
 			)}
 		</>
-	);
-}
-
-export default function (props) {
-	return (
-		<Checkin {...props} portletNamespace={`_${props.portletNamespace}_`} />
 	);
 }

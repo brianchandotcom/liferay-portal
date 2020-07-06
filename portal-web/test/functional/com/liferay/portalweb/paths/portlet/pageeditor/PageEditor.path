@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDITABLE_FIELD_TOOLBAR_MAPPED_BUTTON</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map' and contains(@class,'active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map']</td>
 	<td></td>
@@ -211,6 +216,11 @@
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON</td>
 	<td>//button[@data-panel-id='layout_background_image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_TOOLBAR_UNMAPPED_BUTTON</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map' and not (contains(@class,'active'))]</td>
 	<td></td>
 </tr>
 <!--EXPERIENCE-->

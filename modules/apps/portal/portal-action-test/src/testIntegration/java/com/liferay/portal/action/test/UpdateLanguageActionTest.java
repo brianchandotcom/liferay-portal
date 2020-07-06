@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.events.test;
+package com.liferay.portal.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -127,7 +129,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -142,7 +144,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -157,7 +159,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -172,7 +174,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -187,7 +189,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -202,7 +204,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -217,7 +219,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -232,7 +234,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -244,7 +246,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanelWithI18n();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
 	}
@@ -256,7 +258,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanelWithI18n();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
 	}
@@ -268,7 +270,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanelWithI18n();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
 	}
@@ -280,7 +282,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanelWithI18n();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
 	}
@@ -292,7 +294,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanel();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(
 			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
@@ -305,7 +307,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanel();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(
 			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
@@ -318,7 +320,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanel();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(
 			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
@@ -331,7 +333,7 @@ public class UpdateLanguageActionTest {
 		_setThemeDisplayForControlPanel();
 		String bareURL = _getURLForControlPanel();
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(
 			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
@@ -347,7 +349,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -362,7 +364,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -377,7 +379,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -392,7 +394,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -407,7 +409,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -422,7 +424,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -437,7 +439,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -452,7 +454,7 @@ public class UpdateLanguageActionTest {
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}

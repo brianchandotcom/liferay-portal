@@ -68,6 +68,7 @@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUti
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationException" %><%@
 page import="com.liferay.exportimport.kernel.exception.ExportImportContentValidationException" %><%@
+page import="com.liferay.info.field.InfoField" %><%@
 page import="com.liferay.info.field.InfoFieldSetEntry" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.journal.configuration.JournalFileUploadsConfiguration" %><%@

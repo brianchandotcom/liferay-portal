@@ -12,7 +12,7 @@
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import React, {useContext} from 'react';
 
-import {UPDATE_STEP_INDEX} from '../configReducer.es';
+import {ADD_STEP, UPDATE_STEP_INDEX} from '../configReducer.es';
 import WorkflowStep from './WorkflowStep.es';
 
 export default function WorkflowBuilder() {
@@ -28,21 +28,41 @@ export default function WorkflowBuilder() {
 	};
 
 	const stepInfo = [
-		{
-			...dataObject,
-			label: Liferay.Language.get('data-object'),
-		},
+		[
+			{
+				...dataObject,
+				label: Liferay.Language.get('data-object'),
+			},
+		],
 	];
+
+	const badgeLabel = (stepIndex) => {
+		if (stepIndex === 0) {
+			return Liferay.Language.get('start');
+		} else if (stepIndex === steps.length - 1) {
+			return Liferay.Language.get('end');
+		}
+
+		return stepIndex;
+	};
 
 	return (
 		<div className="app-builder-workflow-app__builder">
 			{steps.map((step, index) => (
 				<WorkflowStep
+					addStep={() =>
+						dispatchConfig({stepIndex: index, type: ADD_STEP})
+					}
+					badgeLabel={badgeLabel(index)}
 					{...step}
 					key={index}
 					onClick={() => onClickStep(index)}
 					selected={stepIndex === index}
-					stepInfo={index < steps.length - 1 ? stepInfo : []}
+					stepInfo={
+						index < steps.length - 1 && stepInfo[index]
+							? stepInfo[index]
+							: []
+					}
 				/>
 			))}
 		</div>

@@ -15,24 +15,32 @@
 package com.liferay.asset.list.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,15 +51,15 @@ public class ListItemsActionDropdownItems {
 
 	public ListItemsActionDropdownItems(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		AssetInfoEditURLProvider assetInfoEditURLProvider,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		DLAppService dlAppService,
+		InfoEditURLProviderTracker infoEditURLProviderTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		HttpServletRequest httpServletRequest) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_assetInfoEditURLProvider = assetInfoEditURLProvider;
-		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_dlAppService = dlAppService;
+		_infoEditURLProviderTracker = infoEditURLProviderTracker;
 		_infoItemServiceTracker = infoItemServiceTracker;
 
 		_httpServletRequest = httpServletRequest;
@@ -64,38 +72,39 @@ public class ListItemsActionDropdownItems {
 			String className, Object object)
 		throws Exception {
 
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		InfoItemFieldValues infoFormValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
-
-		InfoItemClassPKReference infoItemClassPKReference =
-			infoFormValues.getInfoItemClassPKReference();
-
-		long classPK = infoItemClassPKReference.getClassPK();
-
-		String objectClassName = className;
-
-		if (object instanceof AssetEntry) {
-			AssetEntry assetEntry = (AssetEntry)object;
-
-			classPK = assetEntry.getClassPK();
-			objectClassName = assetEntry.getClassName();
-		}
-
 		return DropdownItemListBuilder.add(
-			_getViewDisplayPageActionUnsafeConsumer(objectClassName, classPK)
+			_getViewDisplayPageActionUnsafeConsumer(className, object)
 		).add(
-			_getEditContentActionUnsafeConsumer(objectClassName, classPK)
+			_getEditContentActionUnsafeConsumer(className, object)
 		).build();
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditContentActionUnsafeConsumer(String className, long classPK) {
+	private Object _getAssetEntryObject(AssetEntry assetEntry)
+		throws Exception {
 
-		String editContentURL = _getEditContentURL(className, classPK);
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntry.getClassName());
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		return assetRenderer.getAssetObject();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getEditContentActionUnsafeConsumer(String className, Object object)
+		throws Exception {
+
+		String editContentURL = _getEditContentURL(className, object);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "editContent");
@@ -106,9 +115,34 @@ public class ListItemsActionDropdownItems {
 		};
 	}
 
-	private String _getEditContentURL(String className, long classPK) {
-		String editContentURL = _assetInfoEditURLProvider.getURL(
-			className, classPK, _httpServletRequest);
+	private String _getEditContentURL(String className, Object object)
+		throws Exception {
+
+		if (object instanceof AssetEntry) {
+			AssetEntry assetEntry = (AssetEntry)object;
+
+			className = assetEntry.getClassName();
+			object = _getAssetEntryObject(assetEntry);
+		}
+
+		if (Objects.equals(className, DLFileEntryConstants.getClassName())) {
+			className = FileEntry.class.getName();
+
+			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)object;
+
+			object = _dlAppService.getFileEntry(
+				liferayFileEntry.getFileEntryId());
+		}
+
+		InfoEditURLProvider<Object> infoEditURLProvider =
+			_infoEditURLProviderTracker.getInfoEditURLProvider(className);
+
+		if (infoEditURLProvider == null) {
+			return null;
+		}
+
+		String editContentURL = infoEditURLProvider.getURL(
+			object, _httpServletRequest);
 
 		return HttpUtil.setParameter(
 			editContentURL, "redirect", _getRedirect());
@@ -126,10 +160,10 @@ public class ListItemsActionDropdownItems {
 
 	private UnsafeConsumer<DropdownItem, Exception>
 			_getViewDisplayPageActionUnsafeConsumer(
-				String className, long classPK)
+				String className, Object object)
 		throws Exception {
 
-		String viewDisplayPageURL = _getViewDisplayPageURL(className, classPK);
+		String viewDisplayPageURL = _getViewDisplayPageURL(className, object);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "viewDisplayPage");
@@ -140,11 +174,34 @@ public class ListItemsActionDropdownItems {
 		};
 	}
 
-	private String _getViewDisplayPageURL(String className, long classPK)
+	private String _getViewDisplayPageURL(String className, Object object)
 		throws Exception {
 
 		if (_assetDisplayPageFriendlyURLProvider == null) {
 			return null;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		InfoItemFieldValues infoFormValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+
+		InfoItemClassPKReference infoItemClassPKReference =
+			infoFormValues.getInfoItemClassPKReference();
+
+		long classPK = infoItemClassPKReference.getClassPK();
+
+		if (object instanceof AssetEntry) {
+			AssetEntry assetEntry = (AssetEntry)object;
+
+			classPK = assetEntry.getClassPK();
+			className = assetEntry.getClassName();
+		}
+
+		if (Objects.equals(className, DLFileEntryConstants.getClassName())) {
+			className = FileEntry.class.getName();
 		}
 
 		String viewDisplayPageURL =
@@ -157,9 +214,9 @@ public class ListItemsActionDropdownItems {
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final AssetInfoEditURLProvider _assetInfoEditURLProvider;
+	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoEditURLProviderTracker _infoEditURLProviderTracker;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;

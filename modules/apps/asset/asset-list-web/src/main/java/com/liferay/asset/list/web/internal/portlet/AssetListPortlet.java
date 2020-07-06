@@ -15,7 +15,6 @@
 package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
@@ -29,7 +28,9 @@ import com.liferay.asset.list.web.internal.display.context.InfoListProviderDispl
 import com.liferay.asset.list.web.internal.display.context.InfoListProviderItemsDisplayContext;
 import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -109,8 +110,8 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS,
 			new ListItemsActionDropdownItems(
-				_assetDisplayPageFriendlyURLProvider, _assetInfoEditURLProvider,
-				_infoDisplayContributorTracker, _infoItemServiceTracker,
+				_assetDisplayPageFriendlyURLProvider, _dlAppService,
+				_infoEditURLProviderTracker, _infoItemServiceTracker,
 				_portal.getHttpServletRequest(renderRequest)));
 
 		renderRequest.setAttribute(
@@ -155,9 +156,6 @@ public class AssetListPortlet extends MVCPortlet {
 		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
-	private AssetInfoEditURLProvider _assetInfoEditURLProvider;
-
-	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 
 	@Reference
@@ -165,7 +163,13 @@ public class AssetListPortlet extends MVCPortlet {
 		_assetRendererFactoryClassProvider;
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

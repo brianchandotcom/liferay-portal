@@ -104,11 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE</td>
-	<td>//div[contains(@class,'questions-navigation-parent-section-title') and contains(.,'${key_parentCategoryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>QUESTIONS_TITLE</td>
 	<td>//a[contains(@class,'questions-title')]/h2[contains(.,'${key_questionTitle}')]</td>
 	<td></td>

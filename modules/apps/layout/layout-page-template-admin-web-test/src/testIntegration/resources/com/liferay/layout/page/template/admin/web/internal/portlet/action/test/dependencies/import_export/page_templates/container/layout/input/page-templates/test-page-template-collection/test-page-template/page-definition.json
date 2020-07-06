@@ -1,0 +1,35 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"backgroundImage": {
+					},
+					"layout": {
+						"borderColor": "danger",
+						"borderRadius": "Circle",
+						"borderWidth": 99,
+						"contentDisplay": "Block",
+						"justify": "None",
+						"marginBottom": 6,
+						"marginLeft": 1,
+						"marginRight": 2,
+						"marginTop": 4,
+						"opacity": 99,
+						"paddingBottom": 6,
+						"paddingLeft": 1,
+						"paddingRight": 2,
+						"paddingTop": 4,
+						"widthType": "Fluid"
+					}
+				},
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

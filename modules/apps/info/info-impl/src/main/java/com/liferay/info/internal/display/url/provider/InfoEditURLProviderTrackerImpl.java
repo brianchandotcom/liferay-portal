@@ -33,8 +33,8 @@ public class InfoEditURLProviderTrackerImpl
 	implements InfoEditURLProviderTracker {
 
 	@Override
-	public InfoEditURLProvider<?> getInfoEditURLProvider(String className) {
-		return _infoEditURLProviders.get(className);
+	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className) {
+		return (InfoEditURLProvider<T>)_infoEditURLProviders.get(className);
 	}
 
 	@Reference(

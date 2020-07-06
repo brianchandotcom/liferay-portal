@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
@@ -82,6 +83,9 @@ public class ContainerLayoutStructureItemExporter
 							containerLayoutStructureItem.
 								getBackgroundImageJSONObject(),
 							saveMappingConfiguration);
+						fragmentLink = _toFragmentLink(
+							containerLayoutStructureItem.getLinkJSONObject(),
+							saveMappingConfiguration);
 						layout = _toLayout(containerLayoutStructureItem);
 					}
 				};
@@ -108,6 +112,10 @@ public class ContainerLayoutStructureItemExporter
 		if (saveMapping && jsonObject.has("classNameId") &&
 			jsonObject.has("classPK") && jsonObject.has("fieldId")) {
 
+			return true;
+		}
+
+		if (saveMapping && jsonObject.has("collectionFieldId")) {
 			return true;
 		}
 
@@ -235,6 +243,54 @@ public class ContainerLayoutStructureItemExporter
 		return null;
 	}
 
+	private FragmentLink _toFragmentLink(
+		JSONObject jsonObject, boolean saveMapping) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		if (jsonObject.isNull("href") &&
+			!_isSaveFragmentMappedValue(jsonObject, saveMapping)) {
+
+			return null;
+		}
+
+		return new FragmentLink() {
+			{
+				setHref(
+					() -> {
+						if (_isSaveFragmentMappedValue(
+								jsonObject, saveMapping)) {
+
+							return _toFragmentMappedValue(
+								_toDefaultMappingValue(jsonObject, null),
+								jsonObject);
+						}
+
+						return new FragmentInlineValue() {
+							{
+								value = jsonObject.getString("href");
+							}
+						};
+					});
+
+				setTarget(
+					() -> {
+						String target = jsonObject.getString("target");
+
+						if (Validator.isNull(target)) {
+							return null;
+						}
+
+						return Target.create(
+							StringUtil.upperCaseFirstLetter(
+								target.substring(1)));
+					});
+			}
+		};
+	}
+
 	private FragmentMappedValue _toFragmentMappedValue(
 		FragmentInlineValue fragmentInlineValue, JSONObject jsonObject) {
 
@@ -247,6 +303,13 @@ public class ContainerLayoutStructureItemExporter
 
 						setFieldKey(
 							() -> {
+								String collectionFieldId = jsonObject.getString(
+									"collectionFieldId");
+
+								if (Validator.isNotNull(collectionFieldId)) {
+									return collectionFieldId;
+								}
+
 								String fieldId = jsonObject.getString(
 									"fieldId");
 
@@ -254,7 +317,14 @@ public class ContainerLayoutStructureItemExporter
 									return fieldId;
 								}
 
-								return jsonObject.getString("mappedField");
+								String mappedField = jsonObject.getString(
+									"mappedField");
+
+								if (Validator.isNotNull(mappedField)) {
+									return mappedField;
+								}
+
+								return null;
 							});
 					}
 				};
@@ -335,11 +405,22 @@ public class ContainerLayoutStructureItemExporter
 	}
 
 	private Object _toItemReference(JSONObject jsonObject) {
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
 		String fieldId = jsonObject.getString("fieldId");
 		String mappedField = jsonObject.getString("mappedField");
 
-		if (Validator.isNull(fieldId) && Validator.isNull(mappedField)) {
+		if (Validator.isNull(collectionFieldId) && Validator.isNull(fieldId) &&
+			Validator.isNull(mappedField)) {
+
 			return null;
+		}
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.COLLECTION_ITEM;
+				}
+			};
 		}
 
 		if (Validator.isNotNull(mappedField)) {

@@ -98,7 +98,7 @@ public class ContainerLayoutStructureItemImporter
 			Map<String, Object> containerLayout =
 				(Map<String, Object>)definitionMap.get("layout");
 
-			if (layout != null) {
+			if (containerLayout != null) {
 				containerLayoutStructureItem.setAlign(
 					AlignConverter.convertToInternalValue(
 						(String)containerLayout.get("align")));

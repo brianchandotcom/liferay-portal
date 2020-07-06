@@ -17,7 +17,7 @@ import React from 'react';
 
 import Color from '../../../../src/main/resources/META-INF/resources/js/components/color/Color.es';
 
-describe('List', () => {
+describe('Color', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {

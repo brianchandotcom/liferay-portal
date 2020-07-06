@@ -35,6 +35,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -71,14 +73,19 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -116,6 +123,44 @@ public class ExportImportPerformanceTest {
 			properties.getProperty("portlets.per.content.page"));
 		_portletsPerPortletPage = GetterUtil.getInteger(
 			properties.getProperty("portlets.per.portlet.page"));
+
+		_results = new ArrayList<>();
+
+		_resultsFile = properties.getProperty("results.file");
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("pageType - ");
+		sb.append(_pageType);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("pagesCount - ");
+		sb.append(_pagesCount);
+		sb.append(StringPool.COMMA_AND_SPACE);
+
+		if (Objects.equals(_pageType, LayoutConstants.TYPE_CONTENT)) {
+			sb.append("fragmentsPerPage - ");
+			sb.append(_fragmentsPerPage);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append("portletsPerPage - ");
+			sb.append(_portletsPerContentPage);
+		}
+		else {
+			sb.append("portletsPerPage - ");
+			sb.append(_portletsPerPortletPage);
+		}
+
+		_results.add(sb.toString());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (Validator.isNotNull(_resultsFile)) {
+			Stream<String> stream = _results.stream();
+
+			FileUtil.write(
+				_resultsFile,
+				stream.collect(Collectors.joining(StringPool.NEW_LINE)));
+		}
 	}
 
 	@Before
@@ -161,6 +206,8 @@ public class ExportImportPerformanceTest {
 			_exportImportConfiguration);
 
 		stopWatch.stop();
+
+		_results.add("testExportGroupToLAR - " + stopWatch.getTime());
 	}
 
 	@Test
@@ -202,6 +249,8 @@ public class ExportImportPerformanceTest {
 			_exportImportConfiguration, file);
 
 		stopWatch.stop();
+
+		_results.add("testImportGroupFromLAR - " + stopWatch.getTime());
 	}
 
 	@Test
@@ -214,6 +263,8 @@ public class ExportImportPerformanceTest {
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
 		stopWatch.stop();
+
+		_results.add("testInitialStagingPublication - " + stopWatch.getTime());
 	}
 
 	@Test
@@ -234,8 +285,8 @@ public class ExportImportPerformanceTest {
 			_layoutLocalService.updateLayout(prototypeLayout);
 			_layoutCopyHelper.copyLayout(layout, prototypeLayout);
 
-			layout.setLayoutPrototypeLinkEnabled(true);
 			layout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
+			layout.setLayoutPrototypeLinkEnabled(true);
 
 			_layoutLocalService.updateLayout(layout);
 		}
@@ -254,6 +305,8 @@ public class ExportImportPerformanceTest {
 			_group, _group.getPublicLayoutSet());
 
 		stopWatch.stop();
+
+		_results.add("testSiteTemplatePropagation - " + stopWatch.getTime());
 	}
 
 	@Test
@@ -295,6 +348,8 @@ public class ExportImportPerformanceTest {
 		}
 
 		stopWatch.stop();
+
+		_results.add("testStagingPublication - " + stopWatch.getTime());
 	}
 
 	private void _createFragments(Layout layout) throws Exception {
@@ -469,6 +524,8 @@ public class ExportImportPerformanceTest {
 	private static String _pageType;
 	private static int _portletsPerContentPage;
 	private static int _portletsPerPortletPage;
+	private static List<String> _results;
+	private static String _resultsFile;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

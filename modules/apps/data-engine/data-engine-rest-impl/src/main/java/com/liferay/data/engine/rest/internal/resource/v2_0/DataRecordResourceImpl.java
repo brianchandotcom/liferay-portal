@@ -208,7 +208,7 @@ public class DataRecordResourceImpl
 			},
 			sorts,
 			document -> _toDataRecord(
-				_ddlRecordLocalService.getRecord(
+				_ddlRecordLocalService.fetchRecord(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -451,6 +451,10 @@ public class DataRecordResourceImpl
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {
+		if (ddlRecord == null) {
+			return null;
+		}
+
 		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();

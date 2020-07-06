@@ -61,10 +61,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-		double version = ParamUtil.getDouble(actionRequest, "version");
-
 		String targetLanguageId = ParamUtil.getString(
 			actionRequest, "targetLanguageId");
 
@@ -78,8 +74,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 						InfoItemFieldValuesProvider.class,
 						JournalArticle.class.getName());
 
-			JournalArticle article = _journalArticleService.getArticle(
-				groupId, articleId, version);
+			JournalArticle article = ActionUtil.getArticle(actionRequest);
 
 			InfoItemFieldValues infoItemFieldValues =
 				infoItemFieldValuesProvider.getInfoItemFieldValues(article);

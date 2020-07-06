@@ -113,4 +113,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publish in Staging site."
+	@priority = "3"
+	test ViewAutoSavedBeforePublishingComponentInStaging {
+		JSONFragment.addFragmentCollection(
+			groupKey = "Test Site Name-staging",
+			name = "Collection Name",
+			site = "false");
+
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			fragmentStatus = "Approved",
+			groupKey = "Test Site Name-staging",
+			name = "Fragment Name",
+			site = "false");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Fragment Name",
+			item = "Edit");
+
+		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
+
+		AssertTextEquals(
+			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
+			value1 = "Changes Saved");
+
+		Navigator.gotoBack();
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Fragment Name",
+			item = "Edit");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+			value1 = '''<div class="fragment_1">Fragment Name</div>''');
+	}
+
 }

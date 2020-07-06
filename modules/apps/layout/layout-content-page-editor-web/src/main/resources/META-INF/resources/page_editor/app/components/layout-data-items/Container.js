@@ -131,7 +131,12 @@ const Container = React.forwardRef(
 		);
 
 		return link ? (
-			<a {...data} href={link.href} target={link.target}>
+			<a
+				{...data}
+				href={link.href}
+				style={{color: 'inherit', textDecoration: 'none'}}
+				target={link.target}
+			>
 				{content}
 			</a>
 		) : (

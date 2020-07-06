@@ -31,7 +31,7 @@ definition {
 	test CountUserStatisticsAfterEnablingSocialTracking {
 		property test.name.skip.portal.instance = "SocialActivity#CountUserStatisticsAfterEnablingSocialTracking";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -42,6 +42,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewCheckboxChecked(fieldName = "enableUserSocialActivityTracking");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -86,7 +88,7 @@ definition {
 	test DisableSocialTracking {
 		property test.name.skip.portal.instance = "SocialActivity#DisableSocialTracking";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -101,6 +103,8 @@ definition {
 		PortletEntry.save();
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enable");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

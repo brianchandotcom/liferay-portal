@@ -39,9 +39,13 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name="/document_library/ddm/add_data_definition" var="addDataDefinitionURL" />
+<portlet:actionURL name="/document_library/ddm/add_data_definition" var="addDataDefinitionURL">
+	<portlet:param name="mvcRenderCommandName" value="/document_library/ddm/edit_ddm_structure" />
+</portlet:actionURL>
 
-<portlet:actionURL name="/document_library/ddm/update_data_definition" var="updateDataDefinitionURL" />
+<portlet:actionURL name="/document_library/ddm/update_data_definition" var="updateDataDefinitionURL">
+	<portlet:param name="mvcRenderCommandName" value="/document_library/ddm/edit_ddm_structure" />
+</portlet:actionURL>
 
 <aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveDDMStructure();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -63,7 +67,7 @@ renderResponse.setTitle(title);
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" onClick='<%= liferayPortletResponse.getNamespace() + "saveDDMStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+						<aui:button cssClass="btn-sm mr-3" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 					</div>
 				</li>
 			</ul>

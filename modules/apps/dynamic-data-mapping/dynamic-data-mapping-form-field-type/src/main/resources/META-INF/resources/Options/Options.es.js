@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {usePrevious} from 'frontend-js-react-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -68,14 +67,14 @@ const Option = React.forwardRef(
 const refreshFields = (defaultLanguageId, editingLanguageId, options) =>
 	[
 		...options.map((option) => ({
-			id: random(),
-			...option,
 			generateKeyword: isOptionValueGenerated(
 				defaultLanguageId,
 				editingLanguageId,
 				options,
 				option
 			),
+			id: random(),
+			...option,
 		})),
 		{...defaultOption, generateKeyword: true, id: random()},
 	].filter((field) => field && Object.keys(field).length > 0);
@@ -88,8 +87,6 @@ const Options = ({
 	onChange,
 	value = {},
 }) => {
-	const prevEditingLanguageId = usePrevious(editingLanguageId);
-
 	const normalizedValue = useMemo(() => {
 		const formattedValue = {...value};
 
@@ -114,19 +111,13 @@ const Options = ({
 	});
 
 	useEffect(() => {
-			const options =
-				normalizedValue[editingLanguageId] ||
-				normalizedValue[defaultLanguageId] ||
-				[];
+		const options =
+			normalizedValue[editingLanguageId] ||
+			normalizedValue[defaultLanguageId] ||
+			[];
 
-			setFields(
-				refreshFields(defaultLanguageId, editingLanguageId, options)
-			);
-	}, [
-		defaultLanguageId,
-		editingLanguageId,
-		normalizedValue,
-	]);
+		setFields(refreshFields(defaultLanguageId, editingLanguageId, options));
+	}, [defaultLanguageId, editingLanguageId, normalizedValue]);
 
 	const defaultOptionRef = useRef(
 		fields.length === 2 &&

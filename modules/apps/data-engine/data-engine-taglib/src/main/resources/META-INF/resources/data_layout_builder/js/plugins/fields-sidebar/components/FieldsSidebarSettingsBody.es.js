@@ -43,7 +43,7 @@ export default function () {
 	const settingsContext = hasFocusedCustomObjectField
 		? customObjectFieldSettingsContext
 		: fieldSettingsContext;
-	
+
 	const filteredSettingsContext = useMemo(
 		() =>
 			getFilteredSettingsContext({

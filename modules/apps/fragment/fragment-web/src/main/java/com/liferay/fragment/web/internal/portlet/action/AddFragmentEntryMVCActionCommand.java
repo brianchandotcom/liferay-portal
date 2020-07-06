@@ -20,7 +20,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -89,10 +88,10 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			htmlSB.append(fragmentEntry.getFragmentEntryId());
 			htmlSB.append("\">\n</div>");
 
-			fragmentEntry = _fragmentEntryService.updateFragmentEntry(
-				fragmentEntry.getFragmentEntryId(), fragmentEntry.getName(),
-				cssSB.toString(), htmlSB.toString(), StringPool.BLANK,
-				StringPool.BLANK, WorkflowConstants.STATUS_DRAFT);
+			fragmentEntry.setCss(cssSB.toString());
+			fragmentEntry.setHtml(htmlSB.toString());
+
+			fragmentEntry = _fragmentEntryService.updateDraft(fragmentEntry);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));

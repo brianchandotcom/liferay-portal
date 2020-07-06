@@ -64,7 +64,9 @@ class Form extends Component {
 			showPublishAlert,
 		} = this.props;
 
-		this.syncActiveNavItem(this.state.activeNavItem);
+		if (this.isFormBuilderView()) {
+			this.syncActiveNavItem(this.state.activeNavItem);
+		}
 
 		const {paginationMode} = this.state;
 

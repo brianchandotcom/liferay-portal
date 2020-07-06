@@ -142,8 +142,12 @@ export default ({
 									!app.dataListViewId ||
 									!app.name.en_US ||
 									config.steps.some(
-										({name}) =>
-											!name || name.trim().length === 0
+										({appWorkflowRoleAssignments, name}) =>
+											!appWorkflowRoleAssignments ||
+											appWorkflowRoleAssignments.length ===
+												0 ||
+											!name ||
+											name.trim().length === 0
 									)
 								}
 								onClick={() => setModalVisible(true)}

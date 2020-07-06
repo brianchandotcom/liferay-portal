@@ -278,6 +278,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110708. Can add Row element into a custom module of anthor one."
+	@priority = "3"
+	test AddRowToCustomModuleOfAnotherRow {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row");
+
+		Click(
+			key_position = "2",
+			locator1 = "PageEditor#ROW_COLUMN_RESIZER");
+
+		DragAndDrop.DragAndDropObject(
+			key_position = "2",
+			locator1 = "PageEditor#ROW_COLUMN_RESIZER",
+			position = "530,-20");
+
+		AssertVisible(locator1 = "PageEditor#ROW_COLUMN_FIRST_RESIZER");
+
+		PageEditor.addElementToColumn(
+			collectionName = "Layout Elements",
+			columnNumber = "3",
+			fragmentName = "Row",
+			navTab = "Fragments");
+
+		PageEditor.waitForAutoSave();
+
+		AssertElementPresent(
+			key_columnNumber = "3",
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+	}
+
 	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
 	@priority = "5"
 	test CanAccessContentPanel {

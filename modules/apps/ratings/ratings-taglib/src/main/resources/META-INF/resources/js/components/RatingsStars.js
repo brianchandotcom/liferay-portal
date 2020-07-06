@@ -60,7 +60,6 @@ const RatingsStars = ({
 		[numberOfStars]
 	);
 
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [score, setScore] = useState(getLabelScore(userScore));
 	const [averageScore, setAverageScore] = useState(
 		formatAverageScore(initialAverageScore)
@@ -83,7 +82,6 @@ const RatingsStars = ({
 
 		setScore(label);
 		handleSendVoteRequest(value);
-		setIsDropdownOpen(false);
 	};
 
 	const handleSendVoteRequest = useCallback(
@@ -146,11 +144,9 @@ const RatingsStars = ({
 				disabled,
 				getSrAverageMessage,
 				getTitle,
-				handleOnClick,
-				isDropdownOpen,
 				numberOfStars,
+				onClick: handleOnClick,
 				score,
-				setIsDropdownOpen,
 				starScores,
 				totalEntries,
 		  })
@@ -310,14 +306,19 @@ function RatingsSelectStars({
 	disabled,
 	getSrAverageMessage,
 	getTitle,
-	handleOnClick,
-	isDropdownOpen,
 	numberOfStars,
+	onClick,
 	score,
-	setIsDropdownOpen,
 	starScores,
 	totalEntries,
 }) {
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+	const handleOnClick = (index) => {
+		setIsDropdownOpen(false);
+		onClick(index);
+	};
+
 	return (
 		<ClayLayout.ContentRow
 			className="ratings ratings-stars"

@@ -75,25 +75,23 @@ definition {
 			siteName = "Community Site Name",
 			siteType = "Community");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Community Site Name",
+			layoutName = "Site Page Name");
 
-		SitePages.addPublicPage(
-			pageName = "Site Page Name",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Community Site Name",
+			layoutName = "Site Page Name",
+			layoutTemplate = "1 Column");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Site Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Community Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Announcements");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Community Site Name");
-
-		Portlet.addPG(portletName = "Announcements");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",

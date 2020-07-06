@@ -16,18 +16,17 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 
 import useRequest from '../../hooks/useRequest.es';
 import List from '../list/List.es';
 import Summary from '../summary/Summary.es';
 import {SidebarContext} from './SidebarContext.es';
 
-export default () => {
+const SidebarContent = () => {
 	const {
 		field,
 		formReportRecordsFieldValuesURL,
-		isOpen,
 		portletNamespace,
 		summary = {},
 		toggleSidebar,
@@ -35,88 +34,90 @@ export default () => {
 		type,
 	} = useContext(SidebarContext);
 
-	let endpoint = null;
+	const {origin} = new URL(formReportRecordsFieldValuesURL);
+	const path = formReportRecordsFieldValuesURL.replace(origin, '');
 
-	if (field) {
-		const {origin} = new URL(formReportRecordsFieldValuesURL);
-		const path = formReportRecordsFieldValuesURL.replace(origin, '');
-
-		endpoint = `${path}&${portletNamespace}fieldName=${field.name}`;
-	}
-	else {
-		return null;
-	}
+	const endpoint = `${path}&${portletNamespace}fieldName=${field.name}`;
 
 	const {isLoading, response: data = []} = useRequest(endpoint);
-
-	if (!isOpen) {
-		return null;
-	}
 
 	const {icon, label} = field;
 
 	return (
 		<>
-			<div className="sidebar-backdrop"></div>
+			<nav className="component-tbar tbar">
+				<ClayLayout.ContainerFluid>
+					<ul className="tbar-nav">
+						<li className="tbar-item">
+							<div className="icon">
+								<ClayIcon symbol={icon} />
+							</div>
+						</li>
+
+						<li className="tbar-item tbar-item-expand">
+							<div className="tbar-section">
+								<div className="field-info">
+									<p className="title">{label}</p>
+
+									<p className="description">
+										{totalEntries}{' '}
+										{Liferay.Language.get(
+											'entries'
+										).toLowerCase()}
+									</p>
+								</div>
+							</div>
+						</li>
+
+						<li className="tbar-item">
+							<ClayButton
+								className="close-sidebar"
+								displayType="secondary"
+								monospaced
+								onClick={() => toggleSidebar()}
+							>
+								<ClayIcon
+									className="close-button"
+									symbol={'times-small'}
+								/>
+							</ClayButton>
+						</li>
+					</ul>
+				</ClayLayout.ContainerFluid>
+			</nav>
+
+			<div className="sidebar-body">
+				{isLoading && (
+					<div className="align-items-center d-flex loading-wrapper">
+						<ClayLoadingIndicator />
+					</div>
+				)}
+
+				{!!Object.entries(summary).length && (
+					<Summary summary={summary} />
+				)}
+
+				<List data={data} type={type}></List>
+			</div>
+		</>
+	);
+};
+
+export default () => {
+	const {field, isOpen, portletNamespace} = useContext(SidebarContext);
+
+	const ref = useRef();
+
+	return (
+		<>
+			{isOpen && <div className="sidebar-backdrop"></div>}
 			<div
 				className="open sidebar-container sidebar-reports"
 				id={`${portletNamespace}-sidebar-reports`}
+				ref={ref}
 			>
 				<div className="sidebar sidebar-light">
-					<nav className="component-tbar tbar">
-						<ClayLayout.ContainerFluid>
-							<ul className="tbar-nav">
-								<li className="tbar-item">
-									<div className="icon">
-										<ClayIcon symbol={icon} />
-									</div>
-								</li>
-
-								<li className="tbar-item tbar-item-expand">
-									<div className="tbar-section">
-										<div className="field-info">
-											<p className="title">{label}</p>
-
-											<p className="description">
-												{totalEntries}{' '}
-												{Liferay.Language.get(
-													'entries'
-												).toLowerCase()}
-											</p>
-										</div>
-									</div>
-								</li>
-
-								<li className="tbar-item">
-									<ClayButton
-										className="close-sidebar"
-										displayType="secondary"
-										monospaced
-										onClick={() => toggleSidebar()}
-									>
-										<ClayIcon
-											className="close-button"
-											symbol={'times-small'}
-										/>
-									</ClayButton>
-								</li>
-							</ul>
-						</ClayLayout.ContainerFluid>
-					</nav>
-
-					<div className="sidebar-body">
-						{isLoading && (
-							<div className="align-items-center d-flex loading-wrapper">
-								<ClayLoadingIndicator />
-							</div>
-						)}
-
-						{!!Object.entries(summary).length && (
-							<Summary summary={summary} />
-						)}
-
-						<List data={data} type={type}></List>
-					</div>
+					{field && <SidebarContent />}
 				</div>
 			</div>
 		</>

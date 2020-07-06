@@ -191,6 +191,116 @@ public class PortletLayoutDisplayContext {
 			className);
 	}
 
+	public String getContainerLinkHref(
+			ContainerLayoutStructureItem containerLayoutStructureItem,
+			Object displayObject)
+		throws PortalException {
+
+		JSONObject linkJSONObject =
+			containerLayoutStructureItem.getLinkJSONObject();
+
+		if (linkJSONObject == null) {
+			return StringPool.BLANK;
+		}
+
+		String mappedField = linkJSONObject.getString("mappedField");
+
+		if (Validator.isNotNull(mappedField)) {
+			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
+				(InfoDisplayObjectProvider<Object>)
+					_httpServletRequest.getAttribute(
+						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+			if ((_infoDisplayContributorTracker != null) &&
+				(infoDisplayObjectProvider != null)) {
+
+				InfoDisplayContributor<Object> infoDisplayContributor =
+					(InfoDisplayContributor<Object>)
+						_infoDisplayContributorTracker.
+							getInfoDisplayContributor(
+								PortalUtil.getClassName(
+									infoDisplayObjectProvider.
+										getClassNameId()));
+
+				if (infoDisplayContributor != null) {
+					Object object =
+						infoDisplayContributor.getInfoDisplayFieldValue(
+							infoDisplayObjectProvider.getDisplayObject(),
+							mappedField, LocaleUtil.getDefault());
+
+					if (object instanceof String) {
+						String fieldValue = (String)object;
+
+						if (Validator.isNotNull(fieldValue)) {
+							return fieldValue;
+						}
+
+						return StringPool.BLANK;
+					}
+				}
+			}
+		}
+
+		String fieldId = linkJSONObject.getString("fieldId");
+
+		if (Validator.isNotNull(fieldId)) {
+			long classNameId = linkJSONObject.getLong("classNameId");
+			long classPK = linkJSONObject.getLong("classPK");
+
+			if ((classNameId != 0L) && (classPK != 0L)) {
+				InfoDisplayContributor<Object> infoDisplayContributor =
+					(InfoDisplayContributor<Object>)
+						_infoDisplayContributorTracker.
+							getInfoDisplayContributor(
+								PortalUtil.getClassName(classNameId));
+
+				if (infoDisplayContributor != null) {
+					InfoDisplayObjectProvider<Object>
+						infoDisplayObjectProvider =
+							infoDisplayContributor.getInfoDisplayObjectProvider(
+								classPK);
+
+					if (infoDisplayObjectProvider != null) {
+						Object object =
+							infoDisplayContributor.getInfoDisplayFieldValue(
+								infoDisplayObjectProvider.getDisplayObject(),
+								fieldId, LocaleUtil.getDefault());
+
+						if (object instanceof String) {
+							String fieldValue = (String)object;
+
+							if (Validator.isNotNull(fieldValue)) {
+								return fieldValue;
+							}
+
+							return StringPool.BLANK;
+						}
+					}
+				}
+			}
+		}
+
+		String collectionFieldId = linkJSONObject.getString(
+			"collectionFieldId");
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			String mappedCollectionValue = _getMappedCollectionValue(
+				collectionFieldId, displayObject);
+
+			if (Validator.isNotNull(mappedCollectionValue)) {
+				return mappedCollectionValue;
+			}
+		}
+
+		String href = linkJSONObject.getString("href");
+
+		if (Validator.isNotNull(href)) {
+			return href;
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getCssClass(
 		ContainerLayoutStructureItem containerLayoutStructureItem) {
 

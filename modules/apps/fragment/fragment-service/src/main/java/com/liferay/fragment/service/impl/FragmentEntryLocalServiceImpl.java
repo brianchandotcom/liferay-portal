@@ -641,9 +641,11 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntry = getDraft(fragmentEntry);
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			fragmentEntry = publishDraft(fragmentEntry);
+		if (status != WorkflowConstants.STATUS_APPROVED) {
+			return fragmentEntry;
 		}
+
+		fragmentEntry = publishDraft(fragmentEntry);
 
 		FragmentServiceConfiguration fragmentServiceConfiguration =
 			_configurationProvider.getCompanyConfiguration(

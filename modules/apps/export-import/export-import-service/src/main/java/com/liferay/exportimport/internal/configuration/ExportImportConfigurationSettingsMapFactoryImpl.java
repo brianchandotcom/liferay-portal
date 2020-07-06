@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.internal.configuration;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

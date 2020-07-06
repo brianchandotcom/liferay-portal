@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;

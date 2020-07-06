@@ -22,7 +22,7 @@ import com.liferay.bulk.selection.internal.constants.BulkSelectionBackgroundTask
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;

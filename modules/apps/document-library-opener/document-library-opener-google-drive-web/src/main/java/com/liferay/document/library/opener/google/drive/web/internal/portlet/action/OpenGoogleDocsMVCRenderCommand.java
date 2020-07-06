@@ -23,7 +23,7 @@ import com.liferay.document.library.opener.google.drive.web.internal.util.Google
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 

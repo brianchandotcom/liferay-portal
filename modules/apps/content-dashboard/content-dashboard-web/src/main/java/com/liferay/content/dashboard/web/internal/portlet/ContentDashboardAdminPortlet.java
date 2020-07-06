@@ -32,7 +32,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageConstants;
+import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

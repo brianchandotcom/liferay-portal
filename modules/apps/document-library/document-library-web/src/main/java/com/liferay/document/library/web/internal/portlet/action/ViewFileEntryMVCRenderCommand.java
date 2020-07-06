@@ -22,7 +22,7 @@ import com.liferay.document.library.repository.authorization.capability.Authoriz
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;

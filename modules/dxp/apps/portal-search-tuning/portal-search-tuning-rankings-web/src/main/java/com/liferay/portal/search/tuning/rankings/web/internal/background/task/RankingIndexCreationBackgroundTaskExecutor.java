@@ -15,10 +15,10 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;

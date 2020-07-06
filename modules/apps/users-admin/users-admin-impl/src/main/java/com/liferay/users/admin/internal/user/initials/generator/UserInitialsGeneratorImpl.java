@@ -14,8 +14,8 @@
 
 package com.liferay.users.admin.internal.user.initials.generator;
 
-import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;

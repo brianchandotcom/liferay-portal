@@ -16,9 +16,9 @@ package com.liferay.portal.background.task.internal.lock;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistryUtil;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 

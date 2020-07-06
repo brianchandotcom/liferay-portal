@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;

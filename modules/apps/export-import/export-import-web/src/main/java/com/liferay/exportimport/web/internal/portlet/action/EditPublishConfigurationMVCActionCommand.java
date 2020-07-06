@@ -15,13 +15,13 @@
 package com.liferay.exportimport.web.internal.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;

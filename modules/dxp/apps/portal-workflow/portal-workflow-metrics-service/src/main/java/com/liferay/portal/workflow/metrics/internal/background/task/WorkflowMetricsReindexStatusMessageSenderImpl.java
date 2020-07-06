@@ -14,9 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.internal.background.task;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;

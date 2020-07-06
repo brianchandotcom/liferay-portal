@@ -16,9 +16,9 @@ package com.liferay.exportimport.lifecycle;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lifecycle.EventAwareExportImportLifecycleListener;
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.TransientValue;

@@ -15,10 +15,10 @@
 package com.liferay.portal.background.task.internal.messaging;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

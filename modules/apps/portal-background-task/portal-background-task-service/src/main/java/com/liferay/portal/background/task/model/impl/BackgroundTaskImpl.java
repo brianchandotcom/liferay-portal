@@ -16,7 +16,7 @@ package com.liferay.portal.background.task.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

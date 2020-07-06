@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

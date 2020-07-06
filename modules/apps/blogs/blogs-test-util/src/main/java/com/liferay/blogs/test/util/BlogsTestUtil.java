@@ -18,7 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;

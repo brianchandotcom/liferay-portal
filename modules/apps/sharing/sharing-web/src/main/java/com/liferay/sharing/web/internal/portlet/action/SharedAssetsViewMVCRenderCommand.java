@@ -18,7 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;

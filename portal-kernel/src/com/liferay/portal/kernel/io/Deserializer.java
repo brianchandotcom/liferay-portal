@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.lang.ClassResolverUtil;
+import com.liferay.portal.kernel.io.constants.SerializationConstants;
 
 import java.io.IOException;
 import java.io.InputStream;

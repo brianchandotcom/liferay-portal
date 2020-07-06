@@ -15,13 +15,13 @@
 package com.liferay.exportimport.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;

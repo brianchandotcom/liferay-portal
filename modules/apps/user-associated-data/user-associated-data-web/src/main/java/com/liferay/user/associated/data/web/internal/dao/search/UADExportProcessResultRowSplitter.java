@@ -15,7 +15,7 @@
 package com.liferay.user.associated.data.web.internal.dao.search;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;

@@ -16,9 +16,9 @@ package com.liferay.document.library.opener.google.drive.web.internal.background
 
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
 

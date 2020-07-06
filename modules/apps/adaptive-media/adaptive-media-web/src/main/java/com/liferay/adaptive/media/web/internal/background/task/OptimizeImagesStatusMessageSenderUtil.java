@@ -15,9 +15,9 @@
 package com.liferay.adaptive.media.web.internal.background.task;
 
 import com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Message;
 
 import org.osgi.service.component.annotations.Activate;

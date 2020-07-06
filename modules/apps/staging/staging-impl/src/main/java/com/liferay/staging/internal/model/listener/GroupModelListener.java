@@ -16,7 +16,7 @@ package com.liferay.staging.internal.model.listener;
 
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

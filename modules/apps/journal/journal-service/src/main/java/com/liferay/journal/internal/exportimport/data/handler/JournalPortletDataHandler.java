@@ -33,7 +33,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;

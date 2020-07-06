@@ -18,7 +18,7 @@ import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundT
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

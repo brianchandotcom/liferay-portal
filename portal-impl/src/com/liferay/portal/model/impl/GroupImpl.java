@@ -15,8 +15,8 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

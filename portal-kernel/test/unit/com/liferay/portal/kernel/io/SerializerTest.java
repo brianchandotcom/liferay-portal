@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.constants.SerializationConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

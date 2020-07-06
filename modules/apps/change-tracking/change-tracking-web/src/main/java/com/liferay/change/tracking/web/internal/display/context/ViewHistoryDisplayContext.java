@@ -23,7 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

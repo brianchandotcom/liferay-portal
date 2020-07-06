@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+
 import java.io.Serializable;
 
 /**

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;

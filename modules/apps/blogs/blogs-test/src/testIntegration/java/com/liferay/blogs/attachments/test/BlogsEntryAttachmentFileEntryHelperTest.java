@@ -21,7 +21,7 @@ import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;

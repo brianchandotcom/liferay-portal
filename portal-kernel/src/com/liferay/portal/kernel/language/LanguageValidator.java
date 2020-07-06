@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;

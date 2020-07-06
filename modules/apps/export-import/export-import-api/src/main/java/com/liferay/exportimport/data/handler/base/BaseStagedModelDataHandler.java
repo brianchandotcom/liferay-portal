@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;

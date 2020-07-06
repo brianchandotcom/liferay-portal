@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;

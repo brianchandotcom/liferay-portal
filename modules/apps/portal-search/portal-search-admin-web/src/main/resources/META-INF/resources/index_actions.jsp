@@ -24,8 +24,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@

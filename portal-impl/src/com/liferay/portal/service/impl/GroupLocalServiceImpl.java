@@ -15,23 +15,23 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;

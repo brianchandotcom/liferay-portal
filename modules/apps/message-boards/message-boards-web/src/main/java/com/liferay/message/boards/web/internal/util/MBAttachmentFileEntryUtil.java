@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.util;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;

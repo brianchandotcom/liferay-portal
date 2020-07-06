@@ -18,7 +18,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;

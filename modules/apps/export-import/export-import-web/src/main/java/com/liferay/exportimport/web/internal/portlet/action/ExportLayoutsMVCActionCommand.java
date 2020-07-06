@@ -15,8 +15,8 @@
 package com.liferay.exportimport.web.internal.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.exception.LARFileNameException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;

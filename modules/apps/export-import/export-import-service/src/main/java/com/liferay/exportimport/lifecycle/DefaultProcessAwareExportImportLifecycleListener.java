@@ -14,10 +14,10 @@
 
 package com.liferay.exportimport.lifecycle;
 
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 
 /**
  * @author Daniel Kocsis

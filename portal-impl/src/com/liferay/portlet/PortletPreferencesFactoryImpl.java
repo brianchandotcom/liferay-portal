@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
+import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

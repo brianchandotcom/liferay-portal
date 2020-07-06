@@ -31,8 +31,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;

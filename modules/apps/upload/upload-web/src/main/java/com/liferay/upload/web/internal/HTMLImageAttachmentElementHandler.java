@@ -16,7 +16,7 @@ package com.liferay.upload.web.internal;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;

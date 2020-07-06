@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.internal.background.task.display;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;

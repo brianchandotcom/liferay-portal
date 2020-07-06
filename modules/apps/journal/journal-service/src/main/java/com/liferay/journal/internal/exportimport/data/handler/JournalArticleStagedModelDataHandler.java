@@ -36,7 +36,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;

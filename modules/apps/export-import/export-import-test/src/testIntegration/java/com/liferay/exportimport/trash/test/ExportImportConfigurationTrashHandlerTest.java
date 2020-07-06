@@ -15,7 +15,7 @@
 package com.liferay.exportimport.trash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.trash.test.util.ExportImportConfigurationTestUtil;

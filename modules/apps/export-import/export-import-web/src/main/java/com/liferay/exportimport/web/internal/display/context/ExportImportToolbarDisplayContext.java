@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;

@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.web.internal.messaging;
 
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.web.internal.configuration.ExportImportWebConfigurationValues;

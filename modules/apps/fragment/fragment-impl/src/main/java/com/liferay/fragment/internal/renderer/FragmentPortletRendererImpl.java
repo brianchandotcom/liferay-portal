@@ -19,7 +19,7 @@ import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
+import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 

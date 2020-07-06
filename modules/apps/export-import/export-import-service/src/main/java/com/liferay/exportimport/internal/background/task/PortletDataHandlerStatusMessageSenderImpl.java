@@ -21,9 +21,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.StagedModel;
 

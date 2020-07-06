@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.internal.lifecycle;
 
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;

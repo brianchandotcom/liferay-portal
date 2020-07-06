@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.language.constants.LanguageConstants;
+
 import org.junit.Assert;
 import org.junit.Test;
 

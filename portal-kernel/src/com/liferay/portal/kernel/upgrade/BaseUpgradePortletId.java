@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;

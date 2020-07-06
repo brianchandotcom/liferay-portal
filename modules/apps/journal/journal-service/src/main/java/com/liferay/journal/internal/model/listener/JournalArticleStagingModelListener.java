@@ -21,7 +21,7 @@ import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;

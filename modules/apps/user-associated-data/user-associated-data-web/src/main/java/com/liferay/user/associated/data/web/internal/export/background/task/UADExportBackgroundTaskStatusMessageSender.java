@@ -14,9 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.export.background.task;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Message;
 
 import org.osgi.service.component.annotations.Component;

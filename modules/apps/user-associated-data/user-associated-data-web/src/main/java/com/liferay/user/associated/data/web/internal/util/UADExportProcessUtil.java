@@ -16,7 +16,7 @@ package com.liferay.user.associated.data.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;

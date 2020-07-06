@@ -16,8 +16,8 @@ package com.liferay.exportimport.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

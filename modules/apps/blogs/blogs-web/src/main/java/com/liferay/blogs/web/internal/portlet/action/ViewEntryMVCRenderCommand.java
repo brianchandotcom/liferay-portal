@@ -21,7 +21,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;

@@ -29,12 +29,12 @@ import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLoc
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

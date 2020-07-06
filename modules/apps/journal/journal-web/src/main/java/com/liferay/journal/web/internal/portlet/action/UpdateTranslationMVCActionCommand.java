@@ -25,6 +25,8 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -109,6 +111,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				updateFromInfoItemFieldValues(article, newInfoItemFieldValues);
 		}
 		catch (Exception exception) {
+			_log.error(exception, exception);
+
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			actionResponse.setRenderParameter(
@@ -149,6 +153,9 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		return infoFields;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateTranslationMVCActionCommand.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

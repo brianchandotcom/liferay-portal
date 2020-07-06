@@ -689,15 +689,15 @@ public class JournalArticleActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getTranslateActionUnsafeConsumer() {
 
-		PortletURL translateURL = _liferayPortletResponse.createRenderURL();
-
-		translateURL.setParameter("mvcRenderCommandName", "/journal/translate");
-		translateURL.setParameter("redirect", _getRedirect());
-		translateURL.setParameter(
-			"articleId", String.valueOf(_article.getArticleId()));
-
 		return dropdownItem -> {
-			dropdownItem.setHref(translateURL.toString());
+			dropdownItem.setHref(
+				_liferayPortletResponse.createRenderURL(),
+				"mvcRenderCommandName", "/journal/translate", "redirect",
+				_getRedirect(), "referringPortletResource",
+				_getReferringPortletResource(), "groupId",
+				_article.getGroupId(), "folderId", _article.getFolderId(),
+				"articleId", _article.getArticleId(), "version",
+				_article.getVersion());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "translate"));
 		};

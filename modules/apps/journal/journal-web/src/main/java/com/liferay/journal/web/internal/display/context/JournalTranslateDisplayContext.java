@@ -21,9 +21,9 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -53,16 +53,16 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalTranslateDisplayContext {
 
 	public JournalTranslateDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
 
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 
-		_article = (JournalArticle)_httpServletRequest.getAttribute(
-			JournalWebKeys.JOURNAL_ARTICLES);
+		_article = ActionUtil.getArticle(liferayPortletRequest);
 		_infoForm = (InfoForm)_httpServletRequest.getAttribute(
 			InfoForm.class.getName());
 		_infoItemFieldValues =

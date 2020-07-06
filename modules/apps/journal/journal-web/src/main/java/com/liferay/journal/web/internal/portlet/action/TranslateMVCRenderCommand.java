@@ -20,11 +20,9 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -74,9 +72,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			JournalArticle article = _journalArticleLocalService.getArticle(
-				themeDisplay.getScopeGroupId(),
-				ParamUtil.getString(renderRequest, "articleId"));
+			JournalArticle article = ActionUtil.getArticle(renderRequest);
 
 			renderRequest.setAttribute(
 				InfoForm.class.getName(),
@@ -118,13 +114,11 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					renderRequest, "targetLanguageId",
 					availableTargetLanguageIds.get(0)));
 			renderRequest.setAttribute(
-				JournalWebKeys.JOURNAL_ARTICLES, article);
-			renderRequest.setAttribute(
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
 		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/translate.jsp";

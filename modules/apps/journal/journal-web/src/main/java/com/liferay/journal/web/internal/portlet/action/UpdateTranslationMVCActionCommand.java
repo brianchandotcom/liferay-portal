@@ -25,7 +25,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,17 +32,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
-import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,7 +111,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
-			_sendRedirect(actionRequest, actionResponse, articleId);
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName", "/journal/translate");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -151,25 +148,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return infoFields;
-	}
-
-	private void _sendRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String articleId)
-		throws IOException, WindowStateException {
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, JournalPortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/translation.jsp");
-		portletURL.setParameter(
-			"redirect", ParamUtil.getString(actionRequest, "redirect"));
-		portletURL.setParameter("articleId", articleId);
-
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		sendRedirect(actionRequest, actionResponse, portletURL.toString());
 	}
 
 	@Reference

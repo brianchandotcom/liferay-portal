@@ -17,10 +17,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import getAppContext from '../Context';
+function getOdataString(value, key) {
+	return `${key} eq ${value}`;
+}
 
-function NumberFilter({id, inputText, max, min, panelType, value: valueProp}) {
-	const {actions} = getAppContext();
+function NumberFilter({actions, id, inputText, max, min, value: valueProp}) {
 	const [value, setValue] = useState(valueProp);
 
 	return (
@@ -50,9 +51,15 @@ function NumberFilter({id, inputText, max, min, panelType, value: valueProp}) {
 				<ClayButton
 					className="btn-sm"
 					disabled={Number(value) === valueProp}
-					onClick={() => actions.updateFilterValue(id, Number(value))}
+					onClick={() =>
+						actions.updateFilterValue(
+							id,
+							Number(value),
+							getOdataString(Number(value, id))
+						)
+					}
 				>
-					{panelType === 'edit'
+					{valueProp
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>
@@ -68,7 +75,6 @@ NumberFilter.propTypes = {
 	label: PropTypes.string.isRequired,
 	max: PropTypes.number,
 	min: PropTypes.number,
-	operator: PropTypes.oneOf(['eq', 'ne', 'gt', 'ge', 'lt', 'le']).isRequired,
 	type: PropTypes.oneOf(['number']).isRequired,
 	value: PropTypes.number,
 };

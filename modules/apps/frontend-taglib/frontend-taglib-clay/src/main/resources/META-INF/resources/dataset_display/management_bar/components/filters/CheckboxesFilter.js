@@ -17,10 +17,22 @@ import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import getAppContext from '../Context';
+function getOdataString(value, key) {
+	if (!value || !value.length) {
+		return null;
+	}
 
-function CheckboxesFilter({id, items, panelType, value: valueProp}) {
-	const {actions} = getAppContext();
+	return `${key}/any(x:${value
+		.map(
+			(v) =>
+				`(x eq ${
+					typeof v.value === 'string' ? `'${v.value}'` : v.value
+				})`
+		)
+		.join(' or ')})`;
+}
+
+function CheckboxesFilter({actions, id, items, value: valueProp}) {
 	const [value, setValue] = useState(valueProp);
 
 	function selectCheckbox(itemValue) {
@@ -64,9 +76,15 @@ function CheckboxesFilter({id, items, panelType, value: valueProp}) {
 				<ClayButton
 					className="btn-sm"
 					disabled={value === valueProp}
-					onClick={() => actions.updateFilterValue(id, value)}
+					onClick={() =>
+						actions.updateFilterValue(
+							id,
+							value,
+							getOdataString(value, id)
+						)
+					}
 				>
-					{panelType === 'edit'
+					{valueProp
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>
@@ -85,17 +103,6 @@ CheckboxesFilter.propTypes = {
 		})
 	),
 	label: PropTypes.string.isRequired,
-	operator: PropTypes.oneOf([
-		'eq',
-		'ne',
-		'gt',
-		'ge',
-		'lt',
-		'le',
-		'and',
-		'or',
-		'not',
-	]).isRequired,
 	type: PropTypes.oneOf(['checkbox']).isRequired,
 	value: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])

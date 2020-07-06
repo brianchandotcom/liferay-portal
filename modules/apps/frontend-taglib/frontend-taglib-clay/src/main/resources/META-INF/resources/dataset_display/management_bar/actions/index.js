@@ -17,10 +17,15 @@ export const actionsDefinition = {
 	UPDATE_FILTER_VALUE: 'updateFilterValue',
 };
 
-const updateFilterValue = (dispatch) => (id, value = null) =>
+const updateFilterValue = (dispatch) => (
+	id,
+	value = null,
+	odataFilterString = null
+) =>
 	dispatch({
 		payload: {
 			id,
+			odataFilterString,
 			value,
 		},
 		type: actionsDefinition.UPDATE_FILTER_VALUE,

@@ -75,6 +75,7 @@ function TableHeadCell({
 			{sortable ? (
 				<a
 					className="inline-item text-nowrap text-truncate-inline"
+					data-senna-off
 					href="#"
 					onClick={handleSortingCellClick}
 				>

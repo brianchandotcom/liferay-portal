@@ -17,10 +17,11 @@ import {ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import getAppContext from '../Context';
+function getOdataString(value, key) {
+	return `${key} eq ${typeof value === 'string' ? `'${value}'` : value}`;
+}
 
-function SelectFilter({id, items, panelType, value: valueProp}) {
-	const {actions} = getAppContext();
+function SelectFilter({actions, id, items, value: valueProp}) {
 	const [value, setValue] = useState(valueProp);
 
 	return (
@@ -44,9 +45,15 @@ function SelectFilter({id, items, panelType, value: valueProp}) {
 				<ClayButton
 					className="btn-sm"
 					disabled={value === valueProp}
-					onClick={() => actions.updateFilterValue(id, value)}
+					onClick={() =>
+						actions.updateFilterValue(
+							id,
+							value,
+							getOdataString(value, id)
+						)
+					}
 				>
-					{panelType === 'edit'
+					{valueProp
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>
@@ -65,17 +72,6 @@ SelectFilter.propTypes = {
 		})
 	),
 	label: PropTypes.string.isRequired,
-	operator: PropTypes.oneOf([
-		'eq',
-		'ne',
-		'gt',
-		'ge',
-		'lt',
-		'le',
-		'and',
-		'or',
-		'not',
-	]).isRequired,
 	type: PropTypes.oneOf(['select']).isRequired,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

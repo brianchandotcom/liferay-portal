@@ -12,6 +12,8 @@
  * details.
  */
 
+import React from 'react';
+
 export function getLiferayJsModule(moduleUrl) {
 	return new Promise((resolve, reject) => {
 		Liferay.Loader.require(
@@ -32,12 +34,10 @@ export function getFakeJsModule() {
 			resolve(() => {
 				return <>fakely fetched component</>;
 			});
-		}, 500);
+		}, 3000);
 	});
 }
 
-const getJsModule = Liferay.Loader?.require
+export const getJsModule = Liferay.Loader?.require
 	? getLiferayJsModule
 	: getFakeJsModule;
-
-export default getJsModule;

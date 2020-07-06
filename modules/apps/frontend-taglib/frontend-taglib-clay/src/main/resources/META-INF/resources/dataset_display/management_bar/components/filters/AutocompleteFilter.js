@@ -24,7 +24,6 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {fetchParams, getValueFromItem} from '../../../utilities/index';
 import {logError} from '../../../utilities/logError';
-import getAppContext from '../Context';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -63,8 +62,30 @@ Item.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
+function getOdataString(value, key, selectionType) {
+	if (!value || !value.length) {
+		return null;
+	}
+
+	return selectionType === 'multiple'
+		? `${key}/any(x:${value
+				.map(
+					(v) =>
+						`(x eq ${
+							typeof v.value === 'string'
+								? `'${v.value}'`
+								: v.value
+						})`
+				)
+				.join(' or ')})`
+		: `${key} eq ${
+				typeof value[0].value === 'string'
+					? `'${value[0].value}'`
+					: value[0].value
+		  }`;
+}
+
 function AutocompleteFilter(props) {
-	const {actions} = getAppContext();
 	const [query, setQuery] = useState('');
 	const [search, setSearch] = useState('');
 	const [selectedItems, setSelectedItems] = useState(props.value || []);
@@ -261,13 +282,18 @@ function AutocompleteFilter(props) {
 					className="btn-sm"
 					disabled={!isValueChanged(props.value || [], selectedItems)}
 					onClick={() =>
-						actions.updateFilterValue(
+						props.actions.updateFilterValue(
 							props.id,
-							selectedItems.length ? selectedItems : null
+							selectedItems.length ? selectedItems : null,
+							getOdataString(
+								selectedItems,
+								props.id,
+								props.selectionType
+							)
 						)
 					}
 				>
-					{props.panelType === 'edit'
+					{props.value
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

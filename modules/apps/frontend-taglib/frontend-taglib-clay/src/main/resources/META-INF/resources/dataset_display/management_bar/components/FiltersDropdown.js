@@ -18,8 +18,29 @@ import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {renderFilter} from '../../utilities/filters';
 import getAppContext from './Context';
+import {Filter} from './filters/index';
+
+function DropdownFilterItem(props) {
+	const {actions} = getAppContext();
+
+	return (
+		<ClayPanel
+			className={classNames(
+				`mb-0 filter-panel-head`,
+				props.value && 'active'
+			)}
+			collapsable
+			displayTitle={props.label}
+			key={props.id}
+			showCollapseIcon={true}
+		>
+			<ClayPanel.Body className="filter-body">
+				<Filter {...props} actions={actions} />
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+}
 
 function FiltersDropdown() {
 	const [active, setActive] = useState(false);
@@ -69,23 +90,7 @@ function FiltersDropdown() {
 			{visibleFilters.length ? (
 				<ClayDropDown.ItemList>
 					{visibleFilters.map((item) => (
-						<ClayPanel
-							className={classNames(
-								`mb-0 filter-panel-head`,
-								item.value && 'active'
-							)}
-							collapsable
-							displayTitle={item.label}
-							key={item.id}
-							showCollapseIcon={true}
-						>
-							<ClayPanel.Body className="filter-body">
-								{renderFilter(
-									item,
-									item.value ? 'edit' : 'add'
-								)}
-							</ClayPanel.Body>
-						</ClayPanel>
+						<DropdownFilterItem key={item.id} {...item} />
 					))}
 				</ClayDropDown.ItemList>
 			) : (

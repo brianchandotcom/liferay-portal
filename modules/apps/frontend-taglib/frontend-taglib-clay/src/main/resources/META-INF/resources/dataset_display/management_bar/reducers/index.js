@@ -26,10 +26,7 @@ function reducer(state = initialState, action) {
 				...state,
 				filters: state.filters.map((element) => ({
 					...element,
-					value:
-						action.payload.id === element.id
-							? action.payload.value
-							: element.value,
+					...(element.id === action.payload.id ? action.payload : {}),
 				})),
 			};
 		case actionsDefinition.RESET_FILTERS_VALUE:
@@ -37,6 +34,7 @@ function reducer(state = initialState, action) {
 				...state,
 				filters: state.filters.map((element) => ({
 					...element,
+					odataFilterString: null,
 					value: null,
 				})),
 			};

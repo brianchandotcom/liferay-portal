@@ -21,11 +21,37 @@ import {
 	formatDateObject,
 	getDateFromDateString,
 } from '../../../utilities/dates';
-import getAppContext from '../Context';
 
-function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
-	const {actions} = getAppContext();
+export function convertObjectDateToIsoString(objDate, direction) {
+	const time = direction === 'from' ? [0, 0, 0, 0] : [23, 59, 59, 999];
+	const date = new Date(
+		objDate.year,
+		objDate.month - 1,
+		objDate.day,
+		...time
+	);
 
+	return date.toISOString();
+}
+
+function getOdataString(value, key) {
+	const from = convertObjectDateToIsoString(value.from, 'from');
+	const to = convertObjectDateToIsoString(value.to, 'to');
+
+	if (value.from && value.to) {
+		return `${key} ge ${from}) and (${key} le ${to}`;
+	}
+	else if (value.from) {
+		return `${key} ge ${from}`;
+	}
+	else if (value.to) {
+		return `${key} le ${to}`;
+	}
+
+	return null;
+}
+
+function DateRangeFilter({actions, id, max, min, placeholder, value}) {
 	const [fromValue, setFromValue] = useState(
 		value?.from && formatDateObject(value.from)
 	);
@@ -48,7 +74,7 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					pattern="\d{4}-\d{2}-\d{2}"
 					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"
-					value={fromValue}
+					value={fromValue || ''}
 				/>
 			</ClayForm.Group>
 			<ClayForm.Group className="form-group-sm mt-2">
@@ -62,7 +88,7 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					pattern="\d{4}-\d{2}-\d{2}"
 					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"
-					value={toValue}
+					value={toValue || ''}
 				/>
 			</ClayForm.Group>
 
@@ -77,21 +103,27 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					}
 					onClick={() => {
 						if (!fromValue && !toValue) {
-							actions.updateFilterValue(id, null);
+							actions.updateFilterValue(id, null, null);
 						}
 						else {
-							actions.updateFilterValue(id, {
+							const newValue = {
 								from: fromValue
 									? getDateFromDateString(fromValue)
 									: null,
 								to: toValue
 									? getDateFromDateString(toValue)
 									: null,
-							});
+							};
+
+							actions.updateFilterValue(
+								id,
+								newValue,
+								getOdataString(newValue, id)
+							);
 						}
 					}}
 				>
-					{panelType === 'edit'
+					{value
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

@@ -13,31 +13,39 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-function getOdataString(value, key) {
-	return `${key} eq ${typeof value === 'string' ? `'${value}'` : value}`;
+function getOdataString() {
+	return `test ne 4`;
 }
 
-function RadioFilter({actions, id, items, value: valueProp}) {
+function TestFilter({actions, id, inputText, label, value: valueProp}) {
 	const [value, setValue] = useState(valueProp);
 
 	return (
-		<>
-			<ClayRadioGroup
-				onSelectedValueChange={setValue}
-				selectedValue={value || ''}
-			>
-				{items.map((item) => (
-					<ClayRadio
-						key={item.value}
-						label={item.label}
-						value={item.value}
+		<div className="form-group">
+			<div className="input-group">
+				<div
+					className={classNames('input-group-item', {
+						'input-group-prepend': inputText,
+					})}
+				>
+					<input
+						aria-label={label}
+						className="form-control"
+						onChange={(e) => setValue(e.target.value)}
+						type="text"
+						value={value || ''}
 					/>
-				))}
-			</ClayRadioGroup>
+				</div>
+				<div className="input-group-append input-group-item input-group-item-shrink">
+					<span className="input-group-text">
+						{Liferay.Language.get('test')}
+					</span>
+				</div>
+			</div>
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
@@ -55,22 +63,15 @@ function RadioFilter({actions, id, items, value: valueProp}) {
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>
 			</div>
-		</>
+		</div>
 	);
 }
 
-RadioFilter.propTypes = {
+TestFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	invisible: PropTypes.bool,
-	items: PropTypes.arrayOf(
-		PropTypes.shape({
-			label: PropTypes.string,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-		})
-	),
 	label: PropTypes.string.isRequired,
-	type: PropTypes.oneOf(['radio']).isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	value: PropTypes.string,
 };
 
-export default RadioFilter;
+export default TestFilter;

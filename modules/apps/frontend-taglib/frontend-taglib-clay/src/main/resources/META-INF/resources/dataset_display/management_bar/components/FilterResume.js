@@ -18,11 +18,10 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import {prettifyFilterValue} from '../../../utilities/dates';
-import {renderFilter} from '../../../utilities/filters';
-import getAppContext from '../Context';
+import getAppContext from './Context';
+import {Filter} from './filters/index';
 
-function ResumeFilter(props) {
+function FilterResume(props) {
 	const {actions} = getAppContext();
 	const [open, setOpen] = useState(false);
 
@@ -62,7 +61,9 @@ function ResumeFilter(props) {
 			trigger={label}
 		>
 			<ClayDropDown.ItemList>
-				<div className="p-3">{renderFilter(props, 'edit')}</div>
+				<div className="p-3">
+					<Filter {...props} actions={actions} />
+				</div>
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
@@ -70,4 +71,4 @@ function ResumeFilter(props) {
 	return props.disabled ? label : dropDown;
 }
 
-export default ResumeFilter;
+export default FilterResume;

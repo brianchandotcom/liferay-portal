@@ -108,6 +108,10 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 		path = StringUtil.replaceLast(path, '/', "");
 
+		Class<?> clazz = instance.getClass();
+
+		Method[] methods = clazz.getMethods();
+
 		if (_configurationMap.containsKey(path)) {
 			Configuration configuration = _configurationMap.get(path);
 
@@ -119,10 +123,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 			List<String> excludedOperationIdsList = Arrays.asList(
 				excludedOperationIds.split(","));
-
-			Class<?> clazz = instance.getClass();
-
-			Method[] methods = clazz.getMethods();
 
 			for (Method method : methods) {
 				if (excludedOperationIdsList.contains(method.getName())) {

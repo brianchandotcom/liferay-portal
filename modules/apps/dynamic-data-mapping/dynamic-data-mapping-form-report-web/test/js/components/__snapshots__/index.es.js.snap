@@ -257,6 +257,13 @@ exports[`index renders 1`] = `
         </div>
       </div>
     </div>
+    <div
+      class="sidebar-container sidebar-reports"
+    >
+      <div
+        class="sidebar sidebar-light"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

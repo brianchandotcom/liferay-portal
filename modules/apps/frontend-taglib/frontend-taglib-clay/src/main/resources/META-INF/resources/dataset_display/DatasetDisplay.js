@@ -340,7 +340,7 @@ function DatasetDisplay({
 						value={selectedItemsValue.join(',')}
 					/>
 				)}
-				{items?.length > 0 ? (
+				{items?.length ?? 0 ? (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
 						items={items}

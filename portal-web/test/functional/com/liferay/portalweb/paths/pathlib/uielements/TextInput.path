@@ -525,7 +525,7 @@
 </tr>
 <tr>
 	<td>SEO_MAPPED_FIELD</td>
-	<td>//input[contains(@id,'mapped-${key_mappedField}')]</td>
+	<td>//input[contains(@id,'${key_mappedField}')]</td>
 	<td></td>
 </tr>
 <tr>

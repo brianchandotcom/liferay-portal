@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
@@ -252,6 +253,29 @@ public class ButtonTag extends BaseContainerTag {
 		_small = false;
 		_title = null;
 		_type = "button";
+	}
+
+	@Override
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("block", _block);
+		props.put("borderless", _borderless);
+		props.put("displayType", _displayType);
+		props.put("icon", _icon);
+
+		if (Validator.isNotNull(_label)) {
+			props.put(
+				"label",
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_label));
+		}
+
+		props.put("monospaced", _monospaced);
+		props.put("outline", _outline);
+		props.put("small", _small);
+		props.put("type", _type);
+
+		return super.prepareProps(props);
 	}
 
 	@Override

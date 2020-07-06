@@ -1206,7 +1206,7 @@ class Sidebar extends Component {
 					<a
 						class="component-action sidebar-close"
 						data-onclick={this._handleCloseButtonClicked}
-						href="#1"
+						href="javascript:;"
 						ref="closeButton"
 						role="button"
 					>

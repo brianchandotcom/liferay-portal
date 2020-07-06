@@ -9,6 +9,31 @@
 </thead>
 <tbody>
 <tr>
+	<td>CONTENT_DISPLAY_FRAGMENT_BODY</td>
+	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'fragment-content') and contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_DISPLAY_FRAGMENT_CONTENT</td>
+	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}][contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_DISPLAY_FRAGMENT_IMAGE</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FRAGMENT_BODY</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')]//*[contains(@class,'content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_4_PNG</td>
+	<td>portal/screenshots/fragments/Document_4.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT</td>
 	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
@@ -16,6 +41,21 @@
 <tr>
 	<td>FRAGMENT_BASIC_COMPONENT</td>
 	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'component-${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_BODY</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_CONTENT_BACKGROUND_IMAGE</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,8 +69,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_CONTENT_BACKGROUND_IMAGE</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[contains(@style,'${key_imageName}')]</td>
+	<td>FRAGMENT_SITE_USAGE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SITE_USAGE_NAV_ITEM</td>
+	<td>//li[contains(@class,'navbar-breakpoint')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETPLACE_ICON_PNG</td>
+	<td>portal/screenshots/fragments/marketplace_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_INFO</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='portlet-msg-info' and contains(.,'${key_messageIfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOT_COLLECTION_SELECTED_MESSAGE</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='page-editor__collection' and contains(.,'${key_message}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,139 +108,18 @@
 	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>FRAGMENT_BODY</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FRAGMENT_BODY</td>
-	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')]//*[contains(@class,'content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_DISPLAY_FRAGMENT_BODY</td>
-	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'fragment-content') and contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_DISPLAY_FRAGMENT_CONTENT</td>
-	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}][contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY</td>
-	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'component-${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_DISPLAY_FRAGMENT_IMAGE</td>
-	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}') and contains(@data-lfr-editable-id,'${id}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES</td>
-	<td>//img[contains(@alt,'${key_imageDescription}') and contains(@data-lfr-editable-id,'${id}') and contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_CK_EDITOR</td>
-	<td>//div[contains(@class,'page-editor__topper')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_CONTENT</td>
-	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_4_PNG</td>
-	<td>portal/screenshots/fragments/Document_4.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MARKETPLACE_ICON_PNG</td>
-	<td>portal/screenshots/fragments/marketplace_icon.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_HTML_FRAGMENT_FIELD</td>
-	<td>//div[contains(@class,'source-panel')]//div[contains(@class,'lfr-source-editor-code')]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_INFO</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='portlet-msg-info' and contains(.,'${key_messageIfo}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOT_COLLECTION_SELECTED_MESSAGE</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='page-editor__collection' and contains(.,'${key_message}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CHECKBOX</td>
-	<td>//div[contains(@class,'floating-toolbar')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SITE_USAGE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SITE_USAGE_NAV_ITEM</td>
-	<td>//li[contains(@class,'navbar-breakpoint')]</td>
-	<td></td>
-</tr>
 <!--FRAGMENT_COMMENT-->
 <tr>
 	<td>FRAGMENT_COMMENT_ICON</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'comments-borde')]]]</td>
 	<td></td>
 </tr>
-<!--FRAGMENT_TABS-->
-<tr>
-	<td>ACTIVE_NAV_ITEM_TAB</td>
-	<td>//div[contains(@class,'navbar')]//button[contains(@aria-selected,'true') and normalize-space()='${key_navItem}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAV_ITEM_TAB</td>
-	<td>//div[contains(@class,'navbar')]//button[normalize-space()='${key_navItem}']</td>
-	<td></td>
-</tr>
 <!--FRAGMENT_CONFIGURAION-->
+<tr>
+	<td>FRAGMENT_CHECKBOX</td>
+	<td>//div[contains(@class,'floating-toolbar')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
 	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_alignment}')]</td>
@@ -202,13 +141,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'mb-${key_marginBottom}')]</td>
+	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@class,'shadow-${key_boxShadow}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@class,'shadow-${key_boxShadow}')]</td>
+	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -241,6 +180,52 @@
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
 	<td></td>
 </tr>
+<!--FRAGMENT_EDITABLE_FIELD-->
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES</td>
+	<td>//img[contains(@alt,'${key_imageDescription}') and contains(@data-lfr-editable-id,'${id}') and contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}') and contains(@data-lfr-editable-id,'${id}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'component-${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_CK_EDITOR</td>
+	<td>//div[contains(@class,'page-editor__topper')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_CONTENT</td>
+	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_HTML_FRAGMENT_FIELD</td>
+	<td>//div[contains(@class,'source-panel')]//div[contains(@class,'lfr-source-editor-code')]//textarea</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>
@@ -270,6 +255,17 @@
 <tr>
 	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
+	<td></td>
+</tr>
+<!--FRAGMENT_TABS-->
+<tr>
+	<td>ACTIVE_NAV_ITEM_TAB</td>
+	<td>//div[contains(@class,'navbar')]//button[contains(@aria-selected,'true') and normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_ITEM_TAB</td>
+	<td>//div[contains(@class,'navbar')]//button[normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
 </tbody>

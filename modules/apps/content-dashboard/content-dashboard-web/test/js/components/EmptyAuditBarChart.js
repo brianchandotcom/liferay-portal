@@ -22,7 +22,7 @@ import '@testing-library/jest-dom/extend-expect';
 describe('EmptyAuditBarChart', () => {
 	afterEach(cleanup);
 
-	it('renders empty bar chart if there is no content labeled with marketing categories', () => {
+	it('renders empty bar chart if there is no content labeled with categories', () => {
 		const {getByText} = render(<EmptyAuditBarChart />);
 
 		expect(getByText('there-is-no-data')).toBeInTheDocument();

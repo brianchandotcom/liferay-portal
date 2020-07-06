@@ -1,0 +1,16 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+				},
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

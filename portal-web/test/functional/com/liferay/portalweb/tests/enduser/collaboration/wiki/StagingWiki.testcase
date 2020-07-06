@@ -1,10 +1,9 @@
-@component-name = "portal-staging"
+@component-name = "portal-collaboration"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Wiki";
-	property testray.main.component.name = "Staging";
+	property testray.main.component.name = "Wiki";
 
 	setUp {
 		TestCase.setUpPortalInstance();

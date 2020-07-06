@@ -39,21 +39,6 @@ const INITIAL_STATE = {
 export const AddPanelContext = React.createContext(INITIAL_STATE);
 const AddPanelContextProvider = AddPanelContext.Provider;
 
-const normalizeCollections = (collection) => {
-	const normalizedElement = {
-		children: collection.portlets.map(normalizeWidget),
-		collectionId: collection.path,
-		label: collection.title,
-	};
-
-	return collection.categories?.length
-		? {
-				...normalizedElement,
-				collections: collection.categories.map(normalizeCollections),
-		  }
-		: normalizedElement;
-};
-
 const AddPanel = ({
 	addContentsURLs,
 	contents,
@@ -143,34 +128,64 @@ const AddPanel = ({
 	);
 };
 
+const updateUsedPortlet = ({item, portlet, used}) => {
+	if (portlet.portletId === item.itemId && !portlet.instanceable) {
+		portlet.used = used;
+
+		if (portlet.portletItems?.length) {
+			portlet.portletItems.map((portletItem) => {
+				portletItem.used = used;
+			});
+		}
+	}
+};
+
+const updateUsedCategoryPortlet = ({category, item, used}) => {
+	if (category.portlets?.length) {
+		category.portlets.map((portlet) => {
+			updateUsedPortlet({item, portlet, used});
+		});
+	}
+
+	return category.categories?.length
+		? {
+				...category,
+				categories: category.categories.map((category) =>
+					updateUsedCategoryPortlet({category, item, used})
+				),
+		  }
+		: category;
+};
+
 export const updateUsedWidget = ({item, used = true, widgets}) =>
 	widgets.map((collection) => {
+		updateUsedCategoryPortlet({category: collection, item, used});
+
 		return {
 			...collection,
 			portlets: collection.portlets.map((portlet) => {
-				if (
-					portlet.portletId === item.itemId &&
-					!portlet.instanceable
-				) {
-					const updatedPortletItems = portlet.portletItems?.length
-						? portlet.portletItems.map((portletItem) => ({
-								...portletItem,
-								used,
-						  }))
-						: portlet.portletItems;
+				updateUsedPortlet({item, portlet, used});
 
-					return {
-						...portlet,
-						portletItems: updatedPortletItems,
-						used,
-					};
-				}
-				else {
-					return portlet;
-				}
+				return {...portlet};
 			}),
 		};
 	});
+
+const normalizeCollections = (collection) => {
+	const normalizedElement = {
+		children: collection.portlets.map(normalizeWidget),
+		collectionId: collection.path,
+		label: collection.title,
+	};
+
+	if (collection.categories?.length) {
+		normalizedElement.collections = collection.categories.map(
+			normalizeCollections
+		);
+	}
+
+	return normalizedElement;
+};
 
 const normalizeWidget = (widget) => {
 	return {

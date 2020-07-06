@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.bridges.mvc;
+package com.liferay.portal.kernel.portlet.bridges.mvc.constants;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 /**
- * @author     Michael C. Han
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants}
+ * @author Michael C. Han
  */
-@Deprecated
 public class MVCRenderConstants {
 
 	public static final String MVC_PATH_REQUEST_ATTRIBUTE_NAME =

@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.exportimport.kernel.configuration;
+package com.liferay.exportimport.kernel.configuration.constants;
 
 import com.liferay.petra.string.StringPool;
 
 /**
- * @author     Daniel Kocsis
- * @author     Akos Thurzo
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants}
+ * @author Daniel Kocsis
+ * @author Akos Thurzo
  */
-@Deprecated
 public class ExportImportConfigurationConstants {
 
 	public static final int TYPE_EXPORT_LAYOUT = 0;

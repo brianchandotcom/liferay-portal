@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.exportimport.kernel.lifecycle;
+package com.liferay.exportimport.kernel.lifecycle.constants;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author     Daniel Kocsis
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants}
+ * @author Daniel Kocsis
  */
-@Deprecated
 @ProviderType
 public interface ExportImportLifecycleConstants {
 

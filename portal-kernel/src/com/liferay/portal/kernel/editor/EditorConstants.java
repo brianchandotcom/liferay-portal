@@ -15,8 +15,11 @@
 package com.liferay.portal.kernel.editor;
 
 /**
- * @author Roberto Díaz
+ * @author     Roberto Díaz
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.portal.kernel.editor.constants.EditorConstants}
  */
+@Deprecated
 public class EditorConstants {
 
 	public static final String ATTRIBUTE_DATA_IMAGE_ID = "data-image-id";

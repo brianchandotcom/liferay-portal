@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.portal.kernel.io.constants;
 
 /**
- * @author     Shuyang Zhou
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.portal.kernel.io.constants.SerializationConstants}
+ * @author Shuyang Zhou
  */
-@Deprecated
 public class SerializationConstants {
 
 	public static final byte TC_BOOLEAN = 0;

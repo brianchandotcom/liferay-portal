@@ -30,13 +30,13 @@ public class ShadowConverter {
 		HashMapBuilder.put(
 			"Default", StringPool.BLANK
 		).put(
-			"Large", "shadow-large"
+			"Large", "shadow-lg"
 		).put(
 			"None", "shadow-none"
 		).put(
 			"Regular", "shadow"
 		).put(
-			"Small", "shadow-small"
+			"Small", "shadow-sm"
 		).build();
 
 	public static String convertToExternalValue(String value) {

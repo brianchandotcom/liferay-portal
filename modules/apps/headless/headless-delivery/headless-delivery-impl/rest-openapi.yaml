@@ -2125,6 +2125,8 @@ components:
                     type: string
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
                 layout:
                     properties:
                         align:

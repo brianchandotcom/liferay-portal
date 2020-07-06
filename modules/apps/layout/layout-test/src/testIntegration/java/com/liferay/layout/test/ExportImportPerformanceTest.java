@@ -114,7 +114,7 @@ public class ExportImportPerformanceTest {
 
 		Properties properties = PropertiesUtil.load(
 			clazz.getResourceAsStream("export-import-performance.properties"),
-			"utf-8");
+			"UTF-8");
 
 		_fragmentsPerPage = GetterUtil.getInteger(
 			properties.getProperty("fragments.per.page"));

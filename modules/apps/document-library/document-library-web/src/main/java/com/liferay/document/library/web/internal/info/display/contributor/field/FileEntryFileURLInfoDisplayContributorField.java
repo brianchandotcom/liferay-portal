@@ -57,6 +57,12 @@ public class FileEntryFileURLInfoDisplayContributorField
 	@Override
 	public WebImage getValue(FileEntry fileEntry, Locale locale) {
 		try {
+			String mimeType = fileEntry.getMimeType();
+
+			if (!mimeType.startsWith("image")) {
+				return null;
+			}
+
 			WebImage webImage = new WebImage(
 				_dlURLHelper.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), null,

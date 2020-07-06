@@ -17,9 +17,8 @@ package com.liferay.document.library.web.internal.info.display.contributor.field
 import com.liferay.info.display.contributor.field.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
-import com.liferay.petra.string.StringPool;
+import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,22 +63,23 @@ public class FileEntryAuthorProfileImageInfoDisplayContributorField
 	}
 
 	@Override
-	public Object getValue(FileEntry fileEntry, Locale locale) {
+	public WebImage getValue(FileEntry fileEntry, Locale locale) {
 		User user = _userLocalService.fetchUser(fileEntry.getUserId());
 
 		if (user == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
 			try {
-				return JSONUtil.put(
-					"alt", user.getFullName()
-				).put(
-					"url", user.getPortraitURL(getThemeDisplay())
-				);
+				WebImage webImage = new WebImage(
+					user.getPortraitURL(getThemeDisplay()));
+
+				webImage.setAlt(user.getFullName());
+
+				return webImage;
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -88,7 +88,7 @@ public class FileEntryAuthorProfileImageInfoDisplayContributorField
 			}
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

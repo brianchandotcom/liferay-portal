@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.info.display.contributor.field
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -54,13 +54,14 @@ public class FileEntryPreviewImageInfoDisplayContributorField
 	}
 
 	@Override
-	public Object getValue(FileEntry fileEntry, Locale locale) {
+	public WebImage getValue(FileEntry fileEntry, Locale locale) {
 		try {
-			return JSONUtil.put(
-				"alt", fileEntry.getTitle()
-			).put(
-				"url", _dlURLHelper.getImagePreviewURL(fileEntry, null)
-			);
+			WebImage webImage = new WebImage(
+				_dlURLHelper.getImagePreviewURL(fileEntry, null));
+
+			webImage.setAlt(fileEntry.getTitle());
+
+			return webImage;
 		}
 		catch (Exception exception) {
 			return null;

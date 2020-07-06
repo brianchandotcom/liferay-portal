@@ -26,6 +26,7 @@ import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -35,7 +36,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -131,8 +131,7 @@ public class FileEntryInfoDisplayContributorTest {
 				Assert.assertEquals(
 					fileEntry.getUserName(),
 					infoDisplayFieldsValues.get("authorName"));
-				Assert.assertEquals(
-					StringPool.BLANK,
+				Assert.assertNull(
 					infoDisplayFieldsValues.get("authorProfileImage"));
 				Assert.assertEquals(
 					null, infoDisplayFieldsValues.get("categories"));
@@ -151,11 +150,10 @@ public class FileEntryInfoDisplayContributorTest {
 					fileEntry.getMimeType(),
 					infoDisplayFieldsValues.get("mimeType"));
 
-				JSONObject previewImageJSONObject =
-					(JSONObject)infoDisplayFieldsValues.get("previewImage");
+				WebImage previewWebImage =
+					(WebImage)infoDisplayFieldsValues.get("previewImage");
 
-				Assert.assertEquals(
-					StringPool.BLANK, previewImageJSONObject.getString("url"));
+				Assert.assertEquals(StringPool.BLANK, previewWebImage.getUrl());
 
 				Format dateFormatDateTime =
 					FastDateFormatFactoryUtil.getDateTime(

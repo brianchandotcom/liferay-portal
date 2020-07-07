@@ -30,7 +30,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 <aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar">
 		<clay:container-fluid>
@@ -160,3 +160,15 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		</div>
 	</clay:container-fluid>
 </aui:form>
+
+<script>
+	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
+
+	saveDraftBtn.addEventListener('click', function () {
+		var workflowActionInput = document.getElementById(
+			'<portlet:namespace />workflowAction'
+		);
+
+		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+	});
+</script>

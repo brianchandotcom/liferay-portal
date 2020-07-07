@@ -64,11 +64,7 @@ class Form extends Component {
 			showPublishAlert,
 		} = this.props;
 
-		if (this.isFormBuilderView()) {
-			this.syncActiveNavItem(this.state.activeNavItem);
-		}
-
-		const {paginationMode} = this.state;
+		const {activeNavItem, paginationMode} = this.state;
 
 		this._eventHandler = new EventHandler();
 
@@ -100,6 +96,8 @@ class Form extends Component {
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
+
+			this.syncActiveNavItem(activeNavItem);
 		}
 
 		Promise.all(dependencies).then(
@@ -210,7 +208,7 @@ class Form extends Component {
 		}
 
 		if (
-			this.state.activeNavItem == NAV_ITEMS.FORM &&
+			activeNavItem === NAV_ITEMS.FORM &&
 			!this._pageHasFields(store.getPages(), store.state.activePage)
 		) {
 			this.openSidebar();

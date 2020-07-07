@@ -168,8 +168,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_noInitialDelay = _getBoolean(properties, NO_INITIAL_DELAY, false);
 		_startLevel = _getInt(properties, START_LEVEL, 0);
 		_activeLevel = _getInt(properties, ACTIVE_LEVEL, 0);
-		_updateWithListeners = _getBoolean(
-			properties, UPDATE_WITH_LISTENERS, false);
 		_fragmentScope = properties.get(FRAGMENT_SCOPE);
 		_optionalScope = properties.get(OPTIONAL_SCOPE);
 		_webStartLevel = _getInt(properties, WEB_START_LEVEL, _startLevel);
@@ -1492,7 +1490,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final AtomicBoolean _stateChanged = new AtomicBoolean();
 	private final Bundle _systemBundle;
 	private File _tmpDir;
-	private final boolean _updateWithListeners;
 	private final boolean _useStartActivationPolicy;
 	private final boolean _useStartTransient;
 	private final File _watchedDirectory;

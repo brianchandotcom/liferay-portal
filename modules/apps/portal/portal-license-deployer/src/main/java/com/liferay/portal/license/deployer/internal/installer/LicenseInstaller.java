@@ -72,4 +72,8 @@ public class LicenseInstaller implements FileInstaller {
 		return null;
 	}
 
+	@Override
+	public void uninstall(File file) {
+	}
+
 }

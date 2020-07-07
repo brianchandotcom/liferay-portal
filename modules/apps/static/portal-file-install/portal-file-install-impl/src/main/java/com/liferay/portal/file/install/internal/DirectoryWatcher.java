@@ -22,6 +22,7 @@ import com.liferay.portal.file.install.internal.manifest.Clause;
 import com.liferay.portal.file.install.internal.manifest.Parser;
 import com.liferay.portal.file.install.internal.version.VersionRange;
 import com.liferay.portal.file.install.internal.version.VersionTable;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -152,9 +153,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_bundleContext = bundleContext;
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
-		_poll = _getLong(properties, POLL, 2000);
-		_logLevel = _getInt(
-			properties, LOG_LEVEL, Util.getGlobalLogLevel(bundleContext));
+		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
+		_logLevel = GetterUtil.getInteger(
+			properties.get(LOG_LEVEL), Util.getGlobalLogLevel(bundleContext));
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
 		_verifyWatchedDir();
 		_tmpDir = _getFile(properties, TMPDIR, null);
@@ -166,11 +167,12 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			properties, USE_START_ACTIVATION_POLICY, true);
 		_filter = properties.get(FILTER);
 		_noInitialDelay = _getBoolean(properties, NO_INITIAL_DELAY, false);
-		_startLevel = _getInt(properties, START_LEVEL, 0);
-		_activeLevel = _getInt(properties, ACTIVE_LEVEL, 0);
+		_startLevel = GetterUtil.getInteger(properties.get(START_LEVEL));
+		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
 		_fragmentScope = properties.get(FRAGMENT_SCOPE);
 		_optionalScope = properties.get(OPTIONAL_SCOPE);
-		_webStartLevel = _getInt(properties, WEB_START_LEVEL, _startLevel);
+		_webStartLevel = GetterUtil.getInteger(
+			properties.get(WEB_START_LEVEL), _startLevel);
 		_bundleContext.addBundleListener(this);
 
 		scanner = new Scanner(
@@ -685,48 +687,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		if (value != null) {
 			return new File(value);
-		}
-
-		return defaultValue;
-	}
-
-	private int _getInt(
-		Map<String, String> properties, String property, int defaultValue) {
-
-		String value = properties.get(property);
-
-		if (value != null) {
-			try {
-				return Integer.parseInt(value);
-			}
-			catch (Exception exception) {
-				_log(
-					Util.Logger.LOG_WARNING,
-					StringBundler.concat(
-						property, " set, but not a int: ", value),
-					null);
-			}
-		}
-
-		return defaultValue;
-	}
-
-	private long _getLong(
-		Map<String, String> properties, String property, long defaultValue) {
-
-		String value = properties.get(property);
-
-		if (value != null) {
-			try {
-				return Long.parseLong(value);
-			}
-			catch (Exception exception) {
-				_log(
-					Util.Logger.LOG_WARNING,
-					StringBundler.concat(
-						property, " set, but not a long: ", value),
-					null);
-			}
 		}
 
 		return defaultValue;

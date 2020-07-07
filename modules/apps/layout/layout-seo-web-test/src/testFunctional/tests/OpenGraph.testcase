@@ -210,6 +210,392 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
 	}
 
+	@description = "This test ensures that user can map the blogs with open graph meta tags for display pages."
+	@priority = "5"
+	test MapBlogsToDisplayPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Blogs Entry: Title");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Blogs Entry: Description");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Subtitle",
+			mappedField = "Title");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Content",
+			mappedField = "Description");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Author Profile Image",
+			mappedField = "Image");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Author Name",
+			mappedField = "Image Alt Description");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Blogs Entry: Subtitle");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Blogs Entry: Content");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "Blogs Entry: Author Profile Image");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "Blogs Entry: Author Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Blogs Entry Subtitle","og:description" content="Blogs Entry Content"''');
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/image/user_portrait''');
+	}
+
+	@description = "This test ensures that user can map the document with open graph meta tags for display pages."
+	@priority = "5"
+	test MapDocumentToDisplayPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Document: Title");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Document: Description");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.mapEditableTextToField(
+			field = "File Name",
+			mappedField = "Title");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Content Type",
+			mappedField = "Description");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Preview Image",
+			mappedField = "Image");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Author Name",
+			mappedField = "Image Alt Description");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Document: File Name");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Document: Content Type");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "Document: Preview Image");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "Document: Author Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		var siteID = Site.getSiteId();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="DM Document Title.jpg","og:description" content="image/jpeg"''');
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/documents/${siteID}/0/DM+Document+Title.jpg''');
+	}
+
+	@description = "This test ensures that image meta tags are displayed with the site image and alt description in the HTML when the image fields are not mapped in the display page."
+	@priority = "5"
+	test MapSiteImageToDisplayPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			altDescription = "This is image alternative description",
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "-- Unmapped --");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		var siteID = Site.getSiteId();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="This is image alternative description","og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
+	}
+
+	@description = "This test ensures that user can map the web content with open graph meta tags for display pages."
+	@priority = "5"
+	test MapWebContentToDisplayPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Configure",
+			pageTemplateName = "Display Page Template Name");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Basic Web Content: Title");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Basic Web Content: Description");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "-- Unmapped --");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Last Editor Name",
+			mappedField = "Title");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Content",
+			mappedField = "Description");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Small Image",
+			mappedField = "Image");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Author Name",
+			mappedField = "Image Alt Description");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "Title",
+			mappedFieldValue = "Basic Web Content: Last Editor Name");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Description",
+			mappedFieldValue = "Basic Web Content: Content");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Image",
+			mappedFieldValue = "Basic Web Content: Small Image");
+
+		OpenGraph.viewMappedField(
+			mappedField = "Alt",
+			mappedFieldValue = "Basic Web Content: Author Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		WebContent.addFeaturedImageFromURL(imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg");
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Test Test","og:description" content="Web Content Content"''');
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="https://dummyimage.com/600x400/000/fff.jpg"''');
+	}
+
 	@description = "This ensures that the user can reset to the default OG title tag."
 	@priority = "5"
 	test RevertCustomTitle {

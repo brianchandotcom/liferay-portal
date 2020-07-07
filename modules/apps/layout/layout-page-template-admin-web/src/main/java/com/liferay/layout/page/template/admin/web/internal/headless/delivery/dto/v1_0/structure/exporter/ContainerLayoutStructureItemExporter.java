@@ -98,6 +98,10 @@ public class ContainerLayoutStructureItemExporter
 				return jsonObject.getString("url");
 			}
 
+			if (object instanceof String) {
+				return (String)object;
+			}
+
 			return StringPool.BLANK;
 		};
 	}

@@ -110,7 +110,7 @@ export default () => {
 							</div>
 						)}
 
-						{Object.keys(summary).length && (
+						{!!Object.entries(summary).length && (
 							<Summary summary={summary} />
 						)}
 

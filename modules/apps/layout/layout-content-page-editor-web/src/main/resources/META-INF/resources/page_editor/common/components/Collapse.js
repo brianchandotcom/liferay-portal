@@ -17,47 +17,57 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-export default function Collapse(props) {
-	const [open, setOpen] = useState(props.open);
-	const collapseIcon = open ? 'angle-down-small' : 'angle-right-small';
-	const collapseIconClassName = open ? 'open' : 'closed';
+export default function Collapse({children, indentation = false, label, open}) {
+	const [isOpen, setIsOpen] = useState(open);
+	const collapseIcon = isOpen ? 'angle-down-small' : 'angle-right-small';
+	const collapseIconClassName = isOpen ? 'open' : 'closed';
 
 	useEffect(() => {
-		setOpen(props.open);
-	}, [props.open]);
+		setIsOpen(open);
+	}, [open]);
 
 	const handleClick = () => {
-		setOpen(!open);
+		setIsOpen(!isOpen);
 	};
 
 	return (
-		<div className="page-editor__collapse panel-group panel-group-flush">
+		<div
+			className={classNames(
+				'panel-group-flush',
+				'page-editor__collapse panel-group',
+				{
+					'ml-3': indentation,
+				}
+			)}
+		>
 			<button
-				aria-expanded={open}
+				aria-expanded={isOpen}
 				className={classNames(
 					'btn',
 					'btn-unstyled',
 					'collapse-icon',
 					'sheet-subtitle',
 					{
-						collapsed: !open,
+						collapsed: !isOpen,
 					}
 				)}
 				onClick={handleClick}
 			>
-				<span className="c-inner" tabIndex="-1">
-					{props.label}
+				<span className="c-inner ellipsis" tabIndex="-1">
+					{label}
 					<span className={`collapse-icon-${collapseIconClassName}`}>
 						<ClayIcon key={collapseIcon} symbol={collapseIcon} />
 					</span>
 				</span>
 			</button>
-			{open && props.children}
+			{isOpen && children}
 		</div>
 	);
 }
 
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
+	indentation: PropTypes.bool,
+	label: PropTypes.string,
 	open: PropTypes.bool,
 };

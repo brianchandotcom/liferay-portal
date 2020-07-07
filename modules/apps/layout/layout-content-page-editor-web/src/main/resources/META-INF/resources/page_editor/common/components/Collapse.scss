@@ -7,6 +7,12 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 .page-editor__collapse {
 	cursor: pointer;
 
+	.ellipsis {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.collapse-icon {
 		background: none;
 		border-color: $secondary-l3;

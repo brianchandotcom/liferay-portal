@@ -15,28 +15,17 @@
 package com.liferay.portal.file.install.internal;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.jar.JarFile;
-import java.util.jar.JarOutputStream;
 import java.util.logging.Level;
-import java.util.zip.Deflater;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -75,55 +64,6 @@ public class Util {
 		}
 
 		return logLevel;
-	}
-
-	public static void jarDir(File directory, File zipName) throws IOException {
-		try (OutputStream outputStream1 = new FileOutputStream(zipName);
-			OutputStream outputStream2 = new BufferedOutputStream(
-				outputStream1)) {
-
-			jarDir(directory, outputStream2);
-		}
-	}
-
-	public static void jarDir(File directory, OutputStream outputStream)
-		throws IOException {
-
-		try (JarOutputStream jarOutputStream = new JarOutputStream(
-				outputStream)) {
-
-			jarOutputStream.setLevel(Deflater.NO_COMPRESSION);
-
-			String path = StringPool.BLANK;
-
-			File manifest = new File(directory, JarFile.MANIFEST_NAME);
-
-			if (manifest.exists()) {
-				byte[] readBuffer = new byte[8192];
-
-				try (FileInputStream fileInputStream = new FileInputStream(
-						manifest)) {
-
-					ZipEntry zipEntry = new ZipEntry(JarFile.MANIFEST_NAME);
-
-					jarOutputStream.putNextEntry(zipEntry);
-
-					int bytesIn = fileInputStream.read(readBuffer);
-
-					while (bytesIn != -1) {
-						jarOutputStream.write(readBuffer, 0, bytesIn);
-
-						bytesIn = fileInputStream.read(readBuffer);
-					}
-				}
-
-				jarOutputStream.closeEntry();
-			}
-
-			zipDir(
-				directory, jarOutputStream, path,
-				Collections.singleton(JarFile.MANIFEST_NAME));
-		}
 	}
 
 	public static long loadChecksum(
@@ -181,51 +121,6 @@ public class Util {
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}
-	}
-
-	public static void zipDir(
-			File directory, ZipOutputStream zipOutputStream, String path,
-			Set<String> exclusions)
-		throws IOException {
-
-		File[] files = directory.listFiles();
-		byte[] readBuffer = new byte[8192];
-		int bytesIn;
-
-		for (File file : files) {
-			String name = file.getName();
-
-			if (file.isDirectory()) {
-				String prefix = StringBundler.concat(
-					path, name, StringPool.SLASH);
-
-				zipOutputStream.putNextEntry(new ZipEntry(prefix));
-
-				zipDir(file, zipOutputStream, prefix, exclusions);
-
-				continue;
-			}
-
-			String entryName = path.concat(name);
-
-			if (!exclusions.contains(entryName)) {
-				try (FileInputStream fileInputStream = new FileInputStream(
-						file)) {
-
-					ZipEntry zipEntry = new ZipEntry(entryName);
-
-					zipOutputStream.putNextEntry(zipEntry);
-
-					bytesIn = fileInputStream.read(readBuffer);
-
-					while (bytesIn != -1) {
-						zipOutputStream.write(readBuffer, 0, bytesIn);
-
-						bytesIn = fileInputStream.read(readBuffer);
-					}
-				}
-			}
 		}
 	}
 

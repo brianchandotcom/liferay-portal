@@ -257,11 +257,6 @@
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar tbar')])[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
-	<td></td>
-</tr>
 <!--FRAGMENT_TABS-->
 <tr>
 	<td>ACTIVE_NAV_ITEM_TAB</td>

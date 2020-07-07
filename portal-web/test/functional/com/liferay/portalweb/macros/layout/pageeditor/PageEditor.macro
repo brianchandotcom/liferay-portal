@@ -1245,6 +1245,20 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
+	macro gotoStyle {
+		key_fragmentName = "${fragmentName}";
+
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		Click(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
+	}
+
 	macro gotoTab {
 		if ("${tabName}" == "Look and Feel") {
 			Click.clickNoMouseOver(

@@ -211,7 +211,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -243,7 +243,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -275,7 +275,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -298,7 +298,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -326,7 +326,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -358,7 +358,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -376,7 +376,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 
@@ -432,7 +432,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				JournalArticle journalArticle = _addJournalArticle(
 					_group.getGroupId());
 
-				return String.valueOf(journalArticle.getClassPK());
+				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
 

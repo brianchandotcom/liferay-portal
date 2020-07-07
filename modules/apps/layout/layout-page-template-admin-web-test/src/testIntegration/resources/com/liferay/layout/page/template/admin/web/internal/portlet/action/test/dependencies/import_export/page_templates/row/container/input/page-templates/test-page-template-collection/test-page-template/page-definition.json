@@ -1,0 +1,95 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"gutters": true,
+					"modulesPerRow": 1,
+					"numberOfColumns": 1,
+					"rowViewportConfig": {
+						"landscapeMobile": {
+						},
+						"portraitMobile": {
+						},
+						"tablet": {
+						}
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"columnViewportConfig": {
+								"landscapeMobile": {
+								},
+								"portraitMobile": {
+								},
+								"tablet": {
+								}
+							},
+							"size": 12
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"backgroundImage": {
+									},
+									"layout": {
+										"borderWidth": 0,
+										"contentDisplay": "Block",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"collectionName": "Basic Components",
+												"key": "BASIC_COMPONENT-paragraph",
+												"name": "Paragraph"
+											},
+											"fragmentConfig": {
+												"marginBottom": "3",
+												"textAlign": "left",
+												"textColor": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "My paragraph"
+															}
+														}
+													}
+												}
+											]
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Column"
+					}
+				],
+				"type": "Row"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

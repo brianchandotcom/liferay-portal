@@ -29,10 +29,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-42381."
-	@ignore = "true"
 	@priority = "5"
 	test AssertMobileDeviceRuleActionOnSitePage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MobileDeviceFamilies#AssertMobileDeviceRuleActionOnSitePage";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -126,6 +125,12 @@ definition {
 		Refresh();
 
 		Page.selectMobileDeviceFamily(deviceFamilyName = "Windows Device Family Name");
+
+		// Workaround for LPS-92083
+
+		Refresh();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Page.manageDeviceFamilyActions(
 			actionName = "Windows Device Family Test Action",

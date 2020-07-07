@@ -405,9 +405,9 @@ definition {
 
 		PortletEntry.inputName(name = "${actionName}");
 
-		var key_actionType = "${actionType}";
-
-		Click(locator1 = "MobileDevice#ADD_ACTION_TYPE_OPTION");
+		Select(
+			locator1 = "MobileDevice#ADD_ACTION_TYPE_SELECT",
+			value1 = "${actionType}");
 
 		if ("${actionType}" == "Redirect to URL") {
 			Type(
@@ -415,13 +415,13 @@ definition {
 				value1 = "${actionURL}");
 		}
 		else if ("${actionType}" == "Redirect to Site") {
-			var key_siteName = "${siteName}";
+			Select(
+				locator1 = "MobileDevice#ADD_ACTION_SITE_SELECT",
+				value1 = "${siteName}");
 
-			Click(locator1 = "MobileDevice#ADD_ACTION_SITE_OPTION");
-
-			var key_pageName = "${pageName}";
-
-			Click(locator1 = "MobileDevice#ADD_ACTION_PAGE_OPTION");
+			Select(
+				locator1 = "MobileDevice#ADD_ACTION_PAGE_SELECT",
+				value1 = "${pageName}");
 		}
 
 		PortletEntry.save();

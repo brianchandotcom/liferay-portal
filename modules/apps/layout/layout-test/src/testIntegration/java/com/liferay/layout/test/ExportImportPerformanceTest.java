@@ -35,7 +35,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -128,28 +128,12 @@ public class ExportImportPerformanceTest {
 
 		_resultsFile = properties.getProperty("results.file");
 
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("pageType - ");
-		sb.append(_pageType);
-		sb.append(StringPool.COMMA_AND_SPACE);
-		sb.append("pagesCount - ");
-		sb.append(_pagesCount);
-		sb.append(StringPool.COMMA_AND_SPACE);
-
-		if (Objects.equals(_pageType, LayoutConstants.TYPE_CONTENT)) {
-			sb.append("fragmentsPerPage - ");
-			sb.append(_fragmentsPerPage);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append("portletsPerPage - ");
-			sb.append(_portletsPerContentPage);
-		}
-		else {
-			sb.append("portletsPerPage - ");
-			sb.append(_portletsPerPortletPage);
-		}
-
-		_results.add(sb.toString());
+		_results.add("Settings:");
+		_results.add(
+			StreamUtil.toString(
+				clazz.getResourceAsStream(
+					"export-import-performance.properties")));
+		_results.add("\nResults:");
 	}
 
 	@AfterClass

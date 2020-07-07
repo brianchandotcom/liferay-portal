@@ -194,12 +194,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				long bundleId = bundle.getBundleId();
 
 				if (artifact.getBundleId() == bundleId) {
-					_log(
-						Util.Logger.LOG_DEBUG,
-						StringBundler.concat(
-							"Bundle ", bundleId, " has been uninstalled"),
-						null);
-
 					iterator.remove();
 
 					break;
@@ -271,57 +265,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		try {
-			StringBundler sb = new StringBundler(33);
-
-			sb.append(StringPool.OPEN_CURLY_BRACE);
-			sb.append(POLL);
-			sb.append(" (ms) = ");
-			sb.append(_poll);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(DIR);
-			sb.append(" = ");
-			sb.append(_watchedDirectory.getAbsolutePath());
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(LOG_LEVEL);
-			sb.append(" = ");
-			sb.append(_logLevel);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(START_NEW_BUNDLES);
-			sb.append(" = ");
-			sb.append(_startBundles);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(START_NEW_BUNDLES);
-			sb.append(" = ");
-			sb.append(_startBundles);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(TMPDIR);
-			sb.append(" = ");
-			sb.append(_tmpDir);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(FILTER);
-			sb.append(" = ");
-			sb.append(_filter);
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(START_LEVEL);
-			sb.append(" = ");
-			sb.append(_startLevel);
-			sb.append(StringPool.CLOSE_CURLY_BRACE);
-
-			_log(Util.Logger.LOG_DEBUG, sb.toString(), null);
-
 			if (!_noInitialDelay) {
 				try {
 					Thread.sleep(_poll);
 				}
 				catch (InterruptedException interruptedException) {
-					_log(
-						Util.Logger.LOG_DEBUG,
-						StringBundler.concat(
-							"Watcher for ", _watchedDirectory,
-							" was interrupted while waiting ", _poll,
-							" milliseconds for initial directory scan."),
-						interruptedException);
-
 					return;
 				}
 
@@ -373,8 +321,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public void start() {
 		if (_noInitialDelay) {
-			_log(Util.Logger.LOG_DEBUG, "Starting initial scan", null);
-
 			_initializeCurrentManagedBundles();
 
 			Set<File> files = scanner.scan(true);

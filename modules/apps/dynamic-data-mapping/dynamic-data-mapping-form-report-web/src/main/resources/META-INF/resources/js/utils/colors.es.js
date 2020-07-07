@@ -58,6 +58,7 @@ const COLORS = [
 const NAMED_COLORS = {
 	blueDark: '#272833',
 	gray: '#cdced9',
+	lightBlue: '#4b9bff',
 	white: '#ffffff',
 };
 

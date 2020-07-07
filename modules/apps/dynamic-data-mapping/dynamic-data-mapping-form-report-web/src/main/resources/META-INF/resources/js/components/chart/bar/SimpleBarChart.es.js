@@ -24,10 +24,10 @@ import {
 	YAxis,
 } from 'recharts';
 
-import colors, {NAMED_COLORS} from '../../../utils/colors.es';
+import {NAMED_COLORS} from '../../../utils/colors.es';
 import TooltipContent from '../TooltipContent.es';
 
-const {blueDark, gray, white} = NAMED_COLORS;
+const {blueDark, gray, lightBlue, white} = NAMED_COLORS;
 
 export default ({data, height, totalEntries, width}) => {
 	const [activeIndex, setActiveIndex] = useState(null);
@@ -84,7 +84,7 @@ export default ({data, height, totalEntries, width}) => {
 					barCategoryGap={30}
 					barGap={5}
 					dataKey="count"
-					fill={colors(0)}
+					fill={lightBlue}
 					onMouseOut={handleOnMouseOut}
 					onMouseOver={(_, index) => handleOnMouseOver(index)}
 				>

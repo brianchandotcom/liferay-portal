@@ -160,6 +160,10 @@ definition {
 
 		MenuItem.click(menuItem = "Manage");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		SitePages.deletePage(pageName = "${pageName}");
 	}
 

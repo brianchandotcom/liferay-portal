@@ -11,9 +11,7 @@ definition {
 			colorPalette = "${colorPalette}",
 			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.waitForAutoSave();
 	}
 
 	macro changeConfigSelection {
@@ -29,9 +27,7 @@ definition {
 				value1 = "${optionValue}");
 		}
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.waitForAutoSave();
 	}
 
 	macro changeConfigText {
@@ -41,15 +37,15 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		while (!IsTextEqual(key_fieldName = "${textConfigName}", locator1 = "FormFields#TEXT_FIELD", value1 = "${editableText}")) {
-			FormFields.editText(
-				fieldName = "${textConfigName}",
-				fieldValue = "${editableText}");
-		}
+		FormFields.editText(
+			fieldName = "${textConfigName}",
+			fieldValue = "${editableText}");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		Pause(locator1 = "3000");
+
+		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro checkConfigCheckbox {

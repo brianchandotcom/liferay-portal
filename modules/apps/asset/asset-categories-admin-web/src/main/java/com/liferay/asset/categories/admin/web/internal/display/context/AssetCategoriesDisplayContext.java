@@ -745,13 +745,22 @@ public class AssetCategoriesDisplayContext {
 	private long _getDefaultVocabularyId() throws PortalException {
 		List<AssetVocabulary> vocabularies = getVocabularies();
 
-		if (ListUtil.isEmpty(vocabularies)) {
-			return 0;
+		if (ListUtil.isNotEmpty(vocabularies)) {
+			AssetVocabulary vocabulary = vocabularies.get(0);
+
+			return vocabulary.getVocabularyId();
 		}
 
-		AssetVocabulary vocabulary = vocabularies.get(0);
+		List<AssetVocabulary> inheritedVocabularies =
+			getInheritedVocabularies();
 
-		return vocabulary.getVocabularyId();
+		if (ListUtil.isNotEmpty(inheritedVocabularies)) {
+			AssetVocabulary vocabulary = inheritedVocabularies.get(0);
+
+			return vocabulary.getVocabularyId();
+		}
+
+		return 0;
 	}
 
 	private PortletURL _getIteratorURL() throws PortalException {

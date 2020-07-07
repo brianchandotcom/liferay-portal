@@ -15,13 +15,12 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
-import {getJsModule} from '../../../../../utilities/modules';
+import {getComponentByModuleUrl} from '../../../utilities/modules';
 import AutocompleteFilter from './AutocompleteFilter';
 import CheckboxesFilter from './CheckboxesFilter';
 import DateRangeFilter from './DateRangeFilter';
 import NumberFilter from './NumberFilter';
 import RadioFilter from './RadioFilter';
-import SelectFilter from './SelectFilter';
 import TextFilter from './TextFilter';
 
 export const filterIdToComponentMap = {
@@ -30,7 +29,6 @@ export const filterIdToComponentMap = {
 	dateRange: DateRangeFilter,
 	number: NumberFilter,
 	radio: RadioFilter,
-	select: SelectFilter,
 	text: TextFilter,
 };
 
@@ -54,39 +52,17 @@ export function Filter(props) {
 
 	useEffect(() => {
 		if (moduleUrl) {
-			getFilterByModuleUrl(moduleUrl).then((FetchedComponent) =>
+			getComponentByModuleUrl(moduleUrl).then((FetchedComponent) =>
 				updateComponent(() => FetchedComponent)
 			);
 		}
 	}, [moduleUrl]);
 
 	return Component ? (
-		<Component {...props} />
+		<div className="dataset-filter test">
+			<Component {...props} />
+		</div>
 	) : (
 		<ClayLoadingIndicator small />
 	);
-}
-
-export const fetchedCustomFiltersModules = [];
-
-export function getFilterByModuleUrl(url) {
-	return new Promise((resolve, reject) => {
-		const addedCustomFilter = fetchedCustomFiltersModules.find(
-			(cr) => cr.url === url
-		);
-		if (addedCustomFilter) {
-			resolve(addedCustomFilter.component);
-		}
-
-		return getJsModule(url)
-			.then((fetchedComponent) => {
-				fetchedCustomFiltersModules.push({
-					component: fetchedComponent,
-					url,
-				});
-
-				return resolve(fetchedComponent);
-			})
-			.catch(reject);
-	});
 }

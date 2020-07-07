@@ -103,7 +103,7 @@ function DateRangeFilter({actions, id, max, min, placeholder, value}) {
 					}
 					onClick={() => {
 						if (!fromValue && !toValue) {
-							actions.updateFilterValue(id, null, null);
+							actions.updateFilterState(id, null, null);
 						}
 						else {
 							const newValue = {
@@ -115,7 +115,7 @@ function DateRangeFilter({actions, id, max, min, placeholder, value}) {
 									: null,
 							};
 
-							actions.updateFilterValue(
+							actions.updateFilterState(
 								id,
 								newValue,
 								getOdataString(newValue, id)

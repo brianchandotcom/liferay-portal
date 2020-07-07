@@ -51,7 +51,7 @@ function TestFilter({actions, id, inputText, label, value: valueProp}) {
 					className="btn-sm"
 					disabled={value === valueProp}
 					onClick={() =>
-						actions.updateFilterValue(
+						actions.updateFilterState(
 							id,
 							value,
 							getOdataString(value, id)

@@ -282,7 +282,7 @@ function AutocompleteFilter(props) {
 					className="btn-sm"
 					disabled={!isValueChanged(props.value || [], selectedItems)}
 					onClick={() =>
-						props.actions.updateFilterValue(
+						props.actions.updateFilterState(
 							props.id,
 							selectedItems.length ? selectedItems : null,
 							getOdataString(

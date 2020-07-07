@@ -43,7 +43,7 @@ function RadioFilter({actions, id, items, value: valueProp}) {
 					className="btn-sm"
 					disabled={value === valueProp}
 					onClick={() =>
-						actions.updateFilterValue(
+						actions.updateFilterState(
 							id,
 							value,
 							getOdataString(value, id)

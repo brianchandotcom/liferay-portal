@@ -52,7 +52,7 @@ function NumberFilter({actions, id, inputText, max, min, value: valueProp}) {
 					className="btn-sm"
 					disabled={Number(value) === valueProp}
 					onClick={() =>
-						actions.updateFilterValue(
+						actions.updateFilterState(
 							id,
 							Number(value),
 							getOdataString(Number(value, id))

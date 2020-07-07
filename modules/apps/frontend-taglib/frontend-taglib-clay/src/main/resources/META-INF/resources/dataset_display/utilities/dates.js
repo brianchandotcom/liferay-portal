@@ -12,34 +12,6 @@
  * details.
  */
 
-export const prettifyCheckboxValue = (value, items) => {
-	const prettifiedValue = value
-		? value
-				.map((v) => {
-					return items.reduce(
-						(found, item) =>
-							found || (item.value === v ? item.label : null),
-						null
-					);
-				})
-				.join(', ')
-		: '';
-
-	return prettifiedValue;
-};
-
-export const prettifySelectValue = (value, items) => {
-	const prettifiedValue = value
-		? items.reduce(
-				(found, item) =>
-					found || (item.value === value ? item.label : null),
-				null
-		  )
-		: '';
-
-	return prettifiedValue;
-};
-
 export function formatDateObject(dateObject) {
 	return `${dateObject.year}-${('0' + dateObject.month).slice(-2)}-${(
 		'0' + dateObject.day
@@ -66,7 +38,7 @@ export function prettifyDateObject(dateObject) {
 	return date.toLocaleDateString();
 }
 
-export function prettifyDateRangeObject(dateRangeObject) {
+export function formatDateRangeObject(dateRangeObject) {
 	if (dateRangeObject.from && dateRangeObject.to) {
 		return `${prettifyDateObject(
 			dateRangeObject.from
@@ -84,18 +56,14 @@ export function prettifyDateRangeObject(dateRangeObject) {
 	}
 }
 
-export function prettifyFilterValue({items, type, value}) {
-	switch (type) {
-		case 'checkbox':
-			return prettifyCheckboxValue(value, items);
-		case 'autocomplete':
-			return value.map((element) => element.label).join(', ');
-		case 'radio':
-		case 'select':
-			return prettifySelectValue(value, items);
-		case 'dateRange':
-			return prettifyDateRangeObject(value);
-		default:
-			return value;
-	}
+export function convertObjectDateToIsoString(objDate, direction) {
+	const time = direction === 'from' ? [0, 0, 0, 0] : [23, 59, 59, 999];
+	const date = new Date(
+		objDate.year,
+		objDate.month - 1,
+		objDate.day,
+		...time
+	);
+
+	return date.toISOString();
 }

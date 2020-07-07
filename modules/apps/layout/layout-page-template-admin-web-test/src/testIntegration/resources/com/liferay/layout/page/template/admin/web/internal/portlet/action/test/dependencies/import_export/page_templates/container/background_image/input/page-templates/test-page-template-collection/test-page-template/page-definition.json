@@ -1,0 +1,91 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"backgroundImage": {
+					},
+					"layout": {
+						"borderWidth": 0,
+						"contentDisplay": "Block",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"backgroundImage": {
+								"url": {
+									"value": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Liferay-logo-full-color-2x.png"
+								}
+							},
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "Block",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"backgroundImage": {
+								"url": {
+									"defaultValue": {
+										"value": "https://avatars1.githubusercontent.com/u/131436"
+									},
+									"mapping": {
+										"fieldKey": "smallImage",
+										"itemReference": {
+											"className": "com.liferay.journal.model.JournalArticle",
+											"classPK": "${CLASS_PK}"
+										}
+									}
+								}
+							},
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "Block",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

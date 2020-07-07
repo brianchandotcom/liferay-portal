@@ -754,9 +754,11 @@ definition {
 					key_contentName = "${imageFileName}",
 					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
+				var key_imageName = StringUtil.replace("${imageFileName}", " ", "+");
+
 				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
-					key_imageName = "${imageFileName}",
+					key_imageName = "${key_imageName}",
 					locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
 			}
 

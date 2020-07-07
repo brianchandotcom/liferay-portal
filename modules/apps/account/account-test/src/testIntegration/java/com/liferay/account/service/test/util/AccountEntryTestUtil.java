@@ -73,7 +73,7 @@ public class AccountEntryTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static AccountEntry addPersonalAccountEntry(
+	public static AccountEntry addPersonAccountEntry(
 			AccountEntryLocalService accountEntryLocalService)
 		throws Exception {
 

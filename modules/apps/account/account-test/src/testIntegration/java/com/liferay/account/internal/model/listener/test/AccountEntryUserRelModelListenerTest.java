@@ -72,12 +72,11 @@ public class AccountEntryUserRelModelListenerTest {
 	}
 
 	@Test(expected = ModelListenerException.class)
-	public void testAddAccountEntryUserRelForAccountEntryTypePersonal()
+	public void testAddAccountEntryUserRelForAccountEntryTypePerson()
 		throws Exception {
 
-		AccountEntry accountEntry =
-			AccountEntryTestUtil.addPersonalAccountEntry(
-				_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addPersonAccountEntry(
+			_accountEntryLocalService);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), _user.getUserId());

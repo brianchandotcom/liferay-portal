@@ -288,7 +288,7 @@ public class AccountEntryUserRelLocalServiceTest {
 	@Test
 	public void testAddPersonTypeAccountEntryUserRel() throws Exception {
 		AccountEntry personTypeAccountEntry =
-			AccountEntryTestUtil.addPersonalAccountEntry(
+			AccountEntryTestUtil.addPersonAccountEntry(
 				_accountEntryLocalService);
 
 		AccountEntryUserRel accountEntryUserRel1 =
@@ -404,7 +404,7 @@ public class AccountEntryUserRelLocalServiceTest {
 	@Test
 	public void testSetPersonTypeAccountEntryUser() throws Exception {
 		AccountEntry personTypeAccountEntry =
-			AccountEntryTestUtil.addPersonalAccountEntry(
+			AccountEntryTestUtil.addPersonAccountEntry(
 				_accountEntryLocalService);
 		User user1 = UserTestUtil.addUser();
 

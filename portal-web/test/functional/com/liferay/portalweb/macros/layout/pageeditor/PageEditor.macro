@@ -1195,6 +1195,8 @@ definition {
 	}
 
 	macro gotoDuplicate {
+		var key_fragmentName = "${fragmentName}";
+
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		PageEditor.gotoTab(tabName = "Page Structure");
@@ -1205,7 +1207,9 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_DUPLICATE_BUTTON");
+		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Duplicate");
 	}
 
 	macro gotoEditableFieldEdit {
@@ -1243,7 +1247,9 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_SAVE_AS_FRAGMENT_BUTTON");
+		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Save Composition");
 	}
 
 	macro gotoSelectPanel {
@@ -1288,9 +1294,9 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON");
+		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
 
 		if (!(isSet(duplicateFragment))) {
 			AssertElementNotPresent(

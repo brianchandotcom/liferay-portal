@@ -1446,7 +1446,7 @@ definition {
 		}
 
 		task ("Configure the Heading") {
-			PageEditor.gotoConfiguration(fragmentName = "Heading");
+			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(textColor = "white");
 

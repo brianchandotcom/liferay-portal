@@ -214,7 +214,7 @@ definition {
 				fragmentName = "Heading",
 				scope = "Master");
 
-			PageEditor.gotoConfiguration(fragmentName = "Heading");
+			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
 				headingLevel = "H2",

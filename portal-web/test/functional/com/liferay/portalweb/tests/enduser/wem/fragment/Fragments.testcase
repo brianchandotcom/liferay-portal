@@ -190,7 +190,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.gotoConfiguration(fragmentName = "Button");
+			PageEditor.gotoStyle(fragmentName = "Button");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
@@ -310,7 +310,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.gotoConfiguration(fragmentName = "Heading");
+			PageEditor.gotoStyle(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
 				headingLevel = "H2",

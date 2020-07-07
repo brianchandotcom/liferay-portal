@@ -186,7 +186,7 @@ definition {
 			key_text = "undo",
 			locator1 = "Icon#ANY_ENABLED");
 
-		PageEditor.gotoConfiguration(fragmentName = "Button");
+		PageEditor.gotoStyle(fragmentName = "Button");
 
 		PageEditor.configureFragment(alignment = "Center");
 

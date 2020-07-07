@@ -52,7 +52,7 @@ definition {
 			key_text = "undo",
 			locator1 = "Icon#ANY_ENABLED");
 
-		PageEditor.gotoConfiguration(fragmentName = "Heading");
+		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(textAlign = "Center");
 
@@ -78,7 +78,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Button");
 
-		PageEditor.gotoConfiguration(fragmentName = "Button");
+		PageEditor.gotoStyle(fragmentName = "Button");
 
 		PageEditor.configureFragment(alignment = "Center");
 
@@ -159,7 +159,7 @@ definition {
 			id = "element-text",
 			text = "New editable fragment text");
 
-		PageEditor.gotoConfiguration(fragmentName = "Heading");
+		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(alignment = "Center");
 
@@ -681,7 +681,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Button");
 
-		PageEditor.gotoConfiguration(fragmentName = "Button");
+		PageEditor.gotoStyle(fragmentName = "Button");
 
 		PageEditor.configureFragment(alignment = "Center");
 

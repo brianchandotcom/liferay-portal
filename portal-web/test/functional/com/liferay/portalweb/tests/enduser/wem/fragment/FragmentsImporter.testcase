@@ -430,7 +430,7 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
-		PageEditor.gotoConfiguration(fragmentName = "Heading");
+		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(
 			headingLevel = "H2",

@@ -77,7 +77,7 @@ definition {
 			id = "element-text",
 			text = "New editable fragment text");
 
-		PageEditor.gotoConfiguration(fragmentName = "Heading");
+		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(alignment = "Center");
 

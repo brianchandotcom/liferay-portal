@@ -119,6 +119,14 @@ definition {
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
+		if (isSet(selectedAsset)) {
+			Panel.expandPanel(panel = "Source");
+
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+				value1 = "${selectedAsset}");
+		}
+
 		Panel.expandPanel(panel = "Scope");
 
 		if (isSet(otherSite)) {

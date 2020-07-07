@@ -14,8 +14,8 @@
 
 import ellipsize from '../../../src/main/resources/META-INF/resources/js/utils/ellipsize.es';
 
-describe('toDataArray', () => {
-	it('sorts array from the highest to lower count values ', () => {
+describe('ellipsize', () => {
+	it('add an ellipsis in the end of the text', () => {
 		const ellipsized = ellipsize('Very long text', 5);
 
 		expect(ellipsized).toBe('Very...');

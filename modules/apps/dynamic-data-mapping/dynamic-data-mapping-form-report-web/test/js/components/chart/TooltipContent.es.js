@@ -43,7 +43,7 @@ describe('Tooltip', () => {
 	});
 
 	it('renders tooltip for MultiBar Chart', () => {
-		const {asFragment} = render(
+		const {container} = render(
 			<TooltipContent
 				active={true}
 				label="Row 1"
@@ -72,11 +72,25 @@ describe('Tooltip', () => {
 			/>
 		);
 
-		expect(asFragment()).toMatchSnapshot();
+		const header = container.querySelector('.header').innerHTML;
+
+		expect(header).toBe('<div class="title">Row 1</div>');
+
+		const tooltipBodies = container.querySelectorAll('#tooltip-label');
+
+		expect(tooltipBodies[0].innerHTML).toBe(
+			'Col 1: 1 entry <b>(16.6%)</b>'
+		);
+		expect(tooltipBodies[1].innerHTML).toBe(
+			'Col 2: 2 entries <b>(33.3%)</b>'
+		);
+		expect(tooltipBodies[2].innerHTML).toBe(
+			'Col 3: 3 entries <b>(50%)</b>'
+		);
 	});
 
 	it('renders tooltip for Pie chart', () => {
-		const {asFragment} = render(
+		const {container} = render(
 			<TooltipContent
 				active={true}
 				payload={[
@@ -95,6 +109,9 @@ describe('Tooltip', () => {
 			/>
 		);
 
-		expect(asFragment()).toMatchSnapshot();
+		const tooltipLabel = container.querySelector('#tooltip-label')
+			.innerHTML;
+
+		expect(tooltipLabel).toBe('Option 1: 1 entry <b>(100%)</b>');
 	});
 });

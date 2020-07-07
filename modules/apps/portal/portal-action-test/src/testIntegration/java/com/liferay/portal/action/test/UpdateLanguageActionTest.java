@@ -116,7 +116,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testAssetI18nRedirect() throws PortalException {
-		_setThemeDisplayForLayoutWithI18n();
+		_setThemeDisplayForLayout(true);
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
@@ -128,7 +128,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testAssetRedirect() throws PortalException {
-		_setThemeDisplayForLayout();
+		_setThemeDisplayForLayout(false);
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
@@ -140,7 +140,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testControlPanelI18nRedirect() throws PortalException {
-		_setThemeDisplayForControlPanelWithI18n();
+		_setThemeDisplayForControlPanel(true);
 		String bareURL = _getURLForControlPanel();
 
 		_assertRedirect(bareURL, bareURL);
@@ -149,7 +149,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testControlPanelRedirect() throws PortalException {
-		_setThemeDisplayForControlPanel();
+		_setThemeDisplayForControlPanel(false);
 		String bareURL = _getURLForControlPanel();
 
 		_assertRedirect(bareURL, bareURL);
@@ -159,7 +159,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testPublicPageI18nRedirect() throws PortalException {
-		_setThemeDisplayForLayoutWithI18n();
+		_setThemeDisplayForLayout(true);
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
@@ -171,7 +171,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testPublicPageRedirect() throws PortalException {
-		_setThemeDisplayForLayout();
+		_setThemeDisplayForLayout(false);
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
@@ -251,34 +251,28 @@ public class UpdateLanguageActionTest {
 		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
-	private void _setThemeDisplayForControlPanel() throws PortalException {
+	private void _setThemeDisplayForControlPanel(boolean i18n) {
 		_themeDisplay = new ThemeDisplay();
 
 		_themeDisplay.setLayout(_controlPanelLayout);
+
+		if (i18n) {
+			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			_themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
 	}
 
-	private void _setThemeDisplayForControlPanelWithI18n()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanel();
-
-		_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-		_themeDisplay.setI18nPath(_sourceLocalePrepend);
-	}
-
-	private void _setThemeDisplayForLayout() {
+	private void _setThemeDisplayForLayout(boolean i18n) {
 		_themeDisplay = new ThemeDisplay();
 
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setLayout(_layout);
 		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-	}
 
-	private void _setThemeDisplayForLayoutWithI18n() {
-		_setThemeDisplayForLayout();
-
-		_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-		_themeDisplay.setI18nPath(_sourceLocalePrepend);
+		if (i18n) {
+			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			_themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
 	}
 
 	private static Locale _defaultLocale;

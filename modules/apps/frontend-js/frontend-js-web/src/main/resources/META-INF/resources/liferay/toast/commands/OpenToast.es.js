@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {render} from 'frontend-js-react-web';
+import {buildFragment} from 'metal-dom';
 import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
@@ -29,6 +30,12 @@ const TYPES = {
 	HTML: 'html',
 	TEXT: 'text',
 };
+
+const TPL_ALERT_CONTAINER = `
+	<div class="alert-container container">
+		<div class="alert-notifications alert-notifications-fixed" id=${DEFAULT_ALERT_CONTAINER_ID}></div>
+	</div>
+`;
 
 const Text = ({allowHTML, string = null}) => {
 	if (allowHTML) {
@@ -54,21 +61,23 @@ const getRootElement = ({container, containerId}) => {
 	let alertFixed = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
 
 	if (!alertFixed) {
-		const alertContainer = document.createElement('div');
-		alertContainer.className = 'alert-container container';
-		document.body.appendChild(alertContainer);
+		alertFixed = buildFragment(TPL_ALERT_CONTAINER).querySelector(
+			'.alert-container.container'
+		);
 
-		alertFixed = document.createElement('div');
-		alertFixed.id = DEFAULT_ALERT_CONTAINER_ID;
-		alertFixed.className = 'alert-notifications alert-notifications-fixed';
-		alertContainer.appendChild(alertFixed);
+		alertFixed = document.body.appendChild(alertFixed);
 	}
 
 	// Creates a fragment for preventing React to unmount the alertContainer
+
 	container = document.createElement('div');
 	container.className = 'mb-3';
 
-	alertFixed.appendChild(container);
+	const fragmentContainer = document.querySelector(
+		`.alert-notifications.alert-notifications-fixed`
+	);
+
+	fragmentContainer.appendChild(container);
 
 	return container;
 };
@@ -122,26 +131,21 @@ function openToast({
 	};
 
 	render(
-		<>
-			<ClayAlert
-				autoClose={autoClose}
-				displayType={type}
-				onClick={(event) => onClick({event, onClose: onCloseFn})}
-				onClose={onCloseFn}
-				title={
-					title && (
-						<Text
-							allowHTML={titleType === TYPES.HTML}
-							string={title}
-						/>
-					)
-				}
-				variant={variant}
-				{...toastProps}
-			>
-				<Text allowHTML={messageType === TYPES.HTML} string={message} />
-			</ClayAlert>
-		</>,
+		<ClayAlert
+			autoClose={autoClose}
+			displayType={type}
+			onClick={(event) => onClick({event, onClose: onCloseFn})}
+			onClose={onCloseFn}
+			title={
+				title && (
+					<Text allowHTML={titleType === TYPES.HTML} string={title} />
+				)
+			}
+			variant={variant}
+			{...toastProps}
+		>
+			<Text allowHTML={messageType === TYPES.HTML} string={message} />
+		</ClayAlert>,
 		renderData,
 		rootElement
 	);

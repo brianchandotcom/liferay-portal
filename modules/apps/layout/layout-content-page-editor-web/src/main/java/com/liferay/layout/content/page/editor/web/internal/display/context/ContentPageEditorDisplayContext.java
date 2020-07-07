@@ -1765,19 +1765,19 @@ public class ContentPageEditorDisplayContext {
 		return stream.sorted(
 			new PortletCategoryComparator(themeDisplay.getLocale())
 		).filter(
-			category -> !category.isHidden()
+			currentPortletCategory -> !currentPortletCategory.isHidden()
 		).map(
-			category -> HashMapBuilder.<String, Object>put(
-				"categories", _getWidgetCategories(category)
+			currentPortletCategory -> HashMapBuilder.<String, Object>put(
+				"categories", _getWidgetCategories(currentPortletCategory)
 			).put(
 				"path",
 				StringUtil.replace(
-					category.getPath(), new String[] {"/", "."},
+					currentPortletCategory.getPath(), new String[] {"/", "."},
 					new String[] {"-", "-"})
 			).put(
-				"portlets", _getPortlets(category)
+				"portlets", _getPortlets(currentPortletCategory)
 			).put(
-				"title", _getPortletCategoryTitle(category)
+				"title", _getPortletCategoryTitle(currentPortletCategory)
 			).build()
 		).collect(
 			Collectors.toList()

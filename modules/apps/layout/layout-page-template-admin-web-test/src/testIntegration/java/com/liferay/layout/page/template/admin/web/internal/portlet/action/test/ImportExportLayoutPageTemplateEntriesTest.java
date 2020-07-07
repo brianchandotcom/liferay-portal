@@ -469,11 +469,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId());
 
-		return JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			groupId, 0,
 			_portal.getClassNameId("com.liferay.journal.model.JournalArticle"),
 			titleMap, null, contentMap, LocaleUtil.getSiteDefault(), false,
 			true, serviceContext);
+
+		journalArticle.setSmallImage(true);
+		journalArticle.setSmallImageURL(
+			"https://avatars1.githubusercontent.com/u/131436");
+
+		return JournalTestUtil.updateArticle(journalArticle);
 	}
 
 	private void _addTextFragmentEntry() throws Exception {

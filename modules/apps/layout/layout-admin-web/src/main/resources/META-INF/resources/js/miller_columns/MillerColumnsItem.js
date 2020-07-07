@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -292,19 +293,18 @@ const MillerColumnsItem = ({
 	}, [active, dropZone, isOver, itemId, onItemStayHover]);
 
 	return (
-		<li
-			className={classNames(
-				'autofit-row autofit-row-center list-group-item-flex miller-columns-item',
-				{
-					dragging: isDragging,
-					'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
-					'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
-					'drop-top': isOver && dropZone === DROP_ZONES.TOP,
-					'miller-columns-item--active': active,
-				}
-			)}
+		<ClayLayout.ContentRow
+			className={classNames('list-group-item-flex miller-columns-item', {
+				dragging: isDragging,
+				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
+				'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
+				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
+				'miller-columns-item--active': active,
+			})}
+			containerElement="li"
 			data-actions={bulkActions}
 			ref={ref}
+			verticalAlign="center"
 		>
 			<a className="miller-columns-item-mask" href={url}>
 				<span className="c-inner sr-only">{`${Liferay.Language.get(
@@ -313,22 +313,22 @@ const MillerColumnsItem = ({
 			</a>
 
 			{draggable && (
-				<div className="autofit-col miller-columns-item-drag-handler pl-0">
+				<ClayLayout.ContentCol className="miller-columns-item-drag-handler pl-0">
 					<ClayIcon symbol="drag" />
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
 			{selectable && (
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					<ClayCheckbox
 						defaultChecked={checked}
 						name={`${namespace}rowIds`}
 						value={itemId}
 					/>
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
-			<div className="autofit-col autofit-col-expand">
+			<ClayLayout.ContentCol expand>
 				<h4 className="list-group-title text-truncate-inline">
 					<a className="text-truncate" href={viewUrl}>
 						{title}
@@ -350,10 +350,10 @@ const MillerColumnsItem = ({
 						))}
 					</h5>
 				)}
-			</div>
+			</ClayLayout.ContentCol>
 
 			{layoutActions.length > 0 && (
-				<div className="autofit-col miller-columns-item-actions">
+				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDown
 						active={layoutActionsActive}
 						onActiveChange={setLayoutActionsActive}
@@ -380,12 +380,12 @@ const MillerColumnsItem = ({
 							))}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
 			{quickActions.map((action) => (
-				<div
-					className="autofit-col miller-columns-item-quick-action"
+				<ClayLayout.ContentCol
+					className="miller-columns-item-quick-action"
 					key={action.id}
 				>
 					<ClayLink
@@ -397,11 +397,11 @@ const MillerColumnsItem = ({
 					>
 						<ClayIcon symbol={action.icon} />
 					</ClayLink>
-				</div>
+				</ClayLayout.ContentCol>
 			))}
 
 			{dropdownActions.length > 0 && (
-				<div className="autofit-col miller-columns-item-actions">
+				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDown
 						active={dropdownActionsActive}
 						onActiveChange={setDropdownActionsActive}
@@ -428,15 +428,15 @@ const MillerColumnsItem = ({
 							))}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
 			{hasChild && (
-				<div className="autofit-col miller-columns-item-child-indicator">
+				<ClayLayout.ContentCol className="miller-columns-item-child-indicator">
 					<ClayIcon symbol={rtl ? 'caret-left' : 'caret-right'} />
-				</div>
+				</ClayLayout.ContentCol>
 			)}
-		</li>
+		</ClayLayout.ContentRow>
 	);
 };
 

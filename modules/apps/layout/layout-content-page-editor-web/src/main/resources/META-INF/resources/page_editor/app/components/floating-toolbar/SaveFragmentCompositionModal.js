@@ -17,6 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-web';
@@ -261,13 +262,13 @@ const SaveFragmentCompositionModal = ({
 										)}
 									</p>
 
-									<div className="row">
+									<ClayLayout.Row>
 										{collections.map((collection) => (
-											<div
-												className="col-md-4"
+											<ClayLayout.Col
 												key={
 													collection.fragmentCollectionId
 												}
+												md="4"
 											>
 												<ClayCard
 													className={
@@ -286,15 +287,18 @@ const SaveFragmentCompositionModal = ({
 												>
 													<ClayCard.Body>
 														<ClayCard.Row>
-															<span className="autofit-col">
+															<ClayLayout.ContentCol containerElement="span">
 																<ClaySticker
 																	inline
 																>
 																	<ClayIcon symbol="folder" />
 																</ClaySticker>
-															</span>
-															<span className="autofit-col autofit-col-expand">
-																<span className="autofit-section">
+															</ClayLayout.ContentCol>
+															<ClayLayout.ContentCol
+																containerElement="span"
+																expand
+															>
+																<ClayLayout.ContentSection containerElement="span">
 																	<ClayCard.Description
 																		displayType="title"
 																		truncate
@@ -303,14 +307,14 @@ const SaveFragmentCompositionModal = ({
 																			collection.name
 																		}
 																	</ClayCard.Description>
-																</span>
-															</span>
+																</ClayLayout.ContentSection>
+															</ClayLayout.ContentCol>
 														</ClayCard.Row>
 													</ClayCard.Body>
 												</ClayCard>
-											</div>
+											</ClayLayout.Col>
 										))}
-									</div>
+									</ClayLayout.Row>
 								</>
 							) : (
 								<div className="alert alert-info">

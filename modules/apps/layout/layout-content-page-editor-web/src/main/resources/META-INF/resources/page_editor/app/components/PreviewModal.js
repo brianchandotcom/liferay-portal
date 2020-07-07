@@ -13,6 +13,7 @@
  */
 
 import {ClaySelect} from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {addParams} from 'frontend-js-web';
@@ -77,96 +78,106 @@ const PreviewModal = ({observer}) => {
 			observer={observer}
 			size="full-screen"
 		>
-			<ClayModal.Header className="container-fluid">
-				<ClayModal.Title className="pb-3 pt-3">
-					<div
-						className={classNames(
-							'd-flex',
-							'justify-content-between',
-							{
-								'responsive-mode': config.responsiveEnabled,
-							}
-						)}
-					>
-						<ul className="navbar-nav page-editor__preview-modal__part">
-							{availableSegmentsExperiences && (
-								<li className="mr-2 nav-item">
-									<div className="align-middle d-inline-flex">
-										<label
-											className="mr-2 mt-1"
-											htmlFor={experienceSelectId}
-										>
-											{Liferay.Language.get('experience')}
-										</label>
-
-										<ClaySelect
-											aria-label="Experience"
-											className="form-control-sm"
-											id={experienceSelectId}
-											onChange={(event) => {
-												setSegmentsExperienceId(
-													event.target.options[
-														event.target
-															.selectedIndex
-													].value
-												);
-											}}
-											value={segmentsExperienceId}
-										>
-											{availableSegmentsExperiences &&
-												Object.keys(
-													availableSegmentsExperiences
-												).map(
-													(segmentsExperienceId) => (
-														<ClaySelect.Option
-															key={
-																segmentsExperienceId
-															}
-															label={
-																availableSegmentsExperiences[
-																	segmentsExperienceId
-																].name
-															}
-															value={
-																segmentsExperienceId
-															}
-														/>
-													)
+			<ClayModal.Header>
+				<ClayLayout.ContainerFluid size={false}>
+					<ClayModal.Title className="pb-3 pt-3">
+						<div
+							className={classNames(
+								'd-flex',
+								'justify-content-between',
+								{
+									'responsive-mode': config.responsiveEnabled,
+								}
+							)}
+						>
+							<ul className="navbar-nav page-editor__preview-modal__part">
+								{availableSegmentsExperiences && (
+									<li className="mr-2 nav-item">
+										<div className="align-middle d-inline-flex">
+											<label
+												className="mr-2 mt-1"
+												htmlFor={experienceSelectId}
+											>
+												{Liferay.Language.get(
+													'experience'
 												)}
-										</ClaySelect>
-									</div>
+											</label>
+
+											<ClaySelect
+												aria-label="Experience"
+												className="form-control-sm"
+												id={experienceSelectId}
+												onChange={(event) => {
+													setSegmentsExperienceId(
+														event.target.options[
+															event.target
+																.selectedIndex
+														].value
+													);
+												}}
+												value={segmentsExperienceId}
+											>
+												{availableSegmentsExperiences &&
+													Object.keys(
+														availableSegmentsExperiences
+													).map(
+														(
+															segmentsExperienceId
+														) => (
+															<ClaySelect.Option
+																key={
+																	segmentsExperienceId
+																}
+																label={
+																	availableSegmentsExperiences[
+																		segmentsExperienceId
+																	].name
+																}
+																value={
+																	segmentsExperienceId
+																}
+															/>
+														)
+													)}
+											</ClaySelect>
+										</div>
+									</li>
+								)}
+
+								<li className="nav-item">
+									<Translation
+										availableLanguages={
+											config.availableLanguages
+										}
+										defaultLanguageId={
+											config.defaultLanguageId
+										}
+										dispatch={({
+											languageId: nextLanguageId,
+										}) => setLanguageId(nextLanguageId)}
+										fragmentEntryLinks={fragmentEntryLinks}
+										languageId={languageId}
+										segmentsExperienceId={
+											segmentsExperienceId
+										}
+										showNotTranslated={false}
+									/>
 								</li>
-							)}
+							</ul>
 
-							<li className="nav-item">
-								<Translation
-									availableLanguages={
-										config.availableLanguages
-									}
-									defaultLanguageId={config.defaultLanguageId}
-									dispatch={({languageId: nextLanguageId}) =>
-										setLanguageId(nextLanguageId)
-									}
-									fragmentEntryLinks={fragmentEntryLinks}
-									languageId={languageId}
-									segmentsExperienceId={segmentsExperienceId}
-									showNotTranslated={false}
-								/>
-							</li>
-						</ul>
+							<div className="page-editor__preview-modal__part">
+								{config.responsiveEnabled && (
+									<ViewportSizeSelector
+										onSizeSelected={setViewportSize}
+										selectedSize={viewportSize}
+									/>
+								)}
+							</div>
 
-						<div className="page-editor__preview-modal__part">
-							{config.responsiveEnabled && (
-								<ViewportSizeSelector
-									onSizeSelected={setViewportSize}
-									selectedSize={viewportSize}
-								/>
-							)}
+							<div className="page-editor__preview-modal__part"></div>
 						</div>
-
-						<div className="page-editor__preview-modal__part"></div>
-					</div>
-				</ClayModal.Title>
+					</ClayModal.Title>
+				</ClayLayout.ContainerFluid>
 			</ClayModal.Header>
 
 			<ClayModal.Body

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
@@ -35,8 +36,8 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const {modulesPerRow, reverseOrder} = itemConfig;
 
 	const rowContent = (
-		<div
-			className={classNames(className, 'row', {
+		<ClayLayout.Row
+			className={classNames(className, {
 				empty:
 					item.config.numberOfColumns === modulesPerRow &&
 					!item.children.some(
@@ -53,7 +54,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 			ref={ref}
 		>
 			{children}
-		</div>
+		</ClayLayout.Row>
 	);
 
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);
@@ -71,7 +72,9 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	);
 
 	return shouldAddContainer ? (
-		<div className="container-fluid p-0">{rowContent}</div>
+		<ClayLayout.ContainerFluid className="p-0" size={false}>
+			{rowContent}
+		</ClayLayout.ContainerFluid>
 	) : (
 		rowContent
 	);

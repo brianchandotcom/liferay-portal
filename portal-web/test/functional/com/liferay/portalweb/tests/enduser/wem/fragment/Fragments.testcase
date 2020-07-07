@@ -318,8 +318,7 @@ definition {
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
-			PageEditor.configureFragment(
-				headingLevel = "H2");
+			PageEditor.configureFragment(headingLevel = "H2");
 		}
 
 		task ("View the fragment style") {

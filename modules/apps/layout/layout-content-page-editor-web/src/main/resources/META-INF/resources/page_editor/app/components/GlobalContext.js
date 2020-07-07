@@ -37,6 +37,26 @@ export default function GlobalContextProvider({children, useIframe}) {
 				return;
 			}
 
+			const pageEditorStylesLinkId = `${config.portletNamespace}pageEditorStylesLink`;
+
+			if (
+				!iframeElement.contentDocument.getElementById(
+					pageEditorStylesLinkId
+				)
+			) {
+				const pageEditorStylesLink = iframeElement.contentDocument.createElement(
+					'link'
+				);
+
+				pageEditorStylesLink.id = pageEditorStylesLinkId;
+				pageEditorStylesLink.rel = 'stylesheet';
+				pageEditorStylesLink.href = config.getIframeContentCssURL;
+
+				iframeElement.contentDocument.head.appendChild(
+					pageEditorStylesLink
+				);
+			}
+
 			const element =
 				iframeElement.contentDocument &&
 				iframeElement.contentDocument.getElementById('content');

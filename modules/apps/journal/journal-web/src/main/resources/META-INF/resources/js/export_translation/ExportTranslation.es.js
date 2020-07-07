@@ -25,6 +25,9 @@ function ExportTranslation(props) {
 	const {namespace} = useContext(ExportTranslationContext);
 	const bridgeComponentId = `${namespace}ExportForTranslationComponent`;
 	const [availableSourceLocales, setAvailableSourceLocales] = useState([]);
+	const [defaultSourceLanguageId, setDefaultSourceLanguageId] = useState(
+		null
+	);
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -48,9 +51,10 @@ function ExportTranslation(props) {
 
 					fetch(getExportTranslationAvailableLocalesURL.toString())
 						.then((res) => res.json())
-						.then((availableLocales) => {
+						.then(({availableLocales, defaultLanguageId}) => {
 							setAvailableSourceLocales(availableLocales);
 							setArticleIds(articleIds);
+							setDefaultSourceLanguageId(defaultLanguageId);
 							setShowModal(true);
 						});
 				},
@@ -68,6 +72,7 @@ function ExportTranslation(props) {
 					{...props}
 					articleIds={articleIds}
 					availableSourceLocales={availableSourceLocales}
+					defaultSourceLanguageId={defaultSourceLanguageId}
 					observer={observer}
 					onModalClose={onClose}
 				/>

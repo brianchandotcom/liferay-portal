@@ -26,6 +26,7 @@ const ExportTranslationModal = ({
 	articleIds,
 	availableSourceLocales,
 	availableTargetLocales,
+	defaultSourceLanguageId,
 	exportTranslationURL,
 	observer,
 	onModalClose = noop,
@@ -33,7 +34,7 @@ const ExportTranslationModal = ({
 	const {namespace} = useContext(ExportTranslationContext);
 
 	const [sourceLanguageId, setSourceLanguageId] = useState(
-		availableSourceLocales[0].languageId
+		defaultSourceLanguageId
 	);
 
 	const [selectedTargetLanguageIds, setSelectedTargetLanguageIds] = useState(
@@ -197,6 +198,7 @@ ExportTranslationModal.propTypes = {
 			languageId: PropTypes.string,
 		})
 	).isRequired,
+	defaultSourceLanguageId: PropTypes.string.isRequired,
 };
 
 export default ExportTranslationModal;

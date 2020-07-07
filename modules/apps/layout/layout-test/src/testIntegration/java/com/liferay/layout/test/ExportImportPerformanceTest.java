@@ -184,8 +184,8 @@ public class ExportImportPerformanceTest {
 			_exportImportConfiguration);
 
 		_results.add(
-			"testExportGroupToLAR - " +
-				(System.currentTimeMillis() - startTime));
+			"testExportGroupToLAR used " +
+				(System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	@Test
@@ -225,8 +225,8 @@ public class ExportImportPerformanceTest {
 			_exportImportConfiguration, file);
 
 		_results.add(
-			"testImportGroupFromLAR - " +
-				(System.currentTimeMillis() - startTime));
+			"testImportGroupFromLAR used " +
+				(System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	@Test
@@ -237,8 +237,8 @@ public class ExportImportPerformanceTest {
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
 		_results.add(
-			"testInitialStagingPublication - " +
-				(System.currentTimeMillis() - startTime));
+			"testInitialStagingPublication used " +
+				(System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	@Test
@@ -277,8 +277,8 @@ public class ExportImportPerformanceTest {
 			_group, _group.getPublicLayoutSet());
 
 		_results.add(
-			"testSiteTemplatePropagation - " +
-				(System.currentTimeMillis() - startTime));
+			"testSiteTemplatePropagation used " +
+				(System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	@Test
@@ -318,8 +318,8 @@ public class ExportImportPerformanceTest {
 		}
 
 		_results.add(
-			"testStagingPublication - " +
-				(System.currentTimeMillis() - startTime));
+			"testStagingPublication used " +
+				(System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	private void _createFragments(Layout layout) throws Exception {

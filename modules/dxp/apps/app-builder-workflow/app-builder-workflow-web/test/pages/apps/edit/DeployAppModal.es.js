@@ -24,11 +24,6 @@ import AppContextProviderWrapper from '../../../AppContextProviderWrapper.es';
 
 const mockToast = jest.fn();
 
-jest.mock('frontend-js-web', () => ({
-	createResourceURL: jest.fn(() => 'http://resource_url?'),
-	fetch: jest.fn().mockResolvedValue(),
-}));
-
 jest.mock('app-builder-web/js/utils/client.es', () => ({
 	parseResponse: jest
 		.fn()
@@ -40,6 +35,20 @@ jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: (title) => mockToast(title),
 	successToast: (title) => mockToast(title),
+}));
+
+jest.mock('dynamic-data-mapping-form-builder', () => ({
+	compose: jest.fn().mockResolvedValue(),
+}));
+
+jest.mock('dynamic-data-mapping-form-renderer', () => ({
+	debounce: jest.fn().mockResolvedValue(),
+	getConnectedReactComponentAdapter: jest.fn().mockResolvedValue(),
+}));
+
+jest.mock('frontend-js-web', () => ({
+	createResourceURL: jest.fn(() => 'http://resource_url?'),
+	fetch: jest.fn().mockResolvedValue(),
 }));
 
 const EditAppContextProviderWrapper = ({children, edit}) => {

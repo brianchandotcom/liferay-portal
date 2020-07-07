@@ -328,9 +328,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-96685. User can restore and change fragment configuration value."
+	@description = "This is a test for LPS-96685. User can change fragment configuration value."
 	@priority = "5"
-	test RestoreAndChangeConfigurationFragmentToContentPage {
+	test ChangeConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -360,12 +360,6 @@ definition {
 
 		task ("Assert dark text is visible") {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
-		}
-
-		PageEditorConfiguration.restoreConfigValues(fragmentName = "Text Fragment Example");
-
-		task ("Assert default value is displayed") {
-			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'light')]");
 		}
 	}
 

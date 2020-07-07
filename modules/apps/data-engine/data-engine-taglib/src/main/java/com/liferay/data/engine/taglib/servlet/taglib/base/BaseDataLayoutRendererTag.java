@@ -58,6 +58,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		return _namespace;
 	}
 
+	public boolean getReadOnly() {
+		return _readOnly;
+	}
+
 	public void setContainerId(java.lang.String containerId) {
 		_containerId = containerId;
 	}
@@ -82,6 +86,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_namespace = namespace;
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -99,6 +107,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_dataRecordId = null;
 		_dataRecordValues = null;
 		_namespace = null;
+		_readOnly = false;
 	}
 
 	@Override
@@ -114,6 +123,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		setNamespacedAttribute(request, "dataRecordId", _dataRecordId);
 		setNamespacedAttribute(request, "dataRecordValues", _dataRecordValues);
 		setNamespacedAttribute(request, "namespace", _namespace);
+		setNamespacedAttribute(request, "readOnly", _readOnly);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-data-engine:data-layout-renderer:";
@@ -127,5 +137,6 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 	private java.lang.Long _dataRecordId = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _dataRecordValues = null;
 	private java.lang.String _namespace = null;
+	private boolean _readOnly = false;
 
 }

@@ -83,7 +83,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 
 			if ((accountEntry != null) &&
 				Objects.equals(
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 					accountEntry.getType())) {
 
 				accountEntryUserRel =

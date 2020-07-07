@@ -203,8 +203,7 @@ public class AccountUserDisplay {
 				accountEntryUserRel.getAccountEntryId());
 
 		return !Objects.equals(
-			accountEntry.getType(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL);
+			accountEntry.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
 	}
 
 	private AccountUserDisplay(User user) {

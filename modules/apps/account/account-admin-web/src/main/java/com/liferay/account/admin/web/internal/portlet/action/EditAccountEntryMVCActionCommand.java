@@ -154,7 +154,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 					AccountEntry.class.getName(), actionRequest));
 
 		if (Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 				accountEntry.getType())) {
 
 			long personAccountEntryUserId = ParamUtil.getLong(

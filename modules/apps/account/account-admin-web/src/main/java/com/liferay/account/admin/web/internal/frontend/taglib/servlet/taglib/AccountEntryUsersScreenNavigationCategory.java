@@ -77,7 +77,7 @@ public class AccountEntryUsersScreenNavigationCategory
 
 		if (Objects.equals(
 				accountEntryDisplay.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL)) {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
 
 			return false;
 		}

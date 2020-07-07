@@ -70,7 +70,7 @@ const formViewItems = {
 			description: {},
 			id: 37625,
 			name: {
-				'en-US': 'Form 01',
+				en_US: 'Form 01',
 			},
 			paginationMode: 'wizard',
 			siteId: 20124,
@@ -89,7 +89,7 @@ const tableViewItems = {
 			fieldNames: ['Text'],
 			id: 37628,
 			name: {
-				'en-US': 'Table 01',
+				en_US: 'Table 01',
 			},
 			siteId: 20124,
 			sortField: '',

@@ -160,7 +160,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryId);
 
 		if (!Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 				accountEntry.getType())) {
 
 			throw new AccountEntryTypeException();
@@ -236,7 +236,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryId);
 
 		if (!Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 				accountEntry.getType())) {
 
 			throw new AccountEntryTypeException();

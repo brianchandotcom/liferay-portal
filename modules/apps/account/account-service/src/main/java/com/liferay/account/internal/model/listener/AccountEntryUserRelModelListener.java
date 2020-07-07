@@ -101,7 +101,7 @@ public class AccountEntryUserRelModelListener
 
 			if (Objects.equals(
 					accountEntry.getType(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL) &&
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON) &&
 				ListUtil.isNotEmpty(
 					_accountEntryUserRelLocalService.
 						getAccountEntryUserRelsByAccountEntryId(

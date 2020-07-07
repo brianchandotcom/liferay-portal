@@ -38,7 +38,7 @@ import Row from './Row';
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const {rowConfig} = layoutData.items[item.itemId];
+		const rowConfig = layoutData.items[item.itemId].config;
 		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);

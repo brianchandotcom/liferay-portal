@@ -29,13 +29,11 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -67,7 +65,6 @@ public class UpdateLanguageActionTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_defaultLocale = LocaleUtil.getDefault();
-		_defaultPrependStyle = PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
 
 		LocaleUtil.setDefault(
 			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
@@ -82,8 +79,6 @@ public class UpdateLanguageActionTest {
 		LocaleUtil.setDefault(
 			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
 			_defaultLocale.getVariant());
-
-		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = _defaultPrependStyle;
 	}
 
 	@Before
@@ -120,341 +115,68 @@ public class UpdateLanguageActionTest {
 	}
 
 	@Test
-	public void testGetRedirectForAssetWithI18nAndPrepend0()
-		throws PortalException {
-
+	public void testAssetI18nRedirect() throws PortalException {
 		_setThemeDisplayForLayoutWithI18n();
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
-	public void testGetRedirectForAssetWithI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForAssetWithI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForAssetWithI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForAssetWithoutI18nAndPrepend0()
-		throws PortalException {
-
+	public void testAssetRedirect() throws PortalException {
 		_setThemeDisplayForLayout();
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
-	public void testGetRedirectForAssetWithoutI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForAssetWithoutI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForAssetWithoutI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForAsset();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithI18nAndPrepend0()
-		throws PortalException {
-
+	public void testControlPanelI18nRedirect() throws PortalException {
 		_setThemeDisplayForControlPanelWithI18n();
 		String bareURL = _getURLForControlPanel();
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
 	}
 
 	@Test
-	public void testGetRedirectForControlPanelWithI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanelWithI18n();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanelWithI18n();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanelWithI18n();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithoutI18nAndPrepend0()
-		throws PortalException {
-
+	public void testControlPanelRedirect() throws PortalException {
 		_setThemeDisplayForControlPanel();
 		String bareURL = _getURLForControlPanel();
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareURL, bareURL);
 		_assertRedirect(
 			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
 	}
 
 	@Test
-	public void testGetRedirectForControlPanelWithoutI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanel();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(
-			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithoutI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanel();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(
-			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForControlPanelWithoutI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForControlPanel();
-		String bareURL = _getURLForControlPanel();
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(
-			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithI18nAndPrepend0()
-		throws PortalException {
-
+	public void testPublicPageI18nRedirect() throws PortalException {
 		_setThemeDisplayForLayoutWithI18n();
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
-	public void testGetRedirectForPublicPageWithI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForLayoutWithI18n();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithoutI18nAndPrepend0()
-		throws PortalException {
-
+	public void testPublicPageRedirect() throws PortalException {
 		_setThemeDisplayForLayout();
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "0");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithoutI18nAndPrepend1()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithoutI18nAndPrepend2()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
-	}
-
-	@Test
-	public void testGetRedirectForPublicPageWithoutI18nAndPrepend3()
-		throws PortalException {
-
-		_setThemeDisplayForLayout();
-		String[] urls = _getURLsForPublicPage();
-
-		String bareSourceURL = urls[0];
-		String bareDefaultURL = urls[1];
-
-		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "3");
 		_assertRedirect(bareDefaultURL, bareSourceURL);
 		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
@@ -560,7 +282,6 @@ public class UpdateLanguageActionTest {
 	}
 
 	private static Locale _defaultLocale;
-	private static int _defaultPrependStyle;
 	private static final Locale _sourceLocale = LocaleUtil.FRANCE;
 	private static String _sourceLocalePrepend;
 	private static final Locale _targetLocale = LocaleUtil.GERMAN;

@@ -87,6 +87,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -291,12 +292,7 @@ public class ExportImportPerformanceTest {
 			BackgroundTask backgroundTask =
 				_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
 
-			while (backgroundTask.isInProgress()) {
-				backgroundTask = _backgroundTaskManager.getBackgroundTask(
-					backgroundTaskId);
-
-				Thread.sleep(1000);
-			}
+			Assert.assertTrue(backgroundTask.isCompleted());
 		}
 	}
 

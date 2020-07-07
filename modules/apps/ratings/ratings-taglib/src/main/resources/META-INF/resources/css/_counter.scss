@@ -1,0 +1,35 @@
+.counter {
+	$animation-duration: 300ms;
+
+	display: inline-flex;
+	justify-content: center;
+	position: relative;
+
+	&.counter-animated-down {
+		.current {
+			animation-duration: $animation-duration;
+			animation-name: fadeInDown;
+		}
+
+		.previous {
+			animation-duration: $animation-duration;
+			animation-name: fadeOutDown;
+		}
+	}
+
+	&.counter-animated-up {
+		.current {
+			animation-duration: $animation-duration;
+			animation-name: fadeInUp;
+		}
+
+		.previous {
+			animation-duration: $animation-duration;
+			animation-name: fadeOutUp;
+		}
+	}
+
+	.previous {
+		position: absolute;
+	}
+}

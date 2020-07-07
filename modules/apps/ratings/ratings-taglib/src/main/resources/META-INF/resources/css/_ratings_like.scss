@@ -1,0 +1,15 @@
+.ratings-like {
+	$animation-duration: 500ms;
+
+	button {
+		&[aria-pressed='true'] .on .lexicon-icon {
+			color: $red;
+		}
+
+		&.btn-animated {
+			&[aria-pressed='true'] .on {
+				animation-name: heart-on;
+			}
+		}
+	}
+}

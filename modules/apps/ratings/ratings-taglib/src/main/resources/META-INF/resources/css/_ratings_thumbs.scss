@@ -1,0 +1,23 @@
+.ratings-thumbs {
+	.btn {
+		&[aria-pressed='true'] .on .lexicon-icon {
+			color: $primary;
+		}
+
+		&.btn-animated {
+			&[aria-pressed='true'] {
+				.on {
+					animation-name: thumbs-on;
+				}
+
+				&.btn-thumbs-up .on {
+					transform-origin: bottom left;
+				}
+
+				&.btn-thumbs-down .on {
+					transform-origin: top right;
+				}
+			}
+		}
+	}
+}

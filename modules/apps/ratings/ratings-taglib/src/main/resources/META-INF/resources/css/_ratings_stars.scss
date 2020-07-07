@@ -1,0 +1,31 @@
+.ratings-stars {
+	.btn[aria-pressed='true'] .lexicon-icon {
+		color: $primary;
+	}
+
+	.ratings-stars-button-text {
+		font-size: 0.875rem;
+		justify-content: center;
+		min-width: 1ch;
+	}
+
+	.ratings-stars-average {
+		line-height: 1;
+		margin-top: -0.125rem;
+	}
+
+	.ratings-stars-average-text {
+		color: $secondary;
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+
+	.ratings-stars-average-icon {
+		color: $yellow;
+		font-size: 1rem;
+	}
+}
+
+.ratings-stars-dropdown {
+	min-width: auto;
+}

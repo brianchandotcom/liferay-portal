@@ -137,7 +137,7 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(
 			collectionName = "Collection Name",
@@ -324,7 +324,7 @@ definition {
 			key_image = "Document_1.jpg",
 			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(
 			fragmentName = "New Fragment Name",
@@ -438,7 +438,7 @@ definition {
 			textAlign = "Center",
 			textColor = "danger");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
@@ -557,7 +557,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
@@ -708,7 +708,7 @@ definition {
 			fileName = "fragment_freemarker_basic.html",
 			fragmentName = "HTML");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Row");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Row");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
@@ -887,7 +887,7 @@ definition {
 			fileName = "fragment_freemarker_basic.html",
 			fragmentName = "HTML");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Row");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Row");
 
 		PageEditorComposition.saveAsFragment(
 			fragmentName = "New Fragment Name",

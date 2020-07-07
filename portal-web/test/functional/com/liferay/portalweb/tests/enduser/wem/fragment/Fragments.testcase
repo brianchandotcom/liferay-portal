@@ -935,7 +935,7 @@ definition {
 			key_position = "1",
 			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 

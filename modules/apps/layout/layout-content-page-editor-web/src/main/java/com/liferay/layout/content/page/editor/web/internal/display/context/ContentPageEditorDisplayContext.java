@@ -306,9 +306,13 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
 				"getIframeContentURL",
-				getResourceURL(
-					"/content_layout/get_iframe_content",
-					!isLayoutPageTemplate())
+				() -> {
+					String layoutURL = PortalUtil.getLayoutFriendlyURL(
+						themeDisplay.getLayout(), themeDisplay);
+
+					return HttpUtil.addParameter(
+						layoutURL, "p_l_mode", Constants.PREVIEW);
+				}
 			).put(
 				"getPageContentsURL",
 				getResourceURL("/content_layout/get_page_contents")

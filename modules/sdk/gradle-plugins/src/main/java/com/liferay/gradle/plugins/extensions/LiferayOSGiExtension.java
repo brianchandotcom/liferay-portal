@@ -18,6 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import aQute.lib.spring.SpringComponent;
 
+import com.liferay.ant.bnd.enterprise.EnterpriseAnalyzerPlugin;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.metatype.MetatypePlugin;
 import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
@@ -192,7 +193,8 @@ public class LiferayOSGiExtension {
 		SassAnalyzerPlugin.class.getName(),
 		ServiceAnalyzerPlugin.class.getName(),
 		SocialAnalyzerPlugin.class.getName(), SpringComponent.class.getName(),
-		SpringDependencyAnalyzerPlugin.class.getName()
+		SpringDependencyAnalyzerPlugin.class.getName(),
+		EnterpriseAnalyzerPlugin.class.getName()
 	};
 
 	private boolean _autoUpdateXml = true;

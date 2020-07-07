@@ -1639,9 +1639,9 @@ public class ContentPageEditorDisplayContext {
 
 		Stream<String> stream = portletIds.stream();
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		ServletContext servletContext = session.getServletContext();
+		ServletContext servletContext = httpSession.getServletContext();
 
 		return stream.map(
 			portletId -> PortletLocalServiceUtil.getPortletById(

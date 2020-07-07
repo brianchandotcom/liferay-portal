@@ -288,9 +288,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		PageEditor.gotoConfiguration(
-			elementType = "Collection Display",
-			fragmentName = "Collection Display");
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
@@ -322,9 +320,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		PageEditor.gotoConfiguration(
-			elementType = "Collection Display",
-			fragmentName = "Collection Display");
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
@@ -740,7 +736,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

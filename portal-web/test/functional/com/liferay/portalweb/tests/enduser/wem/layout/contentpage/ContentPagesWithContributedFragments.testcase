@@ -2249,7 +2249,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2324,7 +2324,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2657,7 +2657,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2772,7 +2772,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

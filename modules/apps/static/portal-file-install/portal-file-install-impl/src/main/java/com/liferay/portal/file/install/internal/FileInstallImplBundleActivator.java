@@ -144,16 +144,7 @@ public class FileInstallImplBundleActivator
 
 			_fileInstallersTracker.open();
 
-			try {
-				_cmSupport = new ConfigAdminSupport(bundleContext, this);
-			}
-			catch (NoClassDefFoundError noClassDefFoundError) {
-				Util.log(
-					bundleContext, Util.Logger.LOG_DEBUG,
-					"ConfigAdmin is not available, some features will be " +
-						"disabled",
-					noClassDefFoundError);
-			}
+			_cmSupport = new ConfigAdminSupport(bundleContext, this);
 
 			Map<String, String> map = new HashMap<>();
 

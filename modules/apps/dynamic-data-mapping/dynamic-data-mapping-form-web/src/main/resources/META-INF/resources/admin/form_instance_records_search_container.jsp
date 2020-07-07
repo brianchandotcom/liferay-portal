@@ -22,12 +22,6 @@ DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDispl
 PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
 %>
 
-<clay:alert
-	message='<%= LanguageUtil.get(resourceBundle, "view-current-fields-warning-message") %>'
-	style="info"
-	title='<%= LanguageUtil.get(resourceBundle, "info") %>'
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"

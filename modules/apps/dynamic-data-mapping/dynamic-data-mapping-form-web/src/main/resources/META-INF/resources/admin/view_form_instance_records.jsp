@@ -27,4 +27,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
 />
 
+<clay:alert
+	message='<%= LanguageUtil.get(resourceBundle, "view-current-fields-warning-message") %>'
+	style="info"
+	title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+/>
+
 <liferay-util:include page="/admin/form_instance_records_search_container.jsp" servletContext="<%= application %>" />

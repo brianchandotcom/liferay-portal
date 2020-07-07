@@ -83,8 +83,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -183,9 +181,7 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testExportGroupToLAR() throws Exception {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		Map<String, Serializable> exportLayoutSettingsMap =
 			_exportImportConfigurationSettingsMapFactory.
@@ -203,9 +199,9 @@ public class ExportImportPerformanceTest {
 		_exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
 
-		stopWatch.stop();
-
-		_results.add("testExportGroupToLAR - " + stopWatch.getTime());
+		_results.add(
+			"testExportGroupToLAR - " +
+				(System.currentTimeMillis() - startTime));
 	}
 
 	@Test
@@ -226,9 +222,7 @@ public class ExportImportPerformanceTest {
 		File file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		Map<String, Serializable> importLayoutSettingsMap =
 			_exportImportConfigurationSettingsMapFactory.
@@ -246,23 +240,21 @@ public class ExportImportPerformanceTest {
 		_exportImportLocalService.importLayouts(
 			_exportImportConfiguration, file);
 
-		stopWatch.stop();
-
-		_results.add("testImportGroupFromLAR - " + stopWatch.getTime());
+		_results.add(
+			"testImportGroupFromLAR - " +
+				(System.currentTimeMillis() - startTime));
 	}
 
 	@Test
 	public void testInitialStagingPublication() throws Exception {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
-		stopWatch.stop();
-
-		_results.add("testInitialStagingPublication - " + stopWatch.getTime());
+		_results.add(
+			"testInitialStagingPublication - " +
+				(System.currentTimeMillis() - startTime));
 	}
 
 	@Test
@@ -293,18 +285,16 @@ public class ExportImportPerformanceTest {
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			true);
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		SitesUtil.mergeLayoutSetPrototypeLayouts(
 			_group, _group.getPublicLayoutSet());
 
-		stopWatch.stop();
-
-		_results.add("testSiteTemplatePropagation - " + stopWatch.getTime());
+		_results.add(
+			"testSiteTemplatePropagation - " +
+				(System.currentTimeMillis() - startTime));
 	}
 
 	@Test
@@ -312,9 +302,7 @@ public class ExportImportPerformanceTest {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		Group stagingGroup = _group.getStagingGroup();
 
@@ -345,9 +333,9 @@ public class ExportImportPerformanceTest {
 			Thread.sleep(1000);
 		}
 
-		stopWatch.stop();
-
-		_results.add("testStagingPublication - " + stopWatch.getTime());
+		_results.add(
+			"testStagingPublication - " +
+				(System.currentTimeMillis() - startTime));
 	}
 
 	private void _createFragments(Layout layout) throws Exception {

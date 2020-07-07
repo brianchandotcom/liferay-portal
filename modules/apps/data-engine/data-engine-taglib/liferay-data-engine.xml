@@ -105,6 +105,12 @@
 				<outputType>java.lang.String</outputType>
 				<required>true</required>
 			</attribute>
+			<attribute>
+				<name>readOnly</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
+			</attribute>
 		</attributes>
 	</component>
 </taglibs>

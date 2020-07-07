@@ -67,8 +67,13 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			ExportTranslationUtil.getLocalesJSONJArray(
-				themeDisplay.getLocale(), _getAvailableLocales(article)));
+			JSONUtil.put(
+				"availableLocales",
+				ExportTranslationUtil.getLocalesJSONJArray(
+					themeDisplay.getLocale(), _getAvailableLocales(article))
+			).put(
+				"defaultLanguageId", article.getDefaultLanguageId()
+			));
 	}
 
 	private List<Locale> _getAvailableLocales(JournalArticle journalArticle) {

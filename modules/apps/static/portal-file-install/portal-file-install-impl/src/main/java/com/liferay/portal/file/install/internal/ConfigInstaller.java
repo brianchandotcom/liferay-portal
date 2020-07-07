@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.collections.DictionaryAsMap;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -475,7 +474,15 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		Dictionary<String, Object> old = null;
 
 		if (properties != null) {
-			old = new HashMapDictionary<>(new DictionaryAsMap<>(properties));
+			old = new HashMapDictionary<>();
+
+			Enumeration<String> enumeration = properties.keys();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+
+				old.put(key, properties.get(key));
+			}
 		}
 
 		if (old != null) {

@@ -1,4 +1,4 @@
-@keyframes fadeInDown {
+@keyframes fade-in-down {
 	from {
 		opacity: 0;
 		transform: translate3d(0, -1.5rem, 0);
@@ -9,7 +9,7 @@
 	}
 }
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
 	from {
 		opacity: 0;
 		transform: translate3d(0, 1.5rem, 0);
@@ -20,7 +20,7 @@
 	}
 }
 
-@keyframes fadeOutDown {
+@keyframes fade-out-down {
 	from {
 		opacity: 1;
 	}
@@ -31,7 +31,7 @@
 	}
 }
 
-@keyframes fadeOutUp {
+@keyframes fade-out-up {
 	from {
 		opacity: 1;
 	}

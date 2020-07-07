@@ -21,6 +21,7 @@ import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
+import DisabledArea from './DisabledArea';
 import GlobalContextProvider from './GlobalContext';
 import Layout from './Layout';
 import MasterLayout from './MasterLayout';
@@ -131,6 +132,8 @@ export default function LayoutViewport({
 				<GlobalContextProvider
 					useIframe={selectedViewportSize !== VIEWPORT_SIZES.desktop}
 				>
+					<DisabledArea />
+
 					{useMasterLayout ? (
 						<MasterLayout />
 					) : (

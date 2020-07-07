@@ -16,21 +16,30 @@ import ClayPopover from '@clayui/popover';
 import {useEventListener} from 'frontend-js-react-web';
 import {match} from 'metal-dom';
 import {Align} from 'metal-position';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from 'react';
 import {createPortal} from 'react-dom';
 
 import {useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
+import {useGlobalContext} from './GlobalContext';
 
 const DEFAULT_DISABLED_AREA_CLASS = 'page-editor__disabled-area';
-const DEFAULT_ORIGIN = 'layout-content';
+const DEFAULT_ORIGIN = '#content';
+
 const DEFAULT_WHITELIST = [
 	DEFAULT_ORIGIN,
-	DEFAULT_DISABLED_AREA_CLASS,
-	'control-menu',
-	'lfr-add-panel',
-	'lfr-product-menu-panel',
+	`.${DEFAULT_DISABLED_AREA_CLASS}`,
+	'.control-menu',
+	'.lfr-add-panel',
+	'.lfr-product-menu-panel',
 ];
+
 const POPOVER_POSITIONS = {
 	[Align.Bottom]: 'bottom',
 	[Align.BottomLeft]: 'bottom',
@@ -46,32 +55,37 @@ const STATIC_POSITIONS = ['', 'static', 'relative'];
 const DisabledArea = () => {
 	const popoverRef = useRef(null);
 	const [currentElementClicked, setCurrentElementClicked] = useState(null);
+	const globalContext = useGlobalContext();
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
 	const sidebarOpen = useSelector((state) => state.sidebar.open);
 	const selectItem = useSelectItem();
 
-	const isDisabled = (element) => {
-		const {height} = element.getBoundingClientRect();
-		const {position} = window.getComputedStyle(element);
+	const isDisabled = useCallback(
+		(element) => {
+			const {height} = element.getBoundingClientRect();
+			const {position} = globalContext.window.getComputedStyle(element);
 
-		const hasAbsolutePosition = STATIC_POSITIONS.indexOf(position) === -1;
-		const hasZeroHeight = height === 0;
+			const hasAbsolutePosition =
+				STATIC_POSITIONS.indexOf(position) === -1;
+			const hasZeroHeight = height === 0;
 
-		return (
-			element.tagName !== 'SCRIPT' &&
-			!hasZeroHeight &&
-			!hasAbsolutePosition &&
-			!DEFAULT_WHITELIST.some(
-				(selector) =>
-					match(element, `.${selector}`) ||
-					element.querySelector(`.${selector}`)
-			)
-		);
-	};
+			return (
+				element.tagName !== 'SCRIPT' &&
+				!hasZeroHeight &&
+				!hasAbsolutePosition &&
+				!DEFAULT_WHITELIST.some(
+					(selector) =>
+						match(element, selector) ||
+						element.querySelector(selector)
+				)
+			);
+		},
+		[globalContext]
+	);
 
 	useEffect(() => {
-		const element = document.querySelector(
+		const element = globalContext.document.querySelector(
 			`.${DEFAULT_DISABLED_AREA_CLASS}`
 		);
 
@@ -83,7 +97,7 @@ const DisabledArea = () => {
 				element.classList.remove('collapsed');
 			}
 		}
-	}, [sidebarOpen]);
+	}, [globalContext, sidebarOpen]);
 
 	useEventListener(
 		'scroll',
@@ -94,7 +108,7 @@ const DisabledArea = () => {
 			}
 		},
 		true,
-		document
+		globalContext.document
 	);
 
 	useEventListener(
@@ -115,7 +129,7 @@ const DisabledArea = () => {
 			}
 		},
 		true,
-		document.body
+		globalContext.document.body
 	);
 
 	useLayoutEffect(() => {
@@ -143,9 +157,13 @@ const DisabledArea = () => {
 	}, [show, popoverRef, currentElementClicked]);
 
 	useLayoutEffect(() => {
-		let element = document.querySelector(`.${DEFAULT_ORIGIN}`);
+		let element = globalContext.document.querySelector(DEFAULT_ORIGIN);
 
-		while (element.parentElement && element !== document.body) {
+		while (
+			element &&
+			element.parentElement &&
+			element !== globalContext.document.body
+		) {
 			Array.from(element.parentElement.children).forEach(
 				(child) =>
 					isDisabled(child) &&
@@ -156,7 +174,7 @@ const DisabledArea = () => {
 		}
 
 		return () => {
-			const elements = document.querySelectorAll(
+			const elements = globalContext.document.querySelectorAll(
 				`.${DEFAULT_DISABLED_AREA_CLASS}`
 			);
 
@@ -164,7 +182,7 @@ const DisabledArea = () => {
 				element.classList.remove(DEFAULT_DISABLED_AREA_CLASS)
 			);
 		};
-	}, []);
+	}, [globalContext, isDisabled]);
 
 	return (
 		show &&
@@ -174,7 +192,7 @@ const DisabledArea = () => {
 					'this-area-is-defined-by-the-theme.-to-change-theme-settings-go-to-the-look-and-feel-configuration-in-the-sidebar'
 				)}
 			</ClayPopover>,
-			document.body
+			globalContext.document.body
 		)
 	);
 };

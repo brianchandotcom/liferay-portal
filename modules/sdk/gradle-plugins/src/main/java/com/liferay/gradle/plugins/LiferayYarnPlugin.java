@@ -54,8 +54,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 	public static final String YARN_INSTALL_TASK_NAME = "yarnInstall";
 
-	public static final String YARN_LOCK_TASK_NAME = "yarnLock";
-
 	@Override
 	public void apply(Project project) {
 
@@ -73,20 +71,12 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			yarnFormatTaskProviders = new HashMap<>();
 		Map<TaskProvider<YarnInstallTask>, File> yarnInstallTaskProviders =
 			new HashMap<>();
-		Map<TaskProvider<YarnInstallTask>, File> yarnLockTaskProviders =
-			new HashMap<>();
 
 		for (File yarnLockFile : _getYarnLockFiles(project)) {
 			yarnInstallTaskProviders.put(
 				GradleUtil.addTaskProvider(
 					project,
 					_getYarnTaskName(YARN_INSTALL_TASK_NAME, yarnLockFile),
-					YarnInstallTask.class),
-				yarnLockFile);
-			yarnLockTaskProviders.put(
-				GradleUtil.addTaskProvider(
-					project,
-					_getYarnTaskName(YARN_LOCK_TASK_NAME, yarnLockFile),
 					YarnInstallTask.class),
 				yarnLockFile);
 
@@ -131,13 +121,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			_configureTaskYarnInstallProvider(entry.getKey(), entry.getValue());
 		}
 
-		for (Map.Entry<TaskProvider<YarnInstallTask>, File> entry :
-				yarnLockTaskProviders.entrySet()) {
-
-			_configureTaskYarnLockProvider(
-				entry.getKey(), entry.getValue(), nodeExtension);
-		}
-
 		TaskProvider<Task> yarnCheckFormatTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, YARN_CHECK_FORMAT_TASK_NAME, Task.class);
@@ -146,8 +129,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		final TaskProvider<Task> yarnInstallTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, YARN_INSTALL_TASK_NAME, Task.class);
-		TaskProvider<Task> yarnLockTaskProvider = GradleUtil.addTaskProvider(
-			project, YARN_LOCK_TASK_NAME, Task.class);
 
 		_configureTaskYarnCheckFormatProvider(
 			yarnCheckFormatTaskProvider, yarnCheckFormatTaskProviders.keySet());
@@ -155,8 +136,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 			yarnFormatTaskProvider, yarnFormatTaskProviders.keySet());
 		_configureTaskYarnInstallProvider(
 			yarnInstallTaskProvider, yarnInstallTaskProviders.keySet());
-		_configureTaskYarnLockProvider(
-			yarnLockTaskProvider, yarnLockTaskProviders.keySet());
 
 		// Other
 
@@ -337,60 +316,14 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(YarnInstallTask yarnInstallTask) {
+					boolean frozenLockfile = Boolean.parseBoolean(
+						System.getProperty(
+							"frozen.lockfile", Boolean.TRUE.toString()));
+
 					yarnInstallTask.setDescription(
 						"Installs the Node.js packages.");
-					yarnInstallTask.setFrozenLockFile(true);
+					yarnInstallTask.setFrozenLockFile(frozenLockfile);
 					yarnInstallTask.setWorkingDir(yarnLockFile.getParentFile());
-				}
-
-			});
-	}
-
-	private void _configureTaskYarnLockProvider(
-		TaskProvider<Task> yarnLockTaskProvider,
-		final Set<TaskProvider<YarnInstallTask>> yarnLockTaskProviders) {
-
-		yarnLockTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task yarnLockTask) {
-					yarnLockTask.setDescription(
-						"Installs the Node.js packages and updates the " +
-							"yarn.lock file");
-					yarnLockTask.setGroup(BasePlugin.BUILD_GROUP);
-
-					for (TaskProvider<YarnInstallTask> yarnLockTaskProvider :
-							yarnLockTaskProviders) {
-
-						yarnLockTask.finalizedBy(yarnLockTaskProvider);
-					}
-				}
-
-			});
-	}
-
-	private void _configureTaskYarnLockProvider(
-		TaskProvider<YarnInstallTask> yarnLockYarnInstallTaskProvider,
-		final File yarnLockFile, final NodeExtension nodeExtension) {
-
-		yarnLockYarnInstallTaskProvider.configure(
-			new Action<YarnInstallTask>() {
-
-				@Override
-				public void execute(YarnInstallTask yarnLockYarnInstallTask) {
-					Project project = yarnLockYarnInstallTask.getProject();
-
-					yarnLockYarnInstallTask.setDescription(
-						"Installs the Node.js packages and updates the " +
-							"yarn.lock file");
-					yarnLockYarnInstallTask.setFrozenLockFile(false);
-					yarnLockYarnInstallTask.setWorkingDir(
-						yarnLockFile.getParentFile());
-					yarnLockYarnInstallTask.setYarnDir(
-						new File(project.getBuildDir(), "yarn"));
-					yarnLockYarnInstallTask.setYarnUrl(
-						nodeExtension.getYarnUrl());
 				}
 
 			});

@@ -44,6 +44,10 @@ public class DataLayoutRendererContext {
 		return _portletNamespace;
 	}
 
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
 	public void setContainerId(String containerId) {
 		_containerId = containerId;
 	}
@@ -66,10 +70,15 @@ public class DataLayoutRendererContext {
 		_portletNamespace = portletNamespace;
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
 	private String _containerId;
 	private Map<String, Object> _dataRecordValues;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private String _portletNamespace;
+	private boolean _readOnly;
 
 }

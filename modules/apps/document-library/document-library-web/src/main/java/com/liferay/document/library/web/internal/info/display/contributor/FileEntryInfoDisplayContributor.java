@@ -85,7 +85,8 @@ public class FileEntryInfoDisplayContributor
 
 		infoDisplayFields.addAll(
 			_expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(getClassName(), locale));
+				getContributorExpandoInfoDisplayFields(
+					DLFileEntryConstants.getClassName(), locale));
 
 		return infoDisplayFields;
 	}

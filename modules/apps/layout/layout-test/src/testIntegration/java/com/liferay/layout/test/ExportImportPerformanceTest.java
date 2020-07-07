@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -73,6 +72,9 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.io.File;
 import java.io.Serializable;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,8 +82,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -157,11 +157,7 @@ public class ExportImportPerformanceTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		if (Validator.isNotNull(_resultsFile)) {
-			Stream<String> stream = _results.stream();
-
-			FileUtil.write(
-				_resultsFile,
-				stream.collect(Collectors.joining(StringPool.NEW_LINE)));
+			Files.write(Paths.get(_resultsFile), _results);
 		}
 	}
 

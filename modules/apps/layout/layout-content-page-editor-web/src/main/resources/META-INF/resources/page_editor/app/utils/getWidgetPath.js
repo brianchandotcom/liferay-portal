@@ -31,7 +31,7 @@ export function getWidgetPath(widgets, portletId, path = []) {
 
 		const subCategoryPortletPath = getWidgetPath(categories, portletId, [
 			...path,
-			categoryIndex.toString(),
+			categoryIndex,
 			'categories',
 		]);
 

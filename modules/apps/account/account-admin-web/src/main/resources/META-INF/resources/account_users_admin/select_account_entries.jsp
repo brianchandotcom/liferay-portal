@@ -43,12 +43,6 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
-				name="parent-account"
-				property="parentAccountEntryName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
 				name="status"
 			>
 				<clay:label

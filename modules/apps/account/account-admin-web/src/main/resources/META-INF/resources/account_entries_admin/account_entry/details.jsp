@@ -47,8 +47,6 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) %>">
 					<div class="business-account-only">
 						<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
-
-						<liferay-util:include page="/account_entries_admin/account_entry/parent_account_entry.jsp" servletContext="<%= application %>" />
 					</div>
 				</c:when>
 				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL, accountEntryDisplay.getType()) %>">

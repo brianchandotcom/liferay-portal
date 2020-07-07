@@ -60,7 +60,6 @@ page import="com.liferay.account.constants.AccountRoleConstants" %><%@
 page import="com.liferay.account.exception.AccountEntryDomainsException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.account.model.AccountRole" %><%@
-page import="com.liferay.account.service.AccountEntryLocalServiceUtil" %><%@
 page import="com.liferay.account.service.AccountRoleLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -92,8 +91,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
 
-<%@ page import="java.util.Arrays" %><%@
-page import="java.util.Collections" %><%@
+<%@ page import="java.util.Collections" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@

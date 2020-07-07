@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.portal.workflow.metrics.sla.calendar.sample.SampleWorkflowMetricsSLACalendar" immediate="false">
+  <property name="sla.calendar.key" type="String" value="sample"/>
+  <service>
+    <provide interface="com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar"/>
+  </service>
+  <implementation class="com.liferay.portal.workflow.metrics.sla.calendar.sample.SampleWorkflowMetricsSLACalendar"/>
+</scr:component>

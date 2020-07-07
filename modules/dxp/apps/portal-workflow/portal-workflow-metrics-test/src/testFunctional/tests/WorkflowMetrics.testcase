@@ -1795,7 +1795,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifySLACustomCalendar";
 
-		var appName = "com.liferay.portal.workflow.metrics.calendar.integration";
+		var appName = "com.liferay.portal.workflow.metrics.sla.calendar.sample";
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -1825,7 +1825,7 @@ definition {
 			warFileName = "${appName}.jar");
 
 		AppManager.viewAppCP(
-			appName = "Liferay Portal Workflow Metrics Calendar Integration",
+			appName = "Liferay Portal Workflow Metrics Calendar Sample",
 			appStatus = "Active",
 			searchTerm = "calendar");
 
@@ -1841,9 +1841,11 @@ definition {
 			calendar = "Calendar",
 			durationMessage = "Define the SLA duration and calendar format.");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_SELECT");
+
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_SELECT_VALUE_DEFAULT",
-			value1 = "Dummy");
+			value1 = "Sample Calendar");
 
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionCalendar = "24/7 (System Default)",

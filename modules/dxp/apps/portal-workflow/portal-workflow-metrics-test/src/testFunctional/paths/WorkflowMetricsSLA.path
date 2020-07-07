@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SLA_DEFINITION_CALENDAR_SELECT_VALUE_DEFAULT</td>
-	<td>//div[contains(@class,'form-group')]//select[@name='calendarKey']/option[1]</td>
+	<td>//div[contains(@class,'form-group')]//select[@name='calendarKey']/option[2]</td>
 	<td></td>
 </tr>
 <tr>

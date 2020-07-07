@@ -106,15 +106,15 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 	@Override
 	public void render(DisplayContext<T> displayContext) throws Exception {
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
 		HttpServletResponse httpServletResponse =
 			displayContext.getHttpServletResponse();
-		T model = displayContext.getModel();
 
 		Writer writer = httpServletResponse.getWriter();
 
 		writer.write("<div class=\"table-responsive\"><table class=\"table\">");
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -122,6 +122,8 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 		Format format = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+		T model = displayContext.getModel();
 
 		Map<String, Function<T, Object>> attributeGetterFunctions =
 			model.getAttributeGetterFunctions();

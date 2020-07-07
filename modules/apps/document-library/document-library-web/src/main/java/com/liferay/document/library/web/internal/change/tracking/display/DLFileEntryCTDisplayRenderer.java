@@ -40,7 +40,6 @@ import javax.portlet.PortletURL;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,8 +121,9 @@ public class DLFileEntryCTDisplayRenderer
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
+
+		httpServletRequest.setAttribute("displayContext", displayContext);
+
 		DLFileEntry dlFileEntry = displayContext.getModel();
 
 		httpServletRequest.setAttribute(
@@ -132,13 +132,12 @@ public class DLFileEntryCTDisplayRenderer
 			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
 			dlFileEntry.getFileVersion());
 
-		httpServletRequest.setAttribute("displayContext", displayContext);
-
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/document_library/ct_display/render_file_version.jsp");
 
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
+		requestDispatcher.include(
+			httpServletRequest, displayContext.getHttpServletResponse());
 	}
 
 	@Reference

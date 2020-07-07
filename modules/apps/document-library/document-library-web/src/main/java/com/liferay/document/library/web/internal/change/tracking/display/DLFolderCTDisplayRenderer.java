@@ -35,7 +35,6 @@ import javax.portlet.PortletURL;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,18 +101,16 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
-		DLFolder dlFolder = displayContext.getModel();
 
 		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER, dlFolder);
+			WebKeys.DOCUMENT_LIBRARY_FOLDER, displayContext.getModel());
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/document_library/ct_display/render_folder.jsp");
 
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
+		requestDispatcher.include(
+			httpServletRequest, displayContext.getHttpServletResponse());
 	}
 
 	@Reference

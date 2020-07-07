@@ -33,7 +33,6 @@ import java.util.ResourceBundle;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,8 +98,7 @@ public class DLFileVersionCTDisplayRenderer
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
+
 		DLFileVersion dlFileVersion = displayContext.getModel();
 
 		httpServletRequest.setAttribute(
@@ -114,7 +112,8 @@ public class DLFileVersionCTDisplayRenderer
 			_servletContext.getRequestDispatcher(
 				"/document_library/ct_display/render_file_version.jsp");
 
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
+		requestDispatcher.include(
+			httpServletRequest, displayContext.getHttpServletResponse());
 	}
 
 	@Reference

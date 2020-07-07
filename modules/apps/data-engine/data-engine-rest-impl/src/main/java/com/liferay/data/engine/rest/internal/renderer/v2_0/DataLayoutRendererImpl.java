@@ -81,6 +81,8 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 				dataLayoutRendererContext.getHttpServletRequest()));
 		ddmFormRenderingContext.setPortletNamespace(
 			dataLayoutRendererContext.getPortletNamespace());
+		ddmFormRenderingContext.setReadOnly(
+			dataLayoutRendererContext.isReadOnly());
 		ddmFormRenderingContext.setShowSubmitButton(false);
 		ddmFormRenderingContext.setViewMode(true);
 

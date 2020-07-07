@@ -243,6 +243,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_HEADER_ELLIPSIS</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]/following-sibling::li//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_HEADER_INSET_STYLE</td>
 	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'topper__bar--inset') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>

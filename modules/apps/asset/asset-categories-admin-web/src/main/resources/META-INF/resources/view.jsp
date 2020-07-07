@@ -105,32 +105,34 @@
 									</ul>
 								</c:if>
 
-								<ul class="mb-2 nav nav-stacked">
-									<span class="text-truncate"><%= assetCategoriesDisplayContext.getGroupName() %></span>
+								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
+									<ul class="mb-2 nav nav-stacked">
+										<span class="text-truncate"><%= assetCategoriesDisplayContext.getGroupName() %></span>
 
-									<%
-									for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getVocabularies()) {
-									%>
+										<%
+										for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getVocabularies()) {
+										%>
 
-										<li class="nav-item">
+											<li class="nav-item">
 
-											<%
-											PortletURL vocabularyURL = renderResponse.createRenderURL();
+												<%
+												PortletURL vocabularyURL = renderResponse.createRenderURL();
 
-											vocabularyURL.setParameter("mvcPath", "/view.jsp");
-											vocabularyURL.setParameter("vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
-											%>
+												vocabularyURL.setParameter("mvcPath", "/view.jsp");
+												vocabularyURL.setParameter("vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
+												%>
 
-											<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
-												<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
-											</a>
-										</li>
+												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+												</a>
+											</li>
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-								</ul>
+									</ul>
+								</c:if>
 							</c:when>
 							<c:otherwise>
 								<p class="text-uppercase">

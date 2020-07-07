@@ -45,11 +45,9 @@ export default function FragmentsSidebar() {
 				label: Liferay.Language.get('fragments'),
 			},
 			{
-				collections: widgets.map((collection) => ({
-					children: collection.portlets.map(normalizeWidget),
-					collectionId: collection.path,
-					label: collection.title,
-				})),
+				collections: widgets.map((collection) =>
+					normalizeCollections(collection)
+				),
 				label: Liferay.Language.get('widgets'),
 			},
 		],
@@ -101,6 +99,22 @@ export default function FragmentsSidebar() {
 		</>
 	);
 }
+
+const normalizeCollections = (collection) => {
+	const normalizedElement = {
+		children: collection.portlets.map(normalizeWidget),
+		collectionId: collection.path,
+		label: collection.title,
+	};
+
+	if (collection.categories?.length) {
+		normalizedElement.collections = collection.categories.map(
+			normalizeCollections
+		);
+	}
+
+	return normalizedElement;
+};
 
 const normalizeFragmentEntry = (fragmentEntry) => {
 	if (!fragmentEntry.fragmentEntryKey) {

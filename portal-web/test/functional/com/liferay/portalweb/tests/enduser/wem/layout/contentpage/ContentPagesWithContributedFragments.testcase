@@ -268,7 +268,7 @@ definition {
 		AssertVisible(
 			key_content = "Place fragments here.",
 			key_fragmentClass = "content",
-			key_position = "1",
+			key_position = "5",
 			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 		Navigator.gotoNavTab(navTab = "Widgets");

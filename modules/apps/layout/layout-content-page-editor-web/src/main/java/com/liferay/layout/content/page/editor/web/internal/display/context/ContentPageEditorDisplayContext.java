@@ -305,6 +305,13 @@ public class ContentPageEditorDisplayContext {
 				"getExperienceUsedPortletsURL",
 				getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
+				"getIframeContentCssURL",
+				PortalUtil.getStaticResourceURL(
+					httpServletRequest,
+					PortalUtil.getPathModule() +
+						"/layout-content-page-editor-web/page_editor/app" +
+							"/components/App.css")
+			).put(
 				"getIframeContentURL",
 				() -> {
 					String layoutURL = PortalUtil.getLayoutFriendlyURL(

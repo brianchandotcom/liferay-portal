@@ -36,6 +36,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -69,6 +70,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.sites.kernel.util.SitesUtil;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.Serializable;
 
@@ -165,27 +167,23 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testExportGroupToLAR() throws Exception {
-		long startTime = System.currentTimeMillis();
+		try (Closeable closeable = _startTimer()) {
+			Map<String, Serializable> exportLayoutSettingsMap =
+				_exportImportConfigurationSettingsMapFactory.
+					buildExportLayoutSettingsMap(
+						TestPropsValues.getUser(), _group.getGroupId(), false,
+						_layoutIds, new HashMap<>());
 
-		Map<String, Serializable> exportLayoutSettingsMap =
-			_exportImportConfigurationSettingsMapFactory.
-				buildExportLayoutSettingsMap(
-					TestPropsValues.getUser(), _group.getGroupId(), false,
-					_layoutIds, new HashMap<>());
+			_exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						TestPropsValues.getUserId(), "export-group",
+						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+						exportLayoutSettingsMap);
 
-		_exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), "export-group",
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap);
-
-		_exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfiguration);
-
-		_results.add(
-			"testExportGroupToLAR used " +
-				(System.currentTimeMillis() - startTime) + "ms");
+			_exportImportLocalService.exportLayoutsAsFile(
+				_exportImportConfiguration);
+		}
 	}
 
 	@Test
@@ -206,39 +204,32 @@ public class ExportImportPerformanceTest {
 		File file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
 
-		long startTime = System.currentTimeMillis();
+		try (Closeable closeable = _startTimer()) {
+			Map<String, Serializable> importLayoutSettingsMap =
+				_exportImportConfigurationSettingsMapFactory.
+					buildImportLayoutSettingsMap(
+						TestPropsValues.getUser(), _importGroup.getGroupId(),
+						false, _layoutIds, new HashMap<>());
 
-		Map<String, Serializable> importLayoutSettingsMap =
-			_exportImportConfigurationSettingsMapFactory.
-				buildImportLayoutSettingsMap(
-					TestPropsValues.getUser(), _importGroup.getGroupId(), false,
-					_layoutIds, new HashMap<>());
+			_exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						TestPropsValues.getUserId(), "import-group",
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						importLayoutSettingsMap);
 
-		_exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), "import-group",
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap);
-
-		_exportImportLocalService.importLayouts(
-			_exportImportConfiguration, file);
-
-		_results.add(
-			"testImportGroupFromLAR used " +
-				(System.currentTimeMillis() - startTime) + "ms");
+			_exportImportLocalService.importLayouts(
+				_exportImportConfiguration, file);
+		}
 	}
 
 	@Test
 	public void testInitialStagingPublication() throws Exception {
-		long startTime = System.currentTimeMillis();
-
-		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
-
-		_results.add(
-			"testInitialStagingPublication used " +
-				(System.currentTimeMillis() - startTime) + "ms");
+		try (Closeable closeable = _startTimer()) {
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), _group, false, false,
+				_serviceContext);
+		}
 	}
 
 	@Test
@@ -269,16 +260,12 @@ public class ExportImportPerformanceTest {
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			true);
 
-		long startTime = System.currentTimeMillis();
+		try (Closeable closeable = _startTimer()) {
+			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-		SitesUtil.mergeLayoutSetPrototypeLayouts(
-			_group, _group.getPublicLayoutSet());
-
-		_results.add(
-			"testSiteTemplatePropagation used " +
-				(System.currentTimeMillis() - startTime) + "ms");
+			SitesUtil.mergeLayoutSetPrototypeLayouts(
+				_group, _group.getPublicLayoutSet());
+		}
 	}
 
 	@Test
@@ -286,40 +273,49 @@ public class ExportImportPerformanceTest {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
-		long startTime = System.currentTimeMillis();
+		try (Closeable closeable = _startTimer()) {
+			Group stagingGroup = _group.getStagingGroup();
 
-		Group stagingGroup = _group.getStagingGroup();
+			Map<String, Serializable> stagingSettingsMap =
+				_exportImportConfigurationSettingsMapFactory.
+					buildPublishLayoutLocalSettingsMap(
+						TestPropsValues.getUser(), stagingGroup.getGroupId(),
+						_group.getGroupId(), false, _layoutIds,
+						new HashMap<>());
 
-		Map<String, Serializable> stagingSettingsMap =
-			_exportImportConfigurationSettingsMapFactory.
-				buildPublishLayoutLocalSettingsMap(
-					TestPropsValues.getUser(), stagingGroup.getGroupId(),
-					_group.getGroupId(), false, _layoutIds, new HashMap<>());
+			_exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						TestPropsValues.getUserId(), "publish-group",
+						ExportImportConfigurationConstants.
+							TYPE_PUBLISH_LAYOUT_LOCAL,
+						stagingSettingsMap);
 
-		_exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), "publish-group",
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_LOCAL,
-					stagingSettingsMap);
+			long backgroundTaskId = _staging.publishLayouts(
+				TestPropsValues.getUserId(), _exportImportConfiguration);
 
-		long backgroundTaskId = _staging.publishLayouts(
-			TestPropsValues.getUserId(), _exportImportConfiguration);
+			BackgroundTask backgroundTask =
+				_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.getBackgroundTask(backgroundTaskId);
+			while (backgroundTask.isInProgress()) {
+				backgroundTask = _backgroundTaskManager.getBackgroundTask(
+					backgroundTaskId);
 
-		while (backgroundTask.isInProgress()) {
-			backgroundTask = _backgroundTaskManager.getBackgroundTask(
-				backgroundTaskId);
-
-			Thread.sleep(1000);
+				Thread.sleep(1000);
+			}
 		}
+	}
 
-		_results.add(
-			"testStagingPublication used " +
-				(System.currentTimeMillis() - startTime) + "ms");
+	private static String _getInvokerName() {
+		Thread thread = Thread.currentThread();
+
+		StackTraceElement[] stackTraceElements = thread.getStackTrace();
+
+		StackTraceElement stackTraceElement = stackTraceElements[3];
+
+		return StringBundler.concat(
+			stackTraceElement.getClassName(), StringPool.POUND,
+			stackTraceElement.getMethodName());
 	}
 
 	private void _createFragments(Layout layout) throws Exception {
@@ -474,6 +470,17 @@ public class ExportImportPerformanceTest {
 
 		PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 			layout, portletId, portletPreferencesXML);
+	}
+
+	private Closeable _startTimer() {
+		String invokerName = _getInvokerName();
+
+		long startTime = System.currentTimeMillis();
+
+		return () -> _results.add(
+			StringBundler.concat(
+				invokerName, " used ", System.currentTimeMillis() - startTime,
+				"ms"));
 	}
 
 	private static final String _FRAGMENT_EDITABLE_VALUES_TMPL =

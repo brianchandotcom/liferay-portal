@@ -1230,7 +1230,7 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
 	}
 
-	macro gotoSaveAsFrgament {
+	macro gotoSaveAsFragment {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 		PageEditor.gotoTab(tabName = "Page Structure");

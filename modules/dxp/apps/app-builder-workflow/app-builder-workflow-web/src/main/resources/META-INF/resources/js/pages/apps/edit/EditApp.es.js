@@ -18,6 +18,7 @@ import EditAppContext, {
 	reducer,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
+import {getTranslatedValue} from 'app-builder-web/js/utils/utils.es';
 import React, {useEffect, useReducer, useState} from 'react';
 
 import '../../../../css/EditApp.scss';
@@ -114,6 +115,19 @@ export default ({
 
 	const maxLength = 30;
 
+	const isDeployButtonDisabled =
+		!app.dataDefinitionId ||
+		!app.dataLayoutId ||
+		!app.dataListViewId ||
+		!getTranslatedValue(app, 'name') ||
+		config.steps.some(
+			({appWorkflowRoleAssignments, name}) =>
+				(appWorkflowRoleAssignments &&
+					appWorkflowRoleAssignments.length === 0) ||
+				!name ||
+				name.trim().length === 0
+		);
+
 	return (
 		<div className="app-builder-workflow-app">
 			<ControlMenu backURL={`../../${scope}`} title={title} />
@@ -136,20 +150,7 @@ export default ({
 							</UpperToolbar.Button>
 
 							<UpperToolbar.Button
-								disabled={
-									!config.dataObject.id ||
-									!app.dataLayoutId ||
-									!app.dataListViewId ||
-									!app.name.en_US ||
-									config.steps.some(
-										({appWorkflowRoleAssignments, name}) =>
-											!appWorkflowRoleAssignments ||
-											appWorkflowRoleAssignments.length ===
-												0 ||
-											!name ||
-											name.trim().length === 0
-									)
-								}
+								disabled={isDeployButtonDisabled}
 								onClick={() => setModalVisible(true)}
 							>
 								{Liferay.Language.get('deploy')}

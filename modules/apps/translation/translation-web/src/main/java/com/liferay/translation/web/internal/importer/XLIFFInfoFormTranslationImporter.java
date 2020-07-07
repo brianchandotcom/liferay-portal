@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +34,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import net.sf.okapi.lib.xliff2.InvalidParameterException;
 import net.sf.okapi.lib.xliff2.XLIFFException;
@@ -44,6 +46,7 @@ import net.sf.okapi.lib.xliff2.document.FileNode;
 import net.sf.okapi.lib.xliff2.document.XLIFFDocument;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -69,7 +72,8 @@ public class XLIFFInfoFormTranslationImporter
 
 			xliffDocument.load(FileUtil.createTempFile(inputStream));
 
-			_validateXLIFFFile(infoItemClassPKReference, xliffDocument);
+			_validateXLIFFFile(
+				groupId, infoItemClassPKReference, xliffDocument);
 
 			StartXliffData startXliffData = xliffDocument.getStartXliffData();
 
@@ -124,7 +128,8 @@ public class XLIFFInfoFormTranslationImporter
 		}
 	}
 
-	private void _validateXLIFFCompletion(XLIFFDocument xliffDocument)
+	private void _validateXLIFFCompletion(
+			long groupId, XLIFFDocument xliffDocument)
 		throws XLIFFFileException {
 
 		StartXliffData startXliffData = xliffDocument.getStartXliffData();
@@ -144,6 +149,13 @@ public class XLIFFInfoFormTranslationImporter
 				sourceLanguage);
 		}
 
+		Set<Locale> availableLocales = _language.getAvailableLocales(groupId);
+
+		if (!availableLocales.contains(sourceLocale)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(
+				sourceLanguage);
+		}
+
 		String targetLanguage = startXliffData.getTargetLanguage();
 
 		if (Validator.isNull(targetLanguage)) {
@@ -158,14 +170,19 @@ public class XLIFFInfoFormTranslationImporter
 			throw new XLIFFFileException.MustBeSupportedLanguage(
 				targetLanguage);
 		}
+
+		if (!availableLocales.contains(targetLocale)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(
+				targetLanguage);
+		}
 	}
 
 	private void _validateXLIFFFile(
-			InfoItemClassPKReference infoItemClassPKReference,
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
 			XLIFFDocument xliffDocument)
 		throws XLIFFFileException {
 
-		_validateXLIFFCompletion(xliffDocument);
+		_validateXLIFFCompletion(groupId, xliffDocument);
 
 		_validateXLIFFFileNode(infoItemClassPKReference, xliffDocument);
 	}
@@ -190,5 +207,8 @@ public class XLIFFInfoFormTranslationImporter
 			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 }

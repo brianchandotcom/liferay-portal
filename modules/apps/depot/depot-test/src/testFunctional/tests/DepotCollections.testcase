@@ -625,6 +625,8 @@ definition {
 			assetType = "Web Content Folder,Web Content Article,Document,Documents Folder",
 			dynamicSelection = "true");
 
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Any");
+
 		for (var i : list "1,2,3") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 

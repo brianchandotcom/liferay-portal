@@ -53,7 +53,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>
 
-	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field" id="<portlet:namespace />managementToolbar">
+	<nav class="hide management-bar management-bar-light navbar navbar-expand-md toolbar-group-field" id="<portlet:namespace />managementToolbar">
 		<clay:container-fluid
 			cssClass="autosave-bar toolbar"
 		>
@@ -103,7 +103,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</nav>
 
 	<clay:container-fluid
-		cssClass="ddm-translation-manager"
+		cssClass="ddm-translation-manager hide"
 	>
 		<liferay-frontend:translation-manager
 			availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>"
@@ -176,11 +176,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 />
 
 <aui:script>
-	document
-		.querySelector('#<portlet:namespace />managementToolbar')
-		.classList.add('hide');
-	document.querySelector('.ddm-translation-manager').classList.add('hide');
-
 	Liferay.namespace('DDM').FormSettings = {
 		autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
 		autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',

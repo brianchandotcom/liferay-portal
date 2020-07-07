@@ -18,6 +18,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.util.ExportTranslationUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -60,14 +61,14 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		JournalArticle article = _journalArticleLocalService.getArticle(
+			themeDisplay.getScopeGroupId(),
+			ParamUtil.getString(resourceRequest, "articleId"));
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			ExportTranslationUtil.getLocalesJSONJArray(
-				themeDisplay.getLocale(),
-				_getAvailableLocales(
-					_journalArticleLocalService.getArticle(
-						themeDisplay.getScopeGroupId(),
-						ParamUtil.getString(resourceRequest, "articleId")))));
+				themeDisplay.getLocale(), _getAvailableLocales(article)));
 	}
 
 	private List<Locale> _getAvailableLocales(JournalArticle journalArticle) {

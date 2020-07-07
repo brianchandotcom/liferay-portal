@@ -1460,7 +1460,7 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertVisible(
-			key_imageFileName = "Document Title",
+			key_imageFileName = "Document+Title",
 			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 	}
 

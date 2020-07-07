@@ -164,7 +164,9 @@ public class NodeExtension {
 					return new File(npmDir, "bin/npm-cli.js");
 				}
 
-				return NodePluginUtil.getYarnScriptFile(getYarnDir());
+				File yarnDir = NodePluginUtil.getYarnDir(nodeDir);
+
+				return new File(yarnDir, "yarn-" + getYarnVersion() + ".js");
 			}
 
 		};
@@ -177,24 +179,7 @@ public class NodeExtension {
 					return true;
 				}
 
-				File file = NodePluginUtil.getYarnScriptFile(getYarnDir());
-
-				if (file == null) {
-					return true;
-				}
-
 				return false;
-			}
-
-		};
-
-		_yarnDir = new Callable<File>() {
-
-			@Override
-			public File call() throws Exception {
-				Project rootProject = project.getRootProject();
-
-				return new File(rootProject.getBuildDir(), "yarn");
 			}
 
 		};
@@ -250,10 +235,6 @@ public class NodeExtension {
 
 	public File getScriptFile() {
 		return GradleUtil.toFile(_project, _scriptFile);
-	}
-
-	public File getYarnDir() {
-		return GradleUtil.toFile(_project, _yarnDir);
 	}
 
 	public String getYarnUrl() {
@@ -332,10 +313,6 @@ public class NodeExtension {
 		_useNpm = useNpm;
 	}
 
-	public void setYarnDir(Object yarnDir) {
-		_yarnDir = yarnDir;
-	}
-
 	public void setYarnUrl(Object yarnUrl) {
 		_yarnUrl = yarnUrl;
 	}
@@ -376,7 +353,6 @@ public class NodeExtension {
 	private final Project _project;
 	private Object _scriptFile;
 	private Object _useNpm;
-	private Object _yarnDir;
 	private Object _yarnUrl;
 	private Object _yarnVersion = "1.13.0";
 

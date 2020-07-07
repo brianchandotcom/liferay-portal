@@ -51,15 +51,24 @@ const getRootElement = ({container, containerId}) => {
 		}
 	}
 
-	container = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
+	let alertFixed = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
 
-	if (!container) {
-		container = document.createElement('div');
+	if (!alertFixed) {
+		const alertContainer = document.createElement('div');
+		alertContainer.className = 'alert-container container';
+		document.body.appendChild(alertContainer);
 
-		container.id = DEFAULT_ALERT_CONTAINER_ID;
-
-		document.body.appendChild(container);
+		alertFixed = document.createElement('div');
+		alertFixed.id = DEFAULT_ALERT_CONTAINER_ID;
+		alertFixed.className = 'alert-notifications alert-notifications-fixed';
+		alertContainer.appendChild(alertFixed);
 	}
+
+	// Creates a fragment for preventing React to unmount the alertContainer
+	container = document.createElement('div');
+	container.className = 'mb-3';
+
+	alertFixed.appendChild(container);
 
 	return container;
 };
@@ -100,19 +109,20 @@ function openToast({
 
 	unmountComponentAtNode(rootElement);
 
-	const Container =
-		container || containerId ? React.Fragment : ClayAlert.ToastContainer;
-
 	const onCloseFn = (event) => {
 		if (onClose) {
 			onClose({event});
+		}
+
+		if (!container || !containerId) {
+			rootElement.parentNode.removeChild(rootElement);
 		}
 
 		unmountComponentAtNode(rootElement);
 	};
 
 	render(
-		<Container>
+		<>
 			<ClayAlert
 				autoClose={autoClose}
 				displayType={type}
@@ -131,7 +141,7 @@ function openToast({
 			>
 				<Text allowHTML={messageType === TYPES.HTML} string={message} />
 			</ClayAlert>
-		</Container>,
+		</>,
 		renderData,
 		rootElement
 	);

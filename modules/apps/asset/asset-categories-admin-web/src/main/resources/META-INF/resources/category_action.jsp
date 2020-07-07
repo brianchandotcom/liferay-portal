@@ -87,6 +87,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			confirmation="this-category-might-be-being-used-in-some-contents"
 			url="<%= deleteCategoryURL %>"
 		/>
 	</c:if>

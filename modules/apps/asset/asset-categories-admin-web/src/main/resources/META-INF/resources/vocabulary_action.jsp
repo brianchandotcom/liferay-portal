@@ -62,7 +62,18 @@ AssetVocabulary vocabulary = assetCategoriesDisplayContext.getVocabulary();
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:actionURL>
 
+		<%
+		String confirmationMessage = StringPool.BLANK;
+
+		int categoriesCount = vocabulary.getCategoriesCount();
+
+		if (categoriesCount > 0) {
+			confirmationMessage = LanguageUtil.format(request, "this-vocabulary-has-x-categories-that-might-be-being-used-in-content", categoriesCount);
+		}
+		%>
+
 		<liferay-ui:icon-delete
+			confirmation="<%= confirmationMessage %>"
 			url="<%= deleteVocabularyURL %>"
 		/>
 	</c:if>

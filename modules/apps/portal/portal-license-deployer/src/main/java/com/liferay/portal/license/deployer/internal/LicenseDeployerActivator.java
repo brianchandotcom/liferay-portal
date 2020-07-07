@@ -56,10 +56,7 @@ public class LicenseDeployerActivator {
 		BundleContext bundleContext, FileInstaller fileInstaller) {
 
 		return bundleContext.registerService(
-			new String[] {
-				FileInstaller.class.getName(), FileInstaller.class.getName()
-			},
-			fileInstaller, null);
+			FileInstaller.class, fileInstaller, null);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

@@ -303,6 +303,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOCABULARY_LABEL</td>
+	<td>//div/label[contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

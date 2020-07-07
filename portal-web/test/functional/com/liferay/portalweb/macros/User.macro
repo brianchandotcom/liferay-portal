@@ -1318,6 +1318,10 @@ definition {
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL");
 
+		AssertElementPresent(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "UsersAndOrganizationsEditUser#VOCABULARY_LABEL");
+
 		AssertElementPresent.assertVisible(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
 			value1 = "Select");
@@ -1325,6 +1329,10 @@ definition {
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
 			value1 = "Select");
+
+		AssertElementPresent(
+			key_iframeTitle = "Select ${vocabularyName}",
+			locator1 = "IFrame#IFRAME_TITLE");
 
 		AssetCategorization.selectCategory(categoryName = "${categoryName}");
 

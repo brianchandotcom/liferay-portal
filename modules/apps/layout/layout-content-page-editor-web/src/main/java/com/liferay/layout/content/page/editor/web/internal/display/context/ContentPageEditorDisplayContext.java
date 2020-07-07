@@ -88,6 +88,8 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -99,6 +101,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -111,6 +114,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1632,6 +1636,35 @@ public class ContentPageEditorDisplayContext {
 		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
+	private List<Map<String, Object>> _getPortletItems(Portlet portlet) {
+		List<PortletItem> portletItems =
+			PortletItemLocalServiceUtil.getPortletItems(
+				themeDisplay.getScopeGroupId(), portlet.getPortletId(),
+				PortletPreferences.class.getName());
+
+		if (ListUtil.isEmpty(portletItems)) {
+			return Collections.emptyList();
+		}
+
+		Stream<PortletItem> stream = portletItems.stream();
+
+		return stream.map(
+			portletItem -> HashMapBuilder.<String, Object>put(
+				"instanceable", portlet.isInstanceable()
+			).put(
+				"portletId", portlet.getPortletId()
+			).put(
+				"portletItemId", portletItem.getPortletItemId()
+			).put(
+				"title", HtmlUtil.escape(portletItem.getName())
+			).put(
+				"used", _isUsed(portlet, themeDisplay.getPlid())
+			).build()
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private List<Map<String, Object>> _getPortlets(
 		PortletCategory portletCategory) {
 
@@ -1681,6 +1714,8 @@ public class ContentPageEditorDisplayContext {
 				"instanceable", portlet.isInstanceable()
 			).put(
 				"portletId", portlet.getPortletId()
+			).put(
+				"portletItems", _getPortletItems(portlet)
 			).put(
 				"title",
 				PortalUtil.getPortletTitle(

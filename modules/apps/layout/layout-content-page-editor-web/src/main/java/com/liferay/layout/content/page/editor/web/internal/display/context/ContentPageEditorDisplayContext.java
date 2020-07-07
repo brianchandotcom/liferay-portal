@@ -1658,7 +1658,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"title", HtmlUtil.escape(portletItem.getName())
 			).put(
-				"used", _isUsed(portlet, themeDisplay.getPlid())
+				"used", _isUsed(portlet)
 			).build()
 		).collect(
 			Collectors.toList()
@@ -1721,7 +1721,7 @@ public class ContentPageEditorDisplayContext {
 				PortalUtil.getPortletTitle(
 					portlet, servletContext, themeDisplay.getLocale())
 			).put(
-				"used", _isUsed(portlet, themeDisplay.getPlid())
+				"used", _isUsed(portlet)
 			).build()
 		).collect(
 			Collectors.toList()
@@ -1939,14 +1939,14 @@ public class ContentPageEditorDisplayContext {
 		return false;
 	}
 
-	private boolean _isUsed(Portlet portlet, long plid) {
+	private boolean _isUsed(Portlet portlet) {
 		if (portlet.isInstanceable()) {
 			return false;
 		}
 
 		long count =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 				PortletIdCodec.encode(
 					portlet.getPortletId(), String.valueOf(CharPool.NUMBER_0)));
 

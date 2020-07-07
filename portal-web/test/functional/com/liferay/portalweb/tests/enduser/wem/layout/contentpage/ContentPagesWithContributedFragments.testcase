@@ -1206,7 +1206,7 @@ definition {
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Select More Than One...");
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Select Types...");
 
 			for (var key_type : list "Web Content Article,Blogs Entry,Document") {
 				AssertVisible(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");

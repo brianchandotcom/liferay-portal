@@ -123,6 +123,7 @@ const EditTableView = withRouter(({history}) => {
 	fieldNames.forEach((fieldName) => {
 		dataDefinitionFields.forEach((dataDefinitionField) => {
 			const {name, nestedDataDefinitionFields} = dataDefinitionField;
+
 			if (nestedDataDefinitionFields.length) {
 				const nested = nestedDataDefinitionFields.find(
 					({name: nestedName}) => nestedName === fieldName

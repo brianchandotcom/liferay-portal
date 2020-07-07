@@ -48,8 +48,10 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 				value,
 				visible,
 			}) => {
+				let _value = value;
+
 				if (!visible) {
-					value = '';
+					_value = '';
 				}
 
 				if (localizable) {
@@ -61,17 +63,17 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 
 					if (repeatable) {
 						dataRecord.dataRecordValues[fieldName][languageId].push(
-							value
+							_value
 						);
 					}
 					else {
 						dataRecord.dataRecordValues[fieldName] = {
-							[languageId]: value,
+							[languageId]: _value,
 						};
 					}
 				}
 				else {
-					dataRecord.dataRecordValues[fieldName] = value;
+					dataRecord.dataRecordValues[fieldName] = _value;
 				}
 			};
 

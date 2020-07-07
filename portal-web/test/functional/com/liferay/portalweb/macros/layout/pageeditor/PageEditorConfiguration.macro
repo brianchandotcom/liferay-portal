@@ -68,24 +68,4 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro restoreConfigValues {
-		var key_fragmentName = "${fragmentName}";
-
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
-
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-		AssertClick(
-			locator1 = "Button#RESTORE_VALUES",
-			value1 = "Restore Values");
-
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-	}
-
 }

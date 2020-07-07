@@ -72,6 +72,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 					(RenderResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE)));
 			dataLayoutRendererContext.setPortletNamespace(getNamespace());
+			dataLayoutRendererContext.setReadOnly(getReadOnly());
 
 			if (Validator.isNotNull(getDataLayoutId())) {
 				content = DataLayoutTaglibUtil.renderDataLayout(

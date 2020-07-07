@@ -81,7 +81,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<ul class="dropdown-menu dropdown-menu-left" role="menu">
 						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
-							<li>
+							<li class="child-page-action-option type-{parentable}">
 								<clay:content-row
 									containerElement="a"
 									cssClass="dropdown-item layout-action"
@@ -102,7 +102,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 							</li>
 
 							<c:if test="<%= CollectionLayoutsConfigurationUtil.enabled() %>">
-								<li>
+								<li class="child-page-action-option type-{parentable}">
 									<clay:content-row
 										containerElement="a"
 										cssClass="dropdown-item layout-action"

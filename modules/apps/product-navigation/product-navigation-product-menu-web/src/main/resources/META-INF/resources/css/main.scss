@@ -6,6 +6,14 @@ $product-menu-item-fixed-width: $product-menu-width;
 $product-menu-pages-administration-link-height: 72px;
 
 .pages-tree {
+	.child-page-action-option {
+		display: block;
+	}
+
+	.child-page-action-option.type-false {
+		display: none;
+	}
+
 	.dropdown-toggle {
 		color: $gray-500 !important;
 

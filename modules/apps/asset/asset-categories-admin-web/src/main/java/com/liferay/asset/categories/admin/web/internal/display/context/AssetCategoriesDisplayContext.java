@@ -570,7 +570,7 @@ public class AssetCategoriesDisplayContext {
 
 			AssetVocabularyDisplay assetVocabularyDisplay =
 				AssetVocabularyServiceUtil.searchVocabulariesDisplay(
-					_themeDisplay.getScopeGroupId(), keywords, true,
+					_themeDisplay.getScopeGroupId(), keywords, false,
 					vocabulariesSearchContainer.getStart(),
 					vocabulariesSearchContainer.getEnd(), sort);
 
@@ -588,7 +588,7 @@ public class AssetCategoriesDisplayContext {
 			vocabulariesSearchContainer.setTotal(vocabulariesCount);
 
 			vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
-				_themeDisplay.getScopeGroupId(), true,
+				_themeDisplay.getScopeGroupId(), false,
 				vocabulariesSearchContainer.getStart(),
 				vocabulariesSearchContainer.getEnd(),
 				vocabulariesSearchContainer.getOrderByComparator());

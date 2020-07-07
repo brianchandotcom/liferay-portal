@@ -30,7 +30,4 @@ public interface FFLayoutContentPageEditorConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean containerItemEnabled();
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean responsiveEnabled();
-
 }

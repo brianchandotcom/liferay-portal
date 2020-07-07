@@ -40,8 +40,8 @@ export default ({data, field, height, structure, width}) => {
 		setActiveIndex(null);
 	};
 
-	const handleOnMouseOver = (index) => {
-		setActiveIndex(index);
+	const handleOnMouseOver = (activeIndex) => {
+		setActiveIndex(activeIndex);
 	};
 
 	const getColumnLabel = (column) => {
@@ -53,37 +53,23 @@ export default ({data, field, height, structure, width}) => {
 	};
 
 	const processData = ({columns, rows}) => {
-		const newData = [];
+		const processedData = [];
 
 		rows.map((row) => {
-			const newDataAux = {name: getRowLabel(row)};
+			const newData = {name: getRowLabel(row)};
 
-			columns.map((col) => {
-				newDataAux[getColumnLabel(col)] = data[row][col]
-					? data[row][col]
+			columns.map((column) => {
+				newData[getColumnLabel(column)] = data[row][column]
+					? data[row][column]
 					: 0;
 			});
-			newData.push(newDataAux);
+			processedData.push(newData);
 		});
 
-		return newData;
+		return processedData;
 	};
 
 	data = structure ? processData(structure) : data;
-
-	let xAxisProps = {};
-	let yAxisProps = {};
-
-	xAxisProps = {
-		['axisLine']: {stroke: blueDark},
-		['dataKey']: 'name',
-		['interval']: 0,
-	};
-
-	yAxisProps = {
-		['axisLine']: {stroke: gray},
-		['type']: 'number',
-	};
 
 	const renderLegend = (props) => {
 		const {payload} = props;
@@ -119,12 +105,18 @@ export default ({data, field, height, structure, width}) => {
 				}}
 			>
 				<XAxis
+					axisLine={{stroke: blueDark}}
+					dataKey="name"
+					interval={0}
 					tick={<CustomizedAxisTick />}
 					tickLine={false}
-					{...xAxisProps}
 				/>
 
-				<YAxis tickLine={false} {...yAxisProps} />
+				<YAxis
+					axisLine={{stroke: gray}}
+					tickLine={false}
+					type="number"
+				/>
 
 				<Tooltip
 					content={<TooltipContent roundBullet={false} />}

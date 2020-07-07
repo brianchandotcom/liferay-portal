@@ -29,8 +29,8 @@ export default ({
 		const getPercentage = (count) => count / totalEntries;
 
 		if (!totalEntries) {
-			totalEntries = payload.reduce((acc, payloadItem) => {
-				return acc + payloadItem.value;
+			totalEntries = payload.reduce((accumulator, payloadItem) => {
+				return accumulator + payloadItem.value;
 			}, 0);
 		}
 

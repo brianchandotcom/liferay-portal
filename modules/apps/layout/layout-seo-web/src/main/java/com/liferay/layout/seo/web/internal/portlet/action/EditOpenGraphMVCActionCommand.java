@@ -20,6 +20,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -119,7 +121,14 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
 		if (draftLayout != null) {
+			draftLayout = _updateTypeSettings(
+				draftLayout, formTypeSettingsUnicodeProperties);
+
 			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				canonicalURLEnabled, canonicalURLMap,
@@ -128,24 +137,10 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 		}
 
+		layout = _updateTypeSettings(layout, formTypeSettingsUnicodeProperties);
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
-
-		layout.getTypeSettingsProperties();
-
-		UnicodeProperties formTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
-		UnicodeProperties layoutTypeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		layoutTypeSettingsUnicodeProperties.putAll(
-			formTypeSettingsUnicodeProperties);
-
-		layout = _layoutService.updateLayout(
-			groupId, privateLayout, layoutId,
-			layoutTypeSettingsUnicodeProperties.toString());
 
 		EventsProcessorUtil.process(
 			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
@@ -169,6 +164,48 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, portletResource + "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	private Layout _updateTypeSettings(
+			Layout layout, UnicodeProperties formTypeSettingsUnicodeProperties)
+		throws Exception {
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String type = layout.getType();
+
+		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
+			layoutTypeSettingsUnicodeProperties.putAll(
+				formTypeSettingsUnicodeProperties);
+
+			boolean layoutCustomizable = GetterUtil.getBoolean(
+				layoutTypeSettingsUnicodeProperties.get(
+					LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+			if (!layoutCustomizable) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				layoutTypePortlet.removeCustomization(
+					layoutTypeSettingsUnicodeProperties);
+			}
+
+			return _layoutService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(),
+				layoutTypeSettingsUnicodeProperties.toString());
+		}
+
+		layoutTypeSettingsUnicodeProperties.putAll(
+			formTypeSettingsUnicodeProperties);
+
+		layoutTypeSettingsUnicodeProperties.putAll(
+			layout.getTypeSettingsProperties());
+
+		return _layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layoutTypeSettingsUnicodeProperties.toString());
 	}
 
 	@Reference

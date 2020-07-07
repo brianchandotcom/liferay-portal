@@ -172,7 +172,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 					</optgroup>
 
-					<optgroup label="multiple-subtypes">
+					<optgroup label='<%= LanguageUtil.get(request, "multiple-subtypes") %>'>
 						<aui:option label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length > 1) && !noAssetSubtypeSelected %>" value="<%= false %>" />
 						<aui:option label="any" selected="<%= anyAssetSubtype %>" value="<%= true %>" />
 					</optgroup>

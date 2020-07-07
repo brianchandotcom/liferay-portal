@@ -33,6 +33,7 @@ import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUti
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
+import com.liferay.asset.list.web.internal.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -366,23 +367,32 @@ public class EditAssetListDisplayContext {
 		return rulesJSONArray;
 	}
 
-	public long[] getAvailableClassNameIds() {
+	public List<Long> getAvailableClassNameIds() {
 		if (_availableClassNameIds != null) {
 			return _availableClassNameIds;
 		}
 
-		_availableClassNameIds =
+		List<Long> availableClassNameIds = ListUtil.fromArray(
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				_themeDisplay.getCompanyId(), true);
+				_themeDisplay.getCompanyId(), true));
 
-		_availableClassNameIds = ArrayUtil.filter(
-			_availableClassNameIds,
+		ListUtil.distinct(availableClassNameIds);
+
+		availableClassNameIds = ListUtil.filter(
+			availableClassNameIds,
 			availableClassNameId -> {
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					PortalUtil.getClassName(availableClassNameId));
 
 				return indexer != null;
 			});
+
+		availableClassNameIds = ListUtil.sort(
+			availableClassNameIds,
+			new ClassNameModelResourceComparator(
+				true, _themeDisplay.getLocale()));
+
+		_availableClassNameIds = availableClassNameIds;
 
 		return _availableClassNameIds;
 	}
@@ -467,8 +477,11 @@ public class EditAssetListDisplayContext {
 			return _classNameIds;
 		}
 
+		List<Long> availableClassNameIds = getAvailableClassNameIds();
+
 		_classNameIds = getClassNameIds(
-			_unicodeProperties, getAvailableClassNameIds());
+			_unicodeProperties,
+			ArrayUtil.toArray(availableClassNameIds.toArray(new Long[0])));
 
 		return _classNameIds;
 	}
@@ -1171,7 +1184,7 @@ public class EditAssetListDisplayContext {
 	private Integer _assetListEntryType;
 	private final AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
-	private long[] _availableClassNameIds;
+	private List<Long> _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;

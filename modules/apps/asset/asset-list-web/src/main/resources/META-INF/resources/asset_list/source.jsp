@@ -26,7 +26,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	>
 
 		<%
-		Set<Long> availableClassNameIdsSet = SetUtil.fromArray(editAssetListDisplayContext.getAvailableClassNameIds());
 
 		// Left list
 
@@ -48,12 +47,12 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		%>
 
 		<aui:select label="item-type" name="TypeSettingsProperties--anyAssetType--" title="item-type">
-			<aui:option label='<%= StringPool.DASH + LanguageUtil.get(request, "not-selected") + StringPool.DASH %>' selected="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" />
+			<aui:option label='<%= StringPool.DASH + LanguageUtil.get(request, "not-selected") + StringPool.DASH %>' selected="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" value="" />
 
 			<optgroup label="<liferay-ui:message key="single-item-type" />">
 
 				<%
-				for (long classNameId : availableClassNameIdsSet) {
+				for (long classNameId : editAssetListDisplayContext.getAvailableClassNameIds()) {
 					ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
 
 					if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
@@ -107,6 +106,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 				continue;
 			}
 
+			classTypes.sort(new ClassTypeNameComparator(true));
+
 			classTypesAssetRendererFactories.add(assetRendererFactory);
 
 			String className = editAssetListDisplayContext.getClassName(assetRendererFactory);
@@ -147,15 +148,10 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		%>
 
 			<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">
-
-				<%
-				String label = ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) + StringPool.SPACE + assetRendererFactory.getSubtypeTitle(themeDisplay.getLocale());
-				%>
-
-				<aui:select label="<%= label %>" name='<%= "TypeSettingsProperties--anyClassType" + className + "--" %>'>
+				<aui:select label='<%= LanguageUtil.get(request, "item-subtype") %>' name='<%= "TypeSettingsProperties--anyClassType" + className + "--" %>'>
 					<aui:option label='<%= StringPool.DASH + LanguageUtil.get(request, "not-selected") + StringPool.DASH %>' selected="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" value="" />
 
-					<optgroup label="<%= assetRendererFactory.getSubtypeTitle(themeDisplay.getLocale()) %>">
+					<optgroup label="<%= LanguageUtil.get(request, "single-item-subtype") %>">
 
 						<%
 						for (ClassType classType : classTypes) {
@@ -172,7 +168,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 					</optgroup>
 
-					<optgroup label='<%= LanguageUtil.get(request, "multiple-subtypes") %>'>
+					<optgroup label="<%= LanguageUtil.get(request, "multiple-item-subtypes") %>">
 						<aui:option label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length > 1) && !noAssetSubtypeSelected %>" value="<%= false %>" />
 						<aui:option label="any" selected="<%= anyAssetSubtype %>" value="<%= true %>" />
 					</optgroup>

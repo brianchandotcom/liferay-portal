@@ -56,6 +56,7 @@ page import="com.liferay.asset.list.web.internal.security.permission.resource.As
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.AssetEntryListActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.InfoListProviderActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems" %><%@
+page import="com.liferay.asset.list.web.internal.util.comparator.ClassTypeNameComparator" %><%@
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.Field" %><%@
@@ -81,7 +82,6 @@ page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
@@ -99,8 +99,7 @@ page import="java.util.Arrays" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Objects" %><%@
-page import="java.util.Set" %>
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

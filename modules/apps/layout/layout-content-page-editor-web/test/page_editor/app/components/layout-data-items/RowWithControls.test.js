@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, queryByText, render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -86,5 +86,12 @@ describe('RowWithControls', () => {
 		const {baseElement} = renderRow({hasUpdatePermissions: false});
 
 		expect(baseElement.querySelector('.page-editor__row')).toBe(null);
+	});
+
+	it('does not allow deleting or duplicating the row if user has no permissions', () => {
+		const {baseElement} = renderRow({hasUpdatePermissions: false});
+
+		expect(queryByText(baseElement, 'delete')).not.toBeInTheDocument();
+		expect(queryByText(baseElement, 'duplicate')).not.toBeInTheDocument();
 	});
 });

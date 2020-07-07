@@ -101,4 +101,13 @@ describe('CollectionWithControls', () => {
 
 		expect(queryByTitle('collection-display-configuration')).toBe(null);
 	});
+
+	it('does not allow deleting or duplicating the collection if user has no permissions', () => {
+		const {queryByText} = renderCollection({
+			hasUpdatePermission: false,
+		});
+
+		expect(queryByText('delete')).not.toBeInTheDocument();
+		expect(queryByText('duplicate')).not.toBeInTheDocument();
+	});
 });

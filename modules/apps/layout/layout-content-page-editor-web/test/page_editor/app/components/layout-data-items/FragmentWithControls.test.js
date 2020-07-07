@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, cleanup, queryByText, render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -97,5 +97,14 @@ describe('FragmentWithControls', () => {
 		expect(
 			document.body.querySelector('.page-editor__floating-toolbar')
 		).toBe(null);
+	});
+
+	it('does not allow deleting or duplicating the fragment if user has no permissions', async () => {
+		await act(async () => {
+			renderFragment({hasUpdatePermissions: false});
+		});
+
+		expect(queryByText(document.body, 'delete')).not.toBeInTheDocument();
+		expect(queryByText(document.body, 'duplicate')).not.toBeInTheDocument();
 	});
 });

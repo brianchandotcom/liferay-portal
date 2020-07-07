@@ -82,28 +82,28 @@ definition {
 	}
 
 	@priority = "4"
-	test AddPersonalAccount {
+	test AddPersonAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
-			accountDescription = "This is a Personal Account.",
-			accountName = "Personal Account",
-			accountType = "Personal");
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account",
+			accountType = "Person");
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Search.searchCP(searchTerm = "Personal Account");
+		Search.searchCP(searchTerm = "Person Account");
 
 		Accounts.viewAccountDetails(
-			accountDescription = "This is a Personal Account.",
-			accountName = "Personal Account",
-			accountType = "Personal");
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account",
+			accountType = "Person");
 	}
 
 	@priority = "4"

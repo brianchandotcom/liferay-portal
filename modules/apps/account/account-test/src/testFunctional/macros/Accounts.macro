@@ -52,7 +52,7 @@ definition {
 				selectFieldLabel = "Type",
 				selectFieldValue = "${accountType}");
 
-			if ("${accountType}" == "Personal") {
+			if ("${accountType}" == "Person") {
 				AssertElementPresent(
 					key_hidedSection = "${hidedSection}",
 					locator1 = "Account#HIDED_DOMAIN_SECTION");

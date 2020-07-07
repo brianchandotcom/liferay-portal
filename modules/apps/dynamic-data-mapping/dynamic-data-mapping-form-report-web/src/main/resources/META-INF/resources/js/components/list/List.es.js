@@ -22,12 +22,21 @@ import {SidebarContext} from '../sidebar/SidebarContext.es';
 export default ({data, field, summary, totalEntries, type}) => {
 	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
 
-	const formatDate = (field) => {
-		moment.locale(themeDisplay.getLanguageId().split('_', 1)[0]);
-		const m = moment(field);
-		field = m.format('L');
+	const checkType = (field, type) => {
+		switch (type) {
+			case 'color':
+				return <Color hexColor={field} />;
+			case 'date':
+				return formatDate(field);
+			default:
+				return field;
+		}
+	};
 
-		return field;
+	const formatDate = (field) => {
+		const locale = themeDisplay.getLanguageId().split('_', 1).join('');
+
+		return moment(field).locale(locale).format('L');
 	};
 
 	return (
@@ -35,15 +44,7 @@ export default ({data, field, summary, totalEntries, type}) => {
 			<ul className="entries-list">
 				{Array.isArray(data) &&
 					data.map((field, index) => (
-						<li key={index}>
-							{type == 'color' ? (
-								<Color hexColor={field} />
-							) : type == 'date' ? (
-								formatDate(field)
-							) : (
-								field
-							)}
-						</li>
+						<li key={index}>{checkType(field, type)}</li>
 					))}
 
 				{data.length == 5 && totalEntries > 5 ? (

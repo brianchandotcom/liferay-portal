@@ -27,10 +27,10 @@ public interface DisplayContext<T> {
 
 	public String getDownloadURL(String key, long size, String title);
 
+	public HttpServletRequest getHttpServletRequest();
+
+	public HttpServletResponse getHttpServletResponse();
+
 	public T getModel();
-
-	public HttpServletRequest getRequest();
-
-	public HttpServletResponse getResponse();
 
 }

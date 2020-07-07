@@ -97,8 +97,10 @@ public class DLFileVersionCTDisplayRenderer
 	public void render(DisplayContext<DLFileVersion> displayContext)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		DLFileVersion dlFileVersion = displayContext.getModel();
 
 		httpServletRequest.setAttribute(

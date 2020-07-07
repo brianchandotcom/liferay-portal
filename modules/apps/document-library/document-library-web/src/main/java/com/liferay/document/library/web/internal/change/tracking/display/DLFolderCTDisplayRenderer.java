@@ -100,8 +100,10 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 	public void render(DisplayContext<DLFolder> displayContext)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		DLFolder dlFolder = displayContext.getModel();
 
 		httpServletRequest.setAttribute(

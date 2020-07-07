@@ -88,18 +88,18 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 	}
 
 	@Override
-	public T getModel() {
-		return _model;
-	}
-
-	@Override
-	public HttpServletRequest getRequest() {
+	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
 
 	@Override
-	public HttpServletResponse getResponse() {
+	public HttpServletResponse getHttpServletResponse() {
 		return _httpServletResponse;
+	}
+
+	@Override
+	public T getModel() {
+		return _model;
 	}
 
 	private final long _ctEntryId;

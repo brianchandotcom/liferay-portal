@@ -120,8 +120,10 @@ public class DLFileEntryCTDisplayRenderer
 	public void render(DisplayContext<DLFileEntry> displayContext)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		DLFileEntry dlFileEntry = displayContext.getModel();
 
 		httpServletRequest.setAttribute(

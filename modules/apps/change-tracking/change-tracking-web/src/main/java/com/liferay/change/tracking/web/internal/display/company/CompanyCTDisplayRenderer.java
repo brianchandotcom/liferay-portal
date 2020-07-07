@@ -70,8 +70,10 @@ public class CompanyCTDisplayRenderer implements CTDisplayRenderer<Company> {
 	public void render(DisplayContext<Company> displayContext)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		Company company = displayContext.getModel();
 
 		Writer writer = httpServletResponse.getWriter();

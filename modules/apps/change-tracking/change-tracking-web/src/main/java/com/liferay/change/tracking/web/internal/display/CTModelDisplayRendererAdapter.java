@@ -106,8 +106,10 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 	@Override
 	public void render(DisplayContext<T> displayContext) throws Exception {
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		T model = displayContext.getModel();
 
 		Writer writer = httpServletResponse.getWriter();

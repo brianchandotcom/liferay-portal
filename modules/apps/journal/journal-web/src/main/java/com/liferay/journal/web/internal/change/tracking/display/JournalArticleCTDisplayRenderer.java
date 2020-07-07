@@ -105,8 +105,10 @@ public class JournalArticleCTDisplayRenderer
 	public void render(DisplayContext<JournalArticle> displayContext)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		JournalArticle journalArticle = displayContext.getModel();
 
 		ThemeDisplay themeDisplay =

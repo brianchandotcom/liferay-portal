@@ -72,8 +72,10 @@ public class UserCTDisplayRenderer implements CTDisplayRenderer<User> {
 
 	@Override
 	public void render(DisplayContext<User> displayContext) throws Exception {
-		HttpServletRequest httpServletRequest = displayContext.getRequest();
-		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+		HttpServletResponse httpServletResponse =
+			displayContext.getHttpServletResponse();
 		User user = displayContext.getModel();
 
 		Writer writer = httpServletResponse.getWriter();

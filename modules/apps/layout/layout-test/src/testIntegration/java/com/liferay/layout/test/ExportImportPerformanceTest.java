@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -508,7 +507,6 @@ public class ExportImportPerformanceTest {
 	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
 
-	@DeleteAfterTestRun
 	private ExportImportConfiguration _exportImportConfiguration;
 
 	@Inject
@@ -529,10 +527,7 @@ public class ExportImportPerformanceTest {
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private Group _importGroup;
 
 	@Inject
@@ -547,7 +542,6 @@ public class ExportImportPerformanceTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject

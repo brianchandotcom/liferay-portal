@@ -645,10 +645,6 @@ definition {
 
 		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Collection Display",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -722,10 +718,6 @@ definition {
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
-
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -929,8 +921,6 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
 		if (isSet(backgroundColor)) {
 			Click(
 				key_paletteItem = "${backgroundColor}",
@@ -1063,8 +1053,6 @@ definition {
 		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
-
-		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(columnCount)) {
 			Select(

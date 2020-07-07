@@ -180,10 +180,15 @@ public class CTSQLTransformerTest {
 
 		CTModelRegistry.unregisterCTModel("ReferenceTable");
 
-		try (CaptureAppender captureAppender =
+		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.change.tracking.service.impl." +
 						"CTCollectionLocalServiceImpl",
+					Level.WARN);
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.change.tracking.internal.search." +
+						"CTSearchEventListener",
 					Level.WARN)) {
 
 			for (CTCollection ctCollection : _ctCollections) {

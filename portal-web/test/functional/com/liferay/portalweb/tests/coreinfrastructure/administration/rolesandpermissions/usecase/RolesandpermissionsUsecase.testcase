@@ -2005,7 +2005,7 @@ definition {
 
 		Role.viewPermissionSubdirectory(
 			navItem = "User",
-			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations,My Subscriptions");
+			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
 	}
 
 }

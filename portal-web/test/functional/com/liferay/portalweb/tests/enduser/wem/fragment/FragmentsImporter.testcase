@@ -433,10 +433,14 @@ definition {
 		PageEditor.gotoStyle(fragmentName = "Heading");
 
 		PageEditor.configureFragment(
-			headingLevel = "H2",
 			marginBottom = "1",
 			textAlign = "Center",
 			textColor = "danger");
+
+		PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+		PageEditor.configureFragment(
+			headingLevel = "H2");
 
 		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 

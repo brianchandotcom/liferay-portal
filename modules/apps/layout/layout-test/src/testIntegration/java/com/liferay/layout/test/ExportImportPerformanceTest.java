@@ -72,20 +72,21 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -126,23 +127,16 @@ public class ExportImportPerformanceTest {
 		_portletsPerPortletPage = GetterUtil.getInteger(
 			properties.getProperty("portlets.per.portlet.page"));
 
-		_results = new ArrayList<>();
+		_resultsFilePath = Paths.get(properties.getProperty("results.file"));
 
-		_resultsFile = properties.getProperty("results.file");
+		Files.deleteIfExists(_resultsFilePath);
 
-		_results.add("Settings:");
-		_results.add(
+		_writeToResultsFile(
+			"Settings:",
 			StreamUtil.toString(
 				clazz.getResourceAsStream(
-					"export-import-performance.properties")));
-		_results.add("\nResults:");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		if (Validator.isNotNull(_resultsFile)) {
-			Files.write(Paths.get(_resultsFile), _results);
-		}
+					"export-import-performance.properties")),
+			"\nResults:");
 	}
 
 	@Before
@@ -318,6 +312,15 @@ public class ExportImportPerformanceTest {
 			stackTraceElement.getMethodName());
 	}
 
+	private static void _writeToResultsFile(String... contents)
+		throws IOException {
+
+		Files.write(
+			_resultsFilePath, Arrays.asList(contents),
+			StandardOpenOption.APPEND, StandardOpenOption.CREATE,
+			StandardOpenOption.WRITE);
+	}
+
 	private void _createFragments(Layout layout) throws Exception {
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -477,7 +480,7 @@ public class ExportImportPerformanceTest {
 
 		long startTime = System.currentTimeMillis();
 
-		return () -> _results.add(
+		return () -> _writeToResultsFile(
 			StringBundler.concat(
 				invokerName, " used ", System.currentTimeMillis() - startTime,
 				"ms"));
@@ -501,8 +504,7 @@ public class ExportImportPerformanceTest {
 	private static String _pageType;
 	private static int _portletsPerContentPage;
 	private static int _portletsPerPortletPage;
-	private static List<String> _results;
-	private static String _resultsFile;
+	private static Path _resultsFilePath;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

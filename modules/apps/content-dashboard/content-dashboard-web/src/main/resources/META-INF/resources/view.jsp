@@ -117,7 +117,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smaller"
 								name="subtype"
-								value="<%= HtmlUtil.escape(contentDashboardItem.getSubtype(locale)) %>"
+								value="<%= HtmlUtil.escape(contentDashboardItem.getContentDashboardItemType().getLabel(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

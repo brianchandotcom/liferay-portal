@@ -17,14 +17,20 @@ package com.liferay.content.dashboard.web.internal.item;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactory;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,8 +54,23 @@ public class JournalArticleContentDashboardItemFactory
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
+		Optional<ContentDashboardItemTypeFactory<DDMStructure>>
+			contentDashboardItemTypeFactoryOptional =
+				_contentDashboardItemTypeFactoryTracker.
+					getContentDashboardItemTypeFactoryOptional(
+						DDMStructure.class);
+
+		ContentDashboardItemTypeFactory<DDMStructure>
+			contentDashboardItemTypeFactory =
+				contentDashboardItemTypeFactoryOptional.orElseThrow(
+					NoSuchModelException::new);
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), _assetDisplayPageFriendlyURLProvider,
+			contentDashboardItemTypeFactory.create(
+				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			_infoEditURLProviderTracker.getInfoEditURLProvider(
 				JournalArticle.class.getName()),
@@ -62,6 +83,10 @@ public class JournalArticleContentDashboardItemFactory
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ContentDashboardItemTypeFactoryTracker
+		_contentDashboardItemTypeFactoryTracker;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

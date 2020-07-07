@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -53,6 +54,7 @@ public class JournalArticleContentDashboardItem
 	public JournalArticleContentDashboardItem(
 		List<AssetCategory> assetCategories,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		ContentDashboardItemType<DDMStructure> contentDashboardItemType,
 		Group group, InfoEditURLProvider<JournalArticle> infoEditURLProvider,
 		JournalArticle journalArticle, Language language,
 		ModelResourcePermission<JournalArticle> modelResourcePermission) {
@@ -66,6 +68,7 @@ public class JournalArticleContentDashboardItem
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_contentDashboardItemType = contentDashboardItemType;
 		_group = group;
 		_infoEditURLProvider = infoEditURLProvider;
 		_journalArticle = journalArticle;
@@ -83,6 +86,11 @@ public class JournalArticleContentDashboardItem
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Override
+	public ContentDashboardItemType getContentDashboardItemType() {
+		return _contentDashboardItemType;
 	}
 
 	@Override
@@ -163,13 +171,6 @@ public class JournalArticleContentDashboardItem
 		}
 
 		return Collections.unmodifiableList(statuses);
-	}
-
-	@Override
-	public String getSubtype(Locale locale) {
-		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
-
-		return ddmStructure.getName(locale);
 	}
 
 	@Override
@@ -256,6 +257,7 @@ public class JournalArticleContentDashboardItem
 	private final List<AssetCategory> _assetCategories;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final ContentDashboardItemType _contentDashboardItemType;
 	private final Group _group;
 	private final InfoEditURLProvider<JournalArticle> _infoEditURLProvider;
 	private final JournalArticle _journalArticle;

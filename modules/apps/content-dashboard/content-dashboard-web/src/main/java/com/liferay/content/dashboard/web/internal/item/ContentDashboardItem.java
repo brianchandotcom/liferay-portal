@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,8 @@ public interface ContentDashboardItem<T> {
 
 	public List<AssetCategory> getAssetCategories(long vocabularyId);
 
+	public ContentDashboardItemType getContentDashboardItemType();
+
 	public String getEditURL(HttpServletRequest httpServletRequest);
 
 	public Date getExpirationDate();
@@ -40,8 +43,6 @@ public interface ContentDashboardItem<T> {
 	public String getScopeName(Locale locale);
 
 	public List<Status> getStatuses(Locale locale);
-
-	public String getSubtype(Locale locale);
 
 	public String getTitle(Locale locale);
 

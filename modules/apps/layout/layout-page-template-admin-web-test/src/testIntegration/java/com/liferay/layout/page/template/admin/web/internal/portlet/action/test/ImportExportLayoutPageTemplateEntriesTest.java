@@ -452,6 +452,21 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_validateFile(expectedFile, outputFile);
 	}
 
+	@Test
+	public void testImportExportLayoutPageTemplateEntryRowContainer()
+		throws Exception {
+
+		File expectedFile = _generateZipFile("row/container/expected", null);
+
+		File inputFile = _generateZipFile("row/container/input", null);
+
+		File outputFile = _importExportLayoutPageTemplateEntry(
+			inputFile, _group.getGroupId(), false,
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		_validateFile(expectedFile, outputFile);
+	}
+
 	private FragmentEntry _addFragmentEntry(
 			long groupId, String key, String name, String html)
 		throws Exception {

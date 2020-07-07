@@ -1328,19 +1328,6 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro removeLayoutElement {
-		var key_elementType = "${elementType}";
-		var key_position = "${position}";
-
-		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-		}
-
-		Click(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER_DELETE_BUTTON");
-
-		PageEditor.waitForAutoSave();
-	}
-
 	macro reopenResolvedComment {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_UNCHECKED");
 

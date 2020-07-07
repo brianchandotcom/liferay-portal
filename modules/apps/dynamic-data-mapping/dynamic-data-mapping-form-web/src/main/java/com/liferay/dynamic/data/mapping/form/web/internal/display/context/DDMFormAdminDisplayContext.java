@@ -543,7 +543,7 @@ public class DDMFormAdminDisplayContext {
 			navigationItem -> {
 				navigationItem.putData("action", "showForm");
 
-				if (activeNavItem == _FORM_NAV_ITEM) {
+				if (activeNavItem == _NAV_ITEM_FORM) {
 					navigationItem.setActive(true);
 				}
 
@@ -554,7 +554,7 @@ public class DDMFormAdminDisplayContext {
 			navigationItem -> {
 				navigationItem.putData("action", "showRules");
 
-				if (activeNavItem == _RULES_NAV_ITEM) {
+				if (activeNavItem == _NAV_ITEM_RULES) {
 					navigationItem.setActive(true);
 				}
 
@@ -565,7 +565,7 @@ public class DDMFormAdminDisplayContext {
 			navigationItem -> {
 				navigationItem.putData("action", "showReport");
 
-				if (activeNavItem == _REPORT_NAV_ITEM) {
+				if (activeNavItem == _NAV_ITEM_REPORT) {
 					navigationItem.setActive(true);
 				}
 
@@ -1568,11 +1568,11 @@ public class DDMFormAdminDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
-	private static final int _FORM_NAV_ITEM = 0;
+	private static final int _NAV_ITEM_FORM = 0;
 
-	private static final int _REPORT_NAV_ITEM = 2;
+	private static final int _NAV_ITEM_REPORT = 2;
 
-	private static final int _RULES_NAV_ITEM = 1;
+	private static final int _NAV_ITEM_RULES = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAdminDisplayContext.class);

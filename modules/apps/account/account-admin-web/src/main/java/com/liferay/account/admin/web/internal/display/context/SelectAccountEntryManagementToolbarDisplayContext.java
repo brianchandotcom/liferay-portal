@@ -64,7 +64,7 @@ public class SelectAccountEntryManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name", "parent-account"};
+		return new String[] {"name"};
 	}
 
 }

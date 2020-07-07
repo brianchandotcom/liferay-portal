@@ -64,7 +64,6 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long parentAccountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String[] domains = new String[0];
@@ -78,14 +77,12 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type)) {
 
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
-			parentAccountEntryId = ParamUtil.getInteger(
-				actionRequest, "parentAccountEntryId");
 		}
 
 		return _accountEntryLocalService.addAccountEntry(
-			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			domains, _getLogoBytes(actionRequest), taxIdNumber, type,
-			_getStatus(actionRequest),
+			themeDisplay.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			name, description, domains, _getLogoBytes(actionRequest),
+			taxIdNumber, type, _getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 	}
@@ -137,21 +134,21 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
 
-		long parentAccountEntryId = ParamUtil.getInteger(
-			actionRequest, "parentAccountEntryId");
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
 		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
 
-		AccountEntry accountEntry =
-			_accountEntryLocalService.updateAccountEntry(
-				accountEntryId, parentAccountEntryId, name, description,
-				deleteLogo, domains, _getLogoBytes(actionRequest), taxIdNumber,
-				_getStatus(actionRequest),
-				ServiceContextFactory.getInstance(
-					AccountEntry.class.getName(), actionRequest));
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntryId, accountEntry.getParentAccountEntryId(), name,
+			description, deleteLogo, domains, _getLogoBytes(actionRequest),
+			taxIdNumber, _getStatus(actionRequest),
+			ServiceContextFactory.getInstance(
+				AccountEntry.class.getName(), actionRequest));
 
 		if (Objects.equals(
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,

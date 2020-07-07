@@ -44,4 +44,8 @@ public class DefaultJarInstaller implements FileInstaller {
 		return uri.toURL();
 	}
 
+	@Override
+	public void uninstall(File file) {
+	}
+
 }

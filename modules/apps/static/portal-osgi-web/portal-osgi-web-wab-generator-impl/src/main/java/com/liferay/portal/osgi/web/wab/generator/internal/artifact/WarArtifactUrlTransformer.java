@@ -63,6 +63,10 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 		return ArtifactURLUtil.transform(uri.toURL());
 	}
 
+	@Override
+	public void uninstall(File file) {
+	}
+
 	private boolean _hasResources(File artifact) {
 		try (ZipFile zipFile = new ZipFile(artifact)) {
 			if (zipFile.getEntry("WEB-INF/classes/resources-importer/") !=

@@ -428,7 +428,7 @@ public class AccountEntryLocalServiceTest {
 		_assertSearchWithParams(
 			Collections.singletonList(personalAccountEntry),
 			_getLinkedHashMap(
-				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL));
+				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON));
 		_assertSearchWithParams(
 			Collections.emptyList(), _getLinkedHashMap("type", "invalidType"));
 	}

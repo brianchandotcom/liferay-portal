@@ -81,7 +81,7 @@ public class AccountEntryTestUtil {
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), null, null,
 			RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}

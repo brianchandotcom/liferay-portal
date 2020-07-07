@@ -18,7 +18,6 @@ import React from 'react';
 
 import {ResizeContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/ResizeContext';
 import {RowConfigurationPanel} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/RowConfigurationPanel';
-import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import updateItemConfig from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
@@ -79,7 +78,6 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				landscapeMobile: {label: 'landscapeMobile'},
 			},
-			responsiveEnabled: true,
 		},
 	})
 );
@@ -97,27 +95,8 @@ jest.mock(
 describe('RowConfigurationPanel', () => {
 	afterEach(() => {
 		cleanup();
-		config.responsiveEnabled = true;
 		updateItemConfig.mockClear();
 		updateRowColumns.mockClear();
-	});
-
-	it('allows changing the number of columns of a row', async () => {
-		config.responsiveEnabled = false;
-
-		const {getByLabelText} = renderComponent({});
-		const input = getByLabelText('number-of-columns');
-
-		await fireEvent.change(input, {
-			target: {value: '6'},
-		});
-
-		expect(updateRowColumns).toHaveBeenCalledWith({
-			itemId: '0',
-			numberOfColumns: 6,
-			segmentsExperienceId: '0',
-			viewportSizeId: 'desktop',
-		});
 	});
 
 	it('allows changing the number of modules of a grid', async () => {

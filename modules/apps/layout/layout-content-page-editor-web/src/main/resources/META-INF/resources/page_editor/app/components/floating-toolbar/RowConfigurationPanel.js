@@ -18,7 +18,6 @@ import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
@@ -105,11 +104,7 @@ export const RowConfigurationPanel = ({item}) => {
 			<Select
 				configurationKey="numberOfColumns"
 				handleChange={handleConfigurationValueChanged}
-				label={
-					config.responsiveEnabled
-						? Liferay.Language.get('number-of-modules')
-						: Liferay.Language.get('number-of-columns')
-				}
+				label={Liferay.Language.get('number-of-modules')}
 				options={NUMBER_OF_COLUMNS_OPTIONS.map((option) => ({
 					label: option,
 				}))}

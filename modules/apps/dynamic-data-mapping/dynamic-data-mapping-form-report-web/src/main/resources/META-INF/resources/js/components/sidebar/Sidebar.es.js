@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useContext, useRef} from 'react';
+import React, {useContext} from 'react';
 
 import useRequest from '../../hooks/useRequest.es';
 import List from '../list/List.es';
@@ -106,24 +106,15 @@ const SidebarContent = () => {
 export default () => {
 	const {field, isOpen, portletNamespace} = useContext(SidebarContext);
 
-	const ref = useRef();
-
-	useEffect(() => {
-		if (isOpen) {
-			ref.current.classList.add('open');
-		}
-		else {
-			ref.current.classList.remove('open');
-		}
-	}, [isOpen, field]);
-
 	return (
 		<>
 			{isOpen && <div className="sidebar-backdrop"></div>}
 			<div
-				className="open sidebar-container sidebar-reports"
+				className={
+					'sidebar-container sidebar-reports' +
+					(isOpen ? ' open' : '')
+				}
 				id={`${portletNamespace}-sidebar-reports`}
-				ref={ref}
 			>
 				<div className="sidebar sidebar-light">
 					{field && <SidebarContent />}

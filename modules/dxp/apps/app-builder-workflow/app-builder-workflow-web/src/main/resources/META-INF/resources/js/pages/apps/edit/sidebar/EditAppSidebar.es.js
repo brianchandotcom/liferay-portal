@@ -66,12 +66,10 @@ export default function EditAppSidebar({assigneeRoles}) {
 
 		dispatchConfig({
 			step: {
-				currentStep: {
-					...currentStep,
-					appWorkflowRoleAssignments: selectedAssignees.map(
-						({id, name}) => ({roleId: id, roleName: name})
-					),
-				},
+				...currentStep,
+				appWorkflowRoleAssignments: selectedAssignees.map(
+					({id, name}) => ({roleId: id, roleName: name})
+				),
 			},
 			stepIndex,
 			type: UPDATE_STEP,

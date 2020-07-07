@@ -221,6 +221,16 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 
+		downloadNodeTask.setYarnUrl(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return nodeExtension.getYarnUrl();
+				}
+
+			});
+
 		downloadNodeTask.onlyIf(
 			new Spec<Task>() {
 

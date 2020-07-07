@@ -132,6 +132,27 @@ public class DownloadNodeTask extends DefaultTask {
 				});
 		}
 
+		String yarnUrl = getYarnUrl();
+
+		final File yarnDir = NodePluginUtil.getYarnDir(nodeDir);
+
+		if (Validator.isNotNull(yarnUrl)) {
+			final File yarnFile = _download(yarnUrl, null);
+
+			project.delete(yarnDir);
+
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(yarnFile);
+						copySpec.into(yarnDir);
+					}
+
+				});
+		}
+
 		if (!OSDetector.isWindows()) {
 			File binDir = new File(nodeDir, "bin");
 
@@ -168,6 +189,12 @@ public class DownloadNodeTask extends DefaultTask {
 		return GradleUtil.toString(_npmUrl);
 	}
 
+	@Input
+	@Optional
+	public String getYarnUrl() {
+		return GradleUtil.toString(_yarnUrl);
+	}
+
 	public void setNodeDir(Object nodeDir) {
 		_nodeExecutor.setNodeDir(nodeDir);
 	}
@@ -178,6 +205,10 @@ public class DownloadNodeTask extends DefaultTask {
 
 	public void setNpmUrl(Object npmUrl) {
 		_npmUrl = npmUrl;
+	}
+
+	public void setYarnUrl(Object yarnUrl) {
+		_yarnUrl = yarnUrl;
 	}
 
 	private File _download(String url, File destinationFile)
@@ -215,7 +246,7 @@ public class DownloadNodeTask extends DefaultTask {
 	}
 
 	private String _getDigest() {
-		return DigestUtil.getDigest(getNodeUrl(), getNpmUrl());
+		return DigestUtil.getDigest(getNodeUrl(), getNpmUrl(), getYarnUrl());
 	}
 
 	private File _getDigestFile() {
@@ -225,5 +256,6 @@ public class DownloadNodeTask extends DefaultTask {
 	private final NodeExecutor _nodeExecutor;
 	private Object _nodeUrl;
 	private Object _npmUrl;
+	private Object _yarnUrl;
 
 }

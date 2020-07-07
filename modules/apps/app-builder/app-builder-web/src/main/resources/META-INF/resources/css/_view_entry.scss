@@ -25,10 +25,10 @@
 		.panel-header {
 			cursor: pointer;
 			padding: 0;
-		}
 
-		.panel-header:focus {
-			box-shadow: none;
+			&:focus {
+				box-shadow: none;
+			}
 		}
 
 		.collapse-icon-closed,
@@ -36,6 +36,7 @@
 			right: 0;
 			top: 30%;
 		}
+
 		.sheet-section {
 			margin-bottom: 0;
 		}

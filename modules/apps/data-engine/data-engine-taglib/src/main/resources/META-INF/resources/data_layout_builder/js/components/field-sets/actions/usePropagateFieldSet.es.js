@@ -26,7 +26,7 @@ export default () => {
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 	const defaultLanguageId = Liferay.ThemeDisplay.getLanguageId();
 
-	return ({fieldSet, onPropagate}) => {
+	return ({deleteAction, fieldSet, onPropagate}) => {
 		return getItem(
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
 		).then(({items}) => {
@@ -96,15 +96,23 @@ export default () => {
 									<strong>
 										{Liferay.Language.get('warning')}:
 									</strong>{' '}
-									{Liferay.Language.get(
-										'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
-									)}
+									{deleteAction
+										? Liferay.Language.get(
+												'this-action-may-erase-data-permanently'
+										  )
+										: Liferay.Language.get(
+												'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
+										  )}
 								</ClayAlert>
 
-								<p>
-									{Liferay.Language.get(
-										'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
-									)}
+								<p className="fieldset-message">
+									{deleteAction
+										? Liferay.Language.get(
+												'the-fieldset-will-be-deleted-permanently-from'
+										  )
+										: Liferay.Language.get(
+												'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
+										  )}
 								</p>
 
 								{dataLayouts.length > 0 && (
@@ -155,12 +163,17 @@ export default () => {
 										onClose();
 									}}
 								>
-									{Liferay.Language.get('propagate')}
+									{deleteAction
+										? Liferay.Language.get('delete')
+										: Liferay.Language.get('propagate')}
 								</ClayButton>
 							</ClayButton.Group>,
 						],
-						header: Liferay.Language.get('propagate-changes'),
+						header: deleteAction
+							? Liferay.Language.get('delete')
+							: Liferay.Language.get('propagate-changes'),
 						size: 'md',
+						status: deleteAction ? 'danger' : '',
 					},
 					type: 1,
 				};

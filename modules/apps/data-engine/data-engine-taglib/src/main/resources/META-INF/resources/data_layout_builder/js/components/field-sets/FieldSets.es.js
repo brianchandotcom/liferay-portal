@@ -139,6 +139,7 @@ export default function FieldSets({keywords}) {
 								{
 									action: () =>
 										propagateFieldSet({
+											deleteAction: true,
 											fieldSet,
 											onPropagate: deleteFieldSet,
 										}),

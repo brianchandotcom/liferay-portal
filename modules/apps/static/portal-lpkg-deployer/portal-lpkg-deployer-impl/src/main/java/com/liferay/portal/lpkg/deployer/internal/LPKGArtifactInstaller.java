@@ -102,15 +102,13 @@ public class LPKGArtifactInstaller implements FileInstaller {
 	}
 
 	@Override
-	public boolean uninstall(File file) throws Exception {
+	public void uninstall(File file) throws Exception {
 		Bundle bundle = _bundleContext.getBundle(
 			LPKGLocationUtil.getLPKGLocation(file));
 
 		if (bundle != null) {
 			bundle.uninstall();
 		}
-
-		return true;
 	}
 
 	@Activate

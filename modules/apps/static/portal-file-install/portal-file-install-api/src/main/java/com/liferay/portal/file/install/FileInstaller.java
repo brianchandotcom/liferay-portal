@@ -27,8 +27,7 @@ public interface FileInstaller {
 
 	public URL transformURL(File file) throws Exception;
 
-	public default boolean uninstall(File file) throws Exception {
-		return false;
+	public default void uninstall(File file) throws Exception {
 	}
 
 }

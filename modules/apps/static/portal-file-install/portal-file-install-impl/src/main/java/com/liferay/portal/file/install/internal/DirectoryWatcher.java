@@ -1304,8 +1304,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	private Bundle _uninstall(Artifact artifact) {
-		Bundle bundle = null;
-
 		try {
 			File path = artifact.getPath();
 
@@ -1313,14 +1311,14 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			FileInstaller fileInstaller = artifact.getFileInstaller();
 
-			if ((fileInstaller != null) && fileInstaller.uninstall(path)) {
-				return null;
+			if (fileInstaller != null) {
+				fileInstaller.uninstall(path);
 			}
 
 			long bundleId = artifact.getBundleId();
 
-			if (bundleId != 0) {
-				bundle = _bundleContext.getBundle(bundleId);
+			if (bundleId > 0) {
+				Bundle bundle = _bundleContext.getBundle(bundleId);
 
 				if (bundle == null) {
 					StringBundler sb = new StringBundler(5);
@@ -1344,6 +1342,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					null);
 
 				bundle.uninstall();
+
+				return bundle;
 			}
 		}
 		catch (Exception exception) {
@@ -1353,7 +1353,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				exception);
 		}
 
-		return bundle;
+		return null;
 	}
 
 	private Collection<Bundle> _uninstall(Collection<Artifact> artifacts) {

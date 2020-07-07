@@ -270,10 +270,25 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 	}
 
 	@Override
-	public boolean uninstall(File file) throws Exception {
-		_deleteConfig(file);
+	public void uninstall(File file) throws Exception {
+		String[] pid = _parsePid(file.getName());
 
-		return true;
+		String logString = StringPool.BLANK;
+
+		if (pid[1] != null) {
+			logString = StringPool.DASH + pid[1];
+		}
+
+		Util.log(
+			_bundleContext, Util.Logger.LOG_INFO,
+			StringBundler.concat(
+				"Deleting configuration from ", pid[0], logString, ".cfg"),
+			null);
+
+		Configuration configuration = _getConfiguration(
+			_toConfigKey(file), pid[0], pid[1]);
+
+		configuration.delete();
 	}
 
 	private static boolean _equals(
@@ -319,29 +334,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			}
 
 		};
-	}
-
-	private boolean _deleteConfig(File file) throws Exception {
-		String[] pid = _parsePid(file.getName());
-
-		String logString = StringPool.BLANK;
-
-		if (pid[1] != null) {
-			logString = StringPool.DASH + pid[1];
-		}
-
-		Util.log(
-			_bundleContext, Util.Logger.LOG_INFO,
-			StringBundler.concat(
-				"Deleting configuration from ", pid[0], logString, ".cfg"),
-			null);
-
-		Configuration configuration = _getConfiguration(
-			_toConfigKey(file), pid[0], pid[1]);
-
-		configuration.delete();
-
-		return true;
 	}
 
 	private String _encoding() {

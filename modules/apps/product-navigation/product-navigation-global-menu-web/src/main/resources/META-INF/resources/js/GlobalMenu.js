@@ -200,6 +200,7 @@ const AppsPanel = ({
 									{sites.viewAllURL && (
 										<li>
 											<ClayButton
+												className="c-pl-0"
 												displayType="link"
 												onClick={() => {
 													Liferay.Util.openModal({

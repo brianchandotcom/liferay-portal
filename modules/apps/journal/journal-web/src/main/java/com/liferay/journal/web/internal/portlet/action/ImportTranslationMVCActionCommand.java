@@ -73,11 +73,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleResourcePrimKey = ParamUtil.getLong(
-			actionRequest, "articleResourcePrimKey");
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-		double version = ParamUtil.getDouble(actionRequest, "version");
+		JournalArticle article = ActionUtil.getArticle(actionRequest);
 
 		try {
 			UploadPortletRequest uploadPortletRequest =
@@ -96,22 +92,20 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 							themeDisplay.getScopeGroupId(),
 							new InfoItemClassPKReference(
 								JournalArticle.class.getName(),
-								articleResourcePrimKey),
+								article.getResourcePrimKey()),
 							inputStream);
 
 				_journalArticleInfoItemFieldValuesUpdater.
-					updateFromInfoItemFieldValues(
-						_journalArticleService.getArticle(
-							groupId, articleId, version),
-						infoItemFieldValues);
+					updateFromInfoItemFieldValues(article, infoItemFieldValues);
 			}
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			_sendRedirect(
-				actionRequest, actionResponse, articleResourcePrimKey, groupId,
-				articleId, version);
+				actionRequest, actionResponse, article.getResourcePrimKey(),
+				article.getGroupId(), article.getArticleId(),
+				article.getVersion());
 		}
 	}
 

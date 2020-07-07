@@ -1061,21 +1061,12 @@ definition {
 
 			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__fragment-content')][contains(.,'border: solid violet')]");
 
-			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
 			AssertTextEquals(
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "Go Somewhere");
-
-			AssertClick(
-				locator1 = "Button#RESTORE_VALUES",
-				value1 = "Restore Values");
-
-			AssertTextEquals(
-				key_fieldLabel = "Button Text",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Description");
 
 			ClickNoError(
 				key_text = "Here we go",

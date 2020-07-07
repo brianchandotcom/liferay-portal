@@ -18,6 +18,7 @@ import aQute.lib.spring.SpringComponent;
 
 import com.beust.jcommander.Parameter;
 
+import com.liferay.ant.bnd.enterprise.EnterpriseAnalyzerPlugin;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
 import com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin;
@@ -106,7 +107,8 @@ public class OSGiBundleBuilderArgs {
 		SassAnalyzerPlugin.class.getName(),
 		ServiceAnalyzerPlugin.class.getName(),
 		SocialAnalyzerPlugin.class.getName(),
-		SpringDependencyAnalyzerPlugin.class.getName());
+		SpringDependencyAnalyzerPlugin.class.getName(),
+		EnterpriseAnalyzerPlugin.class.getName());
 
 	@Parameter(description = "The base directory.", names = "--base-dir")
 	private File _baseDir = new File(System.getProperty("user.dir"));

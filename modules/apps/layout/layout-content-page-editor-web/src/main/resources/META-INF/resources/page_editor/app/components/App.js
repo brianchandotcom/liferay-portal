@@ -20,7 +20,6 @@ import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
 import useParseURL from '../utils/useParseURL';
-import DisabledArea from './DisabledArea';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
 import Sidebar from './Sidebar';
@@ -47,7 +46,6 @@ export default function App() {
 
 	return (
 		<DragAndDropContextProvider layoutData={layoutData}>
-			<DisabledArea />
 			<DragPreview />
 			<Toolbar />
 			<LayoutViewport

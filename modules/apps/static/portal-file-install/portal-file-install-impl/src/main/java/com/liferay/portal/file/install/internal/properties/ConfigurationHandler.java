@@ -16,7 +16,6 @@ package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
@@ -210,16 +209,6 @@ public class ConfigurationHandler {
 	private ConfigurationHandler() {
 	}
 
-	private void _ensureNext(PushbackReader pushbackReader, int expected)
-		throws IOException {
-
-		int next = _read(pushbackReader);
-
-		if (next != expected) {
-			_readFailure(next, expected);
-		}
-	}
-
 	private int _ignorablePageBreakAndWhiteSpace(PushbackReader pushbackReader)
 		throws IOException {
 
@@ -270,14 +259,6 @@ public class ConfigurationHandler {
 			c = '\n';
 		}
 
-		if (c == '\n') {
-			_line++;
-			_pos = 0;
-		}
-		else {
-			_pos++;
-		}
-
 		return c;
 	}
 
@@ -316,7 +297,7 @@ public class ConfigurationHandler {
 					return null;
 				}
 
-				_ensureNext(pushbackReader, _TOKEN_VAL_CLOS);
+				_read(pushbackReader);
 
 				list.add(value);
 
@@ -362,7 +343,7 @@ public class ConfigurationHandler {
 					return null;
 				}
 
-				_ensureNext(pushbackReader, _TOKEN_VAL_CLOS);
+				_read(pushbackReader);
 
 				collection.add(value);
 
@@ -382,22 +363,6 @@ public class ConfigurationHandler {
 	}
 
 	// primitives
-
-	private IOException _readFailure(int current, int expected) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Unexpected token ");
-		sb.append(current);
-		sb.append("; expected: ");
-		sb.append(expected);
-		sb.append(" (line=");
-		sb.append(_line);
-		sb.append(", pos=");
-		sb.append(_pos);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return new IOException(sb.toString());
-	}
 
 	private String _readQuoted(PushbackReader pushbackReader)
 		throws IOException {
@@ -550,7 +515,7 @@ public class ConfigurationHandler {
 		else if (code == _TOKEN_VAL_OPEN) {
 			Object value = _readSimple(type, pushbackReader);
 
-			_ensureNext(pushbackReader, _TOKEN_VAL_CLOS);
+			_read(pushbackReader);
 
 			return value;
 		}
@@ -658,8 +623,5 @@ public class ConfigurationHandler {
 
 		_codeToType.put(Integer.valueOf(_TOKEN_SIMPLE_STRING), String.class);
 	}
-
-	private int _line;
-	private int _pos;
 
 }

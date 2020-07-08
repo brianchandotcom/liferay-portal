@@ -25,7 +25,30 @@ import java.util.List;
  */
 public final class Parser {
 
-	public static Clause[] parseClauses(String[] clauses)
+	public static Clause[] parseHeader(String header)
+		throws IllegalArgumentException {
+
+		Clause[] clauses = null;
+
+		if (header != null) {
+			if (header.length() == 0) {
+				throw new IllegalArgumentException(
+					"The header cannot be an empty string");
+			}
+
+			String[] headers = _parseDelimitedString(header, StringPool.COMMA);
+
+			clauses = _parseClauses(headers);
+		}
+
+		if (clauses == null) {
+			return new Clause[0];
+		}
+
+		return clauses;
+	}
+
+	private static Clause[] _parseClauses(String[] clauses)
 		throws IllegalArgumentException {
 
 		if (clauses == null) {
@@ -35,7 +58,7 @@ public final class Parser {
 		List<Clause> completeList = new ArrayList<>();
 
 		for (String clause : clauses) {
-			String[] tokens = parseDelimitedString(
+			String[] tokens = _parseDelimitedString(
 				clause, StringPool.SEMICOLON);
 
 			int pathCount = 0;
@@ -130,7 +153,7 @@ public final class Parser {
 		return completeList.toArray(new Clause[0]);
 	}
 
-	public static String[] parseDelimitedString(
+	private static String[] _parseDelimitedString(
 		String value, String delimiter) {
 
 		if (value == null) {
@@ -183,29 +206,6 @@ public final class Parser {
 		}
 
 		return (String[])list.toArray(new String[0]);
-	}
-
-	public static Clause[] parseHeader(String header)
-		throws IllegalArgumentException {
-
-		Clause[] clauses = null;
-
-		if (header != null) {
-			if (header.length() == 0) {
-				throw new IllegalArgumentException(
-					"The header cannot be an empty string");
-			}
-
-			String[] headers = parseDelimitedString(header, StringPool.COMMA);
-
-			clauses = parseClauses(headers);
-		}
-
-		if (clauses == null) {
-			return new Clause[0];
-		}
-
-		return clauses;
 	}
 
 	private static final int _CHAR = 1;

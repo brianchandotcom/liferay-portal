@@ -280,7 +280,7 @@ function TopperContent({
 					)}
 					{canUpdatePageStructure && (
 						<TopperListItem>
-							<ItemActions item={item}></ItemActions>
+							<ItemActions item={item} />
 						</TopperListItem>
 					)}
 				</ul>

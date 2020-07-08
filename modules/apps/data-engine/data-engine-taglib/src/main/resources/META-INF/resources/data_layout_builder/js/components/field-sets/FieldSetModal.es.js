@@ -84,6 +84,14 @@ const ModalContent = ({
 		[childrenContext]
 	);
 
+	/**
+	 * This functions is necessary to handle with ddm-container,
+	 * just a trick to simply show/hide container. Actually the z-index of container
+	 * is biggest than the Modal and DropDown, that's why is necessary to handle
+	 * with Javascript interaction
+	 * @param {Boolean} active DropDown Visible of TranslationManager
+	 */
+
 	const onActiveChange = (active) => {
 		document
 			.querySelectorAll('#ddm-actionable-fields-container')

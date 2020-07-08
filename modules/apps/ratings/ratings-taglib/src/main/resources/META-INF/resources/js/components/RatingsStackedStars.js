@@ -133,7 +133,10 @@ export default function RatingsStackedStars({
 						onClick={onVote}
 						title={Liferay.Language.get('delete')}
 					>
-						<ClayIcon symbol="times-circle" />
+						<ClayIcon
+							className="lexicon-icon-vertical-align"
+							symbol="times-circle"
+						/>
 					</ClayButton>
 				)}
 			</div>

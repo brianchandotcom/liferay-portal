@@ -11,9 +11,10 @@
 		}
 
 		.ratings-stacked-stars-vote-stars {
-			display: flex;
+			display: inline-flex;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
+			margin-right: 0.3125rem;
 		}
 	}
 
@@ -84,6 +85,10 @@
 
 		&:hover {
 			color: $dark;
+		}
+
+		.lexicon-icon-times-circle.lexicon-icon-vertical-align {
+			margin-top: -2px;
 		}
 	}
 }

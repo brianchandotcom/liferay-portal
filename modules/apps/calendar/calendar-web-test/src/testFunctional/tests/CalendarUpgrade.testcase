@@ -32,6 +32,8 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarArchive621015 {
+		property portal.upstream = "true";
+
 		property data.archive.type = "data-archive-calendar";
 		property portal.version = "6.2.10.15";
 

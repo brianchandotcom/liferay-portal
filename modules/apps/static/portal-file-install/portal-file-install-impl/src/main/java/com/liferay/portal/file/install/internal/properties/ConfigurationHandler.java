@@ -14,14 +14,14 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.PushbackReader;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import java.lang.reflect.Array;
@@ -39,9 +39,10 @@ import java.util.Map;
 public class ConfigurationHandler {
 
 	public static Object read(String value) throws IOException {
-		try (StringReader stringReader = new StringReader(value);
+		try (UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
+				value);
 			PushbackReader pushbackReader = new PushbackReader(
-				stringReader, 1)) {
+				unsyncStringReader, 1)) {
 
 			ConfigurationHandler configurationHandler =
 				new ConfigurationHandler();
@@ -51,11 +52,11 @@ public class ConfigurationHandler {
 	}
 
 	public static String write(Object value) throws IOException {
-		StringWriter stringWriter = new StringWriter();
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		_writeValue(stringWriter, value);
+		_writeValue(unsyncStringWriter, value);
 
-		return stringWriter.toString();
+		return unsyncStringWriter.toString();
 	}
 
 	private static void _writeArray(Writer writer, Object arrayValue)

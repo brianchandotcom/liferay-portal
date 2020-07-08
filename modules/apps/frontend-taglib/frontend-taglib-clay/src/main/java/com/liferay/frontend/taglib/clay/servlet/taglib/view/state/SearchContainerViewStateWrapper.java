@@ -26,58 +26,58 @@ public abstract class SearchContainerViewStateWrapper
 	public SearchContainerViewStateWrapper(
 		SearchContainerViewState searchContainerViewState) {
 
-		_wrapped = searchContainerViewState;
+		_wrappedSearchContainerViewState = searchContainerViewState;
 	}
 
 	@Override
 	public int getCur() {
-		return _wrapped.getCur();
+		return _wrappedSearchContainerViewState.getCur();
 	}
 
 	@Override
 	public int getDelta() {
-		return _wrapped.getDelta();
+		return _wrappedSearchContainerViewState.getDelta();
 	}
 
 	@Override
 	public String getDisplayStyle() {
-		return _wrapped.getDisplayStyle();
+		return _wrappedSearchContainerViewState.getDisplayStyle();
 	}
 
 	@Override
 	public int getEnd() {
-		return _wrapped.getEnd();
+		return _wrappedSearchContainerViewState.getEnd();
 	}
 
 	@Override
 	public String getKeywords() {
-		return _wrapped.getKeywords();
+		return _wrappedSearchContainerViewState.getKeywords();
 	}
 
 	@Override
 	public String getOrderByCol() {
-		return _wrapped.getOrderByCol();
+		return _wrappedSearchContainerViewState.getOrderByCol();
 	}
 
 	@Override
 	public String getOrderByType() {
-		return _wrapped.getOrderByType();
+		return _wrappedSearchContainerViewState.getOrderByType();
 	}
 
 	@Override
 	public boolean getResetCur() {
-		return _wrapped.getResetCur();
+		return _wrappedSearchContainerViewState.getResetCur();
 	}
 
 	@Override
 	public int getStart() {
-		return _wrapped.getStart();
+		return _wrappedSearchContainerViewState.getStart();
 	}
 
 	public SearchContainerViewState getWrapped() {
-		return _wrapped;
+		return _wrappedSearchContainerViewState;
 	}
 
-	private final SearchContainerViewState _wrapped;
+	private final SearchContainerViewState _wrappedSearchContainerViewState;
 
 }

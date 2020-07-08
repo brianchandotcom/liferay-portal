@@ -463,14 +463,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro reindexSpecific {
-		var key_actionDescription = "${actionDescription}";
-
-		Click(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_SPECIFIC_BUTTON");
-
-		Alert.viewSuccessMessageText(successMessage = "${key_actionDescription} has reindexed successfully.");
-	}
-
 	macro executeWorkflowScript {
 		var key_scriptName = "${scriptName}";
 
@@ -627,6 +619,14 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+	}
+
+	macro reindexSpecific {
+		var key_actionDescription = "${actionDescription}";
+
+		Click(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_SPECIFIC_BUTTON");
+
+		Alert.viewSuccessMessageText(successMessage = "${key_actionDescription} has reindexed successfully.");
 	}
 
 	macro searchForAssigneeName {

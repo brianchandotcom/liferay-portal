@@ -75,13 +75,9 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	}
 
 	public TypedProperties(SubstitutionCallback callback) {
-		this(callback, true);
-	}
-
-	public TypedProperties(SubstitutionCallback callback, boolean substitute) {
 		_storage = new Properties(false);
 		_callback = callback;
-		_substitute = substitute;
+		_substitute = true;
 	}
 
 	@Override

@@ -330,7 +330,7 @@ definition {
 			fieldName = "url",
 			fieldValue = "${videoLink}");
 
-		Click(locator1 = "//input[@type='text' and contains(@id,'width')]");
+		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 
 		PageEditor.waitForAutoSave();
 	}

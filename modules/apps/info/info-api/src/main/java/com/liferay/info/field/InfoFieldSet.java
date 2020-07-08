@@ -161,6 +161,20 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 
 	public static class Builder {
 
+		public InfoFieldSet build() {
+			return new InfoFieldSet(this);
+		}
+
+		public Builder infoFieldSetEntries(
+			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+
+			for (InfoFieldSetEntry fieldSetEntry : infoFieldSetEntries) {
+				infoFieldSetEntry(fieldSetEntry);
+			}
+
+			return this;
+		}
+
 		public Builder infoFieldSetEntry(InfoFieldSetEntry infoFieldSetEntry) {
 			_infoFieldSetEntriesByName.put(
 				infoFieldSetEntry.getName(), infoFieldSetEntry);
@@ -176,20 +190,6 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			consumer.accept(this::infoFieldSetEntry);
 
 			return this;
-		}
-
-		public Builder infoFieldSetEntries(
-			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
-
-			for (InfoFieldSetEntry fieldSetEntry : infoFieldSetEntries) {
-				infoFieldSetEntry(fieldSetEntry);
-			}
-
-			return this;
-		}
-
-		public InfoFieldSet build() {
-			return new InfoFieldSet(this);
 		}
 
 		public Builder labelInfoLocalizedValue(

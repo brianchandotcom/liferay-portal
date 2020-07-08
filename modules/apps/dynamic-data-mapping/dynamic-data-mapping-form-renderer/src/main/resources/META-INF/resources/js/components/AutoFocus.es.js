@@ -25,7 +25,7 @@ export const AutoFocus = ({children}) => {
 	const lazyStatus = children?.props?.children?.type?._status;
 
 	useLayoutEffect(() => {
-		if (childRef.current && containerElement && containerElement.current) {
+		if (childRef.current && containerElement?.current) {
 			const firstInput = childRef.current.querySelector('input');
 
 			if (

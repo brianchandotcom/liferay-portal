@@ -43,7 +43,9 @@ const getEditedPages = ({editingLanguageId, name, pages, value}) => {
 	);
 };
 
-const debounceFn = debounce((fn) => fn(), 50);
+const UPDATE_DELAY_MS = 50;
+
+const debounceFn = debounce((fn) => fn(), UPDATE_DELAY_MS);
 
 export default function fieldChange({
 	defaultLanguageId,

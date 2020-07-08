@@ -39,7 +39,7 @@ const Pages = React.forwardRef(
 			editable,
 			editingLanguageId = themeDisplay.getLanguageId(),
 			pages = [],
-			paginationMode,
+			paginationMode = 'wizard',
 			readOnly,
 			submitLabel = Liferay.Language.get('submit'),
 			view,
@@ -52,11 +52,9 @@ const Pages = React.forwardRef(
 
 		const containerFallbackRef = useRef();
 
-		const currentPaginationMode = paginationMode ?? 'wizard';
 		const displayable =
 			initialDisplayableValue ||
 			getDisplayableValue({containerId, readOnly, viewMode});
-		const total = Array.isArray(pages) ? pages.length : 0;
 
 		if (!displayable) {
 			return null;
@@ -66,7 +64,7 @@ const Pages = React.forwardRef(
 
 		return (
 			<div
-				className={view === 'fieldSets' ? 'sheet' : ''}
+				className={classNames({sheet: view === 'fieldSets'})}
 				ref={containerElementRef}
 			>
 				<div
@@ -90,10 +88,10 @@ const Pages = React.forwardRef(
 							page={page}
 							pageIndex={index}
 							pages={pages}
-							paginationMode={currentPaginationMode}
+							paginationMode={paginationMode}
 							readOnly={readOnly}
 							submitLabel={submitLabel}
-							total={total}
+							total={pages.length}
 							view={view}
 							viewMode={viewMode}
 						/>

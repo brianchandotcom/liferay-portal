@@ -29,152 +29,177 @@ import {evaluate} from '../util/evaluation.es';
 import {getFormId, getFormNode} from '../util/formId.es';
 import templates from './Form.soy';
 
-function handleLiferayFormSubmitted(event) {
-	if (event.form && event.form.getDOM() === this.form) {
-		event.preventDefault();
-	}
-}
-
-const Form = React.forwardRef((props, ref) => {
-	const dispatch = useForm();
-	const containerRef = useRef(null);
-
-	const validate = useCallback(() => {
-		const {
+const Form = React.forwardRef(
+	(
+		{
 			activePage,
 			defaultLanguageId,
+			description,
 			editingLanguageId,
+			name,
 			pages,
+			paginationMode,
 			portletNamespace,
 			rules,
-		} = props;
+			successPageSettings,
+			...otherProps
+		},
+		ref
+	) => {
+		const dispatch = useForm();
+		const containerRef = useRef(null);
 
-		return dispatch(
-			formValidate({
+		const validate = useCallback(
+			() =>
+				dispatch(
+					formValidate({
+						activePage,
+						defaultLanguageId,
+						editingLanguageId,
+						pages,
+						portletNamespace,
+						rules,
+					})
+				),
+			[
+				dispatch,
 				activePage,
 				defaultLanguageId,
 				editingLanguageId,
 				pages,
 				portletNamespace,
 				rules,
-			})
+			]
 		);
-	}, [dispatch, props]);
 
-	const handleFormSubmitted = useCallback(
-		(event) => {
-			event.preventDefault();
+		const handleFormSubmitted = useCallback(
+			(event) => {
+				event.preventDefault();
 
-			validate().then((validForm) => {
-				if (validForm) {
-					Liferay.Util.submitForm(event.target);
+				validate()
+					.then((validForm) => {
+						if (validForm) {
+							Liferay.Util.submitForm(event.target);
 
-					Liferay.fire('ddmFormSubmit', {
-						formId: getFormId(getFormNode(containerRef.current)),
+							Liferay.fire('ddmFormSubmit', {
+								formId: getFormId(
+									getFormNode(containerRef.current)
+								),
+							});
+						}
+					})
+					.catch((error) => {
+						console.error(error);
 					});
+			},
+			[containerRef, validate]
+		);
+
+		useImperativeHandle(ref, () => ({
+			evaluate: () =>
+				evaluate(null, {
+					defaultLanguageId,
+					editingLanguageId,
+					pages,
+					portletNamespace,
+					rules,
+				}),
+			get: (key) => {
+				const props = {
+					activePage,
+					defaultLanguageId,
+					description,
+					editingLanguageId,
+					name,
+					pages,
+					paginationMode,
+					portletNamespace,
+					rules,
+					successPageSettings,
+					...otherProps,
+				};
+
+				return props[key];
+			},
+			getFormNode: () =>
+				containerRef.current && getFormNode(containerRef.current),
+			toJSON: () => ({
+				defaultLanguageId,
+				description,
+				editingLanguageId,
+				name,
+				pages,
+				paginationMode,
+				portletNamespace,
+				rules,
+				successPageSettings,
+			}),
+			validate,
+		}));
+
+		useEffect(() => {
+			if (containerRef.current) {
+				Liferay.fire('ddmFormPageShow', {
+					formId: getFormId(getFormNode(containerRef.current)),
+					page: activePage,
+					title: pages[activePage].title,
+				});
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
+
+		useEffect(() => {
+			let submitHandle;
+
+			let onHandle;
+
+			if (containerRef.current) {
+				const form = getFormNode(containerRef.current);
+
+				if (form) {
+					submitHandle = dom.on(form, 'submit', handleFormSubmitted);
+
+					onHandle = Liferay.on(
+						'submitForm',
+						(event) => {
+							if (event.form && event.form.getDOM() === form) {
+								event.preventDefault();
+							}
+						},
+						this
+					);
 				}
-			});
-		},
-		[containerRef, validate]
-	);
+			}
 
-	useImperativeHandle(ref, () => ({
-		evaluate: () => {
-			const {
-				defaultLanguageId,
-				editingLanguageId,
-				pages,
-				portletNamespace,
-				rules,
-			} = props;
+			return () => {
+				if (onHandle) {
+					onHandle.detach();
+				}
 
-			return evaluate(null, {
-				defaultLanguageId,
-				editingLanguageId,
-				pages,
-				portletNamespace,
-				rules,
-			});
-		},
-		get: (key) => props[key],
-		getFormNode: () =>
-			containerRef.current && getFormNode(containerRef.current),
-		toJSON: () => {
-			const {
-				defaultLanguageId,
-				description,
-				editingLanguageId,
-				name,
-				pages,
-				paginationMode,
-				portletNamespace,
-				rules,
-				successPageSettings,
-			} = props;
-
-			return {
-				defaultLanguageId,
-				description,
-				editingLanguageId,
-				name,
-				pages,
-				paginationMode,
-				portletNamespace,
-				rules,
-				successPageSettings,
+				if (submitHandle) {
+					submitHandle.removeListener();
+				}
 			};
-		},
-		validate,
-	}));
+		}, [containerRef, handleFormSubmitted]);
 
-	useEffect(() => {
-		if (containerRef.current) {
-			Liferay.fire('ddmFormPageShow', {
-				formId: getFormId(getFormNode(containerRef.current)),
-				page: props.activePage,
-				title: props.pages[props.activePage].title,
-			});
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [containerRef]);
-
-	useEffect(() => {
-		let domDelegatedEventHandle = null;
-		const form = null;
-
-		if (containerRef.current) {
-			const form = getFormNode(containerRef.current);
-
-			if (form) {
-				domDelegatedEventHandle = dom.on(
-					form,
-					'submit',
-					handleFormSubmitted
-				);
-			}
-
-			Liferay.on(
-				'submitForm',
-				handleLiferayFormSubmitted.bind({form}),
-				this
-			);
-		}
-
-		return () => {
-			Liferay.detach(
-				'submitForm',
-				handleLiferayFormSubmitted.bind({form}),
-				this
-			);
-
-			if (domDelegatedEventHandle) {
-				domDelegatedEventHandle.removeListener();
-			}
-		};
-	}, [containerRef, handleFormSubmitted]);
-
-	return <Pages {...props} ref={containerRef} />;
-});
+		return (
+			<Pages
+				activePage={activePage}
+				defaultLanguageId={defaultLanguageId}
+				description={description}
+				editingLanguageId={editingLanguageId}
+				name={name}
+				pages={pages}
+				paginationMode={paginationMode}
+				portletNamespace={portletNamespace}
+				rules={rules}
+				successPageSettings={successPageSettings}
+				{...otherProps}
+				ref={containerRef}
+			/>
+		);
+	}
+);
 
 Form.displayName = 'Form';
 

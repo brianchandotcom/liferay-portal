@@ -46,17 +46,13 @@ export const createReducer = (onEvent) => {
 			// the final result to avoid double operations that are
 			// costly.
 
-			let payload = {transformation: nextProperties};
-
-			if (typeof action.payload === 'object') {
-				payload = {...payload, ...action.payload};
-			}
-			else {
-				payload = {...payload, value: action.payload};
-			}
-
 			hasSentEvent = false;
-			onEvent(action.type, payload);
+			onEvent(action.type, {
+				transformation: nextProperties,
+				...(typeof action.payload === 'object'
+					? action.payload
+					: {value: action.payload}),
+			});
 
 			return {
 				...prevState,

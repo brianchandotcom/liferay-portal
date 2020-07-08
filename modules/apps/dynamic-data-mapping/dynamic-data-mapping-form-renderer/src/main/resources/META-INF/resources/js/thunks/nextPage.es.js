@@ -48,15 +48,7 @@ export default function nextPage({
 
 			if (validPage) {
 				const nextActivePageIndex = evaluatedPages.findIndex(
-					({enabled}, index) => {
-						let found = false;
-
-						if (enabled && index > activePage) {
-							found = true;
-						}
-
-						return found;
-					}
+					({enabled}, index) => enabled && index > activePage
 				);
 
 				const activePageUpdated = Math.min(

@@ -19,6 +19,7 @@
 
 	label {
 		color: $secondary-l1;
+		margin: 0;
 		padding: 0.1875rem;
 
 		.ratings-stars-icon-full {
@@ -40,10 +41,18 @@
 		}
 	}
 
-	label:hover {
-		&,
-		& ~ label {
+	input:checked ~ label {
+		color: $primary;
+	}
+
+	.ratings-stacked-stars-vote {
+		&:hover label {
 			color: $secondary-l1;
+		}
+
+		label:hover,
+		label:hover ~ label {
+			color: $primary;
 
 			.ratings-stars-icon-full {
 				display: initial;
@@ -52,13 +61,17 @@
 			.ratings-stars-icon-empty {
 				display: none;
 			}
-		}
-	}
 
-	input:checked {
-		+ label,
-		~ label {
-			color: $primary;
+			&.ratings-stars-star-full {
+				color: $secondary-l1;
+			}
+		}
+
+		label.ratings-stars-star-full:hover {
+			&,
+			~ label {
+				color: $primary;
+			}
 		}
 	}
 

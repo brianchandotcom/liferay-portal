@@ -73,7 +73,7 @@ public class StyleBookEntryLocalServiceImpl
 			serviceContext = new ServiceContext();
 		}
 
-		validate(name);
+		_validate(name);
 
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = _generateStyleBookEntryKey(groupId, name);
@@ -81,7 +81,7 @@ public class StyleBookEntryLocalServiceImpl
 
 		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
 
-		validateStyleBookEntryKey(groupId, styleBookEntryKey);
+		_validateStyleBookEntryKey(groupId, styleBookEntryKey);
 
 		long styleBookEntryId = counterLocalService.increment();
 
@@ -211,46 +211,11 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		validate(name);
+		_validate(name);
 
 		styleBookEntry.setName(name);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
-	}
-
-	protected void validate(String name) throws PortalException {
-		if (Validator.isNull(name)) {
-			throw new StyleBookEntryNameException("Name must not be null");
-		}
-
-		if (name.contains(StringPool.PERIOD) ||
-			name.contains(StringPool.SLASH)) {
-
-			throw new StyleBookEntryNameException(
-				"Name contains invalid characters");
-		}
-
-		int nameMaxLength = ModelHintsUtil.getMaxLength(
-			StyleBookEntry.class.getName(), "name");
-
-		if (name.length() > nameMaxLength) {
-			throw new StyleBookEntryNameException(
-				"Maximum length of name exceeded");
-		}
-	}
-
-	protected void validateStyleBookEntryKey(
-			long groupId, String styleBookEntryKey)
-		throws PortalException {
-
-		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
-
-		StyleBookEntry styleBookEntry = styleBookEntryPersistence.fetchByG_SBEK(
-			groupId, styleBookEntryKey);
-
-		if (styleBookEntry != null) {
-			throw new DuplicateStyleBookEntryNameKeyException();
-		}
 	}
 
 	private void _copyStyleBookEntryPreviewFileEntry(
@@ -328,6 +293,41 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private void _validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new StyleBookEntryNameException("Name must not be null");
+		}
+
+		if (name.contains(StringPool.PERIOD) ||
+			name.contains(StringPool.SLASH)) {
+
+			throw new StyleBookEntryNameException(
+				"Name contains invalid characters");
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			StyleBookEntry.class.getName(), "name");
+
+		if (name.length() > nameMaxLength) {
+			throw new StyleBookEntryNameException(
+				"Maximum length of name exceeded");
+		}
+	}
+
+	private void _validateStyleBookEntryKey(
+			long groupId, String styleBookEntryKey)
+		throws PortalException {
+
+		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+
+		StyleBookEntry styleBookEntry = styleBookEntryPersistence.fetchByG_SBEK(
+			groupId, styleBookEntryKey);
+
+		if (styleBookEntry != null) {
+			throw new DuplicateStyleBookEntryNameKeyException();
+		}
 	}
 
 	@Reference

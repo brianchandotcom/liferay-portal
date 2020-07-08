@@ -62,17 +62,31 @@ export default function FragmentsSidebar() {
 							...tab,
 
 							collections: tab.collections
-								.map((collection) => ({
-									...collection,
-									children: collection.children.filter(
-										(item) =>
-											item.label
-												.toLowerCase()
-												.indexOf(
-													searchValueLowerCase
-												) !== -1
-									),
-								}))
+								.map((collection) => {
+									let filteredChildren = collection.children;
+
+									if (collection.collections) {
+										filteredChildren = filteredChildren
+											.concat(
+												collection.collections.map(
+													collectionFilter
+												)
+											)
+											.flat();
+									}
+
+									return {
+										...collection,
+										children: filteredChildren.filter(
+											(item) =>
+												item.label
+													.toLowerCase()
+													.indexOf(
+														searchValueLowerCase
+													) !== -1
+										),
+									};
+								})
 								.filter(
 									(collection) => collection.children.length
 								),
@@ -149,4 +163,12 @@ const normalizeWidget = (widget) => {
 		preview: '',
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
+};
+
+const collectionFilter = (collection) => {
+	return collection.collections.reduce((acc, item) => {
+		return item.collections?.length > 0
+			? acc.concat(item.children, collectionFilter(item))
+			: acc.concat(item.children);
+	}, []);
 };

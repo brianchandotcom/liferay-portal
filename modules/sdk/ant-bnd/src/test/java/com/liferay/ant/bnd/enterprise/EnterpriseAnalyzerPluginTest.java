@@ -17,16 +17,23 @@ package com.liferay.ant.bnd.enterprise;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Tina Tian
  */
 public class EnterpriseAnalyzerPluginTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testAnalyzeJar() throws Exception {

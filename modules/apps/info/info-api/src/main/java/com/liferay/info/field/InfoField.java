@@ -31,10 +31,8 @@ import java.util.Optional;
  */
 public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
-	public static <T extends InfoFieldType> Builder<T> builder(
-		T infoFieldType, String name) {
-
-		return new Builder<>(infoFieldType, name);
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	/**
@@ -47,12 +45,15 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 		this(
 			builder(
-				infoFieldType, name
+			).infoFieldType(
+				infoFieldType
+			).name(
+				name
 			).labelInfoLocalizedValue(
 				labelInfoLocalizedValue
 			).localizable(
 				localizable
-			));
+			)._builder);
 	}
 
 	/**
@@ -64,8 +65,14 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		String name) {
 
 		this(
-			builder(infoFieldType, name).labelInfoLocalizedValue(
-				labelInfoLocalizedValue));
+			builder(
+			).infoFieldType(
+				infoFieldType
+			).name(
+				name
+			).labelInfoLocalizedValue(
+				labelInfoLocalizedValue
+			)._builder);
 	}
 
 	@Override
@@ -145,57 +152,90 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return sb.toString();
 	}
 
-	public static class Builder<T extends InfoFieldType> {
+	public static class Builder {
 
-		public <V> Builder<T> attribute(
+		public <T extends InfoFieldType> NameStep<T> infoFieldType(
+			T infoFieldType) {
+
+			_infoFieldType = infoFieldType;
+
+			return new NameStep<>(this);
+		}
+
+		private Builder() {
+		}
+
+		private final Map
+			<InfoFieldType.Attribute<? extends InfoFieldType, ?>, Object>
+				_attributes = new HashMap<>();
+		private InfoFieldType _infoFieldType;
+		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
+		private boolean _localizable;
+		private String _name;
+
+	}
+
+	public static class FinalStep<T extends InfoFieldType> {
+
+		public <V> FinalStep<T> attribute(
 			InfoFieldType.Attribute<T, V> attribute, V value) {
 
-			_attributes.put(attribute, value);
+			_builder._attributes.put(attribute, value);
 
 			return this;
 		}
 
 		public InfoField<T> build() {
-			if (_labelInfoLocalizedValue == null) {
-				_labelInfoLocalizedValue = InfoLocalizedValue.localize(
-					InfoField.class, _name);
+			if (_builder._labelInfoLocalizedValue == null) {
+				_builder._labelInfoLocalizedValue = InfoLocalizedValue.localize(
+					InfoField.class, _builder._name);
 			}
 
-			return new InfoField<>(this);
+			return new InfoField<>(_builder);
 		}
 
-		public Builder<T> labelInfoLocalizedValue(
+		public FinalStep<T> labelInfoLocalizedValue(
 			InfoLocalizedValue<String> labelInfoLocalizedValue) {
 
-			_labelInfoLocalizedValue = labelInfoLocalizedValue;
+			_builder._labelInfoLocalizedValue = labelInfoLocalizedValue;
 
 			return this;
 		}
 
-		public Builder<T> localizable(boolean localizable) {
-			_localizable = localizable;
+		public FinalStep<T> localizable(boolean localizable) {
+			_builder._localizable = localizable;
 
 			return this;
 		}
 
-		private Builder(T infoFieldType, String name) {
-			_infoFieldType = infoFieldType;
-			_name = name;
+		private FinalStep(Builder builder) {
+			_builder = builder;
 		}
 
-		private final Map<InfoFieldType.Attribute<T, ?>, Object> _attributes =
-			new HashMap<>();
-		private final T _infoFieldType;
-		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
-		private boolean _localizable;
-		private final String _name;
+		private final Builder _builder;
 
 	}
 
-	private InfoField(Builder<T> builder) {
+	public static class NameStep<T extends InfoFieldType> {
+
+		public FinalStep<T> name(String name) {
+			_builder._name = name;
+
+			return new FinalStep<>(_builder);
+		}
+
+		private NameStep(Builder builder) {
+			_builder = builder;
+		}
+
+		private final Builder _builder;
+
+	}
+
+	private InfoField(Builder builder) {
 		_builder = builder;
 	}
 
-	private final Builder<T> _builder;
+	private final Builder _builder;
 
 }

@@ -29,7 +29,10 @@ public class TextInfoFieldTypeTest {
 	@Test
 	public void testMultilineAttributeCanBeSetToFalse() {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
-			TextInfoFieldType.INSTANCE, "test-field"
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"test-field"
 		).attribute(
 			TextInfoFieldType.MULTILINE, false
 		).build();
@@ -43,7 +46,10 @@ public class TextInfoFieldTypeTest {
 	@Test
 	public void testMultilineAttributeCanBeSetToTrue() {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
-			TextInfoFieldType.INSTANCE, "test-field"
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"test-field"
 		).attribute(
 			TextInfoFieldType.MULTILINE, true
 		).build();
@@ -57,7 +63,10 @@ public class TextInfoFieldTypeTest {
 	@Test
 	public void testMultilineAttributeIsEmptyByDefault() {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
-			TextInfoFieldType.INSTANCE, "test-field"
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"test-field"
 		).build();
 
 		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(

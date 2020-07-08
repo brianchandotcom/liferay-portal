@@ -12,7 +12,7 @@
  * details.
  */
 
-export const EVENT_TYPES = {
+const PUBLIC_EVENTS = {
 	CHANGE_ACTIVE_PAGE: 'activePageUpdated',
 	FIELD_BLUR: 'fieldBlurred',
 	FIELD_CHANGE: 'fieldEdited',
@@ -28,12 +28,14 @@ export const EVENT_TYPES = {
 	PAGE_SWAPPED: 'pagesSwapped',
 	PAGE_VALIDATION_FAILED: 'pageValidationFailed',
 	SUCCESS_CHANGED: 'successPageChanged',
+};
 
-	// Internal events
-	/* eslint-disable sort-keys */
-
+const PRIVATE_EVENTS = {
 	ALL: 'all',
 	UPDATE_PAGES: 'update_pages',
+};
 
-	/* eslint-enable sort-keys */
+export const EVENT_TYPES = {
+	...PUBLIC_EVENTS,
+	...PRIVATE_EVENTS,
 };

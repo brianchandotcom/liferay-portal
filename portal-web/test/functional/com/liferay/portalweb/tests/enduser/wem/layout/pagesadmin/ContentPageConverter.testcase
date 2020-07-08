@@ -479,58 +479,59 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
-	@ignore = "true"
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayout";
 
 		GlobalMenu.gotoPortlet(
-			category = "Sites",
+			category = "System",
 			panel = "Control Panel",
-			portlet = "Sites");
+			portlet = "App Manager");
 
-		Site.addCP(
-			siteName = "Test Westeros Site",
-			siteTemplateName = "Westeros Bank",
-			siteType = "Site Template");
+		AppManager.uploadAppCP(
+			appName = "custom-layout-layouttpl",
+			warFileName = "custom-layout-layouttpl.war");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Test Westeros Site",
+			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Westeros Site",
-			layoutName = "Test Page Name",
-			layoutTemplate = "Westeros 2 columns");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.configurePage(
+			columnName = "Custom Layout",
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Test Westeros Site",
+			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			widgetName = "Asset Publisher");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "2",
-			groupName = "Test Westeros Site",
+			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
 			widgetName = "Profile");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
-			siteName = "Test Westeros Site");
+			siteName = "Test Site Name");
 
 		AssertTextEquals(
-			key_portletName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
 			value1 = "Asset Publisher");
 
 		AssertTextEquals(
-			key_portletName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			key_portletTitleName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
 			value1 = "Profile");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Convert to content page...",
@@ -541,33 +542,35 @@ definition {
 			key_type = "warning",
 			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
 
-		AssertTextEquals(
-			key_portletName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
 
-		AssertTextEquals(
-			key_portletName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
-			value1 = "Profile");
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Page Name",
-			siteName = "Test Westeros Site");
+			siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
 
-		AssertTextEquals(
-			key_portletName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
-			value1 = "Asset Publisher");
-
-		AssertTextEquals(
-			key_portletName = "Profile",
-			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
-			value1 = "Profile");
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"

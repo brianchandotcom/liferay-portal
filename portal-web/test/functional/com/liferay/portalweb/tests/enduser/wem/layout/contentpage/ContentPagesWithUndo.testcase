@@ -400,9 +400,7 @@ definition {
 
 		PageEditor.configureFragment(numberOfTabs = "2");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 
 		AssertVisible(
 			key_navItem = "Tab 2",
@@ -517,9 +515,7 @@ definition {
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -533,9 +529,7 @@ definition {
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -549,9 +543,7 @@ definition {
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -565,9 +557,7 @@ definition {
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		PageEditor.removeFragment(fragmentName = "Tabs");
@@ -581,9 +571,7 @@ definition {
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 		}
 
 		var count = "0";
@@ -630,9 +618,7 @@ definition {
 			columnCount = "1",
 			position = "1");
 
-		Click.clickNoMouseOver(
-			key_elementType = "Row",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 
 		PageEditor.editLayoutRow(columnCount = "2");
 

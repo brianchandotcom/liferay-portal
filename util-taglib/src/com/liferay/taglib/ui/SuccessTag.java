@@ -132,8 +132,6 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		}
 
 		Map<String, String> values = HashMapBuilder.put(
-			"pathThemeImages", themeDisplay.getPathThemeImages()
-		).put(
 			"title", LanguageUtil.get(resourceBundle, "success-colon")
 		).build();
 
@@ -157,8 +155,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 			ScriptTag.doTag(
 				null,
-				"metal-dom/src/all/dom as dom,clay-alert/src/ClayToast as " +
-					"ClayToast",
+				null,
 				null, result, getBodyContent(), pageContext);
 		}
 

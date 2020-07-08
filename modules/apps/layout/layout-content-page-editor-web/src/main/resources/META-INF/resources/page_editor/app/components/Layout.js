@@ -14,32 +14,21 @@
 
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
-import {useEventListener, useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from 'frontend-js-react-web';
 import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
-import {
-	ARROW_DOWN_KEYCODE,
-	ARROW_UP_KEYCODE,
-} from '../config/constants/keycodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
-import {useDispatch, useSelector} from '../store/index';
-import moveItem from '../thunks/moveItem';
-import {
-	useActivationOrigin,
-	useActiveItemId,
-	useIsActive,
-	useSelectItem,
-} from './Controls';
+import {useSelector} from '../store/index';
+import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
 import ShortcutManager from './ShortcutManager';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
@@ -66,15 +55,11 @@ const LAYOUT_DATA_ITEMS = {
 };
 
 export default function Layout({mainItemId}) {
-	const activeItemId = useActiveItemId();
-	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const mainItem = layoutData.items[mainItemId];
 	const layoutRef = useRef(null);
-	const segmentsExperienceId = useSelector(
-		(state) => state.segmentsExperienceId
-	);
+
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
 		(state) => state.sidebar.panelId && state.sidebar.open
@@ -85,72 +70,6 @@ export default function Layout({mainItemId}) {
 			selectItem(null);
 		}
 	};
-
-	const getDirection = (keycode) => {
-		let direction = null;
-
-		if (keycode === ARROW_UP_KEYCODE) {
-			direction = MOVE_ITEM_DIRECTIONS.UP;
-		}
-		else if (keycode === ARROW_DOWN_KEYCODE) {
-			direction = MOVE_ITEM_DIRECTIONS.DOWN;
-		}
-
-		return direction;
-	};
-
-	const onKeyUp = useCallback(
-		(event) => {
-			event.preventDefault();
-
-			if (!activeItemId) {
-				return;
-			}
-
-			const item = layoutData.items[activeItemId];
-
-			if (!item) {
-				return;
-			}
-
-			const {itemId, parentId} = item;
-
-			const direction = getDirection(event.keyCode);
-			const parentItem = layoutData.items[parentId];
-
-			if (direction) {
-				const numChildren = parentItem.children.length;
-				const currentPosition = parentItem.children.indexOf(itemId);
-
-				if (
-					(direction === MOVE_ITEM_DIRECTIONS.UP &&
-						currentPosition === 0) ||
-					(direction === MOVE_ITEM_DIRECTIONS.DOWN &&
-						currentPosition === numChildren - 1)
-				) {
-					return;
-				}
-
-				let position;
-				if (direction === MOVE_ITEM_DIRECTIONS.UP) {
-					position = currentPosition - 1;
-				}
-				else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
-					position = currentPosition + 1;
-				}
-
-				dispatch(
-					moveItem({
-						itemId,
-						parentItemId: parentId,
-						position,
-						segmentsExperienceId,
-					})
-				);
-			}
-		},
-		[activeItemId, dispatch, layoutData.items, segmentsExperienceId]
-	);
 
 	useEffect(() => {
 		const layout = layoutRef.current;
@@ -176,8 +95,6 @@ export default function Layout({mainItemId}) {
 			}
 		};
 	}, [layoutRef]);
-
-	useEventListener('keyup', onKeyUp, false, document.body);
 
 	const isPageConversion = config.pageType === PAGE_TYPES.conversion;
 	const hasWarningMessages =

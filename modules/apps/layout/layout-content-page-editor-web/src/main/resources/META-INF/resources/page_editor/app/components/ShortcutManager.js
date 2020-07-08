@@ -183,12 +183,74 @@ export default function ShortcutManager() {
 		[dispatch, state]
 	);
 
+	const move = useCallback(
+		(event) => {
+			const item = layoutData.items[activeItemId];
+
+			if (
+				item &&
+				!isTextElement(event.target) &&
+				!isEditableCKEditor(event.target) &&
+				!isCommentsAlloyEditor(event.target)
+			) {
+				event.preventDefault();
+
+				const {itemId, parentId} = item;
+
+				const parentItem = layoutData.items[parentId];
+
+				const numChildren = parentItem.children.length;
+
+				const currentPosition = parentItem.children.indexOf(itemId);
+
+				const direction =
+					event.keyCode === ARROW_UP_KEYCODE
+						? MOVE_ITEM_DIRECTIONS.UP
+						: MOVE_ITEM_DIRECTIONS.DOWN;
+
+				if (
+					(direction === MOVE_ITEM_DIRECTIONS.UP &&
+						currentPosition === 0) ||
+					(direction === MOVE_ITEM_DIRECTIONS.DOWN &&
+						currentPosition === numChildren - 1)
+				) {
+					return;
+				}
+
+				let position;
+
+				if (direction === MOVE_ITEM_DIRECTIONS.UP) {
+					position = currentPosition - 1;
+				}
+				else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+					position = currentPosition + 1;
+				}
+
+				dispatch(
+					moveItem({
+						itemId,
+						parentItemId: parentId,
+						position,
+						segmentsExperienceId,
+					})
+				);
+			}
+		},
+		[activeItemId, dispatch, layoutData.items, segmentsExperienceId]
+	);
+
 	const keymap = useMemo(() => {
 		return {
 			duplicate: {
 				action: duplicate,
 				isKeyCombination: (event) =>
 					ctrlOrMeta(event) && event.keyCode === D_KEYCODE,
+			},
+			move: {
+				action: move,
+				isKeyCombination: (event) =>
+					event.keyCode === ARROW_UP_KEYCODE ||
+					event.keyCode === ARROW_DOWN_KEYCODE,
 			},
 			remove: {
 				action: remove,
@@ -208,7 +270,7 @@ export default function ShortcutManager() {
 					!event.altKey,
 			},
 		};
-	}, [duplicate, remove, save, undo]);
+	}, [duplicate, move, remove, save, undo]);
 
 	useEffect(() => {
 		const onKeyDown = (event) => {

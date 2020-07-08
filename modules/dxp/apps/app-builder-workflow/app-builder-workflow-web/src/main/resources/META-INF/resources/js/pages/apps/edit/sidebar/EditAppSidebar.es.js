@@ -52,14 +52,6 @@ export default function EditAppSidebar({assigneeRoles}) {
 		},
 	];
 
-	const onChangeStepName = ({target}) => {
-		dispatchConfig({
-			step: {...currentStep, name: target.value},
-			stepIndex,
-			type: UPDATE_STEP,
-		});
-	};
-
 	const onChangeAssignees = (assignees) => {
 		dispatchConfig({
 			step: {
@@ -69,6 +61,14 @@ export default function EditAppSidebar({assigneeRoles}) {
 					roleName: name,
 				})),
 			},
+			stepIndex,
+			type: UPDATE_STEP,
+		});
+	};
+
+	const onChangeStepName = ({target}) => {
+		dispatchConfig({
+			step: {...currentStep, name: target.value},
 			stepIndex,
 			type: UPDATE_STEP,
 		});

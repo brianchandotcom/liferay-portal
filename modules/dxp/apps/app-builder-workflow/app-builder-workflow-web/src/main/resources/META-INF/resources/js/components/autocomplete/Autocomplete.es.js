@@ -33,16 +33,6 @@ const Autocomplete = ({
 	const keyArrowUp = 40;
 	const keyEnter = 13;
 
-	const onBlur = useCallback(() => {
-		setDropDownVisible(false);
-		setActiveItem(-1);
-
-		if (!selected) {
-			setValue('');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selected]);
-
 	const handleChange = useCallback(
 		({target: {value}}) => {
 			if (selected) {
@@ -58,32 +48,6 @@ const Autocomplete = ({
 		[onSelect, selected]
 	);
 
-	const onFocus = () => {
-		setDropDownVisible(true);
-	};
-
-	const onKeyDown = useCallback(
-		({keyCode}) => {
-			const item = dropDownItems[activeItem];
-
-			if (keyCode === keyEnter && item) {
-				handleSelect(item);
-			}
-
-			if (keyCode === keyArrowDown && activeItem > 0) {
-				setActiveItem(activeItem - 1);
-			}
-
-			if (
-				keyCode === keyArrowUp &&
-				activeItem < dropDownItems.length - 1
-			) {
-				setActiveItem(activeItem + 1);
-			}
-		},
-		[activeItem, dropDownItems, handleSelect]
-	);
-
 	const handleSelect = useCallback(
 		(item) => {
 			onSelect(item);
@@ -95,14 +59,55 @@ const Autocomplete = ({
 		[onSelect]
 	);
 
+	const onBlur = useCallback(() => {
+		setDropDownVisible(false);
+		setActiveItem(-1);
+
+		if (!selected) {
+			setValue('');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selected]);
+
+	const onFocus = () => {
+		setDropDownVisible(true);
+	};
+
+	const onKeyDown = useCallback(
+		({keyCode}) => {
+			const item = dropDownItems[activeItem];
+
+			if (keyCode === keyArrowDown && activeItem > 0) {
+				setActiveItem(activeItem - 1);
+			}
+			else if (
+				keyCode === keyArrowUp &&
+				activeItem < dropDownItems.length - 1
+			) {
+				setActiveItem(activeItem + 1);
+			}
+			else if (keyCode === keyEnter && item) {
+				handleSelect(item);
+			}
+		},
+		[activeItem, dropDownItems, handleSelect]
+	);
+
+	useEffect(() => {
+		if (disabled) {
+			setValue('');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [disabled]);
+
 	useEffect(() => {
 		setDropDownItems(items);
 	}, [items]);
 
 	useEffect(() => {
 		if (!onChange) {
-			const regExpValue = formatRegExp(value);
-			const match = new RegExp(regExpValue, 'gi');
+			const match = new RegExp(formatRegExp(value), 'gi');
+
 			setDropDownItems(
 				items ? items.filter((item) => item.name.match(match)) : []
 			);
@@ -113,13 +118,6 @@ const Autocomplete = ({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
-
-	useEffect(() => {
-		if (disabled) {
-			setValue('');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [disabled]);
 
 	return (
 		<>

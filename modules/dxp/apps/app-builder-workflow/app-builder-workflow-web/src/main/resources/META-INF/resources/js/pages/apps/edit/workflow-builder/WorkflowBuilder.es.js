@@ -21,6 +21,17 @@ export default function WorkflowBuilder() {
 		dispatchConfig,
 	} = useContext(EditAppContext);
 
+	const badgeLabel = (stepIndex) => {
+		if (stepIndex === 0) {
+			return Liferay.Language.get('start');
+		}
+		else if (stepIndex === steps.length - 1) {
+			return Liferay.Language.get('end');
+		}
+
+		return stepIndex;
+	};
+
 	const onClickStep = (index) => {
 		if (index !== stepIndex) {
 			dispatchConfig({stepIndex: index, type: UPDATE_STEP_INDEX});
@@ -35,17 +46,6 @@ export default function WorkflowBuilder() {
 			},
 		],
 	];
-
-	const badgeLabel = (stepIndex) => {
-		if (stepIndex === 0) {
-			return Liferay.Language.get('start');
-		}
-		else if (stepIndex === steps.length - 1) {
-			return Liferay.Language.get('end');
-		}
-
-		return stepIndex;
-	};
 
 	return (
 		<div className="app-builder-workflow-app__builder">

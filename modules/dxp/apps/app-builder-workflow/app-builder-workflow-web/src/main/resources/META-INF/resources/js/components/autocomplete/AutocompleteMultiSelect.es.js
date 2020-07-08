@@ -65,23 +65,20 @@ const AutocompleteMultiSelect = ({
 
 		const item = filteredItems[currentIndex];
 
-		if (keyCode === keyTab) {
-			onBlur();
-		}
-
-		if (keyCode === keyEnter && item) {
-			onSelect(item);
-		}
-
 		if (keyCode === keyArrowUp && currentIndex > 0) {
 			setCurrentIndex(currentIndex - 1);
 		}
-
-		if (
+		else if (
 			keyCode === keyArrowDown &&
 			currentIndex < filteredItems.length - 1
 		) {
 			setCurrentIndex(currentIndex + 1);
+		}
+		else if (keyCode === keyEnter && item) {
+			onSelect(item);
+		}
+		else if (keyCode === keyTab) {
+			onBlur();
 		}
 	};
 
@@ -101,21 +98,6 @@ const AutocompleteMultiSelect = ({
 	};
 
 	useEffect(() => {
-		const term = search.toLowerCase().trim();
-
-		setFilteredItems(
-			items
-				.filter(
-					(item) =>
-						!selectedItems.find(
-							(selectedItem) => item['id'] === selectedItem['id']
-						)
-				)
-				.filter(({name}) => name.toLowerCase().indexOf(term) > -1)
-		);
-	}, [items, search, selectedItems]);
-
-	useEffect(() => {
 		const listener = handleClickOutside((event) => {
 			const listenerCallback = handleClickOutside(
 				onBlur,
@@ -131,6 +113,21 @@ const AutocompleteMultiSelect = ({
 			removeClickOutsideListener(listener);
 		};
 	}, [id, wrapperRef]);
+
+	useEffect(() => {
+		const term = search.toLowerCase().trim();
+
+		setFilteredItems(
+			items
+				.filter(
+					(item) =>
+						!selectedItems.find(
+							(selectedItem) => item['id'] === selectedItem['id']
+						)
+				)
+				.filter(({name}) => name.toLowerCase().indexOf(term) > -1)
+		);
+	}, [items, search, selectedItems]);
 
 	return (
 		<ClayAutocomplete>

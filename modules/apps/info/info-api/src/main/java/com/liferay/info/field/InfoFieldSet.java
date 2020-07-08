@@ -56,8 +56,8 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoFieldSet add(InfoFieldSetEntry fieldSetEntry) {
-		_builder.add(fieldSetEntry);
+	public InfoFieldSet add(InfoFieldSetEntry infoFieldSetEntry) {
+		_builder.add(infoFieldSetEntry);
 
 		return this;
 	}
@@ -66,8 +66,10 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoFieldSet addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
-		_builder.addAll(fieldSetEntries);
+	public InfoFieldSet addAll(
+		Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+
+		_builder.addAll(infoFieldSetEntries);
 
 		return this;
 	}
@@ -96,28 +98,30 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 	}
 
 	public List<InfoField> getAllInfoFields() {
-		List<InfoField> allFields = new ArrayList<>();
+		List<InfoField> allInfoFields = new ArrayList<>();
 
-		for (InfoFieldSetEntry infoFieldSetEntry : _builder._entries.values()) {
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				_builder._infoFieldSetEntriesByName.values()) {
+
 			if (infoFieldSetEntry instanceof InfoField) {
-				allFields.add((InfoField)infoFieldSetEntry);
+				allInfoFields.add((InfoField)infoFieldSetEntry);
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				allFields.addAll(infoFieldSet.getAllInfoFields());
+				allInfoFields.addAll(infoFieldSet.getAllInfoFields());
 			}
 		}
 
-		return allFields;
+		return allInfoFields;
 	}
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
-		return new ArrayList<>(_builder._entries.values());
+		return new ArrayList<>(_builder._infoFieldSetEntriesByName.values());
 	}
 
 	public InfoFieldSetEntry getInfoFieldSetEntry(String name) {
-		return _builder._entries.get(name);
+		return _builder._infoFieldSetEntriesByName.get(name);
 	}
 
 	@Override
@@ -147,7 +151,7 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("{entries: ");
-		sb.append(_builder._entries.size());
+		sb.append(_builder._infoFieldSetEntriesByName.size());
 		sb.append(", name: ");
 		sb.append(_builder._name);
 		sb.append("}");
@@ -157,8 +161,9 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 
 	public static class Builder {
 
-		public Builder add(InfoFieldSetEntry fieldSetEntry) {
-			_entries.put(fieldSetEntry.getName(), fieldSetEntry);
+		public Builder add(InfoFieldSetEntry infoFieldSetEntry) {
+			_infoFieldSetEntriesByName.put(
+				infoFieldSetEntry.getName(), infoFieldSetEntry);
 
 			return this;
 		}
@@ -173,8 +178,10 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			return this;
 		}
 
-		public Builder addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
-			for (InfoFieldSetEntry fieldSetEntry : fieldSetEntries) {
+		public Builder addAll(
+			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+
+			for (InfoFieldSetEntry fieldSetEntry : infoFieldSetEntries) {
 				add(fieldSetEntry);
 			}
 
@@ -199,8 +206,8 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			return this;
 		}
 
-		private final Map<String, InfoFieldSetEntry> _entries =
-			new LinkedHashMap<>();
+		private final Map<String, InfoFieldSetEntry>
+			_infoFieldSetEntriesByName = new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
 		private String _name;
 

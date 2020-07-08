@@ -70,9 +70,9 @@ public class InfoItemFieldValues {
 		return this;
 	}
 
-	public InfoFieldValue<Object> getInfoFieldValue(String fieldName) {
+	public InfoFieldValue<Object> getInfoFieldValue(String infoFieldName) {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			_builder._infoFieldValuesByName.get(fieldName);
+			_builder._infoFieldValuesByName.get(infoFieldName);
 
 		if (infoFieldValues != null) {
 			Iterator<InfoFieldValue<Object>> iterator =
@@ -91,10 +91,10 @@ public class InfoItemFieldValues {
 	}
 
 	public Collection<InfoFieldValue<Object>> getInfoFieldValues(
-		String fieldName) {
+		String infoFieldName) {
 
 		return _builder._infoFieldValuesByName.getOrDefault(
-			fieldName, Collections.emptyList());
+			infoFieldName, Collections.emptyList());
 	}
 
 	public InfoItemClassPKReference getInfoItemClassPKReference() {

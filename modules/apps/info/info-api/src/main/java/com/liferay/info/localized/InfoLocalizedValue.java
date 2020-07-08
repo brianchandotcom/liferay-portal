@@ -60,7 +60,7 @@ public interface InfoLocalizedValue<T> {
 	}
 
 	public static InfoLocalizedValue<String> singleValue(String value) {
-		return new SingleValueInfoLocalizedValue(value);
+		return new SingleValueInfoLocalizedValue<>(value);
 	}
 
 	public Set<Locale> getAvailableLocales();

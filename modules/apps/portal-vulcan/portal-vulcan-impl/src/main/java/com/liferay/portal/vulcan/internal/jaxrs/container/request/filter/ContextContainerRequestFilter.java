@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -118,8 +119,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
-			String excludedOperationIds = (String)properties.get(
-				"excludedOperationIds");
+			String excludedOperationIds = GetterUtil.getString(
+				properties.get("excludedOperationIds"));
 
 			Set<String> excludedOperationIdsList = SetUtil.fromArray(
 				excludedOperationIds.split(","));

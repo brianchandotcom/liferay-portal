@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -92,6 +94,10 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 	@Test
 	public void testSearchByAbsoluteSourceURL() throws Exception {
+		if (!_isSearchEngine("Elasticsearch")) {
+			return;
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -469,6 +475,18 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 		return _getSearchResults(searchContext);
 	}
+
+	private boolean _isSearchEngine(String engine) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
+			_searchEngineHelper.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		return vendor.equals(engine);
+	}
+
+	@Inject
+	private static SearchEngineHelper _searchEngineHelper;
 
 	@Inject
 	private RedirectEntryLocalService _redirectEntryLocalService;

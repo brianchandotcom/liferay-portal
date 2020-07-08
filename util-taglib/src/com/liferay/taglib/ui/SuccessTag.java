@@ -154,9 +154,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 				values);
 
 			ScriptTag.doTag(
-				null,
-				null,
-				null, result, getBodyContent(), pageContext);
+				null, null, null, result, getBodyContent(), pageContext);
 		}
 
 		return EVAL_PAGE;

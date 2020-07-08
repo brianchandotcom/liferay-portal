@@ -16,6 +16,7 @@ import './Field.scss';
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import MetalComponent from 'metal-component';
 import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
 
@@ -163,9 +164,11 @@ export const Field = ({field, ...otherProps}) => {
 		return (
 			<div className="ddm-field-renderer--error">
 				<p className="ddm-field-renderer--title">
-					{Liferay.Language.get(
-						'there-was-an-error-loading-the-x-field',
-						field.type
+					{sub(
+						Liferay.Language.get(
+							'there-was-an-error-when-loading-the-x-field'
+						),
+						[field.type]
 					)}
 				</p>
 				{hasError.network && (

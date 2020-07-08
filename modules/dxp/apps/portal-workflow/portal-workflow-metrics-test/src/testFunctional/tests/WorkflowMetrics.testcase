@@ -2377,12 +2377,11 @@ definition {
 			isPresent = "Blogs Entry Title 3",
 			taskName = "Review");
 	}
-
 	@description = "LRQA-53630 Automate LPS-98518: [Dashboard] View workload distribution for all assignees"
 	@priority = "5"
 	test WorkflowMetricsReindex {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#WorkflowMetricsReindex";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
@@ -2400,6 +2399,7 @@ definition {
 		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow SLA Instance Results");
 
 		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow SLA Task Results");
+
 	}
 
 }

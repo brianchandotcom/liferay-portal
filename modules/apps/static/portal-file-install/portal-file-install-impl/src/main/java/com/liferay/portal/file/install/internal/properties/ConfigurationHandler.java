@@ -18,10 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PushbackReader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -30,11 +27,8 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -261,67 +255,6 @@ public class ConfigurationHandler {
 		return c;
 	}
 
-	private int _nextToken(PushbackReader pushbackReader, boolean newLine)
-		throws IOException {
-
-		int c = _ignorableWhiteSpace(pushbackReader);
-
-		// immediately return EOF
-
-		if (c < 0) {
-			return _token = c;
-		}
-
-		// check for comment
-
-		if (newLine && (c == _TOKEN_COMMENT)) {
-
-			// skip everything until end of line
-
-			do {
-				c = _read(pushbackReader);
-			}
-			while ((c != -1) && (c != '\n'));
-
-			if (c == -1) {
-				return _token = c;
-			}
-
-			// and start over
-
-			return _nextToken(pushbackReader, true);
-		}
-
-		// check whether there is a name
-
-		if (_NAME_CHARS.get(c) || !_TOKEN_CHARS.get(c)) {
-
-			// read the property name
-
-			pushbackReader.unread(c);
-
-			_tokenValue = _readUnquoted(pushbackReader);
-
-			_token = _TOKEN_NAME;
-
-			return _TOKEN_NAME;
-		}
-
-		// check another token
-
-		if (_TOKEN_CHARS.get(c)) {
-			_token = c;
-
-			return c;
-		}
-
-		// unexpected character -> so what ??
-
-		_token = -1;
-
-		return _token;
-	}
-
 	private int _read(PushbackReader pushbackReader) throws IOException {
 		int c = pushbackReader.read();
 
@@ -464,47 +397,6 @@ public class ConfigurationHandler {
 		return new IOException(sb.toString());
 	}
 
-	private Dictionary<String, Object> _readInternal(InputStream inputStream)
-		throws IOException {
-
-		try (InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, _ENCODING);
-			BufferedReader bufferedReader = new BufferedReader(
-				inputStreamReader);
-			PushbackReader pushbackReader = new PushbackReader(
-				bufferedReader, 1)) {
-
-			_token = 0;
-			_tokenValue = null;
-			_line = 0;
-			_pos = 0;
-
-			Dictionary<String, Object> configuration = new Hashtable<>();
-
-			_token = 0;
-
-			while (_nextToken(pushbackReader, true) == _TOKEN_NAME) {
-				String key = _tokenValue;
-
-				// expect equal sign
-
-				if (_nextToken(pushbackReader, false) != _TOKEN_EQ) {
-					throw _readFailure(_token, _TOKEN_EQ);
-				}
-
-				// expect the token value
-
-				Object value = _readValue(pushbackReader);
-
-				if (value != null) {
-					configuration.put(key, value);
-				}
-			}
-
-			return configuration;
-		}
-	}
-
 	private String _readQuoted(PushbackReader pushbackReader)
 		throws IOException {
 
@@ -627,58 +519,6 @@ public class ConfigurationHandler {
 		}
 	}
 
-	private String _readUnquoted(PushbackReader pushbackReader)
-		throws IOException {
-
-		StringBundler sb = new StringBundler();
-
-		while (true) {
-			int c = _read(pushbackReader);
-
-			if (c == '\\') {
-				c = _read(pushbackReader);
-
-				if (c == 'b') {
-					sb.append('\b');
-				}
-				else if (c == 't') {
-					sb.append('\t');
-				}
-				else if (c == 'n') {
-					sb.append('\n');
-				}
-				else if (c == 'f') {
-					sb.append('\f');
-				}
-				else if (c == 'r') {
-					sb.append('\r');
-				}
-				else if (c == 'u') {
-					char[] charBuffer = new char[4];
-
-					if (_read(pushbackReader, charBuffer) == 4) {
-						c = Integer.parseInt(new String(charBuffer), 16);
-
-						sb.append((char)c);
-					}
-				}
-				else {
-					sb.append((char)c);
-				}
-			}
-			else if ((c == -1) || (c == _TOKEN_VAL_CLOS) ||
-					 (c == _TOKEN_SPACE) || (c == _TOKEN_EQ)) {
-
-				pushbackReader.unread(c);
-
-				return sb.toString();
-			}
-			else {
-				sb.append((char)c);
-			}
-		}
-	}
-
 	private Object _readValue(PushbackReader pushbackReader)
 		throws IOException {
 
@@ -717,32 +557,7 @@ public class ConfigurationHandler {
 
 	private static final String _COLLECTION_LINE_BREAK = " \\\r\n";
 
-	private static final String _CRLF = "\r\n";
-
-	private static final String _ENCODING = "UTF-8";
-
 	private static final String _INDENT = "  ";
-
-	private static final BitSet _NAME_CHARS = new BitSet() {
-		{
-			for (int i = '0'; i <= '9'; i++) {
-				set(i);
-			}
-
-			for (int i = 'a'; i <= 'z'; i++) {
-				set(i);
-			}
-
-			for (int i = 'A'; i <= 'Z'; i++) {
-				set(i);
-			}
-
-			set(CharPool.UNDERLINE);
-			set(CharPool.DASH);
-			set(CharPool.PERIOD);
-			set('\\');
-		}
-	};
 
 	private static final int _TOKEN_ARR_CLOS = ']';
 
@@ -752,48 +567,9 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_BRACE_OPEN = '{';
 
-	// set of valid characters for "symblic-name"
-
-	private static final BitSet _TOKEN_CHARS = new BitSet() {
-		{
-			set(_TOKEN_EQ);
-			set(_TOKEN_ARR_OPEN);
-			set(_TOKEN_ARR_CLOS);
-			set(_TOKEN_VEC_OPEN);
-			set(_TOKEN_VEC_CLOS);
-			set(_TOKEN_COMMA);
-			set(_TOKEN_VAL_OPEN);
-			set(_TOKEN_VAL_CLOS);
-			set(_TOKEN_SIMPLE_STRING);
-			set(_TOKEN_SIMPLE_INTEGER);
-			set(_TOKEN_SIMPLE_LONG);
-			set(_TOKEN_SIMPLE_FLOAT);
-			set(_TOKEN_SIMPLE_DOUBLE);
-			set(_TOKEN_SIMPLE_BYTE);
-			set(_TOKEN_SIMPLE_SHORT);
-			set(_TOKEN_SIMPLE_CHARACTER);
-			set(_TOKEN_SIMPLE_BOOLEAN);
-
-			// primitives
-
-			set(_TOKEN_PRIMITIVE_INT);
-			set(_TOKEN_PRIMITIVE_LONG);
-			set(_TOKEN_PRIMITIVE_FLOAT);
-			set(_TOKEN_PRIMITIVE_DOUBLE);
-			set(_TOKEN_PRIMITIVE_BYTE);
-			set(_TOKEN_PRIMITIVE_SHORT);
-			set(_TOKEN_PRIMITIVE_CHAR);
-			set(_TOKEN_PRIMITIVE_BOOLEAN);
-		}
-	};
-
 	private static final int _TOKEN_COMMA = ',';
 
-	private static final int _TOKEN_COMMENT = '#';
-
 	private static final int _TOKEN_EQ = '=';
-
-	private static final int _TOKEN_NAME = 'N';
 
 	private static final int _TOKEN_PRIMITIVE_BOOLEAN = 'b';
 
@@ -833,8 +609,6 @@ public class ConfigurationHandler {
 	private static final int _TOKEN_SIMPLE_SHORT = 'S';
 
 	private static final int _TOKEN_SIMPLE_STRING = 'T';
-
-	private static final int _TOKEN_SPACE = ' ';
 
 	private static final int _TOKEN_VAL_CLOS = '"'; // '}';
 
@@ -883,7 +657,5 @@ public class ConfigurationHandler {
 
 	private int _line;
 	private int _pos;
-	private int _token;
-	private String _tokenValue;
 
 }

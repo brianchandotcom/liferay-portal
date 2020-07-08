@@ -14,7 +14,7 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import {EVENT_TYPES} from '../../actions/types.es';
+import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import MetalFieldAdapter from './MetalFieldAdapter.es';

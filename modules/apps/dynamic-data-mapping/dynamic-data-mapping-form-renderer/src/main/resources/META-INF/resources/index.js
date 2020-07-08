@@ -28,7 +28,7 @@ export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter
 // Composing Form
 
 export {default as Pages} from './js/components/Pages.es';
-export {EVENT_TYPES} from './js/actions/types.es';
+export {EVENT_TYPES} from './js/actions/eventTypes.es';
 export {PageProvider, usePage} from './js/hooks/usePage.es';
 export {FormProvider, FormNoopProvider, useForm} from './js/hooks/useForm.es';
 export {Layout} from './js/components/PageRenderer/Layout.es';

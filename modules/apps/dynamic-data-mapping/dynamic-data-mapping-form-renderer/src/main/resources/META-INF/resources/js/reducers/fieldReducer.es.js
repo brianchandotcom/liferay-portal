@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../actions/types.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {
 	generateInstanceId,
 	generateName,

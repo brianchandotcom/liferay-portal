@@ -15,7 +15,7 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {EVENT_TYPES} from '../actions/types.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
 
 export const MultiStep = ({activePage, editable, pages}) => {

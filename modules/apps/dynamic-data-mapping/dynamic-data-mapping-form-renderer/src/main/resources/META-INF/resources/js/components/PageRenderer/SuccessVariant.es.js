@@ -17,7 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
-import {EVENT_TYPES} from '../../actions/types.es';
+import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import {setValue} from '../../util/i18n.es';

@@ -75,18 +75,14 @@ public class LanguageResources {
 		return LanguageBuilderUtil.fixValue(value);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void fixValues(
 		Map<String, String> languageMap, Properties properties) {
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			String key = (String)entry.getKey();
-
-			String value = (String)entry.getValue();
-
-			value = LanguageBuilderUtil.fixValue(value);
-
-			languageMap.put(key, value);
-		}
+		_fixValues(languageMap, properties);
 	}
 
 	public static String getMessage(Locale locale, String key) {
@@ -158,6 +154,20 @@ public class LanguageResources {
 			StringUtil.replace(config, CharPool.PERIOD, CharPool.SLASH));
 	}
 
+	private static void _fixValues(
+		Map<String, String> languageMap, Properties properties) {
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+
+			String value = (String)entry.getValue();
+
+			value = LanguageBuilderUtil.fixValue(value);
+
+			languageMap.put(key, value);
+		}
+	}
+
 	private static Locale _getSuperLocale(Locale locale) {
 		String variant = locale.getVariant();
 
@@ -216,7 +226,7 @@ public class LanguageResources {
 
 				Properties properties = _loadProperties(sb.toString());
 
-				fixValues(languageMap, properties);
+				_fixValues(languageMap, properties);
 			}
 		}
 		else {

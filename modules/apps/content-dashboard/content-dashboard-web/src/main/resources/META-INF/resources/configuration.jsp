@@ -47,6 +47,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						leftTitle="available"
 						rightBoxName="availableAssetVocabularyNames"
 						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
+						rightReorder="<%= Boolean.TRUE.toString() %>"
 						rightTitle="in-use"
 					/>
 				</aui:field-wrapper>

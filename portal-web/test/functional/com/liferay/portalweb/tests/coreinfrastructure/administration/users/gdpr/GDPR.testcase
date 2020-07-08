@@ -248,10 +248,6 @@ definition {
 			entryContent = "This is an announcement added via json.",
 			entryTitle = "Announcement Entry Title");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

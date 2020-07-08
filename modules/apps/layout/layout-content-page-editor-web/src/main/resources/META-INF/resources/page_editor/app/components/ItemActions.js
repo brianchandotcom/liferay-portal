@@ -26,13 +26,14 @@ import {
 	D_KEYCODE,
 	S_KEYCODE,
 } from '../config/constants/keycodes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
+import canBeDuplicated from '../utils/canBeDuplicated';
+import canBeRemoved from '../utils/canBeRemoved';
+import canBeSaved from '../utils/canBeSaved';
 import {useIsActive, useSelectItem} from './Controls';
 import SaveFragmentCompositionModal from './floating-toolbar/SaveFragmentCompositionModal';
-import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 
 export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);
@@ -205,70 +206,3 @@ export default function ItemActions({item}) {
 ItemActions.propTypes = {
 	item: PropTypes.oneOfType([getLayoutDataItemPropTypes()]),
 };
-
-function canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets) {
-	switch (item.type) {
-		case LAYOUT_DATA_ITEM_TYPES.collection:
-			return true;
-
-		case LAYOUT_DATA_ITEM_TYPES.container:
-		case LAYOUT_DATA_ITEM_TYPES.row:
-			return !hasDropZoneChild(item, layoutData);
-
-		case LAYOUT_DATA_ITEM_TYPES.fragment: {
-			const fragmentEntryLink =
-				fragmentEntryLinks[item.config.fragmentEntryLinkId];
-
-			const portletId = fragmentEntryLink.editableValues.portletId;
-
-			const widget = portletId && getWidget(widgets, portletId);
-
-			return !widget || widget.instanceable;
-		}
-
-		default:
-			return false;
-	}
-}
-
-function canBeRemoved(item, layoutData) {
-	switch (item.type) {
-		case LAYOUT_DATA_ITEM_TYPES.column:
-		case LAYOUT_DATA_ITEM_TYPES.dropZone:
-			return false;
-
-		default:
-			return !hasDropZoneChild(item, layoutData);
-	}
-}
-
-function canBeSaved(item, layoutData) {
-	switch (item.type) {
-		case LAYOUT_DATA_ITEM_TYPES.container:
-		case LAYOUT_DATA_ITEM_TYPES.row:
-			return !hasDropZoneChild(item, layoutData);
-
-		default:
-			return false;
-	}
-}
-
-function getWidget(widgets, portletId) {
-	let widget = null;
-
-	for (let i = 0; i < widgets.length; i++) {
-		const {categories = [], portlets = []} = widgets[i];
-		const categoryPortlet = portlets.find(
-			(portlet) => portlet.portletId === portletId
-		);
-		const subCategoryPortlet = getWidget(categories, portletId);
-
-		widget = subCategoryPortlet || categoryPortlet;
-
-		if (widget) {
-			return widget;
-		}
-	}
-
-	return widget;
-}

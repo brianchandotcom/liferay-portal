@@ -40,7 +40,11 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:field-wrapper label="select-vocabularies">
+				<aui:field-wrapper>
+					<p class="sheet-text">
+						<liferay-ui:message key="select-vocabularies-description" />
+					</p>
+
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentAssetVocabularyNames"
 						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"

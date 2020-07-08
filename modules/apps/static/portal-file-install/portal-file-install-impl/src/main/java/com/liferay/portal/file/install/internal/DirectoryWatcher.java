@@ -20,8 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.manifest.Clause;
 import com.liferay.portal.file.install.internal.manifest.Parser;
-import com.liferay.portal.file.install.internal.version.VersionRange;
-import com.liferay.portal.file.install.internal.version.VersionTable;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.BufferedInputStream;
@@ -63,6 +61,7 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
+import org.osgi.framework.VersionRange;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
@@ -373,14 +372,13 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 								if (versionString != null) {
 									VersionRange versionRange =
-										VersionRange.parseVersionRange(
-											versionString);
+										new VersionRange(versionString);
 
 									headers = hostBundle.getHeaders(
 										StringPool.BLANK);
 
-									if (versionRange.contains(
-											VersionTable.getVersion(
+									if (versionRange.includes(
+											Version.parseVersion(
 												headers.get(
 													Constants.
 														BUNDLE_VERSION)))) {
@@ -492,10 +490,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 								exportVersionString);
 						}
 
-						VersionRange imported = VersionRange.parseVersionRange(
+						VersionRange imported = new VersionRange(
 							importVersionString);
 
-						if (imported.contains(exported)) {
+						if (imported.includes(exported)) {
 							matching = true;
 
 							break;

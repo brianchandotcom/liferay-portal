@@ -265,10 +265,6 @@ definition {
 
 		GDPR.deleteEntryCP();
 
-		AssertElementPresent(
-			key_tab = "Auto Anonymize Data",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
-
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
@@ -337,10 +333,6 @@ definition {
 
 		GDPR.deleteEntryCP();
 
-		AssertElementPresent(
-			key_tab = "Auto Anonymize Data",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
-
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 	}
 
@@ -379,10 +371,6 @@ definition {
 			itemsCount = "1");
 
 		GDPR.deleteEntryCP();
-
-		AssertElementPresent(
-			key_tab = "Auto Anonymize Data",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 

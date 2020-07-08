@@ -160,9 +160,6 @@ definition {
 	@description = "This is a use case for for LPS-111548. Undo can make the content page template editor come back to previous state in Staging site."
 	@priority = "4"
 	test UndoPageTemplateChangeTwice {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "undoEnabled = true";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");

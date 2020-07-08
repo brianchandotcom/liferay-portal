@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.personal.menu.web.internal.configuration.definition;
+package com.liferay.product.navigation.personal.menu.web.internal.configuration.admin.definition;
 
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 

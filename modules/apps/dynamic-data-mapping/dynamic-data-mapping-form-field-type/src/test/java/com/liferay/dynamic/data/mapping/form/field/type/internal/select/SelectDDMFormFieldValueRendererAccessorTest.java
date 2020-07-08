@@ -25,15 +25,23 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Renato Rego
  */
 public class SelectDDMFormFieldValueRendererAccessorTest {
+
+	@Before
+	public void setUp() {
+		_setUpHtmlUtil();
+	}
 
 	@Test
 	public void testRenderMultipleValues() throws Exception {
@@ -156,6 +164,12 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 			createSelectDDMFormFieldValueAccessor();
 
 		return selectDDMFormFieldValueRenderer;
+	}
+
+	private void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

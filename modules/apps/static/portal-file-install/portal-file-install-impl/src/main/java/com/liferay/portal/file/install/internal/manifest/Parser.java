@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Matthew Tambara
  */
-public final class Parser {
+public class Parser {
 
 	public static Clause[] parseHeader(String header)
 		throws IllegalArgumentException {

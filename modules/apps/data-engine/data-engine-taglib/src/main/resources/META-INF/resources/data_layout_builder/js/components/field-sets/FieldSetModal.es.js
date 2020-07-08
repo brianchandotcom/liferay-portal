@@ -67,6 +67,16 @@ const ModalContent = ({
 		if (fieldSet) {
 			propagateFieldSet({
 				fieldSet,
+				modal: {
+					actionMessage: Liferay.Language.get('propagate'),
+					fieldSetMessage: Liferay.Language.get(
+						'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
+					),
+					headerMessage: Liferay.Language.get('propagate-changes'),
+					warningMessage: Liferay.Language.get(
+						'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
+					),
+				},
 				onPropagate: () => saveFieldSet(name),
 			}).finally(onClose);
 		}

@@ -21,6 +21,9 @@ public class TextInfoFieldType implements InfoFieldType {
 
 	public static final TextInfoFieldType INSTANCE = new TextInfoFieldType();
 
+	public static final Attribute<TextInfoFieldType, Boolean> MULTILINE =
+		new Attribute<>();
+
 	@Override
 	public String getName() {
 		return "text";

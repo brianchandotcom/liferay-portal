@@ -27,15 +27,23 @@ const TranslateLanguagesSelector = ({
 	const namespace = `${portletNamespace}`;
 
 	const refreshPage = (sourceId, targetId) => {
-		const url = new URL(currentUrl);
-		const search_params = url.searchParams;
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'
+				)
+			)
+		) {
+			const url = new URL(currentUrl);
+			const search_params = url.searchParams;
 
-		search_params.set(namespace + 'sourceLanguageId', sourceId);
-		search_params.set(namespace + 'targetLanguageId', targetId);
+			search_params.set(namespace + 'sourceLanguageId', sourceId);
+			search_params.set(namespace + 'targetLanguageId', targetId);
 
-		url.search = search_params.toString();
+			url.search = search_params.toString();
 
-		location.href = url.toString();
+			location.href = url.toString();
+		}
 	};
 
 	return (

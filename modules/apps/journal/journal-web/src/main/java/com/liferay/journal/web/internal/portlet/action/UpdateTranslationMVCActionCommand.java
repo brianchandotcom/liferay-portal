@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,8 +65,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "targetLanguageId");
 
 		try {
-			Map<String, String> infoFields = _getInfoFieldsMap(
-				actionRequest, actionRequest.getParameterMap(), "infoField--");
+			UnicodeProperties infoFieldUnicodeProperties =
+				PropertiesParamUtil.getProperties(actionRequest, "infoField--");
 
 			InfoItemFieldValuesProvider<JournalArticle>
 				infoItemFieldValuesProvider =
@@ -93,12 +93,14 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				InfoField infoField = infoFieldValue.getInfoField();
 
 				if ((infoField != null) &&
-					(infoFields.get(infoField.getName()) != null)) {
+					(infoFieldUnicodeProperties.get(infoField.getName()) !=
+						null)) {
 
 					newInfoItemFieldValues.add(
 						_createInfoFieldValue(
 							infoField.getName(), targetLocale,
-							infoFields.get(infoField.getName())));
+							infoFieldUnicodeProperties.get(
+								infoField.getName())));
 				}
 			}
 
@@ -130,23 +132,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			TextInfoFieldType.INSTANCE, infoLocalizedValue, true, fieldName);
 
 		return new InfoFieldValue<>(infoField, value);
-	}
-
-	private Map<String, String> _getInfoFieldsMap(
-		ActionRequest actionRequest, Map<String, String[]> parameterMap,
-		String prefix) {
-
-		Map<String, String> infoFields = new HashMap<>();
-
-		for (String param : parameterMap.keySet()) {
-			if (param.startsWith(prefix)) {
-				String key = param.substring(prefix.length());
-
-				infoFields.put(key, ParamUtil.getString(actionRequest, param));
-			}
-		}
-
-		return infoFields;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

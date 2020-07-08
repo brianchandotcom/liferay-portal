@@ -135,7 +135,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
 
-					String id = "infoField--" + infoField.getName();
+					String id = "infoField--" + infoField.getName() + "--";
 				%>
 
 					<clay:row>

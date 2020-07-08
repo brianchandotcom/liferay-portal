@@ -37,7 +37,7 @@ const load = (fieldModule) => {
 		Liferay.Loader.require(
 			[fieldModule],
 			(Field) => resolve(Field),
-			(error) => reject(error)
+			(error) => reject({error, network: true})
 		);
 	});
 };
@@ -49,22 +49,30 @@ const useLazy = () => {
 		(fieldModule) => {
 			if (!components.has(fieldModule)) {
 				const Component = lazy(() => {
-					return load(fieldModule).then((instance) => {
-						if (!(instance && instance.default)) {
-							return null;
-						}
+					return load(fieldModule)
+						.then((instance) => {
+							if (!(instance && instance.default)) {
+								return null;
+							}
 
-						// To maintain compatibility with fields in Metal+Soy,
-						// we call the bridge component to handle this component.
+							// To maintain compatibility with fields in Metal+Soy,
+							// we call the bridge component to handle this component.
 
-						if (MetalComponent.isComponentCtor(instance.default)) {
-							return {
-								default: MetalComponentAdapter,
-							};
-						}
+							if (
+								MetalComponent.isComponentCtor(instance.default)
+							) {
+								return {
+									default: MetalComponentAdapter,
+								};
+							}
 
-						return instance;
-					});
+							return instance;
+						})
+						.catch((error) => {
+							components.delete(fieldModule);
+
+							throw error;
+						});
 				});
 
 				components.set(fieldModule, Component);
@@ -111,39 +119,71 @@ const mountStruct = (event, field, value) => {
 	return new FieldEventStruct(event, field, value);
 };
 
-export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
-	const {fieldTypes} = usePage();
-	const [hasError, setHasError] = useState(false);
-	const loadField = useLazy();
-
+const FieldLazy = ({
+	field,
+	fieldTypes,
+	onBlur,
+	onChange,
+	onFocus,
+	...otherProps
+}) => {
 	const focusDurationRef = useRef({end: null, start: null});
+
+	const ComponentLazy = useLazy()(getModule(fieldTypes, field.type));
+
+	return (
+		<ComponentLazy
+			onBlur={(event) => {
+				focusDurationRef.current.end = new Date();
+				onBlur(mountStruct(event, field), focusDurationRef.current);
+			}}
+			onChange={(event, value) =>
+				onChange(mountStruct(event, field, value))
+			}
+			onFocus={(event) => {
+				focusDurationRef.current.start = new Date();
+				onFocus(mountStruct(event, field));
+			}}
+			visible
+			{...field}
+			{...otherProps}
+		/>
+	);
+};
+
+export const Field = ({field, ...otherProps}) => {
+	const {fieldTypes} = usePage();
+	const [hasError, setHasError] = useState();
 
 	if (!fieldTypes) {
 		return <ClayLoadingIndicator />;
 	}
 
-	const fieldModule = getModule(fieldTypes, field.type);
-	const FieldLazy = loadField(fieldModule);
-
 	if (hasError) {
 		return (
 			<div className="ddm-field-renderer--error">
 				<p className="ddm-field-renderer--title">
-					Oops! An error happening.
+					{Liferay.Language.get(
+						'there-was-an-error-loading-the-x-field',
+						field.type
+					)}
 				</p>
-				<ClayButton
-					displayType="secondary"
-					onClick={() => setHasError(false)}
-					small
-				>
-					Try Again!
-				</ClayButton>
+				{hasError.network && (
+					<ClayButton
+						className="ddm-field-renderer--button"
+						displayType="secondary"
+						onClick={() => setHasError(false)}
+						small
+					>
+						{Liferay.Language.get('refresh')}
+					</ClayButton>
+				)}
 			</div>
 		);
 	}
 
 	return (
-		<ErrorBoundary onError={() => setHasError(true)}>
+		<ErrorBoundary onError={setHasError}>
 			<Suspense fallback={<ClayLoadingIndicator />}>
 				<ParentFieldContext.Provider value={field}>
 					<AutoFocus>
@@ -152,22 +192,8 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 							data-field-name={field.fieldName}
 						>
 							<FieldLazy
-								onBlur={(event) => {
-									focusDurationRef.current.end = new Date();
-									onBlur(
-										mountStruct(event, field),
-										focusDurationRef.current
-									);
-								}}
-								onChange={(event, value) =>
-									onChange(mountStruct(event, field, value))
-								}
-								onFocus={(event) => {
-									focusDurationRef.current.start = new Date();
-									onFocus(mountStruct(event, field));
-								}}
-								visible
-								{...field}
+								field={field}
+								fieldTypes={fieldTypes}
 								{...otherProps}
 							/>
 						</div>

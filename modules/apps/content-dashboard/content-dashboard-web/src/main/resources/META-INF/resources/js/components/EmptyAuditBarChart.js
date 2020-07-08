@@ -12,9 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
-import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {
 	BarChart,
@@ -26,24 +24,29 @@ import {
 
 import {BAR_CHART} from '../utils/constants';
 
+const LEARN_HOW_URL =
+	'https://help.liferay.com/hc/en-us/articles/360028820492-Defining-Categories-for-Content';
+
 export default function EmptyAuditBarChart() {
 	return (
 		<>
 			<ClayEmptyState
 				className="empty-state text-center"
-				description={Liferay.Language.get(
-					'create-marketing-categories-to-label-and-audit-your-content'
-				)}
-				title={Liferay.Language.get('there-is-no-data')}
-			>
-				<ClayButton displayType="secondary">
-					{Liferay.Language.get('add-marketing-categories')}
-					<ClayIcon
-						className="inline-item inline-item-after"
-						symbol="shortcut"
+				description={
+					<div
+						dangerouslySetInnerHTML={{
+							__html: Liferay.Util.sub(
+								Liferay.Language.get(
+									'learn-how-to-tailor-categories-to-your-needs'
+								),
+								`<a href=${LEARN_HOW_URL} target="_blank">`,
+								'</a>'
+							),
+						}}
 					/>
-				</ClayButton>
-			</ClayEmptyState>
+				}
+				title={Liferay.Language.get('there-is-no-data')}
+			/>
 
 			<ResponsiveContainer height={BAR_CHART.emptyHeight}>
 				<BarChart

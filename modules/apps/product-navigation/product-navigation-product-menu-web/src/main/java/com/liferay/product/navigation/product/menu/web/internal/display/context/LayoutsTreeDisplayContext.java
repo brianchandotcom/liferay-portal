@@ -276,7 +276,7 @@ public class LayoutsTreeDisplayContext {
 
 		portletURL.setParameter(
 			"redirect",
-			PortalUtil.getLayoutFullURL(
+			PortalUtil.getLayoutRelativeURL(
 				_themeDisplay.getLayout(), _themeDisplay));
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
 

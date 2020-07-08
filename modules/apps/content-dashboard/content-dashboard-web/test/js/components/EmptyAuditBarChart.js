@@ -20,6 +20,8 @@ import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/j
 import '@testing-library/jest-dom/extend-expect';
 
 describe('EmptyAuditBarChart', () => {
+	Liferay.Util.sub.mockImplementation((langKey) => langKey);
+
 	afterEach(cleanup);
 
 	it('renders empty bar chart if there is no content labeled with categories', () => {
@@ -27,10 +29,7 @@ describe('EmptyAuditBarChart', () => {
 
 		expect(getByText('there-is-no-data')).toBeInTheDocument();
 		expect(
-			getByText(
-				'create-marketing-categories-to-label-and-audit-your-content'
-			)
+			getByText('learn-how-to-tailor-categories-to-your-needs')
 		).toBeInTheDocument();
-		expect(getByText('add-marketing-categories')).toBeInTheDocument();
 	});
 });

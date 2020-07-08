@@ -12,14 +12,14 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
+import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -27,21 +27,20 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import Button from '../../../common/components/Button';
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
+import useControlledState from '../../../core/hooks/useControlledState';
 import {openImageSelector} from '../../../core/openImageSelector';
 import {config} from '../../config/index';
 import addFragmentComposition from '../../thunks/addFragmentComposition';
+import {useActiveItemId} from '../Controls';
 
-const SaveFragmentCompositionModal = ({
-	errorMessage,
-	itemId,
-	observer,
-	onClose,
-	onErrorDismiss = () => true,
-}) => {
+const SaveFragmentCompositionModal = ({open}) => {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 
-	const collections = useSelector((state) => state.collections);
+	const activeItemId = useActiveItemId();
+	const isMounted = useIsMounted();
+
+	const collections = useSelector((state) => state.collections || []);
 
 	const [name, setName] = useState(undefined);
 	const [description, setDescription] = useState('');
@@ -53,6 +52,16 @@ const SaveFragmentCompositionModal = ({
 	const [saveMappingConfiguration, setSaveMappingConfiguration] = useState(
 		false
 	);
+
+	const [openModal, setOpenModal] = useControlledState(open);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			if (isMounted()) {
+				setOpenModal(false);
+			}
+		},
+	});
 
 	const [thumbnail, setThumbnail] = useState({});
 
@@ -69,7 +78,7 @@ const SaveFragmentCompositionModal = ({
 				addFragmentComposition({
 					description,
 					fragmentCollectionId,
-					itemId,
+					itemId: activeItemId,
 					name,
 					previewImageURL: thumbnail.url,
 					saveInlineContent,
@@ -104,268 +113,264 @@ const SaveFragmentCompositionModal = ({
 	const descriptionInputId = `${config.portletNamespace}fragmentCompositionDescription`;
 
 	return (
-		<ClayModal
-			className="page-editor__save-fragment-composition-modal"
-			observer={observer}
-			size="lg"
-		>
-			<ClayModal.Header>
-				{Liferay.Language.get('save-as-fragment')}
-			</ClayModal.Header>
+		openModal && (
+			<ClayModal
+				className="page-editor__save-fragment-composition-modal"
+				observer={observer}
+				size="lg"
+			>
+				<ClayModal.Header>
+					{Liferay.Language.get('save-as-fragment')}
+				</ClayModal.Header>
 
-			<ClayModal.Body scrollable>
-				<ClayForm
-					autoComplete="off"
-					className="mb-3"
-					noValidate
-					onSubmit={handleSubmit}
-				>
-					<InvisibleFieldset disabled={loading}>
-						{errorMessage && (
-							<ClayAlert
-								displayType="danger"
-								onClose={onErrorDismiss}
-								title={errorMessage}
-							/>
-						)}
-						<ClayForm.Group
-							className={name === '' ? 'has-error mb-3' : 'mb-3'}
-						>
-							<label htmlFor={nameInputId}>
-								{Liferay.Language.get('name')}
-
-								<ClayIcon
-									className="ml-1 reference-mark"
-									focusable="false"
-									role="presentation"
-									symbol="asterisk"
-								/>
-							</label>
-
-							<ClayInput
-								autoFocus
-								id={nameInputId}
-								onChange={(event) =>
-									setName(event.target.value)
+				<ClayModal.Body scrollable>
+					<ClayForm
+						autoComplete="off"
+						className="mb-3"
+						noValidate
+						onSubmit={handleSubmit}
+					>
+						<InvisibleFieldset disabled={loading}>
+							<ClayForm.Group
+								className={
+									name === '' ? 'has-error mb-3' : 'mb-3'
 								}
-								placeholder={Liferay.Language.get('name')}
-								required
-								type="text"
-								value={name}
-							/>
+							>
+								<label htmlFor={nameInputId}>
+									{Liferay.Language.get('name')}
 
-							{name === '' && (
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-										{Liferay.Language.get(
-											'this-field-is-required'
-										)}
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
-							)}
-						</ClayForm.Group>
+									<ClayIcon
+										className="ml-1 reference-mark"
+										focusable="false"
+										role="presentation"
+										symbol="asterisk"
+									/>
+								</label>
 
-						<ClayForm.Group>
-							<ClayInput.Group>
-								<ClayInput.GroupItem shrink>
-									<ClayButton
-										displayType="secondary"
-										onClick={() =>
-											openImageSelector(
-												handleThumbnailSelected
-											)
-										}
-										small
-										value={Liferay.Language.get(
-											'upload-thumbnail'
-										)}
+								<ClayInput
+									autoFocus
+									id={nameInputId}
+									onChange={(event) =>
+										setName(event.target.value)
+									}
+									placeholder={Liferay.Language.get('name')}
+									required
+									type="text"
+									value={name}
+								/>
+
+								{name === '' && (
+									<ClayForm.FeedbackGroup>
+										<ClayForm.FeedbackItem>
+											<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+											{Liferay.Language.get(
+												'this-field-is-required'
+											)}
+										</ClayForm.FeedbackItem>
+									</ClayForm.FeedbackGroup>
+								)}
+							</ClayForm.Group>
+
+							<ClayForm.Group>
+								<ClayInput.Group>
+									<ClayInput.GroupItem shrink>
+										<ClayButton
+											displayType="secondary"
+											onClick={() =>
+												openImageSelector(
+													handleThumbnailSelected
+												)
+											}
+											small
+											value={Liferay.Language.get(
+												'upload-thumbnail'
+											)}
+										>
+											<ClayIcon
+												className="mr-2"
+												focusable="false"
+												monospaced="true"
+												role="presentation"
+												symbol="upload"
+											/>
+
+											{Liferay.Language.get(
+												'upload-thumbnail'
+											)}
+										</ClayButton>
+									</ClayInput.GroupItem>
+									<ClayInput.GroupItem className="align-items-center">
+										<span className="ml-2 text-truncate">
+											{thumbnail.title}
+										</span>
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+							</ClayForm.Group>
+
+							<ClayForm.Group>
+								<label htmlFor={descriptionInputId}>
+									{Liferay.Language.get('description')}
+								</label>
+
+								<ClayInput
+									component="textarea"
+									id={descriptionInputId}
+									onChange={(event) =>
+										setDescription(event.target.value)
+									}
+									placeholder={Liferay.Language.get(
+										'description'
+									)}
+									type="text"
+									value={description}
+								/>
+							</ClayForm.Group>
+
+							<ClayForm.Group>
+								<ClayInput.Group className="input-group-stacked-sm-down">
+									<ClayInput.GroupItem
+										className="mr-4"
+										shrink
 									>
+										<ClayCheckbox
+											checked={saveInlineContent}
+											id={`${config.portletNamespace}saveInlineContent`}
+											label={Liferay.Language.get(
+												'save-inline-content'
+											)}
+											onChange={(event) =>
+												setSaveInlineContent(
+													event.target.checked
+												)
+											}
+										/>
+									</ClayInput.GroupItem>
+									<ClayInput.GroupItem>
+										<ClayCheckbox
+											checked={saveMappingConfiguration}
+											id={`${config.portletNamespace}saveMappingConfiguration`}
+											label={Liferay.Language.get(
+												'save-mapping-configuration'
+											)}
+											onChange={(event) =>
+												setSaveMappingConfiguration(
+													event.target.checked
+												)
+											}
+										/>
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+							</ClayForm.Group>
+							<ClayForm.Group>
+								{collections.length > 0 ? (
+									<>
+										<p className="sheet-tertiary-title">
+											{Liferay.Language.get(
+												'select-collection'
+											)}
+										</p>
+
+										<ClayLayout.Row>
+											{collections.map((collection) => (
+												<ClayLayout.Col
+													key={
+														collection.fragmentCollectionId
+													}
+													md="4"
+												>
+													<ClayCard
+														className={
+															fragmentCollectionId ===
+															collection.fragmentCollectionId
+																? 'active'
+																: ''
+														}
+														horizontal
+														interactive
+														onClick={() =>
+															setFragmentCollectionId(
+																collection.fragmentCollectionId
+															)
+														}
+													>
+														<ClayCard.Body>
+															<ClayCard.Row>
+																<ClayLayout.ContentCol containerElement="span">
+																	<ClaySticker
+																		inline
+																	>
+																		<ClayIcon symbol="folder" />
+																	</ClaySticker>
+																</ClayLayout.ContentCol>
+																<ClayLayout.ContentCol
+																	containerElement="span"
+																	expand
+																>
+																	<ClayLayout.ContentSection containerElement="span">
+																		<ClayCard.Description
+																			displayType="title"
+																			truncate
+																		>
+																			{
+																				collection.name
+																			}
+																		</ClayCard.Description>
+																	</ClayLayout.ContentSection>
+																</ClayLayout.ContentCol>
+															</ClayCard.Row>
+														</ClayCard.Body>
+													</ClayCard>
+												</ClayLayout.Col>
+											))}
+										</ClayLayout.Row>
+									</>
+								) : (
+									<div className="alert alert-info">
 										<ClayIcon
-											className="mr-2"
+											className="inline-item inline-item-after mr-2 reference-mark"
 											focusable="false"
-											monospaced="true"
 											role="presentation"
-											symbol="upload"
+											symbol="exclamation-full"
 										/>
 
 										{Liferay.Language.get(
-											'upload-thumbnail'
+											'this-fragment-will-be-saved-in-a-new-collection-called-saved-fragments'
 										)}
-									</ClayButton>
-								</ClayInput.GroupItem>
-								<ClayInput.GroupItem className="align-items-center">
-									<span className="ml-2 text-truncate">
-										{thumbnail.title}
-									</span>
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</ClayForm.Group>
-
-						<ClayForm.Group>
-							<label htmlFor={descriptionInputId}>
-								{Liferay.Language.get('description')}
-							</label>
-
-							<ClayInput
-								component="textarea"
-								id={descriptionInputId}
-								onChange={(event) =>
-									setDescription(event.target.value)
-								}
-								placeholder={Liferay.Language.get(
-									'description'
+									</div>
 								)}
-								type="text"
-								value={description}
-							/>
-						</ClayForm.Group>
+							</ClayForm.Group>
+						</InvisibleFieldset>
+					</ClayForm>
+				</ClayModal.Body>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								disabled={loading}
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
 
-						<ClayForm.Group>
-							<ClayInput.Group className="input-group-stacked-sm-down">
-								<ClayInput.GroupItem className="mr-4" shrink>
-									<ClayCheckbox
-										checked={saveInlineContent}
-										id={`${config.portletNamespace}saveInlineContent`}
-										label={Liferay.Language.get(
-											'save-inline-content'
-										)}
-										onChange={(event) =>
-											setSaveInlineContent(
-												event.target.checked
-											)
-										}
-									/>
-								</ClayInput.GroupItem>
-								<ClayInput.GroupItem>
-									<ClayCheckbox
-										checked={saveMappingConfiguration}
-										id={`${config.portletNamespace}saveMappingConfiguration`}
-										label={Liferay.Language.get(
-											'save-mapping-configuration'
-										)}
-										onChange={(event) =>
-											setSaveMappingConfiguration(
-												event.target.checked
-											)
-										}
-									/>
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</ClayForm.Group>
-						<ClayForm.Group>
-							{collections.length > 0 ? (
-								<>
-									<p className="sheet-tertiary-title">
-										{Liferay.Language.get(
-											'select-collection'
-										)}
-									</p>
-
-									<ClayLayout.Row>
-										{collections.map((collection) => (
-											<ClayLayout.Col
-												key={
-													collection.fragmentCollectionId
-												}
-												md="4"
-											>
-												<ClayCard
-													className={
-														fragmentCollectionId ===
-														collection.fragmentCollectionId
-															? 'active'
-															: ''
-													}
-													horizontal
-													interactive
-													onClick={() =>
-														setFragmentCollectionId(
-															collection.fragmentCollectionId
-														)
-													}
-												>
-													<ClayCard.Body>
-														<ClayCard.Row>
-															<ClayLayout.ContentCol containerElement="span">
-																<ClaySticker
-																	inline
-																>
-																	<ClayIcon symbol="folder" />
-																</ClaySticker>
-															</ClayLayout.ContentCol>
-															<ClayLayout.ContentCol
-																containerElement="span"
-																expand
-															>
-																<ClayLayout.ContentSection containerElement="span">
-																	<ClayCard.Description
-																		displayType="title"
-																		truncate
-																	>
-																		{
-																			collection.name
-																		}
-																	</ClayCard.Description>
-																</ClayLayout.ContentSection>
-															</ClayLayout.ContentCol>
-														</ClayCard.Row>
-													</ClayCard.Body>
-												</ClayCard>
-											</ClayLayout.Col>
-										))}
-									</ClayLayout.Row>
-								</>
-							) : (
-								<div className="alert alert-info">
-									<ClayIcon
-										className="inline-item inline-item-after mr-2 reference-mark"
-										focusable="false"
-										role="presentation"
-										symbol="exclamation-full"
-									/>
-
-									{Liferay.Language.get(
-										'this-fragment-will-be-saved-in-a-new-collection-called-saved-fragments'
-									)}
-								</div>
-							)}
-						</ClayForm.Group>
-					</InvisibleFieldset>
-				</ClayForm>
-			</ClayModal.Body>
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={loading}
-							displayType="secondary"
-							onClick={onClose}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<Button
-							disabled={loading}
-							displayType="primary"
-							loading={loading}
-							onClick={handleSubmit}
-						>
-							{Liferay.Language.get('save')}
-						</Button>
-					</ClayButton.Group>
-				}
-			></ClayModal.Footer>
-		</ClayModal>
+							<Button
+								disabled={loading}
+								displayType="primary"
+								loading={loading}
+								onClick={handleSubmit}
+							>
+								{Liferay.Language.get('save')}
+							</Button>
+						</ClayButton.Group>
+					}
+				></ClayModal.Footer>
+			</ClayModal>
+		)
 	);
 };
 
 SaveFragmentCompositionModal.propTypes = {
-	errorMessage: PropTypes.string,
-	itemId: PropTypes.string,
-	observer: PropTypes.object.isRequired,
-	onClose: PropTypes.func.isRequired,
-	onErrorDismiss: PropTypes.func.isRequired,
+	open: PropTypes.bool.isRequired,
 };
 
 export default SaveFragmentCompositionModal;

@@ -15,8 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useModal} from '@clayui/modal';
-import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -39,7 +37,6 @@ export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const isActive = useIsActive();
-	const isMounted = useIsMounted();
 	const selectItem = useSelectItem();
 
 	const state = useSelector((state) => state);
@@ -50,22 +47,11 @@ export default function ItemActions({item}) {
 		widgets,
 	} = state;
 
-	const [
-		openSaveFragmentCompositionModal,
-		setOpenSaveFragmentCompositionModal,
-	] = useState(false);
-
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			if (isMounted()) {
-				setOpenSaveFragmentCompositionModal(false);
-			}
-		},
-	});
+	const [openSaveModal, setOpenSaveModal] = useState(false);
 
 	useEffect(() => {
 		const onKeyDown = (event) => {
-			if (isActive(item.itemId) && !openSaveFragmentCompositionModal) {
+			if (isActive(item.itemId) && !openSaveModal) {
 				const itemAction = itemActions.find((itemAction) =>
 					itemAction.isKeyCombination(event)
 				);
@@ -83,7 +69,7 @@ export default function ItemActions({item}) {
 		return () => {
 			window.removeEventListener('keydown', onKeyDown, true);
 		};
-	}, [isActive, item, itemActions, openSaveFragmentCompositionModal]);
+	}, [isActive, item, itemActions, openSaveModal]);
 
 	const itemActions = useMemo(() => {
 		const actions = [];
@@ -112,7 +98,7 @@ export default function ItemActions({item}) {
 
 		if (canBeSaved(item, layoutData)) {
 			actions.push({
-				action: () => setOpenSaveFragmentCompositionModal(true),
+				action: () => setOpenSaveModal(true),
 				icon: 'disk',
 				isKeyCombination: (event) => {
 					const ctrlOrMeta =
@@ -192,13 +178,7 @@ export default function ItemActions({item}) {
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			{openSaveFragmentCompositionModal && (
-				<SaveFragmentCompositionModal
-					itemId={item.itemId}
-					observer={observer}
-					onClose={onClose}
-				/>
-			)}
+			<SaveFragmentCompositionModal open={openSaveModal} />
 		</>
 	) : null;
 }

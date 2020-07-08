@@ -55,6 +55,8 @@ export const dropCustomObjectField = ({
 	);
 	const {label} = dataDefinitionField;
 
+	const {editingLanguageId} = dataLayoutBuilder.getState();
+
 	return {
 		data: {
 			fieldName,
@@ -65,7 +67,8 @@ export const dropCustomObjectField = ({
 				return name === dataDefinitionField.fieldType;
 			}),
 			editable: true,
-			label: label[themeDisplay.getLanguageId()],
+			label:
+				label[editingLanguageId] || label[themeDisplay.getLanguageId()],
 			settingsContext,
 		},
 		indexes,

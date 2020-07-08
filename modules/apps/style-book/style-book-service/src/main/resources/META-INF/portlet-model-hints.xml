@@ -12,6 +12,8 @@
 		<field name="name" type="String" />
 		<field name="styleBookEntryKey" type="String" />
 		<field name="previewFileEntryId" type="long" />
-		<field name="tokensValues" type="String" />
+		<field name="tokensValues" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

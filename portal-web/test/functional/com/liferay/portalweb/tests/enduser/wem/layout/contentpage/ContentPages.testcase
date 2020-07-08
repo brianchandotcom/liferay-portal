@@ -440,13 +440,14 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Row");
 
-			PageEditor.editLayoutRow(
+			PageEditor.editLayoutGrid(
 				columnCount = "2",
+				panel = "Configuration",
 				spaceBetweenColumns = "true");
 		}
 
 		task ("Assert the Row has space between columns and 2 columns") {
-			PageEditor.viewRowStyle(
+			PageEditor.viewGridStyle(
 				columnCount = "3",
 				position = "1",
 				spaceBetweenColumns = "true");
@@ -470,8 +471,9 @@ definition {
 		}
 
 		task ("Edit the row's properties") {
-			PageEditor.editLayoutRow(
+			PageEditor.editLayoutGrid(
 				columnCount = "3",
+				panel = "Configuration",
 				spaceBetweenColumns = "false");
 		}
 
@@ -485,7 +487,7 @@ definition {
 		}
 
 		task ("Assert the Row has exactly 3 columns and no space between columns") {
-			PageEditor.viewRowStyle(
+			PageEditor.viewGridStyle(
 				columnCount = "3",
 				position = "1",
 				spaceBetweenColumns = "false");

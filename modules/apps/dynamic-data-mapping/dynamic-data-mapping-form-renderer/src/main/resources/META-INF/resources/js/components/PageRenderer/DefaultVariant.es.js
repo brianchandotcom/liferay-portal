@@ -220,7 +220,7 @@ export const Placeholder = ({
 
 	const Content = (
 		<ClayLayout.Col
-			className={`col-ddm col-empty`}
+			className={`col col-ddm col-empty`}
 			data-ddm-field-column={columnIndex}
 			data-ddm-field-page={pageIndex}
 			data-ddm-field-row={rowIndex}

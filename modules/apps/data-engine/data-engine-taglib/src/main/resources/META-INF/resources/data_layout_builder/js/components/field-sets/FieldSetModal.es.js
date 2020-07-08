@@ -15,12 +15,14 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import App from '../../App.es';
 import AppContext from '../../AppContext.es';
+import {UPDATE_EDITING_LANGUAGE_ID} from '../../actions.es';
 import {isDataLayoutEmpty} from '../../utils/dataLayoutVisitor.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
+import TranslationManager from '../translation-manager/TranslationManager.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 import useSaveFieldSet from './actions/useSaveFieldSet.es';
@@ -37,11 +39,16 @@ const ModalContent = ({
 		state: {},
 	});
 	const [dataLayoutIsEmpty, setDataLayoutIsEmpty] = useState(true);
-	const [name, setName] = useState('');
+	const {editingLanguageId = defaultLanguageId} = childrenContext.state;
+	const [name, setName] = useState({});
+
+	const availableLanguageIds = [
+		...new Set([...Object.keys(name), editingLanguageId]),
+	];
 
 	useEffect(() => {
 		if (fieldSet) {
-			setName(fieldSet.name[defaultLanguageId]);
+			setName(fieldSet.name);
 		}
 	}, [defaultLanguageId, fieldSet]);
 
@@ -54,14 +61,38 @@ const ModalContent = ({
 		}
 	}, [childrenContext]);
 
-	const createFieldSet = useCreateFieldSet({childrenContext});
+	const createFieldSet = useCreateFieldSet({
+		availableLanguageIds,
+		childrenContext,
+	});
 	const saveFieldSet = useSaveFieldSet({
-		childrenAppProps,
+		DataLayout: childrenAppProps.DataLayout,
+		availableLanguageIds,
 		childrenContext,
 		defaultLanguageId,
 		fieldSet,
 	});
 	const propagateFieldSet = usePropagateFieldSet();
+
+	const onEditingLanguageIdChange = useCallback(
+		(editingLanguageId) => {
+			childrenContext.dispatch({
+				payload: editingLanguageId,
+				type: UPDATE_EDITING_LANGUAGE_ID,
+			});
+		},
+		[childrenContext]
+	);
+
+	const onActiveChange = (active) => {
+		document
+			.querySelectorAll('#ddm-actionable-fields-container')
+			.forEach((container) => {
+				if (container) {
+					container.style.display = active ? 'none' : '';
+				}
+			});
+	};
 
 	const onSave = () => {
 		if (fieldSet) {
@@ -94,6 +125,13 @@ const ModalContent = ({
 			</ClayModal.Header>
 			<ClayModal.Header withTitle={false}>
 				<ClayInput.Group className="pl-4 pr-4">
+					<TranslationManager
+						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
+						onActiveChange={onActiveChange}
+						onEditingLanguageIdChange={onEditingLanguageIdChange}
+						translatedLanguageIds={name}
+					/>
 					<ClayInput.GroupItem>
 						<ClayInput
 							aria-label={Liferay.Language.get(
@@ -101,12 +139,14 @@ const ModalContent = ({
 							)}
 							autoFocus
 							className="form-control-inline"
-							onChange={({target: {value}}) => setName(value)}
+							onChange={({target: {value}}) =>
+								setName({...name, [editingLanguageId]: value})
+							}
 							placeholder={Liferay.Language.get(
 								'untitled-fieldset'
 							)}
 							type="text"
-							value={name}
+							value={name[editingLanguageId]}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
@@ -115,8 +155,9 @@ const ModalContent = ({
 				<div className="pl-4 pr-4">
 					<App
 						{...appProps}
+						availableLanguageIds={availableLanguageIds}
 						dataLayoutBuilderId={`${appProps.dataLayoutBuilderId}_2`}
-						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
 						setChildrenContext={setChildrenContext}
 						{...childrenAppProps}
 					/>

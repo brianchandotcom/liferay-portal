@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.configuration.definition;
+package com.liferay.users.admin.web.internal.configuration.admin.definition;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;

@@ -82,13 +82,16 @@ public class PortalFragmentBundleWatcher {
 					return;
 				}
 
-				Map<String, Bundle> fragmentHostSymbolicNames = new HashMap<>();
+				Map<String, List<Bundle>> fragmentBundlesMap = new HashMap<>();
 
 				for (Map.Entry<Bundle, String> entry :
 						installedFragmentBundles.entrySet()) {
 
-					fragmentHostSymbolicNames.put(
-						entry.getValue(), entry.getKey());
+					List<Bundle> fragmentBundles =
+						fragmentBundlesMap.computeIfAbsent(
+							entry.getValue(), key -> new ArrayList<>());
+
+					fragmentBundles.add(entry.getKey());
 				}
 
 				Bundle originBundle = bundleEvent.getOrigin();
@@ -98,18 +101,31 @@ public class PortalFragmentBundleWatcher {
 				List<Bundle> hostBundles = new ArrayList<>();
 
 				for (Bundle bundle : bundleContext.getBundles()) {
-					Bundle fragmant = fragmentHostSymbolicNames.remove(
+					List<Bundle> fragmantBundles = fragmentBundlesMap.remove(
 						bundle.getSymbolicName());
 
-					if ((fragmant != null) &&
-						(fragmant.getState() != Bundle.RESOLVED) &&
-						(originBundleId != bundle.getBundleId())) {
+					if (fragmantBundles == null) {
+						continue;
+					}
 
-						hostBundles.add(bundle);
+					if (originBundleId != bundle.getBundleId()) {
+						boolean needRefresh = false;
 
-						if (fragmentHostSymbolicNames.isEmpty()) {
-							break;
+						for (Bundle fragmentBundle : fragmantBundles) {
+							if (fragmentBundle.getState() == Bundle.INSTALLED) {
+								needRefresh = true;
+
+								break;
+							}
 						}
+
+						if (needRefresh) {
+							hostBundles.add(bundle);
+						}
+					}
+
+					if (fragmentBundlesMap.isEmpty()) {
+						break;
 					}
 				}
 

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>METRICS_REINDEX_SPECIFIC_BUTTON</td>
-	<td>//*[contains(text(),'"${key_actionDescription}"')]/following-sibling::div//button</td>
+	<td>//*[contains(text(),"${key_actionDescription}")]/following-sibling::div//button</td>
 	<td></td>
 </tr>
 </tbody>

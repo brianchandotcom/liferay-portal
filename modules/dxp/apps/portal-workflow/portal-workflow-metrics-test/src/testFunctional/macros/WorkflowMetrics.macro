@@ -458,7 +458,17 @@ definition {
 			Click(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_SPECIFIC_BUTTON");
 		}
 
+		Refresh();
+
 		Alert.viewSuccessMessage();
+	}
+
+	macro reindexSpecific {
+		var key_actionDescription = "${actionDescription}";
+
+		Click(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_SPECIFIC_BUTTON");
+
+		Alert.viewSuccessMessageText(successMessage = "${key_actionDescription} has reindexed successfully.");
 	}
 
 	macro executeWorkflowScript {

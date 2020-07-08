@@ -193,9 +193,8 @@ public class PortalCORSServletFilter
 			_pathPatternMatchers.get(companyId);
 
 		if (pathPatternMatcher == null) {
-			filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-			return;
+			pathPatternMatcher = _pathPatternMatchers.get(
+				CompanyConstants.SYSTEM);
 		}
 
 		PatternTuple<CORSSupport> patternTuple =
@@ -316,19 +315,23 @@ public class PortalCORSServletFilter
 			_mergeCorsConfiguration(pathPatternsHeadersMap, properties);
 		}
 
-		if (companyId != CompanyConstants.SYSTEM) {
+		if (pathPatternsHeadersMap.isEmpty()) {
+			if (companyId != CompanyConstants.SYSTEM) {
+				_pathPatternMatchers.remove(companyId);
+
+				return;
+			}
+
+			_mergeSystemCompanyProperties(pathPatternsHeadersMap);
+		}
+		else if (companyId != CompanyConstants.SYSTEM) {
 			_mergeSystemCompanyProperties(pathPatternsHeadersMap);
 		}
 
-		if (pathPatternsHeadersMap.isEmpty()) {
-			_pathPatternMatchers.remove(companyId);
-		}
-		else {
-			_pathPatternMatchers.put(
-				companyId,
-				_pathPatternMatcherFactory.createPatternMatcher(
-					pathPatternsHeadersMap));
-		}
+		_pathPatternMatchers.put(
+			companyId,
+			_pathPatternMatcherFactory.createPatternMatcher(
+				pathPatternsHeadersMap));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

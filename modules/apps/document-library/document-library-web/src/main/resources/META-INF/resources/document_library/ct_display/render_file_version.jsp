@@ -17,7 +17,7 @@
 <%@ include file="/document_library/ct_display/init.jsp" %>
 
 <%
-DisplayContext<?> displayContext = (DisplayContext<?>)request.getAttribute("displayContext");
+DisplayContext<?> displayContext = (DisplayContext<?>)request.getAttribute(DLWebKeys.CHANGE_TRACKING_DISPLAY_CONTEXT);
 
 DLFileEntry dlFileEntry = (DLFileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 

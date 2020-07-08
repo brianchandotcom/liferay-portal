@@ -19,6 +19,7 @@ import com.liferay.change.tracking.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -110,7 +111,8 @@ public class DLFileVersionCTDisplayRenderer
 		httpServletRequest.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, dlFileVersion);
 
-		httpServletRequest.setAttribute("displayContext", displayContext);
+		httpServletRequest.setAttribute(
+			DLWebKeys.CHANGE_TRACKING_DISPLAY_CONTEXT, displayContext);
 
 		requestDispatcher.include(
 			httpServletRequest, displayContext.getHttpServletResponse());

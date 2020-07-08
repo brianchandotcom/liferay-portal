@@ -24,6 +24,7 @@ page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileVersion" %><%@
 page import="com.liferay.document.library.kernel.model.DLFolder" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppServiceUtil" %><%@
+page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@

@@ -15,7 +15,6 @@
 package com.liferay.info.field.type;
 
 import com.liferay.info.field.InfoField;
-import com.liferay.info.localized.InfoLocalizedValue;
 
 import java.util.Optional;
 
@@ -29,11 +28,11 @@ public class TextInfoFieldTypeTest {
 
 	@Test
 	public void testMultilineAttributeCanBeSetToFalse() {
-		InfoField<TextInfoFieldType> infoField = new InfoField<>(
-			TextInfoFieldType.INSTANCE,
-			InfoLocalizedValue.singleValue("test-field"), "test-field");
-
-		infoField.addAttribute(TextInfoFieldType.MULTILINE, false);
+		InfoField<TextInfoFieldType> infoField = InfoField.builder(
+			TextInfoFieldType.INSTANCE, "test-field"
+		).attribute(
+			TextInfoFieldType.MULTILINE, false
+		).build();
 
 		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
 			TextInfoFieldType.MULTILINE);
@@ -43,11 +42,11 @@ public class TextInfoFieldTypeTest {
 
 	@Test
 	public void testMultilineAttributeCanBeSetToTrue() {
-		InfoField<TextInfoFieldType> infoField = new InfoField<>(
-			TextInfoFieldType.INSTANCE,
-			InfoLocalizedValue.singleValue("test-field"), "test-field");
-
-		infoField.addAttribute(TextInfoFieldType.MULTILINE, true);
+		InfoField<TextInfoFieldType> infoField = InfoField.builder(
+			TextInfoFieldType.INSTANCE, "test-field"
+		).attribute(
+			TextInfoFieldType.MULTILINE, true
+		).build();
 
 		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
 			TextInfoFieldType.MULTILINE);
@@ -57,9 +56,9 @@ public class TextInfoFieldTypeTest {
 
 	@Test
 	public void testMultilineAttributeIsEmptyByDefault() {
-		InfoField<TextInfoFieldType> infoField = new InfoField<>(
-			TextInfoFieldType.INSTANCE,
-			InfoLocalizedValue.singleValue("test-field"), "test-field");
+		InfoField<TextInfoFieldType> infoField = InfoField.builder(
+			TextInfoFieldType.INSTANCE, "test-field"
+		).build();
 
 		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
 			TextInfoFieldType.MULTILINE);

@@ -31,28 +31,41 @@ import java.util.Optional;
  */
 public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
+	public static <T extends InfoFieldType> Builder<T> builder(
+		T infoFieldType, String name) {
+
+		return new Builder<>(infoFieldType, name);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public InfoField(
 		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
 		boolean localizable, String name) {
 
-		this(infoFieldType, labelInfoLocalizedValue, name);
-
-		_localizable = localizable;
+		this(
+			builder(
+				infoFieldType, name
+			).labelInfoLocalizedValue(
+				labelInfoLocalizedValue
+			).localizable(
+				localizable
+			));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public InfoField(
 		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
 		String name) {
 
-		_infoFieldType = infoFieldType;
-		_labelInfoLocalizedValue = labelInfoLocalizedValue;
-		_name = name;
-	}
-
-	public <V> void addAttribute(
-		InfoFieldType.Attribute<T, V> attribute, V value) {
-
-		_attributes.put(attribute, value);
+		this(
+			builder(infoFieldType, name).labelInfoLocalizedValue(
+				labelInfoLocalizedValue));
 	}
 
 	@Override
@@ -67,11 +80,13 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 		InfoField infoDisplayField = (InfoField)object;
 
-		if (Objects.equals(_infoFieldType, infoDisplayField._infoFieldType) &&
+		if (Objects.equals(
+				_builder._infoFieldType,
+				infoDisplayField._builder._infoFieldType) &&
 			Objects.equals(
-				_labelInfoLocalizedValue,
-				infoDisplayField._labelInfoLocalizedValue) &&
-			Objects.equals(_name, infoDisplayField._name)) {
+				_builder._labelInfoLocalizedValue,
+				infoDisplayField._builder._labelInfoLocalizedValue) &&
+			Objects.equals(_builder._name, infoDisplayField._builder._name)) {
 
 			return true;
 		}
@@ -82,39 +97,39 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 	public <V> Optional<V> getAttributeOptional(
 		InfoFieldType.Attribute<T, V> attribute) {
 
-		return Optional.ofNullable((V)_attributes.get(attribute));
+		return Optional.ofNullable((V)_builder._attributes.get(attribute));
 	}
 
 	public InfoFieldType getInfoFieldType() {
-		return _infoFieldType;
+		return _builder._infoFieldType;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _labelInfoLocalizedValue.getValue(locale);
+		return _builder._labelInfoLocalizedValue.getValue(locale);
 	}
 
 	@Override
 	public InfoLocalizedValue<String> getLabelInfoLocalizedValue() {
-		return _labelInfoLocalizedValue;
+		return _builder._labelInfoLocalizedValue;
 	}
 
 	@Override
 	public String getName() {
-		return _name;
+		return _builder._name;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _infoFieldType);
+		int hash = HashUtil.hash(0, _builder._infoFieldType);
 
-		hash = HashUtil.hash(hash, _labelInfoLocalizedValue);
+		hash = HashUtil.hash(hash, _builder._labelInfoLocalizedValue);
 
-		return HashUtil.hash(hash, _name);
+		return HashUtil.hash(hash, _builder._name);
 	}
 
 	public boolean isLocalizable() {
-		return _localizable;
+		return _builder._localizable;
 	}
 
 	@Override
@@ -122,19 +137,65 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("{name: ");
-		sb.append(_name);
+		sb.append(_builder._name);
 		sb.append(", type: ");
-		sb.append(_infoFieldType.getName());
+		sb.append(_builder._infoFieldType.getName());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private final Map<InfoFieldType.Attribute<T, ?>, Object> _attributes =
-		new HashMap<>();
-	private final T _infoFieldType;
-	private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
-	private boolean _localizable;
-	private final String _name;
+	public static class Builder<T extends InfoFieldType> {
+
+		public <V> Builder<T> attribute(
+			InfoFieldType.Attribute<T, V> attribute, V value) {
+
+			_attributes.put(attribute, value);
+
+			return this;
+		}
+
+		public InfoField<T> build() {
+			if (_labelInfoLocalizedValue == null) {
+				_labelInfoLocalizedValue = InfoLocalizedValue.localize(
+					InfoField.class, _name);
+			}
+
+			return new InfoField<>(this);
+		}
+
+		public Builder<T> labelInfoLocalizedValue(
+			InfoLocalizedValue<String> labelInfoLocalizedValue) {
+
+			_labelInfoLocalizedValue = labelInfoLocalizedValue;
+
+			return this;
+		}
+
+		public Builder<T> localizable(boolean localizable) {
+			_localizable = localizable;
+
+			return this;
+		}
+
+		private Builder(T infoFieldType, String name) {
+			_infoFieldType = infoFieldType;
+			_name = name;
+		}
+
+		private final Map<InfoFieldType.Attribute<T, ?>, Object> _attributes =
+			new HashMap<>();
+		private final T _infoFieldType;
+		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
+		private boolean _localizable;
+		private final String _name;
+
+	}
+
+	private InfoField(Builder<T> builder) {
+		_builder = builder;
+	}
+
+	private final Builder<T> _builder;
 
 }

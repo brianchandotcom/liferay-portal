@@ -47,7 +47,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						leftTitle="available"
 						rightBoxName="availableAssetVocabularyNames"
 						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
-						rightTitle="current"
+						rightTitle="in-use"
 					/>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>

@@ -46,46 +46,12 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 		<%= rowBreak %>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="metal-dom/src/all/dom as dom,clay-alert/src/ClayToast as ClayToast">
-			let alertContainer = document.getElementById('alertContainer');
-
-			if (!alertContainer) {
-				alertContainer = document.createElement('div');
-				alertContainer.id = 'alertContainer';
-
-				dom.addClasses(alertContainer, 'alert-notifications alert-notifications-fixed');
-				dom.enterDocument(alertContainer);
-			}
-			else {
-				dom.removeChildren(alertContainer);
-			}
-
-			const clayToast = new ClayToast.default(
-				{
-					autoClose: true,
-					destroyOnHide: true,
-					events: {
-						'disposed': function(event) {
-							if (!alertContainer.hasChildNodes()) {
-								dom.exitDocument(alertContainer);
-							}
-						}
-					},
-					message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					style: '<%= alertStyle %>',
-					title: '<%= alertTitle %>'
-				},
-				alertContainer
-			);
-
-			dom.removeClasses(clayToast.element, 'show');
-
-			requestAnimationFrame(
-				function() {
-					dom.addClasses(clayToast.element, 'show');
-				}
-			);
+		<aui:script>
+			Liferay.Util.openToast({
+			   displayType: '<%= alertStyle %>',
+			   message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
+			   title: '<%= alertTitle %>'
+			});
 		</aui:script>
 	</c:otherwise>
 </c:choose>

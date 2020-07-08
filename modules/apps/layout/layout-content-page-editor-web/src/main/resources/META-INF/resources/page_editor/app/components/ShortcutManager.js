@@ -16,13 +16,20 @@ import {closest} from 'metal-dom';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {
+	ARROW_DOWN_KEYCODE,
+	ARROW_UP_KEYCODE,
 	BACKSPACE_KEYCODE,
 	D_KEYCODE,
 	S_KEYCODE,
+	Z_KEYCODE,
 } from '../config/constants/keycodes';
+import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
+import moveItem from '../thunks/moveItem';
+import redoThunk from '../thunks/redo';
+import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
@@ -53,6 +60,10 @@ const isTextElement = (element) => {
 			(element.type === 'text' || element.type === 'search')) ||
 		element.tagName === 'TEXTAREA'
 	);
+};
+
+const isWithinIframe = () => {
+	return window.top !== window.self;
 };
 
 export default function ShortcutManager() {
@@ -152,6 +163,26 @@ export default function ShortcutManager() {
 		[activeItemId, layoutData]
 	);
 
+	const undo = useCallback(
+		(event) => {
+			if (
+				!isTextElement(event.target) &&
+				!isCommentsAlloyEditor(event.target) &&
+				!isWithinIframe()
+			) {
+				event.preventDefault();
+
+				if (event.shiftKey) {
+					dispatch(redoThunk({store: state}));
+				}
+				else {
+					dispatch(undoThunk({store: state}));
+				}
+			}
+		},
+		[dispatch, state]
+	);
+
 	const keymap = useMemo(() => {
 		return {
 			duplicate: {
@@ -169,8 +200,15 @@ export default function ShortcutManager() {
 				isKeyCombination: (event) =>
 					ctrlOrMeta(event) && event.keyCode === S_KEYCODE,
 			},
+			undo: {
+				action: undo,
+				isKeyCombination: (event) =>
+					ctrlOrMeta(event) &&
+					event.keyCode === Z_KEYCODE &&
+					!event.altKey,
+			},
 		};
-	}, [duplicate, remove, save]);
+	}, [duplicate, remove, save, undo]);
 
 	useEffect(() => {
 		const onKeyDown = (event) => {

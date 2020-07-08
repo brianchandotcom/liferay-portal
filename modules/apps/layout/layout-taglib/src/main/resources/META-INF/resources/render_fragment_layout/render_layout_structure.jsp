@@ -225,8 +225,9 @@ for (String childrenItemId : childrenItemIds) {
 
 			<c:choose>
 				<c:when test="<%= includeContainer %>">
-					<clay:container-fluid
+					<clay:container
 						cssClass="p-0"
+						fluid="<%= true %>"
 					>
 						<clay:row
 							cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
@@ -238,7 +239,7 @@ for (String childrenItemId : childrenItemIds) {
 
 							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 						</clay:row>
-					</clay:container-fluid>
+					</clay:container>
 				</c:when>
 				<c:otherwise>
 					<clay:row

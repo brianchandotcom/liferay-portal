@@ -61,7 +61,7 @@ public class ExpandoInfoItemFieldReader
 	public InfoField getField() {
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			InfoLocalizedValue.<String>builder(
-			).put(
+			).value(
 				LocaleUtil.getDefault(), _attributeName
 			).defaultLocale(
 				LocaleUtil.getDefault()

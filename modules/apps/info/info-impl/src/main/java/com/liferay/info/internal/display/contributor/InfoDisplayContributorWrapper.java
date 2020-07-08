@@ -184,14 +184,14 @@ public class InfoDisplayContributorWrapper
 		Set<InfoDisplayField> infoDisplayFields) {
 
 		return InfoForm.builder(
-		).add(
+		).infoFieldSetEntry(
 			consumer -> {
 				for (InfoDisplayField infoDisplayField : infoDisplayFields) {
 					consumer.accept(
 						new InfoField(
 							_getInfoFieldTypeType(infoDisplayField.getType()),
 							InfoLocalizedValue.<String>builder(
-							).put(
+							).value(
 								_getLocale(), infoDisplayField.getLabel()
 							).build(),
 							infoDisplayField.getKey()));
@@ -207,7 +207,7 @@ public class InfoDisplayContributorWrapper
 		InfoItemClassPKReference infoItemClassPKReference) {
 
 		return InfoItemFieldValues.builder(
-		).add(
+		).infoFieldValue(
 			consumer -> {
 				for (Map.Entry<String, Object> entry :
 						infoDisplayFieldsValues.entrySet()) {
@@ -216,7 +216,7 @@ public class InfoDisplayContributorWrapper
 
 					InfoLocalizedValue<String> fieldLabelLocalizedValue =
 						InfoLocalizedValue.<String>builder(
-						).put(
+						).value(
 							_getLocale(), fieldName
 						).build();
 

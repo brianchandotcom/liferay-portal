@@ -53,7 +53,7 @@ public class InfoItemFieldValues {
 	 */
 	@Deprecated
 	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
-		_builder.add(infoFieldValue);
+		_builder.infoFieldValue(infoFieldValue);
 
 		return this;
 	}
@@ -65,7 +65,7 @@ public class InfoItemFieldValues {
 	public InfoItemFieldValues addAll(
 		List<InfoFieldValue<Object>> infoFieldValues) {
 
-		_builder.addAll(infoFieldValues);
+		_builder.infoFieldValues(infoFieldValues);
 
 		return this;
 	}
@@ -139,7 +139,7 @@ public class InfoItemFieldValues {
 
 	public static class Builder {
 
-		public Builder add(InfoFieldValue<Object> infoFieldValue) {
+		public Builder infoFieldValue(InfoFieldValue<Object> infoFieldValue) {
 			_infoFieldValues.add(infoFieldValue);
 
 			InfoField infoField = infoFieldValue.getInfoField();
@@ -153,19 +153,19 @@ public class InfoItemFieldValues {
 			return this;
 		}
 
-		public <T extends Throwable> Builder add(
+		public <T extends Throwable> Builder infoFieldValue(
 				UnsafeConsumer<UnsafeConsumer<InfoFieldValue<Object>, T>, T>
 					consumer)
 			throws T {
 
-			consumer.accept(this::add);
+			consumer.accept(this::infoFieldValue);
 
 			return this;
 		}
 
-		public Builder addAll(List<InfoFieldValue<Object>> infoFieldValues) {
+		public Builder infoFieldValues(List<InfoFieldValue<Object>> infoFieldValues) {
 			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-				add(infoFieldValue);
+				infoFieldValue(infoFieldValue);
 			}
 
 			return this;

@@ -106,17 +106,17 @@ public class JournalArticleInfoItemFormProvider
 
 		try {
 			return InfoForm.builder(
-			).addAll(
+			).infoFieldSetEntries(
 				_getJournalArticleFields()
-			).add(
+			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName())
-			).add(
+			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
-			).add(
+			).infoFieldSetEntry(
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName())
-			).<NoSuchStructureException>add(
+			).<NoSuchStructureException>infoFieldSetEntry(
 				consumer -> {
 					if (ddmStructureId != 0) {
 						consumer.accept(

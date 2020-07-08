@@ -57,7 +57,7 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 	 */
 	@Deprecated
 	public InfoFieldSet add(InfoFieldSetEntry infoFieldSetEntry) {
-		_builder.add(infoFieldSetEntry);
+		_builder.infoFieldSetEntry(infoFieldSetEntry);
 
 		return this;
 	}
@@ -69,7 +69,7 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 	public InfoFieldSet addAll(
 		Collection<InfoFieldSetEntry> infoFieldSetEntries) {
 
-		_builder.addAll(infoFieldSetEntries);
+		_builder.infoFieldSetEntries(infoFieldSetEntries);
 
 		return this;
 	}
@@ -161,28 +161,28 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 
 	public static class Builder {
 
-		public Builder add(InfoFieldSetEntry infoFieldSetEntry) {
+		public Builder infoFieldSetEntry(InfoFieldSetEntry infoFieldSetEntry) {
 			_infoFieldSetEntriesByName.put(
 				infoFieldSetEntry.getName(), infoFieldSetEntry);
 
 			return this;
 		}
 
-		public <T extends Throwable> Builder add(
+		public <T extends Throwable> Builder infoFieldSetEntry(
 				UnsafeConsumer<UnsafeConsumer<InfoFieldSetEntry, T>, T>
 					consumer)
 			throws T {
 
-			consumer.accept(this::add);
+			consumer.accept(this::infoFieldSetEntry);
 
 			return this;
 		}
 
-		public Builder addAll(
+		public Builder infoFieldSetEntries(
 			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
 
 			for (InfoFieldSetEntry fieldSetEntry : infoFieldSetEntries) {
-				add(fieldSetEntry);
+				infoFieldSetEntry(fieldSetEntry);
 			}
 
 			return this;

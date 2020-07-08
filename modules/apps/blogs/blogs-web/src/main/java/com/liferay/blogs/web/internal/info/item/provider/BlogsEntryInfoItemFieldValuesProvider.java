@@ -62,15 +62,15 @@ public class BlogsEntryInfoItemFieldValuesProvider
 	public InfoItemFieldValues getInfoItemFieldValues(BlogsEntry blogsEntry) {
 		try {
 			return InfoItemFieldValues.builder(
-			).addAll(
+			).infoFieldValues(
 				_getBlogsEntryInfoFieldValues(blogsEntry)
-			).addAll(
+			).infoFieldValues(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					BlogsEntry.class.getName(), blogsEntry.getEntryId())
-			).addAll(
+			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					BlogsEntry.class.getName(), blogsEntry)
-			).addAll(
+			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					BlogsEntry.class.getName(), blogsEntry)
 			).infoItemClassPKReference(

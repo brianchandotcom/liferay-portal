@@ -46,7 +46,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return InfoFieldSet.builder(
-			).add(
+			).infoFieldSetEntry(
 				consumer -> {
 					for (DDMFormField ddmFormField :
 							ddmStructure.getDDMFormFields(false)) {
@@ -64,7 +64,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 				}
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.<String>builder(
-				).putAll(
+				).values(
 					ddmStructure.getNameMap()
 				).build()
 			).name(

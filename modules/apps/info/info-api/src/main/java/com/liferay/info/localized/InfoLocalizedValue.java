@@ -78,7 +78,7 @@ public interface InfoLocalizedValue<T> {
 		 */
 		@Deprecated
 		public Builder<T> addValue(Locale locale, T value) {
-			return put(locale, value);
+			return value(locale, value);
 		}
 
 		/**
@@ -86,7 +86,7 @@ public interface InfoLocalizedValue<T> {
 		 */
 		@Deprecated
 		public Builder<T> addValues(Map<Locale, T> values) {
-			return putAll(values);
+			return values(values);
 		}
 
 		public InfoLocalizedValue<T> build() {
@@ -99,22 +99,22 @@ public interface InfoLocalizedValue<T> {
 			return this;
 		}
 
-		public Builder<T> put(Locale locale, T value) {
+		public Builder<T> value(Locale locale, T value) {
 			_values.put(locale, value);
 
 			return this;
 		}
 
-		public <E extends Throwable> Builder<T> put(
+		public <E extends Throwable> Builder<T> value(
 				UnsafeConsumer<UnsafeBiConsumer<Locale, T, E>, E> biConsumer)
 			throws E {
 
-			biConsumer.accept(this::put);
+			biConsumer.accept(this::value);
 
 			return this;
 		}
 
-		public Builder<T> putAll(Map<Locale, T> values) {
+		public Builder<T> values(Map<Locale, T> values) {
 			_values.putAll(values);
 
 			return this;

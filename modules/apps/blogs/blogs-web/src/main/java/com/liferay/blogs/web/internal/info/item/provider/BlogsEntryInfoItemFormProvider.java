@@ -85,14 +85,14 @@ public class BlogsEntryInfoItemFormProvider
 
 	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
 		return InfoForm.builder(
-		).addAll(
+		).infoFieldSetEntries(
 			_getBlogsEntryInfoFieldSetEntries()
-		).add(
+		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName())
-		).add(
+		).infoFieldSetEntry(
 			assetEntryInfoFieldSet
-		).add(
+		).infoFieldSetEntry(
 			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName())
 		).name(

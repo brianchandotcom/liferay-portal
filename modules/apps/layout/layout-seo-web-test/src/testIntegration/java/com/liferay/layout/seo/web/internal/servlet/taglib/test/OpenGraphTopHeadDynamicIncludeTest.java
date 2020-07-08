@@ -1173,40 +1173,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			MockObject mockObject) {
 
 			return InfoItemFieldValues.builder(
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null, "description"),
 					"<p>defaultMappedDescription</p>")
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(TextInfoFieldType.INSTANCE, null, "title"),
 					"defaultMappedTitle")
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedDescriptionFieldName"),
 					"<p>mappedDescription</p>")
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedTitleFieldName"),
 					"mappedTitle")
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedTitleFieldName"),
 					"mappedTitle")
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						ImageInfoFieldType.INSTANCE, null,
 						"mappedImageFieldName"),
 					new WebImage("/imageURL"))
-			).add(
+			).infoFieldValue(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,

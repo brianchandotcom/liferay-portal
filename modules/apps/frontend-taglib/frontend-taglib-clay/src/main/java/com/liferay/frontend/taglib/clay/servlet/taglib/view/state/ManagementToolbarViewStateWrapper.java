@@ -30,13 +30,13 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @author  Neil Griffin
  */
 @ConsumerType
-public abstract class ClayToolbarViewStateWrapper
-	implements ClayToolbarViewState {
+public abstract class ManagementToolbarViewStateWrapper
+	implements ManagementToolbarViewState {
 
-	public ClayToolbarViewStateWrapper(
-		ClayToolbarViewState clayToolbarViewState) {
+	public ManagementToolbarViewStateWrapper(
+		ManagementToolbarViewState managementToolbarViewState) {
 
-		_wrapped = clayToolbarViewState;
+		_wrapped = managementToolbarViewState;
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public abstract class ClayToolbarViewStateWrapper
 		return _wrapped.getViewTypeItems();
 	}
 
-	public ClayToolbarViewState getWrapped() {
+	public ManagementToolbarViewState getWrapped() {
 		return _wrapped;
 	}
 
@@ -258,6 +258,6 @@ public abstract class ClayToolbarViewStateWrapper
 		return _wrapped.isShowSearch();
 	}
 
-	private final ClayToolbarViewState _wrapped;
+	private final ManagementToolbarViewState _wrapped;
 
 }

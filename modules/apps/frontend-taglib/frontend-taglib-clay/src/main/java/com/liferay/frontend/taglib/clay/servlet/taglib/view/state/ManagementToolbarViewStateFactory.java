@@ -24,9 +24,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author  Neil Griffin
  */
 @ProviderType
-public interface ClayToolbarViewStateFactory {
+public interface ManagementToolbarViewStateFactory {
 
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, RenderURL addEntryURL,
 		RenderURL clearResultsURL, String displayStyle,
 		RenderURL displayStyleURL, String searchFormMethod,
@@ -36,14 +36,14 @@ public interface ClayToolbarViewStateFactory {
 		boolean showDisplayStyleTable, String sortingOrder,
 		RenderURL sortingURLCurrent, RenderURL sortingURLReverse);
 
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, String defaultDisplayStyle,
 		String defaultOrderByCol, String defaultOrderByType,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		boolean showCreationMenu, boolean showDisplayStyleCard,
 		boolean showDisplayStyleList, boolean showDisplayStyleTable);
 
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, String defaultDisplayStyle,
 		String defaultOrderByCol, String defaultOrderByType,
 		RenderRequest renderRequest, RenderResponse renderResponse,

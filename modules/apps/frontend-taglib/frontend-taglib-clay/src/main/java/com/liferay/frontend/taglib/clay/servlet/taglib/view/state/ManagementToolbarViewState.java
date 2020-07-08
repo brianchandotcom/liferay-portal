@@ -24,7 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author  Neil Griffin
  */
 @ProviderType
-public interface ClayToolbarViewState extends ManagementToolbarDisplayContext {
+public interface ManagementToolbarViewState
+	extends ManagementToolbarDisplayContext {
 
 	public String getAddEntryMessage();
 

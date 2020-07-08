@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib.view.state;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ClayToolbarViewState;
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ClayToolbarViewStateFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ManagementToolbarViewState;
+import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ManagementToolbarViewStateFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.SearchContainerURLFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author  Neil Griffin
  */
-@Component(service = ClayToolbarViewStateFactory.class)
-public class ClayToolbarViewStateFactoryImpl
-	implements ClayToolbarViewStateFactory {
+@Component(service = ManagementToolbarViewStateFactory.class)
+public class ManagementToolbarViewStateFactoryImpl
+	implements ManagementToolbarViewStateFactory {
 
 	@Override
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, RenderURL addEntryURL,
 		RenderURL clearResultsURL, String displayStyle,
 		RenderURL displayStyleURL, String searchFormMethod,
@@ -46,7 +46,7 @@ public class ClayToolbarViewStateFactoryImpl
 		boolean showDisplayStyleTable, String sortingOrder,
 		RenderURL sortingURLCurrent, RenderURL sortingURLReverse) {
 
-		return new ClayToolbarViewStateImpl(
+		return new ManagementToolbarViewStateImpl(
 			addEntryMessage, addEntryURL, clearResultsURL, displayStyle,
 			displayStyleURL, searchFormMethod, searchFormName, searchInputName,
 			searchURL, searchValue, showCreationMenu, showDisplayStyleCard,
@@ -55,7 +55,7 @@ public class ClayToolbarViewStateFactoryImpl
 	}
 
 	@Override
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, String defaultDisplayStyle,
 		String defaultOrderByCol, String defaultOrderByType,
 		RenderRequest renderRequest, RenderResponse renderResponse,
@@ -70,7 +70,7 @@ public class ClayToolbarViewStateFactoryImpl
 	}
 
 	@Override
-	public ClayToolbarViewState create(
+	public ManagementToolbarViewState create(
 		String addEntryMessage, String defaultDisplayStyle,
 		String defaultOrderByCol, String defaultOrderByType,
 		RenderRequest renderRequest, RenderResponse renderResponse,

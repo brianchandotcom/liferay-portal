@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ClayToolbarViewState;
+import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ManagementToolbarViewState;
 
 import java.util.List;
 
@@ -27,9 +27,10 @@ import javax.portlet.RenderURL;
 /**
  * @author  Neil Griffin
  */
-public class ClayToolbarViewStateImpl implements ClayToolbarViewState {
+public class ManagementToolbarViewStateImpl
+	implements ManagementToolbarViewState {
 
-	public ClayToolbarViewStateImpl(
+	public ManagementToolbarViewStateImpl(
 		String addEntryMessage, RenderURL addEntryURL,
 		RenderURL clearResultsURL, String displayStyle,
 		RenderURL displayStyleURL, String searchFormMethod,
@@ -106,7 +107,7 @@ public class ClayToolbarViewStateImpl implements ClayToolbarViewState {
 	public String getSearchFormMethod() {
 		if (_searchFormMethod == null) {
 			_searchFormMethod =
-				ClayToolbarViewState.super.getSearchFormMethod();
+				ManagementToolbarViewState.super.getSearchFormMethod();
 		}
 
 		return _searchFormMethod;
@@ -115,7 +116,8 @@ public class ClayToolbarViewStateImpl implements ClayToolbarViewState {
 	@Override
 	public String getSearchFormName() {
 		if (_searchFormName == null) {
-			_searchFormName = ClayToolbarViewState.super.getSearchFormName();
+			_searchFormName =
+				ManagementToolbarViewState.super.getSearchFormName();
 		}
 
 		return _searchFormName;
@@ -124,7 +126,8 @@ public class ClayToolbarViewStateImpl implements ClayToolbarViewState {
 	@Override
 	public String getSearchInputName() {
 		if (_searchInputName == null) {
-			_searchInputName = ClayToolbarViewState.super.getSearchInputName();
+			_searchInputName =
+				ManagementToolbarViewState.super.getSearchInputName();
 		}
 
 		return _searchInputName;

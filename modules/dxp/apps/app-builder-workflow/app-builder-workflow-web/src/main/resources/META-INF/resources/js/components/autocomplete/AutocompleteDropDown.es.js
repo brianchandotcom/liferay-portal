@@ -16,8 +16,8 @@ import React from 'react';
 const DropDown = ({
 	active,
 	activeItem,
-	emptyMessage = Liferay.Language.get('no-results-found'),
-	emptyResultMessage = Liferay.Language.get('no-results-found'),
+	emptyMessage = Liferay.Language.get('no-results-were-found'),
+	emptyResultMessage = Liferay.Language.get('no-results-were-found'),
 	id = '',
 	items,
 	match,

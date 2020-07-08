@@ -183,8 +183,8 @@ describe('Autocomplete', () => {
 			getByText = autocomplete.getByText;
 		});
 
-		it('renders with "no results found" message', () => {
-			const dropDownEmpty = getByText('no-results-found');
+		it('renders with "no results were found" message', () => {
+			const dropDownEmpty = getByText('no-results-were-found');
 
 			expect(dropDownEmpty).toBeTruthy();
 		});

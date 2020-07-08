@@ -145,10 +145,10 @@ export default function EditAppSidebar({assigneeRoles}) {
 
 									<AutocompleteMultiSelect
 										emptyMessage={Liferay.Language.get(
-											'no-roles-found'
+											'no-roles-were-found'
 										)}
 										emptyResultMessage={Liferay.Language.get(
-											'no-roles-found-with-this-name-try-a-different-one'
+											'no-roles-were-found-with-this-name-try-a-different-one'
 										)}
 										items={assigneeRoles}
 										onChange={onChangeAssignees}

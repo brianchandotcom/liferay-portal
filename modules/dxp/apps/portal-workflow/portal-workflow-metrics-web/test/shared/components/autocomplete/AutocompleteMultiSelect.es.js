@@ -70,7 +70,7 @@ describe('The AutocompleteMultiSelect component should', () => {
 
 		const dropDownEmpty = getByTestId('dropDownEmpty');
 
-		expect(dropDownEmpty).toHaveTextContent('no-results-found');
+		expect(dropDownEmpty).toHaveTextContent('no-results-were-found');
 
 		const multiSelectItemsRemove = getAllByTestId('multiSelectItemRemove');
 

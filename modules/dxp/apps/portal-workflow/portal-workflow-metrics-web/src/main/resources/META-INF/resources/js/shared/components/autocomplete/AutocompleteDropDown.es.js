@@ -45,7 +45,7 @@ const DropDown = ({
 						className="disabled"
 						data-testid="dropDownEmpty"
 					>
-						{Liferay.Language.get('no-results-found')}
+						{Liferay.Language.get('no-results-were-found')}
 					</ClayDropDown.Item>
 				)}
 			</ClayDropDown.ItemList>

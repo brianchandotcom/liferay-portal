@@ -75,7 +75,7 @@ describe('AutocompleteMultiSelect', () => {
 		expect(multiSelectItem1).toBeTruthy();
 		expect(multiSelectItem2).toBeTruthy();
 
-		expect(getByText('no-results-found')).toBeTruthy();
+		expect(getByText('no-results-were-found')).toBeTruthy();
 
 		const multiSelectItemsRemove = document.querySelectorAll(
 			'button.close'

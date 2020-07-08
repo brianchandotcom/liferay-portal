@@ -497,7 +497,7 @@
 </tr>
 <tr>
 	<td>GRID_COLUMN_RESIZER</td>
-	<td>//div[contains(@class,'page-editor__col page-editor__topper')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
+	<td>//div[contains(@class,'page-editor__col')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
 	<td></td>
 </tr>
 <tr>

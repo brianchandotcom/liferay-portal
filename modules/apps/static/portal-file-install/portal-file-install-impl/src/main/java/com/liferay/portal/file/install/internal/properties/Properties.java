@@ -43,20 +43,6 @@ public class Properties extends AbstractMap<String, String> {
 
 	public static final String DEFAULT_ENCODING = "ISO-8859-1";
 
-	public static boolean contains(char[] array, char valueToFind) {
-		if (array == null) {
-			return false;
-		}
-
-		for (char c : array) {
-			if (valueToFind == c) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public Properties(boolean substitute) {
 		_substitute = substitute;
 	}
@@ -99,10 +85,6 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		return new ArrayList<>();
-	}
-
-	public List<String> getHeader() {
-		return _header;
 	}
 
 	public boolean isTyped() {
@@ -376,7 +358,7 @@ public class Properties extends AbstractMap<String, String> {
 				_valueLines.add(line);
 
 				while ((line.length() > 0) &&
-					   contains(_WHITE_SPACE, line.charAt(0))) {
+					   _contains(_WHITE_SPACE, line.charAt(0))) {
 
 					line = line.substring(1);
 				}
@@ -433,13 +415,13 @@ public class Properties extends AbstractMap<String, String> {
 					if (c == '\\') {
 						state = 1;
 					}
-					else if (contains(_WHITE_SPACE, c)) {
+					else if (_contains(_WHITE_SPACE, c)) {
 
 						// switch to the separator crossing state
 
 						state = 2;
 					}
-					else if (contains(_SEPARATORS, c)) {
+					else if (_contains(_SEPARATORS, c)) {
 
 						// switch to the value parsing state
 
@@ -450,7 +432,8 @@ public class Properties extends AbstractMap<String, String> {
 					}
 				}
 				else if (state == 1) {
-					if (contains(_SEPARATORS, c) || contains(_WHITE_SPACE, c)) {
+					if (_contains(_SEPARATORS, c) ||
+						_contains(_WHITE_SPACE, c)) {
 
 						// this is an escaped separator or white space
 
@@ -469,13 +452,13 @@ public class Properties extends AbstractMap<String, String> {
 					state = 0;
 				}
 				else if (state == 2) {
-					if (contains(_WHITE_SPACE, c)) {
+					if (_contains(_WHITE_SPACE, c)) {
 
 						// do nothing, eat all white spaces
 
 						state = 2;
 					}
-					else if (contains(_SEPARATORS, c)) {
+					else if (_contains(_SEPARATORS, c)) {
 
 						// switch to the value parsing state
 
@@ -494,7 +477,7 @@ public class Properties extends AbstractMap<String, String> {
 					}
 				}
 				else if (state == 3) {
-					if (contains(_WHITE_SPACE, c)) {
+					if (_contains(_WHITE_SPACE, c)) {
 
 						// do nothing, eat all white spaces
 
@@ -623,6 +606,20 @@ public class Properties extends AbstractMap<String, String> {
 		}
 	}
 
+	private static boolean _contains(char[] array, char valueToFind) {
+		if (array == null) {
+			return false;
+		}
+
+		for (char c : array) {
+			if (valueToFind == c) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static String _escapeJava(String string) {
 		if (string == null) {
 			return null;
@@ -705,7 +702,7 @@ public class Properties extends AbstractMap<String, String> {
 		for (int i = 0; i < key.length(); i++) {
 			char c = key.charAt(i);
 
-			if (contains(_SEPARATORS, c) || contains(_WHITE_SPACE, c)) {
+			if (_contains(_SEPARATORS, c) || _contains(_WHITE_SPACE, c)) {
 
 				// escape the separator
 
@@ -852,7 +849,7 @@ public class Properties extends AbstractMap<String, String> {
 	}
 
 	private int _checkHeaderComment(List<String> commentLines) {
-		if ((getHeader() == null) && _layoutMap.isEmpty()) {
+		if ((_header == null) && _layoutMap.isEmpty()) {
 
 			// This is the first comment. Search for blank lines.
 

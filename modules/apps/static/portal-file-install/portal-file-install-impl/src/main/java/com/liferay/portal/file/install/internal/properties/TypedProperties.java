@@ -39,41 +39,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	public static final String ENV_PREFIX = "env:";
 
-	public static Map<String, Map<String, String>> prepare(
-		Map<String, TypedProperties> properties) {
-
-		Map<String, Map<String, String>> dynamic = new HashMap<>();
-
-		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
-			String name = entry.getKey();
-
-			TypedProperties typedProperties = entry.getValue();
-
-			dynamic.put(name, new DynamicMap(name, typedProperties._storage));
-		}
-
-		return dynamic;
-	}
-
-	public static void substitute(
-		Map<String, TypedProperties> properties,
-		Map<String, Map<String, String>> dynamic, SubstitutionCallback callback,
-		boolean finalSubstitution) {
-
-		for (Map<String, String> map : dynamic.values()) {
-			DynamicMap dynamicMap = (DynamicMap)map;
-
-			dynamicMap.init(callback, finalSubstitution);
-		}
-
-		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
-			TypedProperties typedProperties = entry.getValue();
-
-			typedProperties._storage.putAllSubstituted(
-				dynamic.get(entry.getKey()));
-		}
-	}
-
 	public TypedProperties(SubstitutionCallback callback) {
 		_storage = new Properties(false);
 		_callback = callback;
@@ -115,7 +80,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader, true);
 
-		substitute(_callback);
+		_substitute(_callback);
 	}
 
 	@Override
@@ -144,31 +109,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		_storage.save(writer);
 	}
 
-	public void substitute(final SubstitutionCallback substitutionCallback) {
-		SubstitutionCallback callback = substitutionCallback;
-
-		if (callback == null) {
-			callback = new SubstitutionCallback() {
-
-				@Override
-				public String getValue(String name, String key, String value) {
-					if (value.startsWith(ENV_PREFIX)) {
-						return System.getenv(
-							value.substring(ENV_PREFIX.length()));
-					}
-
-					return System.getProperty(value);
-				}
-
-			};
-		}
-
-		Map<String, TypedProperties> map = Collections.singletonMap(
-			"root", this);
-
-		substitute(map, prepare(map), callback, true);
-	}
-
 	public interface SubstitutionCallback {
 
 		public String getValue(String name, String key, String value);
@@ -193,6 +133,41 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 	}
 
+	private static Map<String, Map<String, String>> _prepare(
+		Map<String, TypedProperties> properties) {
+
+		Map<String, Map<String, String>> dynamic = new HashMap<>();
+
+		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
+			String name = entry.getKey();
+
+			TypedProperties typedProperties = entry.getValue();
+
+			dynamic.put(name, new DynamicMap(name, typedProperties._storage));
+		}
+
+		return dynamic;
+	}
+
+	private static void _substitute(
+		Map<String, TypedProperties> properties,
+		Map<String, Map<String, String>> dynamic, SubstitutionCallback callback,
+		boolean finalSubstitution) {
+
+		for (Map<String, String> map : dynamic.values()) {
+			DynamicMap dynamicMap = (DynamicMap)map;
+
+			dynamicMap.init(callback, finalSubstitution);
+		}
+
+		for (Map.Entry<String, TypedProperties> entry : properties.entrySet()) {
+			TypedProperties typedProperties = entry.getValue();
+
+			typedProperties._storage.putAllSubstituted(
+				dynamic.get(entry.getKey()));
+		}
+	}
+
 	private void _ensureTyped() {
 		if (!_storage.isTyped()) {
 			_storage.setTyped(true);
@@ -207,6 +182,31 @@ public class TypedProperties extends AbstractMap<String, Object> {
 					Arrays.asList(string.split("\n")));
 			}
 		}
+	}
+
+	private void _substitute(final SubstitutionCallback substitutionCallback) {
+		SubstitutionCallback callback = substitutionCallback;
+
+		if (callback == null) {
+			callback = new SubstitutionCallback() {
+
+				@Override
+				public String getValue(String name, String key, String value) {
+					if (value.startsWith(ENV_PREFIX)) {
+						return System.getenv(
+							value.substring(ENV_PREFIX.length()));
+					}
+
+					return System.getProperty(value);
+				}
+
+			};
+		}
+
+		Map<String, TypedProperties> map = Collections.singletonMap(
+			"root", this);
+
+		_substitute(map, _prepare(map), callback, true);
 	}
 
 	private final SubstitutionCallback _callback;

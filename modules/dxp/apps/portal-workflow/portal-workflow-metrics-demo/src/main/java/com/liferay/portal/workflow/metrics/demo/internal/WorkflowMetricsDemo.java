@@ -291,7 +291,10 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).put(
 				"workflow.metrics.index.entity.names",
-				new String[] {"sla-instance-result", "sla-task-result"}
+				new String[] {
+					"instance", "node", "process", "sla-instance-result",
+					"sla-task-result", "task", "transition"
+				}
 			).build(),
 			new ServiceContext());
 	}

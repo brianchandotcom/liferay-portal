@@ -17,6 +17,7 @@ package com.liferay.portal.file.install.internal.properties;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,7 +63,6 @@ public class ConfigurationHandler {
 
 		return stringWriter.toString();
 	}
-
 
 	private static void _writeArray(Writer writer, Object arrayValue)
 		throws IOException {
@@ -138,9 +138,9 @@ public class ConfigurationHandler {
 		for (int i = 0; i < length; i++) {
 			c = simple.charAt(i);
 
-			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) || (c == CharPool.SPACE) ||
-				(c == _TOKEN_EQ) || (c == _TOKEN_BRACE_OPEN) ||
-				(c == _TOKEN_BRACE_CLOS)) {
+			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) ||
+				(c == CharPool.SPACE) || (c == _TOKEN_EQ) ||
+				(c == _TOKEN_BRACE_OPEN) || (c == _TOKEN_BRACE_CLOS)) {
 
 				writer.write('\\');
 				writer.write(c);
@@ -846,6 +846,8 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_VEC_OPEN = '(';
 
+	private static final Map<Object, Object> _codeToType = new HashMap<>();
+
 	private static final Map<Object, Object> _typeToCode =
 		new HashMap<Object, Object>() {
 			{
@@ -871,21 +873,13 @@ public class ConfigurationHandler {
 			}
 		};
 
-	private static final Map<Object, Object> _codeToType =
-		new HashMap<Object, Object>() {
-			{
+	static {
+		for (Map.Entry<Object, Object> entry : _typeToCode.entrySet()) {
+			_codeToType.put(entry.getValue(), entry.getKey());
+		}
 
-				// reverse map to map type codes to classes, string class
-				// mapping to be added manually, as the string type code is not
-				// written and hence not included in the type2Code map
-
-				for (Map.Entry<Object, Object> entry : _typeToCode.entrySet()) {
-					put(entry.getValue(), entry.getKey());
-				}
-
-				put(Integer.valueOf(_TOKEN_SIMPLE_STRING), String.class);
-			}
-		};
+		_codeToType.put(Integer.valueOf(_TOKEN_SIMPLE_STRING), String.class);
+	}
 
 	private int _line;
 	private int _pos;
@@ -893,4 +887,3 @@ public class ConfigurationHandler {
 	private String _tokenValue;
 
 }
-/* @generated */

@@ -252,25 +252,25 @@ public class UpdateLanguageActionTest {
 	private void _setThemeDisplayForControlPanel(boolean i18n) {
 		_themeDisplay = new ThemeDisplay();
 
-		_themeDisplay.setLayout(_controlPanelLayout);
-
 		if (i18n) {
 			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
 			_themeDisplay.setI18nPath(_sourceLocalePrepend);
 		}
+
+		_themeDisplay.setLayout(_controlPanelLayout);
 	}
 
 	private void _setThemeDisplayForLayout(boolean i18n) {
 		_themeDisplay = new ThemeDisplay();
 
-		_themeDisplay.setLayout(_layout);
-		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-
 		if (i18n) {
 			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
 			_themeDisplay.setI18nPath(_sourceLocalePrepend);
 		}
+
+		_themeDisplay.setLayout(_layout);
+		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		_themeDisplay.setSiteGroupId(_group.getGroupId());
 	}
 
 	private static Locale _defaultLocale;

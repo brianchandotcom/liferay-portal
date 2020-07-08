@@ -83,9 +83,20 @@ const Collections = ({collections, indentation, open}) =>
 			)}
 
 			<ul className="list-unstyled">
-				{collection.children.map((item) => (
-					<TabItem item={item} key={item.itemId} />
+				{collection.children.map((item, index) => (
+					<React.Fragment key={index}>
+						<TabItem item={item} />
+
+						{item.portletItems?.length && (
+							<TabPortletItem item={item} />
+						)}
+					</React.Fragment>
 				))}
 			</ul>
 		</Collapse>
+	));
+
+const TabPortletItem = ({item}) =>
+	item.portletItems.map((portlet, index) => (
+		<TabItem indentation item={portlet} key={index} />
 	));

@@ -41,7 +41,12 @@ export default function SearchResultsPanel({filteredTabs}) {
 							[]
 						)
 						.map((item) => (
-							<TabItem item={item} key={item.itemId} />
+							<React.Fragment key={item.itemId}>
+								<TabItem item={item} key={item.itemId} />
+								{item.portletItems?.length && (
+									<TabPortletItem item={item} />
+								)}
+							</React.Fragment>
 						))}
 				</ul>
 			</div>
@@ -54,6 +59,11 @@ export default function SearchResultsPanel({filteredTabs}) {
 		</ClayAlert>
 	);
 }
+
+const TabPortletItem = ({item}) =>
+	item.portletItems.map((portlet, index) => (
+		<TabItem indentation item={portlet} key={index} />
+	));
 
 SearchResultsPanel.proptypes = {
 	filteredTabs: PropTypes.object.isRequired,

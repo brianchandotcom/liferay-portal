@@ -160,6 +160,9 @@ const normalizeWidget = (widget) => {
 		icon: widget.instanceable ? 'cards2' : 'square-hole',
 		itemId: widget.portletId,
 		label: widget.title,
+		portletItems: widget.portletItems?.length
+			? widget.portletItems.map(normalizeWidget)
+			: null,
 		preview: '',
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};

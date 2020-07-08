@@ -133,12 +133,12 @@ public class EnterpriseAnalyzerPlugin implements AnalyzerPlugin {
 
 		properties.put("version:", version.toString());
 
-		try (HeaderReader headerReader = new HeaderReader(analyzer)) {
-			return new TagResource(
-				headerReader.createComponentTag(
-					modulePortalProfileClassName, modulePortalProfileClassName,
-					properties));
-		}
+		HeaderReader headerReader = new HeaderReader(analyzer);
+
+		return new TagResource(
+			headerReader.createComponentTag(
+				modulePortalProfileClassName, modulePortalProfileClassName,
+				properties));
 	}
 
 	private void _processProvideCapability(Analyzer analyzer) {

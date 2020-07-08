@@ -18,6 +18,12 @@
  */
 export function setWidgetUsage(widgets, path, usage) {
 	if (!path.length) {
+		if (widgets.portletItems?.length) {
+			widgets.portletItems.forEach((item) => {
+				item.used = usage.used;
+			});
+		}
+
 		return {
 			...widgets,
 			used: usage.used,

@@ -591,25 +591,25 @@ public class ConfigurationHandler {
 	private static final Map<Object, Object> _typeToCode =
 		new HashMap<Object, Object>() {
 			{
-				put(Boolean.class, Integer.valueOf(_TOKEN_SIMPLE_BOOLEAN));
-				put(Byte.class, Integer.valueOf(_TOKEN_SIMPLE_BYTE));
-				put(Character.class, Integer.valueOf(_TOKEN_SIMPLE_CHARACTER));
-				put(Double.class, Integer.valueOf(_TOKEN_SIMPLE_DOUBLE));
-				put(Float.class, Integer.valueOf(_TOKEN_SIMPLE_FLOAT));
-				put(Integer.class, Integer.valueOf(_TOKEN_SIMPLE_INTEGER));
-				put(Long.class, Integer.valueOf(_TOKEN_SIMPLE_LONG));
-				put(Short.class, Integer.valueOf(_TOKEN_SIMPLE_SHORT));
+				put(Boolean.class, _TOKEN_SIMPLE_BOOLEAN);
+				put(Byte.class, _TOKEN_SIMPLE_BYTE);
+				put(Character.class, _TOKEN_SIMPLE_CHARACTER);
+				put(Double.class, _TOKEN_SIMPLE_DOUBLE);
+				put(Float.class, _TOKEN_SIMPLE_FLOAT);
+				put(Integer.class, _TOKEN_SIMPLE_INTEGER);
+				put(Long.class, _TOKEN_SIMPLE_LONG);
+				put(Short.class, _TOKEN_SIMPLE_SHORT);
 
 				// primitives
 
-				put(Boolean.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_BOOLEAN));
-				put(Byte.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_BYTE));
-				put(Character.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_CHAR));
-				put(Double.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_DOUBLE));
-				put(Float.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_FLOAT));
-				put(Integer.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_INT));
-				put(Long.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_LONG));
-				put(Short.TYPE, Integer.valueOf(_TOKEN_PRIMITIVE_SHORT));
+				put(Boolean.TYPE, _TOKEN_PRIMITIVE_BOOLEAN);
+				put(Byte.TYPE, _TOKEN_PRIMITIVE_BYTE);
+				put(Character.TYPE, _TOKEN_PRIMITIVE_CHAR);
+				put(Double.TYPE, _TOKEN_PRIMITIVE_DOUBLE);
+				put(Float.TYPE, _TOKEN_PRIMITIVE_FLOAT);
+				put(Integer.TYPE, _TOKEN_PRIMITIVE_INT);
+				put(Long.TYPE, _TOKEN_PRIMITIVE_LONG);
+				put(Short.TYPE, _TOKEN_PRIMITIVE_SHORT);
 			}
 		};
 
@@ -618,7 +618,7 @@ public class ConfigurationHandler {
 			_codeToType.put(entry.getValue(), entry.getKey());
 		}
 
-		_codeToType.put(Integer.valueOf(_TOKEN_SIMPLE_STRING), String.class);
+		_codeToType.put(_TOKEN_SIMPLE_STRING, String.class);
 	}
 
 }

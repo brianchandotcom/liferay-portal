@@ -724,7 +724,9 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Row");
 
-			PageEditor.editLayoutRow(columnCount = "2");
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "Configuration");
 		}
 
 		task ("Add a Collection Display fragment to column 1") {

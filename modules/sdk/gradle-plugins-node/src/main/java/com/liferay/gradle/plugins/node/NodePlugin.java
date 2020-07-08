@@ -196,7 +196,11 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return nodeExtension.getNodeDir();
+					if (nodeExtension.isDownload()) {
+						return nodeExtension.getNodeDir();
+					}
+
+					return null;
 				}
 
 			});
@@ -610,7 +614,11 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return nodeExtension.getScriptFile();
+					if (nodeExtension.isDownload()) {
+						return nodeExtension.getScriptFile();
+					}
+
+					return null;
 				}
 
 			});

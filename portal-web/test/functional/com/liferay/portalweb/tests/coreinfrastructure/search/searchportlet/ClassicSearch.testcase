@@ -313,15 +313,9 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships",
-			site = "${siteName}");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.openURL();
 
@@ -374,15 +368,9 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships",
-			site = "${siteName}");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.openURL();
 
@@ -457,15 +445,9 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships",
-			site = "${siteName}");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.openURL();
 

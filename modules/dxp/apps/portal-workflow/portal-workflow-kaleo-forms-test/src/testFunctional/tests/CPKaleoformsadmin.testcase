@@ -2610,8 +2610,6 @@ definition {
 
 	@priority = "3"
 	test ViewProcessRecordDetails {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

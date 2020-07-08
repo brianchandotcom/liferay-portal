@@ -46,8 +46,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope {
-		property portal.upstream = "quarantine";
-
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -207,8 +205,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope {
-		property portal.upstream = "quarantine";
-
 		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -515,7 +511,7 @@ definition {
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Category Specific");
 
-		WebContentNavigator.gotoAddCP();
+		Workflow.webContentGoToAddCP();
 
 		WebContent.addCP(
 			webContentContent = "legal category",
@@ -541,7 +537,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		WebContentNavigator.gotoAddCP();
+		Workflow.webContentGoToAddCP();
 
 		WebContent.addCP(
 			webContentContent = "both categories",
@@ -571,7 +567,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		WebContentNavigator.gotoAddCP();
+		Workflow.webContentGoToAddCP();
 
 		WebContent.addCP(
 			webContentContent = "other category",
@@ -597,7 +593,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		WebContentNavigator.gotoAddCP();
+		Workflow.webContentGoToAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = "no category",
@@ -916,8 +912,6 @@ definition {
 
 	@priority = "4"
 	test ViewInvalidDefinitionAlert {
-		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "WorkflowUsecase#ViewInvalidDefinitionAlert";
 
 		GlobalMenu.gotoPortlet(
@@ -982,7 +976,7 @@ definition {
 				panel = "Site Administration",
 				portlet = "Web Content");
 
-			WebContentNavigator.gotoAddCP();
+			Workflow.webContentGoToAddCP();
 
 			WebContent.addWithWorkflowCP(
 				webContentContent = "WC WebContent Content ${number}",
@@ -1301,8 +1295,6 @@ definition {
 
 	@priority = "4"
 	test XSSScriptWebContent {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.openURL();
@@ -1321,7 +1313,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		WebContentNavigator.gotoAddCP();
+		Workflow.webContentGoToAddCP();
 
 		WebContent.addWithWorkflowCP(
 			webContentContent = '''&lt;script&gt;alert(123);&lt;/script&gt;''',
@@ -1405,12 +1397,14 @@ definition {
 		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites");
+			portlet = "Sites",
+			site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Asset Publisher Test Page");
 

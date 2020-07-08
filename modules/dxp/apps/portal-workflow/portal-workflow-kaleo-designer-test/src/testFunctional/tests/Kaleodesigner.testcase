@@ -542,8 +542,6 @@ definition {
 
 	@priority = "5"
 	test DeleteConnectors {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteConnectors";
 		property testray.component.names = "Training";
 

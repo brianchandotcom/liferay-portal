@@ -548,8 +548,6 @@ definition {
 
 	@priority = "4"
 	test AddRepeatingWeekly2Times {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZonePacific();
@@ -765,8 +763,6 @@ definition {
 
 	@priority = "4"
 	test AddViaScheduler {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		CalendarScheduler.addEventToday(
@@ -802,8 +798,6 @@ definition {
 
 	@priority = "4"
 	test AddWithRelatedAssetViaAssetPublisher {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

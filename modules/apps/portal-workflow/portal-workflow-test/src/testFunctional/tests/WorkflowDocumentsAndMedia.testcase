@@ -238,8 +238,6 @@ definition {
 
 	@priority = "4"
 	test ConfigureFolderWorkflow {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -370,8 +368,6 @@ definition {
 	@description = "This is a use case for LPS-60870."
 	@priority = "5"
 	test SaveAsDraftAndViewCategories {
-		property portal.upstream = "quarantine";
-
 		property custom.properties = "dl.file.entry.drafts.enabled=true";
 		property testray.component.names = "Training";
 

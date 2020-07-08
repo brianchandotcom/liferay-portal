@@ -1373,6 +1373,22 @@ definition {
 			value1 = "${workflowTask}: ${kfProcessName}");
 	}
 
+	macro webContentGoToAddCP {
+		Pause(locator1 = "3000");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Basic Web Content");
+
+		WaitForElementPresent(locator1 = "TextInput#TITLE");
+
+		AssertVisible(locator1 = "TextInput#TITLE");
+
+		while (IsElementNotPresent(locator1 = "WCEditWebContent#SIDEBAR")) {
+			Pause(locator1 = "1000");
+		}
+	}
+
 	macro withdrawTaskByActions {
 		Workflow.viewMySubmissions(
 			workflowAssetTitle = "${workflowAssetTitle}",

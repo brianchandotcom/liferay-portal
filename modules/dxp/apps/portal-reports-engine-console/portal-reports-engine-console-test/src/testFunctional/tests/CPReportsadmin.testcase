@@ -224,9 +224,6 @@ definition {
 
 	@priority = "4"
 	test DeliverReportToEmail {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
-
 		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 		var portalURL = PropsUtil.get("portal.url");

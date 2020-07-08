@@ -142,6 +142,8 @@ public class StyleBookEntryPersistenceTest {
 
 		newStyleBookEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
+		newStyleBookEntry.setTokensValues(RandomTestUtil.randomString());
+
 		_styleBookEntries.add(_persistence.update(newStyleBookEntry));
 
 		StyleBookEntry existingStyleBookEntry = _persistence.findByPrimaryKey(
@@ -175,6 +177,9 @@ public class StyleBookEntryPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntry.getPreviewFileEntryId(),
 			newStyleBookEntry.getPreviewFileEntryId());
+		Assert.assertEquals(
+			existingStyleBookEntry.getTokensValues(),
+			newStyleBookEntry.getTokensValues());
 	}
 
 	@Test
@@ -230,7 +235,7 @@ public class StyleBookEntryPersistenceTest {
 			"StyleBookEntry", "mvccVersion", true, "styleBookEntryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "name", true, "styleBookEntryKey", true,
-			"previewFileEntryId", true);
+			"previewFileEntryId", true, "tokensValues", true);
 	}
 
 	@Test
@@ -490,6 +495,8 @@ public class StyleBookEntryPersistenceTest {
 		styleBookEntry.setStyleBookEntryKey(RandomTestUtil.randomString());
 
 		styleBookEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
+
+		styleBookEntry.setTokensValues(RandomTestUtil.randomString());
 
 		_styleBookEntries.add(_persistence.update(styleBookEntry));
 

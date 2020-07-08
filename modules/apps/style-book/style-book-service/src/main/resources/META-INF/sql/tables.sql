@@ -8,5 +8,6 @@ create table StyleBookEntry (
 	createDate DATE null,
 	name VARCHAR(75) null,
 	styleBookEntryKey VARCHAR(75) null,
-	previewFileEntryId LONG
+	previewFileEntryId LONG,
+	tokensValues VARCHAR(75) null
 );

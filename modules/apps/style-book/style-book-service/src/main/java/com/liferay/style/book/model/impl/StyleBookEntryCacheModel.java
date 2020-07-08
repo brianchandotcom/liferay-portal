@@ -77,7 +77,7 @@ public class StyleBookEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class StyleBookEntryCacheModel
 		sb.append(styleBookEntryKey);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", tokensValues=");
+		sb.append(tokensValues);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,6 +146,13 @@ public class StyleBookEntryCacheModel
 
 		styleBookEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 
+		if (tokensValues == null) {
+			styleBookEntryImpl.setTokensValues("");
+		}
+		else {
+			styleBookEntryImpl.setTokensValues(tokensValues);
+		}
+
 		styleBookEntryImpl.resetOriginalValues();
 
 		return styleBookEntryImpl;
@@ -166,6 +175,7 @@ public class StyleBookEntryCacheModel
 		styleBookEntryKey = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
+		tokensValues = objectInput.readUTF();
 	}
 
 	@Override
@@ -204,6 +214,13 @@ public class StyleBookEntryCacheModel
 		}
 
 		objectOutput.writeLong(previewFileEntryId);
+
+		if (tokensValues == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(tokensValues);
+		}
 	}
 
 	public long mvccVersion;
@@ -216,5 +233,6 @@ public class StyleBookEntryCacheModel
 	public String name;
 	public String styleBookEntryKey;
 	public long previewFileEntryId;
+	public String tokensValues;
 
 }

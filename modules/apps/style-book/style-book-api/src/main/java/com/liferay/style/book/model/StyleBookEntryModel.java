@@ -219,4 +219,19 @@ public interface StyleBookEntryModel
 	 */
 	public void setPreviewFileEntryId(long previewFileEntryId);
 
+	/**
+	 * Returns the tokens values of this style book entry.
+	 *
+	 * @return the tokens values of this style book entry
+	 */
+	@AutoEscape
+	public String getTokensValues();
+
+	/**
+	 * Sets the tokens values of this style book entry.
+	 *
+	 * @param tokensValues the tokens values of this style book entry
+	 */
+	public void setTokensValues(String tokensValues);
+
 }

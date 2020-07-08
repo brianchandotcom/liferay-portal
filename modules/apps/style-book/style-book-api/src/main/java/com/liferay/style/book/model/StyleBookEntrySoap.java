@@ -41,6 +41,7 @@ public class StyleBookEntrySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setStyleBookEntryKey(model.getStyleBookEntryKey());
 		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
+		soapModel.setTokensValues(model.getTokensValues());
 
 		return soapModel;
 	}
@@ -179,6 +180,14 @@ public class StyleBookEntrySoap implements Serializable {
 		_previewFileEntryId = previewFileEntryId;
 	}
 
+	public String getTokensValues() {
+		return _tokensValues;
+	}
+
+	public void setTokensValues(String tokensValues) {
+		_tokensValues = tokensValues;
+	}
+
 	private long _mvccVersion;
 	private long _styleBookEntryId;
 	private long _groupId;
@@ -189,5 +198,6 @@ public class StyleBookEntrySoap implements Serializable {
 	private String _name;
 	private String _styleBookEntryKey;
 	private long _previewFileEntryId;
+	private String _tokensValues;
 
 }

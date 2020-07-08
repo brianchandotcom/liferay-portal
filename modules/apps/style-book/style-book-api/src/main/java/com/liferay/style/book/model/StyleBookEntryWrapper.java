@@ -52,6 +52,7 @@ public class StyleBookEntryWrapper
 		attributes.put("name", getName());
 		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("tokensValues", getTokensValues());
 
 		return attributes;
 	}
@@ -116,6 +117,12 @@ public class StyleBookEntryWrapper
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
+		}
+
+		String tokensValues = (String)attributes.get("tokensValues");
+
+		if (tokensValues != null) {
+			setTokensValues(tokensValues);
 		}
 	}
 
@@ -214,6 +221,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public String getStyleBookEntryKey() {
 		return model.getStyleBookEntryKey();
+	}
+
+	/**
+	 * Returns the tokens values of this style book entry.
+	 *
+	 * @return the tokens values of this style book entry
+	 */
+	@Override
+	public String getTokensValues() {
+		return model.getTokensValues();
 	}
 
 	/**
@@ -339,6 +356,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setStyleBookEntryKey(String styleBookEntryKey) {
 		model.setStyleBookEntryKey(styleBookEntryKey);
+	}
+
+	/**
+	 * Sets the tokens values of this style book entry.
+	 *
+	 * @param tokensValues the tokens values of this style book entry
+	 */
+	@Override
+	public void setTokensValues(String tokensValues) {
+		model.setTokensValues(tokensValues);
 	}
 
 	/**

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.servlet.taglib.view.state;
+package com.liferay.frontend.taglib.search.container.view.state.internal;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.SearchContainerURLFactory;
+import com.liferay.frontend.taglib.search.container.view.state.SearchContainerURLFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;

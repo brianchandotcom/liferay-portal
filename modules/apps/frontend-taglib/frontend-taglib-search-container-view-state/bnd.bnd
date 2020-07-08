@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Taglib Search Container View State
+Bundle-SymbolicName: com.liferay.frontend.taglib.search.container.view.state
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.taglib.search.container.view.state

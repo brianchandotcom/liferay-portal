@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.view.state;
+package com.liferay.frontend.taglib.search.container.view.state;
+
+import javax.portlet.RenderRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -20,24 +22,15 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author  Neil Griffin
  */
 @ProviderType
-public interface SearchContainerViewState {
+public interface SearchContainerViewStateFactory {
 
-	public int getCur();
+	public SearchContainerViewState create(
+		int cur, int delta, String displayStyle, int end, String keywords,
+		String orderByCol, String orderByType, boolean resetCur, int start);
 
-	public int getDelta();
-
-	public String getDisplayStyle();
-
-	public int getEnd();
-
-	public String getKeywords();
-
-	public String getOrderByCol();
-
-	public String getOrderByType();
-
-	public boolean getResetCur();
-
-	public int getStart();
+	public SearchContainerViewState create(
+		String defaultDisplayStyle, String defaultOrderByCol,
+		String defaultOrderByType, RenderRequest renderRequest,
+		String[] validOrderByCols);
 
 }

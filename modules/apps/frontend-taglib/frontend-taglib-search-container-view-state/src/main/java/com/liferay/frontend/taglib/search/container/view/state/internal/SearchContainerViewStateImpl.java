@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.servlet.taglib.view.state;
+package com.liferay.frontend.taglib.search.container.view.state.internal;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.SearchContainerViewState;
+import com.liferay.frontend.taglib.search.container.view.state.SearchContainerViewState;
 
 /**
  * @author  Neil Griffin

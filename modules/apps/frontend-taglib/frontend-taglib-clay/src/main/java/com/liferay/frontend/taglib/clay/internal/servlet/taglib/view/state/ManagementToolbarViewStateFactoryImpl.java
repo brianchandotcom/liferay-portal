@@ -16,7 +16,7 @@ package com.liferay.frontend.taglib.clay.internal.servlet.taglib.view.state;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ManagementToolbarViewState;
 import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.ManagementToolbarViewStateFactory;
-import com.liferay.frontend.taglib.clay.servlet.taglib.view.state.SearchContainerURLFactory;
+import com.liferay.frontend.taglib.search.container.view.state.SearchContainerURLFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 

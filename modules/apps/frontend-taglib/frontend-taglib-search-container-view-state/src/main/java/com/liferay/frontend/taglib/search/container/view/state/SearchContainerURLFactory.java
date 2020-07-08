@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.view.state;
+package com.liferay.frontend.taglib.search.container.view.state;
 
 import java.util.function.Supplier;
 

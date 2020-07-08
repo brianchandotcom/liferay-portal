@@ -97,50 +97,54 @@ public class UpgradeDDMFormFieldValidation extends UpgradeProcess {
 		}
 	}
 
-	protected String updateValidation(String definitionJSON)
+	protected String updateValidation(String definition)
 		throws PortalException {
 
-		JSONObject definition = _jsonFactory.createJSONObject(definitionJSON);
+		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
+			definition);
 
-		JSONArray fields = definition.getJSONArray("fields");
+		JSONArray fieldsJSONArray = definitionJSONObject.getJSONArray("fields");
 
-		for (int i = 0; i < fields.length(); i++) {
-			JSONObject field = fields.getJSONObject(i);
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
-			JSONObject validation = field.getJSONObject("validation");
+			JSONObject validationJSONObject = fieldJSONObject.getJSONObject(
+				"validation");
 
-			JSONObject expression = validation.getJSONObject("expression");
+			JSONObject expressionJSONObject =
+				validationJSONObject.getJSONObject("expression");
 
-			String expressionValue = expression.getString("value");
+			String expressionValue = expressionJSONObject.getString("value");
 
 			if (Validator.isNull(expressionValue)) {
-				field.remove("validation");
+				fieldJSONObject.remove("validation");
 
 				continue;
 			}
 
-			if (Validator.isNotNull(expression.getString("name"))) {
+			if (Validator.isNotNull(expressionJSONObject.getString("name"))) {
 				continue;
 			}
 
-			expression.put("name", _getExpressionName(expressionValue));
+			expressionJSONObject.put(
+				"name", _getExpressionName(expressionValue));
 
 			String parameterValue = _getParameterValueFromExpression(
 				expressionValue);
 
 			_addParameterValue(
-				parameterValue, validation,
-				definition.getString("defaultLanguageId"));
+				parameterValue, validationJSONObject,
+				definitionJSONObject.getString("defaultLanguageId"));
 
 			if (Validator.isNotNull(parameterValue)) {
-				expression.put(
+				expressionJSONObject.put(
 					"value",
 					StringUtil.replace(
 						expressionValue, parameterValue, "{parameter}"));
 			}
 		}
 
-		return definition.toJSONString();
+		return definitionJSONObject.toJSONString();
 	}
 
 	private void _addParameterValue(

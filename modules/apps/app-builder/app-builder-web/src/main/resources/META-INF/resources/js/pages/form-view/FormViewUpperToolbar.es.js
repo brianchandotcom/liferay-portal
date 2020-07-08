@@ -15,12 +15,12 @@
 import {
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
+	TranslationManager,
 	saveDataDefinition,
 } from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
-import TranslationManager from '../../components/translation-manager/TranslationManager.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';

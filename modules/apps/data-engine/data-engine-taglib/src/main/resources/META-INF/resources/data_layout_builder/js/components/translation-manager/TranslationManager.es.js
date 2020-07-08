@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const formatLabel = (label) => label.replace('_', '-');
 
@@ -51,10 +51,22 @@ export const TranslationManagerLabel = ({
 export default ({
 	defaultLanguageId,
 	editingLanguageId,
+	onActiveChange = () => {},
 	onEditingLanguageIdChange,
 	translatedLanguageIds,
 }) => {
 	const [active, setActive] = useState(false);
+
+	const availableLanguages = [
+		...new Set([
+			defaultLanguageId,
+			...Object.keys(Liferay.Language.available).sort(),
+		]),
+	];
+
+	useEffect(() => {
+		onActiveChange(active);
+	}, [active, onActiveChange]);
 
 	return (
 		<ClayDropDown
@@ -78,36 +90,32 @@ export default ({
 			}
 		>
 			<ClayDropDown.ItemList className="localizable-dropdown-ul">
-				{Object.keys(Liferay.Language.available).map(
-					(languageId, index) => (
-						<ClayDropDown.Item
-							className="autofit-row"
-							key={index}
-							onClick={() => {
-								onEditingLanguageIdChange(languageId);
-								setActive(false);
-							}}
-						>
-							<span className="autofit-col autofit-col-expand">
-								<span className="autofit-section">
-									<span className="inline-item inline-item-before">
-										<ClayIcon
-											symbol={formatIcon(languageId)}
-										/>
-									</span>
-
-									{formatLabel(languageId)}
+				{availableLanguages.map((languageId, index) => (
+					<ClayDropDown.Item
+						className="autofit-row"
+						key={index}
+						onClick={() => {
+							onEditingLanguageIdChange(languageId);
+							setActive(false);
+						}}
+					>
+						<span className="autofit-col autofit-col-expand">
+							<span className="autofit-section">
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol={formatIcon(languageId)} />
 								</span>
-							</span>
 
-							<TranslationManagerLabel
-								defaultLanguageId={defaultLanguageId}
-								languageId={languageId}
-								translatedLanguageIds={translatedLanguageIds}
-							/>
-						</ClayDropDown.Item>
-					)
-				)}
+								{formatLabel(languageId)}
+							</span>
+						</span>
+
+						<TranslationManagerLabel
+							defaultLanguageId={defaultLanguageId}
+							languageId={languageId}
+							translatedLanguageIds={translatedLanguageIds}
+						/>
+					</ClayDropDown.Item>
+				))}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

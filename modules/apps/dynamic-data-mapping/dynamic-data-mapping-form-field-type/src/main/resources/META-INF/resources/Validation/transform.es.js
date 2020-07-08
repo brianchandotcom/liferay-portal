@@ -51,7 +51,7 @@ const getValidation = (
 	transformValidationFromExpression
 ) => {
 	return function transformValue(value) {
-		const {errorMessage, expression, parameter} = value;
+		const {errorMessage = {}, expression = {}, parameter = {}} = value;
 		let parameterMessage = '';
 		let selectedValidation = transformValidationFromExpression(expression);
 		const enableValidation = !!expression.value;

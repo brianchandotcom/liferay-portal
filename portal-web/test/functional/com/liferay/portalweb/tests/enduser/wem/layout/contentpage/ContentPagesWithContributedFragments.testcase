@@ -122,7 +122,7 @@ definition {
 		PageEditor.gotoContentConfiguration(
 			colPosition = "1",
 			entryContent = "Report",
-			fragmentName = "Content Flagss",
+			fragmentName = "Content Flags",
 			rowPosition = "1");
 
 		AssertTextEquals(

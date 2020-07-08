@@ -77,7 +77,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	public TypedProperties(SubstitutionCallback callback) {
 		_storage = new Properties(false);
 		_callback = callback;
-		_substitute = true;
 	}
 
 	@Override
@@ -146,10 +145,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 	}
 
 	public void substitute(final SubstitutionCallback substitutionCallback) {
-		if (!_substitute) {
-			return;
-		}
-
 		SubstitutionCallback callback = substitutionCallback;
 
 		if (callback == null) {
@@ -216,7 +211,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	private final SubstitutionCallback _callback;
 	private final Properties _storage;
-	private final boolean _substitute;
 
 	private static class DynamicMap extends AbstractMap<String, String> {
 

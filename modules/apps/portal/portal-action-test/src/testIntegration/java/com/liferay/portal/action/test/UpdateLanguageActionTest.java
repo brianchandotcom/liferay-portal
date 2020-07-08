@@ -85,24 +85,22 @@ public class UpdateLanguageActionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			_defaultLocale, "Page in Default Locale"
-		).put(
-			_sourceLocale, "Page in Source Locale"
-		).put(
-			_targetLocale, "Page in Target Locale"
-		).build();
-
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			_defaultLocale, "/page-in-default-locale"
-		).put(
-			_sourceLocale, "/page-in-source-locale"
-		).put(
-			_targetLocale, "/page-in-target-locale"
-		).build();
-
 		_layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				_defaultLocale, "Page in Default Locale"
+			).put(
+				_sourceLocale, "Page in Source Locale"
+			).put(
+				_targetLocale, "Page in Target Locale"
+			).build(),
+			HashMapBuilder.put(
+				_defaultLocale, "/page-in-default-locale"
+			).put(
+				_sourceLocale, "/page-in-source-locale"
+			).put(
+				_targetLocale, "/page-in-target-locale"
+			).build());
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());

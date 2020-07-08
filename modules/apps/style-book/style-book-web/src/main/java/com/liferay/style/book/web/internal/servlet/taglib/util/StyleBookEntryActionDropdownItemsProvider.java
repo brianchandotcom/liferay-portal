@@ -198,7 +198,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		PortletURL updateStyleBookEntryURL = _renderResponse.createActionURL();
 
 		updateStyleBookEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/style_book/update_style_book_entry");
+			ActionRequest.ACTION_NAME,
+			"/style_book/update_style_book_entry_name");
 
 		updateStyleBookEntryURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());

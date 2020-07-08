@@ -40,11 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
-		"mvc.command.name=/style_book/update_style_book_entry"
+		"mvc.command.name=/style_book/update_style_book_entry_name"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateStyleBookEntryNameMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

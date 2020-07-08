@@ -1055,37 +1055,48 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editLayoutRow {
-		var key_elementType = "Row";
+	macro editLayoutGrid {
+		var key_elementType = "Grid";
 		var key_position = "1";
 
 		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		if (isSet(columnCount)) {
-			Select(
-				key_fieldLabel = "Number of Columns",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${columnCount}");
+		if ("${panel}" == "Configuration") {
+			Click(
+				key_elementType = "Row",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
-			Pause(locator1 = "3000");
-		}
+			if (isSet(columnCount)) {
+				Select(
+					key_fieldLabel = "Number of Modules",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${columnCount}");
 
-		if ("${spaceBetweenColumns}" == "true") {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Show Gutter",
-					locator1 = "Checkbox#ANY_CHECKBOX");
+				Pause(locator1 = "3000");
+			}
+
+			if ("${spaceBetweenColumns}" == "true") {
+				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+					Click.clickAtNotVisible(
+						checkboxName = "Show Gutter",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
+			}
+
+			if ("${spaceBetweenColumns}" == "false") {
+				while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+					Click.clickAtNotVisible(
+						checkboxName = "Show Gutter",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 			}
 		}
-
-		if ("${spaceBetweenColumns}" == "false") {
-			while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Show Gutter",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
+		else if ("${panel}" == "Styles") {
+			Click(
+				key_elementType = "Row",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1709,13 +1720,7 @@ definition {
 		}
 	}
 
-	macro viewNoFragment {
-		AssertElementNotPresent(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-	}
-
-	macro viewRowStyle {
+	macro viewGridStyle {
 		if (isSet(columnCount)) {
 			var i = "0";
 
@@ -1748,6 +1753,12 @@ definition {
 					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
 		}
+	}
+
+	macro viewNoFragment {
+		AssertElementNotPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
 	macro waitForAutoSave {

@@ -234,7 +234,7 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		if ("${collectionName}" == "Layout Elements") {
-			if ("${fragmentName}" == "Row") {
+			if ("${fragmentName}" == "Grid") {
 				if (isSet(position)) {
 					var key_position = "${position}";
 				}
@@ -246,7 +246,7 @@ definition {
 					key_elementType = "${fragmentName}",
 					locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 			}
-			else if ("${fragmentName}" == "Section") {
+			else if ("${fragmentName}" == "Container") {
 				if (isSet(position)) {
 					var key_position = "${position}";
 				}

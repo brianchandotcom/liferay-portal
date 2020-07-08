@@ -245,8 +245,8 @@ definition {
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title");
+			entryContent = "This is an announcement added via json.",
+			entryTitle = "Announcement Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -277,7 +277,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
+		AnnouncementsEntry.viewNoPG(entryTitle = "Announcement Entry Title");
 	}
 
 	@priority = "4"

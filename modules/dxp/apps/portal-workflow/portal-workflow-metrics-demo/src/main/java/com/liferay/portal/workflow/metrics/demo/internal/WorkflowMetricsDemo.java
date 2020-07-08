@@ -311,6 +311,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		_workflowDefinitionDemoDataCreator.delete();
 
 		_omniAdminUserDemoDataCreator.delete();
+		_siteMemberUserDemoDataCreator.delete();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")

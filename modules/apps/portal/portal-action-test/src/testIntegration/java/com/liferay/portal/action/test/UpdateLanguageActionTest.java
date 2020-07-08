@@ -263,9 +263,9 @@ public class UpdateLanguageActionTest {
 	private void _setThemeDisplayForLayout(boolean i18n) {
 		_themeDisplay = new ThemeDisplay();
 
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setLayout(_layout);
 		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		_themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		if (i18n) {
 			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());

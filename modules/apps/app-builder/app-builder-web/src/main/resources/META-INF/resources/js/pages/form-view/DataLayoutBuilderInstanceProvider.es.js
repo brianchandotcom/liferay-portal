@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DataLayoutBuilderActions} from 'data-engine-taglib';
+import {DataLayoutBuilder, DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
@@ -48,27 +48,12 @@ export default ({children, dataLayoutBuilder}) => {
 			]),
 		];
 
-		provider.props = {
-			...provider.props,
+		DataLayoutBuilder.onLocaleChange({
 			availableLanguageIds,
+			dataLayoutBuilder,
 			editingLanguageId,
-		};
-
-		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps = {
-			...dataLayoutBuilder.formBuilderWithLayoutProvider.props
-				.layoutProviderProps,
-			availableLanguageIds,
-			defaultLanguageId: themeDisplay.getDefaultLanguageId(),
-			editingLanguageId,
-		};
-
-		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps =
-			dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
-
-		if (Object.keys(focusedField).length) {
-			provider.getEvents().fieldClicked(focusedField);
-		}
-
+			focusedField,
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dataLayoutBuilder, dispatch, editingLanguageId]);
 

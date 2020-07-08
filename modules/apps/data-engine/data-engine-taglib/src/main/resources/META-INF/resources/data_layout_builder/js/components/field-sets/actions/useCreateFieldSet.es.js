@@ -21,14 +21,13 @@ import {addItem} from '../../../utils/client.es';
 import {containsField} from '../../../utils/dataLayoutVisitor.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
-export default ({childrenContext}) => {
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+export default ({availableLanguageIds, childrenContext}) => {
 	const [{fieldSets}, dispatch] = useContext(AppContext);
 	const {state: childrenState} = childrenContext;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {contentType, fieldSetContentType} = dataLayoutBuilder.props;
 
-	return (fieldSetName) => {
+	return (name) => {
 		const {
 			dataDefinition: {dataDefinitionFields: fields},
 			dataLayout: {dataLayoutPages},
@@ -39,12 +38,8 @@ export default ({childrenContext}) => {
 				fieldType !== 'fieldset' && containsField(dataLayoutPages, name)
 		);
 
-		const name = {
-			[defaultLanguageId]: fieldSetName,
-		};
-
 		const fieldSetDefinition = {
-			availableLanguageIds: [defaultLanguageId],
+			availableLanguageIds,
 			dataDefinitionFields,
 			defaultDataLayout: {
 				dataLayoutPages,

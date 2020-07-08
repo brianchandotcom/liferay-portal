@@ -22,7 +22,9 @@ import AppContextProvider from './AppContextProvider.es';
 import {UPDATE_APP_PROPS} from './actions.es';
 import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
 import initializeSidebarConfig from './components/sidebar/initializeSidebarConfig.es';
-import DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
+import DataLayoutBuilder, {
+	onLocaleChange,
+} from './data-layout-builder/DataLayoutBuilder.es';
 import DataLayoutBuilderContextProvider from './data-layout-builder/DataLayoutBuilderContextProvider.es';
 import DragLayer from './drag-and-drop/DragLayer.es';
 
@@ -41,13 +43,17 @@ const parseProps = ({
 });
 
 const AppContent = ({
+	availableLanguageIds = [defaultLanguageId],
 	dataLayoutBuilder,
+	defaultLanguageId,
+	editingLanguageId = defaultLanguageId,
 	setChildrenContext,
 	setDataLayoutBuilder,
 	sidebarConfig,
 	...props
 }) => {
 	const [state, dispatch] = useContext(AppContext);
+	const {focusedField} = state;
 	const {panels, sidebarPanels, sidebarVariant} = sidebarConfig;
 
 	useEffect(() => {
@@ -68,6 +74,18 @@ const AppContent = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, setChildrenContext]);
+
+	useEffect(() => {
+		if (dataLayoutBuilder) {
+			onLocaleChange({
+				availableLanguageIds,
+				dataLayoutBuilder,
+				editingLanguageId,
+				focusedField,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dataLayoutBuilder, editingLanguageId]);
 
 	return (
 		<>

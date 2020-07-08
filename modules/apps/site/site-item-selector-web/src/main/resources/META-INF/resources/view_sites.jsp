@@ -143,7 +143,9 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					<liferay-ui:search-container-column-text>
 						<div class="card card-horizontal">
 							<div class="card-body">
-								<clay:content-row>
+								<clay:content-row
+									cssClass="card-row"
+								>
 									<clay:content-col>
 										<clay:sticker
 											displayType="secondary"

@@ -44,10 +44,7 @@ public class ConfigurationHandler {
 			PushbackReader pushbackReader = new PushbackReader(
 				unsyncStringReader, 1)) {
 
-			ConfigurationHandler configurationHandler =
-				new ConfigurationHandler();
-
-			return configurationHandler._readValue(pushbackReader);
+			return _readValue(pushbackReader);
 		}
 	}
 
@@ -57,6 +54,323 @@ public class ConfigurationHandler {
 		_writeValue(unsyncStringWriter, value);
 
 		return unsyncStringWriter.toString();
+	}
+
+	private static int _ignorablePageBreakAndWhiteSpace(
+			PushbackReader pushbackReader)
+		throws IOException {
+
+		int c1 = _ignorableWhiteSpace(pushbackReader);
+
+		while (true) {
+			if (c1 != '\\') {
+				break;
+			}
+
+			int c2 = pushbackReader.read();
+
+			if ((c2 == '\r') || (c2 == '\n')) {
+				c1 = _ignorableWhiteSpace(pushbackReader);
+			}
+			else {
+				pushbackReader.unread(c2);
+
+				break;
+			}
+		}
+
+		return c1;
+	}
+
+	private static int _ignorableWhiteSpace(PushbackReader pushbackReader)
+		throws IOException {
+
+		int c = _read(pushbackReader);
+
+		while ((c >= 0) && Character.isWhitespace((char)c)) {
+			c = _read(pushbackReader);
+		}
+
+		return c;
+	}
+
+	private static int _read(PushbackReader pushbackReader) throws IOException {
+		int c = pushbackReader.read();
+
+		if (c == '\r') {
+			int c1 = pushbackReader.read();
+
+			if (c1 != '\n') {
+				pushbackReader.unread(c1);
+			}
+
+			c = '\n';
+		}
+
+		return c;
+	}
+
+	private static int _read(PushbackReader pushbackReader, char[] buffer)
+		throws IOException {
+
+		for (int i = 0; i < buffer.length; i++) {
+			int c = _read(pushbackReader);
+
+			if (c >= 0) {
+				buffer[i] = (char)c;
+			}
+			else {
+				return i;
+			}
+		}
+
+		return buffer.length;
+	}
+
+	private static Object _readArray(
+			int typeCode, PushbackReader pushbackReader)
+		throws IOException {
+
+		List<Object> list = new ArrayList<>();
+
+		while (true) {
+			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+
+			if (spaces == _TOKEN_VAL_OPEN) {
+				Object value = _readSimple(typeCode, pushbackReader);
+
+				if (value == null) {
+
+					// abort due to error
+
+					return null;
+				}
+
+				_read(pushbackReader);
+
+				list.add(value);
+
+				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+			}
+
+			if (spaces == _TOKEN_ARR_CLOS) {
+				Class<?> type = (Class)_codeToType.get(typeCode);
+
+				Object array = Array.newInstance(type, list.size());
+
+				for (int i = 0; i < list.size(); i++) {
+					Array.set(array, i, list.get(i));
+				}
+
+				return array;
+			}
+			else if (spaces < 0) {
+				return null;
+			}
+			else if (spaces != _TOKEN_COMMA) {
+				return null;
+			}
+		}
+	}
+
+	private static Collection<Object> _readCollection(
+			int typeCode, PushbackReader pushbackReader)
+		throws IOException {
+
+		Collection<Object> collection = new ArrayList<>();
+
+		while (true) {
+			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+
+			if (spaces == _TOKEN_VAL_OPEN) {
+				Object value = _readSimple(typeCode, pushbackReader);
+
+				if (value == null) {
+
+					// abort due to error
+
+					return null;
+				}
+
+				_read(pushbackReader);
+
+				collection.add(value);
+
+				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
+			}
+
+			if (spaces == _TOKEN_VEC_CLOS) {
+				return collection;
+			}
+			else if (spaces < 0) {
+				return null;
+			}
+			else if (spaces != _TOKEN_COMMA) {
+				return null;
+			}
+		}
+	}
+
+	private static String _readQuoted(PushbackReader pushbackReader)
+		throws IOException {
+
+		StringBundler sb = new StringBundler();
+
+		while (true) {
+			int c = _read(pushbackReader);
+
+			if (c == '\\') {
+				c = _read(pushbackReader);
+
+				if (c == 'b') {
+					sb.append('\b');
+				}
+				else if (c == 't') {
+					sb.append('\t');
+				}
+				else if (c == 'n') {
+					sb.append('\n');
+				}
+				else if (c == 'f') {
+					sb.append('\f');
+				}
+				else if (c == 'r') {
+					sb.append('\r');
+				}
+				else if (c == 'u') {
+					char[] charBuffer = new char[4];
+
+					if (_read(pushbackReader, charBuffer) == 4) {
+						c = Integer.parseInt(new String(charBuffer), 16);
+
+						sb.append((char)c);
+					}
+				}
+				else {
+					sb.append((char)c);
+				}
+			}
+			else if ((c == -1) || (c == _TOKEN_VAL_CLOS)) {
+				pushbackReader.unread(c);
+
+				return sb.toString();
+			}
+			else {
+				sb.append((char)c);
+			}
+		}
+	}
+
+	// simple types (string & primitive wrappers)
+
+	private static Object _readSimple(int code, PushbackReader pushbackReader)
+		throws IOException {
+
+		if (code == -1) {
+			return null;
+		}
+		else if (code == _TOKEN_SIMPLE_STRING) {
+			return _readQuoted(pushbackReader);
+		}
+		else if ((code == _TOKEN_SIMPLE_INTEGER) ||
+				 (code == _TOKEN_PRIMITIVE_INT)) {
+
+			return Integer.valueOf(_readQuoted(pushbackReader));
+		}
+		else if ((code == _TOKEN_SIMPLE_LONG) ||
+				 (code == _TOKEN_PRIMITIVE_LONG)) {
+
+			return Long.valueOf(_readQuoted(pushbackReader));
+		}
+		else if ((code == _TOKEN_SIMPLE_FLOAT) ||
+				 (code == _TOKEN_PRIMITIVE_FLOAT)) {
+
+			String floatString = _readQuoted(pushbackReader);
+
+			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
+				return Float.valueOf(floatString);
+			}
+
+			return Float.intBitsToFloat(
+				GetterUtil.getIntegerStrict(floatString));
+		}
+		else if ((code == _TOKEN_SIMPLE_DOUBLE) ||
+				 (code == _TOKEN_PRIMITIVE_DOUBLE)) {
+
+			String doubleString = _readQuoted(pushbackReader);
+
+			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
+				return Double.valueOf(doubleString);
+			}
+
+			return Double.longBitsToDouble(
+				GetterUtil.getLongStrict(doubleString));
+		}
+		else if ((code == _TOKEN_SIMPLE_BYTE) ||
+				 (code == _TOKEN_PRIMITIVE_BYTE)) {
+
+			return Byte.valueOf(_readQuoted(pushbackReader));
+		}
+		else if ((code == _TOKEN_SIMPLE_SHORT) ||
+				 (code == _TOKEN_PRIMITIVE_SHORT)) {
+
+			return Short.valueOf(_readQuoted(pushbackReader));
+		}
+		else if ((code == _TOKEN_SIMPLE_CHARACTER) ||
+				 (code == _TOKEN_PRIMITIVE_CHAR)) {
+
+			String charString = _readQuoted(pushbackReader);
+
+			if ((charString != null) && (charString.length() > 0)) {
+				return Character.valueOf(charString.charAt(0));
+			}
+
+			return null;
+		}
+		else if ((code == _TOKEN_SIMPLE_BOOLEAN) ||
+				 (code == _TOKEN_PRIMITIVE_BOOLEAN)) {
+
+			return Boolean.valueOf(_readQuoted(pushbackReader));
+		}
+		else {
+			return null;
+		}
+	}
+
+	private static Object _readValue(PushbackReader pushbackReader)
+		throws IOException {
+
+		// read past any whitespace and (optional) type code
+
+		int type = _ignorableWhiteSpace(pushbackReader);
+
+		// read value kind code if type code is not a value kinde code
+
+		int code = type;
+
+		if (_codeToType.containsKey(type)) {
+			code = _read(pushbackReader);
+		}
+		else {
+			type = _TOKEN_SIMPLE_STRING;
+		}
+
+		if (code == _TOKEN_ARR_OPEN) {
+			return _readArray(type, pushbackReader);
+		}
+		else if (code == _TOKEN_VEC_OPEN) {
+			return _readCollection(type, pushbackReader);
+		}
+		else if (code == _TOKEN_VAL_OPEN) {
+			Object value = _readSimple(type, pushbackReader);
+
+			_read(pushbackReader);
+
+			return value;
+		}
+		else {
+			return null;
+		}
 	}
 
 	private static void _writeArray(Writer writer, Object arrayValue)
@@ -168,6 +482,8 @@ public class ConfigurationHandler {
 		}
 	}
 
+	// primitives
+
 	private static void _writeSimple(Writer writer, Object value)
 		throws IOException {
 
@@ -202,326 +518,6 @@ public class ConfigurationHandler {
 		else {
 			_writeType(writer, clazz);
 			_writeSimple(writer, value);
-		}
-	}
-
-	// simple types (string & primitive wrappers)
-
-	private ConfigurationHandler() {
-	}
-
-	private int _ignorablePageBreakAndWhiteSpace(PushbackReader pushbackReader)
-		throws IOException {
-
-		int c1 = _ignorableWhiteSpace(pushbackReader);
-
-		while (true) {
-			if (c1 != '\\') {
-				break;
-			}
-
-			int c2 = pushbackReader.read();
-
-			if ((c2 == '\r') || (c2 == '\n')) {
-				c1 = _ignorableWhiteSpace(pushbackReader);
-			}
-			else {
-				pushbackReader.unread(c2);
-
-				break;
-			}
-		}
-
-		return c1;
-	}
-
-	private int _ignorableWhiteSpace(PushbackReader pushbackReader)
-		throws IOException {
-
-		int c = _read(pushbackReader);
-
-		while ((c >= 0) && Character.isWhitespace((char)c)) {
-			c = _read(pushbackReader);
-		}
-
-		return c;
-	}
-
-	private int _read(PushbackReader pushbackReader) throws IOException {
-		int c = pushbackReader.read();
-
-		if (c == '\r') {
-			int c1 = pushbackReader.read();
-
-			if (c1 != '\n') {
-				pushbackReader.unread(c1);
-			}
-
-			c = '\n';
-		}
-
-		return c;
-	}
-
-	private int _read(PushbackReader pushbackReader, char[] buffer)
-		throws IOException {
-
-		for (int i = 0; i < buffer.length; i++) {
-			int c = _read(pushbackReader);
-
-			if (c >= 0) {
-				buffer[i] = (char)c;
-			}
-			else {
-				return i;
-			}
-		}
-
-		return buffer.length;
-	}
-
-	private Object _readArray(int typeCode, PushbackReader pushbackReader)
-		throws IOException {
-
-		List<Object> list = new ArrayList<>();
-
-		while (true) {
-			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
-
-			if (spaces == _TOKEN_VAL_OPEN) {
-				Object value = _readSimple(typeCode, pushbackReader);
-
-				if (value == null) {
-
-					// abort due to error
-
-					return null;
-				}
-
-				_read(pushbackReader);
-
-				list.add(value);
-
-				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
-			}
-
-			if (spaces == _TOKEN_ARR_CLOS) {
-				Class<?> type = (Class)_codeToType.get(typeCode);
-
-				Object array = Array.newInstance(type, list.size());
-
-				for (int i = 0; i < list.size(); i++) {
-					Array.set(array, i, list.get(i));
-				}
-
-				return array;
-			}
-			else if (spaces < 0) {
-				return null;
-			}
-			else if (spaces != _TOKEN_COMMA) {
-				return null;
-			}
-		}
-	}
-
-	private Collection<Object> _readCollection(
-			int typeCode, PushbackReader pushbackReader)
-		throws IOException {
-
-		Collection<Object> collection = new ArrayList<>();
-
-		while (true) {
-			int spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
-
-			if (spaces == _TOKEN_VAL_OPEN) {
-				Object value = _readSimple(typeCode, pushbackReader);
-
-				if (value == null) {
-
-					// abort due to error
-
-					return null;
-				}
-
-				_read(pushbackReader);
-
-				collection.add(value);
-
-				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
-			}
-
-			if (spaces == _TOKEN_VEC_CLOS) {
-				return collection;
-			}
-			else if (spaces < 0) {
-				return null;
-			}
-			else if (spaces != _TOKEN_COMMA) {
-				return null;
-			}
-		}
-	}
-
-	// primitives
-
-	private String _readQuoted(PushbackReader pushbackReader)
-		throws IOException {
-
-		StringBundler sb = new StringBundler();
-
-		while (true) {
-			int c = _read(pushbackReader);
-
-			if (c == '\\') {
-				c = _read(pushbackReader);
-
-				if (c == 'b') {
-					sb.append('\b');
-				}
-				else if (c == 't') {
-					sb.append('\t');
-				}
-				else if (c == 'n') {
-					sb.append('\n');
-				}
-				else if (c == 'f') {
-					sb.append('\f');
-				}
-				else if (c == 'r') {
-					sb.append('\r');
-				}
-				else if (c == 'u') {
-					char[] charBuffer = new char[4];
-
-					if (_read(pushbackReader, charBuffer) == 4) {
-						c = Integer.parseInt(new String(charBuffer), 16);
-
-						sb.append((char)c);
-					}
-				}
-				else {
-					sb.append((char)c);
-				}
-			}
-			else if ((c == -1) || (c == _TOKEN_VAL_CLOS)) {
-				pushbackReader.unread(c);
-
-				return sb.toString();
-			}
-			else {
-				sb.append((char)c);
-			}
-		}
-	}
-
-	private Object _readSimple(int code, PushbackReader pushbackReader)
-		throws IOException {
-
-		if (code == -1) {
-			return null;
-		}
-		else if (code == _TOKEN_SIMPLE_STRING) {
-			return _readQuoted(pushbackReader);
-		}
-		else if ((code == _TOKEN_SIMPLE_INTEGER) ||
-				 (code == _TOKEN_PRIMITIVE_INT)) {
-
-			return Integer.valueOf(_readQuoted(pushbackReader));
-		}
-		else if ((code == _TOKEN_SIMPLE_LONG) ||
-				 (code == _TOKEN_PRIMITIVE_LONG)) {
-
-			return Long.valueOf(_readQuoted(pushbackReader));
-		}
-		else if ((code == _TOKEN_SIMPLE_FLOAT) ||
-				 (code == _TOKEN_PRIMITIVE_FLOAT)) {
-
-			String floatString = _readQuoted(pushbackReader);
-
-			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
-				return Float.valueOf(floatString);
-			}
-
-			return Float.intBitsToFloat(
-				GetterUtil.getIntegerStrict(floatString));
-		}
-		else if ((code == _TOKEN_SIMPLE_DOUBLE) ||
-				 (code == _TOKEN_PRIMITIVE_DOUBLE)) {
-
-			String doubleString = _readQuoted(pushbackReader);
-
-			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
-				return Double.valueOf(doubleString);
-			}
-
-			return Double.longBitsToDouble(
-				GetterUtil.getLongStrict(doubleString));
-		}
-		else if ((code == _TOKEN_SIMPLE_BYTE) ||
-				 (code == _TOKEN_PRIMITIVE_BYTE)) {
-
-			return Byte.valueOf(_readQuoted(pushbackReader));
-		}
-		else if ((code == _TOKEN_SIMPLE_SHORT) ||
-				 (code == _TOKEN_PRIMITIVE_SHORT)) {
-
-			return Short.valueOf(_readQuoted(pushbackReader));
-		}
-		else if ((code == _TOKEN_SIMPLE_CHARACTER) ||
-				 (code == _TOKEN_PRIMITIVE_CHAR)) {
-
-			String charString = _readQuoted(pushbackReader);
-
-			if ((charString != null) && (charString.length() > 0)) {
-				return Character.valueOf(charString.charAt(0));
-			}
-
-			return null;
-		}
-		else if ((code == _TOKEN_SIMPLE_BOOLEAN) ||
-				 (code == _TOKEN_PRIMITIVE_BOOLEAN)) {
-
-			return Boolean.valueOf(_readQuoted(pushbackReader));
-		}
-		else {
-			return null;
-		}
-	}
-
-	private Object _readValue(PushbackReader pushbackReader)
-		throws IOException {
-
-		// read past any whitespace and (optional) type code
-
-		int type = _ignorableWhiteSpace(pushbackReader);
-
-		// read value kind code if type code is not a value kinde code
-
-		int code = type;
-
-		if (_codeToType.containsKey(type)) {
-			code = _read(pushbackReader);
-		}
-		else {
-			type = _TOKEN_SIMPLE_STRING;
-		}
-
-		if (code == _TOKEN_ARR_OPEN) {
-			return _readArray(type, pushbackReader);
-		}
-		else if (code == _TOKEN_VEC_OPEN) {
-			return _readCollection(type, pushbackReader);
-		}
-		else if (code == _TOKEN_VAL_OPEN) {
-			Object value = _readSimple(type, pushbackReader);
-
-			_read(pushbackReader);
-
-			return value;
-		}
-		else {
-			return null;
 		}
 	}
 

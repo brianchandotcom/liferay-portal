@@ -12,10 +12,8 @@
  * details.
  */
 
-import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
-import React, {useState} from 'react';
+import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
@@ -30,24 +28,10 @@ import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar
 import {useSelector} from '../../store/index';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
-import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
 import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const isMounted = useIsMounted();
-		const [
-			openSaveFragmentCompositionModal,
-			setOpenSaveFragmentCompositionModal,
-		] = useState(false);
-		const {observer, onClose} = useModal({
-			onClose: () => {
-				if (isMounted()) {
-					setOpenSaveFragmentCompositionModal(false);
-				}
-			},
-		});
-
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
 		);
@@ -79,16 +63,6 @@ const ContainerWithControls = React.forwardRef(
 						buttons={buttons}
 						item={item}
 						itemElement={itemElement}
-					/>
-				)}
-
-				{openSaveFragmentCompositionModal && (
-					<SaveFragmentCompositionModal
-						errorMessage={''}
-						itemId={item.itemId}
-						observer={observer}
-						onClose={onClose}
-						onErrorDismiss={() => true}
 					/>
 				)}
 

@@ -12,9 +12,7 @@
  * details.
  */
 
-import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -33,13 +31,11 @@ import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
-import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
 import Row from './Row';
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const rowConfig = layoutData.items[item.itemId].config;
-		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 		const [customRow, setCustomRow] = useState(false);
@@ -47,19 +43,6 @@ const RowWithControls = React.forwardRef(
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
-
-		const [
-			openSaveFragmentCompositionModal,
-			setOpenSaveFragmentCompositionModal,
-		] = useState(false);
-
-		const {observer, onClose} = useModal({
-			onClose: () => {
-				if (isMounted()) {
-					setOpenSaveFragmentCompositionModal(false);
-				}
-			},
-		});
 
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
@@ -120,16 +103,6 @@ const RowWithControls = React.forwardRef(
 						)}
 						{children}
 					</ResizeContextProvider>
-
-					{openSaveFragmentCompositionModal && (
-						<SaveFragmentCompositionModal
-							errorMessage={''}
-							itemId={item.itemId}
-							observer={observer}
-							onClose={onClose}
-							onErrorDismiss={() => true}
-						/>
-					)}
 				</Row>
 			</Topper>
 		);

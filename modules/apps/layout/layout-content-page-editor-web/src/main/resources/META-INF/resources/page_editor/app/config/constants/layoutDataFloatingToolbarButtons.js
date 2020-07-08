@@ -68,7 +68,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'cog',
 		id: 'row_configuration',
 		panelId: 'row_configuration',
-		title: Liferay.Language.get('row-configuration'),
+		title: Liferay.Language.get('grid-configuration'),
 		type: 'panel',
 	},
 
@@ -76,7 +76,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'format',
 		id: 'row_styles',
 		panelId: 'row_styles',
-		title: Liferay.Language.get('row-styles'),
+		title: Liferay.Language.get('grid-styles'),
 		type: 'panel',
 	},
 };

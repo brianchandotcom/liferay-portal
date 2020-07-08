@@ -54,6 +54,10 @@ public class ArchivedModulesUpgrade implements UpgradeStepRegistrator {
 				"com.liferay.dictionary.web", UpgradeDictionary::new);
 
 			_removeModuleData(
+				_archivedModulesUpgradeConfiguration::removeDirectoryModuleData,
+				"com.liferay.directory.web", UpgradeDirectory::new);
+
+			_removeModuleData(
 				_archivedModulesUpgradeConfiguration::
 					removeInvitationModuleData,
 				"com.liferay.invitation.web", UpgradeInvitation::new);
@@ -62,10 +66,6 @@ public class ArchivedModulesUpgrade implements UpgradeStepRegistrator {
 				_archivedModulesUpgradeConfiguration::
 					removeMailReaderModuleData,
 				"com.liferay.mail.reader.service", UpgradeMailReader::new);
-
-			_removeModuleData(
-				_archivedModulesUpgradeConfiguration::removeDirectoryModuleData,
-				"com.liferay.directory.web", UpgradeDirectory::new);
 
 			_removeModuleData(
 				_archivedModulesUpgradeConfiguration::

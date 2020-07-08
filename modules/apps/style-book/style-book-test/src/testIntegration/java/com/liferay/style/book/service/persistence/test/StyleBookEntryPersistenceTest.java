@@ -235,7 +235,7 @@ public class StyleBookEntryPersistenceTest {
 			"StyleBookEntry", "mvccVersion", true, "styleBookEntryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "name", true, "styleBookEntryKey", true,
-			"previewFileEntryId", true, "tokensValues", true);
+			"previewFileEntryId", true);
 	}
 
 	@Test

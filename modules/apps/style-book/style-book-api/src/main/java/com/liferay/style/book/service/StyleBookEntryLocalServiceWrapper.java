@@ -43,6 +43,18 @@ public class StyleBookEntryLocalServiceWrapper
 			userId, groupId, name, styleBookEntryKey, serviceContext);
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			String tokensValue,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			userId, groupId, name, styleBookEntryKey, tokensValue,
+			serviceContext);
+	}
+
 	/**
 	 * Adds the style book entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -358,24 +370,6 @@ public class StyleBookEntryLocalServiceWrapper
 		return _styleBookEntryLocalService.getStyleBookEntry(styleBookEntryId);
 	}
 
-	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, name);
-	}
-
 	/**
 	 * Updates the style book entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -387,6 +381,36 @@ public class StyleBookEntryLocalServiceWrapper
 		com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
 
 		return _styleBookEntryLocalService.updateStyleBookEntry(styleBookEntry);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntryName(
+			long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntryName(
+			styleBookEntryId, name);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntryPreviewFileEntryId(
+				long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.
+			updateStyleBookEntryPreviewFileEntryId(
+				styleBookEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntryTokensValues(
+				long styleBookEntryId, String tokensValue)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntryTokensValues(
+			styleBookEntryId, tokensValue);
 	}
 
 	@Override

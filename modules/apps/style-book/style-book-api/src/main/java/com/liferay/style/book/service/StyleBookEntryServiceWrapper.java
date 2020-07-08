@@ -43,6 +43,17 @@ public class StyleBookEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			String tokensValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.addStyleBookEntry(
+			groupId, name, styleBookEntryKey, tokensValues, serviceContext);
+	}
+
+	@Override
 	public com.liferay.style.book.model.StyleBookEntry copyStyleBookEntry(
 			long groupId, long styleBookEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -79,21 +90,32 @@ public class StyleBookEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, long previewFileEntryId)
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntryName(
+			long styleBookEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _styleBookEntryService.updateStyleBookEntry(
+		return _styleBookEntryService.updateStyleBookEntryName(
+			styleBookEntryId, name);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntryPreviewFileEntryId(
+				long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.updateStyleBookEntryPreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
 	}
 
 	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name)
+	public com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntryTokensValues(
+				long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _styleBookEntryService.updateStyleBookEntry(
-			styleBookEntryId, name);
+		return _styleBookEntryService.updateStyleBookEntryTokensValues(
+			styleBookEntryId, tokensValue);
 	}
 
 	@Override

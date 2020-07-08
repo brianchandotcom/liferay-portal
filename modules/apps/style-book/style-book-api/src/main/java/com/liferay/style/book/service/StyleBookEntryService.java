@@ -54,6 +54,11 @@ public interface StyleBookEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			String tokensValues, ServiceContext serviceContext)
+		throws PortalException;
+
 	public StyleBookEntry copyStyleBookEntry(
 			long groupId, long styleBookEntryId, ServiceContext serviceContext)
 		throws PortalException;
@@ -71,12 +76,16 @@ public interface StyleBookEntryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public StyleBookEntry updateStyleBookEntry(
+	public StyleBookEntry updateStyleBookEntryName(
+			long styleBookEntryId, String name)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId)
 		throws PortalException;
 
-	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, String name)
+	public StyleBookEntry updateStyleBookEntryTokensValues(
+			long styleBookEntryId, String tokensValue)
 		throws PortalException;
 
 }

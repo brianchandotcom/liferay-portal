@@ -159,7 +159,9 @@ public class StyleBookEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		styleBookEntryId = objectInput.readLong();
@@ -175,7 +177,7 @@ public class StyleBookEntryCacheModel
 		styleBookEntryKey = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
-		tokensValues = objectInput.readUTF();
+		tokensValues = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -216,10 +218,10 @@ public class StyleBookEntryCacheModel
 		objectOutput.writeLong(previewFileEntryId);
 
 		if (tokensValues == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(tokensValues);
+			objectOutput.writeObject(tokensValues);
 		}
 	}
 

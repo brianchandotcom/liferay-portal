@@ -46,6 +46,16 @@ public class StyleBookEntryServiceUtil {
 			groupId, name, styleBookEntryKey, serviceContext);
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			String tokensValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addStyleBookEntry(
+			groupId, name, styleBookEntryKey, tokensValues, serviceContext);
+	}
+
 	public static com.liferay.style.book.model.StyleBookEntry
 			copyStyleBookEntry(
 				long groupId, long styleBookEntryId,
@@ -81,18 +91,28 @@ public class StyleBookEntryServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(long styleBookEntryId, long previewFileEntryId)
+			updateStyleBookEntryName(long styleBookEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntry(
+		return getService().updateStyleBookEntryName(styleBookEntryId, name);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntryPreviewFileEntryId(
+				long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntryPreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(long styleBookEntryId, String name)
+			updateStyleBookEntryTokensValues(
+				long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntry(styleBookEntryId, name);
+		return getService().updateStyleBookEntryTokensValues(
+			styleBookEntryId, tokensValue);
 	}
 
 	public static StyleBookEntryService getService() {

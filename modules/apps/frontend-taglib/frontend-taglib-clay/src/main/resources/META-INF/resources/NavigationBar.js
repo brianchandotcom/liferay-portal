@@ -13,46 +13,43 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import classNames from 'classnames';
 import React from 'react';
 
 export default function NavigationBar({cssClass, inverted, navigationItems}) {
 	return (
-		<ClayLayout.ContainerFluid className={classNames('p-0', cssClass)}>
-			<ClayNavigationBar
-				inverted={inverted}
-				triggerLabel={navigationItems.find(({active}) => active)?.label}
-			>
-				{navigationItems.map(({active, href, label}, index) => {
-					return (
-						<ClayNavigationBar.Item
-							active={active}
-							data-nav-item-index={index}
-							key={label}
-						>
-							{href ? (
-								<ClayLink
-									className="nav-link"
-									displayType="unstyled"
-									href={href}
-								>
-									{label}
-								</ClayLink>
-							) : (
-								<ClayButton
-									className="nav-link"
-									displayType="unstyled"
-								>
-									{label}
-								</ClayButton>
-							)}
-						</ClayNavigationBar.Item>
-					);
-				})}
-			</ClayNavigationBar>
-		</ClayLayout.ContainerFluid>
+		<ClayNavigationBar
+			className={cssClass}
+			inverted={inverted}
+			triggerLabel={navigationItems.find(({active}) => active)?.label}
+		>
+			{navigationItems.map(({active, href, label}, index) => {
+				return (
+					<ClayNavigationBar.Item
+						active={active}
+						data-nav-item-index={index}
+						key={label}
+					>
+						{href ? (
+							<ClayLink
+								className="nav-link"
+								displayType="unstyled"
+								href={href}
+							>
+								{label}
+							</ClayLink>
+						) : (
+							<ClayButton
+								className="nav-link"
+								displayType="unstyled"
+							>
+								{label}
+							</ClayButton>
+						)}
+					</ClayNavigationBar.Item>
+				);
+			})}
+		</ClayNavigationBar>
 	);
 }

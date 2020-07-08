@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
 
@@ -65,17 +64,6 @@ public class AccountGroupInformationScreenNavigationCategory
 	public String getScreenNavigationKey() {
 		return AccountScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_ACCOUNT_GROUP;
-	}
-
-	@Override
-	public boolean isVisible(
-		User user, AccountGroupDisplay accountGroupDisplay) {
-
-		if (accountGroupDisplay == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

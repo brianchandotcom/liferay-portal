@@ -95,7 +95,7 @@ definition {
 					key_fragmentName = "${fragmentName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ROW_COLUMN",
+					locator2 = "PageEditor#GRID_COLUMN",
 					value1 = "");
 			}
 
@@ -105,7 +105,7 @@ definition {
 				key_columnNumber = "${columnNumber}",
 				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
 				key_position = "${position}",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 		else if ("${navTab}" == "Widgets") {
 			Navigator.gotoNavTab(navTab = "${navTab}");
@@ -128,7 +128,7 @@ definition {
 					key_portletName = "${portletName}",
 					key_position = "${position}",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-					locator2 = "PageEditor#ROW_COLUMN",
+					locator2 = "PageEditor#GRID_COLUMN",
 					value1 = "${portletName}");
 			}
 
@@ -140,7 +140,7 @@ definition {
 				key_columnNumber = "${columnNumber}",
 				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
 				key_position = "${position}",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.gotoTab(tabName = "Contents");
 
@@ -1725,7 +1725,7 @@ definition {
 				AssertElementPresent(
 					key_columnNumber = "${columnNumber}",
 					key_position = "${position}",
-					locator1 = "PageEditor#ROW_COLUMN");
+					locator1 = "PageEditor#GRID_COLUMN");
 			}
 
 			var columnNumber = ${columnCount} + 1;
@@ -1733,19 +1733,19 @@ definition {
 			AssertElementNotPresent(
 				key_columnNumber = "${columnNumber}",
 				key_position = "${position}",
-				locator1 = "PageEditor#ROW_COLUMN");
+				locator1 = "PageEditor#GRID_COLUMN");
 		}
 
 		if (isSet(spaceBetweenColumns)) {
 			if ("${spaceBetweenColumns}" == "true") {
 				AssertElementNotPresent(
 					key_position = "${position}",
-					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
+					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
 			else if ("${spaceBetweenColumns}" == "false") {
 				AssertElementPresent(
 					key_position = "${position}",
-					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
+					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
 		}
 	}

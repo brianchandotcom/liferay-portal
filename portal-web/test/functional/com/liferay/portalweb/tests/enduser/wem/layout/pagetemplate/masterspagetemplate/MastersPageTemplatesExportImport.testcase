@@ -118,7 +118,7 @@ definition {
 				key_fragmentName = "Button",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ROW_COLUMN",
+				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -127,7 +127,7 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			Button.click(button = "Publish Master");
 		}
@@ -174,7 +174,7 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 

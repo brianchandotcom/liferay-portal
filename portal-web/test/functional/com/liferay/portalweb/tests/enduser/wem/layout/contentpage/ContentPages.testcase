@@ -289,6 +289,8 @@ definition {
 			key_position = "3",
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER");
 
+		Pause(locator1 = "1000");
+
 		DragAndDrop.DragAndDropObject(
 			key_position = "3",
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER",

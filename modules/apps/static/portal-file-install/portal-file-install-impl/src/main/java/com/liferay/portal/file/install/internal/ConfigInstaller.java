@@ -40,9 +40,6 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -87,29 +84,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 	@Override
 	public void configurationEvent(ConfigurationEvent configurationEvent) {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged(
-				new PrivilegedAction<Void>() {
-
-					@Override
-					public Void run() {
-						doConfigurationEvent(configurationEvent);
-
-						return null;
-					}
-
-				});
-		}
-		else {
-			doConfigurationEvent(configurationEvent);
-		}
-	}
-
-	public void destroy() {
-		_serviceRegistration.unregister();
-	}
-
-	public void doConfigurationEvent(ConfigurationEvent configurationEvent) {
 		if (!_shouldSaveConfig()) {
 			return;
 		}
@@ -220,6 +194,10 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 				}
 			}
 		}
+	}
+
+	public void destroy() {
+		_serviceRegistration.unregister();
 	}
 
 	public ConfigurationAdmin getConfigurationAdmin() {

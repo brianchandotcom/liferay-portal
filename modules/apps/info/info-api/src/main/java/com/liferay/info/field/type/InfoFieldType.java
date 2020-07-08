@@ -29,4 +29,7 @@ public interface InfoFieldType {
 
 	public String getName();
 
+	public final class Attribute<T extends InfoFieldType, V> {
+	}
+
 }

@@ -19,19 +19,21 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-public class InfoField implements InfoFieldSetEntry {
+public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 	public InfoField(
-		InfoFieldType infoFieldType,
-		InfoLocalizedValue<String> labelInfoLocalizedValue, boolean localizable,
-		String name) {
+		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
+		boolean localizable, String name) {
 
 		this(infoFieldType, labelInfoLocalizedValue, name);
 
@@ -39,12 +41,18 @@ public class InfoField implements InfoFieldSetEntry {
 	}
 
 	public InfoField(
-		InfoFieldType infoFieldType,
-		InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
+		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
+		String name) {
 
 		_infoFieldType = infoFieldType;
 		_labelInfoLocalizedValue = labelInfoLocalizedValue;
 		_name = name;
+	}
+
+	public <V> void addAttribute(
+		InfoFieldType.Attribute<T, V> attribute, V value) {
+
+		_attributes.put(attribute, value);
 	}
 
 	@Override
@@ -69,6 +77,12 @@ public class InfoField implements InfoFieldSetEntry {
 		}
 
 		return false;
+	}
+
+	public <V> Optional<V> getAttributeOptional(
+		InfoFieldType.Attribute<T, V> attribute) {
+
+		return Optional.ofNullable((V)_attributes.get(attribute));
 	}
 
 	public InfoFieldType getInfoFieldType() {
@@ -116,7 +130,9 @@ public class InfoField implements InfoFieldSetEntry {
 		return sb.toString();
 	}
 
-	private final InfoFieldType _infoFieldType;
+	private final Map<InfoFieldType.Attribute<T, ?>, Object> _attributes =
+		new HashMap<>();
+	private final T _infoFieldType;
 	private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
 	private boolean _localizable;
 	private final String _name;

@@ -12,38 +12,21 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useRef} from 'react';
 
-const defaultDataStorage = {
+const localDataStorage = {
 	components: new Map(),
-	refs: 0,
 };
 
-const DDMFormRenderer = Symbol('ddm.form.internal');
-
 /**
- * Simple implementation to create a global context that can be shared
+ * Simple implementation to create a local storage that can be shared
  * independently of the React tree, Form Renderer is not an application
  * and can be reused more than once on the same page, so we need to share
  * requests and fields, they are loaded on demand, so as not to make
  * unnecessary requests. Use the `useStorage` hook as a way to cache data.
  */
 export const useStorage = () => {
-	if (!window[DDMFormRenderer]) {
-		window[DDMFormRenderer] = defaultDataStorage;
-	}
+	const localDataStorageRef = useRef(localDataStorage);
 
-	useEffect(() => {
-		window[DDMFormRenderer].refs += 1;
-
-		return () => {
-			window[DDMFormRenderer].refs -= 1;
-
-			if (window[DDMFormRenderer].refs === 0) {
-				delete window[DDMFormRenderer];
-			}
-		};
-	}, []);
-
-	return window[DDMFormRenderer];
+	return localDataStorageRef.current;
 };

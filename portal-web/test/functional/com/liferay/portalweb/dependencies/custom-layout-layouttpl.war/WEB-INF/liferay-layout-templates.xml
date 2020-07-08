@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout-templates PUBLIC "-//Liferay//DTD Layout Templates 7.3.0//EN" "http://www.liferay.com/dtd/liferay-layout-templates_7_3_0.dtd">
+
+<layout-templates>
+	<custom>
+		<layout-template id="custom-layout" name="Custom Layout">
+			<template-path>/custom_layout.ftl</template-path>
+			<thumbnail-path>/custom_layout.png</thumbnail-path>
+		</layout-template>
+	</custom>
+</layout-templates>

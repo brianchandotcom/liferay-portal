@@ -62,6 +62,17 @@ public class StyleBookEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addStyleBookEntry(
+			userId, groupId, name, styleBookEntryKey, StringPool.BLANK,
+			serviceContext);
+	}
+
+	@Override
+	public StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			String tokensValue, ServiceContext serviceContext)
+		throws PortalException {
+
 		User user = userLocalService.getUser(userId);
 
 		long companyId = user.getCompanyId();
@@ -95,6 +106,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
+		styleBookEntry.setTokensValues(tokensValue);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
@@ -118,7 +130,8 @@ public class StyleBookEntryLocalServiceImpl
 		String name = sb.toString();
 
 		StyleBookEntry copyStyleBookEntry = addStyleBookEntry(
-			userId, groupId, name, StringPool.BLANK, serviceContext);
+			userId, groupId, name, StringPool.BLANK,
+			styleBookEntry.getTokensValues(), serviceContext);
 
 		_copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, styleBookEntry, copyStyleBookEntry);
@@ -214,6 +227,19 @@ public class StyleBookEntryLocalServiceImpl
 		_validate(name);
 
 		styleBookEntry.setName(name);
+
+		return styleBookEntryPersistence.update(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntryTokensValues(
+			long styleBookEntryId, String tokensValue)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		styleBookEntry.setTokensValues(tokensValue);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}

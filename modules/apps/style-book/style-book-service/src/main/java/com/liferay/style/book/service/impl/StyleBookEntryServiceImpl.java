@@ -54,6 +54,21 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
+	public StyleBookEntry addStyleBookEntry(
+			long groupId, String name, String styleBookEntryKey,
+			String tokensValues, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.addStyleBookEntry(
+			getUserId(), groupId, name, styleBookEntryKey, tokensValues,
+			serviceContext);
+	}
+
+	@Override
 	public StyleBookEntry copyStyleBookEntry(
 			long groupId, long styleBookEntryId, ServiceContext serviceContext)
 		throws PortalException {
@@ -117,6 +132,22 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 		return styleBookEntryLocalService.updateStyleBookEntry(
 			styleBookEntryId, name);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntryTokensValues(
+			long styleBookEntryId, String tokensValue)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.updateStyleBookEntryTokensValues(
+			styleBookEntryId, tokensValue);
 	}
 
 	@Reference(

@@ -43,11 +43,11 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 				<aui:field-wrapper label="select-vocabularies">
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentAssetVocabularyNames"
-						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
-						leftTitle="current"
+						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
+						leftTitle="available"
 						rightBoxName="availableAssetVocabularyNames"
-						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
-						rightTitle="available"
+						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
+						rightTitle="current"
 					/>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>

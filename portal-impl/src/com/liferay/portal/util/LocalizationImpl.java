@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1409,10 +1408,7 @@ public class LocalizationImpl implements Localization {
 			}
 		}
 
-		if (Validator.isNotNull(value)) {
-			value = LanguageBuilderUtil.fixValue(value);
-		}
-		else {
+		if (Validator.isNull(value)) {
 			value = LanguageUtil.get(locale, key, defaultValue);
 		}
 

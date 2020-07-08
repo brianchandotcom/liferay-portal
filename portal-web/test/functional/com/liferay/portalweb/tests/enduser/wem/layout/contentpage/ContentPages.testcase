@@ -1362,9 +1362,6 @@ definition {
 	@description = "This is a test for LPS-110707. Can resize the width of device viewport when edit content page."
 	@priority = "5"
 	test ResizeDeviceViewpoint {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "responsiveEnabled = true";
-
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");

@@ -12,7 +12,7 @@ exports[`index renders 1`] = `
         class="sheet"
       >
         <div
-          class="col-md-12"
+          class="col"
         >
           <div
             class="card card-type-asset form-check form-check-card form-check-top-left image-card"
@@ -96,7 +96,7 @@ exports[`index renders 1`] = `
         class="sheet"
       >
         <div
-          class="col-md-12"
+          class="col"
         >
           <div
             class="card card-type-asset form-check form-check-card form-check-top-left image-card"
@@ -180,7 +180,7 @@ exports[`index renders 1`] = `
         class="sheet"
       >
         <div
-          class="col-md-12"
+          class="col"
         >
           <div
             class="card card-type-asset form-check form-check-card form-check-top-left image-card"

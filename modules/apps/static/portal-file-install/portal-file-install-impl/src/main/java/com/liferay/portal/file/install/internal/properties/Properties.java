@@ -279,16 +279,9 @@ public class Properties extends AbstractMap<String, String> {
 	}
 
 	public void substitute() {
-		substitute(_callback);
-	}
-
-	public void substitute(InterpolationUtil.SubstitutionCallback callback) {
-		if (callback == null) {
-			callback = new InterpolationUtil.BundleContextSubstitutionCallback(
-				null);
-		}
-
-		InterpolationUtil.performSubstitution(_storage, callback);
+		InterpolationUtil.performSubstitution(
+			_storage,
+			new InterpolationUtil.BundleContextSubstitutionCallback(null));
 	}
 
 	public static class PropertiesReader extends LineNumberReader {
@@ -896,7 +889,6 @@ public class Properties extends AbstractMap<String, String> {
 
 	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 
-	private InterpolationUtil.SubstitutionCallback _callback;
 	private List<String> _footer;
 	private List<String> _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();

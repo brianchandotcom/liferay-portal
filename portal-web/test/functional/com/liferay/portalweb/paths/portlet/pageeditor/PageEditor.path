@@ -466,28 +466,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROW_COLUMN</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]</td>
+	<td>GRID_COLUMN</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]</td>
 	<td></td>
 </tr>
 <tr>
-  <td>ROW_COLUMN_EMPTY</td>
-  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'row empty')]</td>
+  <td>GRID_COLUMN_EMPTY</td>
+  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Grid')][${key_position}]//div[contains(@class,'row empty')]</td>
   <td></td>
 </tr>
 <tr>
-	<td>ROW_COLUMN_NESTED_ELEMENT</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]${key_elementHeader}</td>
+	<td>GRID_COLUMN_NESTED_ELEMENT</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]${key_elementHeader}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROW_COLUMN_FIRST_RESIZER</td>
+	<td>GRID_COLUMN_FIRST_RESIZER</td>
 	<td>//button[contains(@class,'page-editor__col__resizer-first')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROW_COLUMN_RESIZER</td>
-	<td>//div[contains(@class,'page-editor__topper col')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
+	<td>GRID_COLUMN_RESIZER</td>
+	<td>//div[contains(@class,'page-editor__col page-editor__topper')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -507,8 +507,8 @@
 </tr>
 <!--LAYOUT_ELEMENTS_CONFIGURATION-->
 <tr>
-	<td>ROW_CONFIGURATION_COLUMNS_NO_GUTTER</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'no-gutters')]</td>
+	<td>GRID_CONFIGURATION_COLUMNS_NO_GUTTER</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'no-gutters')]</td>
 	<td></td>
 </tr>
 <tr>

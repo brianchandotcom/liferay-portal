@@ -242,7 +242,7 @@ definition {
 				key_fragmentName = "Row",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ROW_COLUMN",
+				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -251,7 +251,7 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 
 		task ("Assert add the third Row in column 1 of the first Row") {
@@ -270,7 +270,7 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 
@@ -287,14 +287,14 @@ definition {
 
 		Click(
 			key_position = "3",
-			locator1 = "PageEditor#ROW_COLUMN_RESIZER");
+			locator1 = "PageEditor#GRID_COLUMN_RESIZER");
 
 		DragAndDrop.DragAndDropObject(
 			key_position = "3",
-			locator1 = "PageEditor#ROW_COLUMN_RESIZER",
+			locator1 = "PageEditor#GRID_COLUMN_RESIZER",
 			position = "530,0");
 
-		AssertVisible(locator1 = "PageEditor#ROW_COLUMN_FIRST_RESIZER");
+		AssertVisible(locator1 = "PageEditor#GRID_COLUMN_FIRST_RESIZER");
 
 		PageEditor.addElementToColumn(
 			collectionName = "Layout Elements",
@@ -308,7 +308,7 @@ definition {
 			key_columnNumber = "3",
 			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
@@ -869,7 +869,7 @@ definition {
 				key_portletName = "Web Content Display",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#ROW_COLUMN",
+				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "Web Content Display");
 
 			Pause(locator1 = "5000");
@@ -878,7 +878,7 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.gotoTab(tabName = "Contents");
 		}
@@ -894,7 +894,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ROW_COLUMN",
+				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -903,7 +903,7 @@ definition {
 				key_columnNumber = "2",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 
 		task ("Add a Button fragment to column 3") {
@@ -915,7 +915,7 @@ definition {
 				key_fragmentName = "Button",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ROW_COLUMN",
+				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -924,7 +924,7 @@ definition {
 				key_columnNumber = "3",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
 				key_position = "1",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 
 		task ("Assert nested elements duplicated with Row") {
@@ -936,19 +936,19 @@ definition {
 				key_columnNumber = "1",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
 				key_position = "2",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_columnNumber = "2",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
 				key_position = "2",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_columnNumber = "3",
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
 				key_position = "2",
-				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 

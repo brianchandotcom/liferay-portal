@@ -420,7 +420,7 @@ definition {
 			key_fragmentName = "Tabs",
 			key_position = "1",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#ROW_COLUMN",
+			locator2 = "PageEditor#GRID_COLUMN",
 			value1 = "");
 
 		PageEditor.waitForAutoSave();
@@ -429,7 +429,7 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Tabs')]//li[contains(@class,'title')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."

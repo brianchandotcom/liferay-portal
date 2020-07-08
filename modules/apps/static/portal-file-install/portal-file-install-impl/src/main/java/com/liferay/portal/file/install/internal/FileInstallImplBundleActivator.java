@@ -150,8 +150,6 @@ public class FileInstallImplBundleActivator
 
 			_set(map, DirectoryWatcher.POLL);
 			_set(map, DirectoryWatcher.DIR);
-			_set(map, DirectoryWatcher.LOG_LEVEL);
-			_set(map, DirectoryWatcher.LOG_DEFAULT);
 			_set(map, DirectoryWatcher.FILTER);
 			_set(map, DirectoryWatcher.TMPDIR);
 			_set(map, DirectoryWatcher.START_NEW_BUNDLES);

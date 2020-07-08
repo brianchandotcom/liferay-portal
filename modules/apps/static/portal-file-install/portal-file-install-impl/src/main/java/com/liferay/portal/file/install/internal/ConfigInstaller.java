@@ -20,6 +20,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -192,9 +194,9 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 				}
 			}
 			catch (Exception exception) {
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					"Unable to save configuration", exception);
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to save configuration", exception);
+				}
 			}
 		}
 		else if (type == ConfigurationEvent.CM_DELETED) {
@@ -213,9 +215,9 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 				}
 			}
 			catch (Exception exception) {
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					"Unable to delete configuration file", exception);
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to delete configuration file", exception);
+				}
 			}
 		}
 	}
@@ -255,9 +257,10 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			}
 		}
 		catch (Exception exception) {
-			Util.log(
-				_bundleContext, Util.Logger.LOG_INFO,
-				"Unable to initialize configurations list", exception);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to initialize configurations list", exception);
+			}
 		}
 	}
 
@@ -278,11 +281,11 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			logString = StringPool.DASH + pid[1];
 		}
 
-		Util.log(
-			_bundleContext, Util.Logger.LOG_INFO,
-			StringBundler.concat(
-				"Deleting configuration from ", pid[0], logString, ".cfg"),
-			null);
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Deleting configuration from ", pid[0], logString, ".cfg"));
+		}
 
 		Configuration configuration = _getConfiguration(
 			_toConfigKey(file), pid[0], pid[1]);
@@ -501,20 +504,20 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			}
 
 			if (old == null) {
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					StringBundler.concat(
-						"Creating configuration from ", pid[0], logString,
-						".cfg"),
-					null);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Creating configuration from ", pid[0], logString,
+							".cfg"));
+				}
 			}
 			else {
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					StringBundler.concat(
-						"Updating configuration from ", pid[0], logString,
-						".cfg"),
-					null);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Updating configuration from ", pid[0], logString,
+							".cfg"));
+				}
 			}
 
 			configuration.update(dictionary);
@@ -548,6 +551,9 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 		return uri.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigInstaller.class);
 
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;

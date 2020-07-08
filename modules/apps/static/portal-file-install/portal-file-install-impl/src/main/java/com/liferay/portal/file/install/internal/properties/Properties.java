@@ -895,9 +895,6 @@ public class Properties extends AbstractMap<String, String> {
 
 	private static class Layout {
 
-		public Layout() {
-		}
-
 		public Layout(List<String> commentLines, List<String> valueLines) {
 			_commentLines = commentLines;
 			_valueLines = valueLines;
@@ -915,15 +912,7 @@ public class Properties extends AbstractMap<String, String> {
 			return _valueLines;
 		}
 
-		public void setCommentLines(List<String> commentLines) {
-			_commentLines = commentLines;
-		}
-
-		public void setValueLines(List<String> valueLines) {
-			_valueLines = valueLines;
-		}
-
-		private List<String> _commentLines;
+		private final List<String> _commentLines;
 		private List<String> _valueLines;
 
 	}

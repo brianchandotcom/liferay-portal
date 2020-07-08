@@ -20,6 +20,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.manifest.Clause;
 import com.liferay.portal.file.install.internal.manifest.Parser;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.BufferedInputStream;
@@ -90,14 +92,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	public static final String FRAGMENT_SCOPE =
 		"file.install.fragmentRefreshScope";
 
-	public static final String LOG_DEFAULT = "file.install.log.default";
-
-	public static final String LOG_JUL = "jul";
-
-	public static final String LOG_LEVEL = "file.install.log.level";
-
-	public static final String LOG_STDOUT = "stdout";
-
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
 	public static final String OPTIONAL_SCOPE =
@@ -153,8 +147,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
-		_logLevel = GetterUtil.getInteger(
-			properties.get(LOG_LEVEL), Util.getGlobalLogLevel(bundleContext));
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
 		_verifyWatchedDir();
 		_tmpDir = _getFile(properties, TMPDIR, null);
@@ -244,6 +236,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	@Override
 	public void run() {
 		Lock readLock = _fileInstall.getReadLock();
 
@@ -255,12 +248,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			currentThread.interrupt();
 
-			_log(
-				Util.Logger.LOG_INFO,
-				StringBundler.concat(
-					"Watcher for ", _watchedDirectory,
-					" exiting because of interruption."),
-				interruptedException);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Watcher for " + _watchedDirectory + " is interrupted");
+			}
 
 			return;
 		}
@@ -313,9 +304,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					return;
 				}
 
-				_log(
-					Util.Logger.LOG_ERROR,
-					"In main loop, we have serious trouble", throwable);
+				_log.error(throwable, throwable);
 			}
 		}
 	}
@@ -845,9 +834,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			_setArtifact(path, artifact);
 		}
 		catch (Exception exception) {
-			_log(
-				Util.Logger.LOG_ERROR, "Failed to install artifact: " + path,
-				exception);
+			_log.error("Unable to install artifact: " + path, exception);
 
 			_installationFailures.put(path, artifact);
 		}
@@ -942,14 +929,15 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 						if (Util.loadChecksum(currentBundle, _bundleContext) !=
 								checksum) {
 
-							_log(
-								Util.Logger.LOG_WARNING,
-								StringBundler.concat(
-									"A bundle with the same symbolic name (",
-									symbolicName, ") and version (",
-									versionString, ") is already installed. ",
-									"Updating this bundle instead."),
-								null);
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"A bundle with the same symbolic name ",
+										"(", symbolicName, ") and version (",
+										versionString,
+										") is already installed. Updating ",
+										"this bundle instead."));
+							}
 
 							_stopTransient(currentBundle);
 
@@ -967,11 +955,12 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 
 			bufferedInputStream.reset();
-			Util.log(
-				_bundleContext, Util.Logger.LOG_INFO,
-				StringBundler.concat(
-					"Installing bundle ", symbolicName, " / ", version),
-				null);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Installing bundle ", symbolicName, " / ", version));
+			}
 
 			bundle = _bundleContext.installBundle(
 				bundleLocation, bufferedInputStream);
@@ -1016,32 +1005,14 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		return _stateChanged.get();
 	}
 
-	private void _log(int messageLevel, String message, Throwable throwable) {
-		Util.log(_bundleContext, _logLevel, messageLevel, message, throwable);
-	}
-
 	private void _prepareDir(File dir) {
 		if (!dir.exists() && !dir.mkdirs()) {
-			_log(
-				Util.Logger.LOG_ERROR,
-				StringBundler.concat(
-					"Cannot create folder ", dir,
-					". Is the folder write-protected?"),
-				null);
-
-			throw new RuntimeException("Cannot create folder: " + dir);
+			throw new RuntimeException("Unable to create folder: " + dir);
 		}
 
 		if (!dir.isDirectory()) {
-			_log(
-				Util.Logger.LOG_ERROR,
-				StringBundler.concat(
-					"Cannot use ", dir, " because it is not a directory"),
-				null);
-
 			throw new RuntimeException(
-				"Cannot start FileInstall using something that is not a " +
-					"directory");
+				"Unable to start FileInstall. " + dir + " is not a directory.");
 		}
 	}
 
@@ -1163,9 +1134,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 				bundle.start(options);
 
-				_log(
-					Util.Logger.LOG_INFO,
-					"Started bundle: " + bundle.getLocation(), null);
+				if (_log.isInfoEnabled()) {
+					_log.info("Started bundle: " + bundle.getLocation());
+				}
 
 				return true;
 			}
@@ -1178,9 +1149,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 			catch (BundleException bundleException) {
 				if (logFailures) {
-					_log(
-						Util.Logger.LOG_ERROR,
-						"Error while starting bundle: " + bundle.getLocation(),
+					_log.error(
+						"Unable to start bundle: " + bundle.getLocation(),
 						bundleException);
 				}
 			}
@@ -1225,25 +1195,28 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				Bundle bundle = _bundleContext.getBundle(bundleId);
 
 				if (bundle == null) {
-					StringBundler sb = new StringBundler(5);
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(5);
 
-					sb.append("Failed to uninstall bundle: ");
-					sb.append(path);
-					sb.append(" with id: ");
-					sb.append(bundleId);
-					sb.append(". The bundle has already been uninstalled");
+						sb.append("Unable to uninstall bundle: ");
+						sb.append(path);
+						sb.append(" with id: ");
+						sb.append(bundleId);
+						sb.append(". The bundle has already been uninstalled");
 
-					_log(Util.Logger.LOG_WARNING, sb.toString(), null);
+						_log.warn(sb.toString());
+					}
 
 					return null;
 				}
 
-				_log(
-					Util.Logger.LOG_INFO,
-					StringBundler.concat(
-						"Uninstalling bundle ", bundle.getBundleId(), " (",
-						bundle.getSymbolicName(), StringPool.CLOSE_PARENTHESIS),
-					null);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Uninstalling bundle ", bundle.getBundleId(), " (",
+							bundle.getSymbolicName(),
+							StringPool.CLOSE_PARENTHESIS));
+				}
 
 				bundle.uninstall();
 
@@ -1251,10 +1224,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 		}
 		catch (Exception exception) {
-			_log(
-				Util.Logger.LOG_WARNING,
-				"Failed to uninstall artifact: " + artifact.getPath(),
-				exception);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to uninstall artifact: " + artifact.getPath(),
+					exception);
+			}
 		}
 
 		return null;
@@ -1302,25 +1276,27 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			bundle = _bundleContext.getBundle(bundleId);
 
 			if (bundle == null) {
-				StringBundler sb = new StringBundler(5);
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
 
-				sb.append("Failed to update bundle: ");
-				sb.append(path);
-				sb.append(" with ID ");
-				sb.append(bundleId);
-				sb.append(". The bundle has been uninstalled");
+					sb.append("Unable to update bundle: ");
+					sb.append(path);
+					sb.append(" with ID ");
+					sb.append(bundleId);
+					sb.append(". The bundle has been uninstalled");
 
-				_log(Util.Logger.LOG_WARNING, sb.toString(), null);
+					_log.warn(sb.toString());
+				}
 
 				return null;
 			}
 
-			Util.log(
-				_bundleContext, Util.Logger.LOG_INFO,
-				StringBundler.concat(
-					"Updating bundle ", bundle.getSymbolicName(), " / ",
-					bundle.getVersion()),
-				null);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Updating bundle ", bundle.getSymbolicName(), " / ",
+						bundle.getVersion()));
+			}
 
 			_stopTransient(bundle);
 
@@ -1331,9 +1307,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 		}
 		catch (Throwable throwable) {
-			_log(
-				Util.Logger.LOG_WARNING,
-				"Failed to update artifact " + artifact.getPath(), throwable);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to update artifact " + artifact.getPath(),
+					throwable);
+			}
 		}
 
 		return bundle;
@@ -1355,24 +1333,21 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	private void _verifyWatchedDir() {
 		if (!_watchedDirectory.exists()) {
-			_log(
-				Util.Logger.LOG_WARNING,
-				_watchedDirectory + " does not exist, please create it.", null);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					_watchedDirectory + " does not exist, please create it.");
+			}
 		}
 		else if (!_watchedDirectory.isDirectory()) {
-			_log(
-				Util.Logger.LOG_ERROR,
-				StringBundler.concat(
-					"Cannot use ", _watchedDirectory,
-					" because it is not a directory"),
-				null);
-
 			throw new RuntimeException(
 				StringBundler.concat(
 					"File Install cannot monitor ", _watchedDirectory,
 					" because it is not a directory"));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DirectoryWatcher.class);
 
 	private final int _activeLevel;
 	private final BundleContext _bundleContext;
@@ -1385,7 +1360,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final String _fragmentScope;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
-	private final int _logLevel;
 	private final boolean _noInitialDelay;
 	private final String _optionalScope;
 	private final long _poll;

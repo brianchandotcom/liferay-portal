@@ -50,8 +50,8 @@ public class InfoForm {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoForm add(InfoFieldSet fieldSet) {
-		_builder.add(fieldSet);
+	public InfoForm add(InfoFieldSet infoFieldSet) {
+		_builder.add(infoFieldSet);
 
 		return this;
 	}
@@ -60,8 +60,8 @@ public class InfoForm {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoForm add(InfoFieldSetEntry fieldSetEntry) {
-		_builder.add(fieldSetEntry);
+	public InfoForm add(InfoFieldSetEntry infoFieldSetEntry) {
+		_builder.add(infoFieldSetEntry);
 
 		return this;
 	}
@@ -70,8 +70,8 @@ public class InfoForm {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public InfoForm addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
-		_builder.addAll(fieldSetEntries);
+	public InfoForm addAll(Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+		_builder.addAll(infoFieldSetEntries);
 
 		return this;
 	}
@@ -103,20 +103,22 @@ public class InfoForm {
 	}
 
 	public List<InfoField> getAllInfoFields() {
-		List<InfoField> allFields = new ArrayList<>();
+		List<InfoField> allInfoFields = new ArrayList<>();
 
-		for (InfoFieldSetEntry infoFieldSetEntry : _builder._entries.values()) {
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				_builder._infoFieldSetEntriesByName.values()) {
+
 			if (infoFieldSetEntry instanceof InfoField) {
-				allFields.add((InfoField)infoFieldSetEntry);
+				allInfoFields.add((InfoField)infoFieldSetEntry);
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				allFields.addAll(infoFieldSet.getAllInfoFields());
+				allInfoFields.addAll(infoFieldSet.getAllInfoFields());
 			}
 		}
 
-		return allFields;
+		return allInfoFields;
 	}
 
 	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {
@@ -124,11 +126,11 @@ public class InfoForm {
 	}
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
-		return new ArrayList<>(_builder._entries.values());
+		return new ArrayList<>(_builder._infoFieldSetEntriesByName.values());
 	}
 
 	public InfoFieldSetEntry getInfoFieldSetEntry(String name) {
-		return _builder._entries.get(name);
+		return _builder._infoFieldSetEntriesByName.get(name);
 	}
 
 	public String getLabel(Locale locale) {
@@ -174,37 +176,38 @@ public class InfoForm {
 
 	public static class Builder {
 
-		public Builder add(InfoFieldSet fieldSet) {
-			InfoFieldSetEntry infoFieldSetEntry = _entries.get(
-				fieldSet.getName());
+		public Builder add(InfoFieldSet infoFieldSet) {
+			InfoFieldSetEntry existingInfoFieldSetEntry =
+				_infoFieldSetEntriesByName.get(infoFieldSet.getName());
 
-			if ((infoFieldSetEntry != null) &&
-				(infoFieldSetEntry instanceof InfoFieldSet)) {
+			if (existingInfoFieldSetEntry instanceof InfoFieldSet) {
+				InfoFieldSet existingInfoFieldSet =
+					(InfoFieldSet)existingInfoFieldSetEntry;
 
-				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-				_entries.put(
-					fieldSet.getName(),
+				_infoFieldSetEntriesByName.put(
+					infoFieldSet.getName(),
 					InfoFieldSet.builder(
 					).addAll(
-						infoFieldSet.getInfoFieldSetEntries()
+						existingInfoFieldSet.getInfoFieldSetEntries()
 					).addAll(
-						fieldSet.getInfoFieldSetEntries()
+						infoFieldSet.getInfoFieldSetEntries()
 					).labelInfoLocalizedValue(
-						infoFieldSet.getLabelInfoLocalizedValue()
+						existingInfoFieldSet.getLabelInfoLocalizedValue()
 					).name(
-						infoFieldSet.getName()
+						existingInfoFieldSet.getName()
 					).build());
 			}
 			else {
-				_entries.put(fieldSet.getName(), fieldSet);
+				_infoFieldSetEntriesByName.put(
+					infoFieldSet.getName(), infoFieldSet);
 			}
 
 			return this;
 		}
 
-		public Builder add(InfoFieldSetEntry fieldSetEntry) {
-			_entries.put(fieldSetEntry.getName(), fieldSetEntry);
+		public Builder add(InfoFieldSetEntry infoFieldSetEntry) {
+			_infoFieldSetEntriesByName.put(
+				infoFieldSetEntry.getName(), infoFieldSetEntry);
 
 			return this;
 		}
@@ -219,9 +222,11 @@ public class InfoForm {
 			return this;
 		}
 
-		public Builder addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
-			for (InfoFieldSetEntry fieldSetEntry : fieldSetEntries) {
-				add(fieldSetEntry);
+		public Builder addAll(
+			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+
+			for (InfoFieldSetEntry infoFieldSetEntry : infoFieldSetEntries) {
+				add(infoFieldSetEntry);
 			}
 
 			return this;
@@ -232,9 +237,9 @@ public class InfoForm {
 		}
 
 		public Builder descriptionInfoLocalizedValue(
-			InfoLocalizedValue<String> description) {
+			InfoLocalizedValue<String> descriptionInfoLocalizedValue) {
 
-			_descriptionInfoLocalizedValue = description;
+			_descriptionInfoLocalizedValue = descriptionInfoLocalizedValue;
 
 			return this;
 		}
@@ -254,8 +259,8 @@ public class InfoForm {
 		}
 
 		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
-		private final Map<String, InfoFieldSetEntry> _entries =
-			new LinkedHashMap<>();
+		private final Map<String, InfoFieldSetEntry>
+			_infoFieldSetEntriesByName = new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
 		private String _name;
 

@@ -11,7 +11,13 @@ definition {
 			configurationName = "Blogs",
 			configurationScope = "Widget Scope");
 
-		FormFields.enableCheckbox(fieldName = "enableReadingTime");
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableReadingTime")) {
+			Check.checkNotVisible(
+				key_fieldName = "enableReadingTime",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		FormFields.viewCheckboxChecked(fieldName = "enableReadingTime");
 
 		Button.clickSave();
 

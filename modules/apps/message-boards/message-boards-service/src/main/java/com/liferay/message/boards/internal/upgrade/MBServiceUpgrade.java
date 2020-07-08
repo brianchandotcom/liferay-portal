@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -98,6 +99,12 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"5.0.0", "5.1.0",
+			new UpgradeCTModel(
+				"MBBan", "MBCategory", "MBDiscussion", "MBMailingList",
+				"MBMessage", "MBStatsUser", "MBThread", "MBThreadFlag"));
 	}
 
 	@Reference

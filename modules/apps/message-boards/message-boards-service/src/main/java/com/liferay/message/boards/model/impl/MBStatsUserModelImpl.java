@@ -66,10 +66,10 @@ public class MBStatsUserModelImpl
 	public static final String TABLE_NAME = "MBStatsUser";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"statsUserId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"messageCount", Types.INTEGER},
-		{"lastPostDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"statsUserId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"messageCount", Types.INTEGER}, {"lastPostDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,6 +77,7 @@ public class MBStatsUserModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -86,7 +87,7 @@ public class MBStatsUserModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBStatsUser (mvccVersion LONG default 0 not null,statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
+		"create table MBStatsUser (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,statsUserId LONG not null,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null,primary key (statsUserId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 
@@ -252,6 +253,11 @@ public class MBStatsUserModelImpl
 			"mvccVersion",
 			(BiConsumer<MBStatsUser, Long>)MBStatsUser::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", MBStatsUser::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<MBStatsUser, Long>)MBStatsUser::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"statsUserId", MBStatsUser::getStatsUserId);
 		attributeSetterBiConsumers.put(
 			"statsUserId",
@@ -291,6 +297,16 @@ public class MBStatsUserModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -458,6 +474,7 @@ public class MBStatsUserModelImpl
 		MBStatsUserImpl mbStatsUserImpl = new MBStatsUserImpl();
 
 		mbStatsUserImpl.setMvccVersion(getMvccVersion());
+		mbStatsUserImpl.setCtCollectionId(getCtCollectionId());
 		mbStatsUserImpl.setStatsUserId(getStatsUserId());
 		mbStatsUserImpl.setGroupId(getGroupId());
 		mbStatsUserImpl.setCompanyId(getCompanyId());
@@ -565,6 +582,8 @@ public class MBStatsUserModelImpl
 
 		mbStatsUserCacheModel.mvccVersion = getMvccVersion();
 
+		mbStatsUserCacheModel.ctCollectionId = getCtCollectionId();
+
 		mbStatsUserCacheModel.statsUserId = getStatsUserId();
 
 		mbStatsUserCacheModel.groupId = getGroupId();
@@ -658,6 +677,7 @@ public class MBStatsUserModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _statsUserId;
 	private long _groupId;
 	private long _originalGroupId;

@@ -32,6 +32,7 @@ public class MBStatsUserSoap implements Serializable {
 		MBStatsUserSoap soapModel = new MBStatsUserSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setStatsUserId(model.getStatsUserId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -99,6 +100,14 @@ public class MBStatsUserSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getStatsUserId() {
 		return _statsUserId;
 	}
@@ -148,6 +157,7 @@ public class MBStatsUserSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _statsUserId;
 	private long _groupId;
 	private long _companyId;

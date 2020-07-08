@@ -76,10 +76,12 @@ public class MBMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", messageId=");
@@ -146,6 +148,7 @@ public class MBMessageCacheModel
 		MBMessageImpl mbMessageImpl = new MBMessageImpl();
 
 		mbMessageImpl.setMvccVersion(mvccVersion);
+		mbMessageImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			mbMessageImpl.setUuid("");
@@ -261,6 +264,8 @@ public class MBMessageCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		messageId = objectInput.readLong();
@@ -310,6 +315,8 @@ public class MBMessageCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -407,6 +414,7 @@ public class MBMessageCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long messageId;
 	public long groupId;

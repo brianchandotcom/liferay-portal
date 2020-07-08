@@ -34,6 +34,8 @@ public class MBThreadTable extends BaseTable<MBThreadTable> {
 
 	public final Column<MBThreadTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<MBThreadTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<MBThreadTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBThreadTable, Long> threadId = createColumn(

@@ -77,10 +77,12 @@ public class MBThreadFlagCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", threadFlagId=");
@@ -111,6 +113,7 @@ public class MBThreadFlagCacheModel
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
 		mbThreadFlagImpl.setMvccVersion(mvccVersion);
+		mbThreadFlagImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			mbThreadFlagImpl.setUuid("");
@@ -162,6 +165,8 @@ public class MBThreadFlagCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		threadFlagId = objectInput.readLong();
@@ -182,6 +187,8 @@ public class MBThreadFlagCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -213,6 +220,7 @@ public class MBThreadFlagCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long threadFlagId;
 	public long groupId;

@@ -15,6 +15,7 @@
 package com.liferay.message.boards.service;
 
 import com.liferay.message.boards.model.MBStatsUser;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -55,7 +58,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface MBStatsUserLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<MBStatsUser>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -292,5 +296,20 @@ public interface MBStatsUserLocalService
 
 	public MBStatsUser updateStatsUser(
 		long groupId, long userId, int messageCount, Date lastPostDate);
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<MBStatsUser> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<MBStatsUser> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<MBStatsUser>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

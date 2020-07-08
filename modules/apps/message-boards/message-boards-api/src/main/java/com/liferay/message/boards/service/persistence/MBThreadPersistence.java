@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface MBThreadPersistence extends BasePersistence<MBThread> {
+public interface MBThreadPersistence
+	extends BasePersistence<MBThread>, CTPersistence<MBThread> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

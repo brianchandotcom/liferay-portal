@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchThreadFlagException;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
+public interface MBThreadFlagPersistence
+	extends BasePersistence<MBThreadFlag>, CTPersistence<MBThreadFlag> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -77,10 +77,12 @@ public class MBMailingListCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", mailingListId=");
@@ -143,6 +145,7 @@ public class MBMailingListCacheModel
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
 
 		mbMailingListImpl.setMvccVersion(mvccVersion);
+		mbMailingListImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			mbMailingListImpl.setUuid("");
@@ -263,6 +266,8 @@ public class MBMailingListCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		mailingListId = objectInput.readLong();
@@ -307,6 +312,8 @@ public class MBMailingListCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -416,6 +423,7 @@ public class MBMailingListCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long mailingListId;
 	public long groupId;

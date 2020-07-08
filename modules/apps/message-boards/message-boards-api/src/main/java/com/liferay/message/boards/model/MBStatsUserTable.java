@@ -34,6 +34,8 @@ public class MBStatsUserTable extends BaseTable<MBStatsUserTable> {
 
 	public final Column<MBStatsUserTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<MBStatsUserTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<MBStatsUserTable, Long> statsUserId = createColumn(
 		"statsUserId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<MBStatsUserTable, Long> groupId = createColumn(

@@ -76,10 +76,12 @@ public class MBBanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", banId=");
@@ -110,6 +112,7 @@ public class MBBanCacheModel
 		MBBanImpl mbBanImpl = new MBBanImpl();
 
 		mbBanImpl.setMvccVersion(mvccVersion);
+		mbBanImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			mbBanImpl.setUuid("");
@@ -161,6 +164,8 @@ public class MBBanCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		banId = objectInput.readLong();
@@ -181,6 +186,8 @@ public class MBBanCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -212,6 +219,7 @@ public class MBBanCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long banId;
 	public long groupId;

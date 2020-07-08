@@ -70,13 +70,13 @@ public class MBDiscussionModelImpl
 	public static final String TABLE_NAME = "MBDiscussion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"discussionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"threadId", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"discussionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"threadId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,6 +84,7 @@ public class MBDiscussionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("discussionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -99,7 +100,7 @@ public class MBDiscussionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBDiscussion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
+		"create table MBDiscussion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,discussionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null,primary key (discussionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 
@@ -272,6 +273,11 @@ public class MBDiscussionModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", MBDiscussion::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", MBDiscussion::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUuid);
@@ -337,6 +343,16 @@ public class MBDiscussionModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -625,6 +641,7 @@ public class MBDiscussionModelImpl
 		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
 
 		mbDiscussionImpl.setMvccVersion(getMvccVersion());
+		mbDiscussionImpl.setCtCollectionId(getCtCollectionId());
 		mbDiscussionImpl.setUuid(getUuid());
 		mbDiscussionImpl.setDiscussionId(getDiscussionId());
 		mbDiscussionImpl.setGroupId(getGroupId());
@@ -743,6 +760,8 @@ public class MBDiscussionModelImpl
 			new MBDiscussionCacheModel();
 
 		mbDiscussionCacheModel.mvccVersion = getMvccVersion();
+
+		mbDiscussionCacheModel.ctCollectionId = getCtCollectionId();
 
 		mbDiscussionCacheModel.uuid = getUuid();
 
@@ -875,6 +894,7 @@ public class MBDiscussionModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _discussionId;

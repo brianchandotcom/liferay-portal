@@ -80,21 +80,21 @@ public class MBMessageModelImpl
 	public static final String TABLE_NAME = "MBMessage";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"messageId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"categoryId", Types.BIGINT},
-		{"threadId", Types.BIGINT}, {"rootMessageId", Types.BIGINT},
-		{"parentMessageId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"subject", Types.VARCHAR}, {"urlSubject", Types.VARCHAR},
-		{"body", Types.CLOB}, {"format", Types.VARCHAR},
-		{"anonymous", Types.BOOLEAN}, {"priority", Types.DOUBLE},
-		{"allowPingbacks", Types.BOOLEAN}, {"answer", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"messageId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"categoryId", Types.BIGINT}, {"threadId", Types.BIGINT},
+		{"rootMessageId", Types.BIGINT}, {"parentMessageId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"subject", Types.VARCHAR},
+		{"urlSubject", Types.VARCHAR}, {"body", Types.CLOB},
+		{"format", Types.VARCHAR}, {"anonymous", Types.BOOLEAN},
+		{"priority", Types.DOUBLE}, {"allowPingbacks", Types.BOOLEAN},
+		{"answer", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,6 +102,7 @@ public class MBMessageModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("messageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -133,7 +134,7 @@ public class MBMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,urlSubject VARCHAR(255) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBMessage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,messageId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,urlSubject VARCHAR(255) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (messageId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
@@ -205,6 +206,7 @@ public class MBMessageModelImpl
 		MBMessage model = new MBMessageImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setMessageId(soapModel.getMessageId());
 		model.setGroupId(soapModel.getGroupId());
@@ -384,6 +386,11 @@ public class MBMessageModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<MBMessage, Long>)MBMessage::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", MBMessage::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<MBMessage, Long>)MBMessage::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", MBMessage::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<MBMessage, String>)MBMessage::setUuid);
@@ -504,6 +511,17 @@ public class MBMessageModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1343,6 +1361,7 @@ public class MBMessageModelImpl
 		MBMessageImpl mbMessageImpl = new MBMessageImpl();
 
 		mbMessageImpl.setMvccVersion(getMvccVersion());
+		mbMessageImpl.setCtCollectionId(getCtCollectionId());
 		mbMessageImpl.setUuid(getUuid());
 		mbMessageImpl.setMessageId(getMessageId());
 		mbMessageImpl.setGroupId(getGroupId());
@@ -1509,6 +1528,8 @@ public class MBMessageModelImpl
 		MBMessageCacheModel mbMessageCacheModel = new MBMessageCacheModel();
 
 		mbMessageCacheModel.mvccVersion = getMvccVersion();
+
+		mbMessageCacheModel.ctCollectionId = getCtCollectionId();
 
 		mbMessageCacheModel.uuid = getUuid();
 
@@ -1716,6 +1737,7 @@ public class MBMessageModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _messageId;

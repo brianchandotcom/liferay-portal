@@ -127,6 +127,8 @@ public class MBThreadPersistenceTest {
 
 		newMBThread.setMvccVersion(RandomTestUtil.nextLong());
 
+		newMBThread.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newMBThread.setUuid(RandomTestUtil.randomString());
 
 		newMBThread.setGroupId(RandomTestUtil.nextLong());
@@ -174,6 +176,9 @@ public class MBThreadPersistenceTest {
 
 		Assert.assertEquals(
 			existingMBThread.getMvccVersion(), newMBThread.getMvccVersion());
+		Assert.assertEquals(
+			existingMBThread.getCtCollectionId(),
+			newMBThread.getCtCollectionId());
 		Assert.assertEquals(existingMBThread.getUuid(), newMBThread.getUuid());
 		Assert.assertEquals(
 			existingMBThread.getThreadId(), newMBThread.getThreadId());
@@ -407,14 +412,14 @@ public class MBThreadPersistenceTest {
 
 	protected OrderByComparator<MBThread> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MBThread", "mvccVersion", true, "uuid", true, "threadId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "categoryId", true,
-			"rootMessageId", true, "rootMessageUserId", true, "title", true,
-			"lastPostByUserId", true, "lastPostDate", true, "priority", true,
-			"question", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"MBThread", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "threadId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "categoryId", true, "rootMessageId", true,
+			"rootMessageUserId", true, "title", true, "lastPostByUserId", true,
+			"lastPostDate", true, "priority", true, "question", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -650,6 +655,8 @@ public class MBThreadPersistenceTest {
 		MBThread mbThread = _persistence.create(pk);
 
 		mbThread.setMvccVersion(RandomTestUtil.nextLong());
+
+		mbThread.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbThread.setUuid(RandomTestUtil.randomString());
 

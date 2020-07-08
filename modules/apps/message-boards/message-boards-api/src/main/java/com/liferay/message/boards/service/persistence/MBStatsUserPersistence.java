@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchStatsUserException;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
+public interface MBStatsUserPersistence
+	extends BasePersistence<MBStatsUser>, CTPersistence<MBStatsUser> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchBanException;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface MBBanPersistence extends BasePersistence<MBBan> {
+public interface MBBanPersistence
+	extends BasePersistence<MBBan>, CTPersistence<MBBan> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MBDiscussionModel
-	extends AttachedModel, BaseModel<MBDiscussion>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends AttachedModel, BaseModel<MBDiscussion>, CTModel<MBDiscussion>,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface MBDiscussionModel
 	 *
 	 * @return the primary key of this message boards discussion
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface MBDiscussionModel
 	 *
 	 * @param primaryKey the primary key of this message boards discussion
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface MBDiscussionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this message boards discussion.
+	 *
+	 * @return the ct collection ID of this message boards discussion
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this message boards discussion.
+	 *
+	 * @param ctCollectionId the ct collection ID of this message boards discussion
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this message boards discussion.

@@ -77,10 +77,12 @@ public class MBStatsUserCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", statsUserId=");
 		sb.append(statsUserId);
 		sb.append(", groupId=");
@@ -103,6 +105,7 @@ public class MBStatsUserCacheModel
 		MBStatsUserImpl mbStatsUserImpl = new MBStatsUserImpl();
 
 		mbStatsUserImpl.setMvccVersion(mvccVersion);
+		mbStatsUserImpl.setCtCollectionId(ctCollectionId);
 		mbStatsUserImpl.setStatsUserId(statsUserId);
 		mbStatsUserImpl.setGroupId(groupId);
 		mbStatsUserImpl.setCompanyId(companyId);
@@ -125,6 +128,8 @@ public class MBStatsUserCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		statsUserId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -141,6 +146,8 @@ public class MBStatsUserCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(statsUserId);
 
 		objectOutput.writeLong(groupId);
@@ -154,6 +161,7 @@ public class MBStatsUserCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long statsUserId;
 	public long groupId;
 	public long companyId;

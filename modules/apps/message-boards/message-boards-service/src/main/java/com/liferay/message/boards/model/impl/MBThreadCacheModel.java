@@ -76,10 +76,12 @@ public class MBThreadCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", threadId=");
@@ -132,6 +134,7 @@ public class MBThreadCacheModel
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
 		mbThreadImpl.setMvccVersion(mvccVersion);
+		mbThreadImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			mbThreadImpl.setUuid("");
@@ -221,6 +224,8 @@ public class MBThreadCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		threadId = objectInput.readLong();
@@ -259,6 +264,8 @@ public class MBThreadCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -321,6 +328,7 @@ public class MBThreadCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long threadId;
 	public long groupId;

@@ -126,6 +126,8 @@ public class MBBanPersistenceTest {
 
 		newMBBan.setMvccVersion(RandomTestUtil.nextLong());
 
+		newMBBan.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newMBBan.setUuid(RandomTestUtil.randomString());
 
 		newMBBan.setGroupId(RandomTestUtil.nextLong());
@@ -151,6 +153,8 @@ public class MBBanPersistenceTest {
 
 		Assert.assertEquals(
 			existingMBBan.getMvccVersion(), newMBBan.getMvccVersion());
+		Assert.assertEquals(
+			existingMBBan.getCtCollectionId(), newMBBan.getCtCollectionId());
 		Assert.assertEquals(existingMBBan.getUuid(), newMBBan.getUuid());
 		Assert.assertEquals(existingMBBan.getBanId(), newMBBan.getBanId());
 		Assert.assertEquals(existingMBBan.getGroupId(), newMBBan.getGroupId());
@@ -253,10 +257,10 @@ public class MBBanPersistenceTest {
 
 	protected OrderByComparator<MBBan> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MBBan", "mvccVersion", true, "uuid", true, "banId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "banUserId", true,
-			"lastPublishDate", true);
+			"MBBan", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
+			"banId", true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"banUserId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -492,6 +496,8 @@ public class MBBanPersistenceTest {
 		MBBan mbBan = _persistence.create(pk);
 
 		mbBan.setMvccVersion(RandomTestUtil.nextLong());
+
+		mbBan.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbBan.setUuid(RandomTestUtil.randomString());
 

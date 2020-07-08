@@ -17,6 +17,7 @@ package com.liferay.message.boards.model;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MBStatsUserModel
-	extends BaseModel<MBStatsUser>, MVCCModel, ShardedModel {
+	extends BaseModel<MBStatsUser>, CTModel<MBStatsUser>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,6 +50,7 @@ public interface MBStatsUserModel
 	 *
 	 * @return the primary key of this message boards stats user
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -55,6 +58,7 @@ public interface MBStatsUserModel
 	 *
 	 * @param primaryKey the primary key of this message boards stats user
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -72,6 +76,22 @@ public interface MBStatsUserModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this message boards stats user.
+	 *
+	 * @return the ct collection ID of this message boards stats user
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this message boards stats user.
+	 *
+	 * @param ctCollectionId the ct collection ID of this message boards stats user
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the stats user ID of this message boards stats user.

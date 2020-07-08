@@ -69,20 +69,20 @@ public class MBMailingListModelImpl
 	public static final String TABLE_NAME = "MBMailingList";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"mailingListId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"categoryId", Types.BIGINT},
-		{"emailAddress", Types.VARCHAR}, {"inProtocol", Types.VARCHAR},
-		{"inServerName", Types.VARCHAR}, {"inServerPort", Types.INTEGER},
-		{"inUseSSL", Types.BOOLEAN}, {"inUserName", Types.VARCHAR},
-		{"inPassword", Types.VARCHAR}, {"inReadInterval", Types.INTEGER},
-		{"outEmailAddress", Types.VARCHAR}, {"outCustom", Types.BOOLEAN},
-		{"outServerName", Types.VARCHAR}, {"outServerPort", Types.INTEGER},
-		{"outUseSSL", Types.BOOLEAN}, {"outUserName", Types.VARCHAR},
-		{"outPassword", Types.VARCHAR}, {"allowAnonymous", Types.BOOLEAN},
-		{"active_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"mailingListId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"categoryId", Types.BIGINT}, {"emailAddress", Types.VARCHAR},
+		{"inProtocol", Types.VARCHAR}, {"inServerName", Types.VARCHAR},
+		{"inServerPort", Types.INTEGER}, {"inUseSSL", Types.BOOLEAN},
+		{"inUserName", Types.VARCHAR}, {"inPassword", Types.VARCHAR},
+		{"inReadInterval", Types.INTEGER}, {"outEmailAddress", Types.VARCHAR},
+		{"outCustom", Types.BOOLEAN}, {"outServerName", Types.VARCHAR},
+		{"outServerPort", Types.INTEGER}, {"outUseSSL", Types.BOOLEAN},
+		{"outUserName", Types.VARCHAR}, {"outPassword", Types.VARCHAR},
+		{"allowAnonymous", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,6 +90,7 @@ public class MBMailingListModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("mailingListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -119,7 +120,7 @@ public class MBMailingListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMailingList (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(254) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(254) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
+		"create table MBMailingList (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,mailingListId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(254) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(254) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN,primary key (mailingListId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
 
@@ -290,6 +291,11 @@ public class MBMailingListModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<MBMailingList, Long>)MBMailingList::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", MBMailingList::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<MBMailingList, Long>)MBMailingList::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", MBMailingList::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<MBMailingList, String>)MBMailingList::setUuid);
@@ -429,6 +435,16 @@ public class MBMailingListModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -894,6 +910,7 @@ public class MBMailingListModelImpl
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
 
 		mbMailingListImpl.setMvccVersion(getMvccVersion());
+		mbMailingListImpl.setCtCollectionId(getCtCollectionId());
 		mbMailingListImpl.setUuid(getUuid());
 		mbMailingListImpl.setMailingListId(getMailingListId());
 		mbMailingListImpl.setGroupId(getGroupId());
@@ -1022,6 +1039,8 @@ public class MBMailingListModelImpl
 			new MBMailingListCacheModel();
 
 		mbMailingListCacheModel.mvccVersion = getMvccVersion();
+
+		mbMailingListCacheModel.ctCollectionId = getCtCollectionId();
 
 		mbMailingListCacheModel.uuid = getUuid();
 
@@ -1229,6 +1248,7 @@ public class MBMailingListModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _mailingListId;

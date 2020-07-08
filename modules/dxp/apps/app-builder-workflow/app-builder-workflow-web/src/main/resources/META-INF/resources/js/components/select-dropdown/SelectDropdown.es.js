@@ -35,11 +35,6 @@ const SelectDropdown = ({
 	const selectRef = useRef();
 
 	const doFetch = () => {
-		onSelect({
-			...label,
-			name: label,
-		});
-
 		const params = {keywords: '', page: -1, pageSize: -1, sort: ''};
 
 		setFetchState({

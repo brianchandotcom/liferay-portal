@@ -29,7 +29,6 @@ export default function EditAppSidebar({assigneeRoles}) {
 	} = useContext(EditAppContext);
 
 	const [currentTab, setCurrentTab] = useState();
-	const [selectedAssignees, setSelectedAssignees] = useState([]);
 
 	const tabs = [
 		{
@@ -62,14 +61,13 @@ export default function EditAppSidebar({assigneeRoles}) {
 	};
 
 	const onChangeAssignees = (assignees) => {
-		setSelectedAssignees(assignees);
-
 		dispatchConfig({
 			step: {
 				...currentStep,
-				appWorkflowRoleAssignments: selectedAssignees.map(
-					({id, name}) => ({roleId: id, roleName: name})
-				),
+				appWorkflowRoleAssignments: assignees.map(({id, name}) => ({
+					roleId: id,
+					roleName: name,
+				})),
 			},
 			stepIndex,
 			type: UPDATE_STEP,
@@ -79,10 +77,6 @@ export default function EditAppSidebar({assigneeRoles}) {
 	useEffect(() => {
 		setCurrentTab(null);
 	}, [currentStep]);
-
-	useEffect(() => {
-		setSelectedAssignees([]);
-	}, [stepIndex]);
 
 	return (
 		<Sidebar className="app-builder-workflow-app__sidebar">
@@ -167,7 +161,6 @@ export default function EditAppSidebar({assigneeRoles}) {
 												name: roleName,
 											})
 										)}
-										setSelectedItems={setSelectedAssignees}
 									/>
 								</>
 							)}

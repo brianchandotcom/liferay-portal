@@ -13,7 +13,6 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayInput} from '@clayui/form';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import PromisesResolver from '../promises-resolver/PromisesResolver.es';
 import {DropDown} from './AutocompleteDropDown.es';
 
 const Autocomplete = ({
@@ -24,7 +23,6 @@ const Autocomplete = ({
 	onChange,
 	onSelect,
 	placeholder = Liferay.Language.get('select-or-type-an-option'),
-	promises = [],
 }) => {
 	const [activeItem, setActiveItem] = useState(-1);
 	const [dropDownItems, setDropDownItems] = useState([]);
@@ -124,7 +122,7 @@ const Autocomplete = ({
 	}, [disabled]);
 
 	return (
-		<PromisesResolver promises={promises}>
+		<>
 			<ClayAutocomplete>
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
@@ -156,7 +154,7 @@ const Autocomplete = ({
 					setActiveItem={setActiveItem}
 				/>
 			</ClayAutocomplete>
-		</PromisesResolver>
+		</>
 	);
 };
 

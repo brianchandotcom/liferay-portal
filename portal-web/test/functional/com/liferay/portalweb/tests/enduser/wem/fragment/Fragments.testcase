@@ -190,12 +190,15 @@ definition {
 		}
 
 		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Button");
+
+			PageEditor.configureFragment(type = "Link");
+
 			PageEditor.gotoStyle(fragmentName = "Button");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				size = "Large",
-				type = "Link");
+				size = "Large");
 		}
 
 		task ("View the fragment style") {

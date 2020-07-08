@@ -67,9 +67,9 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DepotAdminViewDepotDashboardDisplayContext.class.getName(),
 				new DepotAdminViewDepotDashboardDisplayContext(
+					_getGroup(renderRequest),
 					_portal.getHttpServletRequest(renderRequest),
-					_getGroup(renderRequest), _panelAppRegistry,
-					_panelCategoryRegistry,
+					_panelAppRegistry, _panelCategoryRegistry,
 					_getPermissionChecker(renderRequest), _portal));
 
 			return "/view_depot_dashboard.jsp";

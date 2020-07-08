@@ -54,13 +54,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DepotAdminViewDepotDashboardDisplayContext {
 
 	public DepotAdminViewDepotDashboardDisplayContext(
-		HttpServletRequest httpServletRequest, Group group,
+		Group group, HttpServletRequest httpServletRequest,
 		PanelAppRegistry panelAppRegistry,
 		PanelCategoryRegistry panelCategoryRegistry,
 		PermissionChecker permissionChecker, Portal portal) {
 
-		_httpServletRequest = httpServletRequest;
 		_group = group;
+		_httpServletRequest = httpServletRequest;
 		_panelAppRegistry = panelAppRegistry;
 		_panelCategoryRegistry = panelCategoryRegistry;
 		_permissionChecker = permissionChecker;

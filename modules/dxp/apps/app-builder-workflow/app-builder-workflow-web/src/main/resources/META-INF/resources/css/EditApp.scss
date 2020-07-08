@@ -211,3 +211,12 @@ $navbarHeight: 120px;
 		}
 	}
 }
+
+.outline-text {
+	background-color: white;
+	font-size: 12px;
+	padding-left: 8px;
+	padding-right: 8px;
+	position: absolute;
+	z-index: 50;
+}

@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {getDefaultFieldName} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -26,6 +25,7 @@ import DragPreview from './DragPreview.es';
 import {
 	compose,
 	dedupValue,
+	getDefaultOptionValue,
 	isOptionValueGenerated,
 	normalizeFields,
 	random,
@@ -34,14 +34,11 @@ import {
 const getDefaultOption = (generateOptionValueUsingOptionLabel) => {
 	let defaultOption = {label: '', value: ''};
 
-	if (!generateOptionValueUsingOptionLabel) {
-		defaultOption = {
-			...defaultOption,
-			value: getDefaultFieldName(true),
-		};
-	}
-
-	return defaultOption;
+	return {
+		...defaultOption,
+		value: getDefaultOptionValue(
+			generateOptionValueUsingOptionLabel, defaultOption),
+	};
 };
 
 const Option = React.forwardRef(
@@ -94,6 +91,12 @@ const refreshFields = (
 				: false,
 			id: random(),
 			...option,
+			value: option.value
+				? option.value
+				: getDefaultOptionValue(
+						generateOptionValueUsingOptionLabel,
+						option
+					),
 		})),
 		{
 			generateKeyword: generateOptionValueUsingOptionLabel,

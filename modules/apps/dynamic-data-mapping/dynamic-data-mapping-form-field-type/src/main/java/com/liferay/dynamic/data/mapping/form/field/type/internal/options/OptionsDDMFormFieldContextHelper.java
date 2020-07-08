@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.options;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -95,13 +97,8 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	protected List<Object> createDefaultOptions() {
-		List<Object> options = new ArrayList<>();
-
-		String defaultOptionLabel = getDefaultOptionLabel();
-
-		options.add(createOption(defaultOptionLabel, defaultOptionLabel));
-
-		return options;
+		return ListUtil.fromArray(
+			createOption(getDefaultOptionLabel(), StringPool.BLANK));
 	}
 
 	protected Map<String, String> createOption(String label, String value) {

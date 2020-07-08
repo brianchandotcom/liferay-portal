@@ -120,6 +120,17 @@ export const dedupValue = (
 	}
 };
 
+export const getDefaultOptionValue = (
+	generateOptionValueUsingOptionLabel,
+	option
+) => {
+	const defaultValue = generateOptionValueUsingOptionLabel
+		? option.label
+		: getDefaultFieldName(true);
+
+	return defaultValue;
+};
+
 /**
  * If the value is null or undefined, normalize follows a
  * verification order and the final stage of normalization
@@ -135,11 +146,13 @@ export const normalizeValue = (
 	currentField,
 	generateOptionValueUsingOptionLabel
 ) => {
-	const {label, value: prevValue} = currentField;
-	const defaultValue = generateOptionValueUsingOptionLabel
-		? label
-		: getDefaultFieldName(true);
-	let value = prevValue ? prevValue : defaultValue;
+	const {value: prevValue} = currentField;
+	let value = prevValue
+		? prevValue
+		: getDefaultOptionValue(
+				generateOptionValueUsingOptionLabel,
+				currentField
+		  );
 
 	if (!value) {
 		value = Liferay.Language.get('option');

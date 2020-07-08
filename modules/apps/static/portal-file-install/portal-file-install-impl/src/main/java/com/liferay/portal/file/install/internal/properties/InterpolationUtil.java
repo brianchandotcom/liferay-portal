@@ -41,14 +41,6 @@ public class InterpolationUtil {
 		Map<String, String> properties,
 		SubstitutionCallback substitutionCallback) {
 
-		performSubstitution(properties, substitutionCallback, true, true, true);
-	}
-
-	public static void performSubstitution(
-		Map<String, String> properties, SubstitutionCallback callback,
-		boolean substituteFromConfig, boolean substituteFromSystemProperties,
-		boolean defaultsToEmptyString) {
-
 		Map<String, String> map = new HashMap<>(properties);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -57,9 +49,8 @@ public class InterpolationUtil {
 			properties.put(
 				name,
 				substVars(
-					entry.getValue(), name, null, map, callback,
-					substituteFromConfig, substituteFromSystemProperties,
-					defaultsToEmptyString));
+					entry.getValue(), name, null, map, substitutionCallback,
+					true, true, true));
 		}
 	}
 

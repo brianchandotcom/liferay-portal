@@ -71,7 +71,7 @@ public class AccountGroupAccountEntriesScreenNavigationCategory
 	public boolean isVisible(
 		User user, AccountGroupDisplay accountGroupDisplay) {
 
-		if (accountGroupDisplay == null) {
+		if (accountGroupDisplay.getAccountGroupId() == 0) {
 			return false;
 		}
 

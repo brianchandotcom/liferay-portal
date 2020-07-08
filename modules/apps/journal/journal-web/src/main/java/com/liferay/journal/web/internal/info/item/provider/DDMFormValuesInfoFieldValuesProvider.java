@@ -128,7 +128,7 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 				InfoLocalizedValue.builder(
 				).defaultLocale(
 					value.getDefaultLocale()
-				).put(
+				).value(
 					consumer -> {
 						for (Locale locale : value.getAvailableLocales()) {
 							consumer.accept(

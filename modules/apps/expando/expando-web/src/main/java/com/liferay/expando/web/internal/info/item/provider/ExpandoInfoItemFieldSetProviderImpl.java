@@ -40,7 +40,7 @@ public class ExpandoInfoItemFieldSetProviderImpl
 	@Override
 	public InfoFieldSet getInfoFieldSet(String itemClassName) {
 		return InfoFieldSet.builder(
-		).add(
+		).infoFieldSetEntry(
 			consumer -> {
 				for (ExpandoInfoItemFieldReader expandoInfoItemFieldReader :
 						_getExpandoFieldReaders(itemClassName)) {

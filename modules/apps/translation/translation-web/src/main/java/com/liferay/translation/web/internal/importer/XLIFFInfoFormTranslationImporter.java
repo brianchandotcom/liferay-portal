@@ -77,7 +77,7 @@ public class XLIFFInfoFormTranslationImporter
 				startXliffData.getTargetLanguage(), true, false);
 
 			return InfoItemFieldValues.builder(
-			).<XLIFFFileException>add(
+			).<XLIFFFileException>infoFieldValue(
 				consumer -> {
 					for (Unit unit : xliffDocument.getUnits()) {
 						if (unit.getPartCount() != 1) {
@@ -97,7 +97,7 @@ public class XLIFFInfoFormTranslationImporter
 						InfoField infoField = new InfoField(
 							TextInfoFieldType.INSTANCE,
 							InfoLocalizedValue.<String>builder(
-							).put(
+							).value(
 								targetLocale, unit.getId()
 							).build(),
 							true, unit.getId());

@@ -51,7 +51,7 @@ public class InfoForm {
 	 */
 	@Deprecated
 	public InfoForm add(InfoFieldSet infoFieldSet) {
-		_builder.add(infoFieldSet);
+		_builder.infoFieldSetEntry(infoFieldSet);
 
 		return this;
 	}
@@ -61,7 +61,7 @@ public class InfoForm {
 	 */
 	@Deprecated
 	public InfoForm add(InfoFieldSetEntry infoFieldSetEntry) {
-		_builder.add(infoFieldSetEntry);
+		_builder.infoFieldSetEntry(infoFieldSetEntry);
 
 		return this;
 	}
@@ -71,7 +71,7 @@ public class InfoForm {
 	 */
 	@Deprecated
 	public InfoForm addAll(Collection<InfoFieldSetEntry> infoFieldSetEntries) {
-		_builder.addAll(infoFieldSetEntries);
+		_builder.infoFieldSetEntries(infoFieldSetEntries);
 
 		return this;
 	}
@@ -176,7 +176,7 @@ public class InfoForm {
 
 	public static class Builder {
 
-		public Builder add(InfoFieldSet infoFieldSet) {
+		public Builder infoFieldSetEntry(InfoFieldSet infoFieldSet) {
 			InfoFieldSetEntry existingInfoFieldSetEntry =
 				_infoFieldSetEntriesByName.get(infoFieldSet.getName());
 
@@ -187,9 +187,9 @@ public class InfoForm {
 				_infoFieldSetEntriesByName.put(
 					infoFieldSet.getName(),
 					InfoFieldSet.builder(
-					).addAll(
+					).infoFieldSetEntries(
 						existingInfoFieldSet.getInfoFieldSetEntries()
-					).addAll(
+					).infoFieldSetEntries(
 						infoFieldSet.getInfoFieldSetEntries()
 					).labelInfoLocalizedValue(
 						existingInfoFieldSet.getLabelInfoLocalizedValue()
@@ -205,28 +205,28 @@ public class InfoForm {
 			return this;
 		}
 
-		public Builder add(InfoFieldSetEntry infoFieldSetEntry) {
+		public Builder infoFieldSetEntry(InfoFieldSetEntry infoFieldSetEntry) {
 			_infoFieldSetEntriesByName.put(
 				infoFieldSetEntry.getName(), infoFieldSetEntry);
 
 			return this;
 		}
 
-		public <T extends Throwable> Builder add(
+		public <T extends Throwable> Builder infoFieldSetEntry(
 				UnsafeConsumer<UnsafeConsumer<InfoFieldSetEntry, T>, T>
 					consumer)
 			throws T {
 
-			consumer.accept(this::add);
+			consumer.accept(this::infoFieldSetEntry);
 
 			return this;
 		}
 
-		public Builder addAll(
+		public Builder infoFieldSetEntries(
 			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
 
 			for (InfoFieldSetEntry infoFieldSetEntry : infoFieldSetEntries) {
-				add(infoFieldSetEntry);
+				infoFieldSetEntry(infoFieldSetEntry);
 			}
 
 			return this;

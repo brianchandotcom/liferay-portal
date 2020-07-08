@@ -71,11 +71,11 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			InfoLocalizedValue.localize(getClass(), "categorization")
 		).name(
 			"categorization"
-		).add(
+		).infoFieldSetEntry(
 			_categoriesInfoField
-		).add(
+		).infoFieldSetEntry(
 			_tagsInfoField
-		).add(
+		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())
 		).build();
@@ -104,7 +104,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					new InfoField(
 						TextInfoFieldType.INSTANCE,
 						InfoLocalizedValue.<String>builder(
-						).putAll(
+						).values(
 							assetVocabulary.getTitleMap()
 						).build(),
 						assetVocabulary.getName()),
@@ -241,7 +241,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			assetVocabulary -> new InfoField(
 				TextInfoFieldType.INSTANCE,
 				InfoLocalizedValue.<String>builder(
-				).putAll(
+				).values(
 					assetVocabulary.getTitleMap()
 				).build(),
 				assetVocabulary.getName())
@@ -260,14 +260,14 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 				InfoLocalizedValue.localize(getClass(), "categorization")
 			).name(
 				"categorization"
-			).addAll(
+			).infoFieldSetEntries(
 				_getAssetVocabulariesInfoFieldsCollect(
 					itemClassName, itemClassTypeId, scopeGroupId, assetEntry)
-			).add(
+			).infoFieldSetEntry(
 				_categoriesInfoField
-			).add(
+			).infoFieldSetEntry(
 				_tagsInfoField
-			).add(
+			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					AssetEntry.class.getName())
 			).labelInfoLocalizedValue(

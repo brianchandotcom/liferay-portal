@@ -37,9 +37,9 @@ public class AssetEntryInfoItemFormProvider
 	@Override
 	public InfoForm getInfoForm() {
 		return InfoForm.builder(
-		).addAll(
+		).infoFieldSetEntries(
 			_getAssetEntryFieldSetEntries()
-		).add(
+		).infoFieldSetEntry(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())
 		).name(

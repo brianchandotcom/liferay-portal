@@ -27,7 +27,6 @@ import aQute.bnd.osgi.EmbeddedResource;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.AnalyzerPlugin;
-import aQute.bnd.version.Version;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class EnterpriseAnalyzerPlugin implements AnalyzerPlugin {
 
 		String serviceComponent = analyzer.getProperty("Service-Component");
 
-		if ((serviceComponent == null) || (serviceComponent.length() == 0) ||
+		if ((serviceComponent == null) || serviceComponent.isEmpty() ||
 			serviceComponent.contains("ModulePortalProfile.xml")) {
 
 			return false;
@@ -128,10 +127,7 @@ public class EnterpriseAnalyzerPlugin implements AnalyzerPlugin {
 		properties.put("enabled:", "true");
 		properties.put("immediate:", "true");
 		properties.put("provide:", _INTERFACE_NAME);
-
-		Version version = DSAnnotationReader.V1_3;
-
-		properties.put("version:", version.toString());
+		properties.put("version:", String.valueOf(DSAnnotationReader.V1_3));
 
 		HeaderReader headerReader = new HeaderReader(analyzer);
 

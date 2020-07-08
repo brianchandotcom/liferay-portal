@@ -93,7 +93,7 @@ public class SampleSQLBuilderTest {
 			System.setProperty(
 				"sample-sql-properties", tempPropertiesFile.getAbsolutePath());
 
-			new SampleSQLBuilder(new DataFactory());
+			new SampleSQLBuilder();
 
 			_loadHypersonic("../../../sql", tempDir.getAbsolutePath());
 		}

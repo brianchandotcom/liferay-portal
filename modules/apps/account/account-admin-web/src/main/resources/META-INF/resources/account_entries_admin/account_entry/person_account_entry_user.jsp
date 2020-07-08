@@ -74,7 +74,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 					User::getUserId
 				).orElse(
 					0L
-				)) %>"
+				))
+		%>"
 	/>
 
 	<liferay-ui:search-container
@@ -90,7 +91,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 					Collections::singletonList
 				).orElse(
 					Collections.emptyList()
-				) %>"
+				)
+			%>"
 		/>
 
 		<liferay-ui:search-container-row

@@ -32,7 +32,7 @@ definition {
 		}
 
 		AssertClick(
-			locator1 = "Button#SAVE",
+			locator1 = "//button[normalize-space()='Save']",
 			value1 = "Save");
 	}
 

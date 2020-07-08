@@ -152,9 +152,6 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 							data-field-name={field.fieldName}
 						>
 							<FieldLazy
-								visible
-								{...field}
-								{...otherProps}
 								onBlur={(event) => {
 									focusDurationRef.current.end = new Date();
 									onBlur(
@@ -169,6 +166,9 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 									focusDurationRef.current.start = new Date();
 									onFocus(mountStruct(event, field));
 								}}
+								visible
+								{...field}
+								{...otherProps}
 							/>
 						</div>
 					</AutoFocus>

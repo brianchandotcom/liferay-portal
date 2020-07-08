@@ -56,6 +56,7 @@ public interface PermissionService extends BaseService {
 	 * @param primKey the primary key of the service
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(readOnly = true)
 	public void checkPermission(long groupId, String name, long primKey)
 		throws PortalException;
 
@@ -66,6 +67,7 @@ public interface PermissionService extends BaseService {
 	 * @param name the service name
 	 * @param primKey the primary key of the service
 	 */
+	@Transactional(readOnly = true)
 	public void checkPermission(long groupId, String name, String primKey)
 		throws PortalException;
 

@@ -16,6 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -44,6 +45,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @AccessControlled
+@CTAware
 @JSONWebService
 @ProviderType
 @Transactional(

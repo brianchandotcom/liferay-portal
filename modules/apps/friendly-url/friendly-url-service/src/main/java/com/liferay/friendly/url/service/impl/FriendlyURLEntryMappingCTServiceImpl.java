@@ -18,6 +18,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -29,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 @Component(service = AopService.class)
+@CTAware
 public class FriendlyURLEntryMappingCTServiceImpl
 	implements AopService, CTService<FriendlyURLEntryMapping> {
 

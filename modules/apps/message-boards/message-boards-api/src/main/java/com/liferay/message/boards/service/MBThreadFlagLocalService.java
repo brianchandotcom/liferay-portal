@@ -19,6 +19,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -57,6 +58,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBThreadFlagLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

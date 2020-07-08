@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 /**
  * Provides a wrapper for {@link SocialRequestInterpreterLocalService}.
@@ -43,8 +44,7 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	 */
 	@Override
 	public void addRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter
-			requestInterpreter) {
+		SocialRequestInterpreter requestInterpreter) {
 
 		_socialRequestInterpreterLocalService.addRequestInterpreter(
 			requestInterpreter);
@@ -58,8 +58,7 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	 */
 	@Override
 	public void deleteRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter
-			requestInterpreter) {
+		SocialRequestInterpreter requestInterpreter) {
 
 		_socialRequestInterpreterLocalService.deleteRequestInterpreter(
 			requestInterpreter);

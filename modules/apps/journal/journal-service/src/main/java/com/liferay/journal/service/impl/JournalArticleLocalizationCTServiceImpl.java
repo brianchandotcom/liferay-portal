@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -29,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 @Component(service = AopService.class)
+@CTAware
 public class JournalArticleLocalizationCTServiceImpl
 	implements AopService, CTService<JournalArticleLocalization> {
 

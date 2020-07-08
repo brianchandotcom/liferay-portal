@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.async.Async;
@@ -47,6 +48,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLAppHelperLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

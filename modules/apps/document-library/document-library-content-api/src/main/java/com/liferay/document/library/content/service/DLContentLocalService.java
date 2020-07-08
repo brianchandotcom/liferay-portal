@@ -19,6 +19,7 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -54,6 +55,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLContentLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

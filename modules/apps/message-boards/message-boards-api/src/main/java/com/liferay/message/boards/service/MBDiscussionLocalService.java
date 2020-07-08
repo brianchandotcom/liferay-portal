@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -54,6 +55,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBDiscussionLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

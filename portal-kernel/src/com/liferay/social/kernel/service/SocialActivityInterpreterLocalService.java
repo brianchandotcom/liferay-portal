@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service;
 
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -41,6 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialActivityInterpreterLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

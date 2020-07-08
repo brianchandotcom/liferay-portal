@@ -473,25 +473,27 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					if (Objects.equals(
 							importClause.getName(), exportClause.getName())) {
 
-						String exportVersionString = exportClause.getAttribute(
-							Constants.VERSION_ATTRIBUTE);
-
 						String importVersionString = importClause.getAttribute(
 							Constants.VERSION_ATTRIBUTE);
 
+						if (importVersionString == null) {
+							matching = true;
+
+							break;
+						}
+
 						Version exported = Version.emptyVersion;
+
+						String exportVersionString = exportClause.getAttribute(
+							Constants.VERSION_ATTRIBUTE);
 
 						if (exportVersionString != null) {
 							exported = Version.parseVersion(
 								exportVersionString);
 						}
 
-						VersionRange imported = VersionRange.ANY_VERSION;
-
-						if (importVersionString != null) {
-							imported = VersionRange.parseVersionRange(
-								importVersionString);
-						}
+						VersionRange imported = VersionRange.parseVersionRange(
+							importVersionString);
 
 						if (imported.contains(exported)) {
 							matching = true;

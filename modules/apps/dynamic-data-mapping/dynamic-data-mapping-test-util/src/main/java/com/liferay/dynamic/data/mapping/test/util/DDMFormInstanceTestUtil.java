@@ -64,6 +64,17 @@ public class DDMFormInstanceTestUtil {
 		return null;
 	}
 
+	public static DDMFormInstance addDDMFormInstance(
+			DDMForm ddmForm, Group group, long userId)
+		throws Exception {
+
+		DDMFormValues settingsDDMFormValues =
+			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+
+		return addDDMFormInstance(
+			ddmForm, group, settingsDDMFormValues, userId);
+	}
+
 	public static DDMFormInstance addDDMFormInstance(Group group, long userId)
 		throws Exception {
 

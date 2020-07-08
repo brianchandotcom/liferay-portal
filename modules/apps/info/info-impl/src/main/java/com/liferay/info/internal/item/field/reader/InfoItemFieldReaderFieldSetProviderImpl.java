@@ -48,7 +48,7 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 	@Override
 	public InfoFieldSet getInfoFieldSet(String className) {
 		return InfoFieldSet.builder(
-		).add(
+		).infoFieldSetEntry(
 			consumer -> {
 				List<InfoItemFieldReader> infoItemFieldReaders =
 					_infoItemFieldReaderTracker.getInfoItemFieldReaders(

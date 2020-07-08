@@ -43,7 +43,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			InfoLocalizedValue.<String>builder(
-			).putAll(
+			).values(
 				label.getValues()
 			).defaultLocale(
 				label.getDefaultLocale()

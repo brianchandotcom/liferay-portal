@@ -54,9 +54,9 @@ public class AssetEntryInfoItemFieldValuesProvider
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(AssetEntry assetEntry) {
 		return InfoItemFieldValues.builder(
-		).addAll(
+		).infoFieldValues(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry)
-		).addAll(
+		).infoFieldValues(
 			_getAssetEntryInfoFieldValues(assetEntry)
 		).infoItemClassPKReference(
 			new InfoItemClassPKReference(

@@ -52,7 +52,7 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return InfoFieldSet.builder(
-			).add(
+			).infoFieldSetEntry(
 				consumer -> {
 					List<DDMTemplate> ddmTemplates =
 						ddmStructure.getTemplates();

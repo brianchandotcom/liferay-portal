@@ -79,21 +79,21 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		try {
 			return InfoItemFieldValues.builder(
-			).addAll(
+			).infoFieldValues(
 				_getJournalArticleInfoFieldValues(journalArticle)
-			).addAll(
+			).infoFieldValues(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey())
-			).addAll(
+			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(), journalArticle)
-			).addAll(
+			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(), journalArticle)
-			).addAll(
+			).infoFieldValues(
 				_getDDMStructureInfoFieldValues(journalArticle)
-			).addAll(
+			).infoFieldValues(
 				_getDDMTemplateInfoFieldValues(journalArticle)
 			).infoItemClassPKReference(
 				new InfoItemClassPKReference(
@@ -223,7 +223,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).putAll(
+					).values(
 						journalArticle.getTitleMap()
 					).build()));
 			journalArticleFieldValues.add(
@@ -233,7 +233,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).putAll(
+					).values(
 						journalArticle.getDescriptionMap()
 					).build()));
 

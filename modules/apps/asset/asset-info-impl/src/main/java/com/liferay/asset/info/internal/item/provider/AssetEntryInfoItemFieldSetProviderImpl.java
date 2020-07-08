@@ -91,8 +91,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 				new InfoFieldValue<>(
 					new InfoField<>(
 						TextInfoFieldType.INSTANCE,
-						InfoLocalizedValue.builder(
-						).addValues(
+						InfoLocalizedValue.<String>builder(
+						).values(
 							assetVocabulary.getTitleMap()
 						).build(),
 						assetVocabulary.getName()),
@@ -211,21 +211,21 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		Collection<AssetVocabulary> assetVocabularies) {
 
 		return InfoFieldSet.builder(
-		).add(
+		).infoFieldSetEntry(
 			consumer -> assetVocabularies.forEach(
 				assetVocabulary -> consumer.accept(
 					new InfoField<TextInfoFieldType>(
 						TextInfoFieldType.INSTANCE,
-						InfoLocalizedValue.builder(
-						).addValues(
+						InfoLocalizedValue.<String>builder(
+						).values(
 							assetVocabulary.getTitleMap()
 						).build(),
 						assetVocabulary.getName())))
-		).add(
+		).infoFieldSetEntry(
 			_categoriesInfoField
-		).add(
+		).infoFieldSetEntry(
 			_tagsInfoField
-		).add(
+		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())
 		).labelInfoLocalizedValue(

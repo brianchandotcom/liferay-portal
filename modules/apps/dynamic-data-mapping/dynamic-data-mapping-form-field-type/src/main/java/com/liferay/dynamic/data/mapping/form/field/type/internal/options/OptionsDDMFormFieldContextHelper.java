@@ -55,7 +55,7 @@ public class OptionsDDMFormFieldContextHelper {
 
 		if (Validator.isNull(_value)) {
 			localizedValue.put(
-				LocaleUtil.toLanguageId(_ddmForm.getDefaultLocale()),
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 				createDefaultOptions());
 
 			return localizedValue;

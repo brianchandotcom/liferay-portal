@@ -154,6 +154,7 @@ const normalizeWidget = (widget) => {
 		data: {
 			instanceable: widget.instanceable,
 			portletId: widget.portletId,
+			portletItemId: widget.portletItemId || null,
 			used: widget.used,
 		},
 		disabled: !widget.instanceable && widget.used,

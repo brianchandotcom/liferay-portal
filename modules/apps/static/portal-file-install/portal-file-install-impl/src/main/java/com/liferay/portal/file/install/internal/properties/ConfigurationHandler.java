@@ -17,6 +17,7 @@ package com.liferay.portal.file.install.internal.properties;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.PushbackReader;
@@ -79,7 +80,8 @@ public class ConfigurationHandler {
 		writer.write(_TOKEN_ARR_CLOS);
 	}
 
-	private static void _writeCollection(Writer writer, Collection collection)
+	private static void _writeCollection(
+			Writer writer, Collection<?> collection)
 		throws IOException {
 
 		if (collection.isEmpty()) {
@@ -88,7 +90,7 @@ public class ConfigurationHandler {
 			writer.write(_TOKEN_VEC_CLOS);
 		}
 		else {
-			Iterator iterator = collection.iterator();
+			Iterator<?> iterator = collection.iterator();
 
 			Object firstElement = iterator.next();
 
@@ -176,7 +178,7 @@ public class ConfigurationHandler {
 		writer.write(_TOKEN_VAL_CLOS);
 	}
 
-	private static void _writeType(Writer writer, Class valueType)
+	private static void _writeType(Writer writer, Class<?> valueType)
 		throws IOException {
 
 		Integer code = (Integer)_typeToCode.get(valueType);
@@ -195,7 +197,7 @@ public class ConfigurationHandler {
 			_writeArray(writer, value);
 		}
 		else if (value instanceof Collection) {
-			_writeCollection(writer, (Collection)value);
+			_writeCollection(writer, (Collection<?>)value);
 		}
 		else {
 			_writeType(writer, clazz);
@@ -475,7 +477,8 @@ public class ConfigurationHandler {
 				return Float.valueOf(floatString);
 			}
 
-			return Float.intBitsToFloat(Integer.parseInt(floatString));
+			return Float.intBitsToFloat(
+				GetterUtil.getIntegerStrict(floatString));
 		}
 		else if ((code == _TOKEN_SIMPLE_DOUBLE) ||
 				 (code == _TOKEN_PRIMITIVE_DOUBLE)) {
@@ -486,7 +489,8 @@ public class ConfigurationHandler {
 				return Double.valueOf(doubleString);
 			}
 
-			return Double.longBitsToDouble(Long.parseLong(doubleString));
+			return Double.longBitsToDouble(
+				GetterUtil.getLongStrict(doubleString));
 		}
 		else if ((code == _TOKEN_SIMPLE_BYTE) ||
 				 (code == _TOKEN_PRIMITIVE_BYTE)) {

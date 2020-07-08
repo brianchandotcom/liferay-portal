@@ -168,7 +168,7 @@
 	_mbRootMessageId
 	_mbThreadId
 >
-	<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId, _maxCommentCount)>
+	<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId)>
 
 	${dataFactory.toInsertSQL(mbThreadModel)}
 

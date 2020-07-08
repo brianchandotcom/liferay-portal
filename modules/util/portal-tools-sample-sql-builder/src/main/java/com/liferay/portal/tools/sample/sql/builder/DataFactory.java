@@ -2691,11 +2691,7 @@ public class DataFactory {
 	}
 
 	public MBThreadModel newMBThreadModel(
-		long threadId, long groupId, long rootMessageId, int messageCount) {
-
-		if (messageCount == 0) {
-			messageCount = 1;
-		}
+		long threadId, long groupId, long rootMessageId) {
 
 		return newMBThreadModel(
 			threadId, groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,

@@ -1373,35 +1373,35 @@ definition {
 			key_deviceType = "Desktop",
 			locator1 = "PageEditor#DEVICE_TYPE");
 
-		AssertElementNotPresent(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+		AssertElementNotPresent(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
 		Click.clickNoMouseOver(
 			key_deviceType = "Tablet",
 			locator1 = "PageEditor#DEVICE_TYPE");
 
-		AssertVisible(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
 		DragAndDrop.DragAndDropObject(
-			locator1 = "PageEditor#VIEWPOINT_HANDLE",
+			locator1 = "PageEditor#VIEWPORT_HANDLE",
 			position = "200,0");
 
 		AssertElementPresent(
 			key_style = "992px",
-			locator1 = "PageEditor#VIEWPOINT_RESIZER");
+			locator1 = "PageEditor#VIEWPORT_RESIZER");
 
 		Click(
 			key_deviceType = "Portrait Phone",
 			locator1 = "PageEditor#DEVICE_TYPE");
 
-		AssertVisible(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
 		DragAndDrop.DragAndDropObject(
-			locator1 = "PageEditor#VIEWPOINT_HANDLE",
+			locator1 = "PageEditor#VIEWPORT_HANDLE",
 			position = "200,0");
 
 		AssertElementPresent(
 			key_style = "576px",
-			locator1 = "PageEditor#VIEWPOINT_RESIZER");
+			locator1 = "PageEditor#VIEWPORT_RESIZER");
 	}
 
 	@description = "This is a test for LPS-107285. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."

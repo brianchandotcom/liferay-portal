@@ -11775,10 +11775,10 @@ liferay-amd-loader@4.3.0:
   resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.3.0.tgz#5a6e6b94374f3d5298f637aca57220ec0b3c66ce"
   integrity sha512-8y7jgugf3RzcmA7t4eKJaNFMKI/e2K9+UaAAuT2maDd2X047E961nELmomRfEaXA5aWIS7SvKlP/dnvfGEvxPw==
 
-liferay-ckeditor@4.13.1-liferay.8:
-  version "4.13.1-liferay.8"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.13.1-liferay.8.tgz#5d6e5900c4af6970fdcdb0b57e2454ec8e92bbec"
-  integrity sha512-Iol/U8stYewY5rvsD41UTvyyOdHDXg7S7hb5lCQE4YlGFeckPnbbiwERHw62YBW341rrwuB5x+3j8RxGuLyLvQ==
+liferay-ckeditor@4.14.1-liferay.1:
+  version "4.14.1-liferay.1"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.14.1-liferay.1.tgz#6c2c3b3f89f6c7d29fe1905ccfaa40fd4ac1ef2b"
+  integrity sha512-rw8UVO8qvPJq9BahcatQ4lP0yilXS17mNKtscATotou5DTfFupuiLHi+ziOE/9TxjLKPYspnECtELibxxZK9EQ==
 
 liferay-font-awesome@3.4.0:
   version "3.4.0"

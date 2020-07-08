@@ -653,5 +653,35 @@ class DataLayoutBuilder extends React.Component {
 	}
 }
 
+const onLocaleChange = ({
+	availableLanguageIds,
+	dataLayoutBuilder,
+	editingLanguageId,
+	focusedField = {},
+}) => {
+	const provider = dataLayoutBuilder.getLayoutProvider();
+
+	provider.props = {
+		...provider.props,
+		availableLanguageIds,
+		editingLanguageId,
+	};
+
+	dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps = {
+		...dataLayoutBuilder.formBuilderWithLayoutProvider.props
+			.layoutProviderProps,
+		availableLanguageIds,
+		defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+		editingLanguageId,
+	};
+
+	dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps =
+		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
+
+	if (Object.keys(focusedField).length) {
+		provider.getEvents().fieldClicked({activePage: 0, ...focusedField});
+	}
+};
+
 export default DataLayoutBuilder;
-export {DataLayoutBuilder};
+export {DataLayoutBuilder, onLocaleChange};

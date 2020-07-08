@@ -26,7 +26,8 @@ import saveDataDefinition from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({
-	childrenAppProps: {DataLayout},
+	DataLayout,
+	availableLanguageIds,
 	childrenContext,
 	defaultLanguageId,
 	fieldSet: fieldSetDefault,
@@ -36,7 +37,7 @@ export default ({
 	const {state: childrenState} = childrenContext;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
-	return (fieldSetName) => {
+	return (name) => {
 		let fieldName;
 		const {id} = fieldSetDefault;
 
@@ -45,13 +46,9 @@ export default ({
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const name = {
-			...fieldSetDefault.name,
-			[defaultLanguageId]: fieldSetName,
-		};
-
 		const fieldSet = {
 			...fieldSetDefault,
+			availableLanguageIds,
 			dataDefinitionFields,
 			defaultDataLayout: {
 				...fieldSetDefault.defaultDataLayout,
@@ -109,7 +106,7 @@ export default ({
 								},
 								{
 									name: 'label',
-									value: fieldSetName,
+									value: name[defaultLanguageId],
 								},
 							],
 						});

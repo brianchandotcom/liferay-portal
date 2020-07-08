@@ -38,26 +38,29 @@ export default function FieldSets({keywords}) {
 	});
 
 	const toggleFieldSet = (fieldSet) => {
+		const {context, fieldTypes} = appProps;
+		const DataLayout = new DataLayoutBuilder({
+			editingLanguageId: defaultLanguageId,
+			fieldTypes,
+		});
+
 		let childrenAppProps = {
+			DataLayout,
 			context: {},
 			dataDefinitionId: null,
 			dataLayoutId: null,
+			defaultLanguageId,
 		};
 
 		if (fieldSet) {
-			const {context, fieldTypes} = appProps;
 			const {defaultDataLayout, id: dataDefinitionId} = fieldSet;
-			const DataLayout = new DataLayoutBuilder({
-				editingLanguageId: defaultLanguageId,
-				fieldTypes,
-			});
 			const ddmForm = DataLayout.getDDMForm(fieldSet, defaultDataLayout);
 			const [{rows}] = ddmForm.pages;
 
 			delete ddmForm.pages;
 
 			childrenAppProps = {
-				DataLayout,
+				...childrenAppProps,
 				context: {
 					...context,
 					pages: [

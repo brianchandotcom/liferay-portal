@@ -302,7 +302,9 @@ function CustomTooltip(props) {
 					style={{width: 150}}
 				>
 					<ClayLayout.ContentCol expand>
-						{tooltip === 'value' ? label : payload[i].name}
+						{payload[i].payload.vocabularyName
+							? label
+							: payload[i].name}
 					</ClayLayout.ContentCol>
 					<ClayLayout.ContentCol>
 						{payload[i].value}

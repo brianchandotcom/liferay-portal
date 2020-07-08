@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.settings.definition;
+package com.liferay.users.admin.web.internal.configuration.admin.definition;
 
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 import com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationForm;

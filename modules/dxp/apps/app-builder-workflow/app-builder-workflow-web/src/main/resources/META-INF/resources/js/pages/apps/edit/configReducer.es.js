@@ -12,10 +12,13 @@
 import {sub} from 'app-builder-web/js/utils/lang.es';
 
 export const ADD_STEP = 'ADD_STEP';
+export const ADD_STEP_ACTION = 'ADD_STEP_ACTION';
+export const REMOVE_STEP_ACTION = 'REMOVE_STEP_ACTION';
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
 export const UPDATE_DATA_OBJECT = 'UPDATE_DATA_OBJECT';
 export const UPDATE_FORM_VIEW = 'UPDATE_FORM_VIEW';
 export const UPDATE_STEP = 'UPDATE_STEP';
+export const UPDATE_STEP_ACTION = 'UPDATE_STEP_ACTION';
 export const UPDATE_STEP_INDEX = 'UPDATE_STEP_INDEX';
 export const UPDATE_TABLE_VIEW = 'UPDATE_TABLE_VIEW';
 export const UPDATE_WORKFLOW_APP = 'UPDATE_WORKFLOW_APP';
@@ -82,6 +85,15 @@ export default (state, action) => {
 				steps: [...workflowSteps, finalStep],
 			};
 		}
+		case ADD_STEP_ACTION: {
+			state.steps[state.stepIndex].appWorkflowTransitions.push({
+				name: Liferay.Language.get('secondary-action'),
+				primary: false,
+				transitionTo: state.steps[state.stepIndex - 1].name,
+			});
+
+			return {...state, currentStep: state.steps[state.stepIndex]};
+		}
 		case UPDATE_CONFIG: {
 			const {
 				dataObject = {},
@@ -95,6 +107,11 @@ export default (state, action) => {
 				formView,
 				tableView,
 			};
+		}
+		case REMOVE_STEP_ACTION: {
+			state.steps[state.stepIndex].appWorkflowTransitions.pop();
+
+			return {...state, currentStep: state.steps[state.stepIndex]};
 		}
 		case UPDATE_DATA_OBJECT: {
 			return {
@@ -138,6 +155,20 @@ export default (state, action) => {
 				...state,
 				currentStep: step,
 			};
+		}
+		case UPDATE_STEP_ACTION: {
+			const {name, primary} = action;
+
+			const appWorkflowTransitions =
+				state.steps[state.stepIndex].appWorkflowTransitions;
+
+			const transitionIndex = appWorkflowTransitions.findIndex(
+				(transition) => transition.primary === primary
+			);
+
+			appWorkflowTransitions[transitionIndex].name = name;
+
+			return {...state, currentStep: state.steps[state.stepIndex]};
 		}
 		case UPDATE_STEP_INDEX: {
 			return {

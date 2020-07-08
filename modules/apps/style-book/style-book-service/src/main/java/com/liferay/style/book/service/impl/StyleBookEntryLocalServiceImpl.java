@@ -204,20 +204,7 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		StyleBookEntry styleBookEntry =
-			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
-
-		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
-
-		return styleBookEntryPersistence.update(styleBookEntry);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
+	public StyleBookEntry updateStyleBookEntryName(
 			long styleBookEntryId, String name)
 		throws PortalException {
 
@@ -227,6 +214,19 @@ public class StyleBookEntryLocalServiceImpl
 		_validate(name);
 
 		styleBookEntry.setName(name);
+
+		return styleBookEntryPersistence.update(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
@@ -283,7 +283,7 @@ public class StyleBookEntryLocalServiceImpl
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 
-		updateStyleBookEntry(
+		updateStyleBookEntryPreviewFileEntryId(
 			copyStyleBookEntry.getStyleBookEntryId(),
 			fileEntry.getFileEntryId());
 	}

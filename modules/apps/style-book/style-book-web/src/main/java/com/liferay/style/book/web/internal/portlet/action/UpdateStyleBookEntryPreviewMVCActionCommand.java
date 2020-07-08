@@ -102,7 +102,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 
-		_styleBookEntryService.updateStyleBookEntry(
+		_styleBookEntryService.updateStyleBookEntryPreviewFileEntryId(
 			styleBookEntryId, fileEntry.getFileEntryId());
 
 		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());

@@ -103,23 +103,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, long previewFileEntryId)
-		throws PortalException {
-
-		StyleBookEntry styleBookEntry =
-			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), styleBookEntry.getGroupId(),
-			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
-
-		return styleBookEntryLocalService.updateStyleBookEntry(
-			styleBookEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public StyleBookEntry updateStyleBookEntry(
+	public StyleBookEntry updateStyleBookEntryName(
 			long styleBookEntryId, String name)
 		throws PortalException {
 
@@ -130,8 +114,25 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			getPermissionChecker(), styleBookEntry.getGroupId(),
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
-		return styleBookEntryLocalService.updateStyleBookEntry(
+		return styleBookEntryLocalService.updateStyleBookEntryName(
 			styleBookEntryId, name);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), styleBookEntry.getGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryLocalService.
+			updateStyleBookEntryPreviewFileEntryId(
+				styleBookEntryId, previewFileEntryId);
 	}
 
 	@Override

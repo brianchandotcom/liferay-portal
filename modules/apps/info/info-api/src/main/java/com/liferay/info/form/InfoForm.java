@@ -176,6 +176,28 @@ public class InfoForm {
 
 	public static class Builder {
 
+		public InfoForm build() {
+			return new InfoForm(this);
+		}
+
+		public Builder descriptionInfoLocalizedValue(
+			InfoLocalizedValue<String> descriptionInfoLocalizedValue) {
+
+			_descriptionInfoLocalizedValue = descriptionInfoLocalizedValue;
+
+			return this;
+		}
+
+		public Builder infoFieldSetEntries(
+			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
+
+			for (InfoFieldSetEntry infoFieldSetEntry : infoFieldSetEntries) {
+				infoFieldSetEntry(infoFieldSetEntry);
+			}
+
+			return this;
+		}
+
 		public Builder infoFieldSetEntry(InfoFieldSet infoFieldSet) {
 			InfoFieldSetEntry existingInfoFieldSetEntry =
 				_infoFieldSetEntriesByName.get(infoFieldSet.getName());
@@ -218,28 +240,6 @@ public class InfoForm {
 			throws T {
 
 			consumer.accept(this::infoFieldSetEntry);
-
-			return this;
-		}
-
-		public Builder infoFieldSetEntries(
-			Collection<InfoFieldSetEntry> infoFieldSetEntries) {
-
-			for (InfoFieldSetEntry infoFieldSetEntry : infoFieldSetEntries) {
-				infoFieldSetEntry(infoFieldSetEntry);
-			}
-
-			return this;
-		}
-
-		public InfoForm build() {
-			return new InfoForm(this);
-		}
-
-		public Builder descriptionInfoLocalizedValue(
-			InfoLocalizedValue<String> descriptionInfoLocalizedValue) {
-
-			_descriptionInfoLocalizedValue = descriptionInfoLocalizedValue;
 
 			return this;
 		}

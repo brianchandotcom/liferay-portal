@@ -139,6 +139,10 @@ public class InfoItemFieldValues {
 
 	public static class Builder {
 
+		public InfoItemFieldValues build() {
+			return new InfoItemFieldValues(this);
+		}
+
 		public Builder infoFieldValue(InfoFieldValue<Object> infoFieldValue) {
 			_infoFieldValues.add(infoFieldValue);
 
@@ -163,16 +167,14 @@ public class InfoItemFieldValues {
 			return this;
 		}
 
-		public Builder infoFieldValues(List<InfoFieldValue<Object>> infoFieldValues) {
+		public Builder infoFieldValues(
+			List<InfoFieldValue<Object>> infoFieldValues) {
+
 			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 				infoFieldValue(infoFieldValue);
 			}
 
 			return this;
-		}
-
-		public InfoItemFieldValues build() {
-			return new InfoItemFieldValues(this);
 		}
 
 		public Builder infoItemClassPKReference(

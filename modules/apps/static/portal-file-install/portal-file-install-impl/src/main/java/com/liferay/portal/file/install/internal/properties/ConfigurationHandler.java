@@ -18,12 +18,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PushbackReader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -32,12 +29,9 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -48,10 +42,6 @@ import java.util.Map;
  * @author Matthew Tambara
  */
 public class ConfigurationHandler {
-
-	public static Dictionary read(InputStream inputStream) throws IOException {
-		return new ConfigurationHandler()._readInternal(inputStream);
-	}
 
 	public static Object read(String value) throws IOException {
 		try (StringReader stringReader = new StringReader(value);
@@ -73,47 +63,6 @@ public class ConfigurationHandler {
 		return stringWriter.toString();
 	}
 
-	public static void write(OutputStream outputStream, Dictionary properties)
-		throws IOException {
-
-		try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-				outputStream, _ENCODING);
-			BufferedWriter bufferedWriter = new BufferedWriter(
-				outputStreamWriter)) {
-
-			Enumeration<String> enumeration = _orderedKeys(properties);
-
-			while (enumeration.hasMoreElements()) {
-				String key = enumeration.nextElement();
-
-				// cfg = prop "=" value "." .
-
-				_writeQuoted(bufferedWriter, key);
-
-				bufferedWriter.write(_TOKEN_EQ);
-
-				_writeValue(bufferedWriter, properties.get(key));
-
-				bufferedWriter.write(_CRLF);
-			}
-
-			bufferedWriter.flush();
-		}
-	}
-
-	private static Enumeration<String> _orderedKeys(Dictionary properties) {
-		String[] keyArray = new String[properties.size()];
-		int i = 0;
-
-		for (Enumeration ce = properties.keys(); ce.hasMoreElements();) {
-			keyArray[i] = (String)ce.nextElement();
-			i++;
-		}
-
-		Arrays.sort(keyArray);
-
-		return Collections.enumeration(Arrays.asList(keyArray));
-	}
 
 	private static void _writeArray(Writer writer, Object arrayValue)
 		throws IOException {

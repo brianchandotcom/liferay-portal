@@ -18,16 +18,9 @@ import static com.liferay.portal.file.install.internal.properties.InterpolationU
 
 import com.liferay.petra.string.CharPool;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-
-import java.net.URL;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;
@@ -36,7 +29,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,14 +74,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 	}
 
-	public TypedProperties() {
-		this(null, true);
-	}
-
-	public TypedProperties(boolean substitute) {
-		this(null, substitute);
-	}
-
 	public TypedProperties(SubstitutionCallback callback) {
 		this(callback, true);
 	}
@@ -133,74 +117,10 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		return value;
 	}
 
-	public List<String> getComments(String key) {
-		return _storage.getComments(key);
-	}
-
-	public List<String> getFooter() {
-		return _storage.getFooter();
-	}
-
-	public List<String> getHeader() {
-		return _storage.getHeader();
-	}
-
-	public List<String> getRaw(String key) {
-		return _storage.getRaw(key);
-	}
-
-	public void load(File file) throws IOException {
-		try (InputStream inputStream = new FileInputStream(file)) {
-			load(inputStream);
-		}
-	}
-
-	public void load(InputStream inputStream) throws IOException {
-		try (InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, Properties.DEFAULT_ENCODING)) {
-
-			load(inputStreamReader);
-		}
-	}
-
 	public void load(Reader reader) throws IOException {
 		_storage.loadLayout(reader, true);
 
 		substitute(_callback);
-	}
-
-	public void load(URL url) throws IOException {
-		try (InputStream inputStream = url.openStream()) {
-			load(inputStream);
-		}
-	}
-
-	public Object put(
-		String key, List<String> commentLines, List<String> valueLines) {
-
-		String old = _storage.put(key, commentLines, valueLines);
-
-		if (old == null) {
-			return null;
-		}
-
-		if (_storage.isTyped()) {
-			return _convertFromString(old);
-		}
-
-		return old;
-	}
-
-	public Object put(String key, List<String> commentLines, Object value) {
-		if ((value instanceof String) && !_storage.isTyped()) {
-			return _storage.put(key, commentLines, (String)value);
-		}
-
-		_ensureTyped();
-
-		String string = _convertToString(value);
-
-		return put(key, commentLines, Arrays.asList(string.split("\n")));
 	}
 
 	@Override
@@ -220,39 +140,13 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		return _convertFromString(old);
 	}
 
-	public Object put(String key, String comment, Object value) {
-		return put(key, Collections.singletonList(comment), value);
-	}
-
 	@Override
 	public Object remove(Object key) {
 		return _storage.remove(key);
 	}
 
-	public void save(File location) throws IOException {
-		_storage.save(location);
-	}
-
-	public void save(OutputStream outputStream) throws IOException {
-		_storage.save(outputStream);
-	}
-
 	public void save(Writer writer) throws IOException {
 		_storage.save(writer);
-	}
-
-	public void setFooter(List<String> footer) {
-		_storage.setFooter(footer);
-	}
-
-	public void setHeader(List<String> header) {
-		_storage.setHeader(header);
-	}
-
-	public void store(OutputStream outputStream, String comment)
-		throws IOException {
-
-		_storage.store(outputStream, comment);
 	}
 
 	public void substitute(final SubstitutionCallback substitutionCallback) {
@@ -282,25 +176,6 @@ public class TypedProperties extends AbstractMap<String, Object> {
 			"root", this);
 
 		substitute(map, prepare(map), callback, true);
-	}
-
-	public boolean update(Map<String, Object> map) {
-		TypedProperties typedProperties = new TypedProperties();
-
-		if (map instanceof TypedProperties) {
-			typedProperties = (TypedProperties)map;
-		}
-		else {
-			for (Entry<String, Object> entry : map.entrySet()) {
-				typedProperties.put(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return update(typedProperties);
-	}
-
-	public boolean update(TypedProperties properties) {
-		return _storage.update(properties._storage);
 	}
 
 	public interface SubstitutionCallback {

@@ -19,26 +19,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FilterWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-
-import java.net.URL;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,8 +35,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.osgi.framework.BundleContext;
 
 /**
  * @author Matthew Tambara
@@ -70,38 +57,8 @@ public class Properties extends AbstractMap<String, String> {
 		return false;
 	}
 
-	public Properties() {
-	}
-
 	public Properties(boolean substitute) {
 		_substitute = substitute;
-	}
-
-	public Properties(File location) throws IOException {
-		this(location, (InterpolationUtil.SubstitutionCallback)null);
-	}
-
-	public Properties(File location, boolean substitute) {
-		_location = location;
-		_substitute = substitute;
-	}
-
-	public Properties(File location, BundleContext context) throws IOException {
-		this(
-			location,
-			new InterpolationUtil.BundleContextSubstitutionCallback(context));
-	}
-
-	public Properties(
-			File location, InterpolationUtil.SubstitutionCallback callback)
-		throws IOException {
-
-		_location = location;
-		_callback = callback;
-
-		if (location.exists()) {
-			load(location);
-		}
 	}
 
 	@Override
@@ -144,68 +101,12 @@ public class Properties extends AbstractMap<String, String> {
 		return new ArrayList<>();
 	}
 
-	public List<String> getFooter() {
-		return _footer;
-	}
-
 	public List<String> getHeader() {
 		return _header;
 	}
 
-	public String getProperty(String key) {
-		return get(key);
-	}
-
-	public String getProperty(String key, String defaultValue) {
-		if (get(key) != null) {
-			return get(key);
-		}
-
-		return defaultValue;
-	}
-
-	public List<String> getRaw(String key) {
-		Layout layout = _layoutMap.get(key);
-
-		if (layout != null) {
-			List<String> valueLines = layout.getValueLines();
-
-			if (valueLines != null) {
-				return new ArrayList<>(valueLines);
-			}
-		}
-
-		List<String> result = new ArrayList<>();
-
-		if (_storage.containsKey(key)) {
-			result.add(_storage.get(key));
-		}
-
-		return result;
-	}
-
 	public boolean isTyped() {
 		return _typed;
-	}
-
-	public void load(File location) throws IOException {
-		try (InputStream inputStream = new FileInputStream(location)) {
-			load(inputStream);
-		}
-	}
-
-	public void load(InputStream inputStream) throws IOException {
-		load(new InputStreamReader(inputStream, DEFAULT_ENCODING));
-	}
-
-	public void load(Reader reader) throws IOException {
-		loadLayout(reader, false);
-	}
-
-	public void load(URL url) throws IOException {
-		try (InputStream inputStream = url.openStream()) {
-			load(inputStream);
-		}
 	}
 
 	public void loadLayout(Reader reader, boolean maybeTyped)
@@ -266,10 +167,6 @@ public class Properties extends AbstractMap<String, String> {
 		if (_substitute) {
 			substitute();
 		}
-	}
-
-	public Enumeration<?> propertyNames() {
-		return Collections.enumeration(_storage.keySet());
 	}
 
 	public String put(
@@ -339,14 +236,6 @@ public class Properties extends AbstractMap<String, String> {
 		return _storage.put(key, property[1]);
 	}
 
-	public String put(String key, List<String> commentLines, String value) {
-		commentLines = new ArrayList<>(commentLines);
-
-		_layoutMap.put(key, new Layout(commentLines, null));
-
-		return _storage.put(key, value);
-	}
-
 	@Override
 	public String put(String key, String value) {
 		String old = _storage.put(key, value);
@@ -360,10 +249,6 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		return old;
-	}
-
-	public String put(String key, String comment, String value) {
-		return put(key, Collections.singletonList(comment), value);
 	}
 
 	public void putAllSubstituted(Map<? extends String, ? extends String> map) {
@@ -381,44 +266,16 @@ public class Properties extends AbstractMap<String, String> {
 		return _storage.remove(key);
 	}
 
-	public void save() throws IOException {
-		save(_location);
-	}
-
-	public void save(File location) throws IOException {
-		try (OutputStream outputStream = new FileOutputStream(location)) {
-			save(outputStream);
-		}
-	}
-
-	public void save(OutputStream outputStream) throws IOException {
-		save(new OutputStreamWriter(outputStream, DEFAULT_ENCODING));
-	}
-
 	public void save(Writer writer) throws IOException {
 		saveLayout(writer, _typed);
-	}
-
-	public void setFooter(List<String> footer) {
-		_footer = footer;
 	}
 
 	public void setHeader(List<String> header) {
 		_header = header;
 	}
 
-	public Object setProperty(String key, String value) {
-		return put(key, value);
-	}
-
 	public void setTyped(boolean typed) {
 		_typed = typed;
-	}
-
-	public void store(OutputStream outputStream, String comment)
-		throws IOException {
-
-		save(outputStream);
 	}
 
 	public void substitute() {
@@ -432,64 +289,6 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		InterpolationUtil.performSubstitution(_storage, callback);
-	}
-
-	public boolean update(Map<String, String> props) {
-		Properties properties = new Properties();
-
-		if (props instanceof Properties) {
-			properties = (Properties)props;
-		}
-		else {
-			for (Map.Entry<? extends String, ? extends String> e :
-					props.entrySet()) {
-
-				properties.put(e.getKey(), e.getValue());
-			}
-		}
-
-		return update(properties);
-	}
-
-	public boolean update(Properties properties) {
-		boolean modified = false;
-
-		// Remove "removed" properties from the cfg file
-
-		for (String key : new ArrayList<>(keySet())) {
-			if (!properties.containsKey(key)) {
-				remove(key);
-
-				modified = true;
-			}
-		}
-
-		// Update existing keys
-
-		for (String key : properties.keySet()) {
-			String value = get(key);
-
-			List<String> comments = properties.getComments(key);
-
-			List<String> rawValue = properties.getRaw(key);
-
-			if (value == null) {
-				put(key, comments, rawValue);
-
-				modified = true;
-			}
-			else if (!value.equals(properties.get(key))) {
-				if (comments.isEmpty()) {
-					comments = getComments(key);
-				}
-
-				put(key, comments, rawValue);
-
-				modified = true;
-			}
-		}
-
-		return modified;
 	}
 
 	public static class PropertiesReader extends LineNumberReader {
@@ -1101,9 +900,8 @@ public class Properties extends AbstractMap<String, String> {
 	private List<String> _footer;
 	private List<String> _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
-	private File _location;
 	private final Map<String, String> _storage = new LinkedHashMap<>();
-	private boolean _substitute = true;
+	private final boolean _substitute;
 	private boolean _typed;
 
 	private static class Layout {

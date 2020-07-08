@@ -30,10 +30,6 @@ import org.osgi.framework.BundleContext;
  */
 public class InterpolationUtil {
 
-	public static void performSubstitution(Map<String, String> properties) {
-		performSubstitution(properties, (BundleContext)null);
-	}
-
 	public static void performSubstitution(
 		Map<String, String> properties, BundleContext bundleContext) {
 
@@ -65,36 +61,6 @@ public class InterpolationUtil {
 					substituteFromConfig, substituteFromSystemProperties,
 					defaultsToEmptyString));
 		}
-	}
-
-	public static String substVars(
-			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps)
-		throws IllegalArgumentException {
-
-		return substVars(
-			value, currentKey, cycleMap, configProps,
-			(SubstitutionCallback)null);
-	}
-
-	public static String substVars(
-			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, BundleContext bundleContext)
-		throws IllegalArgumentException {
-
-		return substVars(
-			value, currentKey, cycleMap, configProps,
-			new BundleContextSubstitutionCallback(bundleContext));
-	}
-
-	public static String substVars(
-			String value, String currentKey, Map<String, String> cycleMap,
-			Map<String, String> configProps, SubstitutionCallback callback)
-		throws IllegalArgumentException {
-
-		return substVars(
-			value, currentKey, cycleMap, configProps, callback, true, true,
-			true);
 	}
 
 	public static String substVars(

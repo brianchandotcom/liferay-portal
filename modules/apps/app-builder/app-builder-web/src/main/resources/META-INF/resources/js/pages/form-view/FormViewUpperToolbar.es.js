@@ -132,7 +132,7 @@ export default ({newCustomObject, showTranslationManager}) => {
 				onInput={onDataLayoutNameChange}
 				onKeyDown={onKeyDown}
 				placeholder={Liferay.Language.get('untitled-form-view')}
-				value={dataLayout.name[editingLanguageId]}
+				value={dataLayout.name[editingLanguageId] || ''}
 			/>
 
 			<UpperToolbar.Group>
@@ -142,7 +142,7 @@ export default ({newCustomObject, showTranslationManager}) => {
 
 				<UpperToolbar.Button
 					disabled={
-						!dataLayout.name[defaultLanguageId] ||
+						!dataLayout.name[editingLanguageId] ||
 						DataLayoutVisitor.isDataLayoutEmpty(
 							dataLayout.dataLayoutPages
 						)

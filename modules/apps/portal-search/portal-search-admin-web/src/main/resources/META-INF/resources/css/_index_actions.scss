@@ -1,4 +1,8 @@
 .search-admin-index-actions-container {
+	.index-action-wrapper {
+		justify-content: center;
+	}
+
 	.list-group-item-flex .autofit-col .list-group-title:only-child {
 		min-height: 40px;
 	}

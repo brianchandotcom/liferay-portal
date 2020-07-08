@@ -32,7 +32,8 @@ page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerClassNameComparator" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -166,6 +167,8 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 
 <aui:script use="liferay-admin">
 	new Liferay.Portlet.Admin({
+		controlMenuCategoryKey:
+			'<%= ProductNavigationControlMenuCategoryKeys.TOOLS %>',
 		form: document.<portlet:namespace />fm,
 		indexActionWrapperSelector: '.index-action-wrapper',
 		indexActionsPanel:

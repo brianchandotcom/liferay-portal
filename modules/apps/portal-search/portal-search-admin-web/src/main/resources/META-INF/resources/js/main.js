@@ -37,6 +37,11 @@ AUI.add(
 
 		var Admin = A.Component.create({
 			ATTRS: {
+				controlMenuCategoryKey: {
+					validator: Lang.isString,
+					value: 'tools',
+				},
+
 				form: {
 					setter: A.one,
 					value: null,
@@ -98,6 +103,28 @@ AUI.add(
 					form.append(inputsArray.join(''));
 				},
 
+				_getControlMenuReloadItem(element) {
+					let controlMenuReloadItem;
+
+					if (!element) {
+						return;
+					}
+
+					element
+						.querySelectorAll('.control-menu-nav-item')
+						.forEach((element) => {
+							if (
+								element.getElementsByClassName(
+									'lexicon-icon-reload'
+								).length
+							) {
+								controlMenuReloadItem = element;
+							}
+						});
+
+					return controlMenuReloadItem;
+				},
+
 				_isBackgroundTaskInProgress() {
 					var instance = this;
 
@@ -151,51 +178,98 @@ AUI.add(
 									instance.get(STR_INDEX_ACTIONS_PANEL)
 								);
 
-								var responseAdminIndexNodeList = responseAdminIndexPanel.all(
-									instance.get('indexActionWrapperSelector')
-								);
+								if (
+									currentAdminIndexPanel &&
+									responseAdminIndexPanel
+								) {
+									var responseAdminIndexNodeList = responseAdminIndexPanel.all(
+										instance.get(
+											'indexActionWrapperSelector'
+										)
+									);
 
-								var currentAdminIndexNodeList = currentAdminIndexPanel.all(
-									instance.get('indexActionWrapperSelector')
-								);
+									var currentAdminIndexNodeList = currentAdminIndexPanel.all(
+										instance.get(
+											'indexActionWrapperSelector'
+										)
+									);
 
-								currentAdminIndexNodeList.each(
-									(currentNode, index) => {
-										var responseAdminIndexNode = responseAdminIndexNodeList.item(
-											index
-										);
-
-										var inProgress =
-											currentNode.one(
-												IN_PROGRESS_SELECTOR
-											) ||
-											responseAdminIndexNode.one(
-												IN_PROGRESS_SELECTOR
+									currentAdminIndexNodeList.each(
+										(currentNode, index) => {
+											var responseAdminIndexNode = responseAdminIndexNodeList.item(
+												index
 											);
 
-										if (inProgress) {
-											currentNode.replace(
-												responseAdminIndexNode
-											);
+											var inProgress =
+												currentNode.one(
+													IN_PROGRESS_SELECTOR
+												) ||
+												responseAdminIndexNode.one(
+													IN_PROGRESS_SELECTOR
+												);
+
+											if (inProgress) {
+												currentNode.replace(
+													responseAdminIndexNode
+												);
+											}
 										}
-									}
+									);
+								}
+
+								// Add or remove the reload icon in the top
+								// control menu bar
+
+								const responseDocument = new DOMParser().parseFromString(
+									response,
+									'text/html'
 								);
 
-								// Replace control menu bar
+								const controlMenuId = instance.ns(
+									'controlMenu'
+								);
+								const controlMenuCategoryClassName = `${instance.get(
+									'controlMenuCategoryKey'
+								)}-control-group`;
 
-								var controlMenuId =
-									'#' + instance.ns('controlMenu');
-
-								var currentControlMenu = A.one(controlMenuId);
-
-								var responseControlMenu = responseDataNode.one(
+								const currentControlMenu = document.getElementById(
+									controlMenuId
+								);
+								const responseControlMenu = responseDocument.getElementById(
 									controlMenuId
 								);
 
 								if (currentControlMenu && responseControlMenu) {
-									currentControlMenu.replace(
-										responseControlMenu
+									const currentControlMenuCategory = currentControlMenu.getElementsByClassName(
+										controlMenuCategoryClassName
+									)[0];
+
+									const currentReloadItem = instance._getControlMenuReloadItem(
+										currentControlMenuCategory
 									);
+
+									const responseControlMenuCategory = responseControlMenu.getElementsByClassName(
+										controlMenuCategoryClassName
+									)[0];
+
+									const responseReloadItem = instance._getControlMenuReloadItem(
+										responseControlMenuCategory
+									);
+
+									if (
+										!currentReloadItem &&
+										responseReloadItem
+									) {
+										currentControlMenuCategory.appendChild(
+											responseReloadItem
+										);
+									}
+									else if (
+										currentReloadItem &&
+										!responseReloadItem
+									) {
+										currentReloadItem.remove();
+									}
 								}
 
 								// Start timeout for refreshing the data

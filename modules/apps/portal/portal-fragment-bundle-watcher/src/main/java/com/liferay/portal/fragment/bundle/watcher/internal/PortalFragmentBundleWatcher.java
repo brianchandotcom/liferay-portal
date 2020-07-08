@@ -20,10 +20,9 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -83,8 +82,14 @@ public class PortalFragmentBundleWatcher {
 					return;
 				}
 
-				Set<String> fragmentHostSymbolicNames = new HashSet<>(
-					installedFragmentBundles.values());
+				Map<String, Bundle> fragmentHostSymbolicNames = new HashMap<>();
+
+				for (Map.Entry<Bundle, String> entry :
+						installedFragmentBundles.entrySet()) {
+
+					fragmentHostSymbolicNames.put(
+						entry.getValue(), entry.getKey());
+				}
 
 				Bundle originBundle = bundleEvent.getOrigin();
 
@@ -93,8 +98,11 @@ public class PortalFragmentBundleWatcher {
 				List<Bundle> hostBundles = new ArrayList<>();
 
 				for (Bundle bundle : bundleContext.getBundles()) {
-					if (fragmentHostSymbolicNames.remove(
-							bundle.getSymbolicName()) &&
+					Bundle fragmant = fragmentHostSymbolicNames.remove(
+						bundle.getSymbolicName());
+
+					if ((fragmant != null) &&
+						(fragmant.getState() != Bundle.RESOLVED) &&
 						(originBundleId != bundle.getBundleId())) {
 
 						hostBundles.add(bundle);

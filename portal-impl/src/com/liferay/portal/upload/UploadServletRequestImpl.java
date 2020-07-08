@@ -100,8 +100,7 @@ public class UploadServletRequestImpl
 			}
 			else {
 				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(
-						getTempDir(), (int)uploadServletRequestImplMaxSize));
+					new LiferayFileItemFactory(getTempDir()));
 			}
 
 			if (maxRequestSize > 0) {

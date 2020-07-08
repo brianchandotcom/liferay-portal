@@ -16,27 +16,21 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
-import {
-	BACKSPACE_KEYCODE,
-	D_KEYCODE,
-	S_KEYCODE,
-} from '../config/constants/keycodes';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
-import {useIsActive, useSelectItem} from './Controls';
+import {useSelectItem} from './Controls';
 import SaveFragmentCompositionModal from './floating-toolbar/SaveFragmentCompositionModal';
 
 export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
-	const isActive = useIsActive();
 	const selectItem = useSelectItem();
 
 	const state = useSelector((state) => state);
@@ -48,28 +42,6 @@ export default function ItemActions({item}) {
 	} = state;
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
-
-	useEffect(() => {
-		const onKeyDown = (event) => {
-			if (isActive(item.itemId) && !openSaveModal) {
-				const itemAction = itemActions.find((itemAction) =>
-					itemAction.isKeyCombination(event)
-				);
-
-				if (itemAction) {
-					itemAction.action();
-
-					event.preventDefault();
-				}
-			}
-		};
-
-		window.addEventListener('keydown', onKeyDown, true);
-
-		return () => {
-			window.removeEventListener('keydown', onKeyDown, true);
-		};
-	}, [isActive, item, itemActions, openSaveModal]);
 
 	const itemActions = useMemo(() => {
 		const actions = [];
@@ -85,13 +57,6 @@ export default function ItemActions({item}) {
 						})
 					),
 				icon: 'paste',
-				isKeyCombination: (event) => {
-					const ctrlOrMeta =
-						(event.ctrlKey && !event.metaKey) ||
-						(!event.ctrlKey && event.metaKey);
-
-					return ctrlOrMeta && event.keyCode === D_KEYCODE;
-				},
 				label: Liferay.Language.get('duplicate'),
 			});
 		}
@@ -100,13 +65,6 @@ export default function ItemActions({item}) {
 			actions.push({
 				action: () => setOpenSaveModal(true),
 				icon: 'disk',
-				isKeyCombination: (event) => {
-					const ctrlOrMeta =
-						(event.ctrlKey && !event.metaKey) ||
-						(!event.ctrlKey && event.metaKey);
-
-					return ctrlOrMeta && event.keyCode === S_KEYCODE;
-				},
 				label: Liferay.Language.get('save-composition'),
 			});
 		}
@@ -122,8 +80,6 @@ export default function ItemActions({item}) {
 						})
 					),
 				icon: 'times-circle',
-				isKeyCombination: (event) =>
-					event.keyCode === BACKSPACE_KEYCODE,
 				label: Liferay.Language.get('delete'),
 			});
 		}

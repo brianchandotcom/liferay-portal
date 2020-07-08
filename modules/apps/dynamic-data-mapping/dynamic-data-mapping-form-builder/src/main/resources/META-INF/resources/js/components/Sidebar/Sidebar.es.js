@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
@@ -228,9 +227,9 @@ class Sidebar extends Component {
 				<div class={styles} ref="container">
 					<div class="sidebar sidebar-light">
 						<nav class="component-tbar tbar">
-							<ClayLayout.ContainerFluid>
+							<div class="container-fluid">
 								{this._renderTopBar()}
-							</ClayLayout.ContainerFluid>
+							</div>
 						</nav>
 						<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
 							<a

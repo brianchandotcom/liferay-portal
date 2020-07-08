@@ -258,13 +258,11 @@ const Main = ({
 				}
 				itemSelectorURL={itemSelectorURL}
 				name={name}
-				onClearClick={({event, ...data}) => onChange(event, {...data})}
+				onClearClick={({event, ...data}) => onChange(event, data)}
 				onDescriptionChange={({event, ...data}) =>
-					onChange(event, {...data})
+					onChange(event, data)
 				}
-				onFieldChanged={({event, ...data}) =>
-					onChange(event, {...data})
-				}
+				onFieldChanged={({event, ...data}) => onChange(event, data)}
 				portletNamespace={portletNamespace}
 				readOnly={readOnly}
 			/>

@@ -1,0 +1,1 @@
+com.liferay.users.admin.configuration.definition

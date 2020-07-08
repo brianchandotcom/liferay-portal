@@ -96,6 +96,7 @@ const AutocompleteMultiSelect = ({
 	const onSelect = (item) => {
 		const newSelectedItems = [...selectedItems, item];
 
+		setSearch('');
 		onChange(newSelectedItems);
 	};
 
@@ -151,6 +152,7 @@ const AutocompleteMultiSelect = ({
 						placeholder={!selectedItems.length ? placeholder : ''}
 						style={selectedItems && {width: 0}}
 						type="text"
+						value={search}
 					/>
 
 					{selectedItems.length > 0 && (

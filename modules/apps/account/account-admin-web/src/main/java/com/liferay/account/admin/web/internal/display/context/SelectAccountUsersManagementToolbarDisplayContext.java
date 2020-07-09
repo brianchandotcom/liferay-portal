@@ -61,7 +61,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!isSingleSelect()) {
+		if (!isShowCreateButton()) {
 			return null;
 		}
 
@@ -121,6 +121,10 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isSelectable() {
 		return !isSingleSelect();
+	}
+
+	public boolean isShowCreateButton() {
+		return ParamUtil.getBoolean(liferayPortletRequest, "showCreateButton");
 	}
 
 	public boolean isSingleSelect() {

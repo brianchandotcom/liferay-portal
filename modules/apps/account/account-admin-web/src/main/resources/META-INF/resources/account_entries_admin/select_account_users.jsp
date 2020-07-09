@@ -125,7 +125,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	);
 </aui:script>
 
-<c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isSingleSelect() %>">
+<c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isShowCreateButton() %>">
 	<liferay-frontend:component
 		componentId="<%= selectAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 		module="account_entries_admin/js/SelectAccountUsersManagementToolbarDefaultEventHandler.es"

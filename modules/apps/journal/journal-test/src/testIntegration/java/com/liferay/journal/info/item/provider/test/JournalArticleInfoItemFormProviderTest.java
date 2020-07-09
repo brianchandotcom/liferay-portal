@@ -104,7 +104,7 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoFields.sort(Comparator.comparing(InfoField::getName));
 
-		Assert.assertEquals(infoFields.toString(), 18, infoFields.size());
+		Assert.assertEquals(infoFields.toString(), 20, infoFields.size());
 
 		Iterator<InfoField> iterator = infoFields.iterator();
 
@@ -114,6 +114,40 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertTrue(infoField.isLocalizable());
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals("HTML", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		Optional<Boolean> multilineAttributeOptional =
+			infoField.getAttributeOptional(TextInfoFieldType.MULTILINE);
+
+		Assert.assertTrue(multilineAttributeOptional.get());
+
+		Optional<Boolean> richAttributeOptional =
+			infoField.getAttributeOptional(TextInfoFieldType.RICH);
+
+		Assert.assertTrue(richAttributeOptional.get());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals("TextBox", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		multilineAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.MULTILINE);
+
+		Assert.assertTrue(multilineAttributeOptional.get());
+
+		richAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.RICH);
+
+		Assert.assertFalse(richAttributeOptional.isPresent());
 
 		infoField = iterator.next();
 
@@ -264,7 +298,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			infoItemFieldValues.getInfoFieldValues();
 
 		Assert.assertEquals(
-			infoFieldValues.toString(), 12, infoFieldValues.size());
+			infoFieldValues.toString(), 14, infoFieldValues.size());
 
 		InfoFieldValue<Object> descriptionInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("description");
@@ -343,6 +377,20 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertNotNull(webImage.getUrl());
 
 		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValue("integer"));
+
+		InfoFieldValue<Object> textBoxInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("TextBox");
+
+		Assert.assertEquals(
+			"A lot of text",
+			textBoxInfoFieldValue.getValue(LocaleUtil.getDefault()));
+
+		InfoFieldValue<Object> htmlInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("HTML");
+
+		Assert.assertEquals(
+			"<p><strong>Bold text</strong></p>",
+			htmlInfoFieldValue.getValue(LocaleUtil.getDefault()));
 	}
 
 	private JournalArticle _getJournalArticle() throws Exception {

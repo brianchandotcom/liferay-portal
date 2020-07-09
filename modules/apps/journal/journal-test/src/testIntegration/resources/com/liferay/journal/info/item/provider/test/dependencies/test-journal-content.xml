@@ -18,4 +18,10 @@
 	<dynamic-element index-type="keyword" instance-id="bajz" name="integer" type="ddm-integer">
 		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="vuoo" name="TextBox" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[A lot of text]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="yhzp" name="HTML" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Bold text</strong></p>]]></dynamic-content>
+	</dynamic-element>
 </root>

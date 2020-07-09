@@ -85,6 +85,47 @@
 				"en_US": ""
 			},
 			"type": "ddm-integer"
+		},
+		{
+			"dataType": "string",
+			"indexType": "text",
+			"label": {
+				"en_US": "Text Box"
+			},
+			"localizable": true,
+			"name": "TextBox",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "textarea"
+		},
+		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"en_US": "HTML"
+			},
+			"localizable": true,
+			"name": "HTML",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-text-html"
 		}
 	],
 	"successPage": {

@@ -948,7 +948,8 @@ public class DDMFormAdminDisplayContext {
 
 		context.put(
 			"activeNavItem",
-			ParamUtil.getInteger(renderRequest, "activeNavItem"));
+			ParamUtil.getInteger(
+				renderRequest, "activeNavItem", _NAV_ITEM_FORM));
 
 		return jsonSerializer.serializeDeep(context);
 	}

@@ -64,9 +64,9 @@ const AppContent = ({
 
 	useEffect(() => {
 		if (setChildrenContext) {
-			setChildrenContext({dispatch, state});
+			setChildrenContext({dataLayoutBuilder, dispatch, state});
 		}
-	}, [dispatch, setChildrenContext, state]);
+	}, [dataLayoutBuilder, dispatch, setChildrenContext, state]);
 
 	useEffect(() => {
 		if (!setChildrenContext) {

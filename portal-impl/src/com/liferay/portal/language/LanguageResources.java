@@ -66,6 +66,11 @@ public class LanguageResources {
 
 		};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *   com.liferay.portal.kernel.language.LanguageBuilderUtil#fixValue(String)}
+	 */
+	@Deprecated
 	public static String fixValue(String value) {
 		if (value.endsWith(LangBuilder.AUTOMATIC_COPY)) {
 			value = value.substring(

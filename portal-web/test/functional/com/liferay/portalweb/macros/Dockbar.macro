@@ -4,7 +4,8 @@ definition {
 		Click(locator1 = "ControlMenu#ADD");
 
 		AssertTextEquals(
-			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
+			key_tab = "Widgets",
+			locator1 = "NavTab#TAB_LINK",
 			value1 = "Widgets");
 	}
 

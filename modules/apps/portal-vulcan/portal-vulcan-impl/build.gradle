@@ -55,6 +55,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.2.RELEASE"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
+	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:headless:headless-batch-engine:headless-batch-engine-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")

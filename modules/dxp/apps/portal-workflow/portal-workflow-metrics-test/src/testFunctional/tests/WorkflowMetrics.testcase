@@ -33,9 +33,7 @@ definition {
 			portlet = "Workflow",
 			site = "${siteName}");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "No Workflow",
-			workflowResourceValue = "Blogs Entry");
+		Workflow._tearDownWorkflow();
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
@@ -2377,29 +2375,31 @@ definition {
 			isPresent = "Blogs Entry Title 3",
 			taskName = "Review");
 	}
-	@description = "LRQA-53630 Automate LPS-98518: [Dashboard] View workload distribution for all assignees"
+
+	@description = "LRQA-58272 Automate LPS-107777: Move Workflow Metrics reindex actions out of the Search Settings"
 	@priority = "5"
 	test WorkflowMetricsReindex {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
-
-		GlobalMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
-		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow Metrics Processes");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Indexes");
 
-		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow Metrics Instances");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Nodes");
 
-		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow Metrics Tasks");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Processes");
 
-		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow SLA Instance Results");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Instances");
 
-		WorkflowMetrics.reindexSpecific(actionDescription = "Workflow SLA Task Results");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Tasks");
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Transitions");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow SLA Indexes");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow SLA Instance Results");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow SLA Task Results");
 	}
 
 }

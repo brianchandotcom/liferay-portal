@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
@@ -41,7 +42,6 @@ import java.nio.channels.FileChannel;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,7 +244,7 @@ public class SampleSQLBuilder {
 			public void run() {
 				Writer sampleSQLWriter = null;
 
-				try {
+				try (CSVFileWriter csvFileWriter = new CSVFileWriter()) {
 					sampleSQLWriter = new UnsyncTeeWriter(
 						new UnsyncBufferedWriter(
 							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
@@ -255,20 +255,17 @@ public class SampleSQLBuilder {
 
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
-						Collections.singletonMap("dataFactory", _dataFactory),
+						HashMapBuilder.<String, Object>put(
+							"csvFileWriter", csvFileWriter
+						).put(
+							"dataFactory", _dataFactory
+						).build(),
 						sampleSQLWriter);
 				}
 				catch (Throwable t) {
 					_freeMarkerThrowable = t;
 				}
 				finally {
-					try {
-						_dataFactory.closeCSVWriters();
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-
 					if (sampleSQLWriter != null) {
 						try {
 							sampleSQLWriter.close();

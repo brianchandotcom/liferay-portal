@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Navigate to Global Menu > ${site}"
+	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoLocalizedSite {
 		GlobalMenuHelper.openGlobalMenu();
 
@@ -22,7 +22,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Navigate to Global Menu > ${panel} > ${category} > ${portlet}"
+	@summary = "Navigate to Applications Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
 		GlobalMenuHelper.openGlobalMenu();
 
@@ -33,7 +33,7 @@ definition {
 			portlet = "${portlet}");
 	}
 
-	@summary = "Navigate to Global Menu > ${site}"
+	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoSite {
 		GlobalMenuHelper.openGlobalMenu();
 
@@ -43,7 +43,7 @@ definition {
 			value1 = "${site}");
 	}
 
-	@summary = "Navigate to Global Menu > Sites > Sites Modal > ${site}"
+	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"
 	macro gotoSiteViaViewAll {
 		GlobalMenuHelper.openGlobalMenu();
 

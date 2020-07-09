@@ -213,6 +213,7 @@ export default function TrafficSources({
 							</Pie>
 
 							<Tooltip
+								animationDuration={0}
 								content={<TrafficSourcesCustomTooltip />}
 								formatter={(value, name, iconType) => {
 									return [

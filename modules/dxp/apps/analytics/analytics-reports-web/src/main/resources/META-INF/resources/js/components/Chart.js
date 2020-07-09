@@ -401,6 +401,7 @@ export default function Chart({
 
 							{validAnalyticsConnection && !publishedToday && (
 								<Tooltip
+									animationDuration={0}
 									content={
 										<CustomTooltip
 											publishDateFill={

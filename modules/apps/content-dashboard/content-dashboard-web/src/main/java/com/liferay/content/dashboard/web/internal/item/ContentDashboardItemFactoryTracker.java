@@ -18,21 +18,37 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
 @Component(service = ContentDashboardItemFactoryTracker.class)
 public class ContentDashboardItemFactoryTracker {
+
+	public Collection<Long> getClassIds() {
+		Collection<String> classNames = getClassNames();
+
+		Stream<String> stream = classNames.stream();
+
+		return stream.map(
+			_classNameLocalService::getClassNameId
+		).collect(
+			Collectors.toSet()
+		);
+	}
 
 	public Collection<String> getClassNames() {
 		return Collections.unmodifiableCollection(_serviceTrackerMap.keySet());
@@ -60,6 +76,9 @@ public class ContentDashboardItemFactoryTracker {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	private volatile ServiceTrackerMap<String, ContentDashboardItemFactory<?>>
 		_serviceTrackerMap;

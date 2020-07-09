@@ -211,6 +211,8 @@ public class FreeMarkerTool {
 		String arguments = OpenAPIParserUtil.getArguments(javaMethodParameters);
 
 		arguments = StringUtil.replace(
+			arguments, "assetLibraryId", "Long.valueOf(assetLibraryId)");
+		arguments = StringUtil.replace(
 			arguments, "filter",
 			"_filterBiFunction.apply(" + schemaVarName +
 				"Resource, filterString)");
@@ -293,6 +295,11 @@ public class FreeMarkerTool {
 
 		String parameters = GraphQLOpenAPIParser.getParameters(
 			javaMethodParameters, operation, annotation);
+
+		parameters = StringUtil.replace(
+			parameters,
+			"@GraphQLName(\"assetLibraryId\") java.lang.Long assetLibraryId",
+			"@GraphQLName(\"assetLibraryId\") @NotEmpty String assetLibraryId");
 
 		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.filter.Filter filter",

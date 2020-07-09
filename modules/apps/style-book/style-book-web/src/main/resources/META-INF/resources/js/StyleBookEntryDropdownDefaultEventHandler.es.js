@@ -38,6 +38,17 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteStyleBookEntryPreviewURL);
 	}
 
+	markAsDefaultStyleBookEntry(itemData) {
+		if (itemData.message !== '') {
+			if (confirm(Liferay.Language.get(itemData.message))) {
+				this._send(itemData.markAsDefaultStyleBookEntryURL);
+			}
+		}
+		else {
+			this._send(itemData.markAsDefaultStyleBookEntryURL);
+		}
+	}
+
 	renameStyleBookEntry(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-style-book'),
@@ -51,6 +62,12 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			namespace: this.namespace,
 			spritemap: this.spritemap,
 		});
+	}
+
+	unmarkAsDefaultStyleBookEntry(itemData) {
+		if (confirm(Liferay.Language.get('unmark-default-confirmation'))) {
+			this._send(itemData.unmarkAsDefaultStyleBookEntryURL);
+		}
 	}
 
 	updateStyleBookEntryPreview(itemData) {

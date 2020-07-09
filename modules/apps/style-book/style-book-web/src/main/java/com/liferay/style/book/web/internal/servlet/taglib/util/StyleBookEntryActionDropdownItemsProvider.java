@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.List;
@@ -71,6 +73,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		).add(
 			() -> _styleBookEntry.getPreviewFileEntryId() > 0,
 			_getDeleteStyleBookEntryPreviewActionUnsafeConsumer()
+		).add(
+			_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer()
 		).add(
 			_getDeleteStyleBookEntryActionUnsafeConsumer()
 		).build();
@@ -190,6 +194,66 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			itemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer() {
+
+		PortletURL markAsDefaultStyleBookEntryURL =
+			_renderResponse.createActionURL();
+
+		markAsDefaultStyleBookEntryURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/style_book/update_style_book_entry_default");
+
+		markAsDefaultStyleBookEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		markAsDefaultStyleBookEntryURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+		markAsDefaultStyleBookEntryURL.setParameter(
+			"defaultStyleBookEntry",
+			String.valueOf(!_styleBookEntry.isDefaultStyleBookEntry()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "markAsDefaultStyleBookEntry");
+			dropdownItem.putData(
+				"markAsDefaultStyleBookEntryURL",
+				markAsDefaultStyleBookEntryURL.toString());
+
+			String message = StringPool.BLANK;
+
+			StyleBookEntry defaultLStyleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+					_styleBookEntry.getGroupId());
+
+			if (defaultLStyleBookEntry != null) {
+				long defaultLStyleBookEntryId =
+					defaultLStyleBookEntry.getStyleBookEntryId();
+				long styleBookEntryId = _styleBookEntry.getStyleBookEntryId();
+
+				if (defaultLStyleBookEntryId != styleBookEntryId) {
+					message = LanguageUtil.format(
+						_httpServletRequest,
+						"do-you-want-to-replace-x-for-x-as-the-default-style-" +
+							"book",
+						new String[] {
+							_styleBookEntry.getName(),
+							defaultLStyleBookEntry.getName()
+						});
+				}
+			}
+
+			dropdownItem.putData("message", message);
+
+			String label = "mark-as-default";
+
+			if (_styleBookEntry.isDefaultStyleBookEntry()) {
+				label = "unmark-as-default";
+			}
+
+			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

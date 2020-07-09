@@ -44,6 +44,10 @@ public class NodeExtension {
 
 			@Override
 			public File call() throws Exception {
+				if (!isDownload()) {
+					return null;
+				}
+
 				Project curProject = project;
 
 				if (isGlobal()) {

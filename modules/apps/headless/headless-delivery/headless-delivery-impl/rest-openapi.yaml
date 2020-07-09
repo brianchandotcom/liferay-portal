@@ -2123,6 +2123,8 @@ components:
             properties:
                 backgroundColor:
                     type: string
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
                 backgroundImage:
                     deprecated: true
                     description:

@@ -59,7 +59,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			</p>
 
 			<c:choose>
-				<c:when test="<%= selLayout.isTypeAssetDisplay() && FFMappingInputConfigurationUtil.enabled() %>">
+				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
 					<div class="dpt-mapping">
 						<div class="dpt-mapping-placeholder">
 							<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />

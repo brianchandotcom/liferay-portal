@@ -16,7 +16,6 @@ package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
-import com.liferay.layout.seo.web.internal.configuration.util.FFMappingInputConfigurationUtil;
 import com.liferay.layout.seo.web.internal.constants.LayoutSEOScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,9 +50,7 @@ public class LayoutOpenGraphScreenNavigationEntry
 				return false;
 			}
 
-			if (layout.isTypeAssetDisplay() &&
-				FFMappingInputConfigurationUtil.enabled()) {
-
+			if (layout.isTypeAssetDisplay()) {
 				return true;
 			}
 

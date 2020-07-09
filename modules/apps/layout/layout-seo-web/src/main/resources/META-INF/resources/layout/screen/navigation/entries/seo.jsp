@@ -61,7 +61,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 			<c:choose>
-				<c:when test="<%= selLayout.isTypeAssetDisplay() && FFMappingInputConfigurationUtil.enabled() %>">
+				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
 					<div class="dpt-mapping">
 						<div class="dpt-mapping-placeholder">
 							<aui:model-context bean="<%= null %>" model="<%= null %>" />

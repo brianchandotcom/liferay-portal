@@ -27,13 +27,12 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import Button from '../../../common/components/Button';
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
-import useControlledState from '../../../core/hooks/useControlledState';
 import {openImageSelector} from '../../../core/openImageSelector';
 import {config} from '../../config/index';
 import addFragmentComposition from '../../thunks/addFragmentComposition';
 import {useActiveItemId} from '../Controls';
 
-const SaveFragmentCompositionModal = ({open}) => {
+const SaveFragmentCompositionModal = ({onCloseModal, open}) => {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 
@@ -53,12 +52,10 @@ const SaveFragmentCompositionModal = ({open}) => {
 		false
 	);
 
-	const [openModal, setOpenModal] = useControlledState(open);
-
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			if (isMounted()) {
-				setOpenModal(false);
+				onCloseModal();
 			}
 		},
 	});
@@ -113,7 +110,7 @@ const SaveFragmentCompositionModal = ({open}) => {
 	const descriptionInputId = `${config.portletNamespace}fragmentCompositionDescription`;
 
 	return (
-		openModal && (
+		open && (
 			<ClayModal
 				className="page-editor__save-fragment-composition-modal"
 				observer={observer}
@@ -370,6 +367,7 @@ const SaveFragmentCompositionModal = ({open}) => {
 };
 
 SaveFragmentCompositionModal.propTypes = {
+	onCloseModal: PropTypes.func.isRequired,
 	open: PropTypes.bool.isRequired,
 };
 

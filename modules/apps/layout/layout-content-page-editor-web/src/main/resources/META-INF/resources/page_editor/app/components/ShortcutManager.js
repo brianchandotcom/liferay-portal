@@ -261,5 +261,10 @@ export default function ShortcutManager() {
 		};
 	}, []);
 
-	return <SaveFragmentCompositionModal open={openSaveModal} />;
+	return (
+		<SaveFragmentCompositionModal
+			onCloseModal={() => setOpenSaveModal(false)}
+			open={openSaveModal}
+		/>
+	);
 }

@@ -325,20 +325,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		_style = "default";
 	}
 
-	protected List<ClayPaginationEntry> getClayPaginationEntries() {
-		List<ClayPaginationEntry> clayPaginationEntries = new ArrayList<>();
-
-		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-			if (curDelta > SearchContainer.MAX_DELTA) {
-				continue;
-			}
-
-			clayPaginationEntries.add(new ClayPaginationEntry(null, curDelta));
-		}
-
-		return clayPaginationEntries;
-	}
-
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -393,6 +379,20 @@ public class DatasetDisplayTag extends IncludeTag {
 		request.setAttribute("clay:dataset-display:style", _style);
 	}
 
+	private List<ClayPaginationEntry> _getClayPaginationEntries() {
+		List<ClayPaginationEntry> clayPaginationEntries = new ArrayList<>();
+
+		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+			if (curDelta > SearchContainer.MAX_DELTA) {
+				continue;
+			}
+
+			clayPaginationEntries.add(new ClayPaginationEntry(null, curDelta));
+		}
+
+		return clayPaginationEntries;
+	}
+
 	private void _setClayDataSetDisplayViewsContext() {
 		_clayDataSetDisplayViewsContext =
 			_clayDataSetDisplayViewSerializer.serialize(
@@ -400,7 +400,7 @@ public class DatasetDisplayTag extends IncludeTag {
 	}
 
 	private void _setClayPaginationEntries() {
-		_clayPaginationEntries = getClayPaginationEntries();
+		_clayPaginationEntries = _getClayPaginationEntries();
 
 		Stream<ClayPaginationEntry> stream = _clayPaginationEntries.stream();
 

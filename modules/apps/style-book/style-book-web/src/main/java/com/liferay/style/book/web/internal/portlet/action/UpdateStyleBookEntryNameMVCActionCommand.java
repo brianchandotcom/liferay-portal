@@ -58,8 +58,7 @@ public class UpdateStyleBookEntryNameMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		try {
-			_styleBookEntryService.updateStyleBookEntryName(
-				styleBookEntryId, name);
+			_styleBookEntryService.updateName(styleBookEntryId, name);
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {

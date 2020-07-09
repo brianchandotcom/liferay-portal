@@ -57,7 +57,7 @@ public class UpdateStyleBookEntryTokensValuesMVCActionCommand
 			actionRequest, "tokensValues");
 
 		try {
-			_styleBookEntryService.updateStyleBookEntryTokensValues(
+			_styleBookEntryService.updateTokensValues(
 				styleBookEntryId, tokensValues);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

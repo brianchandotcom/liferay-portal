@@ -204,8 +204,7 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryName(
-			long styleBookEntryId, String name)
+	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -219,7 +218,7 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
+	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId)
 		throws PortalException {
 
@@ -232,7 +231,7 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryTokensValues(
+	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException {
 
@@ -283,7 +282,7 @@ public class StyleBookEntryLocalServiceImpl
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 
-		updateStyleBookEntryPreviewFileEntryId(
+		updatePreviewFileEntryId(
 			copyStyleBookEntry.getStyleBookEntryId(),
 			fileEntry.getFileEntryId());
 	}

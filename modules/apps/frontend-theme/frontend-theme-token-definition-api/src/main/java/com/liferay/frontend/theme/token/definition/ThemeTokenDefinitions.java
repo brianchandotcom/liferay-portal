@@ -19,6 +19,6 @@ package com.liferay.frontend.theme.token.definition;
  */
 public interface ThemeTokenDefinitions {
 
-	public String getTokenDefinition(String themeId);
+	public String getTokenDefinitionString(String themeId);
 
 }

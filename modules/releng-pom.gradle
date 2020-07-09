@@ -61,7 +61,7 @@ generatePom {
 }
 
 generatePomCompileOnly {
-	assert project.properties["portalArtifactsJarVersion"] : "Please provide a value for \"portalArtifactsJarVersion\""
+	assert project.properties["portalArtifactsJarVersion"] : "Please provide a value for the project property 'portalArtifactsJarVersion'"
 
 	doFirst {
 		File projectTemplatesDir = new File(buildDir, "releng/projectTemplates")

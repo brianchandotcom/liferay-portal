@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -30,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Brian Wing Shun Chan
  */
+@CTAware
 public class ClassNameLocalServiceImpl
 	extends ClassNameLocalServiceBaseImpl implements CacheRegistryItem {
 

@@ -676,7 +676,7 @@ definition {
 			locator1 = "WorkflowReassignModal#NEW_ASSIGNEE",
 			value1 = "Test");
 		AssertElementPresent(
-			key_nameOfAssignee = "No results found.",
+			key_nameOfAssignee = "No results were found.",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 	}
 

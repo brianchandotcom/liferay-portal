@@ -16,7 +16,7 @@ definition {
 			-d type=${announcementType} \
 			-d displayDate=${displayDate} \
 			-d expirationDate=${expirationDate} \
-			-d priority=0 \
+			-d priority=${priority} \
 			-d alert=false
 		''';
 

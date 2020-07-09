@@ -94,7 +94,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						/>
 					</div>
 				</c:when>
-				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
+				<c:otherwise>
 					<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 					<div class="form-group">
@@ -189,7 +189,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						module="js/seo/openGraph.es"
 						servletContext="<%= application %>"
 					/>
-				</c:when>
+				</c:otherwise>
 			</c:choose>
 		</clay:sheet-section>
 

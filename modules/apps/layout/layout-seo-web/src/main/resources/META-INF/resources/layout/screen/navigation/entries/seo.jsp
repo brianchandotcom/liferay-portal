@@ -88,7 +88,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						/>
 					</div>
 				</c:when>
-				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
+				<c:otherwise>
 					<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
 					<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
 
@@ -186,7 +186,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						module="js/seo/seo.es"
 						servletContext="<%= application %>"
 					/>
-				</c:when>
+				</c:otherwise>
 			</c:choose>
 
 			<aui:input name="robots" placeholder="robots" />

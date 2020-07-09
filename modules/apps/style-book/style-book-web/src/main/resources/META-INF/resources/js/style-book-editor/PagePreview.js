@@ -15,5 +15,12 @@
 import React from 'react';
 
 export default function PagePreview() {
-	return <div className="style-book-editor__page-preview">Page Preview</div>;
+	return (
+		<div className="style-book-editor__page-preview">
+			<iframe
+				className="style-book-editor__page-preview-frame"
+				src="/web/guest"
+			/>
+		</div>
+	);
 }

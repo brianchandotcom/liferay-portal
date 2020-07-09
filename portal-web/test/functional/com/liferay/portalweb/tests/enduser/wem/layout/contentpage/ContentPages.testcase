@@ -227,7 +227,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 
 			AssertElementNotPresent(
 				key_elementType = "Container",
@@ -239,7 +239,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
-				key_fragmentName = "Row",
+				key_fragmentName = "Grid",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#GRID_COLUMN",
@@ -249,7 +249,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -258,8 +258,8 @@ definition {
 			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
 				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
-				key_fragmentName = "Row",
-				key_targetFragmentName = "Row",
+				key_fragmentName = "Grid",
+				key_targetFragmentName = "Grid",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
 				value1 = "");
@@ -268,7 +268,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "1",
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -283,7 +283,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Row");
+			fragmentName = "Grid");
 
 		Click(
 			key_position = "3",
@@ -301,14 +301,14 @@ definition {
 		PageEditor.addElementToColumn(
 			collectionName = "Layout Elements",
 			columnNumber = "3",
-			fragmentName = "Row",
+			fragmentName = "Grid",
 			navTab = "Fragments");
 
 		PageEditor.waitForAutoSave();
 
 		AssertElementPresent(
 			key_columnNumber = "3",
-			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
@@ -440,7 +440,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
@@ -459,7 +459,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container",
-				targetFragmentName = "Row");
+				targetFragmentName = "Grid");
 		}
 
 		task ("Assert the Container has Fluid, padding bottom 0, padding left 0, padding right 0 and padding top 0") {
@@ -824,25 +824,25 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
-				key_fragmentName = "Row",
+				key_fragmentName = "Grid",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("Assert duplicate Row in the Section") {
-			PageEditor.gotoDuplicate(fragmentName = "Row");
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
 
-			PageEditor.viewDuplicateFragment(fragmentName = "Row");
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -858,7 +858,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 		}
 
 		task ("Add a Web Content Display widget to column 1") {
@@ -932,9 +932,9 @@ definition {
 		}
 
 		task ("Assert nested elements duplicated with Row") {
-			PageEditor.gotoDuplicate(fragmentName = "Row");
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
 
-			PageEditor.viewDuplicateFragment(fragmentName = "Row");
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 
 			AssertElementPresent(
 				key_columnNumber = "1",
@@ -977,14 +977,14 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
-				key_fragmentName = "Row",
+				key_fragmentName = "Grid",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -995,7 +995,7 @@ definition {
 			PageEditor.viewDuplicateFragment(fragmentName = "Container");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

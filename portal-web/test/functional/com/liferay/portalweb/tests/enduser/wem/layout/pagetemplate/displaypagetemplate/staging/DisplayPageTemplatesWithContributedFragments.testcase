@@ -39,7 +39,7 @@ definition {
 	test AddRowWithoutSection {
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Row");
+			fragmentName = "Grid");
 
 		AssertElementNotPresent(
 			key_elementType = "Container",

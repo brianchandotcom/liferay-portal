@@ -300,7 +300,7 @@ definition {
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_collectionName = "Layout Elements",
-			key_fragmentName = "Row",
+			key_fragmentName = "Grid",
 			key_position = "1",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#CONTAINER_CONTAINER",
@@ -606,7 +606,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Row");
+			fragmentName = "Grid");
 
 		PageEditor.viewGridStyle(
 			columnCount = "3",

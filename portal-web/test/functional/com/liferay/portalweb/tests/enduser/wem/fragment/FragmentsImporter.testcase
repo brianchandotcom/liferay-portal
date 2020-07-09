@@ -624,7 +624,7 @@ definition {
 		task ("Add a Row to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 		}
 
 		task ("Add a Heading fragment to column 1") {
@@ -712,7 +712,7 @@ definition {
 			fileName = "fragment_freemarker_basic.html",
 			fragmentName = "HTML");
 
-		PageEditor.gotoSaveAsFragment(fragmentName = "Row");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Grid");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
@@ -803,7 +803,7 @@ definition {
 		task ("Add a Row to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 		}
 
 		task ("Add a Heading fragment to column 1") {
@@ -891,7 +891,7 @@ definition {
 			fileName = "fragment_freemarker_basic.html",
 			fragmentName = "HTML");
 
-		PageEditor.gotoSaveAsFragment(fragmentName = "Row");
+		PageEditor.gotoSaveAsFragment(fragmentName = "Grid");
 
 		PageEditorComposition.saveAsFragment(
 			fragmentName = "New Fragment Name",

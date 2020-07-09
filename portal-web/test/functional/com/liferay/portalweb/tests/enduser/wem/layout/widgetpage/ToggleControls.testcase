@@ -175,15 +175,11 @@ definition {
 				Click.clickAt(locator1 = "ControlMenu#ADD");
 			}
 
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE");
+			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-			AssertVisible(
-				locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
-				value1 = "Widgets");
+			Navigator.gotoNavTab(navTab = "Widgets");
 
 			Pause(locator1 = "5000");
-
-			Panel.expandSidebarApplicationsPanel();
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",

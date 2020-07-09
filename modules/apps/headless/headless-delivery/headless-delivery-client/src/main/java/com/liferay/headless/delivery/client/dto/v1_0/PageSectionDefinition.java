@@ -53,16 +53,41 @@ public class PageSectionDefinition implements Cloneable {
 
 	protected String backgroundColor;
 
-	public FragmentImage getBackgroundImage() {
+	public FragmentImage getBackgroundFragmentImage() {
+		return backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		FragmentImage backgroundFragmentImage) {
+
+		this.backgroundFragmentImage = backgroundFragmentImage;
+	}
+
+	public void setBackgroundFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundFragmentImageUnsafeSupplier) {
+
+		try {
+			backgroundFragmentImage =
+				backgroundFragmentImageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentImage backgroundFragmentImage;
+
+	public BackgroundImage getBackgroundImage() {
 		return backgroundImage;
 	}
 
-	public void setBackgroundImage(FragmentImage backgroundImage) {
+	public void setBackgroundImage(BackgroundImage backgroundImage) {
 		this.backgroundImage = backgroundImage;
 	}
 
 	public void setBackgroundImage(
-		UnsafeSupplier<FragmentImage, Exception>
+		UnsafeSupplier<BackgroundImage, Exception>
 			backgroundImageUnsafeSupplier) {
 
 		try {
@@ -73,7 +98,7 @@ public class PageSectionDefinition implements Cloneable {
 		}
 	}
 
-	protected FragmentImage backgroundImage;
+	protected BackgroundImage backgroundImage;
 
 	public FragmentLink getFragmentLink() {
 		return fragmentLink;

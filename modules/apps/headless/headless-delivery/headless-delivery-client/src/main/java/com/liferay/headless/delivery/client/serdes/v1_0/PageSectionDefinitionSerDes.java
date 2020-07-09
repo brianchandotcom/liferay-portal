@@ -69,6 +69,18 @@ public class PageSectionDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (pageSectionDefinition.getBackgroundFragmentImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundFragmentImage\": ");
+
+			sb.append(
+				String.valueOf(
+					pageSectionDefinition.getBackgroundFragmentImage()));
+		}
+
 		if (pageSectionDefinition.getBackgroundImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -130,6 +142,16 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundColor()));
 		}
 
+		if (pageSectionDefinition.getBackgroundFragmentImage() == null) {
+			map.put("backgroundFragmentImage", null);
+		}
+		else {
+			map.put(
+				"backgroundFragmentImage",
+				String.valueOf(
+					pageSectionDefinition.getBackgroundFragmentImage()));
+		}
+
 		if (pageSectionDefinition.getBackgroundImage() == null) {
 			map.put("backgroundImage", null);
 		}
@@ -183,10 +205,19 @@ public class PageSectionDefinitionSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "backgroundFragmentImage")) {
+
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setBackgroundFragmentImage(
+						FragmentImageSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
 				if (jsonParserFieldValue != null) {
 					pageSectionDefinition.setBackgroundImage(
-						FragmentImageSerDes.toDTO(
+						BackgroundImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

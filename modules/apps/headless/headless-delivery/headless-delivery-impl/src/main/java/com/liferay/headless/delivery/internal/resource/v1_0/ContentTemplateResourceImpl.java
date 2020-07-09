@@ -56,6 +56,16 @@ public class ContentTemplateResourceImpl
 	extends BaseContentTemplateResourceImpl {
 
 	@Override
+	public Page<ContentTemplate> getAssetLibraryContentTemplatesPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getContentTemplatePage(
+			assetLibraryId, search, filter, pagination, sorts);
+	}
+
+	@Override
 	public ContentTemplate getContentTemplate(
 			Long siteId, String contentTemplateId)
 		throws Exception {
@@ -76,6 +86,15 @@ public class ContentTemplateResourceImpl
 
 	@Override
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getContentTemplatePage(
+			siteId, search, filter, pagination, sorts);
+	}
+
+	private Page<ContentTemplate> _getContentTemplatePage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

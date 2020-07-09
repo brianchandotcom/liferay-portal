@@ -47,7 +47,7 @@ const EDITABLE_CLASS_NAMES = {
 };
 
 const isTranslated = (defaultLanguageId, languageId, editableValue) =>
-	defaultLanguageId !== languageId && editableValue[languageId];
+	defaultLanguageId !== languageId && editableValue?.[languageId];
 
 export default function FragmentContentInteractionsFilter({
 	children,

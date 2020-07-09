@@ -29,12 +29,13 @@ import Button from '../../../common/components/Button';
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
 import {openImageSelector} from '../../../core/openImageSelector';
 import {config} from '../../config/index';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import addFragmentComposition from '../../thunks/addFragmentComposition';
 import {useActiveItemId} from '../Controls';
 
 const SaveFragmentCompositionModal = ({onCloseModal, open}) => {
 	const dispatch = useDispatch();
-	const store = useSelector((state) => state);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const activeItemId = useActiveItemId();
 	const isMounted = useIsMounted();
@@ -80,7 +81,7 @@ const SaveFragmentCompositionModal = ({onCloseModal, open}) => {
 					previewImageURL: thumbnail.url,
 					saveInlineContent,
 					saveMappingConfiguration,
-					store,
+					segmentsExperienceId,
 				})
 			)
 				.then(() => {

@@ -1,10 +1,10 @@
 apply plugin: "com.liferay.node"
 
+task runGradleTest
+
 node {
 	download = false
 }
-
-task runGradleTest
 
 runGradleTest {
 	dependsOn downloadNode

@@ -27,13 +27,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.product.navigation.global.menu.configuration.GlobalMenuInstanceConfiguration",
 	localization = "content/Language",
-	name = "global-menu-instance-configuration-name"
+	name = "applications-menu-instance-configuration-name"
 )
 public interface GlobalMenuInstanceConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "enable-global-menu-description",
-		name = "enable-global-menu", required = false
+		deflt = "true", description = "enable-applications-menu-description",
+		name = "enable-applications-menu", required = false
 	)
 	public boolean enableGlobalMenu();
 

@@ -304,7 +304,7 @@ const GlobalMenu = ({
 				onMouseOver={fetchCategories}
 				small
 				symbol="grid"
-				title={Liferay.Language.get('global-menu')}
+				title={Liferay.Language.get('applications-menu')}
 			/>
 		</>
 	);

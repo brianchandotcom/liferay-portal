@@ -26,7 +26,7 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 		displayType="unstyled"
 		icon="grid"
 		small="<%= true %>"
-		title="global-menu"
+		title="applications-menu"
 	/>
 
 	<react:component

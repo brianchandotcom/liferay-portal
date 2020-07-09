@@ -1947,8 +1947,7 @@ public class ContentPageEditorDisplayContext {
 		long count =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				PortletIdCodec.encode(
-					portlet.getPortletId(), String.valueOf(CharPool.NUMBER_0)));
+				portlet.getPortletId());
 
 		if (count > 0) {
 			return true;

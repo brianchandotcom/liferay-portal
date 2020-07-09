@@ -104,6 +104,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserId(user.getUserId());
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
+		styleBookEntry.setDefaultStyleBookEntry(false);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 		styleBookEntry.setTokensValues(tokensValue);
@@ -165,6 +166,11 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
+		return styleBookEntryPersistence.fetchByG_D_First(groupId, true, null);
+	}
+
+	@Override
 	public StyleBookEntry fetchStyleBookEntry(
 		long groupId, String styleBookEntryKey) {
 
@@ -201,6 +207,37 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.countByG_LikeN(
 			groupId,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public StyleBookEntry updateDefaultStyleBookEntry(
+		long styleBookEntryId, boolean defaultStyleBookEntry) {
+
+		StyleBookEntry styleBookEntry = fetchStyleBookEntry(styleBookEntryId);
+
+		if (styleBookEntry == null) {
+			return null;
+		}
+
+		StyleBookEntry oldDefaultStyleBookEntry =
+			styleBookEntryPersistence.fetchByG_D_First(
+				styleBookEntry.getGroupId(), true, null);
+
+		if (defaultStyleBookEntry && (oldDefaultStyleBookEntry != null) &&
+			(oldDefaultStyleBookEntry.getStyleBookEntryId() !=
+				styleBookEntryId)) {
+
+			oldDefaultStyleBookEntry.setDefaultStyleBookEntry(false);
+
+			styleBookEntryLocalService.updateStyleBookEntry(
+				oldDefaultStyleBookEntry);
+		}
+
+		styleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
+
+		styleBookEntryLocalService.updateStyleBookEntry(styleBookEntry);
+
+		return styleBookEntry;
 	}
 
 	@Override

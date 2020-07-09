@@ -69,21 +69,28 @@ public class ContainerLayoutStructureItemImporter
 			containerLayoutStructureItem.setBackgroundColorCssClass(
 				(String)definitionMap.get("backgroundColor"));
 
-			Map<String, Object> backgroundImageMap =
-				(Map<String, Object>)definitionMap.get("backgroundImage");
+			Map<String, Object> backgroundFragmentImageMap =
+				(Map<String, Object>)definitionMap.get(
+					"backgroundFragmentImage");
 
-			if (backgroundImageMap != null) {
+			if (backgroundFragmentImageMap == null) {
+				backgroundFragmentImageMap =
+					(Map<String, Object>)definitionMap.get("backgroundImage");
+			}
+
+			if (backgroundFragmentImageMap != null) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				Map<String, Object> titleMap =
-					(Map<String, Object>)backgroundImageMap.get("title");
+					(Map<String, Object>)backgroundFragmentImageMap.get(
+						"title");
 
 				if (titleMap != null) {
 					jsonObject.put("title", _getLocalizedValue(titleMap));
 				}
 
 				Map<String, Object> urlMap =
-					(Map<String, Object>)backgroundImageMap.get("url");
+					(Map<String, Object>)backgroundFragmentImageMap.get("url");
 
 				if (urlMap != null) {
 					jsonObject.put("url", _getLocalizedValue(urlMap));

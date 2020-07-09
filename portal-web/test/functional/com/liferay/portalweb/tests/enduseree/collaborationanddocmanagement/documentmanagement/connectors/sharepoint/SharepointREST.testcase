@@ -307,6 +307,8 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
 
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.txt");
+
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");

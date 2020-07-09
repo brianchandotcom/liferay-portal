@@ -65,4 +65,7 @@ public interface FragmentEntryLink
 	public boolean isLatestVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isSystem()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

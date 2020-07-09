@@ -238,20 +238,16 @@ public class SampleSQLBuilder {
 	protected Reader generateSQL() {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				Writer sampleSQLWriter = null;
-
-				try (CSVFileWriter csvFileWriter = new CSVFileWriter()) {
-					sampleSQLWriter = new UnsyncTeeWriter(
+		Thread thread = new Thread(
+			() -> {
+				try (CSVFileWriter csvFileWriter = new CSVFileWriter();
+					Writer sampleSQLWriter = new UnsyncTeeWriter(
 						new UnsyncBufferedWriter(
 							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
 						createFileWriter(
 							new File(
 								BenchmarksPropsValues.OUTPUT_DIR,
-								"sample.sql")));
+								"sample.sql")))) {
 
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
@@ -266,20 +262,9 @@ public class SampleSQLBuilder {
 					_freeMarkerThrowable = t;
 				}
 				finally {
-					if (sampleSQLWriter != null) {
-						try {
-							sampleSQLWriter.close();
-						}
-						catch (IOException ioException) {
-							ioException.printStackTrace();
-						}
-					}
-
 					charPipe.close();
 				}
-			}
-
-		};
+			});
 
 		thread.start();
 

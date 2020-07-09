@@ -28,6 +28,10 @@ import java.util.Locale;
  */
 public interface ItemSelectorViewDescriptor<T> {
 
+	public default String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
 	public ItemDescriptor getItemDescriptor(T t);
 
 	public ItemSelectorReturnType getItemSelectorReturnType();

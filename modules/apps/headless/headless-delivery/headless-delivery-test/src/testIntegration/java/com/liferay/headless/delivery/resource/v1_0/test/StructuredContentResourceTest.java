@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -60,6 +63,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.After;
@@ -87,11 +91,24 @@ public class StructuredContentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(testGroup.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, serviceContext);
+
+		testGroup = _depotEntry.getGroup();
+
 		_ddmLocalizedStructure = _addDDMStructure(
 			testGroup, "test-localized-structured-content-structure.json");
 
 		_ddmStructure = _addDDMStructure(
 			testGroup, "test-structured-content-structure.json");
+
 		_irrelevantDDMStructure = _addDDMStructure(
 			irrelevantGroup, "test-structured-content-structure.json");
 
@@ -379,6 +396,25 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
+			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+				Long assetLibraryId, StructuredContent structuredContent)
+		throws Exception {
+
+		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+
+		return structuredContentResource.postAssetLibraryStructuredContent(
+			assetLibraryId, structuredContent);
+	}
+
+	@Override
+	protected Long
+		testGetAssetLibraryStructuredContentsPage_getAssetLibraryId() {
+
+		return _depotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected StructuredContent
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
 				Long contentStructureId, StructuredContent structuredContent)
 		throws Exception {
@@ -389,8 +425,7 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected Long
-			testGetContentStructureStructuredContentsPage_getContentStructureId()
-		throws Exception {
+		testGetContentStructureStructuredContentsPage_getContentStructureId() {
 
 		return _ddmStructure.getStructureId();
 	}
@@ -507,6 +542,7 @@ public class StructuredContentResourceTest
 	private DDMStructure _ddmLocalizedStructure;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
+	private DepotEntry _depotEntry;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;

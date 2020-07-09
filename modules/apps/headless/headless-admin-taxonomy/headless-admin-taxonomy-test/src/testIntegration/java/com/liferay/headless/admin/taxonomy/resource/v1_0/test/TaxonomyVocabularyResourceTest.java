@@ -15,10 +15,18 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Collections;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -27,6 +35,23 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyResourceTest
 	extends BaseTaxonomyVocabularyResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(testGroup.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, serviceContext);
+
+		testGroup = _depotEntry.getGroup();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -57,5 +82,14 @@ public class TaxonomyVocabularyResourceTest
 			}
 		};
 	}
+
+	@Override
+	protected Long
+		testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId() {
+
+		return _depotEntry.getDepotEntryId();
+	}
+
+	private DepotEntry _depotEntry;
 
 }

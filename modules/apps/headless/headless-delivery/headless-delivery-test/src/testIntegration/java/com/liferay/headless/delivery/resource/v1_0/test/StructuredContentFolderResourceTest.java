@@ -15,10 +15,18 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Collections;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +36,23 @@ import org.junit.runner.RunWith;
 public class StructuredContentFolderResourceTest
 	extends BaseStructuredContentFolderResourceTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(testGroup.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, serviceContext);
+
+		testGroup = _depotEntry.getGroup();
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
@@ -36,6 +61,13 @@ public class StructuredContentFolderResourceTest
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"creatorId"};
+	}
+
+	@Override
+	protected Long
+		testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId() {
+
+		return _depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -59,5 +91,7 @@ public class StructuredContentFolderResourceTest
 
 		return journalFolder.getFolderId();
 	}
+
+	private DepotEntry _depotEntry;
 
 }

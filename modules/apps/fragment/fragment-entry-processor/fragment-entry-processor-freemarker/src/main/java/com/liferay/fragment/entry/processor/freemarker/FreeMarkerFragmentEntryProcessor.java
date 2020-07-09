@@ -80,8 +80,9 @@ public class FreeMarkerFragmentEntryProcessor
 					FreeMarkerFragmentEntryProcessorConfiguration.class,
 					fragmentEntryLink.getCompanyId());
 
-		if (Validator.isNull(fragmentEntryLink.getRendererKey()) &&
-			!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable() &&
+			Validator.isNull(fragmentEntryLink.getRendererKey()) &&
+			!fragmentEntryLink.isSystem()) {
 
 			return html;
 		}

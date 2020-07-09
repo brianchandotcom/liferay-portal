@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+  <td>SIDEBAR_HEADER</td>
+  <td>//div[contains(@class,'sidebar-header')]/*[normalize-space(text())='Add']</td>
+  <td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

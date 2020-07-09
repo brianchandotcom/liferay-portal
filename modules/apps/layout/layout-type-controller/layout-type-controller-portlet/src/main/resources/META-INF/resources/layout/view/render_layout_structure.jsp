@@ -220,7 +220,10 @@ for (String childrenItemId : childrenItemIds) {
 
 			<c:choose>
 				<c:when test="<%= parentLayoutStructureItem instanceof RootLayoutStructureItem %>">
-					<div className="container-fluid p-0">
+					<clay:container
+						cssClass="p-0"
+						fluid="<%= true %>"
+					>
 						<clay:row
 							cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
 						>
@@ -231,7 +234,7 @@ for (String childrenItemId : childrenItemIds) {
 
 							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 						</clay:row>
-					</div>
+					</clay:container>
 				</c:when>
 				<c:otherwise>
 					<clay:row

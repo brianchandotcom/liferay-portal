@@ -32,9 +32,13 @@ import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
+	const canUpdateEditables = useSelector(selectCanUpdateEditables);
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);
-	const state = useSelector((state) => state);
 
 	const isMasterPage = config.pageType === PAGE_TYPES.master;
 
@@ -44,10 +48,24 @@ export default function PageStructureSidebar() {
 		() =>
 			visit(data.items[data.rootItems.main], data.items, {
 				activeItemId,
+				canUpdateEditables,
+				canUpdateItemConfiguration,
+				fragmentEntryLinks,
 				isMasterPage,
-				state,
+				layoutData,
+				masterLayoutData,
 			}).children,
-		[data, activeItemId, isMasterPage, state]
+		[
+			activeItemId,
+			canUpdateEditables,
+			canUpdateItemConfiguration,
+			data.items,
+			data.rootItems.main,
+			fragmentEntryLinks,
+			isMasterPage,
+			layoutData,
+			masterLayoutData,
+		]
 	);
 
 	return (
@@ -89,11 +107,20 @@ function isRemovable(item, layoutData) {
 	return !hasDropZoneChild(item, layoutData);
 }
 
-function visit(item, items, {activeItemId, isMasterPage, state}) {
+function visit(
+	item,
+	items,
+	{
+		activeItemId,
+		canUpdateEditables,
+		canUpdateItemConfiguration,
+		fragmentEntryLinks,
+		isMasterPage,
+		layoutData,
+		masterLayoutData,
+	}
+) {
 	const children = [];
-	const {fragmentEntryLinks, layoutData, masterLayoutData} = state;
-	const canUpdateEditables = selectCanUpdateEditables(state);
-	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
 	const itemInMasterLayout =
 		masterLayoutData &&
@@ -127,8 +154,12 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 			...item.children.map((childItemId) => ({
 				...visit(items[childItemId], items, {
 					activeItemId,
+					canUpdateEditables,
+					canUpdateItemConfiguration,
+					fragmentEntryLinks,
 					isMasterPage,
-					state,
+					layoutData,
+					masterLayoutData,
 				}),
 
 				name: Liferay.Language.get('drop-zone'),
@@ -149,8 +180,12 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 					layoutData.items,
 					{
 						activeItemId,
+						canUpdateEditables,
+						canUpdateItemConfiguration,
+						fragmentEntryLinks,
 						isMasterPage,
-						state,
+						layoutData,
+						masterLayoutData,
 					}
 				).children;
 
@@ -159,8 +194,12 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 			else {
 				const child = visit(childItem, items, {
 					activeItemId,
+					canUpdateEditables,
+					canUpdateItemConfiguration,
+					fragmentEntryLinks,
 					isMasterPage,
-					state,
+					layoutData,
+					masterLayoutData,
 				});
 
 				children.push(child);

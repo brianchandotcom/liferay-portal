@@ -2,7 +2,6 @@ apply plugin: "com.liferay.node"
 
 node {
 	download = false
-	useNpm = true
 }
 
 task runGradleTest

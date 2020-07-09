@@ -15,7 +15,19 @@
 import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
+import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
+
 class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	attached() {
+		if (
+			window.sessionStorage.getItem(MODAL_STATE_ACCOUNT_USERS) === 'open'
+		) {
+			window.sessionStorage.removeItem(MODAL_STATE_ACCOUNT_USERS);
+
+			this.selectAccountUsers();
+		}
+	}
+
 	removeUsers(itemData) {
 		if (
 			confirm(

@@ -17,6 +17,7 @@ package com.liferay.portal.language;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.LangBuilder;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -68,21 +68,11 @@ public class LanguageResources {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *   com.liferay.portal.kernel.language.LanguageBuilderUtil#fixValue(String)}
+	 *   LanguageBuilderUtil#fixValue(String)}
 	 */
 	@Deprecated
 	public static String fixValue(String value) {
-		if (value.endsWith(LangBuilder.AUTOMATIC_COPY)) {
-			value = value.substring(
-				0, value.length() - LangBuilder.AUTOMATIC_COPY.length());
-		}
-
-		if (value.endsWith(LangBuilder.AUTOMATIC_TRANSLATION)) {
-			value = value.substring(
-				0, value.length() - LangBuilder.AUTOMATIC_TRANSLATION.length());
-		}
-
-		return value;
+		return LanguageBuilderUtil.fixValue(value);
 	}
 
 	public static void fixValues(
@@ -93,7 +83,7 @@ public class LanguageResources {
 
 			String value = (String)entry.getValue();
 
-			value = fixValue(value);
+			value = LanguageBuilderUtil.fixValue(value);
 
 			languageMap.put(key, value);
 		}

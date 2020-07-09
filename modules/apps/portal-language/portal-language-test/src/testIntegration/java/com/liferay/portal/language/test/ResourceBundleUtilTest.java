@@ -17,6 +17,7 @@ package com.liferay.portal.language.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -99,11 +100,12 @@ public class ResourceBundleUtilTest {
 			resourceBundle, iterator.next());
 
 		Assert.assertFalse(
-			value + " should not contain '(Automatic Copy)'",
-			value.endsWith("(Automatic Copy)"));
+			value + " should not contain " + LanguageBuilderUtil.AUTOMATIC_COPY,
+			value.endsWith(LanguageBuilderUtil.AUTOMATIC_COPY));
 		Assert.assertFalse(
-			value + " should not contain '(Automatic Translation)'",
-			value.endsWith("(Automatic Translation)"));
+			value + " should not contain " +
+				LanguageBuilderUtil.AUTOMATIC_TRANSLATION,
+			value.endsWith(LanguageBuilderUtil.AUTOMATIC_TRANSLATION));
 	}
 
 	private static final Locale _UNSUPPORTED_LOCALE = new Locale("en", "GB");

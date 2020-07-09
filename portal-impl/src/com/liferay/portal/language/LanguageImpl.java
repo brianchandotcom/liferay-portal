@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronize
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -956,7 +957,7 @@ public class LanguageImpl implements Language, Serializable {
 		String value = LanguageResources.getMessage(locale, key);
 
 		if (value != null) {
-			return LanguageResources.fixValue(value);
+			return LanguageBuilderUtil.fixValue(value);
 		}
 
 		if ((key.length() > 0) &&
@@ -1843,7 +1844,7 @@ public class LanguageImpl implements Language, Serializable {
 		String value = ResourceBundleUtil.getString(resourceBundle, key);
 
 		if (value != null) {
-			return LanguageResources.fixValue(value);
+			return LanguageBuilderUtil.fixValue(value);
 		}
 
 		if ((key.length() > 0) &&

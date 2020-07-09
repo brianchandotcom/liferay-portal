@@ -37,7 +37,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ThemeTokenDefinitionsImpl implements ThemeTokenDefinitions {
 
 	@Override
-	public String getTokenDefinition(String themeId) {
+	public String getTokenDefinitionString(String themeId) {
 		AtomicReference<String> atomicReference = _serviceTrackerMap.getService(
 			themeId);
 

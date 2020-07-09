@@ -46,6 +46,16 @@ public interface ContentSetElementResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByKeyContentSetElementsPage(
+				Long assetLibraryId, String key, Pagination pagination)
+		throws Exception;
+
+	public Page<ContentSetElement>
+			getAssetLibraryContentSetByUuidContentSetElementsPage(
+				Long assetLibraryId, String uuid, Pagination pagination)
+		throws Exception;
+
 	public Page<ContentSetElement> getContentSetContentSetElementsPage(
 			Long contentSetId, Pagination pagination)
 		throws Exception;

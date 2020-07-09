@@ -48,6 +48,11 @@ public interface ContentTemplateResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<ContentTemplate> getAssetLibraryContentTemplatesPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

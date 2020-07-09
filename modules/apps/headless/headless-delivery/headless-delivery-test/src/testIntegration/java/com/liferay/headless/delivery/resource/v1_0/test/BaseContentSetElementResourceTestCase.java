@@ -194,6 +194,324 @@ public abstract class BaseContentSetElementResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryContentSetByKeyContentSetElementsPage()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			contentSetElementResource.
+				getAssetLibraryContentSetByKeyContentSetElementsPage(
+					testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId(),
+					testGetAssetLibraryContentSetByKeyContentSetElementsPage_getKey(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getIrrelevantAssetLibraryId();
+		String key =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getKey();
+		String irrelevantKey =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getIrrelevantKey();
+
+		if ((irrelevantAssetLibraryId != null) && (irrelevantKey != null)) {
+			ContentSetElement irrelevantContentSetElement =
+				testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+					irrelevantAssetLibraryId, irrelevantKey,
+					randomIrrelevantContentSetElement());
+
+			page =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						irrelevantAssetLibraryId, irrelevantKey,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContentSetElement),
+				(List<ContentSetElement>)page.getItems());
+			assertValid(page);
+		}
+
+		ContentSetElement contentSetElement1 =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				assetLibraryId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				assetLibraryId, key, randomContentSetElement());
+
+		page =
+			contentSetElementResource.
+				getAssetLibraryContentSetByKeyContentSetElementsPage(
+					assetLibraryId, key, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentSetElement1, contentSetElement2),
+			(List<ContentSetElement>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAssetLibraryContentSetByKeyContentSetElementsPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId();
+		String key =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getKey();
+
+		ContentSetElement contentSetElement1 =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				assetLibraryId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				assetLibraryId, key, randomContentSetElement());
+
+		ContentSetElement contentSetElement3 =
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				assetLibraryId, key, randomContentSetElement());
+
+		Page<ContentSetElement> page1 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByKeyContentSetElementsPage(
+					assetLibraryId, key, Pagination.of(1, 2));
+
+		List<ContentSetElement> contentSetElements1 =
+			(List<ContentSetElement>)page1.getItems();
+
+		Assert.assertEquals(
+			contentSetElements1.toString(), 2, contentSetElements1.size());
+
+		Page<ContentSetElement> page2 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByKeyContentSetElementsPage(
+					assetLibraryId, key, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContentSetElement> contentSetElements2 =
+			(List<ContentSetElement>)page2.getItems();
+
+		Assert.assertEquals(
+			contentSetElements2.toString(), 1, contentSetElements2.size());
+
+		Page<ContentSetElement> page3 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByKeyContentSetElementsPage(
+					assetLibraryId, key, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				contentSetElement1, contentSetElement2, contentSetElement3),
+			(List<ContentSetElement>)page3.getItems());
+	}
+
+	protected ContentSetElement
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
+				Long assetLibraryId, String key,
+				ContentSetElement contentSetElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getIrrelevantKey()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAssetLibraryContentSetByUuidContentSetElementsPage()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			contentSetElementResource.
+				getAssetLibraryContentSetByUuidContentSetElementsPage(
+					testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId(),
+					testGetAssetLibraryContentSetByUuidContentSetElementsPage_getUuid(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getIrrelevantAssetLibraryId();
+		String uuid =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getUuid();
+		String irrelevantUuid =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getIrrelevantUuid();
+
+		if ((irrelevantAssetLibraryId != null) && (irrelevantUuid != null)) {
+			ContentSetElement irrelevantContentSetElement =
+				testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+					irrelevantAssetLibraryId, irrelevantUuid,
+					randomIrrelevantContentSetElement());
+
+			page =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						irrelevantAssetLibraryId, irrelevantUuid,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContentSetElement),
+				(List<ContentSetElement>)page.getItems());
+			assertValid(page);
+		}
+
+		ContentSetElement contentSetElement1 =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				assetLibraryId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				assetLibraryId, uuid, randomContentSetElement());
+
+		page =
+			contentSetElementResource.
+				getAssetLibraryContentSetByUuidContentSetElementsPage(
+					assetLibraryId, uuid, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentSetElement1, contentSetElement2),
+			(List<ContentSetElement>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAssetLibraryContentSetByUuidContentSetElementsPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId();
+		String uuid =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getUuid();
+
+		ContentSetElement contentSetElement1 =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				assetLibraryId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement2 =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				assetLibraryId, uuid, randomContentSetElement());
+
+		ContentSetElement contentSetElement3 =
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				assetLibraryId, uuid, randomContentSetElement());
+
+		Page<ContentSetElement> page1 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByUuidContentSetElementsPage(
+					assetLibraryId, uuid, Pagination.of(1, 2));
+
+		List<ContentSetElement> contentSetElements1 =
+			(List<ContentSetElement>)page1.getItems();
+
+		Assert.assertEquals(
+			contentSetElements1.toString(), 2, contentSetElements1.size());
+
+		Page<ContentSetElement> page2 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByUuidContentSetElementsPage(
+					assetLibraryId, uuid, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContentSetElement> contentSetElements2 =
+			(List<ContentSetElement>)page2.getItems();
+
+		Assert.assertEquals(
+			contentSetElements2.toString(), 1, contentSetElements2.size());
+
+		Page<ContentSetElement> page3 =
+			contentSetElementResource.
+				getAssetLibraryContentSetByUuidContentSetElementsPage(
+					assetLibraryId, uuid, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				contentSetElement1, contentSetElement2, contentSetElement3),
+			(List<ContentSetElement>)page3.getItems());
+	}
+
+	protected ContentSetElement
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
+				Long assetLibraryId, String uuid,
+				ContentSetElement contentSetElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getUuid()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getIrrelevantUuid()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetContentSetContentSetElementsPage() throws Exception {
 		Page<ContentSetElement> page =
 			contentSetElementResource.getContentSetContentSetElementsPage(

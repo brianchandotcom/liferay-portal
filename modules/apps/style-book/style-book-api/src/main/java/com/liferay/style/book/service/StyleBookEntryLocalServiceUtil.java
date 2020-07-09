@@ -346,6 +346,22 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().getStyleBookEntry(styleBookEntryId);
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry updateName(
+			long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateName(styleBookEntryId, name);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updatePreviewFileEntryId(
+				long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updatePreviewFileEntryId(
+			styleBookEntryId, previewFileEntryId);
+	}
+
 	/**
 	 * Updates the style book entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -360,28 +376,10 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryName(long styleBookEntryId, String name)
+			updateTokensValues(long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntryName(styleBookEntryId, name);
-	}
-
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryPreviewFileEntryId(
-				long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateStyleBookEntryPreviewFileEntryId(
-			styleBookEntryId, previewFileEntryId);
-	}
-
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryTokensValues(
-				long styleBookEntryId, String tokensValue)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateStyleBookEntryTokensValues(
-			styleBookEntryId, tokensValue);
+		return getService().updateTokensValues(styleBookEntryId, tokensValue);
 	}
 
 	public static StyleBookEntryLocalService getService() {

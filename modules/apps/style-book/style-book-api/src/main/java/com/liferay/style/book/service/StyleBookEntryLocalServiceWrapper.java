@@ -370,6 +370,23 @@ public class StyleBookEntryLocalServiceWrapper
 		return _styleBookEntryLocalService.getStyleBookEntry(styleBookEntryId);
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateName(
+			long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateName(styleBookEntryId, name);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updatePreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updatePreviewFileEntryId(
+			styleBookEntryId, previewFileEntryId);
+	}
+
 	/**
 	 * Updates the style book entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -384,32 +401,11 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntryName(
-			long styleBookEntryId, String name)
+	public com.liferay.style.book.model.StyleBookEntry updateTokensValues(
+			long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _styleBookEntryLocalService.updateStyleBookEntryName(
-			styleBookEntryId, name);
-	}
-
-	@Override
-	public com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryPreviewFileEntryId(
-				long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.
-			updateStyleBookEntryPreviewFileEntryId(
-				styleBookEntryId, previewFileEntryId);
-	}
-
-	@Override
-	public com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryTokensValues(
-				long styleBookEntryId, String tokensValue)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryLocalService.updateStyleBookEntryTokensValues(
+		return _styleBookEntryLocalService.updateTokensValues(
 			styleBookEntryId, tokensValue);
 	}
 

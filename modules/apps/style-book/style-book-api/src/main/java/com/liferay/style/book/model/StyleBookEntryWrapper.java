@@ -50,8 +50,8 @@ public class StyleBookEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
-		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
 		attributes.put("tokensValues", getTokensValues());
 
 		return attributes;
@@ -107,16 +107,16 @@ public class StyleBookEntryWrapper
 			setName(name);
 		}
 
-		String styleBookEntryKey = (String)attributes.get("styleBookEntryKey");
-
-		if (styleBookEntryKey != null) {
-			setStyleBookEntryKey(styleBookEntryKey);
-		}
-
 		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
+		}
+
+		String styleBookEntryKey = (String)attributes.get("styleBookEntryKey");
+
+		if (styleBookEntryKey != null) {
+			setStyleBookEntryKey(styleBookEntryKey);
 		}
 
 		String tokensValues = (String)attributes.get("tokensValues");

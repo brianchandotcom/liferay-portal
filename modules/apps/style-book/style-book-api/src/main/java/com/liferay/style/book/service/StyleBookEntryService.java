@@ -76,15 +76,14 @@ public interface StyleBookEntryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public StyleBookEntry updateStyleBookEntryName(
-			long styleBookEntryId, String name)
+	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException;
 
-	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
+	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId)
 		throws PortalException;
 
-	public StyleBookEntry updateStyleBookEntryTokensValues(
+	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException;
 

@@ -20,6 +20,7 @@ import React, {useContext} from 'react';
 
 import AppContext from '../../../AppContext.es';
 import {getItem} from '../../../utils/client.es';
+import {containsField} from '../../../utils/dataLayoutVisitor.es';
 
 const getName = ({name = {}}) => {
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -30,38 +31,52 @@ const getName = ({name = {}}) => {
 export default () => {
 	const [{dataDefinition, dataLayout}] = useContext(AppContext);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-	return ({fieldSet, modal, onPropagate}) => {
+	return ({fieldSet, isDeleteAction, modal, onPropagate}) => {
 		return getItem(
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
 		).then(({items}) => {
-			const findDataDefinition = () => {
-				const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-					({customProperties: {ddmStructureId}}) =>
-						ddmStructureId == fieldSet.id
-				);
+			const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+				({customProperties: {ddmStructureId}}) =>
+					ddmStructureId == fieldSet.id
+			);
 
-				if (dataDefinitionField) {
-					const data = {
-						dataDefinition,
-						dataLayouts: [dataLayout],
-						dataListViews: [],
+			if (dataDefinitionField) {
+				items = items.map(({dataLayouts, ...item}) => {
+					const findLayoutById = ({id}) => id === dataLayout.id;
+					if (
+						containsField(
+							dataLayout.dataLayoutPages,
+							dataDefinitionField.name
+						)
+					) {
+						const dataLayoutIndex = dataLayouts.findIndex(
+							findLayoutById
+						);
+						if (dataLayoutIndex === -1) {
+							dataLayouts.push(dataLayout);
+						}
+					}
+					else {
+						dataLayouts = dataLayouts.filter((layout) => {
+							return !findLayoutById(layout);
+						});
+					}
+
+					return {
+						dataLayouts,
+						...item,
 					};
+				});
+			}
 
-					items = [data];
-
-					return data;
-				}
-
-				return {};
-			};
-			const {dataLayouts = [], dataListViews = []} =
-				items[0] || findDataDefinition();
+			const {dataLayouts = [], dataListViews = []} = items[0];
 
 			const isFieldSetUsed =
 				!!dataLayouts.length || !!dataListViews.length;
 
-			if (!items.length || !isFieldSetUsed) {
+			if (!isDeleteAction && (!items.length || !isFieldSetUsed)) {
 				return onPropagate(fieldSet, true);
 			}
 
@@ -85,6 +100,19 @@ export default () => {
 				});
 			};
 
+			const FIELD_LABELS = {
+				label: Liferay.Language.get('label'),
+				name: Liferay.Language.get('name'),
+				type: Liferay.Language.get('type'),
+			};
+
+			const FieldInfo = ({label, value}) => (
+				<div>
+					<label>{`${FIELD_LABELS[label]}:`}</label>
+					<span>{value}</span>
+				</div>
+			);
+
 			return new Promise((resolve) => {
 				const {
 					actionMessage,
@@ -98,20 +126,63 @@ export default () => {
 					payload: {
 						body: (
 							<>
-								{warningMessage && (
-									<ClayAlert displayType="warning">
-										<strong>
-											{Liferay.Language.get('warning')}:
-										</strong>
+								{isFieldSetUsed && (
+									<>
+										{warningMessage && (
+											<ClayAlert displayType="warning">
+												<strong>
+													{Liferay.Language.get(
+														'warning'
+													)}
+													:
+												</strong>
 
-										{warningMessage}
-									</ClayAlert>
+												{warningMessage}
+											</ClayAlert>
+										)}
+
+										{fieldSetMessage && (
+											<p className="fieldset-message">
+												{fieldSetMessage}
+											</p>
+										)}
+									</>
 								)}
 
-								{fieldSetMessage && (
-									<p className="fieldset-message">
-										{fieldSetMessage}
-									</p>
+								{isDeleteAction && !isFieldSetUsed && (
+									<ClayPanel
+										className="remove-object-field-panel"
+										displayTitle={Liferay.Language.get(
+											'field'
+										)}
+										displayType="secondary"
+									>
+										<ClayPanel.Body>
+											{dataDefinitionField && (
+												<FieldInfo
+													label="name"
+													value={
+														dataDefinitionField.name
+													}
+												/>
+											)}
+											<FieldInfo
+												label="label"
+												value={
+													fieldSet.name[
+														defaultLanguageId
+													]
+												}
+											/>
+
+											<FieldInfo
+												label="type"
+												value={Liferay.Language.get(
+													'fieldset'
+												)}
+											/>
+										</ClayPanel.Body>
+									</ClayPanel>
 								)}
 
 								{dataLayouts.length > 0 && (
@@ -140,6 +211,14 @@ export default () => {
 											<Items name="dataListViews" />
 										</ClayPanel.Body>
 									</ClayPanel>
+								)}
+
+								{isDeleteAction && !isFieldSetUsed && (
+									<p className="remove-object-field-message">
+										{Liferay.Language.get(
+											'are-you-sure-you-want-to-delete-this-fieldset-it-will-be-deleted-immediately'
+										)}
+									</p>
 								)}
 							</>
 						),

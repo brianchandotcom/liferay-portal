@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 $controlMenuDesktopHeight: 56px;
 
 .style-book-editor {
@@ -19,6 +21,28 @@ $controlMenuDesktopHeight: 56px;
 	}
 
 	&__sidebar {
+		background-color: $white;
+		border-left: 1px solid $gray-300;
 		width: 320px;
+	}
+
+	&__toolbar {
+		align-items: center;
+		border-bottom: 1px solid $gray-300;
+		display: flex;
+		flex-direction: row;
+		height: 56px;
+		justify-content: space-between;
+	}
+
+	&__status-text {
+		color: $success;
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
+
+	&__status-icon {
+		color: $success;
+		font-size: 0.75rem;
 	}
 }

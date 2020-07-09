@@ -14,6 +14,12 @@
 
 import React from 'react';
 
+import Toolbar from './Toolbar';
+
 export default function Sidebar() {
-	return <div className="style-book-editor__sidebar">Sidebar</div>;
+	return (
+		<div className="style-book-editor__sidebar">
+			<Toolbar />
+		</div>
+	);
 }

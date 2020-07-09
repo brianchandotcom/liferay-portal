@@ -257,13 +257,21 @@ if (tabs1.equals("published")) {
 		['aui-base']
 	);
 
-	window['<portlet:namespace />editWorkflow'] = function (url) {
-		Liferay.Util.openModal({
-			onClose: function () {
-				window.location.reload();
-			},
-			title: '<liferay-ui:message key="workflow" />',
-			url: url,
-		});
-	};
+	Liferay.provide(
+		window,
+		'<portlet:namespace />editWorkflow',
+		function (uri) {
+			var A = AUI();
+
+			var WIN = A.config.win;
+
+			Liferay.Util.openWindow({
+				id: A.guid(),
+				refreshWindow: WIN,
+				title: '<liferay-ui:message key="workflow" />',
+				uri: uri,
+			});
+		},
+		['liferay-util']
+	);
 </aui:script>

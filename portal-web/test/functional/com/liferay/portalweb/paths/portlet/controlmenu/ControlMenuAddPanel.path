@@ -56,9 +56,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_PORTLET_LINK</td>
-	<td>//*[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
-	<td></td>
+  <td>ADD_PORTLET_LINK</td>
+  <td>//div[contains(@class,'item-body') and contains(.,'${key_portletName}')]/following-sibling::button[contains(@class,'item-add')]</td>
+  <td></td>
 </tr>
 <tr>
 	<td>SIDEBAR_APPLICATIONS_PANEL_COLLAPSED</td>

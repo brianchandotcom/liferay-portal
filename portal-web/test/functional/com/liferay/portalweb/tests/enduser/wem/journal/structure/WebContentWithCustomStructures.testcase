@@ -537,7 +537,8 @@ definition {
 			groupName = "Test Site Name",
 			userEmailAddress = "test1@liferay.com");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Site Administrator",
 			userEmailAddress = "test1@liferay.com");
 

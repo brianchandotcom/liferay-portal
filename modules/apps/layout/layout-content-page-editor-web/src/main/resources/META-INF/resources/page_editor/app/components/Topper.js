@@ -112,8 +112,8 @@ function TopperContent({
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
 	);
-	const store = useSelector((state) => state);
 	const hoverItem = useHoverItem();
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 
 	const selectItem = useSelectItem();
 
@@ -139,8 +139,6 @@ function TopperContent({
 	);
 
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
-
-	const fragmentEntryLinks = store.fragmentEntryLinks;
 
 	const notDroppableMessage =
 		isOverTarget && !canDropOverTarget

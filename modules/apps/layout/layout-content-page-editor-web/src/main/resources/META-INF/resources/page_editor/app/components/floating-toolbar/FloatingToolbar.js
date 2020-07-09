@@ -293,20 +293,10 @@ function FloatingToolbar({
 		}
 	}, [panelId, show]);
 
-	useEffect(() => {
-		if (show && buttons.length === 1) {
-			const [button] = buttons;
-
-			if (button.panelId && button.panelId !== panelId) {
-				setPanelId(button.panelId);
-			}
-		}
-	}, [buttons, panelId, show]);
-
 	return (
 		show && (
 			<div onClick={(event) => event.stopPropagation()}>
-				{(buttons.length > 1 || (buttons.length > 0 && !panelId)) &&
+				{(buttons.length > 0 || !panelId) &&
 					createPortal(
 						<div
 							className={classNames(

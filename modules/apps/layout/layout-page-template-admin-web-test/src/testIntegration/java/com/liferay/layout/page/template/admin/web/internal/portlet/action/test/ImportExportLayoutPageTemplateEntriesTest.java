@@ -747,11 +747,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	private void _validateImportExport(File expectedFile, File inputFile)
 		throws Exception {
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
+		File outputFile1 = _importExportLayoutPageTemplateEntry(
 			inputFile, _group.getGroupId(), false,
 			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
 
-		_validateFile(expectedFile, outputFile);
+		_validateFile(expectedFile, outputFile1);
+
+		File outputFile2 = _importExportLayoutPageTemplateEntry(
+			outputFile1, _group.getGroupId(), true,
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		_validateFile(expectedFile, outputFile2);
 	}
 
 	private static final String _LAYOUT_PATE_TEMPLATES_PATH =

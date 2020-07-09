@@ -239,6 +239,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						width={45}
 					/>
 					<Tooltip
+						animationDuration={0}
 						content={<CustomTooltip />}
 						cursor={{fill: 'transparent'}}
 						tooltip={tooltip}

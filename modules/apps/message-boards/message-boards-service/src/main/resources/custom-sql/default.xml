@@ -73,7 +73,7 @@
 				(MBCategory.parentCategoryId = ?) AND
 				(Subscription.userId = ?)
 			GROUP BY
-				MBCategory.categoryId
+				MBCategory.categoryId, MBCategory.ctCollectionId
 			ORDER BY
 				(
 					CASE WHEN

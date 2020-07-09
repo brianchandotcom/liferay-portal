@@ -149,16 +149,14 @@ const Form = React.forwardRef(
 		}, []);
 
 		useEffect(() => {
-			let submitHandle;
-
 			let onHandle;
+
+			let submitHandle;
 
 			if (containerRef.current) {
 				const form = getFormNode(containerRef.current);
 
 				if (form) {
-					submitHandle = dom.on(form, 'submit', handleFormSubmitted);
-
 					onHandle = Liferay.on(
 						'submitForm',
 						(event) => {
@@ -168,6 +166,8 @@ const Form = React.forwardRef(
 						},
 						this
 					);
+
+					submitHandle = dom.on(form, 'submit', handleFormSubmitted);
 				}
 			}
 

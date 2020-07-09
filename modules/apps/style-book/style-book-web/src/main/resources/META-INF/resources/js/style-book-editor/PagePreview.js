@@ -14,16 +14,6 @@
 
 import React from 'react';
 
-import PagePreview from './PagePreview';
-import Sidebar from './Sidebar';
-
-const StyleBookEditor = () => {
-	return (
-		<div className="style-book-editor">
-			<PagePreview />
-			<Sidebar />
-		</div>
-	);
-};
-
-export default StyleBookEditor;
+export default function PagePreview() {
+	return <div className="style-book-editor__page-preview">Page Preview</div>;
+}

@@ -1,0 +1,18 @@
+$controlMenuDesktopHeight: 56px;
+
+.style-book-editor {
+	display: flex;
+	height: calc(100vh - #{$controlMenuDesktopHeight});
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	&__page-preview {
+		flex: 1;
+	}
+
+	&__sidebar {
+		width: 320px;
+	}
+}

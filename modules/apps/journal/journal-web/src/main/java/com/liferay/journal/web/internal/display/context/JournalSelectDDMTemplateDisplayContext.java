@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.util.SiteAncestorGroupUtil;
+import com.liferay.journal.web.internal.util.SiteConnectedGroupUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -146,7 +146,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		templateSearch.setOrderByType(orderByType);
 
 		long[] groupIds =
-			SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+			SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
 				themeDisplay.getScopeGroupId());
 
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(

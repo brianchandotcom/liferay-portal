@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateCom
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.journal.service.JournalFolderServiceUtil;
-import com.liferay.journal.web.internal.util.SiteAncestorGroupUtil;
+import com.liferay.journal.web.internal.util.SiteConnectedGroupUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,14 +67,14 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		if (Validator.isNull(_getKeywords())) {
 			_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-				SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+				SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
 					themeDisplay.getScopeGroupId()),
 				_folderId, _restrictionType);
 		}
 		else {
 			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
 				themeDisplay.getCompanyId(),
-				SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+				SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
 					themeDisplay.getScopeGroupId()),
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());

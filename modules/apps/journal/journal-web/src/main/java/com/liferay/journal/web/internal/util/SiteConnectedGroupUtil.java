@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 /**
  * @author Adolfo Pérez
  */
-public class SiteAncestorGroupUtil {
+public class SiteConnectedGroupUtil {
 
 	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(long groupId)
 		throws PortalException {

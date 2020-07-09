@@ -53,7 +53,7 @@ import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.journal.web.internal.util.JournalArticleTranslation;
 import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
-import com.liferay.journal.web.internal.util.SiteAncestorGroupUtil;
+import com.liferay.journal.web.internal.util.SiteConnectedGroupUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -467,7 +467,7 @@ public class JournalDisplayContext {
 		}
 
 		_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-			SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+			SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
 				_themeDisplay.getScopeGroupId()),
 			getFolderId(), restrictionType);
 

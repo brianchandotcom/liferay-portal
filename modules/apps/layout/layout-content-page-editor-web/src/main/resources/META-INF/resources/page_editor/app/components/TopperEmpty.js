@@ -36,8 +36,7 @@ export default function ({children, ...props}) {
 
 function TopperEmpty({children, item, layoutData}) {
 	const containerRef = useRef(null);
-	const store = useSelector((state) => state);
-	const fragmentEntryLinks = store.fragmentEntryLinks;
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 
 	const {
 		canDropOverTarget,

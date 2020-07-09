@@ -195,7 +195,7 @@ definition {
 			type = "Dynamic");
 	}
 
-	@description = "This ensures that a user cannot see the sections of the product menu that contain disabled applications."
+	@description = "This ensures that a user cannot see the sections of both the product menu and the dashboard that contain disabled applications."
 	@priority = "5"
 	test ViewDepotWithAllAppsDisabled {
 		DepotNavigator.openDepotAdmin();
@@ -214,9 +214,23 @@ definition {
 			key_card = "Test Depot Name",
 			locator1 = "LexiconCard#CARD_TITLE");
 
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Asset Libraries");
+
+		for (var portletName : list "Web Content,Documents and Media,Collections,Recycle Bin") {
+			AssertElementNotPresent(
+				key_card = "${portletName}",
+				locator1 = "LexiconCard#CARD");
+		}
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
 		AssertElementNotPresent(
 			key_category = "Content &amp; Data",
-			locator1 = "ProductMenu#CATEGORY_EXPANDED");
+			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
 
 		AssertElementNotPresent(
 			key_category = "Recycle Bin",

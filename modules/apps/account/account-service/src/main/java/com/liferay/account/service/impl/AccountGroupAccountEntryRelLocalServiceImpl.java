@@ -14,10 +14,17 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.DuplicateAccountGroupAccountEntryRelException;
+import com.liferay.account.model.AccountGroupAccountEntryRel;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.base.AccountGroupAccountEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the account group account entry rel local service.
@@ -39,9 +46,59 @@ import org.osgi.service.component.annotations.Component;
 public class AccountGroupAccountEntryRelLocalServiceImpl
 	extends AccountGroupAccountEntryRelLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.account.service.AccountGroupAccountEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupAccountEntryRelLocalServiceUtil</code>.
-	 */
+	@Override
+	public AccountGroupAccountEntryRel addAccountGroupAccountEntryRel(
+			long accountGroupId, long accountEntryId)
+		throws PortalException {
+
+		AccountGroupAccountEntryRel accountGroupAccountEntryRel =
+			accountGroupAccountEntryRelPersistence.fetchByAGI_AEI(
+				accountGroupId, accountEntryId);
+
+		if (accountGroupAccountEntryRel != null) {
+			throw new DuplicateAccountGroupAccountEntryRelException();
+		}
+
+		if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+			accountEntryLocalService.getAccountEntry(accountEntryId);
+		}
+
+		accountGroupLocalService.getAccountGroup(accountGroupId);
+
+		accountGroupAccountEntryRel = createAccountGroupAccountEntryRel(
+			counterLocalService.increment());
+
+		accountGroupAccountEntryRel.setAccountGroupId(accountGroupId);
+		accountGroupAccountEntryRel.setAccountEntryId(accountEntryId);
+
+		return addAccountGroupAccountEntryRel(accountGroupAccountEntryRel);
+	}
+
+	@Override
+	public void addAccountGroupAccountEntryRels(
+			long accountGroupId, long[] accountEntryIds)
+		throws PortalException {
+
+		for (long accountEntryId : accountEntryIds) {
+			addAccountGroupAccountEntryRel(accountGroupId, accountEntryId);
+		}
+	}
+
+	@Override
+	public void deleteAccountGroupAccountEntryRels(
+			long accountGroupId, long[] accountEntryIds)
+		throws PortalException {
+
+		for (long accountEntryId : accountEntryIds) {
+			accountGroupAccountEntryRelPersistence.removeByAGI_AEI(
+				accountGroupId, accountEntryId);
+		}
+	}
+
+	@Reference
+	private AccountEntryLocalService accountEntryLocalService;
+
+	@Reference
+	private AccountGroupLocalService accountGroupLocalService;
+
 }

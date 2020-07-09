@@ -103,15 +103,15 @@ describe('GlobalMenu', () => {
 		cleanup();
 	});
 
-	it('renders Global Menu button', () => {
+	it('renders Applications Menu button', () => {
 		const {getByTitle} = renderGlobalMenu({});
 
-		expect(getByTitle('global-menu')).toBeInTheDocument();
+		expect(getByTitle('applications-menu')).toBeInTheDocument();
 	});
 
-	it('fetches Global Menu data when trigger button is focused', async () => {
+	it('fetches Applications Menu data when trigger button is focused', async () => {
 		const {getByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
 			fireEvent.focus(trigger);
@@ -127,9 +127,9 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetches Global Menu data when trigger button is hovered', async () => {
+	it('fetches Applications Menu data when trigger button is hovered', async () => {
 		const {getByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
 			fireEvent.mouseOver(trigger);
@@ -145,9 +145,9 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetches Global Menu data when trigger button is clicked', async () => {
+	it('fetches Applications Menu data when trigger button is clicked', async () => {
 		const {getByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
 			fireEvent.click(trigger);
@@ -163,9 +163,9 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('renders Global Menu modal with a close button when trigger button is clicked', async () => {
+	it('renders Applications Menu modal with a close button when trigger button is clicked', async () => {
 		const {getByTitle, queryByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		expect(queryByTitle('close')).not.toBeInTheDocument();
 
@@ -180,9 +180,9 @@ describe('GlobalMenu', () => {
 		expect(getByTitle('close')).toBeInTheDocument();
 	});
 
-	it('closes Global Menu modal when close button is clicked', async () => {
+	it('closes Applications Menu modal when close button is clicked', async () => {
 		const {getByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
 			fireEvent.click(trigger);
@@ -205,9 +205,9 @@ describe('GlobalMenu', () => {
 		expect(closeButton).not.toBeInTheDocument();
 	});
 
-	it('closes Global Menu modal when clicking outside', async () => {
+	it('closes Applications Menu modal when clicking outside', async () => {
 		const {getByTitle} = renderGlobalMenu();
-		const trigger = getByTitle('global-menu');
+		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
 			fireEvent.click(trigger);

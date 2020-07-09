@@ -113,7 +113,7 @@ public class CompanyLogoProductNavigationControlMenuEntry
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get global menu instance configuration",
+					"Unable to get applications menu instance configuration",
 					configurationException);
 			}
 		}

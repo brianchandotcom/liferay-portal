@@ -563,6 +563,23 @@ definition {
 		}
 	}
 
+	macro viewConnectedSiteNumber {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		if ("${connectedSiteNumber}" == "1") {
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "${depotName}",
+				listEntrySubtitle = "${connectedSiteNumber} Connected Site");
+		}
+		else {
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "${depotName}",
+				listEntrySubtitle = "${connectedSiteNumber} Connected Sites");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+	}
+
 	macro viewCurrentLanguages {
 		for (var currentLanguage : list "${currentLanguages}") {
 			AssertTextEquals.assertPartialText(

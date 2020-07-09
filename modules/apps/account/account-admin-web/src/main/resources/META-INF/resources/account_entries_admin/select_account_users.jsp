@@ -126,8 +126,24 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 </aui:script>
 
 <c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isShowCreateButton() %>">
+	<liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" var="addAccountEntryUserURL">
+		<portlet:param name="mvcRenderCommandName" value="/account_admin/add_account_user" />
+		<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
+		<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
+		<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
+	</liferay-portlet:renderURL>
+
+	<%
+	Map<String, Object> context = HashMapBuilder.<String, Object>put(
+		"addAccountEntryUserURL", addAccountEntryUserURL.toString()
+	).put(
+		"openModalOnRedirect", selectAccountUsersManagementToolbarDisplayContext.isOpenModalOnRedirect()
+	).build();
+	%>
+
 	<liferay-frontend:component
 		componentId="<%= selectAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+		context="<%= context %>"
 		module="account_entries_admin/js/SelectAccountUsersManagementToolbarDefaultEventHandler.es"
 	/>
 </c:if>

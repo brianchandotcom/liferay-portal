@@ -15,7 +15,6 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
-import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -24,10 +23,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,32 +65,6 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addAccountEntryUser");
-
-				if (isOpenModalOnRedirect()) {
-					dropdownItem.putData(
-						"openModalOnRedirect", Boolean.TRUE.toString());
-				}
-
-				PortletURL addAccountEntryUserURL =
-					PortletURLFactoryUtil.create(
-						liferayPortletRequest,
-						AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-						PortletRequest.RENDER_PHASE);
-
-				addAccountEntryUserURL.setParameter(
-					"mvcRenderCommandName", "/account_admin/add_account_user");
-				addAccountEntryUserURL.setParameter(
-					"redirect", ParamUtil.getString(request, "redirect"));
-				addAccountEntryUserURL.setParameter(
-					"backURL", ParamUtil.getString(request, "redirect"));
-				addAccountEntryUserURL.setParameter(
-					"accountEntryId",
-					ParamUtil.getString(request, "accountEntryId"));
-
-				dropdownItem.putData(
-					"addAccountEntryUserURL",
-					addAccountEntryUserURL.toString());
-
 				dropdownItem.setLabel(LanguageUtil.get(request, "new-user"));
 			}
 		).build();

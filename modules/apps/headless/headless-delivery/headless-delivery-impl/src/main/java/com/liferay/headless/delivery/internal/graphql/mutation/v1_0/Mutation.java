@@ -619,6 +619,39 @@ public class Mutation {
 					structuredContentId, callbackURL, object));
 	}
 
+	@GraphQLField
+	@GraphQLName(
+		value = "postAssetLibraryDocumentAssetLibraryIdMultipartBody",
+		description = "null"
+	)
+	public Document createAssetLibraryDocument(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postAssetLibraryDocument(
+				Long.valueOf(assetLibraryId), multipartBody));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postAssetLibraryDocumentBatch(
+				Long.valueOf(assetLibraryId), multipartBody, callbackURL,
+				object));
+	}
+
 	@GraphQLField(
 		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
@@ -811,6 +844,35 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> documentResource.postSiteDocumentBatch(
 				Long.valueOf(siteKey), multipartBody, callbackURL, object));
+	}
+
+	@GraphQLField
+	public DocumentFolder createAssetLibraryDocumentFolder(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postAssetLibraryDocumentFolder(
+					Long.valueOf(assetLibraryId), documentFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentFolderBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postAssetLibraryDocumentFolderBatch(
+					Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -2227,6 +2289,37 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField
+	public StructuredContent createAssetLibraryStructuredContent(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postAssetLibraryStructuredContent(
+					Long.valueOf(assetLibraryId), structuredContent));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryStructuredContentBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postAssetLibraryStructuredContentBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -2481,6 +2574,38 @@ public class Mutation {
 					structuredContentId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public StructuredContentFolder createAssetLibraryStructuredContentFolder(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postAssetLibraryStructuredContentFolder(
+						Long.valueOf(assetLibraryId), structuredContentFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryStructuredContentFolderBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postAssetLibraryStructuredContentFolderBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(description = "Creates a new structured content folder.")

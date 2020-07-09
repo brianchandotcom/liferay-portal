@@ -49,6 +49,19 @@ public interface TaxonomyVocabularyResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<TaxonomyVocabulary> getAssetLibraryTaxonomyVocabulariesPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
+			Long assetLibraryId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
+	public Response postAssetLibraryTaxonomyVocabularyBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

@@ -50,6 +50,19 @@ public interface StructuredContentResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<StructuredContent> getAssetLibraryStructuredContentsPage(
+			Long assetLibraryId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public StructuredContent postAssetLibraryStructuredContent(
+			Long assetLibraryId, StructuredContent structuredContent)
+		throws Exception;
+
+	public Response postAssetLibraryStructuredContentBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

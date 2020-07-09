@@ -112,6 +112,15 @@ public class StyleBookVerticalCard
 	}
 
 	@Override
+	public String getStickerIcon() {
+		if (_styleBookEntry.isDefaultStyleBookEntry()) {
+			return "check-circle";
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getTitle() {
 		return _styleBookEntry.getName();
 	}

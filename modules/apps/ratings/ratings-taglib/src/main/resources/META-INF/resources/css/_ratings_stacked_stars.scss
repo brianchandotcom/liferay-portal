@@ -48,7 +48,7 @@
 
 	.ratings-stacked-stars-vote {
 		&:hover label {
-			color: $secondary-l1;
+			color: $primary-l1;
 		}
 
 		label:hover,
@@ -64,7 +64,7 @@
 			}
 
 			&.ratings-stars-star-full {
-				color: $secondary-l1;
+				color: $primary-l1;
 			}
 		}
 

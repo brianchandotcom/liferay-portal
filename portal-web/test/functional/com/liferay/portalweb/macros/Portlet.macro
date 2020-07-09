@@ -1,20 +1,9 @@
 definition {
 
 	macro _clickAddPortlet {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "safari") {
-			Click(locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK");
-		}
-		else {
-			MouseOver(locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK");
-		}
-
-		MouseOver(locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
-
-		Click(
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK",
-			value1 = "Add");
+		Click.clickNoWaitForVisible(
+			key_portletName = "${portletName}",
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
 	macro addDuplicatePG {
@@ -83,15 +72,11 @@ definition {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
 
-		AssertElementPresent(locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-		AssertVisible(
-			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
-			value1 = "Widgets");
+		Navigator.gotoNavTab(navTab = "Widgets");
 
 		Pause(locator1 = "5000");
-
-		Panel.expandSidebarApplicationsPanel();
 
 		Type.sendKeysApplicationSearch(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
@@ -419,23 +404,19 @@ definition {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
 
-		AssertElementPresent(locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-		AssertVisible(
-			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
-			value1 = "Widgets");
+		Navigator.gotoNavTab(navTab = "Widgets");
 
 		Pause(locator1 = "5000");
-
-		Panel.expandSidebarApplicationsPanel();
 
 		Type.sendKeysApplicationSearch(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "${portletName}");
 
 		AssertElementNotPresent(
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
-			portletName = "${portletName}");
+			key_portletName = "${portletName}",
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
 	macro viewCannotEdit {

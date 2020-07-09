@@ -153,16 +153,17 @@ export default function Navigation({
 				</div>
 			)}
 
-			{currentPage.view === 'traffic-source-detail' && (
-				<Detail
-					currentPage={currentPage}
-					languageTag={languageTag}
-					onCurrentPageChange={handleCurrentPage}
-					onTrafficSourceNameChange={handleTrafficSourceName}
-					trafficShareDataProvider={handleTrafficShare}
-					trafficVolumeDataProvider={handleTrafficVolume}
-				/>
-			)}
+			{currentPage.view === 'traffic-source-detail' &&
+				currentPage.data.countryKeywords.length > 0 && (
+					<Detail
+						currentPage={currentPage}
+						languageTag={languageTag}
+						onCurrentPageChange={handleCurrentPage}
+						onTrafficSourceNameChange={handleTrafficSourceName}
+						trafficShareDataProvider={handleTrafficShare}
+						trafficVolumeDataProvider={handleTrafficVolume}
+					/>
+				)}
 		</>
 	);
 }

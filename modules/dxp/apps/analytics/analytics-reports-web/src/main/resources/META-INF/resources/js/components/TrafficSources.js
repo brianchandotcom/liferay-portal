@@ -125,18 +125,24 @@ export default function TrafficSources({
 												)
 											}
 										>
-											<ClayButton
-												className="font-weight-semi-bold px-0 py-1 text-primary"
-												displayType="link"
-												onClick={() =>
-													onTrafficSourceClick(
-														entry.name
-													)
-												}
-												small
-											>
-												{entry.title}
-											</ClayButton>
+											{!entry.countryKeywords.length && (
+												<span>{entry.title}</span>
+											)}
+											{entry.countryKeywords.length >
+												0 && (
+												<ClayButton
+													className="font-weight-semi-bold px-0 py-1 text-primary"
+													displayType="link"
+													onClick={() =>
+														onTrafficSourceClick(
+															entry.name
+														)
+													}
+													small
+												>
+													{entry.title}
+												</ClayButton>
+											)}
 										</td>
 										<td className="text-secondary">
 											<Hint

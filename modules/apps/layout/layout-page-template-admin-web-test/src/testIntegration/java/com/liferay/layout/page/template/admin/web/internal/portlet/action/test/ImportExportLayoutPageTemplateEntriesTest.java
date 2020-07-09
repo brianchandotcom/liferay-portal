@@ -146,11 +146,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File inputFile = _generateZipFile(
 			"container/background_image/input", valuesMap);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -162,11 +158,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		File inputFile = _generateZipFile("container/default/input", null);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -177,11 +169,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		File inputFile = _generateZipFile("container/empty/input", null);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -192,11 +180,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		File inputFile = _generateZipFile("container/layout/input", null);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -224,11 +208,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"fragment/text_field/mapped_value/class_pk_reference/input",
 			valuesMap);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -256,11 +236,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"fragment/text_field/mapped_value/class_pk_reference/input",
 			valuesMap);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -415,11 +391,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"fragment/text_field/mapped_value/class_pk_reference/input",
 			valuesMap);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -445,11 +417,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"fragment/text_field/mapped_value/class_pk_reference/input",
 			valuesMap);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -460,11 +428,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		File inputFile = _generateZipFile("row/container/input", null);
 
-		File outputFile = _importExportLayoutPageTemplateEntry(
-			inputFile, _group.getGroupId(), false,
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
-
-		_validateFile(expectedFile, outputFile);
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -778,6 +742,16 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		Assert.assertEquals(numberOfInputFiles, numberOfOutputFiles);
 		Assert.assertTrue(numberOfInputFiles > 0);
+	}
+
+	private void _validateImportExport(File expectedFile, File inputFile)
+		throws Exception {
+
+		File outputFile = _importExportLayoutPageTemplateEntry(
+			inputFile, _group.getGroupId(), false,
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		_validateFile(expectedFile, outputFile);
 	}
 
 	private static final String _LAYOUT_PATE_TEMPLATES_PATH =

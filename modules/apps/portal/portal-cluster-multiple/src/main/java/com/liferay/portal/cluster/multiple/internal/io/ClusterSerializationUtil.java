@@ -18,6 +18,7 @@ import com.liferay.petra.io.ProtectedObjectInputStream;
 import com.liferay.petra.io.constants.SerializationConstants;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.lang.ClassResolverUtil;
 
 import java.io.IOException;
@@ -85,7 +86,7 @@ public class ClusterSerializationUtil {
 
 		@Override
 		protected void annotateClass(Class<?> clazz) throws IOException {
-			String contextName = ClusterClassLoaderPool.getContextName(
+			String contextName = ClassLoaderPool.getContextName(
 				clazz.getClassLoader());
 
 			writeUTF(contextName);
@@ -108,7 +109,7 @@ public class ClusterSerializationUtil {
 
 			String contextName = readUTF();
 
-			ClassLoader classLoader = ClusterClassLoaderPool.getClassLoader(
+			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
 				contextName);
 
 			String className = objectStreamClass.getName();

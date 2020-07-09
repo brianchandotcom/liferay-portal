@@ -103,8 +103,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/journal/translate");
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

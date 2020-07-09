@@ -99,7 +99,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/import_translation.jsp");
 
-			hideDefaultSuccessMessage(actionRequest);
+			if (exception instanceof XLIFFFileException) {
+				hideDefaultErrorMessage(actionRequest);
+			}
 		}
 	}
 

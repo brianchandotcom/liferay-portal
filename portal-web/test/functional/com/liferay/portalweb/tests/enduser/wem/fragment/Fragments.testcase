@@ -141,14 +141,14 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
-				key_fragmentName = "Row",
+				key_fragmentName = "Grid",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -156,14 +156,14 @@ definition {
 		task ("Assert add second Row fragment to the same Section") {
 			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
 				key_collectionName = "Layout Elements",
-				key_fragmentName = "Row",
-				key_targetFragmentName = "Row",
+				key_fragmentName = "Grid",
+				key_targetFragmentName = "Grid",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
 				value1 = "");
 
 			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -615,16 +615,16 @@ definition {
 		task ("Add a row") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row",
+				fragmentName = "Grid",
 				targetFragmentName = "Container");
 		}
 
 		task ("Duplicate the fragment") {
-			PageEditor.gotoDuplicate(fragmentName = "Row");
+			PageEditor.gotoDuplicate(fragmentName = "Grid");
 		}
 
 		task ("View the duplicate row fragment") {
-			PageEditor.viewDuplicateFragment(fragmentName = "Row");
+			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 		}
 	}
 

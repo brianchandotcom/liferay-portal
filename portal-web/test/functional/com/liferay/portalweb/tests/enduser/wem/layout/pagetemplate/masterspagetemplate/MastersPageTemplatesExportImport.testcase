@@ -105,7 +105,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				dropTarget = "Footer",
-				fragmentName = "Row",
+				fragmentName = "Grid",
 				scope = "Master");
 
 			PageEditor.gotoTab(tabName = "Fragments");
@@ -166,7 +166,7 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			AssertElementPresent(
-				key_elementType = "Row",
+				key_elementType = "Grid",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 

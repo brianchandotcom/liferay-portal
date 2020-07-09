@@ -398,7 +398,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Row",
+			fragmentName = "Grid",
 			targetFragmentName = "Container");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -722,7 +722,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Grid");
 
 			PageEditor.editLayoutGrid(
 				columnCount = "2",

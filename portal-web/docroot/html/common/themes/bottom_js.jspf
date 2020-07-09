@@ -64,7 +64,14 @@
 		svg4everybody(
 			{
 				attributeName: 'data-href',
-				polyfill: true
+				polyfill: true,
+				validate: function (src, svg, use) {
+					if (src && src.startsWith('#')) {
+						return false;
+					}
+
+					return true;
+				}
 			}
 		);
 	}

@@ -26,4 +26,5 @@ EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = new EditDi
 	dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
 	icon="pencil"
 	monospaced="<%= true %>"
+	small="<%= true %>"
 />

@@ -23,8 +23,8 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="styleBookEntryKey" type="String" />
 		<column name="previewFileEntryId" type="long" />
+		<column name="styleBookEntryKey" type="String" />
 		<column name="tokensValues" type="String" />
 
 		<!-- Order -->

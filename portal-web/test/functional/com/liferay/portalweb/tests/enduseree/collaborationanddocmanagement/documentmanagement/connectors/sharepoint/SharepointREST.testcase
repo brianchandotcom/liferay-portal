@@ -444,11 +444,19 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
+		Pause(locator1 = "1000");
+
 		var key_dmFolderName = "Collaboration Test Application";
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "Collaboration Test Application");
+
+		Pause(locator1 = "2000");
+
+		if (IsElementNotPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
+			Refresh();
+		}
 
 		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
 

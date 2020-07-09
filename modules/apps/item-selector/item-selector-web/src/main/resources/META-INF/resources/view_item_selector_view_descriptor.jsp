@@ -108,7 +108,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 							%>
 
 							<c:choose>
-								<c:when test="<%= Validator.isNull(itemDescriptor.getUserName()) %>">
+								<c:when test="<%= Validator.isNotNull(itemDescriptor.getUserName()) %>">
 									<span class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {itemDescriptor.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</span>

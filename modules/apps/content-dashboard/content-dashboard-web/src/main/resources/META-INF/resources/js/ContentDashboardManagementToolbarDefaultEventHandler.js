@@ -49,6 +49,25 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 		itemSelectorDialog.open();
 	}
 
+	selectContentDashboardItemType(itemData) {
+		openModal({
+			id: this.ns('selectedContentDashboardItemTypeItem'),
+			onSelect: (selectedItem) => {
+				navigate(
+					addParams(
+						this.namespace +
+							'contentDashboardItemTypePayload=' +
+							selectedItem.data.value,
+						itemData.redirectURL
+					)
+				);
+			},
+			selectEventName: this.ns('selectedContentDashboardItemTypeItem'),
+			title: itemData.dialogTitle,
+			url: itemData.selectContentDashboardItemTypeURL,
+		});
+	}
+
 	selectScope(itemData) {
 		openModal({
 			id: this.ns('selectedScopeIdItem'),

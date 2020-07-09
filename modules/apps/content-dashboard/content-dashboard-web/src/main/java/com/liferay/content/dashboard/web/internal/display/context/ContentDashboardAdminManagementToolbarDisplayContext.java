@@ -23,6 +23,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
@@ -74,6 +78,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
+		clearResultsURL.setParameter(
+			"contentDashboardItemTypePayload", (String)null);
 		clearResultsURL.setParameter("authorIds", (String)null);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 		clearResultsURL.setParameter("scopeId", (String)null);
@@ -121,11 +127,35 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
+		String contentDashboardItemTypePayload =
+			_contentDashboardAdminDisplayContext.
+				getContentDashboardItemTypePayload();
+
 		long scopeId = _contentDashboardAdminDisplayContext.getScopeId();
 		int status = _contentDashboardAdminDisplayContext.getStatus();
 
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
 			LabelItemListBuilder.add(
+				() -> Validator.isNotNull(contentDashboardItemTypePayload),
+				labelItem -> {
+					PortletURL removeLabelURL = PortletURLUtil.clone(
+						currentURLObj, liferayPortletResponse);
+
+					removeLabelURL.setParameter(
+						"contentDashboardItemTypePayload", (String)null);
+
+					labelItem.putData(
+						"removeLabelURL", removeLabelURL.toString());
+
+					labelItem.setCloseable(true);
+
+					labelItem.setLabel(
+						StringBundler.concat(
+							LanguageUtil.get(request, "subtype"), ": ",
+							_getContentDashboardTypeLabel(
+								contentDashboardItemTypePayload)));
+				}
+			).add(
 				() -> scopeId > 0,
 				labelItem -> {
 					PortletURL removeLabelURL = PortletURLUtil.clone(
@@ -231,6 +261,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	public String getSearchActionURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+		portletURL.setParameter(
+			"contentDashboardItemTypePayload",
+			String.valueOf(
+				_contentDashboardAdminDisplayContext.
+					getContentDashboardItemTypePayload()));
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 		portletURL.setParameter(
@@ -256,6 +291,22 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"title", "modified-date"};
+	}
+
+	private String _getContentDashboardTypeLabel(
+		String contentDashboardTypePayload) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				contentDashboardTypePayload);
+
+			return jsonObject.getString("title");
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException, jsonException);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
@@ -358,6 +409,40 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "site-or-asset-library") +
+						StringPool.TRIPLE_PERIOD);
+
+				return dropdownItem;
+			},
+			() -> {
+				String contentDashboardItemTypePayload =
+					_contentDashboardAdminDisplayContext.
+						getContentDashboardItemTypePayload();
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setActive(
+					Validator.isNotNull(contentDashboardItemTypePayload));
+
+				dropdownItem.putData(
+					"action", "selectContentDashboardItemType");
+				dropdownItem.putData(
+					"dialogTitle", LanguageUtil.get(request, "select-subtype"));
+
+				PortletURL portletURL = getPortletURL();
+
+				portletURL.setParameter(
+					"contentDashboardItemTypePayload", (String)null);
+
+				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
+
+				dropdownItem.putData(
+					"selectContentDashboardItemTypeURL",
+					String.valueOf(
+						_contentDashboardAdminDisplayContext.
+							getContentDashboardItemTypeItemSelectorURL()));
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "subtype") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;

@@ -14,6 +14,11 @@
 
 package com.liferay.content.dashboard.web.internal.search.request;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -27,6 +32,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +68,22 @@ public class ContentDashboardSearchContextBuilder {
 		searchContext.setBooleanClauses(
 			_getBooleanClauses(
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds")));
+
+		String contentDashboardItemTypePayload = ParamUtil.getString(
+			_httpServletRequest, "contentDashboardItemTypePayload");
+
+		if (Validator.isNotNull(contentDashboardItemTypePayload)) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					contentDashboardItemTypePayload);
+
+				searchContext.setClassTypeIds(
+					new long[] {jsonObject.getLong("classPK")});
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException, jsonException);
+			}
+		}
 
 		if (_end != null) {
 			searchContext.setEnd(_end);
@@ -129,6 +151,9 @@ public class ContentDashboardSearchContextBuilder {
 				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentDashboardSearchContextBuilder.class);
 
 	private Integer _end;
 	private final HttpServletRequest _httpServletRequest;

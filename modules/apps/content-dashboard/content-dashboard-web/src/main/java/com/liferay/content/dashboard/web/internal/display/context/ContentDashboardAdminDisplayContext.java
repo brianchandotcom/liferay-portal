@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardConfiguration;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemTypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.model.AssetVocabularyMetric;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -136,6 +137,37 @@ public class ContentDashboardAdminDisplayContext {
 		return portletURL.toString();
 	}
 
+	public String getContentDashboardItemTypeItemSelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
+		ContentDashboardItemTypeItemSelectorCriterion
+			contentDashboardItemTypeItemSelectorCriterion =
+				new ContentDashboardItemTypeItemSelectorCriterion();
+
+		contentDashboardItemTypeItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.singletonList(new UUIDItemSelectorReturnType()));
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_liferayPortletResponse.getNamespace() +
+					"selectedContentDashboardItemTypeItem",
+				contentDashboardItemTypeItemSelectorCriterion));
+	}
+
+	public String getContentDashboardItemTypePayload() {
+		if (_contentDashboardItemTypePayload != null) {
+			return _contentDashboardItemTypePayload;
+		}
+
+		_contentDashboardItemTypePayload = ParamUtil.getString(
+			_liferayPortletRequest, "contentDashboardItemTypePayload");
+
+		return _contentDashboardItemTypePayload;
+	}
+
 	public Map<String, Object> getData() {
 		if (_data != null) {
 			return _data;
@@ -235,6 +267,7 @@ public class ContentDashboardAdminDisplayContext {
 	private List<Long> _authorIds;
 	private final ContentDashboardDropdownItemsProvider
 		_contentDashboardDropdownItemsProvider;
+	private String _contentDashboardItemTypePayload;
 	private Map<String, Object> _data;
 	private final FFContentDashboardConfiguration
 		_ffContentDashboardConfiguration;

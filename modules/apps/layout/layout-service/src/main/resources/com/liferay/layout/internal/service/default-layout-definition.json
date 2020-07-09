@@ -54,9 +54,7 @@
 				{
 					"definition": {
 						"fragment": {
-							"collectionName": "Basic Components",
-							"key": "BASIC_COMPONENT-heading",
-							"name": "Heading"
+							"key": "BASIC_COMPONENT-heading"
 						},
 						"fragmentConfig": {
 							"headingLevel": "h1",
@@ -131,8 +129,7 @@
 					"definition": {
 						"fragment": {
 							"collectionName": "Basic Components",
-							"key": "BASIC_COMPONENT-paragraph",
-							"name": "Paragraph"
+							"key": "BASIC_COMPONENT-paragraph"
 						},
 						"fragmentConfig": {
 							"marginBottom": "3",

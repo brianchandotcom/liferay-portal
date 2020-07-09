@@ -4,9 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"collectionName": "Test Collection",
-						"key": "test-image-fragment",
-						"name": "Test Image Fragment"
+						"key": "test-image-fragment"
 					},
 					"fragmentConfig": {
 						"bottomSpacing": "4",

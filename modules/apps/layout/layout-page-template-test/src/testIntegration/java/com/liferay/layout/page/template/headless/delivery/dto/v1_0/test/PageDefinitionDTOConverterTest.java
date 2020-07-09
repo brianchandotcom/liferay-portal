@@ -611,10 +611,7 @@ public class PageDefinitionDTOConverterTest {
 
 		Fragment fragment = pageFragmentInstanceDefinition.getFragment();
 
-		Assert.assertEquals(
-			_fragmentCollection.getName(), fragment.getCollectionName());
 		Assert.assertEquals(fragmentEntryKey, fragment.getKey());
-		Assert.assertEquals(fragmentName, fragment.getName());
 
 		FragmentField[] fragmentFields =
 			pageFragmentInstanceDefinition.getFragmentFields();

@@ -27,7 +27,7 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 
 		<input
 			{...otherProps}
-			className="key-value-input"
+			className={`${disabled ? 'disabled ' : ''}key-value-input`}
 			onChange={(event) => {
 				const value = normalizeFieldName(event.target.value);
 				onChange({target: {value}});

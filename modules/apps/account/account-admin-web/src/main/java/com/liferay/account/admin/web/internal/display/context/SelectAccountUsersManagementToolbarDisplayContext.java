@@ -69,6 +69,11 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addAccountEntryUser");
 
+				if (isOpenModalOnRedirect()) {
+					dropdownItem.putData(
+						"openModalOnRedirect", Boolean.TRUE.toString());
+				}
+
 				PortletURL addAccountEntryUserURL =
 					PortletURLFactoryUtil.create(
 						liferayPortletRequest,
@@ -116,6 +121,10 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isDisabled() {
 		return false;
+	}
+
+	public boolean isOpenModalOnRedirect() {
+		return ParamUtil.getBoolean(request, "openModalOnRedirect");
 	}
 
 	@Override

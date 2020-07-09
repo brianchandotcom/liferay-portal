@@ -13,11 +13,14 @@
  */
 
 import {DefaultEventHandler} from 'frontend-js-web';
+
 import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
 
 class SelectAccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	addAccountEntryUser({addAccountEntryUserURL}) {
-		window.sessionStorage.setItem(MODAL_STATE_ACCOUNT_USERS, 'open')
+	addAccountEntryUser({addAccountEntryUserURL, openModalOnRedirect = false}) {
+		if (openModalOnRedirect) {
+			window.sessionStorage.setItem(MODAL_STATE_ACCOUNT_USERS, 'open');
+		}
 
 		Liferay.Util.getTop().location.href = addAccountEntryUserURL;
 	}

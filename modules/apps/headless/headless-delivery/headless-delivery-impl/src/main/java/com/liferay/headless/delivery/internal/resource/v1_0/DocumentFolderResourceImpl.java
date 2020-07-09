@@ -70,6 +70,16 @@ public class DocumentFolderResourceImpl
 	}
 
 	@Override
+	public Page<DocumentFolder> getAssetLibraryDocumentFoldersPage(
+			Long assetLibraryId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getDocumentFolderPage(
+			assetLibraryId, flatten, search, filter, pagination, sorts);
+	}
+
+	@Override
 	public DocumentFolder getDocumentFolder(Long documentFolderId)
 		throws Exception {
 
@@ -87,7 +97,7 @@ public class DocumentFolderResourceImpl
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(folder);
 
 		return _getDocumentFoldersPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_SUBFOLDER", folder.getFolderId(),
@@ -119,26 +129,8 @@ public class DocumentFolderResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Long documentFolderId = null;
-
-		if (!GetterUtil.getBoolean(flatten)) {
-			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		return _getDocumentFoldersPage(
-			HashMapBuilder.<String, Map<String, String>>put(
-				"create",
-				addAction(
-					"ADD_FOLDER", "postSiteDocumentFolder",
-					"com.liferay.document.library", siteId)
-			).put(
-				"get",
-				addAction(
-					"VIEW", "getSiteDocumentFoldersPage",
-					"com.liferay.document.library", siteId)
-			).build(),
-			documentFolderId, siteId, flatten, filter, search, pagination,
-			sorts);
+		return _getDocumentFolderPage(
+			siteId, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -160,6 +152,14 @@ public class DocumentFolderResourceImpl
 			).orElse(
 				existingFolder.getName()
 			));
+	}
+
+	@Override
+	public DocumentFolder postAssetLibraryDocumentFolder(
+			Long assetLibraryId, DocumentFolder documentFolder)
+		throws Exception {
+
+		return _addFolder(assetLibraryId, 0L, documentFolder);
 	}
 
 	@Override
@@ -228,6 +228,33 @@ public class DocumentFolderResourceImpl
 						documentFolder.getCustomFields(),
 						contextAcceptLanguage.getPreferredLocale()),
 					siteId, documentFolder.getViewableByAsString())));
+	}
+
+	private Page<DocumentFolder> _getDocumentFolderPage(
+			Long siteId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		Long documentFolderId = null;
+
+		if (!GetterUtil.getBoolean(flatten)) {
+			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return _getDocumentFoldersPage(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_FOLDER", "postSiteDocumentFolder",
+					"com.liferay.document.library", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteDocumentFoldersPage",
+					"com.liferay.document.library", siteId)
+			).build(),
+			documentFolderId, siteId, flatten, filter, search, pagination,
+			sorts);
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(

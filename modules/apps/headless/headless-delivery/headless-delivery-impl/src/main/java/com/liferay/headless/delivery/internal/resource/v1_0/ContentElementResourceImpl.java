@@ -58,6 +58,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 	@Override
+	public Page<ContentElement> getAssetLibraryContentElementsPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getContentElementPage(
+			assetLibraryId, search, filter, pagination, sorts);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
@@ -70,22 +80,8 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		SearchContext searchContext = _getAssetSearchContext(
-			filter, search, siteId, sorts, pagination);
-
-		AssetSearcher assetSearcher =
-			(AssetSearcher)AssetSearcher.getInstance();
-
-		assetSearcher.setAssetEntryQuery(new AssetEntryQuery());
-
-		return Page.of(
-			new HashMap<>(),
-			transform(
-				_assetHelper.getAssetEntries(
-					assetSearcher.search(searchContext)),
-				this::_toContentElement),
-			pagination,
-			_assetHelper.searchCount(searchContext, new AssetEntryQuery()));
+		return _getContentElementPage(
+			siteId, search, filter, pagination, sorts);
 	}
 
 	private SearchContext _getAssetSearchContext(
@@ -140,6 +136,29 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		searchContext.setUserId(contextUser.getUserId());
 
 		return searchContext;
+	}
+
+	private Page<ContentElement> _getContentElementPage(
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		SearchContext searchContext = _getAssetSearchContext(
+			filter, search, siteId, sorts, pagination);
+
+		AssetSearcher assetSearcher =
+			(AssetSearcher)AssetSearcher.getInstance();
+
+		assetSearcher.setAssetEntryQuery(new AssetEntryQuery());
+
+		return Page.of(
+			new HashMap<>(),
+			transform(
+				_assetHelper.getAssetEntries(
+					assetSearcher.search(searchContext)),
+				this::_toContentElement),
+			pagination,
+			_assetHelper.searchCount(searchContext, new AssetEntryQuery()));
 	}
 
 	private ContentElement _toContentElement(AssetEntry assetEntry) {

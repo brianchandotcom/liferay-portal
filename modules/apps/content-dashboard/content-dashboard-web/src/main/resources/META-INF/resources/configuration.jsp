@@ -46,10 +46,10 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 					</p>
 
 					<liferay-ui:input-move-boxes
-						leftBoxName="currentAssetVocabularyNames"
+						leftBoxName="availableAssetVocabularyNames"
 						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
 						leftTitle="available"
-						rightBoxName="availableAssetVocabularyNames"
+						rightBoxName="currentAssetVocabularyNames"
 						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
 						rightReorder="<%= Boolean.TRUE.toString() %>"
 						rightTitle="in-use"

@@ -7,6 +7,8 @@ node {
 task runGradleTest
 
 runGradleTest {
+	dependsOn downloadNode
+
 	doLast {
 		assert npmInstall.nodeDir == null
 		assert npmInstall.scriptFile == null

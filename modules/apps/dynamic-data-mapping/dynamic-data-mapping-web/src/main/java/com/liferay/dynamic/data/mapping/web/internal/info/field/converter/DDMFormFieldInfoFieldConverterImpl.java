@@ -49,9 +49,24 @@ public class DDMFormFieldInfoFieldConverterImpl
 				label.getDefaultLocale()
 			).build();
 
-		return new InfoField(
+		InfoField infoField = new InfoField(
 			_getInfoFieldType(ddmFormField), labelInfoLocalizedValue,
 			ddmFormField.isLocalizable(), ddmFormField.getName());
+
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
+
+			infoField.addAttribute(TextInfoFieldType.MULTILINE, true);
+			infoField.addAttribute(TextInfoFieldType.RICH, true);
+		}
+
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
+
+			infoField.addAttribute(TextInfoFieldType.MULTILINE, true);
+		}
+
+		return infoField;
 	}
 
 	private InfoFieldType _getInfoFieldType(DDMFormField ddmFormField) {

@@ -21,9 +21,7 @@
 		{
 			"definition": {
 				"fragment": {
-					"collectionName": "${FRAGMENT_COLLECTION_NAME}",
-					"key": "${FRAGMENT_ENTRY_KEY}",
-					"name": "${FRAGMENT_ENTRY_NAME}"
+					"key": "${FRAGMENT_ENTRY_KEY}"
 				},
 				"fragmentConfig": {
 					"buttonAlign": "left",

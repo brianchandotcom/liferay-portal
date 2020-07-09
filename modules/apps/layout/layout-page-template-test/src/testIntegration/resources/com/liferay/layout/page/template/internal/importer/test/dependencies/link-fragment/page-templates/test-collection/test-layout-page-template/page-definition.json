@@ -4,9 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"collectionName": "Test Collection",
-						"key": "test-link-fragment",
-						"name": "Test Link Fragment"
+						"key": "test-link-fragment"
 					},
 					"fragmentFields": [
 						{

@@ -4,9 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"collectionName": "My Fragment Collection",
-						"key": "my-key",
-						"name": "My Fragment"
+						"key": "my-key"
 					},
 					"fragmentConfig": {
 						"fieldOne": 1,

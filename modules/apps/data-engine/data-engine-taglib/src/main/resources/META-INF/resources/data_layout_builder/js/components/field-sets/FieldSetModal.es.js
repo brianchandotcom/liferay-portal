@@ -21,6 +21,7 @@ import App from '../../App.es';
 import AppContext from '../../AppContext.es';
 import {UPDATE_EDITING_LANGUAGE_ID} from '../../actions.es';
 import {isDataLayoutEmpty} from '../../utils/dataLayoutVisitor.es';
+import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import TranslationManager from '../translation-manager/TranslationManager.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
@@ -33,18 +34,51 @@ const ModalContent = ({
 	fieldSet,
 	onClose,
 }) => {
-	const [{appProps}] = useContext(AppContext);
+	const [
+		{
+			appProps,
+			dataDefinition: {dataDefinitionFields},
+		},
+	] = useContext(AppContext);
 	const [childrenContext, setChildrenContext] = useState({
+		dataLayoutBuilder: null,
 		dispatch: () => {},
 		state: {},
 	});
 	const [dataLayoutIsEmpty, setDataLayoutIsEmpty] = useState(true);
-	const {editingLanguageId = defaultLanguageId} = childrenContext.state;
 	const [name, setName] = useState({});
+	const {
+		dataLayoutBuilder,
+		state: {
+			dataLayout,
+			dataDefinition: {
+				dataDefinitionFields: childrenDataDefinitionFields = [],
+			} = {},
+			editingLanguageId = defaultLanguageId,
+		},
+	} = childrenContext;
 
 	const availableLanguageIds = [
 		...new Set([...Object.keys(name), editingLanguageId]),
 	];
+
+	const normalizeDataDefinitionFields = (ddFields) => {
+		const fields = [];
+		ddFields.forEach(({fieldType, name, nestedDataDefinitionFields}) => {
+			if (fieldType === 'fieldset') {
+				return fields.push(...nestedDataDefinitionFields);
+			}
+
+			return fields.push({name});
+		});
+
+		return fields;
+	};
+
+	const mergedDataDefinitionFields = normalizeDataDefinitionFields([
+		...dataDefinitionFields,
+		...childrenDataDefinitionFields,
+	]);
 
 	useEffect(() => {
 		if (fieldSet) {
@@ -53,13 +87,22 @@ const ModalContent = ({
 	}, [defaultLanguageId, fieldSet]);
 
 	useEffect(() => {
-		if (childrenContext.state.dataLayout) {
-			const {
-				dataLayout: {dataLayoutPages},
-			} = childrenContext.state;
+		if (dataLayout) {
+			const {dataLayoutPages} = dataLayout;
 			setDataLayoutIsEmpty(isDataLayoutEmpty(dataLayoutPages));
 		}
-	}, [childrenContext]);
+	}, [dataLayout]);
+
+	useEffect(() => {
+		if (dataLayoutBuilder) {
+			const provider = dataLayoutBuilder.getLayoutProvider();
+			provider.props.fieldNameGenerator = (desiredName) =>
+				generateDataDefinitionFieldName(
+					{dataDefinitionFields: mergedDataDefinitionFields},
+					desiredName
+				);
+		}
+	}, [dataLayoutBuilder, mergedDataDefinitionFields]);
 
 	const createFieldSet = useCreateFieldSet({
 		availableLanguageIds,
@@ -73,7 +116,6 @@ const ModalContent = ({
 		fieldSet,
 	});
 	const propagateFieldSet = usePropagateFieldSet();
-
 	const onEditingLanguageIdChange = useCallback(
 		(editingLanguageId) => {
 			childrenContext.dispatch({
@@ -96,9 +138,7 @@ const ModalContent = ({
 		document
 			.querySelectorAll('#ddm-actionable-fields-container')
 			.forEach((container) => {
-				if (container) {
-					container.style.display = active ? 'none' : '';
-				}
+				container.style.display = active ? 'none' : '';
 			});
 	};
 
@@ -178,7 +218,9 @@ const ModalContent = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 						<ClayButton
-							disabled={!name || dataLayoutIsEmpty}
+							disabled={
+								!name[defaultLanguageId] || dataLayoutIsEmpty
+							}
 							onClick={onSave}
 						>
 							{Liferay.Language.get('save')}

@@ -22,16 +22,16 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Global Apps Menu in default instance."
+	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
 	@priority = "5"
 	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInDefaultInstance {
 		property test.name.skip.portal.instance = "GlobalMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInDefaultInstance";
 
-		task ("Assert Global Menu icon is shown in Control Menu by default") {
+		task ("Assert Applications Menu icon is shown in Control Menu by default") {
 			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
 		}
 
-		task ("Disable the Global Apps Menu") {
+		task ("Disable the Applications Menu") {
 			PortalSettings.disableGlobalAppsMenu();
 		}
 
@@ -69,12 +69,12 @@ definition {
 				value1 = "Sites");
 		}
 
-		task ("Enable the Global Apps Menu") {
+		task ("Enable the Applications Menu") {
 			PortalSettings.enableGlobalAppsMenu();
 		}
 	}
 
-	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Global Apps Menu in virtual instance."
+	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in virtual instance."
 	@priority = "4"
 	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInVirtualInstance {
 		property test.name.skip.portal.instance = "GlobalMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInVirtualInstance";
@@ -98,11 +98,11 @@ definition {
 				virtualHostsURL = "http://www.able.com:8080");
 		}
 
-		task ("Assert Global Menu icon is shown in Control Menu by default") {
+		task ("Assert Applications Menu icon is shown in Control Menu by default") {
 			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
 		}
 
-		task ("Disable the Global Apps Menu") {
+		task ("Disable the Applications Menu") {
 			PortalSettings.disableGlobalAppsMenu();
 		}
 
@@ -140,15 +140,15 @@ definition {
 				value1 = "Sites");
 		}
 
-		task ("Enable the Global Apps Menu") {
+		task ("Enable the Applications Menu") {
 			PortalSettings.enableGlobalAppsMenu();
 		}
 	}
 
-	@description = "This is a use case for LPS-112990. The Global Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
+	@description = "This is a use case for LPS-112990. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
 	@priority = "5"
 	test AssertLocationOfGlobalMenuIconAndUserAvatarIcon {
-		task ("The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page") {
+		task ("The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page") {
 			Navigator.gotoPage(pageName = "Home");
 
 			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
@@ -156,7 +156,7 @@ definition {
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 		}
 
-		task ("The Global Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin") {
+		task ("The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin") {
 			SitePages.openPagesAdmin(siteURLKey = "guest");
 
 			MetalComponent.waitForManagementBar();
@@ -174,7 +174,7 @@ definition {
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_CONTROL_MENU");
 		}
 
-		task ("The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor") {
+		task ("The Applications Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Test Content Page Name",
@@ -189,7 +189,7 @@ definition {
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 		}
 
-		task ("The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page.") {
+		task ("The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page.") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 
 			JSONLayout.addPublicLayout(
@@ -218,10 +218,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115218. Can choose to a site in Product Menu when disable Global Apps Menu. Can navigate to site-scope applications in Product Menu when disable Global Apps Menu."
+	@description = "This is a use case for LPS-115218. Can choose to a site in Product Menu when disable Applications Menu. Can navigate to site-scope applications in Product Menu when disable Global Apps Menu."
 	@priority = "5"
 	test NavigateToSiteAndSiteScopeApplicationsInProductMenuWhenDisableGlobalAppsMenu {
-		task ("Disable the Global Apps Menu") {
+		task ("Disable the Applications Menu") {
 			PortalSettings.disableGlobalAppsMenu();
 		}
 
@@ -268,12 +268,12 @@ definition {
 				value1 = "Pages");
 		}
 
-		task ("Enable the Global Apps Menu") {
+		task ("Enable the Applications Menu") {
 			PortalSettings.enableGlobalAppsMenu();
 		}
 	}
 
-	@description = "This is a use case for LPS-112989. View All link will be shown in Global Menu when the total amount of Recently Visited and My Sites more than 7."
+	@description = "This is a use case for LPS-112989. View All link will be shown in Applications Menu when the total amount of Recently Visited and My Sites more than 7."
 	@priority = "5"
 	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
 		property portal.acceptance = "true";
@@ -285,7 +285,7 @@ definition {
 			}
 		}
 
-		task ("Assert View All link shown in Global Menu") {
+		task ("Assert View All link shown in Applications Menu") {
 			GlobalMenuHelper.openGlobalMenu();
 
 			AssertVisible(locator1 = "GlobalMenu#VIEW_ALL_LINK");

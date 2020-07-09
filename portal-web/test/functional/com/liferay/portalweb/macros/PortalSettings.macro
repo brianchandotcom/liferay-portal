@@ -259,7 +259,7 @@ definition {
 	macro disableGlobalAppsMenu {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Navigation",
-			configurationName = "Global Apps Menu",
+			configurationName = "Applications Menu",
 			configurationScope = "Virtual Instance Scope");
 
 		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
@@ -569,7 +569,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Navigation",
-			configurationName = "Global Apps Menu",
+			configurationName = "Applications Menu",
 			configurationScope = "Virtual Instance Scope");
 
 		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");

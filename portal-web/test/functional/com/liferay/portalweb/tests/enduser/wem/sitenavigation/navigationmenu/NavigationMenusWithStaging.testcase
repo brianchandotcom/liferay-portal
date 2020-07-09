@@ -554,7 +554,7 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
-		task ("Navigate to the live site via Global Menu") {
+		task ("Navigate to the live site via Applications Menu") {
 			GlobalMenu.gotoSite(site = "Test Site Name");
 		}
 

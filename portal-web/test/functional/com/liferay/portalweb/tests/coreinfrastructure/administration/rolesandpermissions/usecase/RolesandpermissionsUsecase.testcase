@@ -2000,7 +2000,7 @@ definition {
 			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace");
 
 		Role.viewPermissionSubdirectory(
-			navItem = "Global Menu",
+			navItem = "Applications Menu",
 			subItemList = "Content,Accounts,Workflow,Communication,App Builder");
 
 		Role.viewPermissionSubdirectory(

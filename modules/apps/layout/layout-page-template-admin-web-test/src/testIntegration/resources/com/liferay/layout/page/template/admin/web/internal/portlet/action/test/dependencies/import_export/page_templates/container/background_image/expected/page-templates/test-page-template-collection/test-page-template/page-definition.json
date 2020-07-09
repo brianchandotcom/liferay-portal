@@ -3,7 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"backgroundImage": {
+					"backgroundFragmentImage": {
 					},
 					"layout": {
 						"borderWidth": 0,
@@ -23,7 +23,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"backgroundImage": {
+							"backgroundFragmentImage": {
 								"url": {
 									"value": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Liferay-logo-full-color-2x.png"
 								}
@@ -47,7 +47,7 @@
 					},
 					{
 						"definition": {
-							"backgroundImage": {
+							"backgroundFragmentImage": {
 								"url": {
 									"defaultValue": {
 										"value": "https://avatars1.githubusercontent.com/u/131436"

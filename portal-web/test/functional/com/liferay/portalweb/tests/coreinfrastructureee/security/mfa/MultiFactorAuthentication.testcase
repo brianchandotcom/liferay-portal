@@ -438,7 +438,7 @@ definition {
 	@description = "This is a use case for LPS-101717"
 	@priority = "5"
 	test LoginWithIPBasedVerifierFailedOnInstanceLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailed";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailedOnInstanceLevel";
 
 		GlobalMenu.gotoPortlet(
 			category = "System",

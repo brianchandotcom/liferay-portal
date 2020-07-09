@@ -166,6 +166,26 @@ public class StyleBookEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntrySoap
+			updateDefaultStyleBookEntry(
+				long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.updateDefaultStyleBookEntry(
+					styleBookEntryId, defaultStyleBookEntry);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.style.book.model.StyleBookEntrySoap updateName(
 			long styleBookEntryId, String name)
 		throws RemoteException {

@@ -77,7 +77,7 @@ public class StyleBookEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,6 +93,8 @@ public class StyleBookEntryCacheModel
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", defaultStyleBookEntry=");
+		sb.append(defaultStyleBookEntry);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", previewFileEntryId=");
@@ -129,6 +131,8 @@ public class StyleBookEntryCacheModel
 		else {
 			styleBookEntryImpl.setCreateDate(new Date(createDate));
 		}
+
+		styleBookEntryImpl.setDefaultStyleBookEntry(defaultStyleBookEntry);
 
 		if (name == null) {
 			styleBookEntryImpl.setName("");
@@ -173,6 +177,8 @@ public class StyleBookEntryCacheModel
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
+
+		defaultStyleBookEntry = objectInput.readBoolean();
 		name = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
@@ -200,6 +206,8 @@ public class StyleBookEntryCacheModel
 		}
 
 		objectOutput.writeLong(createDate);
+
+		objectOutput.writeBoolean(defaultStyleBookEntry);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -232,6 +240,7 @@ public class StyleBookEntryCacheModel
 	public long userId;
 	public String userName;
 	public long createDate;
+	public boolean defaultStyleBookEntry;
 	public String name;
 	public long previewFileEntryId;
 	public String styleBookEntryKey;

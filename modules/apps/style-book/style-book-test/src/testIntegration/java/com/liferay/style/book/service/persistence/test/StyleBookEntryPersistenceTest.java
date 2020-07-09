@@ -136,6 +136,9 @@ public class StyleBookEntryPersistenceTest {
 
 		newStyleBookEntry.setCreateDate(RandomTestUtil.nextDate());
 
+		newStyleBookEntry.setDefaultStyleBookEntry(
+			RandomTestUtil.randomBoolean());
+
 		newStyleBookEntry.setName(RandomTestUtil.randomString());
 
 		newStyleBookEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
@@ -170,6 +173,9 @@ public class StyleBookEntryPersistenceTest {
 			Time.getShortTimestamp(existingStyleBookEntry.getCreateDate()),
 			Time.getShortTimestamp(newStyleBookEntry.getCreateDate()));
 		Assert.assertEquals(
+			existingStyleBookEntry.isDefaultStyleBookEntry(),
+			newStyleBookEntry.isDefaultStyleBookEntry());
+		Assert.assertEquals(
 			existingStyleBookEntry.getName(), newStyleBookEntry.getName());
 		Assert.assertEquals(
 			existingStyleBookEntry.getPreviewFileEntryId(),
@@ -187,6 +193,14 @@ public class StyleBookEntryPersistenceTest {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 		_persistence.countByGroupId(0L);
+	}
+
+	@Test
+	public void testCountByG_D() throws Exception {
+		_persistence.countByG_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_D(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -234,8 +248,8 @@ public class StyleBookEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"StyleBookEntry", "mvccVersion", true, "styleBookEntryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "name", true, "previewFileEntryId", true,
-			"styleBookEntryKey", true);
+			true, "createDate", true, "defaultStyleBookEntry", true, "name",
+			true, "previewFileEntryId", true, "styleBookEntryKey", true);
 	}
 
 	@Test
@@ -489,6 +503,8 @@ public class StyleBookEntryPersistenceTest {
 		styleBookEntry.setUserName(RandomTestUtil.randomString());
 
 		styleBookEntry.setCreateDate(RandomTestUtil.nextDate());
+
+		styleBookEntry.setDefaultStyleBookEntry(RandomTestUtil.randomBoolean());
 
 		styleBookEntry.setName(RandomTestUtil.randomString());
 

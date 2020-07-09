@@ -262,6 +262,48 @@ public class StyleBookEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateDefaultStyleBookEntry(
+				HttpPrincipal httpPrincipal, long styleBookEntryId,
+				boolean defaultStyleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				StyleBookEntryServiceUtil.class, "updateDefaultStyleBookEntry",
+				_updateDefaultStyleBookEntryParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, styleBookEntryId, defaultStyleBookEntry);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.style.book.model.StyleBookEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.style.book.model.StyleBookEntry updateName(
 			HttpPrincipal httpPrincipal, long styleBookEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -269,7 +311,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updateName",
-				_updateNameParameterTypes5);
+				_updateNameParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, name);
@@ -311,7 +353,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updatePreviewFileEntryId",
-				_updatePreviewFileEntryIdParameterTypes6);
+				_updatePreviewFileEntryIdParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, previewFileEntryId);
@@ -353,7 +395,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updateTokensValues",
-				_updateTokensValuesParameterTypes7);
+				_updateTokensValuesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, tokensValue);
@@ -408,12 +450,16 @@ public class StyleBookEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteStyleBookEntryParameterTypes4 =
 		new Class[] {com.liferay.style.book.model.StyleBookEntry.class};
-	private static final Class<?>[] _updateNameParameterTypes5 = new Class[] {
+	private static final Class<?>[]
+		_updateDefaultStyleBookEntryParameterTypes5 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateNameParameterTypes6 = new Class[] {
 		long.class, String.class
 	};
-	private static final Class<?>[] _updatePreviewFileEntryIdParameterTypes6 =
+	private static final Class<?>[] _updatePreviewFileEntryIdParameterTypes7 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateTokensValuesParameterTypes7 =
+	private static final Class<?>[] _updateTokensValuesParameterTypes8 =
 		new Class[] {long.class, String.class};
 
 }

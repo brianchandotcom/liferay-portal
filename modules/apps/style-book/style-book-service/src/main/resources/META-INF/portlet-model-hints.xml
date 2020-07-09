@@ -9,6 +9,7 @@
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
+		<field name="defaultStyleBookEntry" type="boolean" />
 		<field name="name" type="String" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="styleBookEntryKey" type="String" />

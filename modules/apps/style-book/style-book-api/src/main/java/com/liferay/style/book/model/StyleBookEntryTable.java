@@ -49,6 +49,10 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, Boolean> defaultStyleBookEntry =
+		createColumn(
+			"defaultStyleBookEntry", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Long> previewFileEntryId =

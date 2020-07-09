@@ -200,6 +200,9 @@ public interface StyleBookEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public StyleBookEntry fetchStyleBookEntry(long styleBookEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -275,6 +278,9 @@ public interface StyleBookEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
 		throws PortalException;
+
+	public StyleBookEntry updateDefaultStyleBookEntry(
+		long styleBookEntryId, boolean defaultStyleBookEntry);
 
 	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException;

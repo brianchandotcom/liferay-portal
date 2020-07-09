@@ -6,6 +6,7 @@ create table StyleBookEntry (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	defaultStyleBookEntry BOOLEAN,
 	name VARCHAR(75) null,
 	previewFileEntryId LONG,
 	styleBookEntryKey VARCHAR(75) null,

@@ -185,6 +185,161 @@ public interface StyleBookEntryPersistence
 	public int countByGroupId(long groupId);
 
 	/**
+	 * Returns all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @return the matching style book entries
+	 */
+	public java.util.List<StyleBookEntry> findByG_D(
+		long groupId, boolean defaultStyleBookEntry);
+
+	/**
+	 * Returns a range of all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @return the range of matching style book entries
+	 */
+	public java.util.List<StyleBookEntry> findByG_D(
+		long groupId, boolean defaultStyleBookEntry, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching style book entries
+	 */
+	public java.util.List<StyleBookEntry> findByG_D(
+		long groupId, boolean defaultStyleBookEntry, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	public java.util.List<StyleBookEntry> findByG_D(
+		long groupId, boolean defaultStyleBookEntry, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first style book entry in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching style book entry
+	 * @throws NoSuchEntryException if a matching style book entry could not be found
+	 */
+	public StyleBookEntry findByG_D_First(
+			long groupId, boolean defaultStyleBookEntry,
+			com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first style book entry in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	public StyleBookEntry fetchByG_D_First(
+		long groupId, boolean defaultStyleBookEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last style book entry in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching style book entry
+	 * @throws NoSuchEntryException if a matching style book entry could not be found
+	 */
+	public StyleBookEntry findByG_D_Last(
+			long groupId, boolean defaultStyleBookEntry,
+			com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last style book entry in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	public StyleBookEntry fetchByG_D_Last(
+		long groupId, boolean defaultStyleBookEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the style book entries before and after the current style book entry in the ordered set where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param styleBookEntryId the primary key of the current style book entry
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next style book entry
+	 * @throws NoSuchEntryException if a style book entry with the primary key could not be found
+	 */
+	public StyleBookEntry[] findByG_D_PrevAndNext(
+			long styleBookEntryId, long groupId, boolean defaultStyleBookEntry,
+			com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 */
+	public void removeByG_D(long groupId, boolean defaultStyleBookEntry);
+
+	/**
+	 * Returns the number of style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultStyleBookEntry the default style book entry
+	 * @return the number of matching style book entries
+	 */
+	public int countByG_D(long groupId, boolean defaultStyleBookEntry);
+
+	/**
 	 * Returns all the style book entries where groupId = &#63; and name LIKE &#63;.
 	 *
 	 * @param groupId the group ID

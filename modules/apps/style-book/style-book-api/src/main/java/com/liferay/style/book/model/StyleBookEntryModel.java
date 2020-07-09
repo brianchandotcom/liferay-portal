@@ -176,6 +176,27 @@ public interface StyleBookEntryModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the default style book entry of this style book entry.
+	 *
+	 * @return the default style book entry of this style book entry
+	 */
+	public boolean getDefaultStyleBookEntry();
+
+	/**
+	 * Returns <code>true</code> if this style book entry is default style book entry.
+	 *
+	 * @return <code>true</code> if this style book entry is default style book entry; <code>false</code> otherwise
+	 */
+	public boolean isDefaultStyleBookEntry();
+
+	/**
+	 * Sets whether this style book entry is default style book entry.
+	 *
+	 * @param defaultStyleBookEntry the default style book entry of this style book entry
+	 */
+	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry);
+
+	/**
 	 * Returns the name of this style book entry.
 	 *
 	 * @return the name of this style book entry

@@ -233,6 +233,12 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
+		fetchDefaultStyleBookEntry(long groupId) {
+
+		return getService().fetchDefaultStyleBookEntry(groupId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
 		fetchStyleBookEntry(long styleBookEntryId) {
 
 		return getService().fetchStyleBookEntry(styleBookEntryId);
@@ -344,6 +350,14 @@ public class StyleBookEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getStyleBookEntry(styleBookEntryId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+		updateDefaultStyleBookEntry(
+			long styleBookEntryId, boolean defaultStyleBookEntry) {
+
+		return getService().updateDefaultStyleBookEntry(
+			styleBookEntryId, defaultStyleBookEntry);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry updateName(

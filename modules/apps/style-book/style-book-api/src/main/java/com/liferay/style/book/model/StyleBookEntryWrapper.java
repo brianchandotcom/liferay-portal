@@ -49,6 +49,7 @@ public class StyleBookEntryWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("defaultStyleBookEntry", isDefaultStyleBookEntry());
 		attributes.put("name", getName());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
@@ -101,6 +102,13 @@ public class StyleBookEntryWrapper
 			setCreateDate(createDate);
 		}
 
+		Boolean defaultStyleBookEntry = (Boolean)attributes.get(
+			"defaultStyleBookEntry");
+
+		if (defaultStyleBookEntry != null) {
+			setDefaultStyleBookEntry(defaultStyleBookEntry);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -144,6 +152,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the default style book entry of this style book entry.
+	 *
+	 * @return the default style book entry of this style book entry
+	 */
+	@Override
+	public boolean getDefaultStyleBookEntry() {
+		return model.getDefaultStyleBookEntry();
 	}
 
 	/**
@@ -263,6 +281,16 @@ public class StyleBookEntryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this style book entry is default style book entry.
+	 *
+	 * @return <code>true</code> if this style book entry is default style book entry; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDefaultStyleBookEntry() {
+		return model.isDefaultStyleBookEntry();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -286,6 +314,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets whether this style book entry is default style book entry.
+	 *
+	 * @param defaultStyleBookEntry the default style book entry of this style book entry
+	 */
+	@Override
+	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry) {
+		model.setDefaultStyleBookEntry(defaultStyleBookEntry);
 	}
 
 	/**

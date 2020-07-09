@@ -76,7 +76,8 @@ public class StyleBookEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"styleBookEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP},
+		{"defaultStyleBookEntry", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"previewFileEntryId", Types.BIGINT},
 		{"styleBookEntryKey", Types.VARCHAR}, {"tokensValues", Types.CLOB}
 	};
@@ -92,6 +93,7 @@ public class StyleBookEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("defaultStyleBookEntry", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("styleBookEntryKey", Types.VARCHAR);
@@ -99,7 +101,7 @@ public class StyleBookEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null,tokensValues TEXT null)";
+		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,defaultStyleBookEntry BOOLEAN,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null,tokensValues TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table StyleBookEntry";
 
@@ -115,13 +117,15 @@ public class StyleBookEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long DEFAULTSTYLEBOOKENTRY_COLUMN_BITMASK = 1L;
 
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
-	public static final long STYLEBOOKENTRYKEY_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long STYLEBOOKENTRYKEY_COLUMN_BITMASK = 8L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -157,6 +161,7 @@ public class StyleBookEntryModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
+		model.setDefaultStyleBookEntry(soapModel.isDefaultStyleBookEntry());
 		model.setName(soapModel.getName());
 		model.setPreviewFileEntryId(soapModel.getPreviewFileEntryId());
 		model.setStyleBookEntryKey(soapModel.getStyleBookEntryKey());
@@ -344,6 +349,12 @@ public class StyleBookEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"createDate",
 			(BiConsumer<StyleBookEntry, Date>)StyleBookEntry::setCreateDate);
+		attributeGetterFunctions.put(
+			"defaultStyleBookEntry", StyleBookEntry::getDefaultStyleBookEntry);
+		attributeSetterBiConsumers.put(
+			"defaultStyleBookEntry",
+			(BiConsumer<StyleBookEntry, Boolean>)
+				StyleBookEntry::setDefaultStyleBookEntry);
 		attributeGetterFunctions.put("name", StyleBookEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -487,6 +498,35 @@ public class StyleBookEntryModelImpl
 
 	@JSON
 	@Override
+	public boolean getDefaultStyleBookEntry() {
+		return _defaultStyleBookEntry;
+	}
+
+	@JSON
+	@Override
+	public boolean isDefaultStyleBookEntry() {
+		return _defaultStyleBookEntry;
+	}
+
+	@Override
+	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry) {
+		_columnBitmask |= DEFAULTSTYLEBOOKENTRY_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultStyleBookEntry) {
+			_setOriginalDefaultStyleBookEntry = true;
+
+			_originalDefaultStyleBookEntry = _defaultStyleBookEntry;
+		}
+
+		_defaultStyleBookEntry = defaultStyleBookEntry;
+	}
+
+	public boolean getOriginalDefaultStyleBookEntry() {
+		return _originalDefaultStyleBookEntry;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -607,6 +647,7 @@ public class StyleBookEntryModelImpl
 		styleBookEntryImpl.setUserId(getUserId());
 		styleBookEntryImpl.setUserName(getUserName());
 		styleBookEntryImpl.setCreateDate(getCreateDate());
+		styleBookEntryImpl.setDefaultStyleBookEntry(isDefaultStyleBookEntry());
 		styleBookEntryImpl.setName(getName());
 		styleBookEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 		styleBookEntryImpl.setStyleBookEntryKey(getStyleBookEntryKey());
@@ -687,6 +728,11 @@ public class StyleBookEntryModelImpl
 
 		styleBookEntryModelImpl._setOriginalGroupId = false;
 
+		styleBookEntryModelImpl._originalDefaultStyleBookEntry =
+			styleBookEntryModelImpl._defaultStyleBookEntry;
+
+		styleBookEntryModelImpl._setOriginalDefaultStyleBookEntry = false;
+
 		styleBookEntryModelImpl._originalName = styleBookEntryModelImpl._name;
 
 		styleBookEntryModelImpl._originalStyleBookEntryKey =
@@ -726,6 +772,9 @@ public class StyleBookEntryModelImpl
 		else {
 			styleBookEntryCacheModel.createDate = Long.MIN_VALUE;
 		}
+
+		styleBookEntryCacheModel.defaultStyleBookEntry =
+			isDefaultStyleBookEntry();
 
 		styleBookEntryCacheModel.name = getName();
 
@@ -835,6 +884,9 @@ public class StyleBookEntryModelImpl
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private boolean _defaultStyleBookEntry;
+	private boolean _originalDefaultStyleBookEntry;
+	private boolean _setOriginalDefaultStyleBookEntry;
 	private String _name;
 	private String _originalName;
 	private long _previewFileEntryId;

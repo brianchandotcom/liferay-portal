@@ -242,6 +242,13 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+		fetchDefaultStyleBookEntry(long groupId) {
+
+		return _styleBookEntryLocalService.fetchDefaultStyleBookEntry(groupId);
+	}
+
+	@Override
 	public com.liferay.style.book.model.StyleBookEntry fetchStyleBookEntry(
 		long styleBookEntryId) {
 
@@ -368,6 +375,15 @@ public class StyleBookEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.getStyleBookEntry(styleBookEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+		updateDefaultStyleBookEntry(
+			long styleBookEntryId, boolean defaultStyleBookEntry) {
+
+		return _styleBookEntryLocalService.updateDefaultStyleBookEntry(
+			styleBookEntryId, defaultStyleBookEntry);
 	}
 
 	@Override

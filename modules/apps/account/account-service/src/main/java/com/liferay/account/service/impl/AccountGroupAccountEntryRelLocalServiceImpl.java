@@ -23,6 +23,8 @@ import com.liferay.account.service.base.AccountGroupAccountEntryRelLocalServiceB
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,10 +62,10 @@ public class AccountGroupAccountEntryRelLocalServiceImpl
 		}
 
 		if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
-			accountEntryLocalService.getAccountEntry(accountEntryId);
+			_accountEntryLocalService.getAccountEntry(accountEntryId);
 		}
 
-		accountGroupLocalService.getAccountGroup(accountGroupId);
+		_accountGroupLocalService.getAccountGroup(accountGroupId);
 
 		accountGroupAccountEntryRel = createAccountGroupAccountEntryRel(
 			counterLocalService.increment());
@@ -95,10 +97,34 @@ public class AccountGroupAccountEntryRelLocalServiceImpl
 		}
 	}
 
-	@Reference
-	private AccountEntryLocalService accountEntryLocalService;
+	@Override
+	public List<AccountGroupAccountEntryRel>
+		getAccountGroupAccountEntryRelsByAccountEntryId(long accountEntryId) {
+
+		return accountGroupAccountEntryRelPersistence.findByAccountEntryId(
+			accountEntryId);
+	}
+
+	@Override
+	public List<AccountGroupAccountEntryRel>
+		getAccountGroupAccountEntryRelsByAccountGroupId(long accountGroupId) {
+
+		return accountGroupAccountEntryRelPersistence.findByAccountGroupId(
+			accountGroupId);
+	}
+
+	@Override
+	public long getAccountGroupAccountEntryRelsCountByAccountGroupId(
+		long accountGroupId) {
+
+		return accountGroupAccountEntryRelPersistence.countByAccountGroupId(
+			accountGroupId);
+	}
 
 	@Reference
-	private AccountGroupLocalService accountGroupLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 }

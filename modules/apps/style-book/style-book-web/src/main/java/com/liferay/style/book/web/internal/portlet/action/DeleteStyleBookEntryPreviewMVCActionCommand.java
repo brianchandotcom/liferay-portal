@@ -58,7 +58,7 @@ public class DeleteStyleBookEntryPreviewMVCActionCommand
 			PortletFileRepositoryUtil.deletePortletFileEntry(
 				styleBookEntry.getPreviewFileEntryId());
 
-			_styleBookEntryService.updateStyleBookEntryPreviewFileEntryId(
+			_styleBookEntryService.updatePreviewFileEntryId(
 				styleBookEntryId, 0);
 		}
 	}

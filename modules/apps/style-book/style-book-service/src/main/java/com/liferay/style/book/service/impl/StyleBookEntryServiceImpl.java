@@ -103,8 +103,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryName(
-			long styleBookEntryId, String name)
+	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
@@ -114,12 +113,11 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			getPermissionChecker(), styleBookEntry.getGroupId(),
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
-		return styleBookEntryLocalService.updateStyleBookEntryName(
-			styleBookEntryId, name);
+		return styleBookEntryLocalService.updateName(styleBookEntryId, name);
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
+	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId)
 		throws PortalException {
 
@@ -130,13 +128,12 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			getPermissionChecker(), styleBookEntry.getGroupId(),
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
-		return styleBookEntryLocalService.
-			updateStyleBookEntryPreviewFileEntryId(
-				styleBookEntryId, previewFileEntryId);
+		return styleBookEntryLocalService.updatePreviewFileEntryId(
+			styleBookEntryId, previewFileEntryId);
 	}
 
 	@Override
-	public StyleBookEntry updateStyleBookEntryTokensValues(
+	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException {
 
@@ -147,7 +144,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			getPermissionChecker(), styleBookEntry.getGroupId(),
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
-		return styleBookEntryLocalService.updateStyleBookEntryTokensValues(
+		return styleBookEntryLocalService.updateTokensValues(
 			styleBookEntryId, tokensValue);
 	}
 

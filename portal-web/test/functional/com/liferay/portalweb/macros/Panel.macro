@@ -18,24 +18,4 @@ definition {
 		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
 	}
 
-	macro expandSidebarApplicationsPanel {
-		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED"))) {
-			AssertClick(
-				locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED",
-				value1 = "Widgets");
-
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_EXPANDED");
-		}
-	}
-
-	macro expandSidebarContentPanel {
-		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED"))) {
-			AssertClick(
-				locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED",
-				value1 = "Content");
-
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_EXPANDED");
-		}
-	}
-
 }

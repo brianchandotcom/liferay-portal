@@ -53,7 +53,7 @@ public class CSVFileWriter implements AutoCloseable {
 		}
 	}
 
-	public Writer getCSVWriter(String csvFileName) {
+	public void write(String csvFileName, String content) throws IOException {
 		Writer writer = _csvWriters.get(csvFileName);
 
 		if (writer == null) {
@@ -61,7 +61,7 @@ public class CSVFileWriter implements AutoCloseable {
 				"Unknown CSV file name: " + csvFileName);
 		}
 
-		return writer;
+		writer.write(content);
 	}
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;

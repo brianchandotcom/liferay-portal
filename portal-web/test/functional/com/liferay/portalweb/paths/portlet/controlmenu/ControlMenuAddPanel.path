@@ -28,57 +28,11 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CONTENT-->
-<tr>
-	<td>CONTENT_ACCORDION_PANEL_TITLE</td>
-	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TITLE</td>
-	<td>//div[contains(@class,'drag-content-item')]//*[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--APPLICATIONS-->
-<tr>
-	<td>APPLICATIONS_ACCORDION_PANEL_TITLE</td>
-	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Widgets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PORTLET_DRAG_LINK</td>
-	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'drag-content-item')]</td>
-	<td></td>
-</tr>
 <tr>
   <td>ADD_PORTLET_LINK</td>
   <td>//div[contains(@class,'item-body') and contains(.,'${key_portletName}')]/following-sibling::button[contains(@class,'item-add')]</td>
   <td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_APPLICATIONS_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Widgets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_APPLICATIONS_PANEL_EXPANDED</td>
-	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='true' and contains(.,'Widgets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_CONTENT_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='false' and contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_CONTENT_PANEL_EXPANDED</td>
-	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='true' and contains(.,'Content')]</td>
-	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ITEM</td>

@@ -13,6 +13,7 @@
  */
 
 import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {Config} from 'metal-state';
 
 class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	removeUsers(itemData) {
@@ -37,15 +38,15 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 		}
 	}
 
-	selectAccountUsers(itemData) {
+	selectAccountUsers() {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('assign'),
 			eventName: this.ns('assignAccountUsers'),
 			title: Liferay.Util.sub(
 				Liferay.Language.get('assign-users-to-x'),
-				itemData.accountEntryName
+				this.accountEntryName
 			),
-			url: itemData.selectAccountUsersURL,
+			url: this.selectAccountUsersURL,
 		});
 
 		itemSelectorDialog.open();
@@ -60,11 +61,17 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 					data: {
 						accountUserIds: selectedItem.value,
 					},
-					url: itemData.assignAccountUsersURL,
+					url: this.assignAccountUsersURL,
 				});
 			}
 		});
 	}
 }
+
+AccountUsersManagementToolbarDefaultEventHandler.STATE = {
+	accountEntryName: Config.string(),
+	assignAccountUsersURL: Config.string(),
+	selectAccountUsersURL: Config.string(),
+};
 
 export default AccountUsersManagementToolbarDefaultEventHandler;

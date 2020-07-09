@@ -15,7 +15,10 @@
 package com.liferay.petra.lang;
 
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Maps servlet context names to/from the servlet context's class loader.
@@ -40,6 +43,25 @@ public class ClassLoaderPool {
 
 		if ((contextName != null) && !contextName.equals("null")) {
 			classLoader = _classLoaders.get(contextName);
+
+			if (classLoader == null) {
+				int index = contextName.lastIndexOf("_");
+
+				if ((index > 0) && (index != (contextName.length() - 1))) {
+					ConcurrentNavigableMap<Version, ClassLoader> classLoaders =
+						_fallbackClassLoaders.get(
+							contextName.substring(0, index));
+
+					if (classLoaders != null) {
+						Map.Entry<Version, ClassLoader> entry =
+							classLoaders.lastEntry();
+
+						if (entry != null) {
+							classLoader = entry.getValue();
+						}
+					}
+				}
+			}
 		}
 
 		if (classLoader == null) {
@@ -80,6 +102,30 @@ public class ClassLoaderPool {
 	public static void register(String contextName, ClassLoader classLoader) {
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
+
+		int index = contextName.lastIndexOf("_");
+
+		if ((index == -1) || (index == (contextName.length() - 1))) {
+			return;
+		}
+
+		Version version = _parseVersion(contextName.substring(index + 1));
+
+		if (version == null) {
+			return;
+		}
+
+		_fallbackClassLoaders.compute(
+			contextName.substring(0, index),
+			(key, classLoaders) -> {
+				if (classLoaders == null) {
+					classLoaders = new ConcurrentSkipListMap<>();
+				}
+
+				classLoaders.put(version, classLoader);
+
+				return classLoaders;
+			});
 	}
 
 	public static void unregister(ClassLoader classLoader) {
@@ -87,6 +133,8 @@ public class ClassLoaderPool {
 
 		if (contextName != null) {
 			_classLoaders.remove(contextName);
+
+			_unregisterFallback(contextName);
 		}
 	}
 
@@ -95,16 +143,159 @@ public class ClassLoaderPool {
 
 		if (classLoader != null) {
 			_contextNames.remove(classLoader);
+
+			_unregisterFallback(contextName);
 		}
 	}
+
+	private static Version _parseVersion(String version) {
+		int major;
+		int minor = 0;
+		int micro = 0;
+		String qualifier = "";
+
+		try {
+			StringTokenizer stringTokenizer = new StringTokenizer(
+				version, ".", true);
+
+			major = Integer.parseInt(stringTokenizer.nextToken());
+
+			if (stringTokenizer.hasMoreTokens()) {
+				stringTokenizer.nextToken();
+
+				minor = Integer.parseInt(stringTokenizer.nextToken());
+
+				if (stringTokenizer.hasMoreTokens()) {
+					stringTokenizer.nextToken();
+
+					micro = Integer.parseInt(stringTokenizer.nextToken());
+
+					if (stringTokenizer.hasMoreTokens()) {
+						stringTokenizer.nextToken();
+
+						qualifier = stringTokenizer.nextToken("");
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			return null;
+		}
+
+		if ((major < 0) || (minor < 0) || (micro < 0)) {
+			return null;
+		}
+
+		for (int i = 0; i < qualifier.length(); i++) {
+			char c = qualifier.charAt(i);
+
+			if ((c < 128) && _VALID_QUALIFIER_CHARS[c]) {
+				continue;
+			}
+
+			return null;
+		}
+
+		return new Version(major, minor, micro, qualifier);
+	}
+
+	private static void _unregisterFallback(String contextName) {
+		int index = contextName.lastIndexOf("_");
+
+		if ((index == -1) || (index == (contextName.length() - 1))) {
+			return;
+		}
+
+		Version version = _parseVersion(contextName.substring(index + 1));
+
+		if (version == null) {
+			return;
+		}
+
+		_fallbackClassLoaders.computeIfPresent(
+			contextName.substring(0, index),
+			(key, classLoaders) -> {
+				classLoaders.remove(version);
+
+				if (classLoaders.isEmpty()) {
+					return null;
+				}
+
+				return classLoaders;
+			});
+	}
+
+	private static final boolean[] _VALID_QUALIFIER_CHARS = new boolean[128];
 
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
 		new ConcurrentHashMap<>();
+	private static final Map
+		<String, ConcurrentNavigableMap<Version, ClassLoader>>
+			_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	static {
+		register("SystemClassLoader", ClassLoader.getSystemClassLoader());
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			_VALID_QUALIFIER_CHARS[i] = true;
+		}
+
+		for (int i = 'A'; i <= 'Z'; i++) {
+			_VALID_QUALIFIER_CHARS[i] = true;
+		}
+
+		for (int i = '0'; i <= '9'; i++) {
+			_VALID_QUALIFIER_CHARS[i] = true;
+		}
+
+		_VALID_QUALIFIER_CHARS['-'] = true;
+		_VALID_QUALIFIER_CHARS['_'] = true;
+	}
+
+	private static class Version implements Comparable<Version> {
+
+		@Override
+		public int compareTo(Version other) {
+			if (other == this) {
+				return 0;
+			}
+
+			int result = _major - other._major;
+
+			if (result != 0) {
+				return result;
+			}
+
+			result = _minor - other._minor;
+
+			if (result != 0) {
+				return result;
+			}
+
+			result = _micro - other._micro;
+
+			if (result != 0) {
+				return result;
+			}
+
+			return _qualifier.compareTo(other._qualifier);
+		}
+
+		private Version(int major, int minor, int micro, String qualifier) {
+			_major = major;
+			_minor = minor;
+			_micro = micro;
+			_qualifier = qualifier;
+		}
+
+		private final int _major;
+		private final int _micro;
+		private final int _minor;
+		private final String _qualifier;
+
 	}
 
 }

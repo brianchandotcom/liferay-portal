@@ -35,6 +35,22 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _assignSiteRoleToUser {
+		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
+				-u test@liferay.com:test \
+				-d userId=${userId} \
+				-d groupId=${groupId} \
+				-d roleIds=[${roleId}]
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteRoleById {
 		Variables.assertDefined(parameterList = "${roleId}");
 

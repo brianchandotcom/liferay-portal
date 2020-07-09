@@ -48,6 +48,11 @@ public interface ContentStructureResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<ContentStructure> getAssetLibraryContentStructuresPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception;
 

@@ -206,6 +206,332 @@ public abstract class BaseContentTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryContentTemplatesPage() throws Exception {
+		Page<ContentTemplate> page =
+			contentTemplateResource.getAssetLibraryContentTemplatesPage(
+				testGetAssetLibraryContentTemplatesPage_getAssetLibraryId(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getIrrelevantAssetLibraryId();
+
+		if ((irrelevantAssetLibraryId != null)) {
+			ContentTemplate irrelevantContentTemplate =
+				testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+					irrelevantAssetLibraryId,
+					randomIrrelevantContentTemplate());
+
+			page = contentTemplateResource.getAssetLibraryContentTemplatesPage(
+				irrelevantAssetLibraryId, null, null, Pagination.of(1, 2),
+				null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantContentTemplate),
+				(List<ContentTemplate>)page.getItems());
+			assertValid(page);
+		}
+
+		ContentTemplate contentTemplate1 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		ContentTemplate contentTemplate2 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		page = contentTemplateResource.getAssetLibraryContentTemplatesPage(
+			assetLibraryId, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentTemplate1, contentTemplate2),
+			(List<ContentTemplate>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getAssetLibraryId();
+
+		ContentTemplate contentTemplate1 = randomContentTemplate();
+
+		contentTemplate1 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, contentTemplate1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ContentTemplate> page =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null,
+					getFilterString(entityField, "between", contentTemplate1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contentTemplate1),
+				(List<ContentTemplate>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getAssetLibraryId();
+
+		ContentTemplate contentTemplate1 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentTemplate contentTemplate2 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		for (EntityField entityField : entityFields) {
+			Page<ContentTemplate> page =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null,
+					getFilterString(entityField, "eq", contentTemplate1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contentTemplate1),
+				(List<ContentTemplate>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getAssetLibraryId();
+
+		ContentTemplate contentTemplate1 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		ContentTemplate contentTemplate2 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		ContentTemplate contentTemplate3 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, randomContentTemplate());
+
+		Page<ContentTemplate> page1 =
+			contentTemplateResource.getAssetLibraryContentTemplatesPage(
+				assetLibraryId, null, null, Pagination.of(1, 2), null);
+
+		List<ContentTemplate> contentTemplates1 =
+			(List<ContentTemplate>)page1.getItems();
+
+		Assert.assertEquals(
+			contentTemplates1.toString(), 2, contentTemplates1.size());
+
+		Page<ContentTemplate> page2 =
+			contentTemplateResource.getAssetLibraryContentTemplatesPage(
+				assetLibraryId, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ContentTemplate> contentTemplates2 =
+			(List<ContentTemplate>)page2.getItems();
+
+		Assert.assertEquals(
+			contentTemplates2.toString(), 1, contentTemplates2.size());
+
+		Page<ContentTemplate> page3 =
+			contentTemplateResource.getAssetLibraryContentTemplatesPage(
+				assetLibraryId, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(contentTemplate1, contentTemplate2, contentTemplate3),
+			(List<ContentTemplate>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithSortDateTime()
+		throws Exception {
+
+		testGetAssetLibraryContentTemplatesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, contentTemplate1, contentTemplate2) -> {
+				BeanUtils.setProperty(
+					contentTemplate1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithSortInteger()
+		throws Exception {
+
+		testGetAssetLibraryContentTemplatesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, contentTemplate1, contentTemplate2) -> {
+				BeanUtils.setProperty(
+					contentTemplate1, entityField.getName(), 0);
+				BeanUtils.setProperty(
+					contentTemplate2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithSortString()
+		throws Exception {
+
+		testGetAssetLibraryContentTemplatesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, contentTemplate1, contentTemplate2) -> {
+				Class<?> clazz = contentTemplate1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						contentTemplate1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						contentTemplate2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						contentTemplate1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						contentTemplate2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						contentTemplate1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						contentTemplate2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAssetLibraryContentTemplatesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ContentTemplate, ContentTemplate, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentTemplatesPage_getAssetLibraryId();
+
+		ContentTemplate contentTemplate1 = randomContentTemplate();
+		ContentTemplate contentTemplate2 = randomContentTemplate();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, contentTemplate1, contentTemplate2);
+		}
+
+		contentTemplate1 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, contentTemplate1);
+
+		contentTemplate2 =
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				assetLibraryId, contentTemplate2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ContentTemplate> ascPage =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(contentTemplate1, contentTemplate2),
+				(List<ContentTemplate>)ascPage.getItems());
+
+			Page<ContentTemplate> descPage =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(contentTemplate2, contentTemplate1),
+				(List<ContentTemplate>)descPage.getItems());
+		}
+	}
+
+	protected ContentTemplate
+			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
+				Long assetLibraryId, ContentTemplate contentTemplate)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAssetLibraryContentTemplatesPage_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAssetLibraryContentTemplatesPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetSiteContentTemplatesPage() throws Exception {
 		Page<ContentTemplate> page =
 			contentTemplateResource.getSiteContentTemplatesPage(

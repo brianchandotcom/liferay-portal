@@ -49,6 +49,18 @@ public interface KeywordResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<Keyword> getAssetLibraryKeywordsPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
+		throws Exception;
+
+	public Response postAssetLibraryKeywordBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Keyword> getKeywordsRankedPage(
 			Long siteId, String search, Pagination pagination)
 		throws Exception;

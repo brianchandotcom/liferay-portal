@@ -49,6 +49,19 @@ public interface DocumentFolderResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<DocumentFolder> getAssetLibraryDocumentFoldersPage(
+			Long assetLibraryId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public DocumentFolder postAssetLibraryDocumentFolder(
+			Long assetLibraryId, DocumentFolder documentFolder)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentFolderBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
 
 	public Response deleteDocumentFolderBatch(String callbackURL, Object object)

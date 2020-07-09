@@ -48,6 +48,11 @@ public interface ContentElementResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<ContentElement> getAssetLibraryContentElementsPage(
+			Long assetLibraryId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<ContentElement> getSiteContentElementsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

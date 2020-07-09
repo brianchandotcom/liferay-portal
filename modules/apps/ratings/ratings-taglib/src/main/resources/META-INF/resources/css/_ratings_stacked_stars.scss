@@ -22,6 +22,7 @@
 		color: $secondary-l1;
 		margin: 0;
 		padding: 0.1875rem;
+		transition: color 300ms ease-in-out;
 
 		.ratings-stars-icon-full {
 			display: none;

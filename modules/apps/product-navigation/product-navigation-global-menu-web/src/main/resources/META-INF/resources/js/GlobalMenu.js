@@ -85,7 +85,10 @@ const AppsPanel = ({
 						<ClayLayout.ContentCol className="c-mr-3 c-pl-1 c-pr-3 control-menu-level-1-heading">
 							{companyName}
 						</ClayLayout.ContentCol>
-						<ClayLayout.ContentCol expand>
+						<ClayLayout.ContentCol
+							className="global-apps-menu-tabs"
+							expand
+						>
 							<ClayTabs modern>
 								{categories.map(({key, label}, index) => (
 									<ClayTabs.Item

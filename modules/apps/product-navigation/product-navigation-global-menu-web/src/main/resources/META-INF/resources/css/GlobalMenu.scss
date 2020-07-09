@@ -5,6 +5,27 @@ $tab-header-height: 38px;
 
 .global-apps-menu-modal {
 	.global-apps-menu-header {
+		.autofit-row {
+			@include media-breakpoint-down(xs) {
+				flex-wrap: wrap;
+			}
+		}
+
+		.global-apps-menu-tabs {
+			@include media-breakpoint-down(xs) {
+				order: 1;
+				width: 100%;
+			}
+		}
+
+		.control-menu-level-1-heading {
+			@include media-breakpoint-down(xs) {
+				flex-grow: 1;
+				flex-shrink: 1;
+				min-height: 3.25rem;
+			}
+		}
+
 		.nav-link {
 			line-height: 1.6rem;
 
@@ -17,6 +38,10 @@ $tab-header-height: 38px;
 	.modal-full {
 		margin-top: 0;
 		width: 100%;
+
+		@include media-breakpoint-down(xs) {
+			margin: 0;
+		}
 
 		.modal-body {
 			padding: 0;
@@ -36,7 +61,7 @@ $tab-header-height: 38px;
 
 .global-apps-nav {
 	margin: 0;
-	padding: 1rem;
+	padding: 0.2rem;
 
 	@include media-breakpoint-up(sm) {
 		padding: 1.5rem 2.5rem 1.5rem 1.75rem;

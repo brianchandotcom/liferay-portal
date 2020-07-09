@@ -537,7 +537,7 @@ public class PageDefinitionDTOConverterTest {
 			"primary", pageSectionDefinition1.getBackgroundColor());
 
 		FragmentImage fragmentImage1 =
-			pageSectionDefinition1.getBackgroundImage();
+			pageSectionDefinition1.getBackgroundFragmentImage();
 
 		FragmentInlineValue titleFragmentInlineValue =
 			(FragmentInlineValue)fragmentImage1.getTitle();
@@ -573,7 +573,7 @@ public class PageDefinitionDTOConverterTest {
 			(PageSectionDefinition)sectionPageElement2.getDefinition();
 
 		FragmentImage fragmentImage2 =
-			pageSectionDefinition2.getBackgroundImage();
+			pageSectionDefinition2.getBackgroundFragmentImage();
 
 		Assert.assertNull(fragmentImage2.getTitle());
 

@@ -16,7 +16,6 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -114,15 +113,11 @@ public class PostgreSQLDB extends BaseDB {
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
-		DBInspector dbInspector = new DBInspector(con);
-
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("select indexname, tablename, indexdef from pg_indexes ");
-		sb.append("where schemaname = '");
-		sb.append(dbInspector.getSchema());
-		sb.append("' and (indexname like 'liferay_%' or indexname like ");
-		sb.append("'ix_%')");
+		sb.append("where schemaname = current_schema() and (indexname like ");
+		sb.append("'liferay_%' or indexname like 'ix_%')");
 
 		String sql = sb.toString();
 

@@ -68,7 +68,7 @@ public class ThemeBundleInspectorTest {
 		ThemeBundleInspector themeBundleInspector = new ThemeBundleInspector(
 			bundle);
 
-		Assert.assertEquals("{}", themeBundleInspector.getTokenDefinition());
+		Assert.assertEquals("{\n}", themeBundleInspector.getTokenDefinition());
 	}
 
 	private static final URL _tokenDefinitionJsonURL =

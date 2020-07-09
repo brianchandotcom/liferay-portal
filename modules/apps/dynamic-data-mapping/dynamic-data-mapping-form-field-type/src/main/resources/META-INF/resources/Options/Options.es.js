@@ -311,7 +311,8 @@ const Main = ({
 					index,
 					option,
 				}) => (
-					<KeyValue
+					option &&
+					(<KeyValue
 						generateKeyword={option.generateKeyword}
 						keyword={option.value}
 						keywordReadOnly={false}
@@ -337,7 +338,7 @@ const Main = ({
 						showLabel={false}
 						value={option.label}
 						visible={visible}
-					/>
+					/>)
 				)}
 			</Options>
 		</FieldBase>

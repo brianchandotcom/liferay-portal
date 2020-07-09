@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -27,7 +29,9 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +39,9 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
 
+import java.util.Collections;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,9 +51,42 @@ import org.junit.runner.RunWith;
 public class ContentStructureResourceTest
 	extends BaseContentStructureResourceTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(testGroup.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, serviceContext);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	@Override
+	protected ContentStructure
+			testGetAssetLibraryContentStructuresPage_addContentStructure(
+				Long assetLibraryId, ContentStructure contentStructure)
+		throws Exception {
+
+		return _toContentStructure(
+			_addDDMStructure(
+				_depotEntry.getGroup(), contentStructure.getName()));
+	}
+
+	@Override
+	protected Long
+		testGetAssetLibraryContentStructuresPage_getAssetLibraryId() {
+
+		return _depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -124,5 +164,7 @@ public class ContentStructureResourceTest
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	private DepotEntry _depotEntry;
 
 }

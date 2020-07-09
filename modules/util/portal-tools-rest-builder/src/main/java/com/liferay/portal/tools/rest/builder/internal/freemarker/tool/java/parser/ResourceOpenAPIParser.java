@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -244,6 +245,9 @@ public class ResourceOpenAPIParser {
 
 		if (methodName.equals("delete" + schemaName) ||
 			methodName.equals("post" + parentSchemaName + schemaName) ||
+			methodName.equals(
+				StringBundler.concat(
+					"post", parentSchemaName, "Id", schemaName)) ||
 			methodName.equals("put" + schemaName)) {
 
 			String batchPath = null;

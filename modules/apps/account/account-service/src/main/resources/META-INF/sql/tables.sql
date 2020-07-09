@@ -46,6 +46,14 @@ create table AccountGroup (
 	description VARCHAR(75) null
 );
 
+create table AccountGroupAccountEntryRel (
+	mvccVersion LONG default 0 not null,
+	AccountGroupAccountEntryRelId LONG not null primary key,
+	companyId LONG,
+	accountGroupId LONG,
+	accountEntryId LONG
+);
+
 create table AccountRole (
 	mvccVersion LONG default 0 not null,
 	accountRoleId LONG not null primary key,

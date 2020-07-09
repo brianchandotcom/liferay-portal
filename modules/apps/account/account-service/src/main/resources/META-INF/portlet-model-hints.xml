@@ -52,6 +52,13 @@
 		<field name="name" type="String" />
 		<field name="description" type="String" />
 	</model>
+	<model name="com.liferay.account.model.AccountGroupAccountEntryRel">
+		<field name="mvccVersion" type="long" />
+		<field name="AccountGroupAccountEntryRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="accountGroupId" type="long" />
+		<field name="accountEntryId" type="long" />
+	</model>
 	<model name="com.liferay.account.model.AccountRole">
 		<field name="mvccVersion" type="long" />
 		<field name="accountRoleId" type="long" />

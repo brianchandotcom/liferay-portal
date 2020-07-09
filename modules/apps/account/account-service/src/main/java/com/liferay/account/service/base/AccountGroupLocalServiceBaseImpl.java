@@ -16,6 +16,7 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.persistence.AccountGroupAccountEntryRelPersistence;
 import com.liferay.account.service.persistence.AccountGroupPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -448,5 +449,9 @@ public abstract class AccountGroupLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
+
+	@Reference
+	protected AccountGroupAccountEntryRelPersistence
+		accountGroupAccountEntryRelPersistence;
 
 }

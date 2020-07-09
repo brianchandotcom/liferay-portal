@@ -55,6 +55,10 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
+		Depot.viewConnectedSiteNumber(
+			connectedSiteNumber = "0",
+			depotName = "Test Depot Name");
+
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
@@ -62,6 +66,10 @@ definition {
 		Depot.connectSite(siteList = "Site Name,Private Site Name,Restricted Site Name");
 
 		DepotNavigator.openDepotAdmin();
+
+		Depot.viewConnectedSiteNumber(
+			connectedSiteNumber = "3",
+			depotName = "Test Depot Name");
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
@@ -154,6 +162,10 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
+
+		Depot.viewConnectedSiteNumber(
+			connectedSiteNumber = "1",
+			depotName = "Test Depot Name");
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 

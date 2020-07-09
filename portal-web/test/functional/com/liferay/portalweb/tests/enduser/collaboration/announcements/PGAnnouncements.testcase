@@ -13,17 +13,19 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page");
 
-		SitePages.addPublicPage(
-			pageName = "Announcements Page",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		Portlet.addPG(portletName = "Announcements");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page",
+			widgetName = "Announcements");
 	}
 
 	tearDown {
@@ -119,13 +121,10 @@ definition {
 
 	@priority = "4"
 	test AddAnnouncementsEntryPriorityImportant {
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com",
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com",
 			priority = "Important");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
@@ -138,38 +137,26 @@ definition {
 
 	@priority = "3"
 	test AddAnnouncementsEntrySite {
-		GlobalMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Announcements Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Announcements Page",
+			layoutTemplate = "1 Column");
 
-		SitePages.addPublicPage(
-			pageName = "Announcements Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Announcements Page",
+			widgetName = "Announcements");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Announcements Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Announcements Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Announcements");
-
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com");
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Announcements Page",
@@ -186,13 +173,10 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGAnnouncements#DeleteAnnouncementsEntry";
 
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com");
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -211,13 +195,10 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGAnnouncements#EditAnnouncementsEntry";
 
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com");
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -244,11 +225,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com");
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 

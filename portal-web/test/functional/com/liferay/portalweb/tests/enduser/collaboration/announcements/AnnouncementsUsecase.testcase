@@ -53,11 +53,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		AnnouncementsEntry.addPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.google.com");
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 

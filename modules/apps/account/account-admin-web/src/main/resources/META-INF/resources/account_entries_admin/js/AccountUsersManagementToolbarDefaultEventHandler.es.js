@@ -81,9 +81,9 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 }
 
 AccountUsersManagementToolbarDefaultEventHandler.STATE = {
-	accountEntryName: Config.string(),
-	assignAccountUsersURL: Config.string(),
-	selectAccountUsersURL: Config.string(),
+	accountEntryName: Config.string().required(),
+	assignAccountUsersURL: Config.string().required(),
+	selectAccountUsersURL: Config.string().required(),
 };
 
 export default AccountUsersManagementToolbarDefaultEventHandler;

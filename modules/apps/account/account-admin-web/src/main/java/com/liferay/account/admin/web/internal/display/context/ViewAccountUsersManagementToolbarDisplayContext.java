@@ -142,8 +142,12 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					"mvcPath",
 					"/account_entries_admin/select_account_users.jsp");
 				selectAccountUsersURL.setParameter(
+					"redirect", currentURLObj.toString());
+				selectAccountUsersURL.setParameter(
 					"accountEntryId",
 					String.valueOf(accountEntry.getAccountEntryId()));
+				selectAccountUsersURL.setParameter(
+					"showCreateButton", Boolean.TRUE.toString());
 				selectAccountUsersURL.setWindowState(LiferayWindowState.POP_UP);
 
 				dropdownItem.putData(

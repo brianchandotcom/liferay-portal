@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -59,6 +60,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
+	@Transactional(readOnly = true)
 	public void checkPermission(long groupId, String name, long primKey)
 		throws PortalException {
 
@@ -74,6 +76,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	 * @param primKey the primary key of the service
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public void checkPermission(long groupId, String name, String primKey)
 		throws PortalException {
 

@@ -945,9 +945,10 @@ class Form extends Component {
 		};
 	}
 
-	_setSearchParamsWithoutPageReload(key, value) {
+	_setSearchParamsWithoutPageReload(name, value) {
 		const url = new URL(location.toString());
-		url.searchParams.set(key, value);
+
+		url.searchParams.set(name, value);
 
 		window.history.replaceState({path: url.toString()}, '', url.toString());
 	}

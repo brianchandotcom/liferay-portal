@@ -79,7 +79,7 @@ public class ContainerLayoutStructureItemExporter
 							containerLayoutStructureItem.
 								getBackgroundColorCssClass(),
 							null);
-						backgroundImage = _toBackgroundFragmentImage(
+						backgroundFragmentImage = _toBackgroundFragmentImage(
 							containerLayoutStructureItem.
 								getBackgroundImageJSONObject(),
 							saveMappingConfiguration);

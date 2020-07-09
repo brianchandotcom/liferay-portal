@@ -20,13 +20,13 @@ import {
 	DELETE_DATA_DEFINITION_FIELD,
 	UPDATE_FIELDSETS,
 } from '../../../actions.es';
-import {confirmDelete, deleteItem} from '../../../utils/client.es';
+import {deleteItem} from '../../../utils/client.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({dataLayoutBuilder}) => {
 	const [{dataDefinition, fieldSets}, dispatch] = useContext(AppContext);
 
-	return (fieldSet, confirmDeletion) => {
+	return (fieldSet) => {
 		const endpoint = '/o/data-engine/v2.0/data-definitions/';
 
 		const onError = () =>
@@ -75,23 +75,9 @@ export default ({dataLayoutBuilder}) => {
 			return Promise.resolve();
 		};
 
-		if (confirmDeletion) {
-			confirmDelete(endpoint)(fieldSet)
-				.then((confirmed) => {
-					if (confirmed) {
-						return onSuccess();
-					}
-
-					return Promise.resolve();
-				})
-				.then(deleteField)
-				.catch(onError);
-		}
-		else {
-			deleteItem(`${endpoint}${fieldSet.id}`)
-				.then(deleteField)
-				.then(onSuccess)
-				.catch(onError);
-		}
+		return deleteItem(`${endpoint}${fieldSet.id}`)
+			.then(deleteField)
+			.then(onSuccess)
+			.catch(onError);
 	};
 };

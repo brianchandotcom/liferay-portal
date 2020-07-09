@@ -259,6 +259,7 @@ exports[`index renders 1`] = `
     </div>
     <div
       class="sidebar-container sidebar-reports"
+      id="undefined-sidebar-reports"
     >
       <div
         class="sidebar sidebar-light"

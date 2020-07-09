@@ -14,6 +14,9 @@
 
 package com.liferay.item.selector.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 
 import java.util.Collections;
@@ -39,10 +42,74 @@ public class ItemSelectorViewDescriptorRendererDisplayContextTest {
 		ItemSelectorViewDescriptorRendererDisplayContext
 			itemSelectorViewDescriptorRendererDisplayContext =
 				new ItemSelectorViewDescriptorRendererDisplayContext(
-					new MockHttpServletRequest(), null, null, null);
+					new MockHttpServletRequest(), null,
+					new ItemSelectorViewDescriptor<Object>() {
+
+						@Override
+						public ItemDescriptor getItemDescriptor(Object object) {
+							return null;
+						}
+
+						@Override
+						public ItemSelectorReturnType
+							getItemSelectorReturnType() {
+
+							return null;
+						}
+
+						@Override
+						public SearchContainer<Object> getSearchContainer() {
+							return null;
+						}
+
+					},
+					null);
 
 		Assert.assertEquals(
 			"icon",
+			itemSelectorViewDescriptorRendererDisplayContext.getDisplayStyle());
+	}
+
+	@Test
+	public void testGetDisplayStyleWithDefaultDisplayStyle() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("displayStyle", "descriptive");
+
+		ItemSelectorViewDescriptorRendererDisplayContext
+			itemSelectorViewDescriptorRendererDisplayContext =
+				new ItemSelectorViewDescriptorRendererDisplayContext(
+					mockHttpServletRequest, null,
+					new ItemSelectorViewDescriptor<Object>() {
+
+						@Override
+						public String getDefaultDisplayStyle() {
+							return "descriptive";
+						}
+
+						@Override
+						public ItemDescriptor getItemDescriptor(Object object) {
+							return null;
+						}
+
+						@Override
+						public ItemSelectorReturnType
+							getItemSelectorReturnType() {
+
+							return null;
+						}
+
+						@Override
+						public SearchContainer<Object> getSearchContainer() {
+							return null;
+						}
+
+					},
+					null);
+
+		Assert.assertEquals(
+			"descriptive",
 			itemSelectorViewDescriptorRendererDisplayContext.getDisplayStyle());
 	}
 
@@ -56,7 +123,28 @@ public class ItemSelectorViewDescriptorRendererDisplayContextTest {
 		ItemSelectorViewDescriptorRendererDisplayContext
 			itemSelectorViewDescriptorRendererDisplayContext =
 				new ItemSelectorViewDescriptorRendererDisplayContext(
-					mockHttpServletRequest, null, null, null);
+					mockHttpServletRequest, null,
+					new ItemSelectorViewDescriptor<Object>() {
+
+						@Override
+						public ItemDescriptor getItemDescriptor(Object object) {
+							return null;
+						}
+
+						@Override
+						public ItemSelectorReturnType
+							getItemSelectorReturnType() {
+
+							return null;
+						}
+
+						@Override
+						public SearchContainer<Object> getSearchContainer() {
+							return null;
+						}
+
+					},
+					null);
 
 		Assert.assertEquals(
 			"descriptive",

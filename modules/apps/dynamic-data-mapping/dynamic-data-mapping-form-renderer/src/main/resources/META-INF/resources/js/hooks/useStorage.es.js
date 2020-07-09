@@ -12,8 +12,6 @@
  * details.
  */
 
-import {useRef} from 'react';
-
 const localDataStorage = {
 	components: new Map(),
 };
@@ -26,7 +24,5 @@ const localDataStorage = {
  * unnecessary requests. Use the `useStorage` hook as a way to cache data.
  */
 export const useStorage = () => {
-	const localDataStorageRef = useRef(localDataStorage);
-
-	return localDataStorageRef.current;
+	return localDataStorage;
 };

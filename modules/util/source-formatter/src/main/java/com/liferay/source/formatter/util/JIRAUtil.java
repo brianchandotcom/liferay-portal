@@ -54,6 +54,10 @@ public class JIRAUtil {
 				continue;
 			}
 
+			if (commitMessage.endsWith("/ci-merge.")) {
+				continue;
+			}
+
 			for (String projectName : projectNames) {
 				if (commitMessage.startsWith(projectName)) {
 					continue outerLoop;
@@ -125,6 +129,10 @@ public class JIRAUtil {
 
 		for (String commitMessage : commitMessages) {
 			if (commitMessage.startsWith("Revert ")) {
+				continue;
+			}
+
+			if (commitMessage.endsWith("/ci-merge.")) {
 				continue;
 			}
 

@@ -3,13 +3,9 @@ definition {
 	macro addNewPG {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		AssertElementPresent(locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-		AssertVisible(
-			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
-			value1 = "Content");
-
-		Panel.expandSidebarContentPanel();
+		Navigator.gotoNavTab(navTab = "Content");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ControlMenuAddPanel#ADD_NEW_DROPDOWN",
@@ -23,28 +19,19 @@ definition {
 	macro addPG {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		AssertElementPresent(locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-		AssertVisible(
-			locator1 = "ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE",
-			value1 = "Content");
-
-		Panel.expandSidebarContentPanel();
+		Navigator.gotoNavTab(navTab = "Content");
 
 		var key_assetTitle = "${assetTitle}";
 
 		Type(
-			locator1 = "NavBar#CONTENT_SEARCH_FIELD",
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "${assetTitle}");
 
-		AssertTextEquals(
-			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
-			value1 = "${assetTitle}");
-
-		DragAndDrop(
-			locator1 = "ControlMenuAddPanel#CONTENT_TITLE",
-			locator2 = "Home#PAGE_COLUMN_1",
-			value1 = "${assetTitle}");
+		Click.clickNoWaitForVisible(
+			key_portletName = "${assetTitle}",
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
 }

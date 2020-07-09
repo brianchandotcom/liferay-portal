@@ -232,20 +232,7 @@ public class SampleSQLBuilder {
 
 		Writer writer = new OutputStreamWriter(fileOutputStream);
 
-		return createUnsyncBufferedWriter(writer);
-	}
-
-	protected Writer createUnsyncBufferedWriter(Writer writer) {
-		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE) {
-
-			@Override
-			public void flush() {
-
-				// Disable FreeMarker from flushing
-
-			}
-
-		};
+		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE);
 	}
 
 	protected Reader generateSQL() {
@@ -259,7 +246,8 @@ public class SampleSQLBuilder {
 
 				try {
 					sampleSQLWriter = new UnsyncTeeWriter(
-						createUnsyncBufferedWriter(charPipe.getWriter()),
+						new UnsyncBufferedWriter(
+							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
 						createFileWriter(
 							new File(
 								BenchmarksPropsValues.OUTPUT_DIR,

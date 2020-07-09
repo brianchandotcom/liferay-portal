@@ -324,16 +324,7 @@ public class DataFactory {
 					new OutputStreamWriter(
 						new FileOutputStream(
 							new File(outputDir, csvFileName.concat(".csv")))),
-					_WRITER_BUFFER_SIZE) {
-
-					@Override
-					public void flush() {
-
-						// Disable FreeMarker from flushing
-
-					}
-
-				});
+					_WRITER_BUFFER_SIZE));
 		}
 
 		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);

@@ -166,14 +166,13 @@ public class StyleBookEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntrySoap
-			updateStyleBookEntryName(long styleBookEntryId, String name)
+	public static com.liferay.style.book.model.StyleBookEntrySoap updateName(
+			long styleBookEntryId, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.style.book.model.StyleBookEntry returnValue =
-				StyleBookEntryServiceUtil.updateStyleBookEntryName(
-					styleBookEntryId, name);
+				StyleBookEntryServiceUtil.updateName(styleBookEntryId, name);
 
 			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
 				returnValue);
@@ -186,15 +185,14 @@ public class StyleBookEntryServiceSoap {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntrySoap
-			updateStyleBookEntryPreviewFileEntryId(
+			updatePreviewFileEntryId(
 				long styleBookEntryId, long previewFileEntryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.style.book.model.StyleBookEntry returnValue =
-				StyleBookEntryServiceUtil.
-					updateStyleBookEntryPreviewFileEntryId(
-						styleBookEntryId, previewFileEntryId);
+				StyleBookEntryServiceUtil.updatePreviewFileEntryId(
+					styleBookEntryId, previewFileEntryId);
 
 			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
 				returnValue);
@@ -207,13 +205,12 @@ public class StyleBookEntryServiceSoap {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntrySoap
-			updateStyleBookEntryTokensValues(
-				long styleBookEntryId, String tokensValue)
+			updateTokensValues(long styleBookEntryId, String tokensValue)
 		throws RemoteException {
 
 		try {
 			com.liferay.style.book.model.StyleBookEntry returnValue =
-				StyleBookEntryServiceUtil.updateStyleBookEntryTokensValues(
+				StyleBookEntryServiceUtil.updateTokensValues(
 					styleBookEntryId, tokensValue);
 
 			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(

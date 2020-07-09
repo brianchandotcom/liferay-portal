@@ -276,6 +276,13 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
 		throws PortalException;
 
+	public StyleBookEntry updateName(long styleBookEntryId, String name)
+		throws PortalException;
+
+	public StyleBookEntry updatePreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException;
+
 	/**
 	 * Updates the style book entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -285,15 +292,7 @@ public interface StyleBookEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public StyleBookEntry updateStyleBookEntry(StyleBookEntry styleBookEntry);
 
-	public StyleBookEntry updateStyleBookEntryName(
-			long styleBookEntryId, String name)
-		throws PortalException;
-
-	public StyleBookEntry updateStyleBookEntryPreviewFileEntryId(
-			long styleBookEntryId, long previewFileEntryId)
-		throws PortalException;
-
-	public StyleBookEntry updateStyleBookEntryTokensValues(
+	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException;
 

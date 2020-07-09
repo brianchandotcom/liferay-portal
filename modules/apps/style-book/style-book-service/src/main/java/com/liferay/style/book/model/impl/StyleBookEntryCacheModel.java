@@ -95,10 +95,10 @@ public class StyleBookEntryCacheModel
 		sb.append(createDate);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", styleBookEntryKey=");
-		sb.append(styleBookEntryKey);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", styleBookEntryKey=");
+		sb.append(styleBookEntryKey);
 		sb.append(", tokensValues=");
 		sb.append(tokensValues);
 		sb.append("}");
@@ -137,14 +137,14 @@ public class StyleBookEntryCacheModel
 			styleBookEntryImpl.setName(name);
 		}
 
+		styleBookEntryImpl.setPreviewFileEntryId(previewFileEntryId);
+
 		if (styleBookEntryKey == null) {
 			styleBookEntryImpl.setStyleBookEntryKey("");
 		}
 		else {
 			styleBookEntryImpl.setStyleBookEntryKey(styleBookEntryKey);
 		}
-
-		styleBookEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 
 		if (tokensValues == null) {
 			styleBookEntryImpl.setTokensValues("");
@@ -174,9 +174,9 @@ public class StyleBookEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		name = objectInput.readUTF();
-		styleBookEntryKey = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
+		styleBookEntryKey = objectInput.readUTF();
 		tokensValues = (String)objectInput.readObject();
 	}
 
@@ -208,14 +208,14 @@ public class StyleBookEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeLong(previewFileEntryId);
+
 		if (styleBookEntryKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(styleBookEntryKey);
 		}
-
-		objectOutput.writeLong(previewFileEntryId);
 
 		if (tokensValues == null) {
 			objectOutput.writeObject("");
@@ -233,8 +233,8 @@ public class StyleBookEntryCacheModel
 	public String userName;
 	public long createDate;
 	public String name;
-	public String styleBookEntryKey;
 	public long previewFileEntryId;
+	public String styleBookEntryKey;
 	public String tokensValues;
 
 }

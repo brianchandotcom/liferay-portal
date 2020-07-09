@@ -77,8 +77,8 @@ public class StyleBookEntryModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"styleBookEntryKey", Types.VARCHAR},
-		{"previewFileEntryId", Types.BIGINT}, {"tokensValues", Types.CLOB}
+		{"previewFileEntryId", Types.BIGINT},
+		{"styleBookEntryKey", Types.VARCHAR}, {"tokensValues", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,13 +93,13 @@ public class StyleBookEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("styleBookEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("styleBookEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tokensValues", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,name VARCHAR(75) null,styleBookEntryKey VARCHAR(75) null,previewFileEntryId LONG,tokensValues TEXT null)";
+		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null,tokensValues TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table StyleBookEntry";
 
@@ -158,8 +158,8 @@ public class StyleBookEntryModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setName(soapModel.getName());
-		model.setStyleBookEntryKey(soapModel.getStyleBookEntryKey());
 		model.setPreviewFileEntryId(soapModel.getPreviewFileEntryId());
+		model.setStyleBookEntryKey(soapModel.getStyleBookEntryKey());
 		model.setTokensValues(soapModel.getTokensValues());
 
 		return model;
@@ -349,17 +349,17 @@ public class StyleBookEntryModelImpl
 			"name",
 			(BiConsumer<StyleBookEntry, String>)StyleBookEntry::setName);
 		attributeGetterFunctions.put(
-			"styleBookEntryKey", StyleBookEntry::getStyleBookEntryKey);
-		attributeSetterBiConsumers.put(
-			"styleBookEntryKey",
-			(BiConsumer<StyleBookEntry, String>)
-				StyleBookEntry::setStyleBookEntryKey);
-		attributeGetterFunctions.put(
 			"previewFileEntryId", StyleBookEntry::getPreviewFileEntryId);
 		attributeSetterBiConsumers.put(
 			"previewFileEntryId",
 			(BiConsumer<StyleBookEntry, Long>)
 				StyleBookEntry::setPreviewFileEntryId);
+		attributeGetterFunctions.put(
+			"styleBookEntryKey", StyleBookEntry::getStyleBookEntryKey);
+		attributeSetterBiConsumers.put(
+			"styleBookEntryKey",
+			(BiConsumer<StyleBookEntry, String>)
+				StyleBookEntry::setStyleBookEntryKey);
 		attributeGetterFunctions.put(
 			"tokensValues", StyleBookEntry::getTokensValues);
 		attributeSetterBiConsumers.put(
@@ -513,6 +513,17 @@ public class StyleBookEntryModelImpl
 
 	@JSON
 	@Override
+	public long getPreviewFileEntryId() {
+		return _previewFileEntryId;
+	}
+
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_previewFileEntryId = previewFileEntryId;
+	}
+
+	@JSON
+	@Override
 	public String getStyleBookEntryKey() {
 		if (_styleBookEntryKey == null) {
 			return "";
@@ -535,17 +546,6 @@ public class StyleBookEntryModelImpl
 
 	public String getOriginalStyleBookEntryKey() {
 		return GetterUtil.getString(_originalStyleBookEntryKey);
-	}
-
-	@JSON
-	@Override
-	public long getPreviewFileEntryId() {
-		return _previewFileEntryId;
-	}
-
-	@Override
-	public void setPreviewFileEntryId(long previewFileEntryId) {
-		_previewFileEntryId = previewFileEntryId;
 	}
 
 	@JSON
@@ -608,8 +608,8 @@ public class StyleBookEntryModelImpl
 		styleBookEntryImpl.setUserName(getUserName());
 		styleBookEntryImpl.setCreateDate(getCreateDate());
 		styleBookEntryImpl.setName(getName());
-		styleBookEntryImpl.setStyleBookEntryKey(getStyleBookEntryKey());
 		styleBookEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
+		styleBookEntryImpl.setStyleBookEntryKey(getStyleBookEntryKey());
 		styleBookEntryImpl.setTokensValues(getTokensValues());
 
 		styleBookEntryImpl.resetOriginalValues();
@@ -735,6 +735,8 @@ public class StyleBookEntryModelImpl
 			styleBookEntryCacheModel.name = null;
 		}
 
+		styleBookEntryCacheModel.previewFileEntryId = getPreviewFileEntryId();
+
 		styleBookEntryCacheModel.styleBookEntryKey = getStyleBookEntryKey();
 
 		String styleBookEntryKey = styleBookEntryCacheModel.styleBookEntryKey;
@@ -742,8 +744,6 @@ public class StyleBookEntryModelImpl
 		if ((styleBookEntryKey != null) && (styleBookEntryKey.length() == 0)) {
 			styleBookEntryCacheModel.styleBookEntryKey = null;
 		}
-
-		styleBookEntryCacheModel.previewFileEntryId = getPreviewFileEntryId();
 
 		styleBookEntryCacheModel.tokensValues = getTokensValues();
 
@@ -837,9 +837,9 @@ public class StyleBookEntryModelImpl
 	private Date _createDate;
 	private String _name;
 	private String _originalName;
+	private long _previewFileEntryId;
 	private String _styleBookEntryKey;
 	private String _originalStyleBookEntryKey;
-	private long _previewFileEntryId;
 	private String _tokensValues;
 	private long _columnBitmask;
 	private StyleBookEntry _escapedModel;

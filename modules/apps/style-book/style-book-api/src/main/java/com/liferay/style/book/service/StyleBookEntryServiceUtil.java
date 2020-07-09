@@ -90,29 +90,27 @@ public class StyleBookEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryName(long styleBookEntryId, String name)
+	public static com.liferay.style.book.model.StyleBookEntry updateName(
+			long styleBookEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntryName(styleBookEntryId, name);
+		return getService().updateName(styleBookEntryId, name);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryPreviewFileEntryId(
+			updatePreviewFileEntryId(
 				long styleBookEntryId, long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntryPreviewFileEntryId(
+		return getService().updatePreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntryTokensValues(
-				long styleBookEntryId, String tokensValue)
+			updateTokensValues(long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateStyleBookEntryTokensValues(
-			styleBookEntryId, tokensValue);
+		return getService().updateTokensValues(styleBookEntryId, tokensValue);
 	}
 
 	public static StyleBookEntryService getService() {

@@ -51,13 +51,13 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<StyleBookEntryTable, String> styleBookEntryKey =
-		createColumn(
-			"styleBookEntryKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Long> previewFileEntryId =
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<StyleBookEntryTable, String> styleBookEntryKey =
+		createColumn(
+			"styleBookEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<StyleBookEntryTable, Clob> tokensValues = createColumn(
 		"tokensValues", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);

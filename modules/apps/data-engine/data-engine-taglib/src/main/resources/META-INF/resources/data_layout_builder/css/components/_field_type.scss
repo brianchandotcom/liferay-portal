@@ -9,6 +9,7 @@ $fieldTypeFieldSet: #5aca75;
 	transition: transform 0.3s $animation;
 
 	&:not(.disabled) {
+		cursor: move;
 		cursor: grab;
 	}
 

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -66,11 +65,8 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		}
 
 		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = "icon";
-		}
+			_httpServletRequest, "displayStyle",
+			_itemSelectorViewDescriptor.getDefaultDisplayStyle());
 
 		return _displayStyle;
 	}

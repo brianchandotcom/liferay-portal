@@ -69,7 +69,7 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 
 	@Override
 	protected String getDefaultDisplayStyle() {
-		return "icon";
+		return _itemSelectorViewDescriptor.getDefaultDisplayStyle();
 	}
 
 	@Override

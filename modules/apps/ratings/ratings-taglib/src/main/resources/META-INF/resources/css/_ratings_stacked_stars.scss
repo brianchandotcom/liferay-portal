@@ -4,14 +4,14 @@
 	}
 
 	.ratings-stacked-stars-vote {
-		display: flex;
+		display: inline-flex;
 
 		&.disabled {
 			cursor: not-allowed;
 		}
 
 		.ratings-stacked-stars-vote-stars {
-			display: inline-flex;
+			display: flex;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
 			margin-right: 0.3125rem;

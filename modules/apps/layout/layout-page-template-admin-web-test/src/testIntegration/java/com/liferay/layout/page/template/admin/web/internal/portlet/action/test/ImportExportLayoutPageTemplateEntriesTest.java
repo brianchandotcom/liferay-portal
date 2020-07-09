@@ -127,6 +127,29 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerBackgroundFragmentImage()
+		throws Exception {
+
+		Map<String, String> valuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_group.getGroupId());
+
+				return String.valueOf(journalArticle.getResourcePrimKey());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"container/background_fragment_image/expected", valuesMap);
+
+		File inputFile = _generateZipFile(
+			"container/background_fragment_image/input", valuesMap);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerBackgroundImage()
 		throws Exception {
 

@@ -147,7 +147,6 @@ function FieldBase({
 							'ddm-empty': !showLabel && !required,
 							'ddm-label': showLabel || required,
 						})}
-
 						htmlFor={id ? id : name}
 					>
 						{label && showLabel && label}

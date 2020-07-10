@@ -125,11 +125,9 @@ export default function TrafficSources({
 												)
 											}
 										>
-											{!entry.countryKeywords.length && (
+											{!entry.countryKeywords.length ? (
 												<span>{entry.title}</span>
-											)}
-											{entry.countryKeywords.length >
-												0 && (
+											) : (
 												<ClayButton
 													className="font-weight-semi-bold px-0 py-1 text-primary"
 													displayType="link"

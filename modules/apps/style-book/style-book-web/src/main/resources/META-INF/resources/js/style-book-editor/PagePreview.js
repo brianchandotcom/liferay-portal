@@ -12,13 +12,31 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
+
+import {StyleBookContext} from './StyleBookContext';
 
 export default function PagePreview() {
+	const iframeRef = useRef();
+
+	const {tokenValues = {}} = useContext(StyleBookContext);
+
+	useEffect(() => {
+		if (iframeRef.current) {
+			Object.entries(tokenValues).forEach(([key, value]) => {
+				iframeRef.current.contentDocument.documentElement.style.setProperty(
+					`--${key}`,
+					value
+				);
+			});
+		}
+	}, [tokenValues]);
+
 	return (
 		<div className="style-book-editor__page-preview">
 			<iframe
 				className="style-book-editor__page-preview-frame"
+				ref={iframeRef}
 				src="/web/guest"
 			/>
 		</div>

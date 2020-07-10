@@ -78,8 +78,8 @@ const refreshFields = (
 	editingLanguageId,
 	generateOptionValueUsingOptionLabel,
 	options
-) =>
-	[
+) => {
+	const refreshedFields = [
 		...options.map((option) => ({
 			generateKeyword: generateOptionValueUsingOptionLabel
 				? isOptionValueGenerated(
@@ -104,6 +104,12 @@ const refreshFields = (
 			...getDefaultOption(generateOptionValueUsingOptionLabel),
 		},
 	].filter((field) => field && Object.keys(field).length > 0);
+
+	return normalizeFields(
+		refreshedFields,
+		generateOptionValueUsingOptionLabel
+	);
+};
 
 const Options = ({
 	children,

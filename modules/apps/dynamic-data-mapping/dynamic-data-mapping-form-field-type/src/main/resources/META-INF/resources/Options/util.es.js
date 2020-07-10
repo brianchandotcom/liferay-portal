@@ -172,11 +172,7 @@ export const normalizeFields = (
 	fields,
 	generateOptionValueUsingOptionLabel
 ) => {
-	return fields.map((field, index) => {
-		if (fields.length - 1 === index) {
-			return field;
-		}
-
+	return fields.map((field) => {
 		return {
 			...field,
 			value: normalizeValue(

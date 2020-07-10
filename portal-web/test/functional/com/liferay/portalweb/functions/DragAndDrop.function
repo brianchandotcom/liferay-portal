@@ -146,12 +146,7 @@ Simulate = {
 	}
 };
 
-function getWebElement(locator) {
-	return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-Simulate.dragAndDrop(getWebElement(arguments[0]), getWebElement(arguments[1]));
-
+Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
 		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
@@ -194,12 +189,7 @@ Simulate = {
 	}
 };
 
-function getWebElement(locator) {
-	return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-Simulate.dragAndDrop(getWebElement(arguments[0]), getWebElement(arguments[1]));
-
+Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
 		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
@@ -322,12 +312,7 @@ Simulate = {
 	}
 };
 
-function getWebElement(locator) {
-	return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-Simulate.dragAndDrop(getWebElement(arguments[0]), getWebElement(arguments[1]));
-
+Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
 		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");

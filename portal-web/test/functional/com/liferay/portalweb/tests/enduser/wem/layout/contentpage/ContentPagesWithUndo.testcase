@@ -396,7 +396,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Tabs");
 
-		PageEditor.clickConfigurableField(fragmentName = "Tabs");
+		PageEditor.gotoStyle(fragmentName = "Tabs");
 
 		PageEditor.configureFragment(numberOfTabs = "2");
 
@@ -511,7 +511,7 @@ definition {
 			fragmentName = "Tabs");
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
@@ -525,7 +525,7 @@ definition {
 			fragmentName = "Tabs");
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
@@ -539,7 +539,7 @@ definition {
 			fragmentName = "Tabs");
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
@@ -553,7 +553,7 @@ definition {
 			fragmentName = "Tabs");
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 
@@ -567,7 +567,7 @@ definition {
 			fragmentName = "Tabs");
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+			PageEditor.gotoStyle(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "${i}");
 

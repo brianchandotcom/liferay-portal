@@ -251,7 +251,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Card");
+			PageEditor.gotoStyle(fragmentName = "Card");
 
 			PageEditor.configureFragment(
 				borderRadius = "None",
@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Image");
+			PageEditor.gotoStyle(fragmentName = "Image");
 
 			PageEditor.configureFragment(
 				alignment = "Center",
@@ -432,7 +432,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Paragraph");
+			PageEditor.gotoStyle(fragmentName = "Paragraph");
 
 			PageEditor.configureFragment(
 				textAlign = "Right",
@@ -488,7 +488,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Separator");
+			PageEditor.gotoStyle(fragmentName = "Separator");
 
 			PageEditor.configureFragment(
 				borderColor = "lighter",
@@ -544,7 +544,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Spacer");
+			PageEditor.gotoStyle(fragmentName = "Spacer");
 
 			PageEditor.configureFragment(height = "4");
 		}

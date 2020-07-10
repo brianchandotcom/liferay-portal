@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.theme.token.definition.internal;
 
-import com.liferay.frontend.theme.token.definition.ThemeTokenDefinitions;
+import com.liferay.frontend.theme.token.definition.ThemeTokenDefinitionRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -33,8 +33,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = ThemeTokenDefinitions.class)
-public class ThemeTokenDefinitionsImpl implements ThemeTokenDefinitions {
+@Component(service = ThemeTokenDefinitionRegistry.class)
+public class ThemeTokenDefinitionRegistryImpl
+	implements ThemeTokenDefinitionRegistry {
 
 	@Override
 	public String getTokenDefinitionString(String themeId) {

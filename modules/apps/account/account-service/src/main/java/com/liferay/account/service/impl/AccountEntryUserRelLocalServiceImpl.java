@@ -24,6 +24,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -338,6 +339,16 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 
 		String domain = emailAddress.substring(index + 1);
+
+		String[] blockedDomains = StringUtil.split(
+			accountEntryEmailDomainsConfiguration.blockedEmailDomains(),
+			StringPool.RETURN_NEW_LINE);
+
+		if (ArrayUtil.contains(blockedDomains, domain)) {
+			throw new UserEmailAddressException.MustNotUseBlockedDomain(
+				emailAddress,
+				StringUtil.merge(blockedDomains, StringPool.COMMA_AND_SPACE));
+		}
 
 		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
 			accountEntryId);

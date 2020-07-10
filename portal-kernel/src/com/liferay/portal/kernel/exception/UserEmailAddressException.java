@@ -149,6 +149,27 @@ public class UserEmailAddressException extends PortalException {
 
 	}
 
+	public static class MustNotUseBlockedDomain
+		extends UserEmailAddressException {
+
+		public MustNotUseBlockedDomain(
+			String emailAddress, String blockedDomains) {
+
+			super(
+				String.format(
+					"Email address %s must not use one of the blocked " +
+						"domains: %s",
+					emailAddress, blockedDomains));
+
+			this.emailAddress = emailAddress;
+			this.blockedDomains = blockedDomains;
+		}
+
+		public final String blockedDomains;
+		public final String emailAddress;
+
+	}
+
 	public static class MustNotUseCompanyMx extends UserEmailAddressException {
 
 		public MustNotUseCompanyMx(String emailAddress) {

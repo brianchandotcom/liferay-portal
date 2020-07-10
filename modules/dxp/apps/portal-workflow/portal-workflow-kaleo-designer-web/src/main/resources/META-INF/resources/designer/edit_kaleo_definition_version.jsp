@@ -401,18 +401,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}
 									};
 
-									Liferay.provide(
-										window,
-										'<portlet:namespace />closeKaleoDialog',
-										function () {
-											var dialog = Liferay.Util.getWindow();
+									window['<portlet:namespace />closeKaleoDialog'] = function () {
+										var dialog = Liferay.Util.getWindow();
 
-											if (dialog) {
-												dialog.destroy();
-											}
-										},
-										['aui-base']
-									);
+										if (dialog) {
+											dialog.destroy();
+										}
+									};
 
 									<%
 									String saveCallback = ParamUtil.getString(request, "saveCallback");

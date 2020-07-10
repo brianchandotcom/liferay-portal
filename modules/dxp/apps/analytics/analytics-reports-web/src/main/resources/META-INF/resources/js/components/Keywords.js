@@ -135,9 +135,7 @@ export default function Keywords({currentPage, languageTag}) {
 					<ClayList.ItemField>
 						<ClayDropDown
 							active={isDropdownOpen}
-							onActiveChange={(isActive) =>
-								setIsDropdownOpen(isActive)
-							}
+							onActiveChange={setIsDropdownOpen}
 							trigger={
 								<ClayButton
 									className="px-0 text-body"

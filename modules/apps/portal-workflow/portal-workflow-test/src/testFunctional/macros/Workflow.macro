@@ -902,11 +902,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${workflowDefinitionFile}");
 
-		AssertVisible(locator1 = "Message#SUCCESS");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "Definition imported successfully.");
+		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 
 		Alert.closeMessage(messageType = "SUCCESS");
 

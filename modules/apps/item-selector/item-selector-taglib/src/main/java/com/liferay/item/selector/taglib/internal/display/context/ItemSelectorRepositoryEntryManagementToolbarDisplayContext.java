@@ -21,14 +21,19 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +68,30 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setActive(_isEverywhereScopeFilter());
+							dropdownItem.setHref(
+								_getPortletURL(), "scope", "everywhere");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "everywhere"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setActive(!_isEverywhereScopeFilter());
+							dropdownItem.setHref(
+								_getPortletURL(), "scope", "current");
+							dropdownItem.setLabel(_getCurrentScopeLabel());
+						}
+					).build());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "filter-by-location"));
+			}
+		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
@@ -125,6 +154,30 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public boolean isDisabled() {
 		return false;
+	}
+
+	private String _getCurrentScopeLabel() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isSite()) {
+			return LanguageUtil.get(_httpServletRequest, "current-site");
+		}
+
+		if (group.isOrganization()) {
+			return LanguageUtil.get(
+				_httpServletRequest, "current-organization");
+		}
+
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			return LanguageUtil.get(
+				_httpServletRequest, "current-asset-library");
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "current-scope");
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
@@ -195,6 +248,17 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	private PortletURL _getPortletURL() {
 		return (PortletURL)_httpServletRequest.getAttribute(
 			"liferay-item-selector:repository-entry-browser:portletURL");
+	}
+
+	private boolean _isEverywhereScopeFilter() {
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "scope"),
+				"everywhere")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final PortletURL _currentURLObj;

@@ -87,7 +87,7 @@ public class StyleBookEntryLocalServiceImpl
 		_validate(name);
 
 		if (Validator.isNull(styleBookEntryKey)) {
-			styleBookEntryKey = _generateStyleBookEntryKey(groupId, name);
+			styleBookEntryKey = generateStyleBookEntryKey(groupId, name);
 		}
 
 		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
@@ -176,6 +176,30 @@ public class StyleBookEntryLocalServiceImpl
 
 		return styleBookEntryPersistence.fetchByG_SBEK(
 			groupId, _getStyleBookEntryKey(styleBookEntryKey));
+	}
+
+	@Override
+	public String generateStyleBookEntryKey(long groupId, String name) {
+		String styleBookEntryKey = _getStyleBookEntryKey(name);
+
+		styleBookEntryKey = StringUtil.replace(
+			styleBookEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curStyleBookEntryKey = styleBookEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			StyleBookEntry styleBookEntry =
+				styleBookEntryPersistence.fetchByG_SBEK(
+					groupId, curStyleBookEntryKey);
+
+			if (styleBookEntry == null) {
+				return curStyleBookEntryKey;
+			}
+
+			curStyleBookEntryKey = styleBookEntryKey + CharPool.DASH + count++;
+		}
 	}
 
 	@Override
@@ -338,29 +362,6 @@ public class StyleBookEntryLocalServiceImpl
 		updatePreviewFileEntryId(
 			copyStyleBookEntry.getStyleBookEntryId(),
 			fileEntry.getFileEntryId());
-	}
-
-	private String _generateStyleBookEntryKey(long groupId, String name) {
-		String styleBookEntryKey = _getStyleBookEntryKey(name);
-
-		styleBookEntryKey = StringUtil.replace(
-			styleBookEntryKey, CharPool.SPACE, CharPool.DASH);
-
-		String curStyleBookEntryKey = styleBookEntryKey;
-
-		int count = 0;
-
-		while (true) {
-			StyleBookEntry styleBookEntry =
-				styleBookEntryPersistence.fetchByG_SBEK(
-					groupId, curStyleBookEntryKey);
-
-			if (styleBookEntry == null) {
-				return curStyleBookEntryKey;
-			}
-
-			curStyleBookEntryKey = styleBookEntryKey + CharPool.DASH + count++;
-		}
 	}
 
 	private String _getStyleBookEntryKey(String styleBookEntryKey) {

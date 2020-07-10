@@ -216,19 +216,12 @@ definition {
 				value1 = "");
 		}
 		else {
-			var browserType = PropsUtil.get("browser.type");
-
-			if (("${browserType}" == "firefox") || ("${browserType}" == "internetexplorer") || ("${browserType}" == "safari")) {
-				DragAndDrop.javaScriptDragAndDropToObjectPrimitive(fragmentOrder = "${fragmentOrder}");
-			}
-			else {
-				DragAndDrop.javaScriptDragAndDropToObject(
-					key_collectionName = "${collectionName}",
-					key_fragmentName = "${fragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-					value1 = "");
-			}
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
 		}
 
 		PageEditor.waitForAutoSave();

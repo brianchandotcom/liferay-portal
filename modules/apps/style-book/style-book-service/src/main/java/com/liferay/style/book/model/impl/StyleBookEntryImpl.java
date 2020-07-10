@@ -16,11 +16,15 @@ package com.liferay.style.book.model.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.zip.ZipWriter;
 
 /**
  * @author Eudaldo Alonso
@@ -48,6 +52,57 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public void populateZipWriter(ZipWriter zipWriter, String path)
+		throws Exception {
+
+		path = path + StringPool.SLASH + getStyleBookEntryKey();
+
+		JSONObject jsonObject = JSONUtil.put(
+			"name", getName()
+		).put(
+			"tokensValues", "tokensValues.json"
+		);
+
+		FileEntry previewFileEntry = _getPreviewFileEntry();
+
+		if (previewFileEntry != null) {
+			jsonObject.put(
+				"thumbnailPath",
+				"thumbnail." + previewFileEntry.getExtension());
+		}
+
+		zipWriter.addEntry(
+			path + StringPool.SLASH + "style-book.json", jsonObject.toString());
+
+		zipWriter.addEntry(path + "/tokensValues.json", getTokensValues());
+
+		if (previewFileEntry != null) {
+			zipWriter.addEntry(
+				path + "/thumbnail." + previewFileEntry.getExtension(),
+				previewFileEntry.getContentStream());
+		}
+	}
+
+	private FileEntry _getPreviewFileEntry() {
+		if (getPreviewFileEntryId() <= 0) {
+			return null;
+		}
+
+		try {
+			return PortletFileRepositoryUtil.getPortletFileEntry(
+				getPreviewFileEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get file entry preview ", portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

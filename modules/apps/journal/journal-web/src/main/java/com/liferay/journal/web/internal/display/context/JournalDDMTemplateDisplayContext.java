@@ -133,8 +133,9 @@ public class JournalDDMTemplateDisplayContext {
 
 		if (_journalWebConfiguration.showAncestorScopesByDefault()) {
 			groupIds =
-				SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
-					themeDisplay.getScopeGroupId());
+				SiteConnectedGroupUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						themeDisplay.getScopeGroupId());
 		}
 
 		List<DDMTemplate> results = null;

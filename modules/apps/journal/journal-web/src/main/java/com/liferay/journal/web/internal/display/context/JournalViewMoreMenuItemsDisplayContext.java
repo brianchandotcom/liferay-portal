@@ -67,15 +67,17 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		if (Validator.isNull(_getKeywords())) {
 			_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-				SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
-					themeDisplay.getScopeGroupId()),
+				SiteConnectedGroupUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						themeDisplay.getScopeGroupId()),
 				_folderId, _restrictionType);
 		}
 		else {
 			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
 				themeDisplay.getCompanyId(),
-				SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
-					themeDisplay.getScopeGroupId()),
+				SiteConnectedGroupUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						themeDisplay.getScopeGroupId()),
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
 		}

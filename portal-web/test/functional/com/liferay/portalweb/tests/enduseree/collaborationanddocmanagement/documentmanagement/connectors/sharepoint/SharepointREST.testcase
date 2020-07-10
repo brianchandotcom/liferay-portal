@@ -446,21 +446,23 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		Pause(locator1 = "1000");
-
-		var key_dmFolderName = "Collaboration Test Application";
-
-		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "Collaboration Test Application");
-
-		Pause(locator1 = "2000");
+		DMNavigator.gotoRepository(
+			dmRepositoryName = "Collaboration Test Application",
+			guest = "true");
 
 		if (IsElementNotPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
-			Refresh();
-		}
+			Navigator.openURL();
 
-		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Pause(locator1 = "3000");
+
+			DMNavigator.gotoRepository(
+				dmRepositoryName = "Collaboration Test Application",
+				guest = "true");
+		}
 
 		User.loginUserPG(
 			password = "test",

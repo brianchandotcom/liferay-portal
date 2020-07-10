@@ -164,7 +164,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
 									<liferay-editor:editor
 										contents="<%= targetContent %>"
-										name='<%= id + "TargetEditor" %>'
+										name="<%= id %>"
 										placeholder="<%= label %>"
 									/>
 								</c:when>

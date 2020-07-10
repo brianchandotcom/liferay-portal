@@ -46,7 +46,8 @@ public class UpgradeAccountEntry extends UpgradeProcess {
 				new AlterTableAddColumn("type_", "VARCHAR(75)"));
 
 			String defaultType = StringUtil.quote(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, StringPool.QUOTE);
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				StringPool.APOSTROPHE);
 
 			runSQL("update AccountEntry set type_ = " + defaultType);
 		}

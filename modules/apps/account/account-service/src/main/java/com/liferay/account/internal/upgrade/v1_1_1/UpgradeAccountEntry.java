@@ -27,9 +27,9 @@ public class UpgradeAccountEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String oldType = StringUtil.quote("personal", StringPool.QUOTE);
+		String oldType = StringUtil.quote("personal", StringPool.APOSTROPHE);
 		String newType = StringUtil.quote(
-			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, StringPool.QUOTE);
+			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, StringPool.APOSTROPHE);
 
 		runSQL(
 			StringBundler.concat(

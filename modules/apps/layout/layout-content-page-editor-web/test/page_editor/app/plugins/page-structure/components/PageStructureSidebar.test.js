@@ -43,12 +43,13 @@ const renderComponent = ({
 
 	return render(
 		<ControlsProvider
-			initialState={{
+			activeInitialState={{
 				activationOrigin: null,
 				activeItemId,
 				activeItemType: null,
+			}}
+			hoverInitialState={{
 				hoveredItemId: null,
-				selectedItemsIds: [],
 			}}
 		>
 			<StoreAPIContextProvider

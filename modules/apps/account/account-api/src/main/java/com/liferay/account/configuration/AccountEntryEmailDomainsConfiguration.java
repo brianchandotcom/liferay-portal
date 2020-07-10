@@ -37,4 +37,10 @@ public interface AccountEntryEmailDomainsConfiguration {
 	)
 	public boolean enableEmailDomainValidation();
 
+	@Meta.AD(
+		description = "blocked-email-domains-help",
+		name = "blocked-email-domains", required = false
+	)
+	public String blockedEmailDomains();
+
 }

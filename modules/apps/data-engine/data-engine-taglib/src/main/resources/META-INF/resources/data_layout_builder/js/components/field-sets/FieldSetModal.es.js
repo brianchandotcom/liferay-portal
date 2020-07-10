@@ -142,6 +142,24 @@ const ModalContent = ({
 			});
 	};
 
+	useEffect(() => {
+		const changeZIndex = (zIndex) => {
+			document
+				.querySelectorAll('.ddm-field-actions-container')
+				.forEach((container) => {
+					container.style.zIndex = zIndex;
+				});
+		};
+
+		if (dataLayoutBuilder) {
+			changeZIndex('1050');
+		}
+
+		return () => {
+			changeZIndex(null);
+		};
+	}, [dataLayoutBuilder]);
+
 	const onSave = () => {
 		if (fieldSet) {
 			propagateFieldSet({

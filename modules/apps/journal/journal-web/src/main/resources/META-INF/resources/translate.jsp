@@ -147,6 +147,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									<label class="control-label">
 										<%= label %>
 									</label>
+
 									<div contenteditable="false" role="textbox" tabIndex="-1">
 										<%= sourceContent %>
 									</div>

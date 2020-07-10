@@ -152,7 +152,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									</div>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" value="<%= sourceContent %>" />
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>
@@ -169,7 +169,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									/>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= targetContent %>" />
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= targetContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>

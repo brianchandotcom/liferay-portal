@@ -106,7 +106,7 @@ export default function ItemActions({item}) {
 					<ClayButton
 						displayType="unstyled"
 						small
-						title={Liferay.Language.get('remove')}
+						title={Liferay.Language.get('options')}
 					>
 						<ClayIcon
 							className="page-editor__topper__icon"

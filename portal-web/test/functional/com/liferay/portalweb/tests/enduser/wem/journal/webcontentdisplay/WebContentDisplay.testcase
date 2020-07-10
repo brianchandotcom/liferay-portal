@@ -221,13 +221,17 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.publishViaWCD();
+		PortletEntry.publish();
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Test Site Name");
+		Click.clickAt(locator1 = "ControlMenu#ADD");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+		Navigator.gotoNavTab(navTab = "Content");
+
+		AssertVisible(
+			key_entryTitle = "WC WebContent Title",
+			locator1 = "ControlMenuAddPanel#ASSET_ENTRY");
 	}
 
 	@priority = "4"

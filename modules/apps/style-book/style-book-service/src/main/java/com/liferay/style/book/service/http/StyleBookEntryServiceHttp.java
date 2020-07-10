@@ -387,6 +387,48 @@ public class StyleBookEntryServiceHttp {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(
+				HttpPrincipal httpPrincipal, long styleBookEntryId, String name,
+				String tokensValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				StyleBookEntryServiceUtil.class, "updateStyleBookEntry",
+				_updateStyleBookEntryParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, styleBookEntryId, name, tokensValues);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.style.book.model.StyleBookEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
 			updateTokensValues(
 				HttpPrincipal httpPrincipal, long styleBookEntryId,
 				String tokensValue)
@@ -395,7 +437,7 @@ public class StyleBookEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				StyleBookEntryServiceUtil.class, "updateTokensValues",
-				_updateTokensValuesParameterTypes8);
+				_updateTokensValuesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, styleBookEntryId, tokensValue);
@@ -459,7 +501,9 @@ public class StyleBookEntryServiceHttp {
 	};
 	private static final Class<?>[] _updatePreviewFileEntryIdParameterTypes7 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateTokensValuesParameterTypes8 =
+	private static final Class<?>[] _updateStyleBookEntryParameterTypes8 =
+		new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[] _updateTokensValuesParameterTypes9 =
 		new Class[] {long.class, String.class};
 
 }

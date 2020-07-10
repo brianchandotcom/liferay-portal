@@ -265,6 +265,12 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public String generateStyleBookEntryKey(long groupId, String name) {
+		return _styleBookEntryLocalService.generateStyleBookEntryKey(
+			groupId, name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -401,6 +407,15 @@ public class StyleBookEntryLocalServiceWrapper
 
 		return _styleBookEntryLocalService.updatePreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name, String tokensValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntry(
+			styleBookEntryId, name, tokensValues);
 	}
 
 	/**

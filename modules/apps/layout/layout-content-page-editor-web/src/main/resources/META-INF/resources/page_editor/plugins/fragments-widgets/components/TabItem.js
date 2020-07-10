@@ -28,7 +28,7 @@ import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
 import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 
-export default function TabItem({indentation, item}) {
+export default function TabItem({item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectItem = useSelectItem();
@@ -71,7 +71,6 @@ export default function TabItem({indentation, item}) {
 		<li
 			className={classNames('page-editor__fragments-widgets__tab-item', {
 				disabled: item.disabled,
-				'ml-3': indentation,
 			})}
 			ref={item.disabled ? null : sourceRef}
 		>
@@ -106,7 +105,6 @@ export default function TabItem({indentation, item}) {
 }
 
 TabItem.propTypes = {
-	indentation: PropTypes.bool,
 	item: PropTypes.shape({
 		data: PropTypes.object.isRequired,
 		icon: PropTypes.string.isRequired,

@@ -70,16 +70,15 @@ export default function TabsPanel({tabs}) {
 	);
 }
 
-const Collections = ({collections, indentation, open}) =>
+const Collections = ({collections, open}) =>
 	collections.map((collection, index) => (
 		<Collapse
-			indentation={indentation}
 			key={collection.collectionId}
 			label={collection.label}
 			open={open && index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
 		>
 			{collection.collections && (
-				<Collections collections={collection.collections} indentation />
+				<Collections collections={collection.collections} />
 			)}
 
 			<ul className="list-unstyled">
@@ -98,5 +97,5 @@ const Collections = ({collections, indentation, open}) =>
 
 const TabPortletItem = ({item}) =>
 	item.portletItems.map((portlet, index) => (
-		<TabItem indentation item={portlet} key={index} />
+		<TabItem item={portlet} key={index} />
 	));

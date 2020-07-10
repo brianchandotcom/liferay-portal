@@ -62,7 +62,7 @@ export default function SearchResultsPanel({filteredTabs}) {
 
 const TabPortletItem = ({item}) =>
 	item.portletItems.map((portlet, index) => (
-		<TabItem indentation item={portlet} key={index} />
+		<TabItem item={portlet} key={index} />
 	));
 
 SearchResultsPanel.proptypes = {

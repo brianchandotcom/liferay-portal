@@ -22,4 +22,12 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 		text-align: left;
 		width: 100%;
 	}
+
+	.page-editor__collapse {
+		margin-left: 1rem;
+
+		> &-content {
+			margin-left: 1rem;
+		}
+	}
 }

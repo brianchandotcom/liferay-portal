@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-export default function Collapse({children, indentation = false, label, open}) {
+export default function Collapse({children, label, open}) {
 	const [isOpen, setIsOpen] = useState(open);
 	const collapseIcon = isOpen ? 'angle-down-small' : 'angle-right-small';
 	const collapseIconClassName = isOpen ? 'open' : 'closed';
@@ -34,10 +34,7 @@ export default function Collapse({children, indentation = false, label, open}) {
 		<div
 			className={classNames(
 				'panel-group-flush',
-				'page-editor__collapse panel-group',
-				{
-					'ml-3': indentation,
-				}
+				'page-editor__collapse panel-group'
 			)}
 		>
 			<button
@@ -60,14 +57,16 @@ export default function Collapse({children, indentation = false, label, open}) {
 					</span>
 				</span>
 			</button>
-			{isOpen && children}
+
+			<div className="page-editor__collapse__content">
+				{isOpen && children}
+			</div>
 		</div>
 	);
 }
 
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
-	indentation: PropTypes.bool,
 	label: PropTypes.string,
 	open: PropTypes.bool,
 };

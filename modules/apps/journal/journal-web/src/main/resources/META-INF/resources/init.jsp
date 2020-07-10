@@ -70,7 +70,6 @@ page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationExcepti
 page import="com.liferay.exportimport.kernel.exception.ExportImportContentValidationException" %><%@
 page import="com.liferay.info.field.InfoField" %><%@
 page import="com.liferay.info.field.InfoFieldSetEntry" %><%@
-page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.journal.configuration.JournalFileUploadsConfiguration" %><%@
 page import="com.liferay.journal.configuration.JournalGroupServiceConfiguration" %><%@
 page import="com.liferay.journal.constants.JournalArticleConstants" %><%@

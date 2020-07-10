@@ -28,7 +28,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,8 +41,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -95,6 +95,25 @@ public class JournalTranslateDisplayContext {
 			PortalUtil.getLocale(_httpServletRequest));
 	}
 
+	public List<InfoField> getInfoFields(InfoFieldSetEntry infoFieldSetEntry) {
+		if (infoFieldSetEntry instanceof InfoField) {
+			InfoField infoField = (InfoField)infoFieldSetEntry;
+
+			if (_translationInfoFieldChecker.isTranslatable(infoField)) {
+				return Arrays.asList(infoField);
+			}
+		}
+		else if (infoFieldSetEntry instanceof InfoFieldSet) {
+			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+			return ListUtil.filter(
+				infoFieldSet.getAllInfoFields(),
+				_translationInfoFieldChecker::isTranslatable);
+		}
+
+		return Collections.emptyList();
+	}
+
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
 		return _infoForm.getInfoFieldSetEntries();
 	}
@@ -109,39 +128,6 @@ public class JournalTranslateDisplayContext {
 		}
 
 		return null;
-	}
-
-	public List<InfoFieldValue<Object>> getInfoFieldValues(
-		InfoFieldSetEntry infoFieldSetEntry) {
-
-		if (infoFieldSetEntry instanceof InfoField) {
-			InfoField infoField = (InfoField)infoFieldSetEntry;
-
-			if (_translationInfoFieldChecker.isTranslatable(infoField)) {
-				return Arrays.asList(
-					_infoItemFieldValues.getInfoFieldValue(
-						infoField.getName()));
-			}
-		}
-		else if (infoFieldSetEntry instanceof InfoFieldSet) {
-			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-			List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
-
-			Stream<InfoField> stream = infoFields.stream();
-
-			return stream.filter(
-				_translationInfoFieldChecker::isTranslatable
-			).map(
-				InfoField::getName
-			).map(
-				_infoItemFieldValues::getInfoFieldValue
-			).collect(
-				Collectors.toList()
-			);
-		}
-
-		return Collections.emptyList();
 	}
 
 	public String getLanguageIdTitle(String languageId) {
@@ -163,6 +149,17 @@ public class JournalTranslateDisplayContext {
 
 	public Locale getSourceLocale() {
 		return _sourceLocale;
+	}
+
+	public Object getStringValue(InfoField infoField, Locale locale) {
+		InfoFieldValue<Object> infoFieldValue =
+			_infoItemFieldValues.getInfoFieldValue(infoField.getName());
+
+		if (infoFieldValue != null) {
+			return GetterUtil.getString(infoFieldValue.getValue(locale));
+		}
+
+		return null;
 	}
 
 	public String getTargetLanguageId() {

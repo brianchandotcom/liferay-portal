@@ -98,9 +98,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 			<%
 			for (InfoFieldSetEntry infoFieldSetEntry : journalTranslateDisplayContext.getInfoFieldSetEntries()) {
-				List<InfoFieldValue<Object>> infoFieldValues = journalTranslateDisplayContext.getInfoFieldValues(infoFieldSetEntry);
+				List<InfoField> infoFields = journalTranslateDisplayContext.getInfoFields(infoFieldSetEntry);
 
-				if (ListUtil.isEmpty(infoFieldValues)) {
+				if (ListUtil.isEmpty(infoFields)) {
 					continue;
 				}
 
@@ -130,9 +130,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				<%
 				}
 
-				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-					InfoField infoField = infoFieldValue.getInfoField();
-
+				for (InfoField infoField : infoFields) {
 					String id = "infoField--" + infoField.getName() + "--";
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
 				%>
@@ -141,13 +139,13 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getSourceLocale())) %>" />
+							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" value="<%= journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale()) %>" />
 						</clay:col>
 
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getTargetLocale())) %>" />
+							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale()) %>" />
 						</clay:col>
 					</clay:row>
 

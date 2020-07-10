@@ -258,9 +258,7 @@ if (tabs1.equals("published")) {
 	);
 
 	window['<portlet:namespace />editWorkflow'] = function (uri) {
-		var A = AUI();
-
-		A.use('liferay-util', function () {
+		AUI().use('liferay-util', function (A) {
 			var WIN = A.config.win;
 
 			Liferay.Util.openWindow({

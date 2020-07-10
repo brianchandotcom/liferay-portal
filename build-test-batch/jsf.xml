@@ -16,230 +16,7 @@
 							<param name="app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
 						</antcall>
 
-						<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
-							terms.of.use.required=false
-							users.reminder.queries.enabled=false
-							users.reminder.queries.custom.question.enabled=false]]></echo>
-
-						<local name="portal.ext.properties" />
-
-						<loadfile
-							property="portal.ext.properties"
-							srcFile="${app.server.classes.portal.dir}/portal-ext.properties"
-						>
-							<filterchain>
-								<tokenfilter>
-									<replacestring from="captcha.max.challenges=-1" to="" />
-								</tokenfilter>
-								<trim />
-								<ignoreblank />
-							</filterchain>
-						</loadfile>
-
-						<echo file="${app.server.classes.portal.dir}/portal-ext.properties">${portal.ext.properties}</echo>
-
-						<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/demo">
-							mvn clean package -P liferay,liferay73,mojarra,tomcat
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/issue">
-							mvn clean package -P liferay,liferay73,mojarra,tomcat
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
-							mvn clean package -P liferay,liferay73,mojarra,tomcat
-						</execute>
-
-						<execute dir="${liferay.faces.portal.dir}/demo">
-							mvn clean package -P liferay,liferay73,mojarra,tomcat,validateCaptchaForTest
-						</execute>
-
-						<execute dir="${liferay.faces.portal.dir}/test/test-setup-hook">
-							mvn clean package -P liferay,liferay73,mojarra,tomcat
-						</execute>
-
-						<copy
-							flatten="true"
-							todir="${liferay.home}/deploy/"
-						>
-							<fileset
-								dir="${liferay.faces.bridge.impl.dir}"
-								includes="**/target/*.war"
-							/>
-							<fileset
-								dir="${liferay.faces.portal.dir}"
-								excludes="**/target/com.liferay.faces.test.setup.hook*.war"
-								includes="**/target/*.war"
-							/>
-						</copy>
-
-						<copy
-							flatten="true"
-							todir="${liferay.home}/osgi/configs"
-						>
-							<fileset
-								dir="${liferay.faces.portal.dir}"
-								includes="**/configs/*.config"
-							/>
-						</copy>
-
-						<propertycopy from="app.server.${app.server.type}.bin.dir" name="app.server.bin.dir" override="true" />
-
-						<antcall inheritall="false" target="start-app-server">
-							<param name="app.server.bin.dir" value="${app.server.bin.dir}" />
-						</antcall>
-
-						<copy
-							flatten="true"
-							todir="${liferay.home}/deploy/"
-						>
-							<fileset
-								dir="${liferay.faces.portal.dir}"
-								includes="**/target/com.liferay.faces.test.setup.hook*.war"
-							/>
-						</copy>
-
-						<wait-for-app-server-log-message log.message="Hook for com.liferay.faces.test.setup.hook is available for use" />
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
-							mvn clean install --quiet
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
-						</execute>
-
-						<!--
-						In order to build the Bridge Impl and Portal tests, first build the JSF Showcase
-						tests since the Alloy, Bridge Impl, and Portal Showcase tests depend on the JSF
-						Showcase tests.
-						-->
-
-						<execute dir="${liferay.faces.showcase.dir}/jsf-showcase-webapp">
-							mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
-						</execute>
-
-						<!--
-						Next build the Alloy Showcase tests that the Bridge Impl tests depend on. In
-						order to build the Alloy Showcase, ensure that the Alloy Showcase depends on the
-						current JSF Showcase version (built above) and its transitive dependencies like
-						Test Selenium:
-
-						1. Extract the Test Selenium version used by the JSF Showcase.
-						-->
-
-						<xmltask source="${liferay.faces.showcase.dir}/jsf-showcase-webapp/pom.xml">
-							<copy
-								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
-								property="liferay.faces.test.selenium.version"
-							/>
-						</xmltask>
-
-						<!--
-						2. Replace the Test Selenium dependency version in the Alloy Showcase with the
-						one extracted from the JSF Showcase above.
-						-->
-
-						<xmltask
-							dest="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
-							source="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
-						>
-							<replace
-								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
-								withText="${liferay.faces.test.selenium.version}"
-							/>
-						</xmltask>
-
-						<!--
-						3. Extract the current JSF Showcase version.
-						-->
-
-						<xmltask source="${liferay.faces.showcase.dir}/pom.xml">
-							<copy
-								path="/*[local-name()='project']/*[local-name()='version']/text()"
-								property="liferay.faces.showcase.version"
-							/>
-						</xmltask>
-
-						<!--
-						4. Replace the JSF Showcase dependency version in the Alloy Showcase with the
-						one extracted from the JSF Showcase above.
-						-->
-
-						<xmltask dest="${liferay.faces.alloy.dir}/pom.xml" source="${liferay.faces.alloy.dir}/pom.xml">
-							<replace
-								path="//*[local-name()='liferay.faces.showcase.version']/text()"
-								withText="${liferay.faces.showcase.version}"
-							/>
-						</xmltask>
-
-						<execute dir="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp">
-							mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration">
-							mvn clean install --quiet
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='!ADF*ApplicantPortletTester,!*Ice*,issue/*,issue/primefaces/*,demo/JSF*,applicant/*Applicant*'
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='showcase/bridge/*,showcase/portlet/*'
-						</execute>
-
-						<!--
-						Move the Bridge Impl test results to a different folder so they are not
-						overwritten by the Showcase test results.
-						-->
-
-						<move
-							file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
-							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-bridge-impl-failsafe-reports"
-						/>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium-alloy-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
-						</execute>
-
-						<!--
-						Move the Alloy Showcase test results to a different folder so they are not
-						overwritten by the JSF Showcase test results.
-						-->
-
-						<move
-							file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
-							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-alloy-showcase-failsafe-reports"
-						/>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium-jsf-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
-						</execute>
-
-						<execute dir="${liferay.faces.portal.dir}/test/integration">
-							mvn clean install --quiet
-						</execute>
-
-						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
-						</execute>
-
-						<!--
-						Move the Portal test results to a different folder so they are not overwritten
-						by the Showcase test results.
-						-->
-
-						<move
-							file="${liferay.faces.portal.dir}/test/integration/target/failsafe-reports"
-							tofile="${liferay.faces.portal.dir}/test/integration/target/selenium-portal-failsafe-reports"
-						/>
-
-						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
-						</execute>
+						<antcall target="run-jsf-tests" />
 					</test-action>
 				</database-test-run-test>
 			</test-action>
@@ -294,41 +71,276 @@
 						</then>
 					</elseif>
 				</if>
-
-				<property name="max.metaspace.size" value="-XX:MaxMetaspaceSize=1024m" />
-
-				<replaceregexp
-					file="${test.app.server.bin.dir}/setenv.sh"
-					flags="gi"
-					match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
-					replace="${max.metaspace.size}"
-				/>
-
-				<replaceregexp
-					file="${test.app.server.bin.dir}/setenv.bat"
-					flags="gi"
-					match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
-					replace="${max.metaspace.size}"
-				/>
-
-				<if>
-					<not>
-						<or>
-							<resourcecontains
-								resource="${test.app.server.bin.dir}/setenv.sh"
-								substring="${max.metaspace.size}"
-							/>
-							<resourcecontains
-								resource="${test.app.server.bin.dir}/setenv.bat"
-								substring="${max.metaspace.size}"
-							/>
-						</or>
-					</not>
-					<then>
-						<fail message="Unable to set custom max metaspace of &quot;${max.metaspace.size}&quot; for ${test.app.server.bin.dir}/setenv.sh and setenv.bat." />
-					</then>
-				</if>
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="run-jsf-tests">
+		<property name="max.metaspace.size" value="-XX:MaxMetaspaceSize=1024m" />
+
+		<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
+
+		<replaceregexp
+			file="${test.app.server.bin.dir}/setenv.sh"
+			flags="gi"
+			match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
+			replace="${max.metaspace.size}"
+		/>
+
+		<replaceregexp
+			file="${test.app.server.bin.dir}/setenv.bat"
+			flags="gi"
+			match="-XX:MaxMetaspaceSize=[0-9]+[a-zA-Z]+"
+			replace="${max.metaspace.size}"
+		/>
+
+		<if>
+			<not>
+				<or>
+					<resourcecontains
+						resource="${test.app.server.bin.dir}/setenv.sh"
+						substring="${max.metaspace.size}"
+					/>
+					<resourcecontains
+						resource="${test.app.server.bin.dir}/setenv.bat"
+						substring="${max.metaspace.size}"
+					/>
+				</or>
+			</not>
+			<then>
+				<fail message="Unable to set custom max metaspace of &quot;${max.metaspace.size}&quot; for ${test.app.server.bin.dir}/setenv.sh and setenv.bat." />
+			</then>
+		</if>
+
+		<propertycopy from="app.server.${app.server.type}.classes.portal.dir" name="app.server.classes.portal.dir" override="true" />
+
+		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
+			terms.of.use.required=false
+			users.reminder.queries.enabled=false
+			users.reminder.queries.custom.question.enabled=false]]></echo>
+
+		<local name="portal.ext.properties" />
+
+		<loadfile
+			property="portal.ext.properties"
+			srcFile="${app.server.classes.portal.dir}/portal-ext.properties"
+		>
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="captcha.max.challenges=-1" to="" />
+				</tokenfilter>
+				<trim />
+				<ignoreblank />
+			</filterchain>
+		</loadfile>
+
+		<echo file="${app.server.classes.portal.dir}/portal-ext.properties">${portal.ext.properties}</echo>
+
+		<propertycopy from="browser.firefox.bin.file[${liferay.faces.test.browser.version}]" name="browser.firefox.bin.file" silent="true" />
+
+		<prepare-gecko-driver />
+
+		<property name="gecko.driver.path" location="${selenium.executable.dir.name}${selenium.gecko.driver.executable}"/>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/demo">
+			mvn clean package -P liferay,liferay73,mojarra,tomcat
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/issue">
+			mvn clean package -P liferay,liferay73,mojarra,tomcat
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/tck">
+			mvn clean package -P liferay,liferay73,mojarra,tomcat
+		</execute>
+
+		<execute dir="${liferay.faces.portal.dir}/demo">
+			mvn clean package -P liferay,liferay73,mojarra,tomcat,validateCaptchaForTest
+		</execute>
+
+		<execute dir="${liferay.faces.portal.dir}/test/test-setup-hook">
+			mvn clean package -P liferay,liferay73,mojarra,tomcat
+		</execute>
+
+		<copy
+			flatten="true"
+			todir="${liferay.home}/deploy/"
+		>
+			<fileset
+				dir="${liferay.faces.bridge.impl.dir}"
+				includes="**/target/*.war"
+			/>
+			<fileset
+				dir="${liferay.faces.portal.dir}"
+				excludes="**/target/com.liferay.faces.test.setup.hook*.war"
+				includes="**/target/*.war"
+			/>
+		</copy>
+
+		<copy
+			flatten="true"
+			todir="${liferay.home}/osgi/configs"
+		>
+			<fileset
+				dir="${liferay.faces.portal.dir}"
+				includes="**/configs/*.config"
+			/>
+		</copy>
+
+		<propertycopy from="app.server.${app.server.type}.bin.dir" name="app.server.bin.dir" override="true" />
+
+		<antcall inheritall="false" target="start-app-server">
+			<param name="app.server.bin.dir" value="${app.server.bin.dir}" />
+		</antcall>
+
+		<copy
+			flatten="true"
+			todir="${liferay.home}/deploy/"
+		>
+			<fileset
+				dir="${liferay.faces.portal.dir}"
+				includes="**/target/com.liferay.faces.test.setup.hook*.war"
+			/>
+		</copy>
+
+		<wait-for-app-server-log-message log.message="Hook for com.liferay.faces.test.setup.hook is available for use" />
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/tck">
+			mvn clean install --quiet
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" failonerror="false">
+			mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
+		</execute>
+
+		<!--
+		In order to build the Bridge Impl and Portal tests, first build the JSF Showcase
+		tests since the Alloy, Bridge Impl, and Portal Showcase tests depend on the JSF
+		Showcase tests.
+		-->
+
+		<execute dir="${liferay.faces.showcase.dir}/jsf-showcase-webapp">
+			mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
+		</execute>
+
+		<!--
+		Next build the Alloy Showcase tests that the Bridge Impl tests depend on. In
+		order to build the Alloy Showcase, ensure that the Alloy Showcase depends on the
+		current JSF Showcase version (built above) and its transitive dependencies like
+		Test Selenium:
+
+		1. Extract the Test Selenium version used by the JSF Showcase.
+		-->
+
+		<xmltask source="${liferay.faces.showcase.dir}/jsf-showcase-webapp/pom.xml">
+			<copy
+				path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
+				property="liferay.faces.test.selenium.version"
+			/>
+		</xmltask>
+
+		<!--
+		2. Replace the Test Selenium dependency version in the Alloy Showcase with the
+		one extracted from the JSF Showcase above.
+		-->
+
+		<xmltask
+			dest="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
+			source="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp/pom.xml"
+		>
+			<replace
+				path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
+				withText="${liferay.faces.test.selenium.version}"
+			/>
+		</xmltask>
+
+		<!--
+		3. Extract the current JSF Showcase version.
+		-->
+
+		<xmltask source="${liferay.faces.showcase.dir}/pom.xml">
+			<copy
+				path="/*[local-name()='project']/*[local-name()='version']/text()"
+				property="liferay.faces.showcase.version"
+			/>
+		</xmltask>
+
+		<!--
+		4. Replace the JSF Showcase dependency version in the Alloy Showcase with the
+		one extracted from the JSF Showcase above.
+		-->
+
+		<xmltask dest="${liferay.faces.alloy.dir}/pom.xml" source="${liferay.faces.alloy.dir}/pom.xml">
+			<replace
+				path="//*[local-name()='liferay.faces.showcase.version']/text()"
+				withText="${liferay.faces.showcase.version}"
+			/>
+		</xmltask>
+
+		<execute dir="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp">
+			mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/test/integration">
+			mvn clean install --quiet
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='!ADF*ApplicantPortletTester,!*Ice*,issue/*,issue/primefaces/*,demo/JSF*,applicant/*Applicant*'
+		</execute>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='showcase/bridge/*,showcase/portlet/*'
+		</execute>
+
+		<!--
+		Move the Bridge Impl test results to a different folder so they are not
+		overwritten by the Showcase test results.
+		-->
+
+		<move
+			file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
+			tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-bridge-impl-failsafe-reports"
+		/>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium-alloy-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
+		</execute>
+
+		<!--
+		Move the Alloy Showcase test results to a different folder so they are not
+		overwritten by the JSF Showcase test results.
+		-->
+
+		<move
+			file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
+			tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-alloy-showcase-failsafe-reports"
+		/>
+
+		<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium-jsf-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
+		</execute>
+
+		<execute dir="${liferay.faces.portal.dir}/test/integration">
+			mvn clean install --quiet
+		</execute>
+
+		<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
+		</execute>
+
+		<!--
+		Move the Portal test results to a different folder so they are not overwritten
+		by the Showcase test results.
+		-->
+
+		<move
+			file="${liferay.faces.portal.dir}/test/integration/target/failsafe-reports"
+			tofile="${liferay.faces.portal.dir}/test/integration/target/selenium-portal-failsafe-reports"
+		/>
+
+		<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
+			mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dwebdriver.gecko.driver=${gecko.driver.path} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout}
+		</execute>
 	</target>
 </project>

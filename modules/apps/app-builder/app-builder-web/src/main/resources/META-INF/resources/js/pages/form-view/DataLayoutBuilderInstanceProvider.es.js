@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DataLayoutBuilder, DataLayoutBuilderActions} from 'data-engine-taglib';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
@@ -28,7 +28,6 @@ export default ({children, dataLayoutBuilder}) => {
 			config: {allowNestedFields},
 			dataDefinition,
 			editingLanguageId,
-			focusedField,
 		},
 		dispatch,
 	] = useContext(FormViewContext);
@@ -40,22 +39,10 @@ export default ({children, dataLayoutBuilder}) => {
 	const saveAsFieldset = useSaveAsFieldset({dataLayoutBuilder});
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
-		const availableLanguageIds = [
-			...new Set([
-				...provider.props.availableLanguageIds,
-				editingLanguageId,
-			]),
-		];
-
-		DataLayoutBuilder.onLocaleChange({
-			availableLanguageIds,
-			dataLayoutBuilder,
+		dataLayoutBuilder.onEditingLanguageIdChange({
 			editingLanguageId,
-			focusedField,
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataLayoutBuilder, dispatch, editingLanguageId]);
+	}, [dataLayoutBuilder, editingLanguageId]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

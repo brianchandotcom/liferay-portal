@@ -20,6 +20,7 @@ import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;
 import com.liferay.application.list.PanelApp;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
@@ -114,11 +115,8 @@ public abstract class BaseAppDeployer implements AppDeployer {
 	protected ServiceTrackerMap<String, AppBuilderAppPortletTab>
 		appBuilderAppPortletTabServiceTrackerMap;
 	protected ServiceTrackerMap
-		<String,
-		 List
-			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <MVCResourceCommand>>>
-					appPortletMVCResourceCommandServiceTrackerMap;
+		<String, List<ServiceWrapper<MVCResourceCommand>>>
+			appPortletMVCResourceCommandServiceTrackerMap;
 	protected final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
 		serviceRegistrationsMap = new ConcurrentHashMap<>();
 

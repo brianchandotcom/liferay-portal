@@ -68,9 +68,9 @@ public class UpdateDataRecordMVCResourceCommand
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 
 		if (Validator.isNotNull(
-				ParamUtil.getLong(resourceRequest, "workflowInstanceId")) &&
+				ParamUtil.getString(resourceRequest, "transitionName")) &&
 			Validator.isNotNull(
-				ParamUtil.getLong(resourceRequest, "transitionName"))) {
+				ParamUtil.getLong(resourceRequest, "workflowInstanceId"))) {
 
 			WorkflowInstance workflowInstance =
 				_workflowInstanceManager.getWorkflowInstance(

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.io.IOException;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -169,14 +168,11 @@ public class AppPortlet extends MVCPortlet {
 			throw new PortletException(exception);
 		}
 
-		String resourceID = GetterUtil.getString(
-			resourceRequest.getResourceID());
-
 		Map<String, MVCResourceCommand> mvcResourceCommandMap =
 			_getMVCResourceCommands(_appBuilderApp);
 
 		MVCResourceCommand mvcResourceCommand = mvcResourceCommandMap.get(
-			resourceID);
+			GetterUtil.getString(resourceRequest.getResourceID()));
 
 		if (!Objects.isNull(mvcResourceCommand)) {
 			mvcResourceCommand.serveResource(resourceRequest, resourceResponse);
@@ -207,17 +203,10 @@ public class AppPortlet extends MVCPortlet {
 	private Map<String, MVCResourceCommand> _getMVCResourceCommands(
 		String scope) {
 
-		List<ServiceWrapper<MVCResourceCommand>>
-			mvcResourceCommandServiceWrappers =
-				_appPortletMVCResourceCommandServiceTrackerMap.getService(
-					scope);
-
-		if (Objects.isNull(mvcResourceCommandServiceWrappers)) {
-			return new HashMap<>();
-		}
-
 		return Stream.of(
-			mvcResourceCommandServiceWrappers
+			_appPortletMVCResourceCommandServiceTrackerMap.getService(scope)
+		).filter(
+			Objects::nonNull
 		).flatMap(
 			List::stream
 		).collect(

@@ -15,12 +15,16 @@
 package com.liferay.account.internal.model.listener.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupAccountEntryRelLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
+import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -108,6 +112,26 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	}
 
 	@Test
+	public void testAccountGroupAccountEntryRelDeleted() throws Exception {
+		_accountGroup = AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		_accountGroupAccountEntryRelLocalService.addAccountGroupAccountEntryRel(
+			_accountGroup.getAccountGroupId(),
+			_accountEntry.getAccountEntryId());
+
+		_accountEntryLocalService.deleteAccountEntry(
+			_accountEntry.getAccountEntryId());
+
+		Assert.assertEquals(
+			0,
+			_accountGroupAccountEntryRelLocalService.
+				getAccountGroupAccountEntryRelsCountByAccountGroupId(
+					_accountGroup.getAccountGroupId()));
+	}
+
+	@Test
 	public void testAccountRoleDeleted() throws Exception {
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
@@ -134,6 +158,16 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@DeleteAfterTestRun
+	private AccountGroup _accountGroup;
+
+	@Inject
+	private AccountGroupAccountEntryRelLocalService
+		_accountGroupAccountEntryRelLocalService;
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;

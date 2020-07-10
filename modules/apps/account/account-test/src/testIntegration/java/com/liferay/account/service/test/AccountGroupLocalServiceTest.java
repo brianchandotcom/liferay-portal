@@ -14,8 +14,12 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupAccountEntryRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -70,6 +74,26 @@ public class AccountGroupLocalServiceTest {
 			_addAccountGroup(),
 			accountGroup -> _accountGroupLocalService.deleteAccountGroup(
 				accountGroup.getAccountGroupId()));
+	}
+
+	@Test
+	public void testDeleteAccountGroupWithAccountGroupAccountEntryRel()
+		throws Exception {
+
+		AccountGroup accountGroup = _addAccountGroup();
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		_accountGroupAccountEntryRelLocalService.addAccountGroupAccountEntryRel(
+			accountGroup.getAccountGroupId(), accountEntry.getAccountEntryId());
+
+		_accountGroupLocalService.deleteAccountGroup(accountGroup);
+
+		Assert.assertEquals(
+			0,
+			_accountGroupAccountEntryRelLocalService.
+				getAccountGroupAccountEntryRelsCountByAccountGroupId(
+					accountGroup.getAccountGroupId()));
 	}
 
 	@Test
@@ -195,6 +219,13 @@ public class AccountGroupLocalServiceTest {
 			ListUtil.subList(expectedAccountGroups, start, start + delta),
 			actualAccountGroups);
 	}
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountGroupAccountEntryRelLocalService
+		_accountGroupAccountEntryRelLocalService;
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;

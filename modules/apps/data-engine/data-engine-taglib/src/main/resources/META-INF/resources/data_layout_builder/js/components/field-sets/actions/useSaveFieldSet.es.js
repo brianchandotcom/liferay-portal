@@ -29,7 +29,6 @@ export default ({
 	DataLayout,
 	availableLanguageIds,
 	childrenContext,
-	defaultLanguageId,
 	fieldSet: fieldSetDefault,
 }) => {
 	const [context, dispatch] = useContext(AppContext);
@@ -106,7 +105,7 @@ export default ({
 								},
 								{
 									name: 'label',
-									value: name[defaultLanguageId],
+									value: name,
 								},
 							],
 						});

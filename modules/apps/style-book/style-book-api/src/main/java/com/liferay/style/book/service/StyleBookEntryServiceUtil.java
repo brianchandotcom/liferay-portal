@@ -116,6 +116,15 @@ public class StyleBookEntryServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(
+				long styleBookEntryId, String name, String tokensValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntry(
+			styleBookEntryId, name, tokensValues);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
 			updateTokensValues(long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

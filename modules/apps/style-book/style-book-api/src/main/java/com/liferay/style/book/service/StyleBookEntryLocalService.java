@@ -209,6 +209,8 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry fetchStyleBookEntry(
 		long groupId, String styleBookEntryKey);
 
+	public String generateStyleBookEntryKey(long groupId, String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -287,6 +289,10 @@ public interface StyleBookEntryLocalService
 
 	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name, String tokensValues)
 		throws PortalException;
 
 	/**

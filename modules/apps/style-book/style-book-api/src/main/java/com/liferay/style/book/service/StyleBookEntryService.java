@@ -87,6 +87,10 @@ public interface StyleBookEntryService extends BaseService {
 			long styleBookEntryId, long previewFileEntryId)
 		throws PortalException;
 
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name, String tokensValues)
+		throws PortalException;
+
 	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException;

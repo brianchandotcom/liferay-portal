@@ -176,42 +176,44 @@ export default function Keywords({currentPage, languageTag}) {
 					</ClayList.ItemField>
 				</ClayList.Item>
 				{!publishedToday &&
-					countryKeywords.length > 0 &&
-					countryKeywords.map((k) => {
-						return (
-							<ClayList.Item flex key={k.keyword}>
-								<ClayList.ItemField expand>
-									<ClayList.ItemText>
-										<ClayTooltipProvider>
-											<span
-												className="text-truncate-inline"
-												data-tooltip-align="top"
-												title={k.keyword}
-											>
-												<span className="text-truncate">
-													{k.keyword}
+					keywords.map(
+						({keyword, position, searchVolume, traffic}) => {
+							return (
+								<ClayList.Item flex key={keyword}>
+									<ClayList.ItemField expand>
+										<ClayList.ItemText>
+											<ClayTooltipProvider>
+												<span
+													className="text-truncate-inline"
+													data-tooltip-align="top"
+													title={keyword}
+												>
+													<span className="text-truncate">
+														{keyword}
+													</span>
 												</span>
-											</span>
-										</ClayTooltipProvider>
-									</ClayList.ItemText>
-								</ClayList.ItemField>
-								<ClayList.ItemField expand>
-									<span className="align-self-end">
-										{numberFormat(
-											languageTag,
-											keywordValueType.name === 'traffic'
-												? k.traffic
-												: keywordValueType.name ===
-												  'volume'
-												? k.searchVolume
-												: k.position
-										)}
-									</span>
-								</ClayList.ItemField>
-							</ClayList.Item>
-						);
-					})}
-				{(publishedToday || countryKeywords.length === 0) && (
+											</ClayTooltipProvider>
+										</ClayList.ItemText>
+									</ClayList.ItemField>
+									<ClayList.ItemField expand>
+										<span className="align-self-end">
+											{numberFormat(
+												languageTag,
+												keywordValueType.name ===
+													'traffic'
+													? traffic
+													: keywordValueType.name ===
+													  'volume'
+													? searchVolume
+													: position
+											)}
+										</span>
+									</ClayList.ItemField>
+								</ClayList.Item>
+							);
+						}
+					)}
+				{(publishedToday || keywords.length === 0) && (
 					<ClayList.Item flex>
 						<ClayList.ItemField expand>
 							<ClayList.ItemText>

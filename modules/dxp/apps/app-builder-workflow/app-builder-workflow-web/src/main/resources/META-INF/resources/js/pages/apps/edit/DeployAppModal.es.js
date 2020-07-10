@@ -73,9 +73,9 @@ export default ({onCancel}) => {
 		onCancel();
 	};
 
-	const onError = ({title}) => {
+	const onError = ({errorMessage}) => {
 		onClose();
-		errorToast(title ? `${title}.` : title);
+		errorToast(`${errorMessage}`);
 		setDeploying(false);
 		setModalVisible(false);
 	};

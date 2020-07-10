@@ -15,6 +15,7 @@
 package com.liferay.app.builder.workflow.web.internal.portlet.action;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
+import com.liferay.app.builder.workflow.exception.DuplicateAppBuilderWorkflowTaskLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Optional;
 
@@ -67,6 +69,17 @@ public abstract class BaseAppBuilderAppMVCResourceCommand
 
 					return null;
 				});
+		}
+		catch (DuplicateAppBuilderWorkflowTaskLinkException
+					duplicateAppBuilderWorkflowTaskLinkException) {
+
+			_handleException(
+				language.get(
+					ResourceBundleUtil.getModuleAndPortalResourceBundle(
+						portal.getLocale(resourceRequest), getClass()),
+					"step-names-must-be-unique"),
+				resourceRequest, resourceResponse,
+				duplicateAppBuilderWorkflowTaskLinkException);
 		}
 		catch (PortalException portalException) {
 			_handleException(

@@ -28,12 +28,12 @@ jest.mock('app-builder-web/js/utils/client.es', () => ({
 	parseResponse: jest
 		.fn()
 		.mockReturnValueOnce({app: {appDeployments: [{type: 'standalone'}]}})
-		.mockRejectedValue({title: 'App name can not be null'}),
+		.mockRejectedValue({errorMessage: 'App name can not be null'}),
 }));
 
 jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	__esModule: true,
-	errorToast: (title) => mockToast(title),
+	errorToast: (errorMessage) => mockToast(errorMessage),
 	successToast: (title) => mockToast(title),
 }));
 

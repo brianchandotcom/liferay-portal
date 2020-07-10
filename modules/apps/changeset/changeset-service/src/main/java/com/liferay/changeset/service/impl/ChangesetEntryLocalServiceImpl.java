@@ -19,7 +19,6 @@ import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.base.ChangesetEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,49 +68,25 @@ public class ChangesetEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteChangesetEntries(long changesetCollectionId)
-		throws PortalException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"changesetCollectionId", changesetCollectionId)));
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
-				changesetEntry ->
-					changesetEntryLocalService.deleteChangesetEntry(
-						changesetEntry));
-
-		actionableDynamicQuery.performActions();
+	public void deleteChangesetEntries(long changesetCollectionId) {
+		changesetEntryPersistence.removeByChangesetCollectionId(
+			changesetCollectionId);
 	}
 
 	@Override
-	public void deleteChangesetEntries(Set<Long> changesetEntryIds)
-		throws PortalException {
-
+	public void deleteChangesetEntries(Set<Long> changesetEntryIds) {
 		if (SetUtil.isEmpty(changesetEntryIds)) {
 			return;
 		}
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		for (long changesetEntryId : changesetEntryIds) {
+			ChangesetEntry changesetEntry =
+				changesetEntryPersistence.fetchByPrimaryKey(changesetEntryId);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.in(
-					"changesetEntryId", changesetEntryIds)));
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
-				changesetEntry ->
-					changesetEntryLocalService.deleteChangesetEntry(
-						changesetEntry));
-
-		actionableDynamicQuery.performActions();
+			if (changesetEntry != null) {
+				changesetEntryPersistence.remove(changesetEntry);
+			}
+		}
 	}
 
 	@Override

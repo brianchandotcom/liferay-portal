@@ -45,6 +45,20 @@ export default function WorkflowBuilder() {
 				label: Liferay.Language.get('data-object'),
 			},
 		],
+		...steps
+			.filter(({initial}) => initial === undefined)
+			.map(({appWorkflowRoleAssignments = []}) =>
+				appWorkflowRoleAssignments.length > 0
+					? [
+							{
+								label: Liferay.Language.get('assignee'),
+								name: appWorkflowRoleAssignments
+									.map(({roleName}) => roleName)
+									.reduce((acc, cur) => `${acc}, ${cur}`),
+							},
+					  ]
+					: []
+			),
 	];
 
 	return (

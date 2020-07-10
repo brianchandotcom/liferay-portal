@@ -63,6 +63,10 @@ import ${import};
  */
 </#if>
 
+<#if entity.isChangeTrackingEnabled()>
+	@CTAware
+</#if>
+
 <#if classDeprecated>
 	@Deprecated
 </#if>
@@ -70,15 +74,9 @@ import ${import};
 <#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local")>
 	@AccessControlled
 
-	<#if entity.isChangeTrackingEnabled()>
-		@CTAware
-	</#if>
-
 	<#if entity.isJsonEnabled()>
 		@JSONWebService
 	</#if>
-<#elseif entity.isChangeTrackingEnabled()>
-	@CTAware
 </#if>
 
 <#if !dependencyInjectorDS>

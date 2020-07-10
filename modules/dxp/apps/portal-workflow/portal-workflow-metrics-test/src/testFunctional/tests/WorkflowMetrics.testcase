@@ -679,7 +679,9 @@ definition {
 	}
 
 	@description = "LRQA-53629 Automate LRQA-53629: Automate LPS-100679: [Performance] Change the order of the all steps performance list"
-	test ChangeStepOrder {
+	@priority = "5"
+	test ChangePerformanceByStepOrder {
+		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

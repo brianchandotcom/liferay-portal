@@ -120,6 +120,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 </div>
 
 <script type="text/javascript">
+	CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
+		languageId: themeDisplay.getLanguageId(),
+	};
+
 	CKEDITOR.disableAutoInline = true;
 
 	CKEDITOR.dtd.$removeEmpty.i = 0;

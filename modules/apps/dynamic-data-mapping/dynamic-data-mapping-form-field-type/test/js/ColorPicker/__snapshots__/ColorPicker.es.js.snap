@@ -121,11 +121,12 @@ exports[`Field Color Picker renders field with label 1`] = `
     class="form-group hide"
     data-field-name="colorPicker"
   >
-    <p
+    <label
       class="ddm-label"
+      for="colorPicker"
     >
       label
-    </p>
+    </label>
     <div
       class="clay-color-picker"
     >

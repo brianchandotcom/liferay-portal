@@ -5,11 +5,11 @@ exports[`Grid has a label 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       label
-    </p>
+    </label>
     <div
       class="table-responsive"
     >
@@ -380,11 +380,11 @@ exports[`Grid renders Label if showLabel is true 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       text
-    </p>
+    </label>
     <div
       class="table-responsive"
     >

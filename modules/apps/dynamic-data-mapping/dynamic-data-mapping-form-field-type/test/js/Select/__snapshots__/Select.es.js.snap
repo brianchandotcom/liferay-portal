@@ -698,11 +698,11 @@ exports[`Select has a label 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       label
-    </p>
+    </label>
     <select
       aria-label="select"
       class="form-control form-control"
@@ -1240,7 +1240,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       This is the label
@@ -1256,7 +1256,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
           />
         </svg>
       </span>
-    </p>
+    </label>
     <select
       aria-label="select"
       class="form-control form-control"
@@ -1324,11 +1324,11 @@ exports[`Select renders Label if showLabel is true 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       text
-    </p>
+    </label>
     <select
       aria-label="select"
       class="form-control form-control"

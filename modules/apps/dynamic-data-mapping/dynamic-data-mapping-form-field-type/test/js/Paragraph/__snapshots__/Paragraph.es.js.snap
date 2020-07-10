@@ -24,11 +24,12 @@ exports[`Field Paragraph has a label 1`] = `
     class="form-group hide"
     data-field-name="textField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="textField"
     >
       label
-    </p>
+    </label>
     <div
       class="form-group liferay-ddm-form-field-paragraph"
       data-field-name="textField"
@@ -137,11 +138,12 @@ exports[`Field Paragraph renders Label if showLabel is true 1`] = `
     class="form-group hide"
     data-field-name="textField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="textField"
     >
       text
-    </p>
+    </label>
     <div
       class="form-group liferay-ddm-form-field-paragraph"
       data-field-name="textField"

@@ -40,6 +40,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -60,11 +61,12 @@ exports[`Field DocumentLibrary has a label 1`] = `
     class="form-group hide"
     data-field-name="textField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="textField"
     >
       label
-    </p>
+    </label>
     <div
       class="liferay-ddm-form-field-document-library"
     >
@@ -99,6 +101,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -148,6 +151,7 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         placeholder="Placeholder"
         type="hidden"
@@ -198,6 +202,7 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -247,6 +252,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{\\"id\\":\\"123\\"}"
@@ -346,6 +352,7 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -395,6 +402,7 @@ exports[`Field DocumentLibrary is not required 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -410,11 +418,12 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     class="form-group hide"
     data-field-name="textField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="textField"
     >
       text
-    </p>
+    </label>
     <div
       class="liferay-ddm-form-field-document-library"
     >
@@ -449,6 +458,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       </div>
       <input
         class="form-control"
+        id="textField"
         name="textField"
         type="hidden"
         value="{}"

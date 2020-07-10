@@ -69,11 +69,12 @@ exports[`Field Radio has a label 1`] = `
     class="form-group hide"
     data-field-name="radioField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="radioField"
     >
       label
-    </p>
+    </label>
     <div
       class="ddm-radio"
     >
@@ -424,11 +425,12 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
     class="form-group hide"
     data-field-name="radioField"
   >
-    <p
+    <label
       class="ddm-label"
+      for="radioField"
     >
       text
-    </p>
+    </label>
     <div
       class="ddm-radio"
     >

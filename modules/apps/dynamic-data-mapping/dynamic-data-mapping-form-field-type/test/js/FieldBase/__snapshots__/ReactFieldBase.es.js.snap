@@ -49,11 +49,11 @@ exports[`ReactFieldBase renders the FieldBase with label 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       Text
-    </p>
+    </label>
   </div>
 </div>
 `;
@@ -63,7 +63,7 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
   <div
     class="form-group hide"
   >
-    <p
+    <label
       class="ddm-label"
     >
       <span
@@ -78,7 +78,7 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
           />
         </svg>
       </span>
-    </p>
+    </label>
   </div>
 </div>
 `;

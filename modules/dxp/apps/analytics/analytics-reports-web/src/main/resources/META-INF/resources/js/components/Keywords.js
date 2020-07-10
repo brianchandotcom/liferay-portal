@@ -60,14 +60,14 @@ export default function Keywords({currentPage, languageTag}) {
 		countries[0].countryCode
 	);
 
-	const countryKeywords = useMemo(() => {
-		const country =
+	const keywords = useMemo(() => {
+		const countryKeywords =
 			currentCountry &&
-			currentPage.data.countryKeywords.find((c) => {
-				return c.countryCode === currentCountry;
+			currentPage.data.countryKeywords.find((country) => {
+				return country.countryCode === currentCountry;
 			});
 
-		return country?.keywords ?? [];
+		return countryKeywords?.keywords ?? [];
 	}, [currentPage.data.countryKeywords, currentCountry]);
 
 	const handleCountrySelection = (event) => {

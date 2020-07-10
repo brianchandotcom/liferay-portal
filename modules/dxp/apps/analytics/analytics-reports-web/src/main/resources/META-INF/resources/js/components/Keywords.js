@@ -32,9 +32,7 @@ export default function Keywords({currentPage, languageTag}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const [keywordValueType, setKeywordValueType] = useState(
-		KEYWORD_VALUE_TYPE.find((keywordValueType) => {
-			return keywordValueType.name === 'traffic';
-		})
+		KEYWORD_VALUE_TYPE[0]
 	);
 
 	const [{publishedToday}] = useContext(StoreContext);
@@ -73,6 +71,15 @@ export default function Keywords({currentPage, languageTag}) {
 	const handleCountrySelection = (event) => {
 		const country = event.target.value;
 		setCurrentCountry(country);
+	};
+
+	const handleKeywordValueType = (valueTypeName) => {
+		const newKeywordValueType = KEYWORD_VALUE_TYPE.find(
+			(keywordValueType) => {
+				return keywordValueType.name === valueTypeName;
+			}
+		);
+		setKeywordValueType(newKeywordValueType);
 	};
 
 	return (
@@ -155,15 +162,8 @@ export default function Keywords({currentPage, languageTag}) {
 										}
 										key={index}
 										onClick={() => {
-											setKeywordValueType(
-												KEYWORD_VALUE_TYPE.find(
-													(keywordValueType) => {
-														return (
-															keywordValueType.name ===
-															valueType.name
-														);
-													}
-												)
+											handleKeywordValueType(
+												valueType.name
 											);
 											setIsDropdownOpen(false);
 										}}

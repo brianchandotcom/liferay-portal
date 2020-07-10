@@ -39,10 +39,10 @@ export default function Keywords({currentPage, languageTag}) {
 
 	const [{publishedToday}] = useContext(StoreContext);
 
-	const keywordsData = useMemo(() => {
+	const countries = useMemo(() => {
 		const dataKeys = new Set();
 
-		const countries = currentPage.data.countryKeywords.reduce(
+		return currentPage.data.countryKeywords.reduce(
 			(acc, {countryCode, countryName}) => {
 				if (dataKeys.has(countryCode)) {
 					return acc;
@@ -54,11 +54,7 @@ export default function Keywords({currentPage, languageTag}) {
 			},
 			[]
 		);
-
-		return {countries};
 	}, [currentPage.data.countryKeywords]);
-
-	const {countries} = keywordsData;
 
 	const [currentCountry, setCurrentCountry] = useState(
 		countries[0].countryCode

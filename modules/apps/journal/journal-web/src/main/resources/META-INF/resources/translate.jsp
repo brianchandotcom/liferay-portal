@@ -130,22 +130,47 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				<%
 				}
 
-				for (InfoField infoField : infoFields) {
+				for (InfoField<TextInfoFieldType> infoField : infoFields) {
 					String id = "infoField--" + infoField.getName() + "--";
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
+
+					String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
+					String targetContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
 				%>
 
 					<clay:row>
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" value="<%= journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale()) %>" />
+							<c:choose>
+								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
+									<liferay-editor:editor
+										contents="<%= sourceContent %>"
+										name='<%= label + "SourceEditor" %>'
+										placeholder="<%= label %>"
+									/>
+								</c:when>
+								<c:otherwise>
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" value="<%= sourceContent %>" />
+								</c:otherwise>
+							</c:choose>
 						</clay:col>
 
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale()) %>" />
+							<c:choose>
+								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
+									<liferay-editor:editor
+										contents="<%= targetContent %>"
+										name='<%= id + "TargetEditor" %>'
+										placeholder="<%= label %>"
+									/>
+								</c:when>
+								<c:otherwise>
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" value="<%= targetContent %>" />
+								</c:otherwise>
+							</c:choose>
 						</clay:col>
 					</clay:row>
 

@@ -151,7 +151,7 @@ public class JournalTranslateDisplayContext {
 		return _sourceLocale;
 	}
 
-	public Object getStringValue(InfoField infoField, Locale locale) {
+	public String getStringValue(InfoField infoField, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
 			_infoItemFieldValues.getInfoFieldValue(infoField.getName());
 

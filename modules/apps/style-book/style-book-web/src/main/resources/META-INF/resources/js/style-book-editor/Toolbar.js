@@ -28,9 +28,18 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useContext} from 'react';
+
+import {StyleBookContext} from './StyleBookContext';
 
 export default function Toolbar() {
+	const {publishURL} = useContext(StyleBookContext);
+
+	const onClick = () => {
+		fetch(publishURL, {method: 'POST'});
+	};
+
 	return (
 		<div className="p-3 style-book-editor__toolbar">
 			<div>
@@ -42,7 +51,7 @@ export default function Toolbar() {
 					Draft Saved
 				</span>
 			</div>
-			<ClayButton displayType="primary" small>
+			<ClayButton displayType="primary" onClick={onClick} small>
 				Publish
 			</ClayButton>
 		</div>

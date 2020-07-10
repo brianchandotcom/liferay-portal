@@ -39,6 +39,12 @@
 	<td>//div[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='${key_assetItem}']/..</td>
 	<td></td>
 </tr>
+<!--CONTENT-->
+<tr>
+  <td>ASSET_ENTRY</td>
+  <td>//div[contains(@class,'item-body') and contains(.,'${key_entryTitle}')]</td>
+  <td></td>
+</tr>
 </tbody>
 </table>
 </body>

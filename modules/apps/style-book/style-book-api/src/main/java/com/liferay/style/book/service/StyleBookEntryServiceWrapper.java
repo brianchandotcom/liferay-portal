@@ -117,6 +117,15 @@ public class StyleBookEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name, String tokensValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.updateStyleBookEntry(
+			styleBookEntryId, name, tokensValues);
+	}
+
+	@Override
 	public com.liferay.style.book.model.StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws com.liferay.portal.kernel.exception.PortalException {

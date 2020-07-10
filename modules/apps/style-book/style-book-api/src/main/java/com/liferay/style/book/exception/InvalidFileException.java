@@ -19,22 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateStyleBookEntryNameKeyException extends PortalException {
+public class InvalidFileException extends PortalException {
 
-	public DuplicateStyleBookEntryNameKeyException() {
+	public InvalidFileException() {
 	}
 
-	public DuplicateStyleBookEntryNameKeyException(String msg) {
+	public InvalidFileException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateStyleBookEntryNameKeyException(
-		String msg, Throwable cause) {
-
+	public InvalidFileException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DuplicateStyleBookEntryNameKeyException(Throwable cause) {
+	public InvalidFileException(Throwable cause) {
 		super(cause);
 	}
 

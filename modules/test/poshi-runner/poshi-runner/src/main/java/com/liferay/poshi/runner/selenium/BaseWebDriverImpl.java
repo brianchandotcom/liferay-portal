@@ -1012,7 +1012,24 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
 
-		javascriptExecutor.executeScript(javaScript, argument1, argument2);
+		Object object1 = null;
+		Object object2 = null;
+
+		try {
+			object1 = getWebElement(argument1);
+		}
+		catch (RuntimeException runtimeException) {
+			object1 = argument1;
+		}
+
+		try {
+			object2 = getWebElement(argument2);
+		}
+		catch (RuntimeException runtimeException) {
+			object2 = argument2;
+		}
+
+		javascriptExecutor.executeScript(javaScript, object1, object2);
 	}
 
 	@Override

@@ -163,7 +163,12 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "${dmRepositoryName}");
 
-		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		if (isSet(guest)) {
+			AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
+		}
+		else {
+			AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		}
 	}
 
 	macro gotoShare {

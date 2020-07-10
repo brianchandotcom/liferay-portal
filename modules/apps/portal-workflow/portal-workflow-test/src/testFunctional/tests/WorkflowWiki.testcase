@@ -44,6 +44,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
 			WikiNode.tearDownCP();
 
 			WikiPage.tearDownCP();
@@ -55,8 +59,6 @@ definition {
 			Workflow.tearDownSiteWorkflow();
 		}
 	}
-
-	// Quarantine flaky test under ticket LPS-108480
 
 	@priority = "5"
 	test ApproveFrontPageUserEdit {
@@ -102,6 +104,8 @@ definition {
 
 		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
 
+		Refresh();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewMySubmissions(
@@ -137,6 +141,8 @@ definition {
 			wikiPageContent = "Front Page Wiki Content",
 			wikiPageTitle = "FrontPage");
 
+		Refresh();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewCannotWithdrawTaskByActions(
@@ -152,6 +158,7 @@ definition {
 
 	@priority = "4"
 	test RejectFrontPageUserEdit {
+
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -192,6 +199,8 @@ definition {
 
 		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
 
+		Refresh();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewMySubmissions(
@@ -223,6 +232,8 @@ definition {
 		Navigator.gotoPage(pageName = "Wiki Page");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		Refresh();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 

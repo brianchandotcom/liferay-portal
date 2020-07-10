@@ -17,12 +17,16 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -67,6 +71,37 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		DropdownItemList dropdownItemList = DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setActive(_isEverywhereScopeFilter());
+							dropdownItem.setHref(
+								getPortletURL(), "scope", "everywhere");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "everywhere"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setActive(!_isEverywhereScopeFilter());
+							dropdownItem.setHref(
+								getPortletURL(), "scope", "current");
+							dropdownItem.setLabel(_getCurrentScopeLabel());
+						}
+					).build());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(request, "filter-by-location"));
+			}
+		).build();
+
+		dropdownItemList.addAll(super.getFilterDropdownItems());
+
+		return dropdownItemList;
 	}
 
 	@Override
@@ -146,6 +181,34 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 		}
 
 		return orderColumns;
+	}
+
+	private String _getCurrentScopeLabel() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isSite()) {
+			return LanguageUtil.get(request, "current-site");
+		}
+
+		if (group.isOrganization()) {
+			return LanguageUtil.get(request, "current-organization");
+		}
+
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			return LanguageUtil.get(request, "current-asset-library");
+		}
+
+		return LanguageUtil.get(request, "current-scope");
+	}
+
+	private boolean _isEverywhereScopeFilter() {
+		if (Objects.equals(
+				ParamUtil.getString(request, "scope"), "everywhere")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final JournalArticleItemSelectorViewDisplayContext

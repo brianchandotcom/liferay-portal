@@ -81,8 +81,7 @@ definition {
 		task ("Add the section fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Fragment Name",
-				fragmentOrder = "18");
+				fragmentName = "Fragment Name");
 		}
 
 		task ("Publish the content page") {

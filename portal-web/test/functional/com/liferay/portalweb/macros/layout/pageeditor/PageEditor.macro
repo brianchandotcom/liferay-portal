@@ -645,6 +645,10 @@ definition {
 
 		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 
+		Click.clickNoMouseOver(
+			key_elementType = "Collection Display",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -718,6 +722,10 @@ definition {
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
+
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -1165,7 +1173,7 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		Click(
+		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
@@ -1185,6 +1193,10 @@ definition {
 				key_rowPosition = "${rowPosition}",
 				locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
 		}
+
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro gotoDuplicate {
@@ -1247,6 +1259,10 @@ definition {
 
 	macro gotoSelectPanel {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		Click(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 

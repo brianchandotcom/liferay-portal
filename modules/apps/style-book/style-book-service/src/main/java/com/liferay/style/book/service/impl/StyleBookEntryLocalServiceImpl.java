@@ -268,6 +268,22 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name, String tokensValues)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		_validate(name);
+
+		styleBookEntry.setName(name);
+		styleBookEntry.setTokensValues(tokensValues);
+
+		return styleBookEntryPersistence.update(styleBookEntry);
+	}
+
+	@Override
 	public StyleBookEntry updateTokensValues(
 			long styleBookEntryId, String tokensValue)
 		throws PortalException {

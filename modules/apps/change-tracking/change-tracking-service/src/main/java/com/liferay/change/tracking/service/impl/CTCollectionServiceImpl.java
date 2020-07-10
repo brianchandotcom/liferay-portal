@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.closure.CTClosure;
+import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEnclosureException;
@@ -23,8 +25,6 @@ import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.reference.closure.CTClosure;
-import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;

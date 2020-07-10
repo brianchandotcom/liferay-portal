@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference.closure;
+package com.liferay.change.tracking.closure;
 
 import java.util.List;
 import java.util.Map;

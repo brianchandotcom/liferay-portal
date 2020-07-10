@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.closure;
+package com.liferay.change.tracking.internal.closure;
 
+import com.liferay.change.tracking.closure.CTClosure;
+import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceDefinitionManager;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.reference.closure.CTClosure;
-import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;

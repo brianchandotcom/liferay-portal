@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference.closure;
+package com.liferay.change.tracking.closure;
 
 /**
  * @author Preston Crary

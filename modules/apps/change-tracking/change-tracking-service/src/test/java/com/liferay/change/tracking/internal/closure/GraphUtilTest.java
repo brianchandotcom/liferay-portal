@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.closure;
+package com.liferay.change.tracking.internal.closure;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.HashMapBuilder;

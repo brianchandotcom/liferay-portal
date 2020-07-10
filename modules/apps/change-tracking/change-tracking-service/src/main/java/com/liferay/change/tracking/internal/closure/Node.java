@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.closure;
+package com.liferay.change.tracking.internal.closure;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
-import java.util.Objects;
-
 /**
  * @author Preston Crary
  */
-public class Edge {
+public class Node {
 
-	public Edge(Node fromNode, Node toNode) {
-		_fromNode = fromNode;
-		_toNode = toNode;
+	public static final Node ROOT_NODE = new Node(0, 0);
+
+	public Node(long classNameId, long primaryKey) {
+		_classNameId = classNameId;
+		_primaryKey = primaryKey;
 	}
 
 	@Override
@@ -35,14 +35,14 @@ public class Edge {
 			return true;
 		}
 
-		if (!(object instanceof Edge)) {
+		if (!(object instanceof Node)) {
 			return false;
 		}
 
-		Edge edge = (Edge)object;
+		Node node = (Node)object;
 
-		if (Objects.equals(_fromNode, edge._fromNode) &&
-			Objects.equals(_toNode, edge._toNode)) {
+		if ((_classNameId == node._classNameId) &&
+			(_primaryKey == node._primaryKey)) {
 
 			return true;
 		}
@@ -50,27 +50,28 @@ public class Edge {
 		return false;
 	}
 
-	public Node getFromNode() {
-		return _fromNode;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public Node getToNode() {
-		return _toNode;
+	public long getPrimaryKey() {
+		return _primaryKey;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _fromNode);
+		int hash = HashUtil.hash(0, _classNameId);
 
-		return HashUtil.hash(hash, _toNode);
+		return HashUtil.hash(hash, _primaryKey);
 	}
 
 	@Override
 	public String toString() {
-		return StringBundler.concat(_fromNode, " -> ", _toNode);
+		return StringBundler.concat(
+			"{classNameId=", _classNameId, ", primaryKey=", _primaryKey, "}");
 	}
 
-	private final Node _fromNode;
-	private final Node _toNode;
+	private final long _classNameId;
+	private final long _primaryKey;
 
 }

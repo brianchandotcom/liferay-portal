@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
-import com.liferay.change.tracking.reference.closure.CTClosure;
+import com.liferay.change.tracking.closure.CTClosure;
 
 import java.util.AbstractMap;
 import java.util.Collections;

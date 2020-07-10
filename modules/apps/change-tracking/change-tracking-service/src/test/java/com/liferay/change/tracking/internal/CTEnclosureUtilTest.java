@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.internal;
 
-import com.liferay.change.tracking.internal.reference.closure.CTClosureImpl;
-import com.liferay.change.tracking.internal.reference.closure.Edge;
-import com.liferay.change.tracking.internal.reference.closure.GraphUtil;
-import com.liferay.change.tracking.internal.reference.closure.Node;
-import com.liferay.change.tracking.reference.closure.CTClosure;
+import com.liferay.change.tracking.closure.CTClosure;
+import com.liferay.change.tracking.internal.closure.CTClosureImpl;
+import com.liferay.change.tracking.internal.closure.Edge;
+import com.liferay.change.tracking.internal.closure.GraphUtil;
+import com.liferay.change.tracking.internal.closure.Node;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 

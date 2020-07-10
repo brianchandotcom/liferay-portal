@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.closure;
+package com.liferay.change.tracking.internal.closure;
 
 import java.util.Collection;
 import java.util.Deque;

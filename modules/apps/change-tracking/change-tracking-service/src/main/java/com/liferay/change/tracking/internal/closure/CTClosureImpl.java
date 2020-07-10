@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.closure;
+package com.liferay.change.tracking.internal.closure;
 
-import com.liferay.change.tracking.reference.closure.CTClosure;
+import com.liferay.change.tracking.closure.CTClosure;
 
 import java.util.ArrayList;
 import java.util.Collection;

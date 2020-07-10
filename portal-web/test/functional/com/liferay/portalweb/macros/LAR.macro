@@ -591,7 +591,7 @@ definition {
 	macro moveToTheRecycleBinExportTemplate {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro openExportAdmin {

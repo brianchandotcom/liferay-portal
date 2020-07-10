@@ -248,7 +248,7 @@ definition {
 
 		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro addMultiplePG {
@@ -291,7 +291,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		Alert.closeMessage(messageType = "SUCCESS");
 	}
@@ -714,7 +714,7 @@ definition {
 	macro deletePGViaMG {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(
 			key_mgDocumentTitle = "${mgDocumentTitle}",
@@ -732,7 +732,7 @@ definition {
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro downloadCP {
@@ -1261,7 +1261,7 @@ definition {
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC")) {
 			AssertTextEquals(
@@ -1571,7 +1571,7 @@ definition {
 		else {
 			AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION_LOCKED");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 	}
 
@@ -1594,7 +1594,7 @@ definition {
 			locator1 = "Button#EDIT",
 			value1 = "Edit");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro viewCP {

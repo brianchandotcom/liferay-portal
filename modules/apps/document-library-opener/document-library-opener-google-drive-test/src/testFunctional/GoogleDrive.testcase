@@ -40,7 +40,7 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

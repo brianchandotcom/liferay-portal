@@ -215,7 +215,7 @@ definition {
 
 		Button.clickSave();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		Navigator.gotoNavItem(navItem = "Approved");
 
@@ -519,7 +519,7 @@ definition {
 		if (isSet(localizedSuccessMessage)) {
 			var localizedSuccessMessage = "${localizedSuccessMessage}";
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 		else {
 			Alert.viewSuccessMessage();

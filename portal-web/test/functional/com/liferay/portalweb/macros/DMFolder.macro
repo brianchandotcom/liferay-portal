@@ -185,7 +185,7 @@ definition {
 		else {
 			PortletEntry.clickMoveToRecycleBin();
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 	}
 
@@ -200,7 +200,7 @@ definition {
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON");
 	}
@@ -341,7 +341,7 @@ definition {
 
 		PortletEntry.clickMoveToRecycleBin();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -409,7 +409,7 @@ definition {
 				locator1 = "MediaGallery#ENTRY_RECYCLE_BIN_ICON",
 				value1 = "Move to Recycle Bin");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		Navigator.openURL();

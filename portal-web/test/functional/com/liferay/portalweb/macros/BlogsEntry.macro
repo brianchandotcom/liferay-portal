@@ -406,7 +406,7 @@ definition {
 			entryTitle = "${entryTitle}",
 			item = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
 
@@ -585,7 +585,7 @@ definition {
 
 			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		Navigator.openURL();

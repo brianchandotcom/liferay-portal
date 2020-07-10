@@ -193,7 +193,7 @@ definition {
 			key_menuItem = "Move to Recycle Bin",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro openBlogsAdmin {

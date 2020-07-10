@@ -8,7 +8,7 @@ definition {
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro gotoViaNotification {

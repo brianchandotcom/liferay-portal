@@ -87,7 +87,7 @@ definition {
 
 		Button.clickPublish();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -906,7 +906,7 @@ definition {
 
 		Button.clickPublish();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -984,7 +984,7 @@ definition {
 
 		Button.clickPublish();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
 			entry = "Fragment Name 2",

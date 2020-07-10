@@ -375,7 +375,7 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -458,7 +458,7 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",

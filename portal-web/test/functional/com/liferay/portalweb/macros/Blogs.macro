@@ -490,7 +490,7 @@ definition {
 
 			Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		Navigator.openURL();

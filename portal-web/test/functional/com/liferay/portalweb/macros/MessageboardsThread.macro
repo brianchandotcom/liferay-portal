@@ -342,7 +342,7 @@ definition {
 
 		MenuItem.click(menuItem = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(locator1 = "MessageBoards#THREAD_LIST_THREAD");
 	}
@@ -628,7 +628,7 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals.assertText(
 			locator1 = "Message#EMPTY_INFO",
@@ -890,7 +890,7 @@ definition {
 				locator1 = "MessageBoardsAdmin#THREADS_RECYCLE_BIN_BUTTON",
 				value1 = "Move to Recycle Bin");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		Navigator.openURL();

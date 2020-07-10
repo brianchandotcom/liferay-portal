@@ -636,7 +636,7 @@ definition {
 
 		PortletEntry.clickMoveToRecycleBin();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro deleteFrontPagePGViaWD {
@@ -646,7 +646,7 @@ definition {
 
 		PortletEntry.clickMoveToRecycleBin();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WikiTable#ALL_PAGES_REVISION",
@@ -668,7 +668,7 @@ definition {
 
 		PortletEntry.clickMoveToRecycleBin();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		if ("${wikiPageTitle}" == "FrontPage") {
 			AssertTextEquals(
@@ -834,7 +834,7 @@ definition {
 			locator1 = "Link#MARK_AS_SPAM",
 			value1 = "Mark as Spam");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
@@ -846,7 +846,7 @@ definition {
 
 		PortletEntry.clickMoveToRecycleBin();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro removeAttachmentViaPageEdit {
@@ -1059,7 +1059,7 @@ definition {
 		while (IsTextNotEqual(locator1 = "WikiTable#ALL_PAGES_REVISION", value1 = "1.0 (Minor Edit)")) {
 			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS_2")) {
@@ -1067,7 +1067,7 @@ definition {
 
 			PortletEntry.clickMoveToRecycleBin();
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		Navigator.openURL();

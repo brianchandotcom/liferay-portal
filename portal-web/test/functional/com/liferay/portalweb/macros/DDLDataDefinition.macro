@@ -95,7 +95,7 @@ definition {
 			locator1 = "Button#COPY",
 			value1 = "Copy");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		DDLDataDefinition.viewName(ddlDataDefinitionName = "${ddlDataDefinitionCopyName}");
 	}

@@ -690,7 +690,7 @@ definition {
 			locator1 = "Button#PUBLISH_LOCALIZED",
 			value1 = "Publicar");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro enableSocialBookmarkSites {

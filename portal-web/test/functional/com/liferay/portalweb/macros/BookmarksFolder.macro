@@ -139,7 +139,7 @@ definition {
 
 		MenuItem.click(menuItem = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		Navigator.openURL();
 
@@ -273,7 +273,7 @@ definition {
 			menuItem = "Move to Recycle Bin",
 			rowEntry = "${subfolderName}");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro moveToRecycleBinCP {
@@ -292,7 +292,7 @@ definition {
 			menuItem = "Move to Recycle Bin",
 			rowEntry = "${folderName}");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro subscribePG {
@@ -322,7 +322,7 @@ definition {
 
 			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 		}

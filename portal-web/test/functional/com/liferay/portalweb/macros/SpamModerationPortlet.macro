@@ -12,7 +12,7 @@ definition {
 
 			AssertConfirm(value1 = "Are you sure you want to mark the selected pages not spam?");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 	}
 

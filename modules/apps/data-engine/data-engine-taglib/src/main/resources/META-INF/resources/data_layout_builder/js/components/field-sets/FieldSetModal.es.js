@@ -227,9 +227,7 @@ const ModalContent = ({
 				<div className="pl-4 pr-4">
 					<App
 						{...appProps}
-						availableLanguageIds={availableLanguageIds}
 						dataLayoutBuilderId={`${appProps.dataLayoutBuilderId}_2`}
-						editingLanguageId={editingLanguageId}
 						setChildrenContext={setChildrenContext}
 						{...childrenAppProps}
 					/>

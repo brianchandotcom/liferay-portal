@@ -71,6 +71,20 @@ export function populateConfigData([app, workflowApp]) {
 					),
 				};
 
+				workflowApp.appWorkflowTasks.forEach((task) => {
+					task.appWorkflowDataLayoutLinks = task.appWorkflowDataLayoutLinks.map(
+						(item) => {
+							const {name} = parseItem(
+								formViews.find(
+									({id}) => id === item.dataLayoutId
+								)
+							);
+
+							return {...item, name};
+						}
+					);
+				});
+
 				resolve([app, workflowApp, config]);
 			})
 			.catch(reject);

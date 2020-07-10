@@ -2253,6 +2253,10 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -2327,6 +2331,10 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2661,6 +2669,10 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -2775,6 +2787,10 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

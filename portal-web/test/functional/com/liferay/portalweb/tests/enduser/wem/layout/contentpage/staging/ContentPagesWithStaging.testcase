@@ -294,6 +294,10 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
+		Click.clickNoMouseOver(
+			key_elementType = "Collection Display",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -325,6 +329,10 @@ definition {
 		}
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Collection Display",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
@@ -744,7 +752,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

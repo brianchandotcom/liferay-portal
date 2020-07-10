@@ -31,7 +31,7 @@ definition {
 
 		Select(
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "Any");
+			value1 = "All Types");
 
 		Panel.expandPanel(panel = "Filter");
 

@@ -126,6 +126,54 @@ definition {
 		AssertConsoleTextPresent(value1 = "TestSiteRole");
 	}
 
+	@description = "This is a use case for LPS-105165"
+	@priority = "5"
+	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
+		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "SAML Configuration",
+			configurationScope = "System Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable Identity Provider Role To Be Configured");
+
+		SystemSettings.saveConfiguration();
+
+		GlobalMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		GlobalMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		MouseOver(locator1 = "Icon#TOOLTIP");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#TOOLTIP",
+			value1 = "The identity provider role has been disabled. It can be re-enabled in System Settings.");
+	}
+
 	@ignore = "true"
 	@priority = "4"
 	test AssertKeepAliveToKeepMySAMLSessionAlive {

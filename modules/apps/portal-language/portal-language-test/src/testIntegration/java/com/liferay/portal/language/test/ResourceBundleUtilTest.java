@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -68,14 +67,11 @@ public class ResourceBundleUtilTest {
 
 			Set<String> portalKeys = portalResourceBundle.keySet();
 
-			for (ResourceBundleLoader resourceBundleLoader :
-					serviceTrackerList) {
-
-				_testGetString(
+			serviceTrackerList.forEach(
+				resourceBundleLoader -> _testGetString(
 					resourceBundleLoader.loadResourceBundle(
 						_UNSUPPORTED_LOCALE),
-					portalKeys);
-			}
+					portalKeys));
 		}
 	}
 
@@ -90,22 +86,20 @@ public class ResourceBundleUtilTest {
 
 		keys.removeAll(excludedKeys);
 
-		if (keys.isEmpty()) {
-			return;
-		}
+		keys.forEach(
+			key -> {
+				String value = ResourceBundleUtil.getString(
+					resourceBundle, key);
 
-		Iterator<String> iterator = keys.iterator();
-
-		String value = ResourceBundleUtil.getString(
-			resourceBundle, iterator.next());
-
-		Assert.assertFalse(
-			value + " should not contain " + LanguageBuilderUtil.AUTOMATIC_COPY,
-			value.endsWith(LanguageBuilderUtil.AUTOMATIC_COPY));
-		Assert.assertFalse(
-			value + " should not contain " +
-				LanguageBuilderUtil.AUTOMATIC_TRANSLATION,
-			value.endsWith(LanguageBuilderUtil.AUTOMATIC_TRANSLATION));
+				Assert.assertFalse(
+					value + " should not contain " +
+						LanguageBuilderUtil.AUTOMATIC_COPY,
+					value.endsWith(LanguageBuilderUtil.AUTOMATIC_COPY));
+				Assert.assertFalse(
+					value + " should not contain " +
+						LanguageBuilderUtil.AUTOMATIC_TRANSLATION,
+					value.endsWith(LanguageBuilderUtil.AUTOMATIC_TRANSLATION));
+			});
 	}
 
 	private static final Locale _UNSUPPORTED_LOCALE = new Locale("en", "GB");

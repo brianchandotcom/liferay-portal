@@ -142,39 +142,6 @@ function TopperContent({
 
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
-	const [isInset, setIsInset] = useState(false);
-	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
-
-	useEffect(() => {
-		const handleWindowScroll = () => {
-			setWindowScrollPosition(window.scrollY);
-		};
-
-		window.addEventListener('scroll', handleWindowScroll);
-
-		return () => {
-			window.removeEventListener('scroll', handleWindowScroll);
-		};
-	}, []);
-
-	useEffect(() => {
-		if (itemElement) {
-			const itemTop =
-				itemElement.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
-
-			const controlMenuContainerHeight =
-				document.querySelector('.control-menu-container')
-					?.offsetHeight ?? 0;
-
-			if (itemTop < controlMenuContainerHeight) {
-				setIsInset(true);
-			}
-			else {
-				setIsInset(false);
-			}
-		}
-	}, [itemElement, layoutData, windowScrollPosition]);
-
 	const notDroppableMessage =
 		isOverTarget && !canDropOverTarget
 			? Liferay.Util.sub(
@@ -232,13 +199,10 @@ function TopperContent({
 			}}
 			ref={canUpdatePageStructure ? handlerRef : null}
 		>
-			<div
-				className={classNames('page-editor__topper__bar', 'tbar', {
-					'page-editor__topper__bar--inset': isInset,
-					'page-editor__topper__bar--mapped': itemIsMappedCollection(
-						item
-					),
-				})}
+			<TopperLabel
+				isActive={isActive}
+				item={item}
+				itemElement={itemElement}
 			>
 				<ul className="tbar-nav">
 					<TopperListItem className="page-editor__topper__drag-handler">
@@ -284,7 +248,8 @@ function TopperContent({
 						</TopperListItem>
 					)}
 				</ul>
-			</div>
+			</TopperLabel>
+
 			<div className="page-editor__topper__content" ref={targetRef}>
 				{React.cloneElement(children, {
 					data: notDroppableMessage
@@ -295,6 +260,56 @@ function TopperContent({
 					withinTopper: true,
 				})}
 			</div>
+		</div>
+	);
+}
+
+function TopperLabel({children, isActive, item, itemElement}) {
+	const [isInset, setIsInset] = useState(false);
+	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
+
+	useEffect(() => {
+		if (isActive) {
+			const handleWindowScroll = () => {
+				setWindowScrollPosition(window.scrollY);
+			};
+
+			window.addEventListener('scroll', handleWindowScroll);
+
+			return () => {
+				window.removeEventListener('scroll', handleWindowScroll);
+			};
+		}
+	}, [isActive]);
+
+	useEffect(() => {
+		if (itemElement && isActive) {
+			const itemTop =
+				itemElement.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
+
+			const controlMenuContainerHeight =
+				document.querySelector('.control-menu-container')
+					?.offsetHeight ?? 0;
+
+			if (itemTop < controlMenuContainerHeight) {
+				setIsInset(true);
+			}
+			else {
+				setIsInset(false);
+			}
+		}
+	}, [isActive, itemElement, windowScrollPosition]);
+
+	return (
+		<div
+			className={classNames('page-editor__topper__bar', 'tbar', {
+				'page-editor__topper__bar--inset': isInset,
+				'page-editor__topper__bar--mapped': itemIsMappedCollection(
+					item
+				),
+			})}
+		>
+			{children}
 		</div>
 	);
 }

@@ -12,19 +12,33 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import {fetch, objectToFormData} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import PagePreview from './PagePreview';
 import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
 
 const StyleBookEditor = ({
+	namespace,
 	publishURL,
 	saveDraftURL,
 	tokenCategories,
 	tokenValues: initialTokenValues,
 }) => {
 	const [tokenValues, setTokenValues] = useState(initialTokenValues);
+
+	useEffect(() => {
+		if (tokenValues === initialTokenValues) {
+			return;
+		}
+
+		const body = objectToFormData({
+			[`${namespace}tokenValues`]: JSON.stringify(tokenValues),
+		});
+
+		fetch(saveDraftURL, {body, method: 'post'});
+	}, [initialTokenValues, namespace, saveDraftURL, tokenValues]);
 
 	return (
 		<StyleBookContextProvider

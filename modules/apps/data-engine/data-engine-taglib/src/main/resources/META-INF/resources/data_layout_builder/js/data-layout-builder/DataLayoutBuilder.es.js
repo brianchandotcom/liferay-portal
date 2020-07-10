@@ -451,6 +451,41 @@ class DataLayoutBuilder extends React.Component {
 		this.eventEmitter.on(eventName, listener);
 	}
 
+	onEditingLanguageIdChange({
+		editingLanguageId,
+		defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	}) {
+		const layoutProvider = this.getLayoutProvider();
+		const availableLanguageIds = [
+			...new Set([
+				...layoutProvider.props.availableLanguageIds,
+				editingLanguageId,
+			]),
+		];
+		const focusedField = layoutProvider.getFocusedField();
+
+		layoutProvider.props = {
+			...layoutProvider.props,
+			availableLanguageIds,
+			editingLanguageId,
+		};
+
+		this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
+			...this.formBuilderWithLayoutProvider.props.layoutProviderProps,
+			availableLanguageIds,
+			defaultLanguageId,
+			editingLanguageId,
+		};
+
+		this.formBuilderWithLayoutProvider.props.layoutProviderProps = this.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
+
+		if (Object.keys(focusedField).length) {
+			layoutProvider
+				.getEvents()
+				.fieldClicked({activePage: 0, ...focusedField});
+		}
+	}
+
 	removeEventListener(eventName, listener) {
 		this.eventEmitter.removeListener(eventName, listener);
 	}
@@ -653,35 +688,5 @@ class DataLayoutBuilder extends React.Component {
 	}
 }
 
-const onLocaleChange = ({
-	availableLanguageIds,
-	dataLayoutBuilder,
-	editingLanguageId,
-	focusedField = {},
-}) => {
-	const provider = dataLayoutBuilder.getLayoutProvider();
-
-	provider.props = {
-		...provider.props,
-		availableLanguageIds,
-		editingLanguageId,
-	};
-
-	dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps = {
-		...dataLayoutBuilder.formBuilderWithLayoutProvider.props
-			.layoutProviderProps,
-		availableLanguageIds,
-		defaultLanguageId: themeDisplay.getDefaultLanguageId(),
-		editingLanguageId,
-	};
-
-	dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps =
-		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
-
-	if (Object.keys(focusedField).length) {
-		provider.getEvents().fieldClicked({activePage: 0, ...focusedField});
-	}
-};
-
 export default DataLayoutBuilder;
-export {DataLayoutBuilder, onLocaleChange};
+export {DataLayoutBuilder};

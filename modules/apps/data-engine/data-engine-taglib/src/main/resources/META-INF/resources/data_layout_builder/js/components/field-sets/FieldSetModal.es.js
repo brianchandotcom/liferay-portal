@@ -104,6 +104,12 @@ const ModalContent = ({
 		}
 	}, [dataLayoutBuilder, mergedDataDefinitionFields]);
 
+	useEffect(() => {
+		if (dataLayoutBuilder) {
+			dataLayoutBuilder.onEditingLanguageIdChange({editingLanguageId});
+		}
+	}, [dataLayoutBuilder, editingLanguageId]);
+
 	const createFieldSet = useCreateFieldSet({
 		availableLanguageIds,
 		childrenContext,

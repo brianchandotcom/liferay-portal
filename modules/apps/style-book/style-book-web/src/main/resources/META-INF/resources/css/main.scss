@@ -45,4 +45,30 @@ $controlMenuDesktopHeight: 56px;
 		color: $success;
 		font-size: 0.75rem;
 	}
+
+	&__sidebar-collapse {
+		cursor: pointer;
+
+		.collapse-icon {
+			background: none;
+			border: 0;
+			color: $gray-600;
+			font-size: 0.7rem;
+			height: 2rem;
+			margin-bottom: 4px;
+			padding-left: 0;
+			text-align: left;
+			width: 100%;
+
+			&-closed {
+				.rtl & {
+					transform: rotate(-180deg);
+				}
+			}
+		}
+
+		.sheet-subtitle {
+			line-height: inherit;
+		}
+	}
 }

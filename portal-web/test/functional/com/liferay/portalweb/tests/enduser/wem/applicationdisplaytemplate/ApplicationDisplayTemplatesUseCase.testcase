@@ -593,7 +593,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Design",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.addCP(
@@ -626,7 +626,7 @@ definition {
 			siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Design",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.addCP(
@@ -644,7 +644,7 @@ definition {
 		ProductMenu.gotoLiveSite(site = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Design",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");

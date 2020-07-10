@@ -90,7 +90,18 @@ export default ({onCancel}) => {
 				workflowAppSteps.shift(),
 				workflowAppSteps.pop(),
 			],
-			appWorkflowTasks: workflowAppSteps,
+			appWorkflowTasks: workflowAppSteps.map(
+				({appWorkflowDataLayoutLinks, ...restProps}) => ({
+					...restProps,
+					appWorkflowDataLayoutLinks: appWorkflowDataLayoutLinks.map(
+						(item) => {
+							delete item.name;
+
+							return item;
+						}
+					),
+				})
+			),
 		};
 
 		if (appId) {

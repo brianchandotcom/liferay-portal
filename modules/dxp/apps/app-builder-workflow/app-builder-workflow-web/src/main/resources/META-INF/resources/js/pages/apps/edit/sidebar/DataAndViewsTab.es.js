@@ -26,6 +26,7 @@ import {
 import {
 	UPDATE_DATA_OBJECT,
 	UPDATE_FORM_VIEW,
+	UPDATE_STEP_FORM_VIEW,
 	UPDATE_TABLE_VIEW,
 } from '../configReducer.es';
 
@@ -47,11 +48,17 @@ const NoObjectEmptyState = () => (
 
 export default () => {
 	const {
-		config: {dataObject, formView, tableView},
+		config: {currentStep, dataObject, formView, stepIndex, tableView},
 		dispatch,
 		dispatchConfig,
 		state: {app},
 	} = useContext(EditAppContext);
+
+	const {
+		appWorkflowDataLayoutLinks: [stepFormView] = [
+			{dataLayoutId: '', name: ''},
+		],
+	} = currentStep;
 
 	const updateDataObject = (dataObject) => {
 		dispatchConfig({
@@ -77,6 +84,13 @@ export default () => {
 		});
 	};
 
+	const updateStepFormView = (formView) => {
+		dispatchConfig({
+			formView,
+			type: UPDATE_STEP_FORM_VIEW,
+		});
+	};
+
 	const updateTableView = (tableView) => {
 		dispatchConfig({
 			tableView,
@@ -91,67 +105,83 @@ export default () => {
 
 	return (
 		<>
-			<div className="main-section">
-				<label id="select-object-label">
-					{Liferay.Language.get('main-data-object')}
-				</label>
-
-				<ClayTooltipProvider>
-					<ClayIcon
-						className="ml-2 text-muted tooltip-icon"
-						data-tooltip-align="top"
-						data-tooltip-delay="0"
-						symbol="question-circle-full"
-						title={Liferay.Language.get(
-							'a-data-object-stores-your-business-data-and-is-composed-by-data-fields'
-						)}
-					/>
-				</ClayTooltipProvider>
-
-				<SelectObjects
-					defaultValue={app.dataDefinitionId}
-					label={Liferay.Language.get('select-object')}
-					onSelect={updateDataObject}
-					selectedValue={dataObject}
-				/>
-			</div>
-
-			{dataObject.name ? (
-				<div className="py-3">
-					<h5 className="text-secondary text-uppercase">
-						{Liferay.Language.get('gather-data')}
-					</h5>
-
+			{stepIndex > 0 ? (
+				<>
 					<label id="form-view-label">
 						{Liferay.Language.get('form-view')}
 					</label>
 
 					<SelectFormView
 						ariaLabelId="form-view-label"
-						defaultValue={app.dataLayoutId}
+						defaultValue={stepFormView.dataLayoutId}
 						objectId={dataObject.id}
-						onSelect={updateFormView}
-						selectedValue={formView.name}
+						onSelect={updateStepFormView}
+						selectedValue={stepFormView.name}
 					/>
-
-					<h5 className="mt-3 text-secondary text-uppercase">
-						{Liferay.Language.get('display-data')}
-					</h5>
-
-					<label id="table-view-label">
-						{Liferay.Language.get('table-view')}
-					</label>
-
-					<SelectTableView
-						ariaLabelId="table-view-label"
-						defaultValue={app.dataListViewId}
-						objectId={dataObject.id}
-						onSelect={updateTableView}
-						selectedValue={tableView.name}
-					/>
-				</div>
+				</>
 			) : (
-				<NoObjectEmptyState />
+				<>
+					<div className="main-section">
+						<label id="select-object-label">
+							{Liferay.Language.get('main-data-object')}
+						</label>
+
+						<ClayTooltipProvider>
+							<ClayIcon
+								className="ml-2 text-muted tooltip-icon"
+								data-tooltip-align="top"
+								data-tooltip-delay="0"
+								symbol="question-circle-full"
+								title={Liferay.Language.get(
+									'a-data-object-stores-your-business-data-and-is-composed-by-data-fields'
+								)}
+							/>
+						</ClayTooltipProvider>
+
+						<SelectObjects
+							defaultValue={app.dataDefinitionId}
+							label={Liferay.Language.get('select-object')}
+							onSelect={updateDataObject}
+							selectedValue={dataObject}
+						/>
+					</div>
+
+					{dataObject.name ? (
+						<div className="py-3">
+							<h5 className="text-secondary text-uppercase">
+								{Liferay.Language.get('gather-data')}
+							</h5>
+
+							<label id="form-view-label">
+								{Liferay.Language.get('form-view')}
+							</label>
+
+							<SelectFormView
+								ariaLabelId="form-view-label"
+								objectId={dataObject.id}
+								onSelect={updateFormView}
+								selectedValue={formView.name}
+							/>
+
+							<h5 className="mt-3 text-secondary text-uppercase">
+								{Liferay.Language.get('display-data')}
+							</h5>
+
+							<label id="table-view-label">
+								{Liferay.Language.get('table-view')}
+							</label>
+
+							<SelectTableView
+								ariaLabelId="table-view-label"
+								objectId={dataObject.id}
+								onSelect={updateTableView}
+								selectedValue={tableView.name}
+							/>
+						</div>
+					) : (
+						<NoObjectEmptyState />
+					)}
+				</>
 			)}
 		</>
 	);

@@ -40,6 +40,7 @@ export default function EditAppSidebar({assigneeRoles}) {
 
 	const {
 		appWorkflowTransitions: [primaryAction, secondaryAction] = [],
+		appWorkflowDataLayoutLinks: [stepFormView] = [{}],
 	} = currentStep;
 
 	const actionsInfo = [];
@@ -61,21 +62,30 @@ export default function EditAppSidebar({assigneeRoles}) {
 	const tabs = [
 		{
 			content: DataAndViewsTab,
-			infoItems: [
-				{
-					...dataObject,
-					label: Liferay.Language.get('data-object'),
-				},
-				{
-					...formView,
-					label: Liferay.Language.get('form-view'),
-				},
-				{
-					...tableView,
-					label: Liferay.Language.get('table-view'),
-				},
-			],
-			show: stepIndex === 0,
+			disabled: stepIndex > 0 && !dataObject.id,
+			infoItems:
+				stepIndex === 0
+					? [
+							{
+								...dataObject,
+								label: Liferay.Language.get('data-object'),
+							},
+							{
+								...formView,
+								label: Liferay.Language.get('form-view'),
+							},
+							{
+								...tableView,
+								label: Liferay.Language.get('table-view'),
+							},
+					  ]
+					: [
+							{
+								...stepFormView,
+								label: Liferay.Language.get('form-view'),
+							},
+					  ],
+			show: stepIndex !== steps.length - 1,
 			title: Liferay.Language.get('data-and-views'),
 		},
 		{
@@ -201,10 +211,11 @@ export default function EditAppSidebar({assigneeRoles}) {
 						</ClayForm.Group>
 
 						{tabs.map(
-							({infoItems, show, title}, index) =>
+							({disabled, infoItems, show, title}, index) =>
 								show && (
 									<ClayButton
 										className="mb-3 tab-button"
+										disabled={disabled}
 										displayType="secondary"
 										key={index}
 										onClick={() =>

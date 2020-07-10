@@ -19,6 +19,7 @@ export const UPDATE_DATA_OBJECT = 'UPDATE_DATA_OBJECT';
 export const UPDATE_FORM_VIEW = 'UPDATE_FORM_VIEW';
 export const UPDATE_STEP = 'UPDATE_STEP';
 export const UPDATE_STEP_ACTION = 'UPDATE_STEP_ACTION';
+export const UPDATE_STEP_FORM_VIEW = 'UPDATE_STEP_FORM_VIEW';
 export const UPDATE_STEP_INDEX = 'UPDATE_STEP_INDEX';
 export const UPDATE_TABLE_VIEW = 'UPDATE_TABLE_VIEW';
 export const UPDATE_WORKFLOW_APP = 'UPDATE_WORKFLOW_APP';
@@ -53,12 +54,35 @@ export default (state, action) => {
 	switch (action.type) {
 		case ADD_STEP: {
 			const workflowSteps = [...state.steps];
+
 			const finalStep = workflowSteps.pop();
 
+			let dataLayoutLinks = [{dataLayoutId: '', name: ''}];
+
+			if (action.stepIndex > 0) {
+				dataLayoutLinks =
+					workflowSteps[action.stepIndex].appWorkflowDataLayoutLinks;
+			}
+
+			const stepDataLayoutInfo = {
+				false: {
+					id: dataLayoutLinks[0].dataLayoutId,
+					name: dataLayoutLinks[0].name,
+				},
+				true: {
+					id: state.formView.id,
+					name: state.formView.name,
+				},
+			};
 			const stepIndex = action.stepIndex + 1;
+
 			const currentStep = {
 				appWorkflowDataLayoutLinks: [
-					{dataLayoutId: state.formView.id, readOnly: true},
+					{
+						dataLayoutId: stepDataLayoutInfo[stepIndex === 1].id,
+						name: stepDataLayoutInfo[stepIndex === 1].name,
+						readOnly: true,
+					},
 				],
 				appWorkflowRoleAssignments: [],
 				appWorkflowTransitions: [
@@ -68,7 +92,6 @@ export default (state, action) => {
 						transitionTo: finalStep.name,
 					},
 				],
-
 				name: sub(Liferay.Language.get('step-x'), [
 					state.steps.length - 1,
 				]),
@@ -120,24 +143,9 @@ export default (state, action) => {
 			};
 		}
 		case UPDATE_FORM_VIEW: {
-			let workflowSteps = [...state.steps];
-
-			const initialStep = workflowSteps.shift();
-			const finalStep = workflowSteps.pop();
-
-			if (workflowSteps.length > 0) {
-				workflowSteps = workflowSteps.map((step) => ({
-					...step,
-					appWorkflowDataLayoutLinks: [
-						{dataLayoutId: action.formView.id, readOnly: true},
-					],
-				}));
-			}
-
 			return {
 				...state,
 				formView: action.formView,
-				steps: [initialStep, ...workflowSteps, finalStep],
 			};
 		}
 		case UPDATE_STEP: {
@@ -167,6 +175,15 @@ export default (state, action) => {
 			);
 
 			appWorkflowTransitions[transitionIndex].name = name;
+
+			return {...state, currentStep: state.steps[state.stepIndex]};
+		}
+		case UPDATE_STEP_FORM_VIEW: {
+			const appWorkflowDataLayoutLinks =
+				state.steps[state.stepIndex].appWorkflowDataLayoutLinks;
+
+			appWorkflowDataLayoutLinks[0].dataLayoutId = action.formView.id;
+			appWorkflowDataLayoutLinks[0].name = action.formView.name;
 
 			return {...state, currentStep: state.steps[state.stepIndex]};
 		}

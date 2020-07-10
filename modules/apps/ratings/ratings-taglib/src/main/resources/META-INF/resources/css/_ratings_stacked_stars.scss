@@ -1,4 +1,17 @@
 .ratings-stacked-stars {
+	.ratings-stars-average {
+		&.disabled {
+			.ratings-stars-average-icon {
+				color: $secondary-l1;
+			}
+
+			& + .ratings-stars-average.disabled {
+				cursor: not-allowed;
+				line-height: 2;
+			}
+		}
+	}
+
 	.ratings-stars-average-icon {
 		margin: -0.1em 0.1875rem 0;
 	}

@@ -121,6 +121,72 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			/>
 		</div>
 	</c:when>
+	<c:when test="<%= type.equals(RatingsType.STACKED_STARS.getValue()) %>">
+		<div class="rating ratings-stacked-stars ratings-stars">
+			<div class="disabled ratings-stars-average">
+				<span class="inline-item inline-item-before">
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+				</span>
+			</div>
+
+			<div class="disabled ratings-stars-average">
+				<span class="inline-item inline-item-before">
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+				</span>
+			</div>
+
+			<react:component
+				data="<%= data %>"
+				module="js/Ratings"
+			/>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<liferay-ui:ratings
 			className="<%= className %>"

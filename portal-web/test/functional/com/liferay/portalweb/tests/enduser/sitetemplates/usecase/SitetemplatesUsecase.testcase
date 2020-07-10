@@ -51,7 +51,7 @@ definition {
 			rowEntry = "Site Template Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Design",
 			portlet = "Page Templates");
 
 		NavItem.gotoPageTemplates();
@@ -80,7 +80,7 @@ definition {
 			portlet = "Pages");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Design",
 			portlet = "Page Templates");
 
 		NavItem.gotoPageTemplates();

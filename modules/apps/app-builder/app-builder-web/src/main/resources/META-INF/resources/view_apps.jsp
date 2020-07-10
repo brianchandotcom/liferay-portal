@@ -36,8 +36,6 @@
 			).put(
 				"deltaValues", PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES
 			).put(
-				"namespace", liferayPortletResponse.getNamespace()
-			).put(
 				"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
 			).put(
 				"userId", themeDisplay.getUserId()

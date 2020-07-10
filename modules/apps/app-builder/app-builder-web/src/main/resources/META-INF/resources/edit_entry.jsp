@@ -79,8 +79,6 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 								).put(
 									"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
 								).put(
-									"namespace", liferayPortletResponse.getNamespace()
-								).put(
 									"redirect", ParamUtil.getString(request, "redirect")
 								).put(
 									"showFormView", request.getAttribute(AppBuilderWebKeys.SHOW_FORM_VIEW)

@@ -19,6 +19,7 @@ const AppContext = createContext();
 const AppContextProvider = ({
 	children,
 	pathFriendlyURLPublic,
+	portletNamespace,
 	...restProps
 }) => {
 	const getStandaloneURL = (appId) =>
@@ -28,6 +29,7 @@ const AppContextProvider = ({
 		<AppContext.Provider
 			value={{
 				getStandaloneURL,
+				namespace: portletNamespace,
 				...restProps,
 			}}
 		>

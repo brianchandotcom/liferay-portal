@@ -546,13 +546,13 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		Button.clickPublish();
 
@@ -564,13 +564,13 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
@@ -652,13 +652,13 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementNotPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		Button.clickPublish();
 
@@ -670,13 +670,13 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementNotPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
@@ -774,19 +774,19 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Nested Applications')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		Button.clickPublish();
 
@@ -798,19 +798,19 @@ definition {
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Nested Applications')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
 			key_columnNumber = "1",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
-			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."

@@ -26,68 +26,75 @@ export function useDDMFormSubmit(ddmForm, onSubmit) {
 }
 
 export function useDDMFormValidation(ddmForm, onSubmitCallback) {
-	return useCallback(() => {
-		const ddmReactForm = ddmForm.reactComponentRef.current;
-
-		ddmReactForm.validate().then((isValidForm) => {
-			if (!isValidForm) {
-				return;
+	return useCallback(
+		(event) => {
+			if (typeof event.stopImmediatePropagation === 'function') {
+				event.stopImmediatePropagation();
 			}
 
-			const dataRecord = {
-				dataRecordValues: {},
-			};
+			const ddmReactForm = ddmForm.reactComponentRef.current;
 
-			const languageId = themeDisplay.getLanguageId();
-			const visitor = new PagesVisitor(ddmReactForm.get('pages'));
-
-			const setDataRecord = ({
-				fieldName,
-				localizable,
-				repeatable,
-				value,
-				visible,
-			}) => {
-				let _value = value;
-
-				if (!visible) {
-					_value = '';
+			ddmReactForm.validate().then((isValidForm) => {
+				if (!isValidForm) {
+					return;
 				}
 
-				if (localizable) {
-					if (!dataRecord.dataRecordValues[fieldName]) {
-						dataRecord.dataRecordValues[fieldName] = {
-							[languageId]: [],
-						};
+				const dataRecord = {
+					dataRecordValues: {},
+				};
+
+				const languageId = themeDisplay.getLanguageId();
+				const visitor = new PagesVisitor(ddmReactForm.get('pages'));
+
+				const setDataRecord = ({
+					fieldName,
+					localizable,
+					repeatable,
+					value,
+					visible,
+				}) => {
+					let _value = value;
+
+					if (!visible) {
+						_value = '';
 					}
 
-					if (repeatable) {
-						dataRecord.dataRecordValues[fieldName][languageId].push(
-							_value
-						);
+					if (localizable) {
+						if (!dataRecord.dataRecordValues[fieldName]) {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: [],
+							};
+						}
+
+						if (repeatable) {
+							dataRecord.dataRecordValues[fieldName][
+								languageId
+							].push(_value);
+						}
+						else {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: _value,
+							};
+						}
 					}
 					else {
-						dataRecord.dataRecordValues[fieldName] = {
-							[languageId]: _value,
-						};
+						dataRecord.dataRecordValues[fieldName] = _value;
 					}
-				}
-				else {
-					dataRecord.dataRecordValues[fieldName] = _value;
-				}
-			};
+				};
 
-			visitor.mapFields(({nestedFields, ...field}) => {
-				if (Array.isArray(nestedFields)) {
-					return nestedFields.forEach(setDataRecord);
-				}
+				visitor.mapFields(({nestedFields, ...field}) => {
+					if (Array.isArray(nestedFields)) {
+						return nestedFields.forEach(setDataRecord);
+					}
 
-				setDataRecord(field);
+					setDataRecord(field);
+				});
+
+				onSubmitCallback(dataRecord);
 			});
-
-			onSubmitCallback(dataRecord);
-		});
-	}, [ddmForm, onSubmitCallback]);
+		},
+		[ddmForm, onSubmitCallback]
+	);
 }
 
 export default function withDDMForm(Component) {

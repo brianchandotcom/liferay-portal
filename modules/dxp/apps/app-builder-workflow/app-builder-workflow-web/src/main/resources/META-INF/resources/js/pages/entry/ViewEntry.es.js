@@ -10,7 +10,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLabel from '@clayui/label';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
@@ -20,73 +19,12 @@ import {ViewDataLayoutPageValues} from 'app-builder-web/js/pages/entry/ViewEntry
 import ViewEntryUpperToolbar from 'app-builder-web/js/pages/entry/ViewEntryUpperToolbar.es';
 import {addItem, getItem} from 'app-builder-web/js/utils/client.es';
 import {errorToast} from 'app-builder-web/js/utils/toast.es';
-import {concatValues, isEqualObjects} from 'app-builder-web/js/utils/utils.es';
+import {isEqualObjects} from 'app-builder-web/js/utils/utils.es';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import '../../../css/ViewEntry.scss';
+import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.es';
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
-
-const WorkflowInfo = ({
-	assignees = [{}],
-	completed,
-	taskNames = [],
-	tasks = [],
-}) => {
-	const emptyValue = '--';
-
-	let assignee = assignees[0].name || emptyValue;
-
-	const status = completed ? (
-		<ClayLabel displayType="success">
-			{Liferay.Language.get('completed')}
-		</ClayLabel>
-	) : (
-		<ClayLabel displayType="info">
-			{Liferay.Language.get('pending')}
-		</ClayLabel>
-	);
-
-	const stepName = taskNames[0] || emptyValue;
-
-	if (assignees[0].id === -1) {
-		const {appWorkflowRoleAssignments: roles = []} =
-			tasks.find(({name}) => name === stepName) || {};
-
-		const roleNames = roles.map(({roleName}) => roleName);
-
-		assignee = roleNames.length ? concatValues(roleNames) : emptyValue;
-	}
-
-	const items = [
-		{
-			label: Liferay.Language.get('status'),
-			value: status,
-		},
-		{
-			label: Liferay.Language.get('step'),
-			value: stepName,
-		},
-		{
-			label: Liferay.Language.get('assignee'),
-			value: assignee,
-		},
-	];
-
-	return (
-		<div className="workflow-info">
-			{items.map(({label, value}, index) => (
-				<div className="info-item" key={index}>
-					<span className="font-weight-bold text-secondary">
-						{`${label}: `}
-					</span>
-
-					{value}
-				</div>
-			))}
-		</div>
-	);
-};
 
 export default function ViewEntry({
 	history,
@@ -284,7 +222,7 @@ export default function ViewEntry({
 				page={page}
 				totalCount={totalCount}
 			>
-				{workflowInfo && <WorkflowInfo {...workflowInfo} />}
+				{workflowInfo && <WorkflowInfoBar {...workflowInfo} />}
 			</ViewEntryUpperToolbar>
 
 			<Loading isLoading={isLoading || isFetching}>

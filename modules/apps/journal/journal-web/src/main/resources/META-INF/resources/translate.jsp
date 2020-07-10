@@ -144,11 +144,12 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						>
 							<c:choose>
 								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
-									<liferay-editor:editor
-										contents="<%= sourceContent %>"
-										name='<%= label + "SourceEditor" %>'
-										placeholder="<%= label %>"
-									/>
+									<label class="control-label">
+										<%= label %>
+									</label>
+									<div contenteditable="false" role="textbox" tabIndex="-1">
+										<%= sourceContent %>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" value="<%= sourceContent %>" />

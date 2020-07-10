@@ -319,6 +319,13 @@ $productMenuWidth: 320px;
 			background-color: #fff;
 			padding: 1.5rem;
 
+			div[contenteditable='false'] {
+				border-radius: 4px;
+				border: 1px solid $gray-300;
+				box-sizing: border-box;
+				padding: 0.75rem 1rem 0.5rem 1rem;
+			}
+
 			.fieldset-title {
 				font-size: 0.875rem;
 				font-weight: 700;

@@ -111,20 +111,22 @@ public class ChangesetEntryLocalServiceImpl
 			return;
 		}
 
-		List<Long> changesetEntryIdsChunk = new LinkedList<>();
+		List<Long> changesetEntryIdsBatch = new LinkedList<>();
 
 		for (Long changesetEntryId : changesetEntryIds) {
-			if (changesetEntryIdsChunk.size() >= 2000) {
-				_deleteChangesetEntries(changesetEntryIdsChunk);
+			if (changesetEntryIdsBatch.size() >=
+					_CHANGESET_ENTRY_DELETE_BATCH_SIZE) {
 
-				changesetEntryIdsChunk = new LinkedList<>();
+				_deleteChangesetEntries(changesetEntryIdsBatch);
+
+				changesetEntryIdsBatch = new LinkedList<>();
 			}
 
-			changesetEntryIdsChunk.add(changesetEntryId);
+			changesetEntryIdsBatch.add(changesetEntryId);
 		}
 
-		if (!ListUtil.isEmpty(changesetEntryIdsChunk)) {
-			_deleteChangesetEntries(changesetEntryIdsChunk);
+		if (!ListUtil.isEmpty(changesetEntryIdsBatch)) {
+			_deleteChangesetEntries(changesetEntryIdsBatch);
 		}
 	}
 
@@ -224,8 +226,7 @@ public class ChangesetEntryLocalServiceImpl
 			changesetCollectionId, classNameId, classPK);
 	}
 
-	private void _deleteChangesetEntries(
-			Collection<Long> changesetEntryIdsChunk)
+	private void _deleteChangesetEntries(Collection<Long> changesetEntryIds)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -234,7 +235,7 @@ public class ChangesetEntryLocalServiceImpl
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.in(
-					"changesetEntryId", changesetEntryIdsChunk)));
+					"changesetEntryId", changesetEntryIds)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
@@ -244,5 +245,7 @@ public class ChangesetEntryLocalServiceImpl
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final int _CHANGESET_ENTRY_DELETE_BATCH_SIZE = 2000;
 
 }

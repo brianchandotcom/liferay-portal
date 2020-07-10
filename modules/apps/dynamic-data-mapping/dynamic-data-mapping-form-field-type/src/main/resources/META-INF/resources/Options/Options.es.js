@@ -31,16 +31,6 @@ import {
 	random,
 } from './util.es';
 
-const getDefaultOption = (generateOptionValueUsingOptionLabel) => {
-	let defaultOption = {label: '', value: ''};
-
-	return {
-		...defaultOption,
-		value: getDefaultOptionValue(
-			generateOptionValueUsingOptionLabel, defaultOption),
-	};
-};
-
 const Option = React.forwardRef(
 	({children, className, disabled, onClick, showCloseButton, style}, ref) => (
 		<div
@@ -72,6 +62,18 @@ const Option = React.forwardRef(
 		</div>
 	)
 );
+
+const getDefaultOption = (generateOptionValueUsingOptionLabel) => {
+	const defaultOption = {label: '', value: ''};
+
+	return {
+		...defaultOption,
+		value: getDefaultOptionValue(
+			generateOptionValueUsingOptionLabel,
+			defaultOption
+		),
+	};
+};
 
 const refreshFields = (
 	defaultLanguageId,

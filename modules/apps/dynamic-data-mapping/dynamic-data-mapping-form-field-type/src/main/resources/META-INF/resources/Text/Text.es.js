@@ -63,7 +63,7 @@ const Text = ({
 			aria-label="text"
 			className="ddm-field-text"
 			disabled={disabled}
-			id={id}
+			id={id ? id : name}
 			name={name}
 			onBlur={onBlur}
 			onChange={(event) => {

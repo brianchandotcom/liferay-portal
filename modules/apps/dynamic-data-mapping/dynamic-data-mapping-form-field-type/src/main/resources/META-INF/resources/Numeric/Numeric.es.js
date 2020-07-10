@@ -129,7 +129,7 @@ const Main = ({
 		<Numeric
 			dataType={dataType}
 			disabled={readOnly}
-			id={id}
+			id={id ? id : name}
 			name={name}
 			onBlur={onBlur}
 			onChange={onChange}

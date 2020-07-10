@@ -105,7 +105,6 @@ const ImagePicker = ({
 		<>
 			<ClayForm.Group style={{marginBottom: '0.5rem'}}>
 				<input
-					id={id}
 					name={name}
 					type="hidden"
 					value={JSON.stringify(imageValues)}
@@ -115,6 +114,7 @@ const ImagePicker = ({
 						<ClayInput
 							className="field"
 							disabled
+							id={id ? id : name}
 							type="text"
 							value={imageValues.title}
 						/>

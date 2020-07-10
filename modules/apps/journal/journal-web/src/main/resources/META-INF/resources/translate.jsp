@@ -141,7 +141,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						<clay:col
 							md="6"
 						>
-							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getSourceLocale())) %>" />
+							<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" value="<%= String.valueOf(infoFieldValue.getValue(journalTranslateDisplayContext.getSourceLocale())) %>" />
 						</clay:col>
 
 						<clay:col

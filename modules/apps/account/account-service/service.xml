@@ -144,6 +144,7 @@
 
 		<!-- References -->
 
+		<reference entity="AccountGroupAccountEntryRel" package-path="com.liferay.account" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="AccountGroupAccountEntryRel">

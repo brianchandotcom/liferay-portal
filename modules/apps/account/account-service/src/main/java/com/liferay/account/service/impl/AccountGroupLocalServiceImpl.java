@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupAccountEntryRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -63,6 +64,30 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDescription(description);
 
 		return accountGroupPersistence.update(accountGroup);
+	}
+
+	@Override
+	public AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
+		List<AccountGroupAccountEntryRel> accountGroupAccountEntryRels =
+			accountGroupAccountEntryRelPersistence.findByAccountGroupId(
+				accountGroup.getAccountGroupId());
+
+		for (AccountGroupAccountEntryRel accountGroupAccountEntryRel :
+				accountGroupAccountEntryRels) {
+
+			accountGroupAccountEntryRelPersistence.remove(
+				accountGroupAccountEntryRel);
+		}
+
+		return accountGroupPersistence.remove(accountGroup);
+	}
+
+	@Override
+	public AccountGroup deleteAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		return deleteAccountGroup(
+			accountGroupLocalService.getAccountGroup(accountGroupId));
 	}
 
 	@Override

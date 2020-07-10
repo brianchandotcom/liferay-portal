@@ -50,17 +50,20 @@ $navbarHeight: 120px;
 			}
 
 			.arrow-body {
+				align-items: flex-start;
 				display: flex;
 				flex-flow: wrap-reverse;
 				justify-content: center;
 
 				.arrow-head {
+					margin-bottom: -4px;
 					margin-top: 4px;
 				}
 
 				.arrow-tail {
 					background-color: #6b6c7e;
-					margin-bottom: 4px;
+					height: 95%;
+					margin-bottom: 5px;
 					width: 2px;
 				}
 			}

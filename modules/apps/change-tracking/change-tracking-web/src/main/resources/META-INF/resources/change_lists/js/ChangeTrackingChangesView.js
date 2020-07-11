@@ -179,6 +179,14 @@ class ChangeTrackingChangesView extends React.Component {
 		return null;
 	}
 
+	_getColumn() {
+		if (this.state.navigation === 'contextView') {
+			return 'title';
+		}
+
+		return this.state.column;
+	}
+
 	_getDisplayNodes(ascending, column, delta, nodes, page) {
 		let displayNodes = nodes.slice(0);
 
@@ -276,14 +284,6 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return displayNodes;
-	}
-
-	_getColumn() {
-		if (this.state.navigation === 'contextView') {
-			return 'title';
-		}
-
-		return this.state.column;
 	}
 
 	_getNode(filterClass, navigation, nodeId) {
@@ -396,6 +396,30 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rootDisplayOptions;
+	}
+
+	_getTableHead() {
+		if (this.state.navigation === 'contextView') {
+			return '';
+		}
+
+		return (
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell style={{width: '5%'}}>
+						{Liferay.Language.get('user')}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell headingCell style={{width: '80%'}}>
+						{Liferay.Language.get('change')}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell headingCell style={{width: '15%'}}>
+						{Liferay.Language.get('last-modified')}
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
+		);
 	}
 
 	_getTableRows(nodes) {
@@ -839,30 +863,6 @@ class ChangeTrackingChangesView extends React.Component {
 
 				{this._renderPagination(nodes)}
 			</>
-		);
-	}
-
-	_getTableHead() {
-		if (this.state.navigation === 'contextView') {
-			return '';
-		}
-
-		return (
-			<ClayTable.Head>
-				<ClayTable.Row>
-					<ClayTable.Cell headingCell style={{width: '5%'}}>
-						{Liferay.Language.get('user')}
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell style={{width: '80%'}}>
-						{Liferay.Language.get('change')}
-					</ClayTable.Cell>
-
-					<ClayTable.Cell headingCell style={{width: '15%'}}>
-						{Liferay.Language.get('last-modified')}
-					</ClayTable.Cell>
-				</ClayTable.Row>
-			</ClayTable.Head>
 		);
 	}
 

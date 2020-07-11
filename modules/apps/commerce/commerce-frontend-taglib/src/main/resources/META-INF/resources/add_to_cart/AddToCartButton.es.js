@@ -89,8 +89,8 @@ function doSubmit() {
 				}
 
 				if (this.orderId !== jsonresponse.orderId) {
-					Liferay.fire('orderChanged', {
-						orderId: jsonresponse.orderId,
+					Liferay.fire('currentOrderChanged', {
+						id: jsonresponse.orderId
 					});
 					this.orderId = jsonresponse.orderId;
 				}
@@ -151,7 +151,7 @@ class AddToCartButton extends Component {
 	}
 
 	attached() {
-		window.Liferay.on('accountSelected', this._handleAccountChange, this);
+		window.Liferay.on('currentAccountChanged', this._handleAccountChange, this);
 
 		window.Liferay.on(
 			'productRemovedFromCart',
@@ -170,7 +170,7 @@ class AddToCartButton extends Component {
 
 	detached() {
 		window.Liferay.detach(
-			'accountSelected',
+			'currentAccountChanged',
 			this._handleAccountChange,
 			this
 		);
@@ -216,8 +216,8 @@ class AddToCartButton extends Component {
 		}
 	}
 
-	_handleAccountChange(e) {
-		this.accountId = e.accountId;
+	_handleAccountChange({account}) {
+		this.accountId = account ? account.id : null;
 		this.orderId = null;
 
 		// TODO: quantity should be imported from the outside

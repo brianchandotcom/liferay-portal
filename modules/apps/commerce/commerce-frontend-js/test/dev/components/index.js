@@ -78,4 +78,9 @@ module.exports = [
 		name: 'Quantity Selector',
 		page: 'quantity-selector.html',
 	},
+  {
+    entry: 'AccountSelector',
+		name: 'Account Selector',
+		page: 'account-selector.html',
+  },
 ];

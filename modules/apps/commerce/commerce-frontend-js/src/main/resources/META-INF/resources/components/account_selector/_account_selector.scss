@@ -1,0 +1,49 @@
+
+.account-selector {
+	.dropdown {
+		
+	}
+	&-info {
+
+		.order-details {
+			font-style: normal;
+			font-weight: normal;
+			font-size: 12px;
+			line-height: 150%;
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+			color: #2C3A4B;
+
+			span:nth-child(2) {
+				padding-left: 10px;
+				border-left: 1px solid #000;
+				margin-left:10px;
+			}
+		}
+	}
+}
+
+.dropdown-menu {
+	width: 400px;
+	max-width: 400px;
+	height: 465px;
+	.list-unstyled {
+		height: 395px;
+	}
+	.inline-scroller {
+		max-height: 285px;
+		height: 285px;
+		padding: 0.5rem 1.25rem;
+		
+	}
+}
+
+
+// .input-icon {
+// 	position:absolute;
+// 	bottom:20px;
+// 	right:20px;
+// 	width:16px;
+// 	height:16px;
+// }

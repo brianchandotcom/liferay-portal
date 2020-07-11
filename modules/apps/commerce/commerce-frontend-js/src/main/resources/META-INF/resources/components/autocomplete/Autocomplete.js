@@ -14,6 +14,9 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
+
+// import ClayIcon from '@clayui/icon';
+
 import {FocusScope} from '@clayui/shared';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
@@ -21,13 +24,15 @@ import React, {useEffect, useRef, useState} from 'react';
 import {debouncePromise} from '../../utilities/debounce';
 import {AUTOCOMPLETE_VALUE_UPDATED} from '../../utilities/eventsDefinitions';
 import {getData, getValueFromItem} from '../../utilities/index';
-import {useLiferayModule} from '../../utilities/modules';
+import {useLiferayModule} from '../../utilities/hooks';
 import {showErrorNotification} from '../../utilities/notifications';
 
-function Autocomplete({onValueUpdated, ...props}) {
+function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 	const [query, setQuery] = useState(props.initialLabel || '');
-	const [initialised, setInitialised] = useState(false);
-	const [debouncedGetItems, updateDebouncedGetItems] = useState(null);
+	const [initialised, setInitialised] = useState(props.alwaysActive);
+	const [debouncedGetItems, updateDebouncedGetItems] = useState(() =>
+		debouncePromise(getData, props.fetchDataDebounce)
+	);
 	const [active, setActive] = useState(false);
 	const [selectedItem, updateSelectedItem] = useState(props.initialValue);
 	const [items, updateItems] = useState(null);
@@ -93,6 +98,21 @@ function Autocomplete({onValueUpdated, ...props}) {
 					else {
 						updateItems(jsonResponse.items);
 					}
+
+					updateItems((prevItems) => {
+						const items = jsonResponse.items;
+
+						if (
+							props.infinityScrollMode &&
+							prevItems?.length &&
+							page > 1
+						) {
+							items.push(...prevItems);
+						}
+
+						return items;
+					});
+
 					updateTotalCount(jsonResponse.totalCount);
 					updateLastPage(jsonResponse.lastPage);
 
@@ -124,6 +144,12 @@ function Autocomplete({onValueUpdated, ...props}) {
 		props.itemsLabel,
 		props.showErrorNotification,
 	]);
+
+	useEffect(() => {
+		if (onItemsUpdated) {
+			onItemsUpdated(items);
+		}
+	}, [items, onItemsUpdated]);
 
 	useEffect(() => {
 		function handleClick(e) {
@@ -158,7 +184,7 @@ function Autocomplete({onValueUpdated, ...props}) {
 	return (
 		<>
 			<FocusScope>
-				<ClayAutocomplete ref={node}>
+				<ClayAutocomplete className={props.inputClass} ref={node}>
 					<input
 						id={props.inputId || props.inputName}
 						name={props.inputName}
@@ -176,18 +202,16 @@ function Autocomplete({onValueUpdated, ...props}) {
 							setInitialised(true);
 						}}
 						onKeyUp={(e) => {
-							if (e.keyCode === 27) {
-								setActive(false);
-							}
-							else {
-								setActive(true);
-							}
+							setActive(Boolean(e.keyCode !== 27));
 						}}
 						placeholder={props.inputPlaceholder}
 						ref={inputNode}
 						required={props.required || false}
 						value={currentLabel || query}
 					/>
+					{/* {props.inputIcon &&  (
+						<ClayIcon className="input-icon" spritemap={props.spritemap} symbol={props.inputIcon} />
+					)} */}
 					{!CustomView && (
 						<ClayAutocomplete.DropDown active={active && !loading}>
 							<div
@@ -244,6 +268,7 @@ function Autocomplete({onValueUpdated, ...props}) {
 }
 
 Autocomplete.propTypes = {
+	alwaysActive: PropTypes.bool,
 	apiUrl: PropTypes.string.isRequired,
 	autofill: PropTypes.bool,
 	customView: PropTypes.func,
@@ -255,6 +280,10 @@ Autocomplete.propTypes = {
 		.isRequired,
 	initialValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
+	inputClass: PropTypes.string,
+
+	// inputIcon: PropTypes.string,
+
 	inputId: PropTypes.string,
 	inputName: PropTypes.string.isRequired,
 	inputPlaceholder: PropTypes.string,
@@ -263,11 +292,15 @@ Autocomplete.propTypes = {
 		PropTypes.string,
 		PropTypes.arrayOf(PropTypes.string),
 	]).isRequired,
+	onItemsUpdated: PropTypes.func,
 	onValueUpdated: PropTypes.func,
 	required: PropTypes.bool,
+
+	// spritemap: PropTypes.string,
 };
 
 Autocomplete.defaultProps = {
+	alwaysActive: true,
 	autofill: false,
 	fetchDataDebounce: 200,
 	infinityScrollMode: false,

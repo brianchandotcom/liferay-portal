@@ -20,7 +20,7 @@ function DateRenderer(props) {
 	}
 
 	const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
-	const dateOptions = props.options.format || {
+	const dateOptions = props.options?.format || {
 		day: 'numeric',
 		hour: 'numeric',
 		minute: 'numeric',

@@ -37,6 +37,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,6 +81,14 @@ public class StyleBookManagementToolbarDisplayContext
 			}
 		).add(
 			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "exportSelectedStyleBookEntries");
+				dropdownItem.setIcon("import-export");
+				dropdownItem.setLabel(LanguageUtil.get(request, "export"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
 				dropdownItem.putData("action", "copySelectedStyleBookEntries");
 				dropdownItem.setIcon("paste");
 				dropdownItem.setLabel(LanguageUtil.get(request, "make-a-copy"));
@@ -114,6 +123,17 @@ public class StyleBookManagementToolbarDisplayContext
 					"redirect", themeDisplay.getURLCurrent());
 
 				return copyStyleBookEntryURL.toString();
+			}
+		).put(
+			"exportStyleBookEntriesURL",
+			() -> {
+				ResourceURL exportStyleBookEntriesURL =
+					liferayPortletResponse.createResourceURL();
+
+				exportStyleBookEntriesURL.setResourceID(
+					"/style_book/export_style_book_entries");
+
+				return exportStyleBookEntriesURL.toString();
 			}
 		).build();
 	}

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.exception.DuplicateStyleBookEntryNameKeyException;
+import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
@@ -388,7 +388,7 @@ public class StyleBookEntryLocalServiceImpl
 			groupId, styleBookEntryKey);
 
 		if (styleBookEntry != null) {
-			throw new DuplicateStyleBookEntryNameKeyException();
+			throw new DuplicateStyleBookEntryKeyException();
 		}
 	}
 

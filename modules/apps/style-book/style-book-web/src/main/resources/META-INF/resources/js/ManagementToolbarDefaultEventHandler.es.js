@@ -46,10 +46,18 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			submitForm(this.one('#fm'));
 		}
 	}
+
+	exportSelectedStyleBookEntries() {
+		submitForm(
+			this.one('#fm'),
+			this.exportStyleBookEntriesURL
+		);
+	}
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
 	copyStyleBookEntryURL: Config.string(),
+	exportStyleBookEntriesURL: Config.string(),
 	spritemap: Config.string(),
 };
 

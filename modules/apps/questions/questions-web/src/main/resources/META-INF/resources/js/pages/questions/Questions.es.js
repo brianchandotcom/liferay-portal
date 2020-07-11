@@ -284,9 +284,10 @@ export default withRouter(
 								<ClaySelect
 									className="bg-transparent border-0"
 									id="questionsFilter"
-									onChange={(event) =>
-										setFilter(event.target.value)
-									}
+									onChange={(event) => {
+										setFilter(event.target.value);
+									}}
+									value={filter}
 								>
 									{filterOptions.map((option) => (
 										<ClaySelect.Option

@@ -147,7 +147,7 @@ public abstract class Base${schemaName}ResourceImpl
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
 				).build();
-			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch")>
+			<#elseif generateBatch && (stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch") || stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "Id" + schemaName + "Batch"))>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
 				vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
 				vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);

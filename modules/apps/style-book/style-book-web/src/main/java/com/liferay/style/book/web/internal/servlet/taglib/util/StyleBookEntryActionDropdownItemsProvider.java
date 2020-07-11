@@ -39,6 +39,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,6 +74,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		).add(
 			() -> _styleBookEntry.getPreviewFileEntryId() > 0,
 			_getDeleteStyleBookEntryPreviewActionUnsafeConsumer()
+		).add(
+			_getExportStyleBookEntryActionUnsafeConsumer()
 		).add(
 			_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer()
 		).add(
@@ -166,6 +169,25 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				_styleBookEntry.getStyleBookEntryId());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExportStyleBookEntryActionUnsafeConsumer() {
+
+		ResourceURL exportStyleBookEntryURL =
+			_renderResponse.createResourceURL();
+
+		exportStyleBookEntryURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+		exportStyleBookEntryURL.setResourceID(
+			"/style_book/export_style_book_entries");
+
+		return dropdownItem -> {
+			dropdownItem.setHref(exportStyleBookEntryURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 

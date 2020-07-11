@@ -57,7 +57,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>DuplicateStyleBookEntryNameKey</exception>
+		<exception>DuplicateStyleBookEntryKey</exception>
 		<exception>InvalidFile</exception>
 		<exception>StyleBookEntryName</exception>
 	</exceptions>

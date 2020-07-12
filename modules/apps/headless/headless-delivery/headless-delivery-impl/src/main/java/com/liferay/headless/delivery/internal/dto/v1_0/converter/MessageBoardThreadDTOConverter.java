@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -134,8 +133,9 @@ public class MessageBoardThreadDTOConverter
 						WorkflowConstants.STATUS_APPROVED);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					_dtoConverterRegistry, mbMessage.getModelClassName(),
-					mbMessage.getMessageId(), dtoConverterContext.getLocale());
+					dtoConverterContext.getDTOConverterRegistry(),
+					mbMessage.getModelClassName(), mbMessage.getMessageId(),
+					dtoConverterContext.getLocale());
 				seen = _mbThreadFlagLocalService.hasThreadFlag(
 					dtoConverterContext.getUserId(), mbThread);
 				showAsQuestion = mbThread.isQuestion();
@@ -189,9 +189,6 @@ public class MessageBoardThreadDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

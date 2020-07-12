@@ -909,7 +909,8 @@ definition {
 			groupName = "Test Site Name",
 			userEmailAddress = "userea1@liferay.com");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea1@liferay.com");
 

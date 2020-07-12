@@ -72,7 +72,8 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -183,7 +184,8 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -331,7 +333,8 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -446,7 +449,8 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -578,7 +582,8 @@ definition {
 				roleType = "site");
 		}
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -685,7 +690,8 @@ definition {
 				roleType = "site");
 		}
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -752,7 +758,8 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		JSONRole.assignRoleToUser(
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
 			roleTitle = "Roles Siterole Name",
 			userEmailAddress = "userea@liferay.com");
 

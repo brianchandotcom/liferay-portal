@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>GO_TO_SITES_LINK</td>
-	<td>//a[contains(.,'Go to Site')]</td>
+	<td>//a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

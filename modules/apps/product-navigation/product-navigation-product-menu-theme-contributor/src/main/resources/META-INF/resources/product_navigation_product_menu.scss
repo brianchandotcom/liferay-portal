@@ -237,18 +237,24 @@
 			height: $product-menu-list-group-heading-border-width;
 		}
 
-		&.goto-link {
-			display: inline-flex;
-			font-size: 0.8rem;
+		&.navigation-link {
+			box-sizing: border-box;
+			font-size: 0.75rem;
 			max-width: 100%;
+			padding: 6px 24px;
 
 			&:hover {
 				color: white;
-				text-decoration: underline;
 			}
 
 			&:before {
 				right: 4px;
+			}
+
+			.lexicon-icon {
+				height: 14px;
+				margin-right: 0.65rem;
+				width: 14px;
 			}
 		}
 
@@ -310,6 +316,11 @@
 			left: 0;
 			right: 0;
 		}
+	}
+
+	.navigation-link-container {
+		margin-bottom: 8px;
+		margin-top: 6px;
 	}
 }
 

@@ -39,7 +39,7 @@ function SidebarContent() {
 	);
 
 	return (
-		<div className="p-3">
+		<div className="p-3 style-book-editor__sidebar-content">
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.BottomLeft}

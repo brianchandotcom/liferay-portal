@@ -51,6 +51,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -74,9 +75,14 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
+		Convention convention = project.getConvention();
+
+		BasePluginConvention basePluginConvention = convention.getPlugin(
+			BasePluginConvention.class);
+
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
 
-		_configureArchivesBaseName(project, packageJsonMap);
+		_configureConventionBasePlugin(basePluginConvention, packageJsonMap);
 
 		Task createLiferayThemeJsonTask = _addTaskCreateLiferayThemeJson(
 			project, liferayExtension);
@@ -150,12 +156,12 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		return task;
 	}
 
-	private void _configureArchivesBaseName(
-		Project project, Map<String, Object> packageJsonMap) {
+	private void _configureConventionBasePlugin(
+		BasePluginConvention basePluginConvention,
+		Map<String, Object> packageJsonMap) {
 
 		String name = null;
 
-		@SuppressWarnings("unchecked")
 		Map<String, Object> liferayThemeMap =
 			(Map<String, Object>)packageJsonMap.get("liferayTheme");
 
@@ -170,9 +176,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		if (Validator.isNull(name)) {
 			return;
 		}
-
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
 
 		basePluginConvention.setArchivesBaseName(name);
 	}

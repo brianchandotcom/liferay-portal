@@ -125,11 +125,11 @@ public class DDMStorageAdapterTest {
 	}
 
 	private static void _setUpDDMTestStorageAdapter() {
+		Registry registry = RegistryUtil.getRegistry();
+
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"ddm.storage.adapter.type", _STORAGE_TYPE_TEST
 		).build();
-
-		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceRegistration = registry.registerService(
 			DDMStorageAdapter.class, new DDMTestStorageAdapter(), properties);

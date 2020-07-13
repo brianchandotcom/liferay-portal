@@ -51,6 +51,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			portalInstanceId);
 
 		_companyLocalService.deleteCompany(company.getCompanyId());
+
+		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	@Override

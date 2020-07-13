@@ -59,6 +59,18 @@ public class FragmentFieldBackgroundImageSerDes {
 
 		sb.append("{");
 
+		if (fragmentFieldBackgroundImage.getBackgroundFragmentImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundFragmentImage\": ");
+
+			sb.append(
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundFragmentImage()));
+		}
+
 		if (fragmentFieldBackgroundImage.getBackgroundImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -93,6 +105,16 @@ public class FragmentFieldBackgroundImageSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (fragmentFieldBackgroundImage.getBackgroundFragmentImage() == null) {
+			map.put("backgroundFragmentImage", null);
+		}
+		else {
+			map.put(
+				"backgroundFragmentImage",
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundFragmentImage()));
+		}
+
 		if (fragmentFieldBackgroundImage.getBackgroundImage() == null) {
 			map.put("backgroundImage", null);
 		}
@@ -124,10 +146,19 @@ public class FragmentFieldBackgroundImageSerDes {
 			FragmentFieldBackgroundImage fragmentFieldBackgroundImage,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
+			if (Objects.equals(
+					jsonParserFieldName, "backgroundFragmentImage")) {
+
+				if (jsonParserFieldValue != null) {
+					fragmentFieldBackgroundImage.setBackgroundFragmentImage(
+						FragmentImageSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
 				if (jsonParserFieldValue != null) {
 					fragmentFieldBackgroundImage.setBackgroundImage(
-						FragmentImageSerDes.toDTO(
+						BackgroundImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

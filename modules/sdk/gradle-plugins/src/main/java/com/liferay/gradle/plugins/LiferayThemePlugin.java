@@ -69,16 +69,23 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		GradleUtil.applyPlugin(project, BasePlugin.class);
 		GradleUtil.applyPlugin(project, GulpPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 
+		// Extensions
+
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		LiferayExtension liferayExtension = extensionContainer.getByType(
 			LiferayExtension.class);
+
+		// Configurations
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -91,6 +98,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		_configureConfigurationDefault(
 			archivesConfiguration, defaultConfiguration);
 
+		// Conventions
+
 		Convention convention = project.getConvention();
 
 		BasePluginConvention basePluginConvention = convention.getPlugin(
@@ -99,6 +108,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
 
 		_configureConventionBasePlugin(basePluginConvention, packageJsonMap);
+
+		// Tasks
 
 		TaskProvider<Delete> cleanTaskProvider = GradleUtil.getTaskProvider(
 			project, BasePlugin.CLEAN_TASK_NAME, Delete.class);
@@ -119,6 +130,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		_configureTaskCreateLiferayThemeJsonProvider(
 			project, liferayExtension, createLiferayThemeJsonTaskProvider);
 		_configureTaskDeployProvider(project, deployTaskProvider);
+
+		// Other
 
 		_configureProject(project, packageJsonMap);
 

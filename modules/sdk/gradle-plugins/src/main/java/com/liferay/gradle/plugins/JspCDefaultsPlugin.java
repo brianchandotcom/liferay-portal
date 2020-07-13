@@ -58,15 +58,22 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
+
+		// Extensions
+
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
 			extensionContainer);
 
+		// Conventions
+
 		Convention convention = project.getConvention();
 
 		JavaPluginConvention javaPluginConvention = convention.getPlugin(
 			JavaPluginConvention.class);
+
+		// Tasks
 
 		final TaskProvider<JavaCompile> compileJSPTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -88,6 +95,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 			project, compileJSPTaskProvider, jarTaskProvider);
 		_configureTaskProcessResourcesProvider(
 			javaPluginConvention, processResourcesTaskProvider);
+
+		// Other
 
 		project.afterEvaluate(
 			new Action<Project>() {

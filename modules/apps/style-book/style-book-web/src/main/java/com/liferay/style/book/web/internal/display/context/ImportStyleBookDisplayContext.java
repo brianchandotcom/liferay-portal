@@ -16,7 +16,7 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.style.book.web.internal.portlet.helper.StyleBookImporterResultEntry;
+import com.liferay.style.book.web.internal.portlet.zip.StyleBookImporterResultEntry;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.style.book.web.internal.portlet.helper;
+package com.liferay.style.book.web.internal.portlet.zip;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.portlet.helper.ImportHelper;
-import com.liferay.style.book.web.internal.portlet.helper.StyleBookImporterResultEntry;
+import com.liferay.style.book.web.internal.portlet.zip.ImportHelper;
+import com.liferay.style.book.web.internal.portlet.zip.StyleBookImporterResultEntry;
 
 import java.io.File;
 

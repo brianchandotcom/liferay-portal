@@ -132,6 +132,59 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	@Test
+	public void testAddAccountEntryUserRel2WithBlockedEmailDomainAs2BUser()
+		throws Exception {
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		String pid =
+			"com.liferay.account.configuration." +
+				"AccountEntryEmailDomainsConfiguration";
+
+		ConfigurationTestUtil.saveConfiguration(
+			pid,
+			new HashMapDictionary() {
+				{
+					put("enableEmailDomainValidation", true);
+					put("blockedEmailDomains", "test.com");
+				}
+			});
+
+		try {
+			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+				_accountEntryLocalService);
+
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), _user.getUserId());
+
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			_userInfo.emailAddress = _userInfo.screenName + "@test.com";
+
+			_addAccountEntryUserRel(_accountEntry.getAccountEntryId());
+
+			Assert.fail();
+		}
+		catch (UserEmailAddressException.MustNotUseBlockedDomain
+					userEmailAddressException) {
+
+			Assert.assertEquals(
+				_userInfo.emailAddress, userEmailAddressException.emailAddress);
+			Assert.assertEquals(
+				String.format(
+					"Email address %s must not use one of the blocked " +
+						"domains: %s",
+					_userInfo.emailAddress, "test.com"),
+				userEmailAddressException.getMessage());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
+	}
+
+	@Test
 	public void testAddAccountEntryUserRel2WithDefaultAccountEntryId()
 		throws Exception {
 

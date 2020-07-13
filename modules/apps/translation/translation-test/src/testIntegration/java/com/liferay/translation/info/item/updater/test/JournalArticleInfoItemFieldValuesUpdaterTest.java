@@ -292,6 +292,49 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				LocaleUtil.JAPAN));
 	}
 
+	@Test
+	public void testUpdateArticleFromInfoItemFieldValuesXLIFFv12File()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemClassPKReference(
+						JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"example-1_2-oasis.xlf"));
+
+		journalArticle =
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
+
+		Assert.assertEquals(
+			"Quetzal", journalArticle.getTitle(LocaleUtil.JAPAN));
+		Assert.assertEquals(
+			"XLIFF データ・マネージャ", journalArticle.getDescription(LocaleUtil.JAPAN));
+		Assert.assertEquals(
+			"<p>XLIFF 文書を編集、または処理 するアプリケーションです。</p>",
+			_getContent(
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.JAPAN));
+	}
+
 	private String _getContent(
 			String actualXML, String fieldName, Locale sourceLocale,
 			Locale targetLocale)

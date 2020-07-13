@@ -1835,9 +1835,9 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
 				value1 = "Modified Text");
 
-			PageEditor.waitForAutoSave();
+			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
 
-			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Assert propagate changes of inline content to other cells") {

@@ -414,6 +414,19 @@ public class ContentUtil {
 					infoDisplayObjectProviders.add(infoDisplayObjectProvider);
 				}
 			}
+
+			JSONObject linkJSONObject =
+				containerLayoutStructureItem.getLinkJSONObject();
+
+			if (linkJSONObject != null) {
+				InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
+					_getInfoDisplayObjectProvider(
+						linkJSONObject, mappedClassPKs);
+
+				if (infoDisplayObjectProvider != null) {
+					infoDisplayObjectProviders.add(infoDisplayObjectProvider);
+				}
+			}
 		}
 
 		return infoDisplayObjectProviders;

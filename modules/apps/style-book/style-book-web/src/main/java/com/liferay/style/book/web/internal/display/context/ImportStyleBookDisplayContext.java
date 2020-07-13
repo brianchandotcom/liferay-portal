@@ -16,7 +16,7 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.style.book.web.internal.portlet.zip.StyleBookImporterResultEntry;
+import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,44 +33,44 @@ public class ImportStyleBookDisplayContext {
 		_renderRequest = renderRequest;
 	}
 
-	public List<String> getStyleBookImporterResultEntries(
-		StyleBookImporterResultEntry.Status status) {
+	public List<String> getImportResultEntries(
+		StyleBookEntryZipProcessor.ImportResultEntry.Status status) {
 
-		List<StyleBookImporterResultEntry> styleBookImporterResultEntries =
-			_getStyleBookImporterResultEntries();
+		List<StyleBookEntryZipProcessor.ImportResultEntry> importResultEntries =
+			_getImportResultEntries();
 
-		if (ListUtil.isEmpty(styleBookImporterResultEntries)) {
+		if (ListUtil.isEmpty(importResultEntries)) {
 			return null;
 		}
 
-		Stream<StyleBookImporterResultEntry> stream =
-			styleBookImporterResultEntries.stream();
+		Stream<StyleBookEntryZipProcessor.ImportResultEntry> stream =
+			importResultEntries.stream();
 
 		return stream.filter(
-			styleBookImporterResultEntry ->
-				styleBookImporterResultEntry.getStatus() == status
+			importResultEntry -> importResultEntry.getStatus() == status
 		).map(
-			StyleBookImporterResultEntry::getName
+			StyleBookEntryZipProcessor.ImportResultEntry::getName
 		).collect(
 			Collectors.toList()
 		);
 	}
 
-	private List<StyleBookImporterResultEntry>
-		_getStyleBookImporterResultEntries() {
+	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+		_getImportResultEntries() {
 
-		if (_styleBookImporterResultEntries != null) {
-			return _styleBookImporterResultEntries;
+		if (_importResultEntries != null) {
+			return _importResultEntries;
 		}
 
-		_styleBookImporterResultEntries =
-			(List<StyleBookImporterResultEntry>)SessionMessages.get(
-				_renderRequest, "styleBookImporterResultEntries");
+		_importResultEntries =
+			(List<StyleBookEntryZipProcessor.ImportResultEntry>)
+				SessionMessages.get(_renderRequest, "importResultEntries");
 
-		return _styleBookImporterResultEntries;
+		return _importResultEntries;
 	}
 
+	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+		_importResultEntries;
 	private final RenderRequest _renderRequest;
-	private List<StyleBookImporterResultEntry> _styleBookImporterResultEntries;
 
 }

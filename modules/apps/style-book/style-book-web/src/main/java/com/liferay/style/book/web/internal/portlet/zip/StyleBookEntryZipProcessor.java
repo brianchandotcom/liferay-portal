@@ -77,11 +77,11 @@ public class StyleBookEntryZipProcessor {
 		}
 	}
 
-	public List<StyleBookImporterResultEntry> importStyleBookEntries(
+	public List<ImportResultEntry> importStyleBookEntries(
 			long userId, long groupId, File file, boolean overwrite)
 		throws Exception {
 
-		_styleBookImporterResultEntries = new ArrayList<>();
+		_importResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
@@ -104,7 +104,57 @@ public class StyleBookEntryZipProcessor {
 			}
 		}
 
-		return _styleBookImporterResultEntries;
+		return _importResultEntries;
+	}
+
+	public static class ImportResultEntry {
+
+		public ImportResultEntry(String name, Status status) {
+			_name = name;
+			_status = status;
+		}
+
+		public ImportResultEntry(
+			String name, Status status, String errorMessage) {
+
+			_name = name;
+			_status = status;
+			_errorMessage = errorMessage;
+		}
+
+		public String getErrorMessage() {
+			return _errorMessage;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public Status getStatus() {
+			return _status;
+		}
+
+		public enum Status {
+
+			IMPORTED("imported"), IMPORTED_DRAFT("imported-draft"),
+			INVALID("invalid");
+
+			public String getLabel() {
+				return _label;
+			}
+
+			private Status(String label) {
+				_label = label;
+			}
+
+			private final String _label;
+
+		}
+
+		private String _errorMessage;
+		private final String _name;
+		private final Status _status;
+
 	}
 
 	private StyleBookEntry _addStyleBookEntry(
@@ -133,17 +183,16 @@ public class StyleBookEntryZipProcessor {
 						tokensValues);
 			}
 
-			_styleBookImporterResultEntries.add(
-				new StyleBookImporterResultEntry(
-					name, StyleBookImporterResultEntry.Status.IMPORTED,
-					StringPool.BLANK));
+			_importResultEntries.add(
+				new ImportResultEntry(
+					name, ImportResultEntry.Status.IMPORTED, StringPool.BLANK));
 
 			return styleBookEntry;
 		}
 		catch (PortalException portalException) {
-			_styleBookImporterResultEntries.add(
-				new StyleBookImporterResultEntry(
-					name, StyleBookImporterResultEntry.Status.INVALID,
+			_importResultEntries.add(
+				new ImportResultEntry(
+					name, ImportResultEntry.Status.INVALID,
 					portalException.getMessage()));
 		}
 
@@ -353,12 +402,12 @@ public class StyleBookEntryZipProcessor {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private List<ImportResultEntry> _importResultEntries;
+
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryEntryLocalService;
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryEntryService;
-
-	private List<StyleBookImporterResultEntry> _styleBookImporterResultEntries;
 
 }

@@ -27,59 +27,49 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<c:choose>
-	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
-		<div>
-			<clay:button
-				borderless="<%= true %>"
-				disabled="<%= true %>"
-				displayType="secondary"
-				small="<%= true %>"
-			>
-				<clay:icon
-					symbol="heart"
-				/>
-			</clay:button>
+<div>
+	<c:choose>
+		<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
+			<div class="ratings ratings-like">
+				<clay:button
+					borderless="<%= true %>"
+					disabled="<%= true %>"
+					displayType="secondary"
+					small="<%= true %>"
+				>
+					<clay:icon
+						symbol="heart"
+					/>
+				</clay:button>
+			</div>
+		</c:when>
+		<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
+			<div class="ratings ratings-thumbs">
+				<clay:button
+					borderless="<%= true %>"
+					disabled="<%= true %>"
+					displayType="secondary"
+					small="<%= true %>"
+				>
+					<clay:icon
+						symbol="thumbs-up"
+					/>
+				</clay:button>
 
-			<react:component
-				data="<%= data %>"
-				module="js/Ratings"
-			/>
-		</div>
-	</c:when>
-	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-		<div class="rating">
-			<clay:button
-				borderless="<%= true %>"
-				disabled="<%= true %>"
-				displayType="secondary"
-				small="<%= true %>"
-			>
-				<clay:icon
-					symbol="thumbs-up"
-				/>
-			</clay:button>
-
-			<clay:button
-				borderless="<%= true %>"
-				disabled="<%= true %>"
-				displayType="secondary"
-				icon="thumbs-down"
-				small="<%= true %>"
-			>
-				<clay:icon
-					symbol="thumbs-down"
-				/>
-			</clay:button>
-
-			<react:component
-				data="<%= data %>"
-				module="js/Ratings"
-			/>
-		</div>
-	</c:when>
-	<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
-		<div>
+				<clay:button
+					borderless="<%= true %>"
+					disabled="<%= true %>"
+					displayType="secondary"
+					icon="thumbs-down"
+					small="<%= true %>"
+				>
+					<clay:icon
+						symbol="thumbs-down"
+					/>
+				</clay:button>
+			</div>
+		</c:when>
+		<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
 			<clay:content-row
 				cssClass="ratings ratings-stars"
 				verticalAlign="center"
@@ -93,11 +83,12 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 							displayType="secondary"
 							small="<%= true %>"
 						>
-							<clay:icon
-								symbol="star-o"
-							/>
-
-							<span>-</span>
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="star-o"
+								/>
+							</span>
+							<span class="inline-item ratings-stars-button-text">-</span>
 						</clay:button>
 					</div>
 				</clay:content-col>
@@ -109,77 +100,72 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 					/>
 				</clay:content-col>
 			</clay:content-row>
+		</c:when>
+		<c:when test="<%= type.equals(RatingsType.STACKED_STARS.getValue()) %>">
+			<div class="rating ratings-stacked-stars ratings-stars">
+				<div class="disabled ratings-stars-average">
+					<span class="inline-item inline-item-before">
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
 
-			<react:component
-				data="<%= data %>"
-				module="js/Ratings"
-			/>
-		</div>
-	</c:when>
-	<c:when test="<%= type.equals(RatingsType.STACKED_STARS.getValue()) %>">
-		<div class="rating ratings-stacked-stars ratings-stars">
-			<div class="disabled ratings-stars-average">
-				<span class="inline-item inline-item-before">
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
 
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
 
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
 
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+					</span>
+				</div>
 
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-				</span>
+				<div class="disabled ratings-stars-average">
+					<span class="inline-item inline-item-before">
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+
+						<clay:icon
+							cssClass="ratings-stars-average-icon"
+							symbol="star"
+						/>
+					</span>
+				</div>
 			</div>
+		</c:when>
+	</c:choose>
 
-			<div class="disabled ratings-stars-average">
-				<span class="inline-item inline-item-before">
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-
-					<clay:icon
-						cssClass="ratings-stars-average-icon"
-						symbol="star"
-					/>
-				</span>
-			</div>
-
-			<react:component
-				data="<%= data %>"
-				module="js/Ratings"
-			/>
-		</div>
-	</c:when>
-</c:choose>
+	<react:component
+		data="<%= data %>"
+		module="js/Ratings"
+	/>
+</div>

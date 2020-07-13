@@ -25,7 +25,11 @@ AUI.add(
 
 		var InputMoveBoxes = A.Component.create({
 			ATTRS: {
+				leftBoxMaxItems: -1,
+
 				leftReorder: {},
+
+				rightBoxMaxItems: -1,
 
 				rightReorder: {},
 
@@ -272,6 +276,8 @@ AUI.add(
 					var instance = this;
 
 					var contentBox = instance.get('contentBox');
+					var leftBoxMaxItems = instance.get('leftBoxMaxItems');
+					var rightBoxMaxItems = instance.get('rightBoxMaxItems');
 
 					var moveBtnLeft = contentBox.one('.move-left');
 					var moveBtnRight = contentBox.one('.move-right');
@@ -283,11 +289,23 @@ AUI.add(
 						var btnDisabledRight = true;
 
 						if (target.get('length') > 0) {
-							if (target == instance._rightBox) {
-								btnDisabledLeft = false;
+							if (target === instance._rightBox) {
+								if (
+									leftBoxMaxItems === -1 ||
+									instance._leftBox.get('length') <
+										leftBoxMaxItems
+								) {
+									btnDisabledLeft = false;
+								}
 							}
-							else if (target == instance._leftBox) {
-								btnDisabledRight = false;
+							else if (target === instance._leftBox) {
+								if (
+									rightBoxMaxItems === -1 ||
+									instance._rightBox.get('length') <
+										rightBoxMaxItems
+								) {
+									btnDisabledRight = false;
+								}
 							}
 						}
 

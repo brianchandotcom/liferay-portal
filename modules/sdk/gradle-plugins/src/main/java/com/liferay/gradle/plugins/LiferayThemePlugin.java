@@ -168,6 +168,79 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureConfigurationDefault(
+		Configuration archivesConfiguration,
+		Configuration defaultConfiguration) {
+
+		defaultConfiguration.extendsFrom(archivesConfiguration);
+	}
+
+	private void _configureConventionBasePlugin(
+		BasePluginConvention basePluginConvention,
+		Map<String, Object> packageJsonMap) {
+
+		String name = null;
+
+		Map<String, Object> liferayThemeMap =
+			(Map<String, Object>)packageJsonMap.get("liferayTheme");
+
+		if (liferayThemeMap != null) {
+			name = (String)liferayThemeMap.get("distName");
+		}
+
+		if (Validator.isNull(name)) {
+			name = (String)packageJsonMap.get("name");
+		}
+
+		if (Validator.isNull(name)) {
+			return;
+		}
+
+		basePluginConvention.setArchivesBaseName(name);
+	}
+
+	private void _configureProject(
+		Project project, Map<String, Object> packageJsonMap) {
+
+		// liferay-theme-tasks already uses the "build" directory
+
+		project.setBuildDir("build_gradle");
+
+		String version = (String)packageJsonMap.get("version");
+
+		if (Validator.isNotNull(version)) {
+			project.setVersion(version);
+		}
+	}
+
+	private void _configureTaskBuildLangProvider(
+		TaskProvider<BuildLangTask> buildLangTaskProvider) {
+
+		buildLangTaskProvider.configure(
+			new Action<BuildLangTask>() {
+
+				@Override
+				public void execute(BuildLangTask buildLangTask) {
+					buildLangTask.setLangDir("src/WEB-INF/src/content");
+				}
+
+			});
+	}
+
+	private void _configureTaskCleanProvider(
+		TaskProvider<Delete> cleanTaskProvider) {
+
+		cleanTaskProvider.configure(
+			new Action<Delete>() {
+
+				@Override
+				public void execute(Delete cleanDelete) {
+					cleanDelete.delete("build", "dist");
+				}
+
+			});
+	}
+
 	private void _configureTaskCreateLiferayThemeJsonProvider(
 		final Project project, final LiferayExtension liferayExtension,
 		TaskProvider<Task> createLiferayThemeJsonTaskProvider) {
@@ -235,65 +308,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureConventionBasePlugin(
-		BasePluginConvention basePluginConvention,
-		Map<String, Object> packageJsonMap) {
-
-		String name = null;
-
-		Map<String, Object> liferayThemeMap =
-			(Map<String, Object>)packageJsonMap.get("liferayTheme");
-
-		if (liferayThemeMap != null) {
-			name = (String)liferayThemeMap.get("distName");
-		}
-
-		if (Validator.isNull(name)) {
-			name = (String)packageJsonMap.get("name");
-		}
-
-		if (Validator.isNull(name)) {
-			return;
-		}
-
-		basePluginConvention.setArchivesBaseName(name);
-	}
-
-	private void _configureConfigurationDefault(
-		Configuration archivesConfiguration,
-		Configuration defaultConfiguration) {
-
-		defaultConfiguration.extendsFrom(archivesConfiguration);
-	}
-
-	private void _configureTaskBuildLangProvider(
-		TaskProvider<BuildLangTask> buildLangTaskProvider) {
-
-		buildLangTaskProvider.configure(
-			new Action<BuildLangTask>() {
-
-				@Override
-				public void execute(BuildLangTask buildLangTask) {
-					buildLangTask.setLangDir("src/WEB-INF/src/content");
-				}
-
-			});
-	}
-
-	private void _configureTaskCleanProvider(
-		TaskProvider<Delete> cleanTaskProvider) {
-
-		cleanTaskProvider.configure(
-			new Action<Delete>() {
-
-				@Override
-				public void execute(Delete cleanDelete) {
-					cleanDelete.delete("build", "dist");
-				}
-
-			});
-	}
-
 	private void _configureTaskDeployProvider(
 		final Project project, TaskProvider<Copy> deployTaskProvider) {
 
@@ -314,20 +328,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		ExecuteGulpTask executeGulpTask) {
 
 		executeGulpTask.dependsOn(createLiferayThemeJsonTaskProvider);
-	}
-
-	private void _configureProject(
-		Project project, Map<String, Object> packageJsonMap) {
-
-		// liferay-theme-tasks already uses the "build" directory
-
-		project.setBuildDir("build_gradle");
-
-		String version = (String)packageJsonMap.get("version");
-
-		if (Validator.isNotNull(version)) {
-			project.setVersion(version);
-		}
 	}
 
 	@SuppressWarnings("unchecked")

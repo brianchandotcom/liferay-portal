@@ -22,45 +22,44 @@ definition {
 
 	@description = "This is a use case for LPS-106057."
 	@priority = "5"
-	test PagesFragments7016 {
-		property data.archive.type = "data-archive-fragments";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.0.10.6";
-
-		siteName  = "guest";
-		portletName = "Web Content Display";
-
-		Navigator.gotoSitePage(
-				pageName = "Public Site Page",
-				siteName = "${siteName}");
-		Portlet.viewTitle(portletName = "${portletName}");
-		Navigator.openPrivateSitePageURL(
-			siteName = "${siteName}",
-			pageName = "Private Site Page");
-		Portlet.viewTitle(portletName = "${portletName}");
-		echo(value1= "Checked Portlet");
-	}
-
-	@description = "This is a use case for LPS-106057."
-	@priority = "5"
 	test PagesFragments704 {
 		property data.archive.type = "data-archive-fragments";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		siteName  = "guest";
+		siteName = "guest";
 		portletName = "Web Content Display";
 
 		Navigator.gotoSitePage(
-				pageName = "Public Site Page",
-				siteName = "${siteName}");
+			pageName = "Public Site Page",
+			siteName = "${siteName}");
 		Portlet.viewTitle(portletName = "${portletName}");
 		Navigator.openPrivateSitePageURL(
-			siteName = "${siteName}",
-			pageName = "Private Site Page");
+			pageName = "Private Site Page",
+			siteName = "${siteName}");
 		Portlet.viewTitle(portletName = "${portletName}");
-		echo(value1= "Checked Portlet");
+		echo(value1 = "Checked Portlet");
 	}
 
+	@description = "This is a use case for LPS-106057."
+	@priority = "5"
+	test PagesFragments7016 {
+		property data.archive.type = "data-archive-fragments";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.10.6";
+
+		siteName = "guest";
+		portletName = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Public Site Page",
+			siteName = "${siteName}");
+		Portlet.viewTitle(portletName = "${portletName}");
+		Navigator.openPrivateSitePageURL(
+			pageName = "Private Site Page",
+			siteName = "${siteName}");
+		Portlet.viewTitle(portletName = "${portletName}");
+		echo(value1 = "Checked Portlet");
+	}
 
 }

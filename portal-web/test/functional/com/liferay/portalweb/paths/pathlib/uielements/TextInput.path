@@ -525,7 +525,7 @@
 </tr>
 <tr>
 	<td>SEO_MAPPED_FIELD</td>
-	<td>//input[contains(@id,'${key_mappedField}')]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//input[contains(@id,'mapped')]</td>
 	<td></td>
 </tr>
 <tr>

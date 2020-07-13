@@ -79,9 +79,8 @@ export const Page = ({page}) => {
 	const {editingLanguageId} = usePage();
 	const dispatch = useForm();
 
-	const {successPageSettings} = page;
+	const {defaultLanguageId, successPageSettings} = page;
 
-	const defaultLanguageId = themeDisplay.getLanguageId();
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
 	const {initialBody, initialTitle} = {

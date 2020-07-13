@@ -21,13 +21,18 @@ const withMultiplePages = (ChildComponent) => {
 	class MultiplePages extends Component {
 		getPages() {
 			let {pages} = this.props;
-			const {paginationMode, successPageSettings} = this.props;
+			const {
+				defaultLanguageId,
+				paginationMode,
+				successPageSettings,
+			} = this.props;
 
 			if (successPageSettings.enabled) {
 				pages = [
 					...pages,
 					{
 						contentRenderer: 'success',
+						defaultLanguageId,
 						paginationItemRenderer: `${paginationMode}_success`,
 						rows: [],
 						successPageSettings,

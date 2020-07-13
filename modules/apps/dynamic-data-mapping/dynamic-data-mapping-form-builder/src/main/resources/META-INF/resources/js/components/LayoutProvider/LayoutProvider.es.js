@@ -693,7 +693,9 @@ class LayoutProvider extends Component {
 		return {
 			...otherProps,
 			body: {
+				...body,
 				[editingLanguageId]:
+					body[editingLanguageId] === undefined ||
 					body[editingLanguageId] === ''
 						? Liferay.Language.get(
 								'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
@@ -701,7 +703,9 @@ class LayoutProvider extends Component {
 						: body[editingLanguageId],
 			},
 			title: {
+				...title,
 				[editingLanguageId]:
+					title[editingLanguageId] === undefined ||
 					title[editingLanguageId] === ''
 						? Liferay.Language.get('thank-you')
 						: title[editingLanguageId],

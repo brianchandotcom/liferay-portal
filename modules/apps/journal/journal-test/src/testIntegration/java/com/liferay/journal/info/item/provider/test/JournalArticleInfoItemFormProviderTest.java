@@ -128,7 +128,7 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertTrue(multilineAttributeOptional.get());
 
 		Optional<Boolean> richAttributeOptional =
-			infoField.getAttributeOptional(TextInfoFieldType.RICH);
+			infoField.getAttributeOptional(TextInfoFieldType.HTML);
 
 		Assert.assertTrue(richAttributeOptional.get());
 
@@ -145,7 +145,7 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertTrue(multilineAttributeOptional.get());
 
 		richAttributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.RICH);
+			TextInfoFieldType.HTML);
 
 		Assert.assertFalse(richAttributeOptional.isPresent());
 
@@ -192,7 +192,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		richAttributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.RICH);
+			TextInfoFieldType.HTML);
 
 		Assert.assertTrue(richAttributeOptional.get());
 

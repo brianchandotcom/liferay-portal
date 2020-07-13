@@ -63,6 +63,45 @@ public class ProjectTemplatesRESTBuilderTest
 	}
 
 	@Test
+	public void testBuildTemplateRESTBuilder() throws Exception {
+		String liferayVersion = getDefaultLiferayVersion();
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+		String template = "rest-builder";
+
+		File gradleWorkspaceDir = buildWorkspace(
+			temporaryFolder, "gradle", "gradleWS", liferayVersion,
+			mavenExecutor);
+
+		File gradleWorkspaceModulesDir = new File(
+			gradleWorkspaceDir, "modules");
+
+		File gradleProjectDir = buildTemplateWithGradle(
+			gradleWorkspaceModulesDir, template, name, "--package-name",
+			packageName, "--liferay-version", liferayVersion);
+
+		testExists(gradleProjectDir, name + "-api/build.gradle");
+		testExists(gradleProjectDir, name + "-client/build.gradle");
+		testExists(gradleProjectDir, name + "-impl/build.gradle");
+		testExists(gradleProjectDir, name + "-test/build.gradle");
+
+		File mavenWorkspaceDir = buildWorkspace(
+			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
+
+		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+			mavenModulesDir, mavenModulesDir, template, name, "com.test",
+			mavenExecutor, "-Dpackage=" + packageName,
+			"-DliferayVersion=" + liferayVersion);
+
+		testExists(mavenProjectDir, name + "-api/pom.xml");
+		testExists(mavenProjectDir, name + "-client/pom.xml");
+		testExists(mavenProjectDir, name + "-impl/pom.xml");
+		testExists(mavenProjectDir, name + "-test/pom.xml");
+	}
+
+	@Test
 	public void testBuildTemplateRESTBuilderCheckExports() throws Exception {
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "guestbook";
@@ -80,15 +119,8 @@ public class ProjectTemplatesRESTBuilderTest
 			gradleWorkspaceModulesDir, template, name, "--package-name",
 			packageName, "--liferay-version", liferayVersion);
 
-		File gradleConfigYAML = new File(
-			new File(gradleProjectDir, name + "-impl"), "rest-config.yaml");
-
-		Assert.assertTrue(gradleConfigYAML.exists());
-
-		File gradleOpenAPIYAML = new File(
-			new File(gradleProjectDir, name + "-impl"), "rest-openapi.yaml");
-
-		Assert.assertTrue(gradleOpenAPIYAML.exists());
+		File gradleBndFile = testExists(
+			gradleProjectDir, name + "-api/bnd.bnd");
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
@@ -100,174 +132,15 @@ public class ProjectTemplatesRESTBuilderTest
 			mavenExecutor, "-Dpackage=" + packageName,
 			"-DliferayVersion=" + liferayVersion);
 
-		File mavenConfigYAML = new File(
-			new File(mavenProjectDir, name + "-impl"), "rest-config.yaml");
-
-		Assert.assertTrue(mavenConfigYAML.exists());
-
-		File mavenOpenAPIYAML = new File(
-			new File(mavenProjectDir, name + "-impl"), "rest-openapi.yaml");
-
-		Assert.assertTrue(mavenOpenAPIYAML.exists());
+		File mavenBndFile = testExists(mavenProjectDir, name + "-api/bnd.bnd");
 
 		Assert.assertArrayEquals(
-			Files.readAllBytes(gradleConfigYAML.toPath()),
-			Files.readAllBytes(mavenConfigYAML.toPath()));
-		Assert.assertArrayEquals(
-			Files.readAllBytes(gradleOpenAPIYAML.toPath()),
-			Files.readAllBytes(mavenOpenAPIYAML.toPath()));
+			Files.readAllBytes(gradleBndFile.toPath()),
+			Files.readAllBytes(mavenBndFile.toPath()));
 
 		testContains(
 			gradleProjectDir, name + "-api/bnd.bnd", "Export-Package:\\",
 			packageName + ".dto.v1_0,\\", packageName + ".resource.v1_0");
-	}
-
-	@Test
-	public void testBuildTemplateRESTBuilderWithExtraModules()
-		throws Exception {
-
-		String extraModules = "true";
-		String liferayVersion = getDefaultLiferayVersion();
-		String name = "guestbook";
-		String packageName = "com.liferay.docs.guestbook";
-		String template = "rest-builder";
-
-		File gradleWorkspaceDir = buildWorkspace(
-			temporaryFolder, "gradle", "gradleWS", liferayVersion,
-			mavenExecutor);
-
-		File gradleWorkspaceModulesDir = new File(
-			gradleWorkspaceDir, "modules");
-
-		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--package-name",
-			packageName, "--liferay-version", liferayVersion, "--extraModules",
-			extraModules);
-
-		File gradleAPI = new File(
-			new File(gradleProjectDir, name + "-api"), "build.gradle");
-
-		Assert.assertTrue(gradleAPI.exists());
-
-		File gradleClient = new File(
-			new File(gradleProjectDir, name + "-client"), "build.gradle");
-
-		Assert.assertTrue(gradleClient.exists());
-
-		File gradleImpl = new File(
-			new File(gradleProjectDir, name + "-impl"), "build.gradle");
-
-		Assert.assertTrue(gradleImpl.exists());
-
-		File gradleTest = new File(
-			new File(gradleProjectDir, name + "-test"), "build.gradle");
-
-		Assert.assertTrue(gradleTest.exists());
-
-		File mavenWorkspaceDir = buildWorkspace(
-			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
-
-		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
-
-		File mavenProjectDir = buildTemplateWithMaven(
-			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-Dpackage=" + packageName,
-			"-DliferayVersion=" + liferayVersion,
-			"-DextraModules=" + extraModules);
-
-		File mavenAPI = new File(
-			new File(mavenProjectDir, name + "-api"), "pom.xml");
-
-		Assert.assertTrue(mavenAPI.exists());
-
-		File mavenClient = new File(
-			new File(mavenProjectDir, name + "-client"), "pom.xml");
-
-		Assert.assertTrue(mavenClient.exists());
-
-		File mavenImpl = new File(
-			new File(mavenProjectDir, name + "-impl"), "pom.xml");
-
-		Assert.assertTrue(mavenImpl.exists());
-
-		File mavenTest = new File(
-			new File(mavenProjectDir, name + "-test"), "pom.xml");
-
-		Assert.assertFalse(mavenTest.exists());
-	}
-
-	@Test
-	public void testBuildTemplateRESTBuilderWithoutExtraModules()
-		throws Exception {
-
-		String extraModules = "false";
-		String liferayVersion = getDefaultLiferayVersion();
-		String name = "guestbook";
-		String packageName = "com.liferay.docs.guestbook";
-		String template = "rest-builder";
-
-		File gradleWorkspaceDir = buildWorkspace(
-			temporaryFolder, "gradle", "gradleWS", liferayVersion,
-			mavenExecutor);
-
-		File gradleWorkspaceModulesDir = new File(
-			gradleWorkspaceDir, "modules");
-
-		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--package-name",
-			packageName, "--liferay-version", liferayVersion, "--extraModules",
-			extraModules);
-
-		File gradleAPI = new File(
-			new File(gradleProjectDir, name + "-api"), "build.gradle");
-
-		Assert.assertTrue(gradleAPI.exists());
-
-		File gradleClient = new File(
-			new File(gradleProjectDir, name + "-client"), "build.gradle");
-
-		Assert.assertFalse(gradleClient.exists());
-
-		File gradleImpl = new File(
-			new File(gradleProjectDir, name + "-impl"), "build.gradle");
-
-		Assert.assertTrue(gradleImpl.exists());
-
-		File gradleTest = new File(
-			new File(gradleProjectDir, name + "-test"), "build.gradle");
-
-		Assert.assertFalse(gradleTest.exists());
-
-		File mavenWorkspaceDir = buildWorkspace(
-			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
-
-		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
-
-		File mavenProjectDir = buildTemplateWithMaven(
-			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-Dpackage=" + packageName,
-			"-DliferayVersion=" + liferayVersion + "-DextraModules=" +
-				extraModules);
-
-		File mavenAPI = new File(
-			new File(mavenProjectDir, name + "-api"), "pom.xml");
-
-		Assert.assertTrue(mavenAPI.exists());
-
-		File mavenClient = new File(
-			new File(mavenProjectDir, name + "-client"), "pom.xml");
-
-		Assert.assertFalse(mavenClient.exists());
-
-		File mavenImpl = new File(
-			new File(mavenProjectDir, name + "-impl"), "pom.xml");
-
-		Assert.assertTrue(mavenImpl.exists());
-
-		File mavenTest = new File(
-			new File(mavenProjectDir, name + "-test"), "pom.xml");
-
-		Assert.assertFalse(mavenTest.exists());
 	}
 
 	@Test

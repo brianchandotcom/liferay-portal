@@ -32,9 +32,9 @@ export default ({
 	fieldSet: fieldSetDefault,
 }) => {
 	const [context, dispatch] = useContext(AppContext);
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {dataDefinition, dataLayout, fieldSets} = context;
 	const {state: childrenState} = childrenContext;
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
 	return (name) => {
 		let fieldName;
@@ -64,7 +64,10 @@ export default ({
 			const fields = dataDefinition.dataDefinitionFields;
 
 			return fields.map((ddField) => {
-				if (ddField.name === fieldName) {
+				const {
+					customProperties: {ddmStructureId},
+				} = ddField;
+				if (ddmStructureId == id) {
 					return {
 						...ddField,
 						label: name,
@@ -105,7 +108,7 @@ export default ({
 								},
 								{
 									name: 'label',
-									value: name,
+									value: name.en_US,
 								},
 							],
 						});

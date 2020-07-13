@@ -83,11 +83,19 @@ const ModalContent = ({
 		...childrenDataDefinitionFields,
 	]);
 
+	const changeZIndex = (zIndex) => {
+		document
+			.querySelectorAll('.ddm-field-actions-container')
+			.forEach((container) => {
+				container.style.zIndex = zIndex;
+			});
+	};
+
 	useEffect(() => {
 		if (fieldSet) {
 			setName(fieldSet.name);
 		}
-	}, [defaultLanguageId, fieldSet]);
+	}, [fieldSet]);
 
 	useEffect(() => {
 		if (dataLayout) {
@@ -113,6 +121,26 @@ const ModalContent = ({
 		}
 	}, [dataLayoutBuilder, editingLanguageId]);
 
+	useEffect(() => {
+		if (dataLayoutBuilder) {
+			changeZIndex('1050');
+		}
+
+		return () => {
+			changeZIndex(null);
+		};
+	}, [dataLayoutBuilder]);
+
+	/**
+	 * This functions is necessary to handle with ddm-container,
+	 * just a trick to simply show/hide container. Actually the z-index of container
+	 * is biggest than the Modal and DropDown, that's why is necessary to handle
+	 * with Javascript interaction
+	 * @param {Boolean} active DropDown Visible of TranslationManager
+	 */
+
+	const onActiveChange = (active) => changeZIndex(active ? null : '1050');
+
 	const createFieldSet = useCreateFieldSet({
 		availableLanguageIds,
 		childrenContext,
@@ -121,7 +149,6 @@ const ModalContent = ({
 		DataLayout: childrenAppProps.DataLayout,
 		availableLanguageIds,
 		childrenContext,
-		defaultLanguageId,
 		fieldSet,
 	});
 	const propagateFieldSet = usePropagateFieldSet();
@@ -135,60 +162,24 @@ const ModalContent = ({
 		[childrenContext]
 	);
 
-	/**
-	 * This functions is necessary to handle with ddm-container,
-	 * just a trick to simply show/hide container. Actually the z-index of container
-	 * is biggest than the Modal and DropDown, that's why is necessary to handle
-	 * with Javascript interaction
-	 * @param {Boolean} active DropDown Visible of TranslationManager
-	 */
+	const isDataLayoutChanged = () => {
+		const fieldNames = fieldSet.dataDefinitionFields.map(({name}) => name);
 
-	const onActiveChange = (active) => {
-		document
-			.querySelectorAll('#ddm-actionable-fields-container')
-			.forEach((container) => {
-				container.style.display = active ? 'none' : '';
-			});
+		const [prevLayoutFields, actualLayoutFields] = [
+			fieldSet.defaultDataLayout.dataLayoutPages,
+			dataLayout.dataLayoutPages,
+		].map((layout) =>
+			fieldNames.filter((field) => containsField(layout, field))
+		);
+
+		return !!prevLayoutFields.filter(
+			(field) => !actualLayoutFields.includes(field)
+		).length;
 	};
-
-	useEffect(() => {
-		const changeZIndex = (zIndex) => {
-			document
-				.querySelectorAll('.ddm-field-actions-container')
-				.forEach((container) => {
-					container.style.zIndex = zIndex;
-				});
-		};
-
-		if (dataLayoutBuilder) {
-			changeZIndex('1050');
-		}
-
-		return () => {
-			changeZIndex(null);
-		};
-	}, [dataLayoutBuilder]);
 
 	const onSave = () => {
 		if (fieldSet) {
-			const fieldNames = fieldSet.dataDefinitionFields.map(
-				({name}) => name
-			);
-
-			const prevLayoutFields = fieldNames.filter((field) =>
-				containsField(fieldSet.defaultDataLayout.dataLayoutPages, field)
-			);
-
-			const actualLayoutFields = fieldNames.filter((field) =>
-				containsField(
-					childrenContext.state.dataLayout.dataLayoutPages,
-					field
-				)
-			);
-
-			const containsRemovedFields = !!prevLayoutFields.filter(
-				(field) => !actualLayoutFields.includes(field)
-			).length;
+			const containsRemovedFields = isDataLayoutChanged();
 
 			propagateFieldSet({
 				fieldSet,

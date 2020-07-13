@@ -36,48 +36,66 @@ export default () => {
 	return ({fieldSet, isDeleteAction, modal, onPropagate}) => {
 		return getItem(
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
-		).then(({items}) => {
+		).then(({items: response}) => {
+			let items = response;
 			const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 				({customProperties: {ddmStructureId}}) =>
 					ddmStructureId == fieldSet.id
 			);
 
-			if (dataDefinitionField) {
-				items = items.map(({dataLayouts, ...item}) => {
-					const findLayoutById = ({id}) => id === dataLayout.id;
-					if (
-						containsField(
-							dataLayout.dataLayoutPages,
-							dataDefinitionField.name
-						)
-					) {
-						const dataLayoutIndex = dataLayouts.findIndex(
-							findLayoutById
-						);
-						if (dataLayoutIndex === -1) {
-							dataLayouts.push(dataLayout);
-						}
-					}
-					else {
-						dataLayouts = dataLayouts.filter((layout) => {
-							return !findLayoutById(layout);
-						});
-					}
+			const findLayoutById = ({id}) => id === dataLayout.id;
 
-					return {
-						dataLayouts,
-						...item,
-					};
-				});
+			if (items.length) {
+				if (dataDefinitionField) {
+					const fieldInDataLayout = containsField(
+						dataLayout.dataLayoutPages,
+						dataDefinitionField.name
+					);
+
+					items = items.map(({dataLayouts, ...item}) => {
+						if (fieldInDataLayout) {
+							const dataLayoutIndex = dataLayouts.findIndex(
+								findLayoutById
+							);
+							if (dataLayoutIndex === -1) {
+								dataLayouts.push(dataLayout);
+							}
+						}
+						else {
+							dataLayouts = dataLayouts.filter((layout) => {
+								return !findLayoutById(layout);
+							});
+						}
+
+						return {
+							dataLayouts,
+							...item,
+						};
+					});
+				}
+				else {
+					items = items.filter(({dataLayouts}) =>
+						findLayoutById(dataLayouts)
+					);
+				}
+			}
+			else if (
+				dataDefinitionField &&
+				containsField(
+					dataLayout.dataLayoutPages,
+					dataDefinitionField.name
+				)
+			) {
+				items.push({dataDefinition, dataLayouts: [dataLayout]});
 			}
 
-			const {dataLayouts = [], dataListViews = []} = items[0];
+			const {dataLayouts = [], dataListViews = []} = items[0] || {};
 
 			const isFieldSetUsed =
 				!!dataLayouts.length || !!dataListViews.length;
 
 			if (!isDeleteAction && (!items.length || !isFieldSetUsed)) {
-				return onPropagate(fieldSet, true);
+				return onPropagate(fieldSet);
 			}
 
 			const Items = ({name}) => {

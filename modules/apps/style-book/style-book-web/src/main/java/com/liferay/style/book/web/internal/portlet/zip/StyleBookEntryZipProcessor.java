@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ExportHelper.class)
-public class ExportHelper {
+@Component(immediate = true, service = StyleBookEntryZipProcessor.class)
+public class StyleBookEntryZipProcessor {
 
 	public File exportStyleBookEntries(List<StyleBookEntry> styleBookEntries)
 		throws PortletException {

@@ -19,8 +19,6 @@ import com.liferay.gradle.util.StringUtil;
 
 import groovy.lang.Closure;
 
-import java.io.File;
-
 import org.gradle.api.Action;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.Plugin;
@@ -52,22 +50,38 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		Convention convention = project.getConvention();
 
-		BasePluginConvention basePluginConvention = convention.getPlugin(
+		final BasePluginConvention basePluginConvention = convention.getPlugin(
 			BasePluginConvention.class);
 
 		_configureConventionBasePlugin(antBuilder, basePluginConvention);
 
 		TaskProvider<Delete> cleanTaskProvider = GradleUtil.getTaskProvider(
 			project, BasePlugin.CLEAN_TASK_NAME, Delete.class);
-		TaskProvider<Task> warTaskProvider = GradleUtil.getTaskProvider(
+		final TaskProvider<Task> warTaskProvider = GradleUtil.getTaskProvider(
 			project, _WAR_TASK_NAME);
 
 		_configureTaskCleanProvider(cleanTaskProvider);
 
 		_configureProject(project, antBuilder);
 
-		_configureArtifacts(
-			project, antBuilder, basePluginConvention, warTaskProvider);
+		ArtifactHandler artifacts = project.getArtifacts();
+
+		artifacts.add(
+			Dependency.ARCHIVES_CONFIGURATION,
+			project.file(antBuilder.getProperty("plugin.file")),
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(
+					ConfigurablePublishArtifact configurablePublishArtifact) {
+
+					configurablePublishArtifact.builtBy(warTaskProvider.get());
+
+					configurablePublishArtifact.setName(
+						basePluginConvention.getArchivesBaseName());
+				}
+
+			});
 	}
 
 	private void _configureTaskCleanProvider(
@@ -90,33 +104,6 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		basePluginConvention.setArchivesBaseName(
 			String.valueOf(antBuilder.getProperty("plugin.name")));
-	}
-
-	@SuppressWarnings("serial")
-	private void _configureArtifacts(
-		final Project project, AntBuilder antBuilder,
-		final BasePluginConvention basePluginConvention,
-		final TaskProvider<Task> warTaskProvider) {
-
-		ArtifactHandler artifacts = project.getArtifacts();
-
-		File pluginFile = project.file(antBuilder.getProperty("plugin.file"));
-
-		artifacts.add(
-			Dependency.ARCHIVES_CONFIGURATION, pluginFile,
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(
-					ConfigurablePublishArtifact configurablePublishArtifact) {
-
-					configurablePublishArtifact.builtBy(warTaskProvider.get());
-
-					configurablePublishArtifact.setName(
-						basePluginConvention.getArchivesBaseName());
-				}
-
-			});
 	}
 
 	private void _configureProject(Project project, AntBuilder antBuilder) {

@@ -37,6 +37,9 @@ public abstract class BaseSelectableTableClayDataSetDisplayView
 	public String getLabel() {
 		return ClayDataSetConstants.SELECTABLE_TABLE;
 	}
+
+	public String getName() {
+		return ClayDataSetConstants.SELECTABLE_TABLE;
 	}
 
 	public String getThumbnail() {

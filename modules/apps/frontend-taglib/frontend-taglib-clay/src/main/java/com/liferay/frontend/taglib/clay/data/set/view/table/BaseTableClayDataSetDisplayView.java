@@ -36,6 +36,9 @@ public abstract class BaseTableClayDataSetDisplayView
 	public String getLabel() {
 		return ClayDataSetConstants.TABLE;
 	}
+
+	public String getName() {
+		return ClayDataSetConstants.TABLE;
 	}
 
 	public ResourceBundle getResourceBundle(Locale locale) {

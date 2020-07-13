@@ -162,7 +162,7 @@
 	);
 }
 
-.btn-link {
+.btn-link:not(.dropdown-item) {
 	@include button-cp(
 		var(--transparent),
 		var(--transparent),

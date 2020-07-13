@@ -84,6 +84,17 @@ public class LiferayAntPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureConventionBasePlugin(
+		AntBuilder antBuilder, BasePluginConvention basePluginConvention) {
+
+		basePluginConvention.setArchivesBaseName(
+			String.valueOf(antBuilder.getProperty("plugin.name")));
+	}
+
+	private void _configureProject(Project project, AntBuilder antBuilder) {
+		project.setVersion(antBuilder.getProperty("plugin.full.version"));
+	}
+
 	private void _configureTaskCleanProvider(
 		TaskProvider<Delete> cleanTaskProvider) {
 
@@ -97,17 +108,6 @@ public class LiferayAntPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureConventionBasePlugin(
-		AntBuilder antBuilder, BasePluginConvention basePluginConvention) {
-
-		basePluginConvention.setArchivesBaseName(
-			String.valueOf(antBuilder.getProperty("plugin.name")));
-	}
-
-	private void _configureProject(Project project, AntBuilder antBuilder) {
-		project.setVersion(antBuilder.getProperty("plugin.full.version"));
 	}
 
 	private static final String _WAR_TASK_NAME = "war";

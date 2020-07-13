@@ -33,6 +33,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -53,8 +54,10 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
+		ExtensionContainer extensionContainer = project.getExtensions();
+
 		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
-			project.getExtensions());
+			extensionContainer);
 
 		_configureTaskGenerateJSPJava(project);
 		_configureTaskJar(project);

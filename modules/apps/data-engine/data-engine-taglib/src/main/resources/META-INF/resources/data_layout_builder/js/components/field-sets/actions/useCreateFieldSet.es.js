@@ -35,7 +35,7 @@ export default ({availableLanguageIds, childrenContext}) => {
 				fieldType !== 'fieldset' && containsField(dataLayoutPages, name)
 		);
 
-		const fieldSetDefinition = {
+		const fieldSet = {
 			availableLanguageIds,
 			dataDefinitionFields,
 			defaultDataLayout: {
@@ -47,7 +47,7 @@ export default ({availableLanguageIds, childrenContext}) => {
 
 		return addItem(
 			`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder-fieldset`,
-			fieldSetDefinition
+			fieldSet
 		)
 			.then((dataDefinitionFieldSet) => {
 				dispatch({

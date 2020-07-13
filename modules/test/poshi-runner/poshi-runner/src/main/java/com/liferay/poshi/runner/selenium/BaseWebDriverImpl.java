@@ -18,7 +18,7 @@ import com.deque.axe.AXE;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.exception.PoshiRunnerRuntimeException;
+import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
@@ -1019,14 +1019,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object1 = getWebElement(argument1);
 		}
-		catch (PoshiRunnerRuntimeException poshiRunnerRuntimeException) {
+		catch (ElementNotFoundPoshiRunnerException elementNotFoundPoshiRunnerException) {
 			object1 = argument1;
 		}
 
 		try {
 			object2 = getWebElement(argument2);
 		}
-		catch (PoshiRunnerRuntimeException poshiRunnerRuntimeException) {
+		catch (ElementNotFoundPoshiRunnerException elementNotFoundPoshiRunnerException) {
 			object2 = argument2;
 		}
 
@@ -4364,7 +4364,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return webElements.get(0);
 		}
 
-		throw new PoshiRunnerRuntimeException(
+		throw new ElementNotFoundPoshiRunnerException(
 			"Element is not present at \"" + locator + "\"");
 	}
 

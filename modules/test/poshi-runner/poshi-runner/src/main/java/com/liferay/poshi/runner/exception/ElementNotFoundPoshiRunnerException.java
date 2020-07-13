@@ -17,20 +17,20 @@ package com.liferay.poshi.runner.exception;
 /**
  * @author Kenji Heigel
  */
-public class PoshiRunnerRuntimeException extends RuntimeException {
+public class ElementNotFoundPoshiRunnerException extends RuntimeException {
 
-	public PoshiRunnerRuntimeException() {
+	public ElementNotFoundPoshiRunnerException() {
 	}
 
-	public PoshiRunnerRuntimeException(String msg) {
+	public ElementNotFoundPoshiRunnerException(String msg) {
 		super(msg);
 	}
 
-	public PoshiRunnerRuntimeException(String msg, Throwable cause) {
+	public ElementNotFoundPoshiRunnerException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public PoshiRunnerRuntimeException(Throwable cause) {
+	public ElementNotFoundPoshiRunnerException(Throwable cause) {
 		super(cause);
 	}
 

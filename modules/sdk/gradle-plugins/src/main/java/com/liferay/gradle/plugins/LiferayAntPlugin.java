@@ -64,9 +64,10 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		_configureTaskCleanProvider(cleanTaskProvider);
 
+		_configureProject(project, antBuilder);
+
 		_configureArtifacts(
 			project, antBuilder, basePluginConvention, warTaskProvider);
-		_configureVersion(project, antBuilder);
 	}
 
 	private void _configureTaskCleanProvider(
@@ -118,7 +119,7 @@ public class LiferayAntPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureVersion(Project project, AntBuilder antBuilder) {
+	private void _configureProject(Project project, AntBuilder antBuilder) {
 		project.setVersion(antBuilder.getProperty("plugin.full.version"));
 	}
 

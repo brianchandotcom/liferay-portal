@@ -41,6 +41,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.util.PatternFilterable;
@@ -67,16 +68,35 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		JavaPluginConvention javaPluginConvention = convention.getPlugin(
 			JavaPluginConvention.class);
 
-		_configureTaskGenerateJSPJava(project, javaPluginConvention);
-		_configureTaskJar(project);
-		_configureTaskProcessResources(project, javaPluginConvention);
+		final TaskProvider<JavaCompile> compileJSPTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JspCPlugin.COMPILE_JSP_TASK_NAME, JavaCompile.class);
+		final TaskProvider<CompileJSPTask> generateJSPJavaTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME,
+				CompileJSPTask.class);
+		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
+			project, JavaPlugin.JAR_TASK_NAME, Jar.class);
+		TaskProvider<Copy> processResourcesTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME, Copy.class);
+
+		_configureTaskGenerateJSPJavaProvider(
+			javaPluginConvention, generateJSPJavaTaskProvider,
+			processResourcesTaskProvider);
+		_configureTaskJarProvider(
+			project, compileJSPTaskProvider, jarTaskProvider);
+		_configureTaskProcessResourcesProvider(
+			javaPluginConvention, processResourcesTaskProvider);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					_configureBundleExtensionDefaults(project, bundleExtension);
+					_configureExtensionBundleAfterEvaluate(
+						bundleExtension, compileJSPTaskProvider,
+						generateJSPJavaTaskProvider);
 				}
 
 			});
@@ -90,128 +110,155 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	private JspCDefaultsPlugin() {
 	}
 
-	private void _configureBundleExtensionDefaults(
-		Project project, BundleExtension bundleExtension) {
+	private void _configureExtensionBundleAfterEvaluate(
+		BundleExtension bundleExtension,
+		TaskProvider<JavaCompile> compileJSPTaskProvider,
+		TaskProvider<CompileJSPTask> generateJSPJavaTaskProvider) {
 
 		StringBuilder sb = new StringBuilder();
 
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+		JavaCompile compileJSPJavaCompile = compileJSPTaskProvider.get();
 
-		sb.append(FileUtil.getAbsolutePath(javaCompile.getDestinationDir()));
+		sb.append(
+			FileUtil.getAbsolutePath(
+				compileJSPJavaCompile.getDestinationDir()));
 
 		sb.append(',');
 
-		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
-			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+		CompileJSPTask generateJSPJavaCompileJSPTask =
+			generateJSPJavaTaskProvider.get();
 
-		sb.append(FileUtil.getAbsolutePath(compileJSPTask.getDestinationDir()));
+		sb.append(
+			FileUtil.getAbsolutePath(
+				generateJSPJavaCompileJSPTask.getDestinationDir()));
 
 		bundleExtension.instruction("-add-resource", sb.toString());
 	}
 
-	private void _configureTaskGenerateJSPJava(
-		final Project project,
-		final JavaPluginConvention javaPluginConvention) {
+	private void _configureTaskGenerateJSPJavaProvider(
+		final JavaPluginConvention javaPluginConvention,
+		TaskProvider<CompileJSPTask> generateJSPJavaTaskProvider,
+		final TaskProvider<Copy> processResourcesTaskProvider) {
 
-		final CompileJSPTask compileJSPTask =
-			(CompileJSPTask)GradleUtil.getTask(
-				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
-
-		Copy copy = (Copy)GradleUtil.getTask(
-			compileJSPTask.getProject(),
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		compileJSPTask.dependsOn(copy);
-
-		compileJSPTask.setWebAppDir(
-			new Callable<File>() {
+		generateJSPJavaTaskProvider.configure(
+			new Action<CompileJSPTask>() {
 
 				@Override
-				public File call() throws Exception {
+				public void execute(
+					CompileJSPTask generateJSPJavaCompileJSPTask) {
+
+					generateJSPJavaCompileJSPTask.dependsOn(
+						processResourcesTaskProvider);
+
+					generateJSPJavaCompileJSPTask.setWebAppDir(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								SourceSet sourceSet = _getSourceSet(
+									javaPluginConvention,
+									SourceSet.MAIN_SOURCE_SET_NAME);
+
+								SourceSetOutput sourceSetOutput =
+									sourceSet.getOutput();
+
+								return new File(
+									sourceSetOutput.getResourcesDir(),
+									"META-INF/resources");
+							}
+
+						});
+				}
+
+			});
+	}
+
+	private void _configureTaskJarProvider(
+		final Project project,
+		final TaskProvider<JavaCompile> compileJSPTaskProvider,
+		TaskProvider<Jar> jarTaskProvider) {
+
+		jarTaskProvider.configure(
+			new Action<Jar>() {
+
+				@Override
+				public void execute(Jar jar) {
+					boolean compileJspInclude = GradleUtil.getProperty(
+						project, COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+
+					if (compileJspInclude) {
+						jar.dependsOn(compileJSPTaskProvider);
+					}
+				}
+
+			});
+	}
+
+	private void _configureTaskProcessResourcesProvider(
+		final JavaPluginConvention javaPluginConvention,
+		TaskProvider<Copy> processResourcesTaskProvider) {
+
+		processResourcesTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy processResourcesCopy) {
 					SourceSet sourceSet = _getSourceSet(
 						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
 
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+					SourceDirectorySet sourceDirectorySet =
+						sourceSet.getResources();
 
-					return new File(
-						sourceSetOutput.getResourcesDir(),
-						"META-INF/resources");
-				}
+					FileTree fileTree = sourceDirectorySet.getAsFileTree();
 
-			});
-	}
+					fileTree = fileTree.matching(
+						new Action<PatternFilterable>() {
 
-	private void _configureTaskJar(final Project project) {
-		boolean compileJspInclude = GradleUtil.getProperty(
-			project, COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+							@Override
+							public void execute(
+								PatternFilterable patternFilterable) {
 
-		if (!compileJspInclude) {
-			return;
-		}
+								patternFilterable.include("**/*.tld");
+							}
 
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+						});
 
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+					processResourcesCopy.from(
+						fileTree.getFiles(),
+						new Action<CopySpec>() {
 
-		jar.dependsOn(javaCompile);
-	}
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.into("META-INF/resources/WEB-INF");
+							}
 
-	private void _configureTaskProcessResources(
-		Project project, JavaPluginConvention javaPluginConvention) {
+						});
 
-		Copy copy = (Copy)GradleUtil.getTask(
-			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+					Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
-		SourceSet sourceSet = _getSourceSet(
-			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
+					Iterator<File> iterator = srcDirs.iterator();
 
-		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
+					if (iterator.hasNext()) {
+						File tagsDir = new File(
+							iterator.next(), "META-INF/tags");
 
-		FileTree fileTree = sourceDirectorySet.getAsFileTree();
+						if (tagsDir.exists()) {
+							processResourcesCopy.from(
+								tagsDir,
+								new Action<CopySpec>() {
 
-		fileTree = fileTree.matching(
-			new Action<PatternFilterable>() {
+									@Override
+									public void execute(CopySpec copySpec) {
+										copySpec.into(
+											"META-INF/resources/META-INF/tags");
+									}
 
-				@Override
-				public void execute(PatternFilterable patternFilterable) {
-					patternFilterable.include("**/*.tld");
-				}
-
-			});
-
-		copy.from(
-			fileTree.getFiles(),
-			new Action<CopySpec>() {
-
-				@Override
-				public void execute(CopySpec copySpec) {
-					copySpec.into("META-INF/resources/WEB-INF");
-				}
-
-			});
-
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		if (iterator.hasNext()) {
-			File tagsDir = new File(iterator.next(), "META-INF/tags");
-
-			if (tagsDir.exists()) {
-				copy.from(
-					tagsDir,
-					new Action<CopySpec>() {
-
-						@Override
-						public void execute(CopySpec copySpec) {
-							copySpec.into("META-INF/resources/META-INF/tags");
+								});
 						}
+					}
+				}
 
-					});
-			}
-		}
+			});
 	}
 
 	private SourceSet _getSourceSet(

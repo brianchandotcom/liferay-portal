@@ -10,16 +10,25 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {
+	act,
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement,
+} from '@testing-library/react';
 import React from 'react';
 
 import EditEntry from '../../../src/main/resources/META-INF/resources/js/pages/entry/EditEntry.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import PermissionsContextProviderWrapper from '../../PermissionsContextProviderWrapper.es';
+import {ENTRY} from '../../constants.es';
 
 const context = {
 	appId: 1,
 	basePortletURL: 'portlet_url',
+	dataLayoutIds: [123],
+	namespace: '_portlet_',
 };
 
 const mockNavigate = jest.fn();
@@ -28,12 +37,28 @@ const mockToast = jest.fn();
 
 jest.mock('frontend-js-web', () => ({
 	createResourceURL: jest.fn(() => 'http://resource_url?'),
+	debounce: jest.fn().mockResolvedValue(),
 	fetch: jest.fn().mockResolvedValue(),
 }));
 
+const mockGetItem = jest
+	.fn()
+	.mockResolvedValueOnce(ENTRY.APP_WORKFLOW)
+	.mockResolvedValueOnce(ENTRY.APP_WORKFLOW)
+	.mockResolvedValue({
+		items: [
+			{
+				assignees: [{id: 0, name: 'User 1'}],
+				classPK: 0,
+				completed: false,
+				taskNames: ['Review'],
+			},
+		],
+		totalCount: 1,
+	});
+
 jest.mock('app-builder-web/js/utils/client.es', () => ({
-	getItem: jest.fn().mockResolvedValue({}),
-	updateItem: jest.fn().mockResolvedValue({}),
+	getItem: () => mockGetItem(),
 }));
 
 jest.mock('app-builder-web/js/utils/toast.es', () => ({
@@ -42,17 +67,15 @@ jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	successToast: (title) => mockToast(title),
 }));
 
-jest.mock('app-builder-web/js/hooks/withDDMForm.es', () => ({
-	__esModule: true,
-	default: jest.fn().mockImplementation((component) => component),
-	useDDMFormSubmit: jest.fn(),
-	useDDMFormValidation: jest.fn().mockImplementation((_, submit) => {
-		return () => {
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/hooks/useDDMForms.es',
+	() => (_, onSubmitCallback) => {
+		return (event) => {
+			onSubmitCallback(event);
 			mockSubmit();
-			submit();
 		};
-	}),
-}));
+	}
+);
 
 window.Liferay.Util = {
 	navigate: (url) => mockNavigate(url),
@@ -64,6 +87,14 @@ describe('EditEntry', () => {
 
 	afterAll(() => {
 		jest.restoreAllMocks();
+	});
+
+	beforeAll(() => {
+		const div = document.createElement('div');
+
+		div.id = 'edit-app-content';
+
+		document.body.appendChild(div);
 	});
 
 	it('renders on create mode', async () => {
@@ -110,6 +141,8 @@ describe('EditEntry', () => {
 		expect(buttons.length).toBe(2);
 		expect(buttons[0]).toHaveTextContent('submit');
 		expect(buttons[1]).toHaveTextContent('cancel');
+
+		await waitForElement(() => document.getElementById('workflowInfoBar'));
 
 		await act(async () => {
 			await fireEvent.click(buttons[0]);

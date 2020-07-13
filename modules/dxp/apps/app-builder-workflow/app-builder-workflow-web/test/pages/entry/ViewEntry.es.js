@@ -29,7 +29,7 @@ const context = {
 const instances = {
 	items: [
 		{
-			assignees: [{name: 'User'}],
+			assignees: [{id: -1, name: 'Unassigned'}],
 			classPK: 0,
 			completed: false,
 			taskNames: ['Review'],
@@ -66,6 +66,6 @@ describe('ViewEntry', () => {
 		expect(infoItems.length).toBe(3);
 		expect(infoItems[0]).toHaveTextContent('status: pending');
 		expect(infoItems[1]).toHaveTextContent('step: Review');
-		expect(infoItems[2]).toHaveTextContent('assignee: User');
+		expect(infoItems[2]).toHaveTextContent('assignee: Administrator');
 	});
 });

@@ -38,8 +38,46 @@ export const ENTRY = {
 	APP_WORKFLOW: {
 		appWorkflowDefinitionId: 1,
 		appWorkflowStates: [
-			{initial: true, name: 'Created'},
-			{initial: false, name: 'Closed'},
+			{
+				appWorkflowTransitions: [
+					{
+						name: 'Submit',
+						primary: true,
+						transitionTo: 'Review',
+					},
+				],
+				initial: true,
+				name: 'Created',
+			},
+			{
+				appWorkflowTransitions: [],
+				initial: false,
+				name: 'Closed',
+			},
+		],
+		appWorkflowTasks: [
+			{
+				appWorkflowDataLayoutLinks: [
+					{
+						dataLayoutId: 1,
+						readOnly: false,
+					},
+				],
+				appWorkflowRoleAssignments: [
+					{
+						roleId: 1,
+						roleName: 'Administrator',
+					},
+				],
+				appWorkflowTransitions: [
+					{
+						name: 'Close',
+						primary: true,
+						transitionTo: 'Closed',
+					},
+				],
+				name: 'Review',
+			},
 		],
 	},
 	DATA_DEFINITION: {

@@ -33,10 +33,13 @@ import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -59,9 +62,14 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
 			extensionContainer);
 
-		_configureTaskGenerateJSPJava(project);
+		Convention convention = project.getConvention();
+
+		JavaPluginConvention javaPluginConvention = convention.getPlugin(
+			JavaPluginConvention.class);
+
+		_configureTaskGenerateJSPJava(project, javaPluginConvention);
 		_configureTaskJar(project);
-		_configureTaskProcessResources(project);
+		_configureTaskProcessResources(project, javaPluginConvention);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -102,7 +110,10 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		bundleExtension.instruction("-add-resource", sb.toString());
 	}
 
-	private void _configureTaskGenerateJSPJava(final Project project) {
+	private void _configureTaskGenerateJSPJava(
+		final Project project,
+		final JavaPluginConvention javaPluginConvention) {
+
 		final CompileJSPTask compileJSPTask =
 			(CompileJSPTask)GradleUtil.getTask(
 				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
@@ -118,9 +129,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 				@Override
 				public File call() throws Exception {
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						compileJSPTask.getProject(),
-						SourceSet.MAIN_SOURCE_SET_NAME);
+					SourceSet sourceSet = _getSourceSet(
+						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
 
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
@@ -148,12 +158,14 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		jar.dependsOn(javaCompile);
 	}
 
-	private void _configureTaskProcessResources(Project project) {
+	private void _configureTaskProcessResources(
+		Project project, JavaPluginConvention javaPluginConvention) {
+
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		SourceSet sourceSet = _getSourceSet(
+			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
 
@@ -200,6 +212,15 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 					});
 			}
 		}
+	}
+
+	private SourceSet _getSourceSet(
+		JavaPluginConvention javaPluginConvention, String name) {
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.getByName(name);
 	}
 
 }

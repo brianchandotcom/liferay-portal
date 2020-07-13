@@ -269,7 +269,7 @@ public class PageDefinitionDTOConverterTest {
 			(FragmentFieldBackgroundImage)fragmentField.getValue();
 
 		_validateFragmentBackgroundImage(
-			fragmentFieldBackgroundImage.getBackgroundImage());
+			fragmentFieldBackgroundImage.getBackgroundFragmentImage());
 	}
 
 	@Test
@@ -285,7 +285,7 @@ public class PageDefinitionDTOConverterTest {
 			(FragmentFieldBackgroundImage)fragmentField.getValue();
 
 		_validateFragmentBackgroundImageWithTitle(
-			fragmentFieldBackgroundImage.getBackgroundImage(),
+			fragmentFieldBackgroundImage.getBackgroundFragmentImage(),
 			"My Background Image Title");
 	}
 

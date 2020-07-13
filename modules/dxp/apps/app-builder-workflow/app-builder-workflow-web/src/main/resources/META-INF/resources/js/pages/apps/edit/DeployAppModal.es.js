@@ -144,7 +144,7 @@ export default ({onCancel}) => {
 	};
 
 	return (
-		<ClayModal observer={observer} size="md">
+		<ClayModal center observer={observer} size="md">
 			<ClayModal.Header>
 				{Liferay.Language.get('deploy')}
 			</ClayModal.Header>

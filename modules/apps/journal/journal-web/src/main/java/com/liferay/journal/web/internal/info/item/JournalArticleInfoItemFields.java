@@ -44,7 +44,7 @@ public interface JournalArticleInfoItemFields {
 			true, "description") {
 
 			{
-				addAttribute(TextInfoFieldType.RICH, true);
+				addAttribute(TextInfoFieldType.HTML, true);
 			}
 		};
 

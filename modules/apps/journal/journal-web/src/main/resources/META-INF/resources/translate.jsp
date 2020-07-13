@@ -131,7 +131,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				}
 
 				for (InfoField<TextInfoFieldType> infoField : infoFields) {
-					boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.RICH);
+					boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
 					boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 				%>

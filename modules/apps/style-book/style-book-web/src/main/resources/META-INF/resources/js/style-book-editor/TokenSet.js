@@ -12,11 +12,10 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import React from 'react';
 
 import Collapse from './Collapse';
-import {StyleBookContext} from './StyleBookContext';
+import Token from './Token';
 
 export default function TokenSet({name, tokens}) {
 	return (
@@ -25,35 +24,5 @@ export default function TokenSet({name, tokens}) {
 				<Token key={name} name={name} />
 			))}
 		</Collapse>
-	);
-}
-
-function Token({name}) {
-	const {tokenValues = {}, setTokenValues} = useContext(StyleBookContext);
-
-	const [tokenValue, setTokenValue] = useState(tokenValues[name] || '');
-
-	const updateTokenValues = (value) => {
-		if (value) {
-			const nextTokenValues = {
-				...tokenValues,
-				[name]: value,
-			};
-
-			setTokenValues(nextTokenValues);
-		}
-	};
-
-	return (
-		<ClayForm.Group small>
-			<label>{name}</label>
-			<ClayInput
-				name={name}
-				onBlur={() => updateTokenValues(tokenValue)}
-				onChange={(event) => setTokenValue(event.target.value)}
-				type="text"
-				value={tokenValue}
-			/>
-		</ClayForm.Group>
 	);
 }

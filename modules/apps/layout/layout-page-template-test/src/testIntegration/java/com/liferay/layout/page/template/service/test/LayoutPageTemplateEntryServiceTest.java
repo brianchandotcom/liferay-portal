@@ -250,23 +250,6 @@ public class LayoutPageTemplateEntryServiceTest {
 	}
 
 	@Test
-	public void testAssertGroupOfWidgetLayoutPageTemplateEntry()
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateTestUtil.addWidgetLayoutPageTemplateEntry(
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
-
-		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		Assert.assertEquals(
-			_group.getGroupId(), persistedLayoutPageTemplateEntry.getGroupId());
-	}
-
-	@Test
 	public void testAssertNameOfLayoutPrototype() throws PortalException {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addWidgetLayoutPageTemplateEntry(

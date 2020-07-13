@@ -66,11 +66,7 @@
 				attributeName: 'data-href',
 				polyfill: true,
 				validate: function (src, svg, use) {
-					if (src && src.startsWith('#')) {
-						return false;
-					}
-
-					return true;
+					return !src || !src.startsWith('#');
 				}
 			}
 		);

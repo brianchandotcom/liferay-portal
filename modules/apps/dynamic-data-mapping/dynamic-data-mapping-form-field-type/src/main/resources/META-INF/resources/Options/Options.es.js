@@ -305,42 +305,37 @@ const Main = ({
 				onChange={(value) => onChange({}, value)}
 				value={value}
 			>
-				{({
-					defaultOptionRef,
-					handleBlur,
-					handleField,
-					index,
-					option,
-				}) => (
-					option &&
-					(<KeyValue
-						generateKeyword={option.generateKeyword}
-						keyword={option.value}
-						keywordReadOnly={keywordReadOnly}
-						name={`option${index}`}
-						onBlur={handleBlur}
-						onChange={(event) =>
-							handleField('label', event.target.value)
-						}
-						onFocus={() => {
-							if (defaultOptionRef.current) {
-								handleField('label', '');
-								defaultOptionRef.current = false;
+				{({defaultOptionRef, handleBlur, handleField, index, option}) =>
+					option && (
+						<KeyValue
+							generateKeyword={option.generateKeyword}
+							keyword={option.value}
+							keywordReadOnly={keywordReadOnly}
+							name={`option${index}`}
+							onBlur={handleBlur}
+							onChange={(event) =>
+								handleField('label', event.target.value)
 							}
-						}}
-						onKeywordBlur={handleBlur}
-						onKeywordChange={(event, value, generate) => {
-							handleField('generateKeyword', generate);
-							handleField('value', value);
-						}}
-						placeholder={placeholder}
-						readOnly={option.disabled}
-						required={required}
-						showLabel={false}
-						value={option.label}
-						visible={visible}
-					/>)
-				)}
+							onFocus={() => {
+								if (defaultOptionRef.current) {
+									handleField('label', '');
+									defaultOptionRef.current = false;
+								}
+							}}
+							onKeywordBlur={handleBlur}
+							onKeywordChange={(event, value, generate) => {
+								handleField('generateKeyword', generate);
+								handleField('value', value);
+							}}
+							placeholder={placeholder}
+							readOnly={option.disabled}
+							required={required}
+							showLabel={false}
+							value={option.label}
+							visible={visible}
+						/>
+					)
+				}
 			</Options>
 		</FieldBase>
 	</DndProvider>

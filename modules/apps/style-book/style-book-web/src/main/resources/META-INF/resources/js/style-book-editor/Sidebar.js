@@ -31,15 +31,13 @@ export default function Sidebar() {
 
 function SidebarContent() {
 	const {tokenCategories} = useContext(StyleBookContext);
-
 	const [active, setActive] = useState(false);
-
 	const [selectedCategory, setSelectedCategory] = useState(
 		tokenCategories[0]
 	);
 
 	return (
-		<div className="p-3 style-book-editor__sidebar-content">
+		<div className="style-book-editor__sidebar-content">
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.BottomLeft}
@@ -51,7 +49,7 @@ function SidebarContent() {
 						small
 						type="button"
 					>
-						<span>{selectedCategory.name}</span>
+						{selectedCategory.name}
 					</ClayButton>
 				}
 			>

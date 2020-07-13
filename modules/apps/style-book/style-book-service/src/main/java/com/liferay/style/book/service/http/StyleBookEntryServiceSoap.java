@@ -167,6 +167,43 @@ public class StyleBookEntryServiceSoap {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntrySoap
+			discardDraftStyleBookEntry(long styleBookEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.discardDraftStyleBookEntry(
+					styleBookEntryId);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap publishDraft(
+			long styleBookEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.style.book.model.StyleBookEntry returnValue =
+				StyleBookEntryServiceUtil.publishDraft(styleBookEntryId);
+
+			return com.liferay.style.book.model.StyleBookEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntrySoap
 			updateDefaultStyleBookEntry(
 				long styleBookEntryId, boolean defaultStyleBookEntry)
 		throws RemoteException {

@@ -73,7 +73,7 @@ public interface StyleBookEntryLocalService
 
 	public StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValue, ServiceContext serviceContext)
+			String tokensValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -363,7 +363,8 @@ public interface StyleBookEntryLocalService
 			versionServiceListener);
 
 	public StyleBookEntry updateDefaultStyleBookEntry(
-		long styleBookEntryId, boolean defaultStyleBookEntry);
+			long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -393,7 +394,7 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValue)
+			long styleBookEntryId, String tokensValues)
 		throws PortalException;
 
 }

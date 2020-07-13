@@ -48,12 +48,12 @@ public class StyleBookEntryLocalServiceUtil {
 
 	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValue,
+			String tokensValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addStyleBookEntry(
-			userId, groupId, name, styleBookEntryKey, tokensValue,
+			userId, groupId, name, styleBookEntryKey, tokensValues,
 			serviceContext);
 	}
 
@@ -470,8 +470,9 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-		updateDefaultStyleBookEntry(
-			long styleBookEntryId, boolean defaultStyleBookEntry) {
+			updateDefaultStyleBookEntry(
+				long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDefaultStyleBookEntry(
 			styleBookEntryId, defaultStyleBookEntry);
@@ -524,10 +525,10 @@ public class StyleBookEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry
-			updateTokensValues(long styleBookEntryId, String tokensValue)
+			updateTokensValues(long styleBookEntryId, String tokensValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateTokensValues(styleBookEntryId, tokensValue);
+		return getService().updateTokensValues(styleBookEntryId, tokensValues);
 	}
 
 	public static StyleBookEntryLocalService getService() {

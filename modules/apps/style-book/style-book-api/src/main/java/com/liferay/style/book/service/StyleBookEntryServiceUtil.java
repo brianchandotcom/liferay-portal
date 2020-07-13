@@ -81,6 +81,13 @@ public class StyleBookEntryServiceUtil {
 		return getService().deleteStyleBookEntry(styleBookEntry);
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry
+			discardDraftStyleBookEntry(long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().discardDraftStyleBookEntry(styleBookEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -88,6 +95,13 @@ public class StyleBookEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry publishDraft(
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().publishDraft(styleBookEntryId);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntry

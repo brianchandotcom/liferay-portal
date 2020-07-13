@@ -46,12 +46,12 @@ public class StyleBookEntryLocalServiceWrapper
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValue,
+			String tokensValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.addStyleBookEntry(
-			userId, groupId, name, styleBookEntryKey, tokensValue,
+			userId, groupId, name, styleBookEntryKey, tokensValues,
 			serviceContext);
 	}
 
@@ -512,8 +512,9 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry
-		updateDefaultStyleBookEntry(
-			long styleBookEntryId, boolean defaultStyleBookEntry) {
+			updateDefaultStyleBookEntry(
+				long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.updateDefaultStyleBookEntry(
 			styleBookEntryId, defaultStyleBookEntry);
@@ -570,11 +571,11 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValue)
+			long styleBookEntryId, String tokensValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.updateTokensValues(
-			styleBookEntryId, tokensValue);
+			styleBookEntryId, tokensValues);
 	}
 
 	@Override

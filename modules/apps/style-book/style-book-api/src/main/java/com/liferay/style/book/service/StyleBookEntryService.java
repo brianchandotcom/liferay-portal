@@ -69,12 +69,18 @@ public interface StyleBookEntryService extends BaseService {
 	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
 		throws PortalException;
 
+	public StyleBookEntry discardDraftStyleBookEntry(long styleBookEntryId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public StyleBookEntry publishDraft(long styleBookEntryId)
+		throws PortalException;
 
 	public StyleBookEntry updateDefaultStyleBookEntry(
 			long styleBookEntryId, boolean defaultStyleBookEntry)

@@ -79,6 +79,15 @@ public class StyleBookEntryServiceWrapper
 		return _styleBookEntryService.deleteStyleBookEntry(styleBookEntry);
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry
+			discardDraftStyleBookEntry(long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.discardDraftStyleBookEntry(
+			styleBookEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -87,6 +96,14 @@ public class StyleBookEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _styleBookEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry publishDraft(
+			long styleBookEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.publishDraft(styleBookEntryId);
 	}
 
 	@Override

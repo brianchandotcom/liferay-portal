@@ -21,7 +21,6 @@ import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracke
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
@@ -49,11 +48,6 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 							createDataEngineNativeObject(
 								company.getCompanyId(),
 								dataEngineNativeObject)));
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference

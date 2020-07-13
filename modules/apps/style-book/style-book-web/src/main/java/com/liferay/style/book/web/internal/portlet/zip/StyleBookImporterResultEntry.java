@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.style.book.web.internal.portlet.helper;
+package com.liferay.style.book.web.internal.portlet.zip;
 
 /**
  * @author Eudaldo Alonso

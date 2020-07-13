@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useEffect, useRef, useState} from 'react';
@@ -298,7 +299,7 @@ const ExperienceSelector = ({
 			{open &&
 				createPortal(
 					<div
-						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu rounded toggled"
+						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu toggled"
 						onBlur={handleDropdownBlur}
 						onFocus={handleDropdownFocus}
 						style={{
@@ -359,25 +360,28 @@ const ExperiencesSelectorHeader = ({
 }) => {
 	return (
 		<>
-			<div className="align-items-end d-flex justify-content-between mb-4">
-				<h3 className="mb-0">
-					{Liferay.Language.get('select-experience')}
-				</h3>
-
-				{canCreateExperiences === true && (
-					<ClayButton
-						aria-label={Liferay.Language.get('new-experience')}
-						displayType="secondary"
-						onClick={onNewExperience}
-						small
-					>
-						{Liferay.Language.get('new-experience')}
-					</ClayButton>
-				)}
-			</div>
+			<ClayLayout.ContentRow verticalAlign="center">
+				<ClayLayout.ContentCol expand>
+					<h3 className="mb-0">
+						{Liferay.Language.get('select-experience')}
+					</h3>
+				</ClayLayout.ContentCol>
+				<ClayLayout.ContentCol>
+					{canCreateExperiences === true && (
+						<ClayButton
+							aria-label={Liferay.Language.get('new-experience')}
+							displayType="secondary"
+							onClick={onNewExperience}
+							small
+						>
+							{Liferay.Language.get('new-experience')}
+						</ClayButton>
+					)}
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 
 			{canCreateExperiences && (
-				<p className="mb-4 text-secondary">
+				<p className="mt-3 text-secondary">
 					{showEmptyStateMessage
 						? Liferay.Language.get(
 								'experience-help-message-empty-state'
@@ -389,7 +393,7 @@ const ExperiencesSelectorHeader = ({
 			)}
 
 			<ClayAlert
-				className="mt-4 mx-0"
+				className="mx-0"
 				displayType="warning"
 				title={Liferay.Language.get('warning')}
 			>

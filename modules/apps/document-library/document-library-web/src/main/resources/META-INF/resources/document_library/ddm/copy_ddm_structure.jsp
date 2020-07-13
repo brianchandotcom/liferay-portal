@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getN
 <portlet:actionURL name="/document_library/copy_ddm_structure" var="copyDDMStructureURL" />
 
 <liferay-frontend:edit-form
-	action="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() ? copyDataDefinitionURL : copyDDMStructureURL %>"
+	action="<%= copyDataDefinitionURL %>"
 	method="post"
 	name="fm"
 >

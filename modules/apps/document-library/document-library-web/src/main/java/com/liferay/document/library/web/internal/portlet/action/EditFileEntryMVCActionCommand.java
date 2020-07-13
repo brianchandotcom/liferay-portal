@@ -42,12 +42,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -960,12 +959,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _setUpDDMFormValues(ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!FFDocumentLibraryDDMEditorConfigurationUtil.
-				useDataEngineEditor()) {
-
-			return;
-		}
-
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId", -1);
 
@@ -976,9 +969,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
 
-		for (com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure :
-				dlFileEntryType.getDDMStructures()) {
-
+		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 			String className =
 				com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
 					getName();

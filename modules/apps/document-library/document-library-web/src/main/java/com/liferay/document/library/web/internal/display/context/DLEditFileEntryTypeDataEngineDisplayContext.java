@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -153,11 +152,6 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 		}
 
 		return additionalPanels;
-	}
-
-	public boolean useDataEngineEditor() {
-		return FFDocumentLibraryDDMEditorConfigurationUtil.
-			useDataEngineEditor();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

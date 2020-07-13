@@ -15,16 +15,11 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,28 +63,15 @@ public class UpdateDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
-
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			DDMStructure ddmStructure = _ddmStructureService.getStructure(
-				ddmStructureId);
-
-			ddmForm = ddmStructure.getDDMForm();
-			ddmFormLayout = ddmStructure.getDDMFormLayout();
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), actionRequest);
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			ddmStructureId);
 
 		_ddmStructureService.updateStructure(
 			ddmStructureId, parentDDMStructureId, nameMap, descriptionMap,
-			ddmForm, ddmFormLayout, serviceContext);
+			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
+			ServiceContextFactory.getInstance(
+				DDMStructure.class.getName(), actionRequest));
 	}
-
-	@Reference
-	private DDM _ddm;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

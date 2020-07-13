@@ -16,14 +16,12 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,19 +88,12 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 			return _dlFileEntryType;
 		}
 
-		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			long fileEntryTypeId = ParamUtil.getLong(
-				_httpServletRequest, "fileEntryTypeId");
+		long fileEntryTypeId = ParamUtil.getLong(
+			_httpServletRequest, "fileEntryTypeId");
 
-			if (fileEntryTypeId != 0) {
-				_dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
-					fileEntryTypeId);
-			}
-		}
-		else {
-			_dlFileEntryType =
-				(DLFileEntryType)_httpServletRequest.getAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
+		if (fileEntryTypeId != 0) {
+			_dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+				fileEntryTypeId);
 		}
 
 		return _dlFileEntryType;
@@ -113,22 +104,16 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 			return _ddmStructure;
 		}
 
-		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			DLFileEntryType dlFileEntryType = getDLFileEntryType();
+		DLFileEntryType dlFileEntryType = getDLFileEntryType();
 
-			if ((dlFileEntryType == null) ||
-				(dlFileEntryType.getDataDefinitionId() == 0)) {
+		if ((dlFileEntryType == null) ||
+			(dlFileEntryType.getDataDefinitionId() == 0)) {
 
-				return null;
-			}
-
-			_ddmStructure = DDMStructureServiceUtil.getStructure(
-				dlFileEntryType.getDataDefinitionId());
+			return null;
 		}
-		else {
-			_ddmStructure = (DDMStructure)_httpServletRequest.getAttribute(
-				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
-		}
+
+		_ddmStructure = DDMStructureServiceUtil.getStructure(
+			dlFileEntryType.getDataDefinitionId());
 
 		return _ddmStructure;
 	}

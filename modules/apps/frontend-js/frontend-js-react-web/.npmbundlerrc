@@ -1,6 +1,10 @@
 {
 	"config": {
 		"imports": {
+			"frontend-js-node-shims": {
+				"domain": "*",
+				"process": "*"
+			},
 			"frontend-taglib-clay": {
 				"@clayui/icon": ">=3.0.0-alpha.1"
 			}

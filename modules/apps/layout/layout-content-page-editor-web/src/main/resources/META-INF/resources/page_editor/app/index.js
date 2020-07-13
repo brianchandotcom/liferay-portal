@@ -14,7 +14,7 @@
 
 import React from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {INIT} from '../app/actions/types';
 import App from './components/App';

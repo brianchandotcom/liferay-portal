@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import KeyValue from '../KeyValue/KeyValue.es';

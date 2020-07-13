@@ -14,7 +14,7 @@
 
 import React, {useContext, useState} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {createPortal} from 'react-dom';
 
 import {AppContext} from '../../AppContext.es';

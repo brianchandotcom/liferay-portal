@@ -18,7 +18,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {useFieldTypesResource} from '../hooks/useResource.es';
 import Page from './PageRenderer/index';

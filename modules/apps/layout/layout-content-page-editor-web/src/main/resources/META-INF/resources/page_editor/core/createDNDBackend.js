@@ -12,7 +12,7 @@
  * details.
  */
 
-import createBackend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 export default function createDNDBackend(manager, mainContext) {
 
@@ -57,7 +57,7 @@ export default function createDNDBackend(manager, mainContext) {
 
 			contexts.forEach((context) => {
 				if (!connections.has(context)) {
-					const backend = createBackend(manager, context);
+					const backend = HTML5Backend(manager, context);
 
 					backend.setup();
 

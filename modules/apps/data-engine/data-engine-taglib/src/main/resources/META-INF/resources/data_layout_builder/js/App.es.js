@@ -15,7 +15,7 @@
 import {ClayModalProvider} from '@clayui/modal';
 import React, {useContext, useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import AppContext from './AppContext.es';
 import AppContextProvider from './AppContextProvider.es';

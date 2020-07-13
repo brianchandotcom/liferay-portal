@@ -15,7 +15,7 @@
 import {ClayModalProvider} from '@clayui/modal';
 import React, {useContext} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContext, AppContextProvider} from './AppContext.es';

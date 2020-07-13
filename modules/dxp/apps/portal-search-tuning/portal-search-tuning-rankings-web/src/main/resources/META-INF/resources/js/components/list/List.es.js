@@ -14,7 +14,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {PropTypes} from 'prop-types';
 import React, {PureComponent} from 'react';
 import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {KEY_CODES} from '../../utils/constants.es';
 import {isNull, toggleListItem} from '../../utils/util.es';

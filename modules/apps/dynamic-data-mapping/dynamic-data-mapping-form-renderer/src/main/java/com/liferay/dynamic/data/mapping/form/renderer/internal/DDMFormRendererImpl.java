@@ -14,13 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
-import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.DDMFormFieldTypesDynamicInclude;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -29,17 +27,13 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
 import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
 
 import java.io.Writer;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,28 +86,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws Exception {
 
-		Set<String> dependencies = new HashSet<>();
-
-		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
-
-		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
-			String moduleName = ddmFormFieldType.getModuleName();
-
-			if (Validator.isNotNull(moduleName)) {
-				if (ddmFormFieldType.isCustomDDMFormFieldType()) {
-					dependencies.add(moduleName);
-				}
-				else {
-					dependencies.add(
-						_npmResolver.resolveModuleName(moduleName));
-				}
-			}
-		}
-
 		ComponentDescriptor componentDescriptor = new ComponentDescriptor(
 			_TEMPLATE_NAMESPACE, _npmResolver.resolveModuleName(_MODULE_NAME),
-			ddmFormRenderingContext.getContainerId(), dependencies);
+			ddmFormRenderingContext.getContainerId());
 
 		Writer writer = new UnsyncStringWriter();
 
@@ -121,11 +96,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			ddmFormRenderingContext.getHttpServletRequest(), writer,
 			componentDescriptor,
 			getContext(ddmForm, ddmFormLayout, ddmFormRenderingContext));
-
-		DynamicIncludeUtil.include(
-			ddmFormRenderingContext.getHttpServletRequest(),
-			ddmFormRenderingContext.getHttpServletResponse(),
-			DDMFormFieldTypesDynamicInclude.class.getName(), true);
 
 		DynamicIncludeUtil.include(
 			ddmFormRenderingContext.getHttpServletRequest(),

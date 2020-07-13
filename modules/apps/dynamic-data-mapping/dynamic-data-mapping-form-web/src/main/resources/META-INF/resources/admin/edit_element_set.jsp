@@ -214,12 +214,5 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 	Liferay.on('destroyPortlet', clearPortletHandlers);
 
-	if (Liferay.DMMFieldTypesReady) {
-		Liferay.Forms.App.start();
-	}
-	else {
-		Liferay.onceAfter('DMMFieldTypesReady', function () {
-			Liferay.Forms.App.start();
-		});
-	}
+	Liferay.Forms.App.start();
 </aui:script>

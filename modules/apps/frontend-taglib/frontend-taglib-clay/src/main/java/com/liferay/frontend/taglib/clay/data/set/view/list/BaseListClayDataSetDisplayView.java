@@ -25,7 +25,7 @@ public abstract class BaseListClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.LIST;
 	}
 
 	public abstract String getDescription();
@@ -35,7 +35,8 @@ public abstract class BaseListClayDataSetDisplayView
 	}
 
 	public String getLabel() {
-		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.LIST;
+	}
 	}
 
 	public String getSticker() {
@@ -47,7 +48,7 @@ public abstract class BaseListClayDataSetDisplayView
 	}
 
 	public String getThumbnail() {
-		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.LIST;
 	}
 
 	public abstract String getTitle();

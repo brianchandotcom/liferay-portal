@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(
-	property = "clay.data.set.content.renderer.name=" + ClayDataSetConstants.CONTENT_RENDERER_CARDS,
+	property = "clay.data.set.content.renderer.name=" + ClayDataSetConstants.CARDS,
 	service = ClayDataSetContentRendererContextContributor.class
 )
 public class CardsClayDataSetContentRendererContextContributor

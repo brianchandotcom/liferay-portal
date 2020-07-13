@@ -25,7 +25,7 @@ public abstract class BaseCardsClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CONTENT_RENDERER_CARDS;
+		return ClayDataSetConstants.CARDS;
 	}
 
 	public abstract String getDescription();
@@ -35,7 +35,7 @@ public abstract class BaseCardsClayDataSetDisplayView
 	}
 
 	public String getLabel() {
-		return ClayDataSetConstants.CONTENT_RENDERER_CARDS;
+		return ClayDataSetConstants.CARDS;
 	}
 
 	public String getLink() {

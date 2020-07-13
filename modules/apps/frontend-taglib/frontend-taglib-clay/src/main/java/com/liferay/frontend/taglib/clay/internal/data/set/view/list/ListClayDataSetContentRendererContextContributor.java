@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.set.content.renderer.name=" + ClayDataSetConstants.CONTENT_RENDERER_LIST,
+	property = "clay.data.set.content.renderer.name=" + ClayDataSetConstants.LIST,
 	service = ClayDataSetContentRendererContextContributor.class
 )
 public class ListClayDataSetContentRendererContextContributor

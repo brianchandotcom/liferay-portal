@@ -30,6 +30,10 @@ public class InputMoveBoxesTag extends IncludeTag {
 		return _cssClass;
 	}
 
+	public int getLeftBoxMaxItems() {
+		return _leftBoxMaxItems;
+	}
+
 	public String getLeftBoxName() {
 		return _leftBoxName;
 	}
@@ -48,6 +52,10 @@ public class InputMoveBoxesTag extends IncludeTag {
 
 	public String getLeftTitle() {
 		return _leftTitle;
+	}
+
+	public int getRightBoxMaxItems() {
+		return _rightBoxMaxItems;
 	}
 
 	public String getRightBoxName() {
@@ -74,6 +82,10 @@ public class InputMoveBoxesTag extends IncludeTag {
 		_cssClass = cssClass;
 	}
 
+	public void setLeftBoxMaxItems(int leftBoxMaxItems) {
+		_leftBoxMaxItems = leftBoxMaxItems;
+	}
+
 	public void setLeftBoxName(String leftBoxName) {
 		_leftBoxName = leftBoxName;
 	}
@@ -92,6 +104,10 @@ public class InputMoveBoxesTag extends IncludeTag {
 
 	public void setLeftTitle(String leftTitle) {
 		_leftTitle = leftTitle;
+	}
+
+	public void setRightBoxMaxItems(int rightBoxMaxItems) {
+		_rightBoxMaxItems = rightBoxMaxItems;
 	}
 
 	public void setRightBoxName(String rightBoxName) {
@@ -119,11 +135,13 @@ public class InputMoveBoxesTag extends IncludeTag {
 		super.cleanUp();
 
 		_cssClass = null;
+		_leftBoxMaxItems = -1;
 		_leftBoxName = null;
 		_leftList = null;
 		_leftOnChange = null;
 		_leftReorder = null;
 		_leftTitle = null;
+		_rightBoxMaxItems = -1;
 		_rightBoxName = null;
 		_rightList = null;
 		_rightOnChange = null;
@@ -141,6 +159,9 @@ public class InputMoveBoxesTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-move-boxes:cssClass", _cssClass);
 		httpServletRequest.setAttribute(
+			"liferay-ui:input-move-boxes:leftBoxMaxItems",
+			String.valueOf(_leftBoxMaxItems));
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-move-boxes:leftBoxName", _leftBoxName);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-move-boxes:leftList", _leftList);
@@ -150,6 +171,9 @@ public class InputMoveBoxesTag extends IncludeTag {
 			"liferay-ui:input-move-boxes:leftReorder", _leftReorder);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-move-boxes:leftTitle", _leftTitle);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-move-boxes:rightBoxMaxItems",
+			String.valueOf(_rightBoxMaxItems));
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-move-boxes:rightBoxName", _rightBoxName);
 		httpServletRequest.setAttribute(
@@ -166,11 +190,13 @@ public class InputMoveBoxesTag extends IncludeTag {
 		"/html/taglib/ui/input_move_boxes/page.jsp";
 
 	private String _cssClass;
+	private int _leftBoxMaxItems = -1;
 	private String _leftBoxName;
 	private List<KeyValuePair> _leftList;
 	private String _leftOnChange;
 	private String _leftReorder;
 	private String _leftTitle;
+	private int _rightBoxMaxItems = -1;
 	private String _rightBoxName;
 	private List<KeyValuePair> _rightList;
 	private String _rightOnChange;

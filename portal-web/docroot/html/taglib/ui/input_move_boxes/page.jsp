@@ -21,6 +21,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-move-boxes:cssClass"));
 
+int leftBoxMaxItems = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-move-boxes:leftBoxMaxItems"));
+int rightBoxMaxItems = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-move-boxes:rightBoxMaxItems"));
+
 String leftTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute("liferay-ui:input-move-boxes:leftTitle"));
 String rightTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
 
@@ -87,6 +90,8 @@ Map<String, Object> data = new HashMap<String, Object>();
 	new Liferay.InputMoveBoxes(
 		{
 			contentBox: '#<%= randomNamespace + "input-move-boxes" %>',
+			leftBoxMaxItems: <%= leftBoxMaxItems %>,
+			rightBoxMaxItems: <%= rightBoxMaxItems %>,
 			strings: {
 				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", leftTitle, false) %>',
 				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", leftTitle, false) %>',

@@ -12,6 +12,7 @@
  * details.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Collapse from './Collapse';
@@ -26,3 +27,12 @@ export default function TokenSet({name, tokens}) {
 		</Collapse>
 	);
 }
+
+TokenSet.propTypes = {
+	name: PropTypes.string.isRequired,
+	tokens: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+		})
+	),
+};

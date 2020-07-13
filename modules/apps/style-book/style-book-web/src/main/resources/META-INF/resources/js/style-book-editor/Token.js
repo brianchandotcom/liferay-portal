@@ -27,6 +27,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
@@ -62,3 +63,7 @@ export default function Token({name}) {
 		</ClayForm.Group>
 	);
 }
+
+Token.propTypes = {
+	name: PropTypes.string.isRequired,
+};

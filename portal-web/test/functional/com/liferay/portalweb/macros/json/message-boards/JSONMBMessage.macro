@@ -77,7 +77,7 @@ definition {
 
 		echo("## * Body: ${threadBody}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post("${curl}", "$['messageId']");
 	}
 
 	@summary = "This calls the JSON WS API to add a MB reply"

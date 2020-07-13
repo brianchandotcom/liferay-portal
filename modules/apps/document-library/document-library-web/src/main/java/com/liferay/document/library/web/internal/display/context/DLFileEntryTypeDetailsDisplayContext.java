@@ -16,7 +16,6 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,13 +37,6 @@ public class DLFileEntryTypeDetailsDisplayContext {
 	}
 
 	public DLFileEntryType getDLFileEntryType() throws PortalException {
-		if (!FFDocumentLibraryDDMEditorConfigurationUtil.
-				useDataEngineEditor()) {
-
-			return (DLFileEntryType)_httpServletRequest.getAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
-		}
-
 		long fileEntryTypeId = ParamUtil.getLong(
 			_httpServletRequest, "fileEntryTypeId");
 
@@ -72,13 +64,6 @@ public class DLFileEntryTypeDetailsDisplayContext {
 	}
 
 	private DDMStructure _getDDMStructure() throws PortalException {
-		if (!FFDocumentLibraryDDMEditorConfigurationUtil.
-				useDataEngineEditor()) {
-
-			return (DDMStructure)_httpServletRequest.getAttribute(
-				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
-		}
-
 		DLFileEntryType dlFileEntryType = getDLFileEntryType();
 
 		if ((dlFileEntryType == null) ||

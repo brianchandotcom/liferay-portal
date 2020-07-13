@@ -16,17 +16,20 @@ package com.liferay.app.builder.workflow.web.internal.portlet.action;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -57,44 +60,73 @@ public class UpdateDataRecordMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		DataRecord dataRecord = _updateDataRecord(
+			resourceRequest, themeDisplay);
+
+		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(), null,
+			new String[] {ParamUtil.getString(resourceRequest, "taskName")},
+			null, null, null, new Long[] {themeDisplay.getUserId()}, null, null,
+			false, null, null,
+			new Long[] {
+				ParamUtil.getLong(resourceRequest, "workflowInstanceId")
+			},
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (workflowTasks.isEmpty()) {
+			throw new WorkflowException(
+				StringBundler.concat(
+					"Workflow Task not found with name ",
+					ParamUtil.getString(resourceRequest, "taskName"),
+					" and instanceId ",
+					ParamUtil.getLong(resourceRequest, "workflowInstanceId")));
+		}
+
+		WorkflowTask workflowTask = workflowTasks.get(0);
+
+		Map<String, Serializable> workflowContext =
+			workflowTask.getOptionalAttributes();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_ID,
+			String.valueOf(themeDisplay.getUserId()));
+
+		_workflowTaskManager.completeWorkflowTask(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			workflowTask.getWorkflowTaskId(),
+			ParamUtil.getString(resourceRequest, "transitionName"), null,
+			workflowContext);
+
+		return Optional.of(dataRecord);
+	}
+
+	private DataRecord _updateDataRecord(
+			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
 		DataRecordResource dataRecordResource = DataRecordResource.builder(
 		).user(
 			themeDisplay.getUser()
 		).build();
 
-		DataRecord dataRecord = dataRecordResource.putDataRecord(
-			ParamUtil.getLong(resourceRequest, "dataRecordId"),
-			DataRecord.toDTO(
-				ParamUtil.getString(resourceRequest, "dataRecord")));
+		DataRecord newDataRecord = DataRecord.toDTO(
+			ParamUtil.getString(resourceRequest, "dataRecord"));
 
-		if (Validator.isNotNull(
-				ParamUtil.getString(resourceRequest, "transitionName")) &&
-			Validator.isNotNull(
-				ParamUtil.getLong(resourceRequest, "workflowInstanceId"))) {
+		DataRecord existingDataRecord = dataRecordResource.getDataRecord(
+			ParamUtil.getLong(resourceRequest, "dataRecordId"));
 
-			WorkflowInstance workflowInstance =
-				_workflowInstanceManager.getWorkflowInstance(
-					themeDisplay.getCompanyId(),
-					ParamUtil.getLong(resourceRequest, "workflowInstanceId"));
+		Map<String, Object> existingDataRecordValues =
+			existingDataRecord.getDataRecordValues();
 
-			Map<String, Serializable> workflowContext =
-				workflowInstance.getWorkflowContext();
+		existingDataRecordValues.putAll(newDataRecord.getDataRecordValues());
 
-			workflowContext.put(
-				WorkflowConstants.CONTEXT_USER_ID,
-				String.valueOf(themeDisplay.getUserId()));
+		newDataRecord.setDataRecordValues(existingDataRecordValues);
 
-			_workflowInstanceManager.signalWorkflowInstance(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				ParamUtil.getLong(resourceRequest, "workflowInstanceId"),
-				ParamUtil.getString(resourceRequest, "transitionName"),
-				workflowContext);
-		}
-
-		return Optional.of(dataRecord);
+		return dataRecordResource.putDataRecord(
+			ParamUtil.getLong(resourceRequest, "dataRecordId"), newDataRecord);
 	}
 
 	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class InvalidStyleBookEntryFileException extends PortalException {
+public class StyleBookEntryFileException extends PortalException {
 
-	public InvalidStyleBookEntryFileException() {
+	public StyleBookEntryFileException() {
 	}
 
-	public InvalidStyleBookEntryFileException(String msg) {
+	public StyleBookEntryFileException(String msg) {
 		super(msg);
 	}
 
-	public InvalidStyleBookEntryFileException(String msg, Throwable cause) {
+	public StyleBookEntryFileException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public InvalidStyleBookEntryFileException(Throwable cause) {
+	public StyleBookEntryFileException(Throwable cause) {
 		super(cause);
 	}
 

@@ -264,6 +264,12 @@ function TopperContent({
 	);
 }
 
+TopperContent.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	itemElement: PropTypes.object,
+	layoutData: LayoutDataPropTypes.isRequired,
+};
+
 function TopperLabel({children, isActive, item, itemElement}) {
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
@@ -314,8 +320,8 @@ function TopperLabel({children, isActive, item, itemElement}) {
 	);
 }
 
-TopperContent.propTypes = {
+TopperLabel.propTypes = {
+	isActive: PropTypes.bool,
 	item: getLayoutDataItemPropTypes().isRequired,
 	itemElement: PropTypes.object,
-	layoutData: LayoutDataPropTypes.isRequired,
 };

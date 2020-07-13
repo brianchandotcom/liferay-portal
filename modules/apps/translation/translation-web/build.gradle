@@ -1,8 +1,12 @@
 dependencies {
+	compileInclude group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.1"
 	compileInclude group: "com.ibm.icu", name: "icu4j", version: "65.1"
 	compileInclude group: "net.sf.okapi", name: "okapi-core", version: "1.39.0"
+	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-autoxliff", version: "1.39.0"
+	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-xliff", version: "1.39.0"
 	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-xliff2", version: "1.39.0"
 	compileInclude group: "net.sf.okapi.lib", name: "okapi-lib-xliff2", version: "1.39.0"
+	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"

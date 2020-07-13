@@ -17,12 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
-boolean inTrash = GetterUtil.getBoolean(request.getAttribute("liferay-ratings:ratings:inTrash"));
-RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("liferay-ratings:ratings:ratingsEntry");
-RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ratings:ratings:ratingsStats");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
 %>
 
@@ -187,14 +182,4 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			/>
 		</div>
 	</c:when>
-	<c:otherwise>
-		<liferay-ui:ratings
-			className="<%= className %>"
-			classPK="<%= classPK %>"
-			inTrash="<%= inTrash %>"
-			ratingsEntry="<%= ratingsEntry %>"
-			ratingsStats="<%= ratingsStats %>"
-			type="<%= type %>"
-		/>
-	</c:otherwise>
 </c:choose>

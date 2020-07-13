@@ -76,15 +76,13 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableRatings() %>">
 		<clay:content-col>
-			<div class="ratings">
-				<liferay-ratings:ratings
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-					inTrash="<%= entry.isInTrash() %>"
-					ratingsEntry="<%= ratingsEntry %>"
-					ratingsStats="<%= ratingsStats %>"
-				/>
-			</div>
+			<liferay-ratings:ratings
+				className="<%= BlogsEntry.class.getName() %>"
+				classPK="<%= entry.getEntryId() %>"
+				inTrash="<%= entry.isInTrash() %>"
+				ratingsEntry="<%= ratingsEntry %>"
+				ratingsStats="<%= ratingsStats %>"
+			/>
 		</clay:content-col>
 	</c:if>
 

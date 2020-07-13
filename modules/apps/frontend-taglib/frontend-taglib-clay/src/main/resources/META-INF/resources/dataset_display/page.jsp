@@ -28,7 +28,9 @@
 	datasetDisplay.default(
 		{
 			actionParameterName: '<%= actionParameterName %>',
-			apiUrl: '<%= dataSetAPI %>',
+			activeViewSettings: <%= activeViewSettingsJSON %>,
+			apiURL: '<%= apiURL %>',
+			appURL: '<%= appURL %>',
 			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
 			componentId: '<%= containerId %>',
 			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,

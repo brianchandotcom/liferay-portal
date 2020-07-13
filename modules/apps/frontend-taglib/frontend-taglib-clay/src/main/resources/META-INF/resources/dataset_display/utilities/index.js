@@ -16,8 +16,8 @@ import {fetch} from 'frontend-js-web';
 
 import createOdataFilter from './odata';
 
-export function getData(apiUrl, query) {
-	const url = new URL(apiUrl);
+export function getData(apiURL, query) {
+	const url = new URL(apiURL);
 
 	if (query) {
 		url.searchParams.append('search', query);
@@ -95,7 +95,7 @@ export function createSortingString(values) {
 }
 
 export function loadData(
-	apiUrl,
+	apiURL,
 	currentUrl,
 	filters,
 	searchParam,
@@ -103,7 +103,7 @@ export function loadData(
 	page = 1,
 	sorting = []
 ) {
-	const url = new URL(apiUrl);
+	const url = new URL(apiURL);
 
 	url.searchParams.append('currentUrl', currentUrl);
 

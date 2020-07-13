@@ -12,24 +12,11 @@
  * details.
  */
 
-import React from 'react';
+export const ACTION_UPDATE_ACTIVE_VIEW = 'ACTION_UPDATE_ACTIVE_VIEW';
 
-const DatasetDisplayContext = React.createContext({
-	actionParameterName: null,
-	formId: null,
-	formRef: null,
-	id: null,
-	loadData: () => {},
-	modalId: null,
-	namespace: null,
-	openModal: () => {},
-	openSidePanel: () => {},
-	selectItems: () => {},
-	selectable: false,
-	selectedItemsValue: [],
-	sidePanelId: null,
-	sorting: [],
-	updateSorting: () => {},
-});
-
-export default DatasetDisplayContext;
+export const updateActiveView = (activeViewName) => {
+	return {
+		type: ACTION_UPDATE_ACTIVE_VIEW,
+		value: activeViewName,
+	};
+};

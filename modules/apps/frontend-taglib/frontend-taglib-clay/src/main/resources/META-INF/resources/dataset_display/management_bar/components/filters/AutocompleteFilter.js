@@ -27,9 +27,9 @@ import {logError} from '../../../utilities/logError';
 
 const DEFAULT_PAGE_SIZE = 10;
 
-function fetchData(apiUrl, searchParam, currentPage = 1) {
+function fetchData(apiURL, searchParam, currentPage = 1) {
 	return fetch(
-		`${apiUrl}?page=${currentPage}&pageSize=${DEFAULT_PAGE_SIZE}${
+		`${apiURL}?page=${currentPage}&pageSize=${DEFAULT_PAGE_SIZE}${
 			searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''
 		}`,
 		{
@@ -116,7 +116,7 @@ function AutocompleteFilter(props) {
 
 	useEffect(() => {
 		setLoading(true);
-		fetchData(props.apiUrl, search, currentPage)
+		fetchData(props.apiURL, search, currentPage)
 			.then((data) => {
 				if (!isMounted()) {
 					return;
@@ -140,7 +140,7 @@ function AutocompleteFilter(props) {
 					setLoading(false);
 				}
 			});
-	}, [currentPage, isMounted, props.apiUrl, search]);
+	}, [currentPage, isMounted, props.apiURL, search]);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingArea.current = node;

@@ -21,7 +21,6 @@ import {StoreProvider, useAppState} from './components/Context';
 import NavBar from './components/NavBar';
 
 function ManagementBar({
-	activeView,
 	bulkActions,
 	creationMenu,
 	fluid,
@@ -30,7 +29,6 @@ function ManagementBar({
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
-	setActiveView,
 	showSearch,
 	total,
 	views,
@@ -57,9 +55,7 @@ function ManagementBar({
 			)}
 			{(!selectedItemsValue.length || selectionType === 'single') && (
 				<NavBar
-					activeView={activeView}
 					creationMenu={creationMenu}
-					setActiveView={setActiveView}
 					showSearch={showSearch}
 					views={views}
 				/>
@@ -78,7 +74,6 @@ function Wrapper({filters, ...otherProps}) {
 }
 
 Wrapper.propTypes = {
-	activeView: PropTypes.number.isRequired,
 	bulkActions: PropTypes.arrayOf(
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,
@@ -98,7 +93,6 @@ Wrapper.propTypes = {
 	selectedItemsKey: PropTypes.string,
 	selectedItemsValue: PropTypes.array,
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
-	setActiveView: PropTypes.func.isRequired,
 	showSearch: PropTypes.bool,
 	total: PropTypes.number,
 	views: PropTypes.array.isRequired,

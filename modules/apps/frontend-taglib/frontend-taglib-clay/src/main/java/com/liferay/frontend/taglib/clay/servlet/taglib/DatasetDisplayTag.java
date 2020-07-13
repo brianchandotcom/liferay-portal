@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -67,20 +69,25 @@ public class DatasetDisplayTag extends IncludeTag {
 				_creationMenu = new CreationMenu();
 			}
 
+			_setActiveViewSettingsJSON();
 			_setClayDataSetDisplayViewsContext();
 			_setClayPaginationEntries();
+
+			_appURL =
+				PortalUtil.getPortalURL(request) +
+					"/o/frontend-taglib-clay/app";
 
 			StringBundler sb = new StringBundler(
 				11 + (_contextParams.size() * 4));
 
-			sb.append(PortalUtil.getPortalURL(request));
-			sb.append("/o/frontend-taglib-clay/app/data-set/");
-			sb.append(themeDisplay.getScopeGroupId());
-			sb.append(StringPool.FORWARD_SLASH);
+			sb.append(_appURL);
+			sb.append("/data-set/");
 			sb.append(_id);
 			sb.append(StringPool.FORWARD_SLASH);
 			sb.append(_dataProviderKey);
-			sb.append("?plid=");
+			sb.append("?groupId=");
+			sb.append(themeDisplay.getScopeGroupId());
+			sb.append("&plid=");
 			sb.append(layout.getPlid());
 			sb.append("&portletId=");
 			sb.append(portletDisplay.getId());
@@ -92,7 +99,7 @@ public class DatasetDisplayTag extends IncludeTag {
 				sb.append(entry.getValue());
 			}
 
-			_dataSetAPI = sb.toString();
+			_apiURL = sb.toString();
 
 			NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 
@@ -297,6 +304,9 @@ public class DatasetDisplayTag extends IncludeTag {
 		super.cleanUp();
 
 		_actionParameterName = null;
+		_activeViewSettingsJSON = null;
+		_apiURL = null;
+		_appURL = null;
 		_bulkActionDropdownItems = new ArrayList<>();
 		_clayDataSetDisplayViewsContext = null;
 		_clayDataSetDisplayViewSerializer = null;
@@ -304,7 +314,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		_contextParams = new HashMap<>();
 		_creationMenu = new CreationMenu();
 		_dataProviderKey = null;
-		_dataSetAPI = null;
 		_deltaParam = null;
 		_formId = null;
 		_id = null;
@@ -335,6 +344,11 @@ public class DatasetDisplayTag extends IncludeTag {
 		request.setAttribute(
 			"clay:dataset-display:actionParameterName", _actionParameterName);
 		request.setAttribute(
+			"clay:dataset-display:activeViewSettingsJSON",
+			_activeViewSettingsJSON);
+		request.setAttribute("clay:dataset-display:apiURL", _apiURL);
+		request.setAttribute("clay:dataset-display:appURL", _appURL);
+		request.setAttribute(
 			"clay:dataset-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
 		request.setAttribute(
@@ -347,7 +361,6 @@ public class DatasetDisplayTag extends IncludeTag {
 			"clay:dataset-display:creationMenu", _creationMenu);
 		request.setAttribute(
 			"clay:dataset-display:dataProviderKey", _dataProviderKey);
-		request.setAttribute("clay:dataset-display:dataSetAPI", _dataSetAPI);
 		request.setAttribute("clay:dataset-display:deltaParam", _deltaParam);
 		request.setAttribute("clay:dataset-display:formId", _formId);
 		request.setAttribute("clay:dataset-display:id", _id);
@@ -393,6 +406,18 @@ public class DatasetDisplayTag extends IncludeTag {
 		return clayPaginationEntries;
 	}
 
+	private void _setActiveViewSettingsJSON() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		String clayDataSetDisplaySettingsNamespace =
+			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
+				request, _id);
+
+		_activeViewSettingsJSON = portalPreferences.getValue(
+			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+	}
+
 	private void _setClayDataSetDisplayViewsContext() {
 		_clayDataSetDisplayViewsContext =
 			_clayDataSetDisplayViewSerializer.serialize(
@@ -421,6 +446,9 @@ public class DatasetDisplayTag extends IncludeTag {
 		DatasetDisplayTag.class);
 
 	private String _actionParameterName;
+	private String _activeViewSettingsJSON;
+	private String _apiURL;
+	private String _appURL;
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private Object _clayDataSetDisplayViewsContext;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
@@ -428,7 +456,6 @@ public class DatasetDisplayTag extends IncludeTag {
 	private Map<String, String> _contextParams = new HashMap<>();
 	private CreationMenu _creationMenu = new CreationMenu();
 	private String _dataProviderKey;
-	private String _dataSetAPI;
 	private String _deltaParam;
 	private String _formId;
 	private String _id;

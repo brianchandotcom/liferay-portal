@@ -12,24 +12,14 @@
  * details.
  */
 
-import React from 'react';
+export let config = {};
 
-const DatasetDisplayContext = React.createContext({
-	actionParameterName: null,
-	formId: null,
-	formRef: null,
-	id: null,
-	loadData: () => {},
-	modalId: null,
-	namespace: null,
-	openModal: () => {},
-	openSidePanel: () => {},
-	selectItems: () => {},
-	selectable: false,
-	selectedItemsValue: [],
-	sidePanelId: null,
-	sorting: [],
-	updateSorting: () => {},
-});
+export function initializeConfig({apiURL, appURL, portletId}) {
+	config = {
+		apiURL,
+		appURL,
+		portletId,
+	};
 
-export default DatasetDisplayContext;
+	return config;
+}

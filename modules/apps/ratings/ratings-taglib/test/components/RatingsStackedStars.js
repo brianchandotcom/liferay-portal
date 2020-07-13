@@ -38,30 +38,46 @@ describe('RatingsStackedStars', () => {
 	describe('when rendered with the default props', () => {
 		let starsRadios;
 		let result;
+		let starsRadiosWrapper;
 
 		beforeEach(() => {
 			result = renderComponent();
 			starsRadios = result.getAllByRole('radio');
+			starsRadiosWrapper = result.baseElement.querySelector(
+				'.ratings-stacked-stars-vote-stars'
+			);
 		});
 
 		it('is enabled', () => {
 			expect(starsRadios[0].disabled).toBe(false);
 		});
 
+		it('has vote title', () => {
+			expect(starsRadiosWrapper.title).toBe('vote');
+		});
 	});
 
 	describe('when rendered with enabled = false', () => {
 		let starsRadios;
 		let result;
+		let starsRadiosWrapper;
 
 		beforeEach(() => {
 			result = renderComponent({enabled: false});
 			starsRadios = result.getAllByRole('radio');
+			starsRadiosWrapper = result.baseElement.querySelector(
+				'.ratings-stacked-stars-vote-stars'
+			);
 		});
 
 		it('is disabled', () => {
 			expect(starsRadios[0].disabled).toBe(true);
 		});
 
+		it('has disabled title', () => {
+			expect(starsRadiosWrapper.title).toBe(
+				'ratings-are-disabled-in-staging'
+			);
+		});
 	});
 });

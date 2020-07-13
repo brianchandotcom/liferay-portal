@@ -23,6 +23,7 @@ export default function RatingsStackedStars({
 	averageScore,
 	disabled,
 	getSrAverageMessage,
+	getTitle,
 	numberOfStars,
 	onVote,
 	randomNamespace,
@@ -72,7 +73,10 @@ export default function RatingsStackedStars({
 			<div
 				className={classNames({disabled}, 'ratings-stacked-stars-vote')}
 			>
-				<div className="ratings-stacked-stars-vote-stars">
+				<div
+					className="lfr-portal-tooltip ratings-stacked-stars-vote-stars"
+					title={getTitle()}
+				>
 					{starScores.reverse().map(({label, value}, index) => {
 						const id = `${randomNamespace}star${label}`;
 						const srMessage =

@@ -135,6 +135,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
 
 					String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
+
+					String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
+
 					String targetContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
 				%>
 
@@ -148,12 +151,12 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 										<%= label %>
 									</label>
 
-									<div contenteditable="false" role="textbox" tabIndex="-1">
+									<div contenteditable="false" dir="<%= sourceContentDir %>" role="textbox" tabIndex="-1">
 										<%= sourceContent %>
 									</div>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+									<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>
@@ -165,6 +168,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
 									<liferay-editor:editor
 										contents="<%= targetContent %>"
+										contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
 										name="<%= id %>"
 										placeholder="<%= label %>"
 										toolbarSet="simple"

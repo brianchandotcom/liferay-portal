@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2"  version="1.2">
-	<file original="Graphic Example.psd"
+	<file original="com.liferay.journal.model.JournalArticle:122"
 		  source-language="en-US" target-language="ja-JP"
 		  tool="Rainbow" datatype="photoshop">
 		<header>
@@ -18,19 +18,18 @@
 			</phase-group>
 		</header>
 		<body>
-			<trans-unit id="1" maxbytes="14">
+			<trans-unit id="title" maxbytes="14">
 				<source xml:lang="en-US">Quetzal</source>
 				<target xml:lang="ja-JP">Quetzal</target>
 			</trans-unit>
-			<trans-unit id="3" maxbytes="114">
-				<source xml:lang="en-US">An application to manipulate and
-					process XLIFF documents</source>
-				<target xml:lang="ja-JP">XLIFF 文書を編集、または処理
-					するアプリケーションです。</target>
+			<trans-unit id="description" maxbytes="36">
+				<source xml:lang="en-US"><![CDATA[XLIFF Data Manager]]></source>
+				<target xml:lang="ja-JP"><![CDATA[XLIFF データ・マネージャ]]></target>
 			</trans-unit>
-			<trans-unit id="4" maxbytes="36">
-				<source xml:lang="en-US">XLIFF Data Manager</source>
-				<target xml:lang="ja-JP">XLIFF データ・マネージャ</target>
+			<trans-unit id="name" maxbytes="114">
+				<source xml:lang="en-US"><![CDATA[An application to manipulate and
+					process XLIFF documents]]></source>
+				<target xml:lang="ja-JP"><![CDATA[<p>XLIFF 文書を編集、または処理 するアプリケーションです。</p>]]></target>
 			</trans-unit>
 		</body>
 	</file>

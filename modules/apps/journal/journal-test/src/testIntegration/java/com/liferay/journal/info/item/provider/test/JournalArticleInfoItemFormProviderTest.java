@@ -191,6 +191,11 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
+		richAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.RICH);
+
+		Assert.assertTrue(richAttributeOptional.get());
+
 		infoField = iterator.next();
 
 		Assert.assertEquals("displayPageURL", infoField.getName());

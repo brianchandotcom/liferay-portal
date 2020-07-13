@@ -82,7 +82,12 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a MB reply"
 	macro addMessageReply {
-		var messageId = JSONMBMessage.getmessageId();
+		if (isSet(messageId)) {
+			var messageId = "${messageId}";
+		}
+		else {
+			var messageId = JSONMBMessage.getmessageId();
+		}
 
 		var portalURL = JSONCompany.getPortalURL();
 

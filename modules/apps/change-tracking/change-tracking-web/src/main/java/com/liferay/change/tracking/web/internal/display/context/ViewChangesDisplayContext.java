@@ -126,10 +126,26 @@ public class ViewChangesDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {
+		ResourceURL renderCTEntryURL = _renderResponse.createResourceURL();
+
+		renderCTEntryURL.setResourceID("/change_lists/render_ct_entry");
+
+		renderCTEntryURL.setParameter(
+			"ctCollectionId",
+			String.valueOf(_ctCollection.getCtCollectionId()));
+
+		ResourceURL renderDiffURL = _renderResponse.createResourceURL();
+
+		renderDiffURL.setResourceID("/change_lists/render_diff");
+
 		return HashMapBuilder.<String, Object>put(
 			"changes", _getChangesJSONObject()
 		).put(
 			"contextView", _getContextViewJSONObject()
+		).put(
+			"renderCTEntryURL", renderCTEntryURL.toString()
+		).put(
+			"renderDiffURL", renderDiffURL.toString()
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
@@ -222,15 +238,10 @@ public class ViewChangesDisplayContext {
 				}
 			}
 
-			ResourceURL renderURL = _renderResponse.createResourceURL();
-
-			renderURL.setResourceID("/change_lists/render_diff");
-
-			renderURL.setParameter(
-				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-
 			childrenJSONArray.put(
 				JSONUtil.put(
+					"ctEntryId", ctEntry.getCtEntryId()
+				).put(
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
 						_httpServletRequest, ctEntry)
@@ -246,8 +257,6 @@ public class ViewChangesDisplayContext {
 					"modifiedTime", modifiedDate.getTime()
 				).put(
 					"portraitURL", portraitURL
-				).put(
-					"renderURL", renderURL.toString()
 				).put(
 					"timeDescription",
 					_language.format(
@@ -309,16 +318,8 @@ public class ViewChangesDisplayContext {
 
 				JSONArray dropdownItemsJSONArray =
 					JSONFactoryUtil.createJSONArray();
-				ResourceURL renderURL = _renderResponse.createResourceURL();
 
 				if (ctEntry == null) {
-					renderURL.setResourceID("/change_lists/render_ct_entry");
-
-					renderURL.setParameter(
-						"modelClassNameId", String.valueOf(classNameId));
-					renderURL.setParameter(
-						"modelClassPK", String.valueOf(classPK));
-
 					T baseModel = baseModelMap.get(classPK);
 
 					if (baseModel == null) {
@@ -337,9 +338,12 @@ public class ViewChangesDisplayContext {
 				}
 				else {
 					childJSONObject.put(
+						"ctEntryId", ctEntry.getCtEntryId()
+					).put(
 						"description",
 						_ctDisplayRendererRegistry.getEntryDescription(
-							_httpServletRequest, ctEntry));
+							_httpServletRequest, ctEntry)
+					);
 
 					if ((_ctCollection.getCtCollectionId() ==
 							_activeCtCollectionId) &&
@@ -360,11 +364,6 @@ public class ViewChangesDisplayContext {
 						}
 					}
 
-					renderURL.setResourceID("/change_lists/render_diff");
-
-					renderURL.setParameter(
-						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-
 					childJSONObject.put(
 						"title",
 						_ctDisplayRendererRegistry.getTitle(
@@ -375,8 +374,6 @@ public class ViewChangesDisplayContext {
 					"dropdownItems", dropdownItemsJSONArray
 				).put(
 					"id", nodeIdCounter.getAndIncrement()
-				).put(
-					"renderURL", renderURL.toString()
 				);
 
 				childrenJSONArray.put(childJSONObject);

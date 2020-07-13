@@ -30,12 +30,20 @@ class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {changes, contextView, spritemap} = props;
+		const {
+			changes,
+			contextView,
+			renderCTEntryURL,
+			renderDiffURL,
+			spritemap,
+		} = props;
 
 		this.changes = changes;
 		this.contextView = contextView;
 		this.filterClass = 'everything';
 		this.nodeId = 0;
+		this.renderCTEntryURL = renderCTEntryURL;
+		this.renderDiffURL = renderDiffURL;
 		this.spritemap = spritemap;
 
 		this.state = {
@@ -338,6 +346,23 @@ class ChangeTrackingChangesView extends React.Component {
 		return null;
 	}
 
+	_getRenderURL(node) {
+		if (node.ctEntryId) {
+			const portletURL = Liferay.PortletURL.createURL(this.renderDiffURL);
+
+			portletURL.setParameter('ctEntryId', node.ctEntryId);
+
+			return portletURL.toString();
+		}
+
+		const portletURL = Liferay.PortletURL.createURL(this.renderCTEntryURL);
+
+		portletURL.setParameter('modelClassNameId', node.modelClassNameId);
+		portletURL.setParameter('modelClassPK', node.modelClassPK);
+
+		return portletURL.toString();
+	}
+
 	_getRootDisplayClassNode(filterClass) {
 		const nodeIds = this.contextView[filterClass];
 
@@ -583,14 +608,16 @@ class ChangeTrackingChangesView extends React.Component {
 			title: node.description ? node.description : node.title,
 		});
 
-		if (node.renderURL) {
-			fetch(node.renderURL)
-				.then((response) => response.text())
-				.then((text) => {
-					this.setState({
-						renderInnerHTML: {__html: text},
+		if (node.modelClassNameId) {
+			AUI().use('liferay-portlet-url', () => {
+				fetch(this._getRenderURL(node))
+					.then((response) => response.text())
+					.then((text) => {
+						this.setState({
+							renderInnerHTML: {__html: text},
+						});
 					});
-				});
+			});
 		}
 	}
 

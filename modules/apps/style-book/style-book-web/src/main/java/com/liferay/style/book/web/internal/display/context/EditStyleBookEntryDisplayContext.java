@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.Collections;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -50,9 +50,29 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() {
 		return HashMapBuilder.<String, Object>put(
-			"context",
-			Collections.singletonMap(
-				"namespace", _renderResponse.getNamespace())
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"publishURL",
+			() -> {
+				PortletURL actionURL = _renderResponse.createActionURL();
+
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/style_book/publish_style_book_entry");
+
+				return actionURL.toString();
+			}
+		).put(
+			"saveDraftURL",
+			() -> {
+				PortletURL actionURL = _renderResponse.createActionURL();
+
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/style_book/save_draft_style_book_entry");
+
+				return actionURL.toString();
+			}
 		).build();
 	}
 

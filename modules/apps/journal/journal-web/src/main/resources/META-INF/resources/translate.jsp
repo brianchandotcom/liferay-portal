@@ -132,20 +132,20 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 				for (InfoField<TextInfoFieldType> infoField : infoFields) {
 					boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.RICH);
-					boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
-					String id = "infoField--" + infoField.getName() + "--";
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
-					String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
-
-					String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
-
-					String targetContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
+					boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 				%>
 
 					<clay:row>
 						<clay:col
 							md="6"
 						>
+
+							<%
+							String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
+							String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
+							%>
+
 							<c:choose>
 								<c:when test="<%= html %>">
 									<label class="control-label">
@@ -165,6 +165,12 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						<clay:col
 							md="6"
 						>
+
+							<%
+							String id = "infoField--" + infoField.getName() + "--";
+							String targetContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
+							%>
+
 							<c:choose>
 								<c:when test="<%= html %>">
 									<liferay-editor:editor

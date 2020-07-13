@@ -77,11 +77,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
 
 		_configureArchivesBaseName(project, packageJsonMap);
-		_configureVersion(project, packageJsonMap);
-
-		// liferay-theme-tasks already uses the "build" directory
-
-		project.setBuildDir("build_gradle");
 
 		Task createLiferayThemeJsonTask = _addTaskCreateLiferayThemeJson(
 			project, liferayExtension);
@@ -92,6 +87,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
 		_configureTasksExecuteGulp(createLiferayThemeJsonTask);
+
+		_configureProject(project, packageJsonMap);
 	}
 
 	private Task _addTaskCreateLiferayThemeJson(
@@ -268,8 +265,12 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureVersion(
+	private void _configureProject(
 		Project project, Map<String, Object> packageJsonMap) {
+
+		// liferay-theme-tasks already uses the "build" directory
+
+		project.setBuildDir("build_gradle");
 
 		String version = (String)packageJsonMap.get("version");
 

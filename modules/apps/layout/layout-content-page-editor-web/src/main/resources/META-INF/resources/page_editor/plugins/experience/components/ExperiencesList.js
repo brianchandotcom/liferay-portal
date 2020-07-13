@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -35,7 +36,7 @@ const ExperiencesList = ({
 	const handleExperienceSelection = (id) => dispatch(selectExperience({id}));
 
 	return (
-		<ul className="list-unstyled mt-4" role="list">
+		<ClayList className="mt-3">
 			{experiences.map((experience, i) => {
 				const active =
 					experience.segmentsExperienceId === activeExperienceId;
@@ -63,7 +64,7 @@ const ExperiencesList = ({
 					/>
 				);
 			})}
-		</ul>
+		</ClayList>
 	);
 };
 

@@ -16,10 +16,16 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
-function ActiveViewSelector({activeView, setActiveView, views}) {
+import DatasetDisplayContext from '../../DatasetDisplayContext';
+import persistActiveView from '../../thunks/persistActiveView';
+import ViewsContext from '../../views/ViewsContext';
+
+function ActiveViewSelector({views}) {
 	const [active, setActive] = useState(false);
+	const [{activeView}, dispatch] = useContext(ViewsContext);
+	const {id} = useContext(DatasetDisplayContext);
 
 	return (
 		<ClayDropDown
@@ -28,22 +34,27 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 			trigger={
 				<ClayButtonWithIcon
 					displayType="secondary"
-					symbol={views[activeView || 0].thumbnail}
+					symbol={activeView.thumbnail}
 				/>
 			}
 		>
 			<ClayDropDown.ItemList>
-				{views.map((view, i) => (
+				{views.map(({label, name, thumbnail}) => (
 					<ClayDropDown.Item
-						key={i}
+						key={name}
 						onClick={(event) => {
 							event.preventDefault();
 							setActive(false);
-							setActiveView(i);
+							dispatch(
+								persistActiveView({
+									activeViewName: name,
+									id,
+								})
+							);
 						}}
 					>
-						<ClayIcon className="mr-3" symbol={view.thumbnail} />
-						{view.label}
+						<ClayIcon className="mr-3" symbol={thumbnail} />
+						{label}
 					</ClayDropDown.Item>
 				))}
 			</ClayDropDown.ItemList>
@@ -52,8 +63,6 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 }
 
 ActiveViewSelector.propTypes = {
-	activeView: PropTypes.number.isRequired,
-	setActiveView: PropTypes.func.isRequired,
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string.isRequired,

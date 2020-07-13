@@ -15,10 +15,12 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import DatasetDisplayContext from './DatasetDisplayContext';
 import EmptyResultMessage from './EmptyResultMessage';
+import {updateViewComponent} from './actions/updateViewComponent';
+import {config} from './config';
 import ManagementBar from './management_bar/index';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
@@ -33,11 +35,11 @@ import {
 import {executeAsyncAction, getRandomId, loadData} from './utilities/index';
 import {logError} from './utilities/logError';
 import getJsModule from './utilities/modules';
-import {getViewById} from './views/index';
+import ViewsContext from './views/ViewsContext';
+import {getViewContentRenderer} from './views/index';
 
 function DatasetDisplay({
 	actionParameterName,
-	apiUrl,
 	bulkActions,
 	creationMenu,
 	currentUrl,
@@ -60,10 +62,8 @@ function DatasetDisplay({
 	sidePanelId,
 	sorting: sortingProp,
 	style,
-	views: viewsProp,
 }) {
 	const wrapperRef = useRef(null);
-	const [views, updateViews] = useState(viewsProp);
 	const [loading, setLoading] = useState(false);
 	const [datasetDisplaySupportSidePanelId] = useState(
 		sidePanelId || 'support-side-panel-' + getRandomId()
@@ -86,43 +86,35 @@ function DatasetDisplay({
 		pagination.initialDelta || pagination.deltas[0].label
 	);
 	const [total, setTotal] = useState(0);
-	const [activeView, setActiveView] = useState(activeView || 0);
+	const [{activeView, views}, dispatch] = useContext(ViewsContext);
 	const {
 		component: CurrentViewComponent,
 		contentRenderer,
-		contentRendererModuleUrl: currentViewModuleUrl,
+		contentRendererModuleUrl,
+		name: activeViewName,
 		...currentViewProps
-	} = views[activeView];
+	} = activeView;
 
 	const selectable = bulkActions?.length && selectedItemsKey;
 
 	useEffect(() => {
 		if (
 			!CurrentViewComponent &&
-			(currentViewModuleUrl || contentRenderer)
+			(contentRendererModuleUrl || contentRenderer)
 		) {
 			setLoading(true);
 			(contentRenderer
-				? getViewById(contentRenderer)
-				: getJsModule(currentViewModuleUrl)
+				? getViewContentRenderer(contentRenderer)
+				: getJsModule(contentRendererModuleUrl)
 			)
 				.then((component) => {
-					updateViews((views) =>
-						views.map((view, i) =>
-							i === activeView
-								? {
-										...view,
-										component,
-								  }
-								: view
-						)
-					);
+					dispatch(updateViewComponent(activeViewName, component));
 					setLoading(false);
 				})
-				.catch((err) => {
+				.catch((error) => {
 					logError(
-						`Requested module: ${currentViewModuleUrl} not available`,
-						err
+						`Requested module: ${contentRendererModuleUrl} not available`,
+						error
 					);
 					openToast({
 						message: Liferay.Language.get('unexpected-error'),
@@ -133,12 +125,12 @@ function DatasetDisplay({
 				});
 		}
 	}, [
-		activeView,
 		contentRenderer,
-		views,
-		currentViewModuleUrl,
 		CurrentViewComponent,
+		contentRendererModuleUrl,
 		setLoading,
+		dispatch,
+		activeViewName,
 	]);
 
 	const formRef = useRef(null);
@@ -149,7 +141,7 @@ function DatasetDisplay({
 	}
 
 	function getData(
-		apiUrl,
+		apiURL,
 		currentUrl,
 		filters,
 		searchParam,
@@ -161,7 +153,7 @@ function DatasetDisplay({
 		setLoading(true);
 
 		return loadData(
-			apiUrl,
+			apiURL,
 			currentUrl,
 			filters,
 			searchParam,
@@ -197,10 +189,12 @@ function DatasetDisplay({
 			});
 	}
 
+	const {apiURL} = config;
+
 	useEffect(() => {
-		if (apiUrl) {
+		if (apiURL) {
 			getData(
-				apiUrl,
+				apiURL,
 				currentUrl,
 				filters.filter((filter) => filter.value),
 				searchParam,
@@ -212,7 +206,7 @@ function DatasetDisplay({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		apiUrl,
+		apiURL,
 		currentUrl,
 		filters,
 		searchParam,
@@ -223,12 +217,12 @@ function DatasetDisplay({
 	]);
 
 	useEffect(() => {
-		const itemsAreInjected = !apiUrl && itemsProp?.length !== items.length;
+		const itemsAreInjected = !apiURL && itemsProp?.length !== items.length;
 
 		if (itemsAreInjected) {
 			updateDatasetItems({items: itemsProp});
 		}
-	}, [items, apiUrl, itemsProp]);
+	}, [items, apiURL, itemsProp]);
 
 	function selectItems(value) {
 		if (Array.isArray(value)) {
@@ -266,7 +260,7 @@ function DatasetDisplay({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const refreshData = (successNotification) =>
 		getData(
-			apiUrl,
+			apiURL,
 			currentUrl,
 			filters.filter((filter) => filter.value),
 			searchParam,
@@ -320,7 +314,6 @@ function DatasetDisplay({
 	const managementBar = showManagementBar ? (
 		<div className="dataset-display-management-bar-wrapper">
 			<ManagementBar
-				activeView={activeView}
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
 				filters={filters}
@@ -333,7 +326,6 @@ function DatasetDisplay({
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={selectionType}
-				setActiveView={setActiveView}
 				showSearch={showSearch}
 				sidePanelId={datasetDisplaySupportSidePanelId}
 				total={items?.length ?? 0}
@@ -435,6 +427,7 @@ function DatasetDisplay({
 				formRef,
 				highlightItems,
 				highlightedItemsValue,
+				id,
 				itemsActions,
 				loadData: refreshData,
 				modalId: datasetDisplaySupportModalId,
@@ -496,8 +489,7 @@ function DatasetDisplay({
 }
 
 DatasetDisplay.propTypes = {
-	activeViewId: PropTypes.string,
-	apiUrl: PropTypes.string,
+	apURL: PropTypes.string,
 	bulkActions: PropTypes.array,
 	creationMenu: PropTypes.shape({
 		primaryItems: PropTypes.array,

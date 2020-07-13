@@ -15,8 +15,16 @@
 package com.liferay.frontend.taglib.clay.internal.servlet;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.DatasetDisplayTag;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -28,6 +36,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class ServletContextUtil {
+
+	public static final String getClayDataSetDisplaySettingsNamespace(
+		HttpServletRequest httpServletRequest, String id) {
+
+		return _servletContextUtil._getClayDataSetDisplaySettingsNamespace(
+			httpServletRequest, id);
+	}
 
 	public static final ClayDataSetDisplayViewSerializer
 		getClayDataSetDisplayViewSerializer() {
@@ -60,12 +75,42 @@ public class ServletContextUtil {
 		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.taglib.clay)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	private String _getClayDataSetDisplaySettingsNamespace(
+		HttpServletRequest httpServletRequest, String id) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletNamespace = _portal.getPortletNamespace(
+			portletDisplay.getId());
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(DatasetDisplayTag.class.getName());
+		sb.append(StringPool.POUND);
+		sb.append(portletNamespace);
+		sb.append(StringPool.POUND);
+		sb.append(themeDisplay.getPlid());
+		sb.append(StringPool.POUND);
+		sb.append(id);
+
+		return sb.toString();
 	}
 
 	private ClayDataSetDisplayViewSerializer
@@ -78,5 +123,6 @@ public class ServletContextUtil {
 	private static ServletContextUtil _servletContextUtil;
 
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
+	private Portal _portal;
 
 }

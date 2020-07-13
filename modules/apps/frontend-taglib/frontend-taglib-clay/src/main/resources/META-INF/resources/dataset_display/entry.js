@@ -12,8 +12,32 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
+import {render, useThunk} from 'frontend-js-react-web';
+import React, {useReducer} from 'react';
 
 import DatasetDisplay from './DatasetDisplay';
+import {initializeConfig} from './config';
+import ViewsContext, {viewsReducer} from './views/ViewsContext';
 
-export default (...data) => render(DatasetDisplay, ...data);
+const App = ({apiURL, appURL, ...props}) => {
+	const {activeViewSettings, portletId, views} = props;
+	const activeView = activeViewSettings.name
+		? views.find(({name}) => name === activeViewSettings.name)
+		: views[0];
+	const [state, dispatch] = useThunk(
+		useReducer(viewsReducer, {
+			activeView,
+			views,
+		})
+	);
+
+	initializeConfig({apiURL, appURL, portletId});
+
+	return (
+		<ViewsContext.Provider value={[state, dispatch]}>
+			<DatasetDisplay {...props} />
+		</ViewsContext.Provider>
+	);
+};
+
+export default (...data) => render(App, ...data);

@@ -23,6 +23,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" 
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
@@ -34,11 +35,13 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%
 String actionParameterName = (String)request.getAttribute("clay:dataset-display:actionParameterName");
+String activeViewSettingsJSON = GetterUtil.getString(request.getAttribute("clay:dataset-display:activeViewSettingsJSON"), "{}");
+String apiURL = (String)request.getAttribute("clay:dataset-display:apiURL");
+String appURL = (String)request.getAttribute("clay:dataset-display:appURL");
 List<DropdownItem> bulkActionDropdownItems = (List<DropdownItem>)request.getAttribute("clay:dataset-display:bulkActionDropdownItems");
 Object clayDataSetDisplayViewsContext = request.getAttribute("clay:dataset-display:clayDataSetDisplayViewsContext");
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:dataset-display:creationMenu");
 String dataProviderKey = (String)request.getAttribute("clay:dataset-display:dataProviderKey");
-String dataSetAPI = (String)request.getAttribute("clay:dataset-display:dataSetAPI");
 String formId = (String)request.getAttribute("clay:dataset-display:formId");
 String id = (String)request.getAttribute("clay:dataset-display:id");
 int itemsPerPage = (int)request.getAttribute("clay:dataset-display:itemsPerPage");

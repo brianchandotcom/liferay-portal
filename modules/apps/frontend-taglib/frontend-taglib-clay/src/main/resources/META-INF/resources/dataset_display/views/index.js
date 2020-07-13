@@ -19,42 +19,21 @@ import SelectableTable from './selectable_table/SelectableTable';
 import Table from './table/Table';
 import Timeline from './timeline/Timeline';
 
-const views = [
-	{
-		component: Table,
-		id: 'table',
-	},
-	{
-		component: SelectableTable,
-		id: 'selectableTable',
-	},
-	{
-		component: Timeline,
-		id: 'timeline',
-	},
-	{
-		component: EmailsList,
-		id: 'emailsList',
-	},
-	{
-		component: List,
-		id: 'list',
-	},
-	{
-		component: Cards,
-		id: 'cards',
-	},
-];
+const VIEWS = {
+	cards: Cards,
+	emailsList: EmailsList,
+	list: List,
+	selectableTable: SelectableTable,
+	table: Table,
+	timeline: Timeline,
+};
 
-export function getViewById(requestedContentRendererId) {
-	return new Promise((resolve) => {
-		views.forEach((view) => {
-			if (view.id === requestedContentRendererId) {
-				resolve(view.component);
-			}
-		});
-		throw new Error(
-			`No content renderer found with the ID: "${requestedContentRendererId}"`
-		);
-	});
+export function getViewContentRenderer(contentRenderer) {
+	const view = VIEWS[contentRenderer];
+
+	return view
+		? Promise.resolve(view)
+		: Promise.reject(
+				`No content renderer found with the ID: "${contentRenderer}"`
+		  );
 }

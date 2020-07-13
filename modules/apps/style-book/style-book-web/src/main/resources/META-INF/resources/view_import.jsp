@@ -64,7 +64,7 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 			<liferay-ui:message arguments="<%= duplicateStyleBookEntryKeyException.getMessage() %>" key="a-style-book-with-the-key-x-already-exists" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= InvalidStyleBookEntryFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
+		<liferay-ui:error exception="<%= StyleBookEntryFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

@@ -58,7 +58,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateStyleBookEntryKey</exception>
-		<exception>InvalidStyleBookEntryFile</exception>
+		<exception>StyleBookEntryFile</exception>
 		<exception>StyleBookEntryName</exception>
 	</exceptions>
 </service-builder>

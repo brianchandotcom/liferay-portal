@@ -174,8 +174,8 @@ definition {
 			rowEntry = "Site Template Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Page Fragments");
+			category = "Design",
+			portlet = "Fragments");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 

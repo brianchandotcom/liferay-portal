@@ -445,9 +445,13 @@ definition {
 			layoutName = "Similar Results Page",
 			widgetName = "Asset Publisher");
 
-		Navigator.gotoPage(pageName = "Similar Results Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Similar Results");
 
-		Portlet.addPG(portletName = "Similar Results");
+		Navigator.gotoPage(pageName = "Similar Results Page");
 	}
 
 	macro viewResultDetails {

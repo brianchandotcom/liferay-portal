@@ -113,6 +113,9 @@ definition {
 		else if ("${widgetName}" == "Sign In") {
 			var portletId = "com_liferay_login_web_portlet_LoginPortlet";
 		}
+		else if ("${widgetName}" == "Similar Results") {
+			var portletId = "com_liferay_portal_search_similar_results_web_portlet_SimilarResultsPortlet";
+		}
 		else if ("${widgetName}" == "Site Map") {
 			var portletId = "com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet";
 		}

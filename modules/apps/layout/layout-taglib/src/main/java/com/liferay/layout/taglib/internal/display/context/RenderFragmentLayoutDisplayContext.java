@@ -28,6 +28,7 @@ import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
@@ -530,6 +531,14 @@ public class RenderFragmentLayoutDisplayContext {
 						return fieldValueJSONObject.getString(
 							"url", StringPool.BLANK);
 					}
+					else if (object instanceof String) {
+						return (String)object;
+					}
+					else if (object instanceof WebImage) {
+						WebImage webImage = (WebImage)object;
+
+						return webImage.getUrl();
+					}
 				}
 			}
 		}
@@ -566,6 +575,14 @@ public class RenderFragmentLayoutDisplayContext {
 
 							return fieldValueJSONObject.getString(
 								"url", StringPool.BLANK);
+						}
+						else if (object instanceof String) {
+							return (String)object;
+						}
+						else if (object instanceof WebImage) {
+							WebImage webImage = (WebImage)object;
+
+							return webImage.getUrl();
 						}
 					}
 				}

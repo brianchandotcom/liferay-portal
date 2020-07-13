@@ -26,6 +26,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
+ * // TODO Temporary class needs to be removed once the refactor is complete
+ *
  * @author Matthew Tambara
  */
 public class Util {

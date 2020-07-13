@@ -37,6 +37,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * // TODO Temporary class needs to be removed once the refactor is complete
+ *
  * @author Matthew Tambara
  */
 public class Properties extends AbstractMap<String, String> {

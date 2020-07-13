@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 /**
+ * // TODO Temporary class needs to be removed once the refactor is complete
+ *
  * @author Matthew Tambara
  */
 public class Clause {

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * // TODO Temporary class needs to be removed once the refactor is complete
+ *
  * @author Matthew Tambara
  */
 public class Parser {

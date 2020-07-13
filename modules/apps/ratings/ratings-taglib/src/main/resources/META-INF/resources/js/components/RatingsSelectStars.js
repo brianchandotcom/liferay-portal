@@ -40,7 +40,7 @@ export default function RatingsSelectStars({
 
 	return (
 		<ClayLayout.ContentRow
-			className="ratings ratings-stars"
+			className="ratings-stars"
 			noGutters
 			verticalAlign="center"
 		>

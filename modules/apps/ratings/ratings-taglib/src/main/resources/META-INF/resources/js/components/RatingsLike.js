@@ -72,7 +72,7 @@ const RatingsLike = ({
 	};
 
 	return (
-		<div className="ratings ratings-like">
+		<div className="ratings-like">
 			<ClayButton
 				aria-pressed={liked}
 				borderless

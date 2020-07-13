@@ -165,7 +165,7 @@ const RatingsThumbs = ({
 	);
 
 	return (
-		<div className="ratings ratings-thumbs">
+		<div className="ratings-thumbs">
 			<ClayButton
 				aria-pressed={pressed === PRESSED_UP}
 				borderless

@@ -31,7 +31,7 @@ export default function RatingsStackedStars({
 	totalEntries,
 }) {
 	return (
-		<fieldset className="rating ratings-stacked-stars ratings-stars">
+		<fieldset className="ratings-stacked-stars ratings-stars">
 			<div
 				className="ratings-stars-average"
 				title={averageScore.toFixed(1)}

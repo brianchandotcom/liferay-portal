@@ -27,10 +27,10 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div>
+<div class="ratings">
 	<c:choose>
 		<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
-			<div class="ratings ratings-like">
+			<div class="ratings-like">
 				<clay:button
 					borderless="<%= true %>"
 					disabled="<%= true %>"
@@ -44,7 +44,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			</div>
 		</c:when>
 		<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-			<div class="ratings ratings-thumbs">
+			<div class="ratings-thumbs">
 				<clay:button
 					borderless="<%= true %>"
 					disabled="<%= true %>"
@@ -71,7 +71,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 		</c:when>
 		<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
 			<clay:content-row
-				cssClass="ratings ratings-stars"
+				cssClass="ratings-stars"
 				verticalAlign="center"
 			>
 				<clay:content-col>
@@ -102,7 +102,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			</clay:content-row>
 		</c:when>
 		<c:when test="<%= type.equals(RatingsType.STACKED_STARS.getValue()) %>">
-			<div class="rating ratings-stacked-stars ratings-stars">
+			<div class="ratings-stacked-stars ratings-stars">
 				<div class="disabled ratings-stars-average">
 					<span class="inline-item inline-item-before">
 						<clay:icon

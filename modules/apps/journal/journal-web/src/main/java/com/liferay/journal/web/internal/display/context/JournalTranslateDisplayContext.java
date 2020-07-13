@@ -18,6 +18,8 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -41,6 +43,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -85,6 +88,16 @@ public class JournalTranslateDisplayContext {
 		_translationInfoFieldChecker =
 			(TranslationInfoFieldChecker)_httpServletRequest.getAttribute(
 				TranslationInfoFieldChecker.class.getName());
+	}
+
+	public boolean getBooleanValue(
+		InfoField<TextInfoFieldType> infoField,
+		InfoFieldType.Attribute<TextInfoFieldType, Boolean> attribute) {
+
+		Optional<Boolean> attributeOptional = infoField.getAttributeOptional(
+			attribute);
+
+		return attributeOptional.orElse(false);
 	}
 
 	public String getInfoFieldLabel(InfoField infoField) {

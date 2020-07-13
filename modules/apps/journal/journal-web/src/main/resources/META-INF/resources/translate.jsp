@@ -131,9 +131,10 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				}
 
 				for (InfoField<TextInfoFieldType> infoField : infoFields) {
+					boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.RICH);
+					boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 					String id = "infoField--" + infoField.getName() + "--";
 					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
-
 					String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
 
 					String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
@@ -146,7 +147,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 							md="6"
 						>
 							<c:choose>
-								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
+								<c:when test="<%= html %>">
 									<label class="control-label">
 										<%= label %>
 									</label>
@@ -156,7 +157,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									</div>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+									<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>
@@ -165,7 +166,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 							md="6"
 						>
 							<c:choose>
-								<c:when test="<%= infoField.getAttributeOptional(TextInfoFieldType.RICH).orElse(false) %>">
+								<c:when test="<%= html %>">
 									<liferay-editor:editor
 										contents="<%= targetContent %>"
 										contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
@@ -175,7 +176,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									/>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" type='<%= infoField.getAttributeOptional(TextInfoFieldType.MULTILINE).orElse(false) ? "textarea" : "text" %>' value="<%= targetContent %>" />
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>

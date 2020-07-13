@@ -31,7 +31,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 >
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type_data_definition" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 		</portlet:renderURL>
@@ -60,7 +60,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/document_library/edit_file_entry_type" var="deleteURL">
+		<portlet:actionURL name="/document_library/edit_file_entry_type_data_definition" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />

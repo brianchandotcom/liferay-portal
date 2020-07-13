@@ -80,7 +80,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/document_library/file_entry_type_action_data_definition.jsp"
+				path="/document_library/file_entry_type_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

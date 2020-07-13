@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
-import com.liferay.style.book.web.internal.portlet.zip.StyleBookImporterResultEntry;
 
 import java.io.File;
 
@@ -81,15 +80,15 @@ public class ImportStyleBookEntriesMVCActionCommand
 			actionRequest, "overwrite", true);
 
 		try {
-			List<StyleBookImporterResultEntry> styleBookImporterResultEntries =
-				_styleBookEntryZipProcessor.importStyleBookEntries(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					file, overwrite);
+			List<StyleBookEntryZipProcessor.ImportResultEntry>
+				importResultEntries =
+					_styleBookEntryZipProcessor.importStyleBookEntries(
+						themeDisplay.getUserId(),
+						themeDisplay.getScopeGroupId(), file, overwrite);
 
-			if (ListUtil.isNotEmpty(styleBookImporterResultEntries)) {
+			if (ListUtil.isNotEmpty(importResultEntries)) {
 				SessionMessages.add(
-					actionRequest, "styleBookImporterResultEntries",
-					styleBookImporterResultEntries);
+					actionRequest, "importResultEntries", importResultEntries);
 			}
 
 			SessionMessages.add(actionRequest, "success");

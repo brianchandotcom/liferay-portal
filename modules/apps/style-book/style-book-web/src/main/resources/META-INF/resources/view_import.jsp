@@ -33,25 +33,25 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 	<liferay-frontend:edit-form-body>
 
 		<%
-		List<String> draftStyleBookImporterResultEntries = importStyleBookDisplayContext.getStyleBookImporterResultEntries(StyleBookImporterResultEntry.Status.IMPORTED_DRAFT);
+		List<String> draftImportResultEntries = importStyleBookDisplayContext.getImportResultEntries(StyleBookEntryZipProcessor.ImportResultEntry.Status.IMPORTED_DRAFT);
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(draftStyleBookImporterResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(draftImportResultEntries) %>">
 			<clay:alert
 				dismissible="<%= true %>"
-				message='<%= LanguageUtil.format(request, "the-following-style-books-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftStyleBookImporterResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
+				message='<%= LanguageUtil.format(request, "the-following-style-books-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftImportResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 			/>
 		</c:if>
 
 		<%
-		List<String> invalidStyleBookImporterResultEntries = importStyleBookDisplayContext.getStyleBookImporterResultEntries(StyleBookImporterResultEntry.Status.INVALID);
+		List<String> invalidImportResultEntries = importStyleBookDisplayContext.getImportResultEntries(StyleBookEntryZipProcessor.ImportResultEntry.Status.INVALID);
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(invalidStyleBookImporterResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(invalidImportResultEntries) %>">
 			<clay:alert
 				dismissible="<%= true %>"
 				displayType="warning"
-				message='<%= LanguageUtil.format(request, "the-following-style-books-could-not-be-imported-x", "<strong>" + StringUtil.merge(invalidStyleBookImporterResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
+				message='<%= LanguageUtil.format(request, "the-following-style-books-could-not-be-imported-x", "<strong>" + StringUtil.merge(invalidImportResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 			/>
 		</c:if>
 

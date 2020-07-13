@@ -16,6 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
+import TYPES from '../../src/main/resources/META-INF/resources/js/RATINGS_TYPES';
 import Ratings from '../../src/main/resources/META-INF/resources/js/Ratings';
 import {formDataToObj} from '../utils';
 
@@ -26,7 +27,7 @@ const baseProps = {
 	numberOfStars: 5,
 	randomNamespace: '_random_namespace_',
 	signedIn: true,
-	type: 'stars',
+	type: TYPES.STARS,
 	url: 'http://url',
 };
 

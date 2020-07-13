@@ -84,9 +84,16 @@ const TabsContent = ({tab, tabIndex}) => {
 
 									return {
 										...collection,
-										children: filteredChildren.filter(
-											itemFilter
-										),
+										children:
+											collection.label
+												.toLowerCase()
+												.indexOf(
+													searchValueLowerCase
+												) !== -1
+												? filteredChildren
+												: filteredChildren.filter(
+														itemFilter
+												  ),
 									};
 								})
 								.filter(
@@ -145,7 +152,7 @@ const TabsContent = ({tab, tabIndex}) => {
 				value={searchValue}
 			/>
 			{isContentTab && <ContentOptions onChangeSelect={setTotalItems} />}
-			{searchValue ? (
+			{isContentTab && searchValue ? (
 				<SearchResultsPanel
 					alertTitle={
 						isContentTab
@@ -156,14 +163,16 @@ const TabsContent = ({tab, tabIndex}) => {
 									'there-are-no-widgets-on-this-page'
 							  )
 					}
-					filteredTabs={
-						isContentTab ? [filteredContent] : filteredWidgets
-					}
+					filteredTabs={[filteredContent]}
 				/>
 			) : (
 				<ul className="list-unstyled">
 					<Collections
-						collections={collections}
+						collections={
+							searchValue && filteredWidgets.length
+								? filteredWidgets[0].collections
+								: collections
+						}
 						isContentTab={isContentTab}
 						open
 					/>

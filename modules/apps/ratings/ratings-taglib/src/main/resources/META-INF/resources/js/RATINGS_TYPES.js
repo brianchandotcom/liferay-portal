@@ -12,9 +12,11 @@
  * details.
  */
 
-export const TYPES = {
+const RATINGS_TYPES = {
 	LIKE: 'like',
 	STACKED_STARS: 'stacked-stars',
 	STARS: 'stars',
 	THUMBS: 'thumbs',
 };
+
+export default RATINGS_TYPES;

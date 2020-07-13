@@ -16,7 +16,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import {useCallback, useState} from 'react';
 
-import {TYPES} from '../constants';
+import TYPES from '../RATINGS_TYPES';
 import Lang from '../utils/lang';
 import RatingsSelectStars from './RatingsSelectStars';
 import RatingsStackedStars from './RatingsStackedStars';

@@ -91,10 +91,10 @@ definition {
 		task ("Assert fragments admin is accessible in the staging site") {
 			ProductMenuHelper.openProductMenu();
 
-			ProductMenuHelper.expandCategory(category = "Site Builder");
+			ProductMenuHelper.expandCategory(category = "Design");
 
 			AssertVisible(
-				key_portlet = "Page Fragments",
+				key_portlet = "Fragments",
 				locator1 = "ProductMenu#PORTLET");
 		}
 
@@ -105,10 +105,10 @@ definition {
 		task ("Assert fragments admin is not accessible in the live site") {
 			ProductMenuHelper.openProductMenu();
 
-			ProductMenuHelper.expandCategory(category = "Site Builder");
+			ProductMenuHelper.expandCategory(category = "Design");
 
 			AssertElementNotPresent(
-				key_portlet = "Page Fragments",
+				key_portlet = "Fragments",
 				locator1 = "ProductMenu#PORTLET");
 		}
 	}

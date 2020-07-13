@@ -470,7 +470,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 
 		return new FragmentFieldBackgroundImage() {
 			{
-				backgroundImage = new FragmentImage() {
+				backgroundFragmentImage = new FragmentImage() {
 					{
 						title = _toTitleFragmentInlineValue(
 							jsonObject, localeMap);

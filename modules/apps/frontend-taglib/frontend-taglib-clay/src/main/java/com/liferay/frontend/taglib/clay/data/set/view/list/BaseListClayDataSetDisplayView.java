@@ -37,6 +37,9 @@ public abstract class BaseListClayDataSetDisplayView
 	public String getLabel() {
 		return ClayDataSetConstants.LIST;
 	}
+
+	public String getName() {
+		return ClayDataSetConstants.LIST;
 	}
 
 	public String getSticker() {

@@ -42,6 +42,10 @@ public abstract class BaseCardsClayDataSetDisplayView
 		return StringPool.BLANK;
 	}
 
+	public String getName() {
+		return ClayDataSetConstants.CARDS;
+	}
+
 	public String getSticker() {
 		return StringPool.BLANK;
 	}

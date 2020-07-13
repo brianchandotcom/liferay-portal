@@ -34,6 +34,9 @@ public abstract class BaseTimelineClayDataSetDisplayView
 	public String getLabel() {
 		return ClayDataSetConstants.TIMELINE;
 	}
+
+	public String getName() {
+		return ClayDataSetConstants.TIMELINE;
 	}
 
 	public String getThumbnail() {

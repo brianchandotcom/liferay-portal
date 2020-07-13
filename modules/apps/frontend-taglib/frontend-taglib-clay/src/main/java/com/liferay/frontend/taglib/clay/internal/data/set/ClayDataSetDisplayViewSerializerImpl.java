@@ -65,6 +65,8 @@ public class ClayDataSetDisplayViewSerializerImpl
 				LanguageUtil.get(
 					resourceBundle, clayDataSetDisplayView.getLabel())
 			).put(
+				"name", clayDataSetDisplayView.getName()
+			).put(
 				"thumbnail", clayDataSetDisplayView.getThumbnail()
 			);
 

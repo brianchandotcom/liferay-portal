@@ -47,6 +47,7 @@ import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
@@ -75,6 +76,17 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration archivesConfiguration = configurationContainer.getByName(
+			Dependency.ARCHIVES_CONFIGURATION);
+		Configuration defaultConfiguration = configurationContainer.getByName(
+			Dependency.DEFAULT_CONFIGURATION);
+
+		_configureConfigurationDefault(
+			archivesConfiguration, defaultConfiguration);
+
 		Convention convention = project.getConvention();
 
 		BasePluginConvention basePluginConvention = convention.getPlugin(
@@ -88,7 +100,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			project, liferayExtension);
 
 		_configureArtifacts(project);
-		_configureConfigurationDefault(project);
 		_configureTaskBuildLang(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
@@ -210,12 +221,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureConfigurationDefault(Project project) {
-		Configuration defaultConfiguration = GradleUtil.getConfiguration(
-			project, Dependency.DEFAULT_CONFIGURATION);
-
-		Configuration archivesConfiguration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
+	private void _configureConfigurationDefault(
+		Configuration archivesConfiguration,
+		Configuration defaultConfiguration) {
 
 		defaultConfiguration.extendsFrom(archivesConfiguration);
 	}

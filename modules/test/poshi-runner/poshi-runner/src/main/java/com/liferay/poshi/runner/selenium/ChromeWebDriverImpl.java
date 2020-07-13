@@ -132,7 +132,9 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 		try {
 			return super.getWebElement(locator, timeout);
 		}
-		catch (ElementNotFoundPoshiRunnerException elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException
+					elementNotFoundPoshiRunnerException) {
+
 			_refreshFrameWebElements();
 
 			throw elementNotFoundPoshiRunnerException;

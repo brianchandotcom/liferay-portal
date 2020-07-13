@@ -1019,14 +1019,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object1 = getWebElement(argument1);
 		}
-		catch (ElementNotFoundPoshiRunnerException elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException
+					elementNotFoundPoshiRunnerException) {
+
 			object1 = argument1;
 		}
 
 		try {
 			object2 = getWebElement(argument2);
 		}
-		catch (ElementNotFoundPoshiRunnerException elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException
+					elementNotFoundPoshiRunnerException) {
+
 			object2 = argument2;
 		}
 

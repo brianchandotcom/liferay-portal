@@ -96,6 +96,7 @@ export default (state, action) => {
 					state.steps.length - 1,
 				]),
 			};
+
 			workflowSteps.splice(stepIndex, 0, currentStep);
 			workflowSteps[
 				action.stepIndex

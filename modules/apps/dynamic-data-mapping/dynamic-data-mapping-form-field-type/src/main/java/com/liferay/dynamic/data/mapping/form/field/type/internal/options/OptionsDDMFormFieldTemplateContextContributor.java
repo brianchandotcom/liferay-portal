@@ -67,8 +67,7 @@ public class OptionsDDMFormFieldTemplateContextContributor
 
 		OptionsDDMFormFieldContextHelper optionsDDMFormFieldContextHelper =
 			new OptionsDDMFormFieldContextHelper(
-				jsonFactory, ddmFormField,
-				ddmFormFieldRenderingContext.getValue());
+				jsonFactory, ddmFormField, ddmFormFieldRenderingContext);
 
 		return optionsDDMFormFieldContextHelper.getValue();
 	}

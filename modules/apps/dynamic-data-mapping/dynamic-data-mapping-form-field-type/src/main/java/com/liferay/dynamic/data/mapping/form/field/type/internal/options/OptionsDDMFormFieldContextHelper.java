@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.options;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -42,21 +43,30 @@ import java.util.ResourceBundle;
 public class OptionsDDMFormFieldContextHelper {
 
 	public OptionsDDMFormFieldContextHelper(
-		JSONFactory jsonFactory, DDMFormField ddmFormField, String value) {
+		JSONFactory jsonFactory, DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		_jsonFactory = jsonFactory;
-		_value = value;
 
 		_ddmForm = ddmFormField.getDDMForm();
+
+		_ddmFormFieldRenderingContext = ddmFormFieldRenderingContext;
+
+		_value = ddmFormFieldRenderingContext.getValue();
 	}
 
 	public Map<String, Object> getValue() {
 		Map<String, Object> localizedValue = new HashMap<>();
 
 		if (Validator.isNull(_value)) {
+			Locale locale = _ddmFormFieldRenderingContext.getLocale();
+
+			if (locale == null) {
+				locale = LocaleUtil.getSiteDefault();
+			}
+
 			localizedValue.put(
-				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				createDefaultOptions());
+				LocaleUtil.toLanguageId(locale), createDefaultOptions());
 
 			return localizedValue;
 		}
@@ -135,6 +145,7 @@ public class OptionsDDMFormFieldContextHelper {
 		OptionsDDMFormFieldContextHelper.class);
 
 	private final DDMForm _ddmForm;
+	private final DDMFormFieldRenderingContext _ddmFormFieldRenderingContext;
 	private final JSONFactory _jsonFactory;
 	private final String _value;
 

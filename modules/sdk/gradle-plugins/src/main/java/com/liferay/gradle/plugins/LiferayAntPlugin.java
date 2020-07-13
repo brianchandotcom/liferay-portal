@@ -31,6 +31,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.MavenPlugin;
 
 /**
@@ -46,8 +47,14 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		antBuilder.importBuild("build.xml", _antTaskNamer);
 
-		_configureArchivesBaseName(project, antBuilder);
-		_configureArtifacts(project, antBuilder);
+		Convention convention = project.getConvention();
+
+		BasePluginConvention basePluginConvention = convention.getPlugin(
+			BasePluginConvention.class);
+
+		_configureConventionBasePlugin(antBuilder, basePluginConvention);
+
+		_configureArtifacts(project, antBuilder, basePluginConvention);
 		_configureVersion(project, antBuilder);
 
 		_configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
@@ -65,11 +72,8 @@ public class LiferayAntPlugin implements Plugin<Project> {
 		task.dependsOn(antTaskName);
 	}
 
-	private void _configureArchivesBaseName(
-		Project project, AntBuilder antBuilder) {
-
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
+	private void _configureConventionBasePlugin(
+		AntBuilder antBuilder, BasePluginConvention basePluginConvention) {
 
 		basePluginConvention.setArchivesBaseName(
 			String.valueOf(antBuilder.getProperty("plugin.name")));
@@ -77,7 +81,8 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private void _configureArtifacts(
-		final Project project, AntBuilder antBuilder) {
+		final Project project, AntBuilder antBuilder,
+		final BasePluginConvention basePluginConvention) {
 
 		ArtifactHandler artifacts = project.getArtifacts();
 
@@ -96,7 +101,7 @@ public class LiferayAntPlugin implements Plugin<Project> {
 					configurablePublishArtifact.builtBy(warTask);
 
 					configurablePublishArtifact.setName(
-						GradleUtil.getArchivesBaseName(project));
+						basePluginConvention.getArchivesBaseName());
 				}
 
 			});

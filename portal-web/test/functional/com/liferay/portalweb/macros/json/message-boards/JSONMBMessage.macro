@@ -38,6 +38,12 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		var serviceContext = JSONServiceContextUtil.setServiceContext(
+			addGroupPermissions = "true",
+			addGuestPermissions = "true",
+			assetTagNames = "${assetTagNames}",
+			workflowAction = "${workflowAction}");
+
 		if (!(isSet(categoryId))) {
 			var categoryId = "0";
 		}
@@ -61,7 +67,8 @@ definition {
 			-d inputStreamOVPs= \
 			-d anonymous=false \
 			-d priority=0 \
-			-d allowPingbacks=true
+			-d allowPingbacks=true \
+			-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Message' with the following info using JSONWS:");

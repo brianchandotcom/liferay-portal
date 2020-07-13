@@ -14,7 +14,14 @@
 
 import React from 'react';
 
-export const StyleBookContext = React.createContext({});
+export const StyleBookContext = React.createContext({
+	namespace: null,
+	publishURL: null,
+	saveDraftURL: null,
+	setTokenValues: () => {},
+	tokenCategories: [],
+	tokenValues: {},
+});
 
 export function StyleBookContextProvider({children, value}) {
 	return (

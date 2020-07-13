@@ -30,11 +30,12 @@ public abstract class BaseTableClayDataSetDisplayView
 	public abstract ClayTableSchema getClayTableSchema();
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CONTENT_RENDERER_TABLE;
+		return ClayDataSetConstants.TABLE;
 	}
 
 	public String getLabel() {
-		return ClayDataSetConstants.CONTENT_RENDERER_TABLE;
+		return ClayDataSetConstants.TABLE;
+	}
 	}
 
 	public ResourceBundle getResourceBundle(Locale locale) {
@@ -43,7 +44,7 @@ public abstract class BaseTableClayDataSetDisplayView
 	}
 
 	public String getThumbnail() {
-		return ClayDataSetConstants.CONTENT_RENDERER_TABLE;
+		return ClayDataSetConstants.TABLE;
 	}
 
 }

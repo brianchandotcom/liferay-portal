@@ -230,8 +230,9 @@ public class DDMStorageAdapterTest {
 				DDMStorageAdapterDeleteRequest ddmStorageAdapterDeleteRequest)
 			throws StorageException {
 
-			DDMStorageAdapterDeleteResponse.Builder builder =
-				DDMStorageAdapterDeleteResponse.Builder.newBuilder();
+			DDMStorageAdapterDeleteResponse.Builder
+				ddmStorageAdapterDeleteResponseBuilder =
+					DDMStorageAdapterDeleteResponse.Builder.newBuilder();
 
 			if (Objects.equals(
 					_DEFAULT_PRIMARY_KEY,
@@ -240,7 +241,7 @@ public class DDMStorageAdapterTest {
 				_ddmFormValues = null;
 			}
 
-			return builder.build();
+			return ddmStorageAdapterDeleteResponseBuilder.build();
 		}
 
 		@Override
@@ -252,11 +253,12 @@ public class DDMStorageAdapterTest {
 					_DEFAULT_PRIMARY_KEY,
 					ddmStorageAdapterGetRequest.getPrimaryKey())) {
 
-				DDMStorageAdapterGetResponse.Builder builder =
-					DDMStorageAdapterGetResponse.Builder.newBuilder(
-						_ddmFormValues);
+				DDMStorageAdapterGetResponse.Builder
+					ddmStorageAdapterGetResponseBuilder =
+						DDMStorageAdapterGetResponse.Builder.newBuilder(
+							_ddmFormValues);
 
-				return builder.build();
+				return ddmStorageAdapterGetResponseBuilder.build();
 			}
 
 			return null;
@@ -267,13 +269,14 @@ public class DDMStorageAdapterTest {
 				DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest)
 			throws StorageException {
 
-			DDMStorageAdapterSaveResponse.Builder builder =
-				DDMStorageAdapterSaveResponse.Builder.newBuilder(
-					_DEFAULT_PRIMARY_KEY);
+			DDMStorageAdapterSaveResponse.Builder
+				ddmStorageAdapterSaveResponseBuilder =
+					DDMStorageAdapterSaveResponse.Builder.newBuilder(
+						_DEFAULT_PRIMARY_KEY);
 
 			_ddmFormValues = ddmStorageAdapterSaveRequest.getDDMFormValues();
 
-			return builder.build();
+			return ddmStorageAdapterSaveResponseBuilder.build();
 		}
 
 		private static final long _DEFAULT_PRIMARY_KEY =

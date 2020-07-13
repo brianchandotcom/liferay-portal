@@ -367,7 +367,11 @@ definition {
 			locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_REVOKE_BUTTON",
 			value1 = "Revoke");
 
-		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to revoke the authorization?");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" != "safari") {
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to revoke the authorization?");
+		}
 
 		Alert.viewSuccessMessage();
 

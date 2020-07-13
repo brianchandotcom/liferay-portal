@@ -1,16 +1,16 @@
 {
 	"dependencies": {
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		"clay-button": "2.18.0",
 		"clay-icon": "2.18.0",
 #end
 		"metal-component": "2.16.8",
-		"metal-soy": "2.16.8"#if (${liferayVersion.startsWith("7.2")}),
+		"metal-soy": "2.16.8"#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}),
 		"metal-state": "2.16.8"
 #end
 	},
 	"devDependencies": {
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		"@babel/cli": "^7.2.3",
 		"@babel/core": "^7.6.0",
 		"@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -32,12 +32,12 @@
 		"rimraf": "^2.6.2"
 #end
 	},
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	"main": "./",
 #end
 	"name": "dynamic-data-${artifactId}-form-field",
 	"scripts": {
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		"build": "npm run build-soy && npm run build-js && liferay-npm-bundler",
 		"build-js": "babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources",
 		"build-soy": "metalsoy --externalMsgFormat \"Liferay.Language.get(‘\\$2’)\" --soyDeps \"./node_modules/clay-*/src/**/*.soy\" \"./node_modules/com.liferay.dynamic.data.mapping.form.field.type/META-INF/resources/+(FieldBase|components)/**/*.soy\""

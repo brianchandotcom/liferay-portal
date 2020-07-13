@@ -1,4 +1,4 @@
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 import 'dynamic-data-mapping-form-field-type/FieldBase/FieldBase.es';
 import './${artifactId}Register.soy.js';
 import templates from './${artifactId}.soy.js';
@@ -7,7 +7,7 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-#if (!${liferayVersion.startsWith("7.2")})
+#if (!(${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}))
 import templates from './${artifactId}.soy';
 
 /**

@@ -3,12 +3,12 @@ package ${package}.form.field;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 #end
 
 import org.osgi.service.component.annotations.Component;
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 import org.osgi.service.component.annotations.Reference;
 #end
 
@@ -20,11 +20,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 #if (${liferayVersion.startsWith("7.0")})
 		"ddm.form.field.type.display.order:Integer=9",
-#elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		"ddm.form.field.type.description=${artifactId}-description",
 #if (${liferayVersion.startsWith("7.1")})
 		"ddm.form.field.type.display.order:Integer=10",
-#elseif (${liferayVersion.startsWith("7.2")})
+#elseif (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		"ddm.form.field.type.display.order:Integer=13",
 #end
 		"ddm.form.field.type.group=customized",
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = DDMFormFieldType.class
 )
 public class ${className}DDMFormFieldType extends BaseDDMFormFieldType {
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 
 	@Override
 	public String getModuleName() {
@@ -53,7 +53,7 @@ public class ${className}DDMFormFieldType extends BaseDDMFormFieldType {
 	public String getName() {
 		return "${formFieldTypeName}";
 	}
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 
 	@Override
 	public boolean isCustomDDMFormFieldType() {

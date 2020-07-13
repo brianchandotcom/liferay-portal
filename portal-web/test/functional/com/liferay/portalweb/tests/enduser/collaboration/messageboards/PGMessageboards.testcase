@@ -416,9 +416,8 @@ definition {
 
 	@priority = "5"
 	test CancelEditOnThread {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Message Boards Thread Body",
 			threadSubject = "Message Boards Thread Subject");
 
@@ -473,9 +472,8 @@ definition {
 	test DeleteMBThread {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -488,9 +486,10 @@ definition {
 	test EditMBCategory {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -505,7 +504,8 @@ definition {
 	test EditMBThreadSubjectAndBody {
 		property test.name.skip.portal.instance = "PGMessageboards#EditMBThreadSubjectAndBody";
 
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -903,17 +903,13 @@ definition {
 	test ViewVisualStateOfReadMBThread {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		for (var num : list "1,2") {
+			Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject 1");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject 2");
+			MessageboardsThread.addPG(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject ${num}");
+		}
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

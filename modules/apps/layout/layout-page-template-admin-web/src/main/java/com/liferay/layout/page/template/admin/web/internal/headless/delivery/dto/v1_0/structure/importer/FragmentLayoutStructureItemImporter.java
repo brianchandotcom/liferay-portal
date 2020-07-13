@@ -171,7 +171,8 @@ public class FragmentLayoutStructureItemImporter
 		JSONObject fragmentEntryProcessorValuesJSONObject = JSONUtil.put(
 			"com.liferay.fragment.entry.processor.background.image." +
 				"BackgroundImageFragmentEntryProcessor",
-			JSONFactoryUtil.createJSONObject());
+			_toBackgroundImageFragmentEntryProcessorJSONObject(
+				(List<Object>)definitionMap.get("fragmentFields")));
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			_toEditableFragmentEntryProcessorJSONObject(
@@ -612,6 +613,56 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		return html;
+	}
+
+	private JSONObject _toBackgroundImageFragmentEntryProcessorJSONObject(
+		List<Object> fragmentFields) {
+
+		JSONObject backgroundImageFragmentEntryProcessorValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		for (Object fragmentField : fragmentFields) {
+			Map<String, Object> fragmentFieldMap =
+				(Map<String, Object>)fragmentField;
+
+			Map<String, Object> fragmentFieldValueMap =
+				(Map<String, Object>)fragmentFieldMap.get("value");
+
+			Map<String, Object> backgroundFragmentImageMap =
+				(Map<String, Object>)fragmentFieldValueMap.get(
+					"backgroundFragmentImage");
+
+			if (backgroundFragmentImageMap == null) {
+				backgroundFragmentImageMap =
+					(Map<String, Object>)fragmentFieldValueMap.get(
+						"backgroundImage");
+			}
+
+			if (backgroundFragmentImageMap == null) {
+				continue;
+			}
+
+			Map<String, Object> urlMap =
+				(Map<String, Object>)backgroundFragmentImageMap.get("url");
+
+			JSONObject fragmentFieldValueJSONObject =
+				_createBaseFragmentFieldJSONObject(urlMap);
+
+			Map<String, Object> titleMap =
+				(Map<String, Object>)backgroundFragmentImageMap.get("title");
+
+			if (titleMap != null) {
+				fragmentFieldValueJSONObject.put(
+					"config",
+					JSONUtil.put("imageTitle", titleMap.get("value")));
+			}
+
+			backgroundImageFragmentEntryProcessorValuesJSONObject.put(
+				(String)fragmentFieldMap.get("id"),
+				fragmentFieldValueJSONObject);
+		}
+
+		return backgroundImageFragmentEntryProcessorValuesJSONObject;
 	}
 
 	private JSONObject _toEditableFragmentEntryProcessorJSONObject(

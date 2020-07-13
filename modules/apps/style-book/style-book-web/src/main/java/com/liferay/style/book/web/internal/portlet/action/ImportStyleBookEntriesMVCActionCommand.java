@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.portlet.zip.ImportHelper;
+import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
 import com.liferay.style.book.web.internal.portlet.zip.StyleBookImporterResultEntry;
 
 import java.io.File;
@@ -82,7 +82,7 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 		try {
 			List<StyleBookImporterResultEntry> styleBookImporterResultEntries =
-				_importHelper.importStyleBookEntries(
+				_styleBookEntryZipProcessor.importStyleBookEntries(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 					file, overwrite);
 
@@ -102,9 +102,9 @@ public class ImportStyleBookEntriesMVCActionCommand
 	}
 
 	@Reference
-	private ImportHelper _importHelper;
+	private Portal _portal;
 
 	@Reference
-	private Portal _portal;
+	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 
 }

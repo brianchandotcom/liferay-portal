@@ -441,8 +441,8 @@ definition {
 	test PublishEditedContentPage {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "false";
-		property portal.acceptance = "false";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		task ("Publish the site to live") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");

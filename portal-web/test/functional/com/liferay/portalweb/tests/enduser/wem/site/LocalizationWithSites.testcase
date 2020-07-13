@@ -75,7 +75,7 @@ definition {
 
 	@priority = "5"
 	test AvailableSiteLocalesSubsetNotAllowed {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithSites#AvailableSiteLocalesSubsetOfAvailablePortalLocales";
 		property testray.component.names = "Site Localization";
 

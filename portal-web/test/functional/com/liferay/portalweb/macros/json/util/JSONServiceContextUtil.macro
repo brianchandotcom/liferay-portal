@@ -47,6 +47,21 @@ definition {
 		return "${JSON}";
 	}
 
+	macro _addGroupPermissions {
+		Variables.assertDefined(parameterList = "${JSON},${addGroupPermissions}");
+
+		if (!(("${addGroupPermissions}" == "true") || ("${addGroupPermissions}" == "false"))) {
+			fail("Invalid addGroupPermissions: '${addGroupPermissions}' specified. Allowed values are 'true' or 'false'.");
+		}
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "addGroupPermissions",
+			value = "${addGroupPermissions}");
+
+		return "${JSON}";
+	}
+
 	macro _addGuestPermissions {
 		Variables.assertDefined(parameterList = "${JSON},${addGuestPermissions}");
 
@@ -96,6 +111,12 @@ definition {
 		if (isSet(assetTagNames)) {
 			var serviceContext = JSONServiceContextUtil._addAssetTagNames(
 				assetTagNames = "${assetTagNames}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(addGroupPermissions)) {
+			var serviceContext = JSONServiceContextUtil._addGroupPermissions(
+				addGroupPermissions = "${addGroupPermissions}",
 				JSON = "${serviceContext}");
 		}
 

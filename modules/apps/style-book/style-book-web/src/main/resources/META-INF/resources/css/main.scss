@@ -27,33 +27,6 @@ $toolbarDesktopHeight: 56px;
 		width: 320px;
 	}
 
-	&__sidebar-content {
-		height: calc(
-			100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}
-		);
-		overflow-y: auto;
-	}
-
-	&__toolbar {
-		align-items: center;
-		border-bottom: 1px solid $gray-300;
-		display: flex;
-		flex-direction: row;
-		height: $toolbarDesktopHeight;
-		justify-content: space-between;
-	}
-
-	&__status-text {
-		color: $success;
-		font-size: 0.75rem;
-		font-weight: 600;
-	}
-
-	&__status-icon {
-		color: $success;
-		font-size: 0.75rem;
-	}
-
 	&__sidebar-collapse {
 		cursor: pointer;
 
@@ -78,5 +51,32 @@ $toolbarDesktopHeight: 56px;
 		.sheet-subtitle {
 			line-height: inherit;
 		}
+	}
+
+	&__sidebar-content {
+		height: calc(
+			100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}
+		);
+		overflow-y: auto;
+	}
+
+	&__status-text {
+		color: $success;
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
+
+	&__status-icon {
+		color: $success;
+		font-size: 0.75rem;
+	}
+
+	&__toolbar {
+		align-items: center;
+		border-bottom: 1px solid $gray-300;
+		display: flex;
+		flex-direction: row;
+		height: $toolbarDesktopHeight;
+		justify-content: space-between;
 	}
 }

@@ -258,7 +258,9 @@ definition {
 			entryTitle = "Document_1.jpg",
 			fieldName = "File URL",
 			navItem = "Documents and Media",
-			panel = "Styles");
+			padding = "true",
+			panel = "Styles",
+			top = "2");
 
 		PageEditor.clickPublish();
 

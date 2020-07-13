@@ -59,7 +59,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<div class="translate-body-form">
+		<div class="sheet translate-body-form">
 			<clay:row>
 				<clay:col
 					md="6"

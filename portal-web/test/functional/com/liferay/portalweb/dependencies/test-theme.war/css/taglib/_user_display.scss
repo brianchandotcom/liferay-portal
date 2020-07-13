@@ -1,0 +1,19 @@
+.taglib-user-display {
+	a .user-name {
+		text-decoration: underline;
+	}
+
+	.avatar {
+		background: no-repeat center;
+		background-size: 60px;
+
+		&.author:after {
+			background: transparentize(#32A8E6, 0.5);
+		}
+	}
+
+	.user-name {
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+}

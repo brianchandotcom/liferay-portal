@@ -1,0 +1,59 @@
+.dialog-iframe-popup:not(.article-preview) {
+	#main-content, #wrapper {
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		padding: $dialog-iframe-padding;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		@include prefixer(overflow-scrolling, touch, 'webkit');
+	}
+}
+
+.modal {
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	position: fixed;
+}
+
+.modal-body {
+	overflow: auto;
+
+	&.dialog-iframe-bd {
+		overflow: hidden;
+		padding: 0;
+	}
+}
+
+.modal-dialog {
+	@include sm {
+		max-width: none;
+	}
+
+	&.modal-dialog-sm {
+		max-width: $modal-md;
+	}
+}
+
+.modal-hidden {
+	display: none;
+}
+
+.modal-open .modal {
+	overflow: hidden;
+}
+
+.portal-popup {
+	.columns-max > .portlet-layout.row {
+		margin-left: 0;
+		margin-right: 0;
+
+		> .portlet-column {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}

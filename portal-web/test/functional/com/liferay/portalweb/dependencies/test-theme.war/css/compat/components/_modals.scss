@@ -1,0 +1,21 @@
+@if $compat-modals {
+	.modal-header {
+		.btn-toolbar {
+			@extend .order-2;
+		}
+
+		.btn-toolbar + .modal-title {
+			@extend .order-1;
+		}
+	}
+
+	.modal-footer > .btn-toolbar {
+		& > :not(:first-child) {
+			margin-left: .25rem;
+		}
+
+		& > :not(:last-child) {
+			margin-right: .25rem;
+		}
+	}
+}

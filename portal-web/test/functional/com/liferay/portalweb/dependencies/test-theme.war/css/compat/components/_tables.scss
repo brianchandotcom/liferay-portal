@@ -1,0 +1,70 @@
+@if $compat-tables {
+	div.splitter,
+	.table.table-autofit .splitter td,
+	.table.table-autofit .splitter th {
+		background-color: $table-divider-bg;
+		color: $table-divider-color;
+		font-size: $table-divider-font-size;
+		font-weight: $table-divider-font-weight;
+		padding: $table-divider-padding;
+		text-transform: $table-divider-text-transform;
+	}
+
+	.table .splitter {
+		box-shadow: none;
+		padding: 0;
+	}
+
+	.table > thead > tr,
+	.table > tbody > tr,
+	.table > tfoot > tr {
+		&.active > th,
+		&.active > td,
+		th.active,
+		td.active {
+			background-color: $table-active-bg;
+		}
+
+		&.success > th,
+		&.success > td,
+		th.success,
+		td.success {
+			background-color: map-get($theme-colors, success);
+		}
+
+		&.info > th,
+		&.info > td,
+		th.info,
+		td.info {
+			background-color: map-get($theme-colors, info);
+		}
+
+		&.warning > th,
+		&.warning > td,
+		th.warning,
+		td.warning {
+			background-color: map-get($theme-colors, warning);
+		}
+
+		&.danger > th,
+		&.danger > td,
+		th.danger,
+		td.danger {
+			background-color: map-get($theme-colors, danger);
+		}
+	}
+
+	.table-cell-content {
+		@extend %table-cell-expand;
+	}
+
+	.table-cell-field {
+		@extend %table-cell-contract;
+	}
+
+	.table-autofit {
+		.table-cell-content {
+			width: auto;
+		}
+	}
+}

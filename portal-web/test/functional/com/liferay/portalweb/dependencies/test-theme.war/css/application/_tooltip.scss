@@ -1,0 +1,13 @@
+.lfr-portal-tooltip {
+	display: inline-block;
+
+	&, a {
+		-webkit-touch-callout: none;
+
+		@include user-select(none);
+	}
+}
+
+.tooltip {
+	max-width: 200px;
+}

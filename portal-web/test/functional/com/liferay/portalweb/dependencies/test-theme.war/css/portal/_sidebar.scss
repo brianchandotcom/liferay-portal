@@ -1,0 +1,82 @@
+.sidebar-sm {
+	font-size: 0.875rem;
+
+	.sheet-subtitle {
+		 font-size: 0.75rem;
+		 margin-bottom: 1rem;
+	}
+
+	.form-group {
+		 margin-bottom: 1rem;
+	}
+
+	.form-control {
+		border-radius: .1875rem;
+		font-size: .875rem;
+		height: 2rem;
+		line-height: 1.5;
+		min-height: auto;
+		padding: .25rem .75rem;
+
+		&.form-control-tag-group {
+			height: auto;
+
+			.form-control-inset {
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+
+			.label {
+				margin-bottom: 0;
+				margin-top: 0;
+				padding-bottom: 0;
+				padding-right: 0;
+				padding-top: 0;
+			}
+		}
+
+		&[type=file] {
+			padding: 0;
+		}
+	}
+
+	select.form-control:not([size]) {
+		height: 2rem;
+	}
+
+	.article-content-description .input-localized.input-localized-editor .input-group-item .wrapper .form-control {
+		min-height: auto;
+		padding: .285rem .75rem;
+	}
+
+	.btn {
+		border-radius: .1875rem;
+		font-size: .875rem;
+		line-height: 1.15;
+		padding: .4375rem .75rem;
+
+		&.close {
+			padding: .4375rem;
+		}
+	}
+
+	.btn-monospaced, .btn-monospaced.btn-sm {
+		height: 2rem;
+		padding: 0.1875rem 0;
+		width: 2rem;
+	}
+
+	.input-group-item {
+		.input-group-text {
+			font-size: 0.875rem;
+			height: 2rem;
+			min-width: 2rem;
+			padding-left: 0.75rem;
+			padding-right: 0.75rem;
+		}
+
+		.btn .btn-section {
+			font-size: 0.5625rem;
+		}
+	}
+}

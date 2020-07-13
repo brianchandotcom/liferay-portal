@@ -1,0 +1,23 @@
+.lfr-panel-page {
+	.panel-page-content {
+		border-left-color: #CCC;
+	}
+
+	.lfr-add-content {
+		h2 {
+			border-color: #CCC;
+
+			span {
+				background: #EFEFEF;
+			}
+		}
+
+		.lfr-content-category h2 {
+			border-bottom-color: #CCC;
+
+			span {
+				background: none;
+			}
+		}
+	}
+}

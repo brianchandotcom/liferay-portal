@@ -1,0 +1,27 @@
+@if $compat-labels {
+	.label {
+		&.approved {
+			@extend .label-success;
+		}
+
+		&.denied {
+			@extend .label-danger;
+		}
+
+		&.draft {
+			@extend .label-secondary;
+		}
+
+		&.expired {
+			@extend .label-warning;
+		}
+
+		&.pending {
+			@extend .label-info;
+		}
+
+		&.scheduled {
+			@extend .label-primary;
+		}
+	}
+}

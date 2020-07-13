@@ -1,0 +1,137 @@
+@if $compat-buttons {
+	.btn-default {
+		@include button-variant(theme-color(secondary), theme-color(secondary));
+
+		@include clay-button-variant(map-get($btn-palette, secondary));
+	}
+
+	.btn-primary.btn-default {
+		@include button-variant(theme-color(primary), theme-color(primary));
+
+		@include clay-button-variant(map-get($btn-palette, primary));
+	}
+
+	.btn-success.btn-default {
+		@include button-variant(theme-color(success), theme-color(success));
+
+		@include clay-button-variant(map-get($btn-palette, success));
+	}
+
+	.btn-info.btn-default {
+		@include button-variant(theme-color(info), theme-color(info));
+
+		@include clay-button-variant(map-get($btn-palette, info));
+	}
+
+	.btn-warning.btn-default {
+		@include button-variant(theme-color(warning), theme-color(warning));
+
+		@include clay-button-variant(map-get($btn-palette, warning));
+	}
+
+	.btn-danger.btn-default {
+		@include button-variant(theme-color(danger), theme-color(danger));
+
+		@include clay-button-variant(map-get($btn-palette, danger));
+	}
+
+	a.btn-monospaced, span.btn-monospaced {
+		line-height: inherit;
+
+		.lexicon-icon {
+			font-size: 1rem;
+		}
+	}
+
+	.btn-unstyled.text-secondary {
+		font-size: 1rem;
+	}
+
+	.btn-link.btn-default {
+		background-color: transparent;
+		border-color: transparent;
+
+		@include border-radius(1px);
+
+		color: $link-color;
+		font-weight: $font-weight-normal;
+
+		@include hover {
+			background-color: transparent;
+			border-color: transparent;
+			color: $link-hover-color;
+			text-decoration: $link-hover-decoration;
+		}
+
+		&:focus, &.focus {
+			border-color: transparent;
+			box-shadow: $btn-focus-box-shadow;
+			text-decoration: $link-decoration;
+		}
+
+		&:disabled, &.disabled {
+			color: $btn-link-disabled-color;
+		}
+
+		&:active, &.active, &:not([disabled]):not(.disabled):active {
+			background-color: transparent;
+			border-color: transparent;
+			box-shadow: none;
+			color: $link-color;
+		}
+	}
+
+	.btn-link.btn-default {
+		&.btn-cancel, &.close-modal {
+			@include border-radius(0.25rem);
+
+			@include button-variant(theme-color(secondary), theme-color(secondary));
+
+			@include clay-button-variant(map-get($btn-palette, secondary));
+
+			font-weight: 600;
+
+			@include hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.btn-xs {
+		@extend .btn-sm;
+
+		.icon-monospaced {
+			height: 1rem;
+			line-height: 18px;
+			width: 1rem;
+		}
+	}
+
+	.btn-bottom-right {
+		bottom: 30px;
+		position: fixed;
+		right: 20px;
+	}
+
+	.btn-action, .btn-action-secondary {
+		z-index: 950;
+	}
+
+	.btn-action, .btn-action-secondary > .btn {
+		@include monospace(2.5rem);
+
+		overflow: hidden;
+		padding: 0;
+		text-align: center;
+		white-space: normal;
+		word-wrap: break-word;
+	}
+
+	.button-holder {
+		display: flex;
+
+		&.btn-group {
+			display: inline-flex;
+		}
+	}
+}

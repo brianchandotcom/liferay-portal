@@ -1,0 +1,245 @@
+////
+/// @group Labels
+////
+
+/// A mixin for creating `.label` size variants.
+/// @deprecated use `clay-label-variant` instead
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// border-width: {Number | String | List | Null}, // Default: $label-border-width
+/// font-size: {Number | String | Null},
+/// height: {Number | String | Null},
+/// line-height: {Number | String | Null},
+/// margin-bottom: {Number | String | Null},
+/// margin-left: {Number | String | Null},
+/// margin-right: {Number | String | Null},
+/// margin-top: {Number | String | Null},
+/// padding-x: {Number | String | Null},
+/// padding-y: {Number | String | Null},
+/// text-transform: {String | List | Null},
+/// item-spacer-x: {Number | String | Null},
+/// item-spacer-y: {Number | String | Null},
+/// lexicon-icon-height: {Number | String | Null}, // Default: map-get($map, lexicon-icon-width)
+/// lexicon-icon-margin-top: {Number | String | Null},
+/// lexicon-icon-width: {Number | String | Null},
+/// sticker-border-radius: {Number | String | List | Null},
+/// sticker-size: {Number | String | Null},
+/// close: {Map | Null}, // Pass parameters to `clay-close` mixin
+
+@mixin clay-label-size($map) {
+	$border-width: setter(map-get($map, border-width), $label-border-width);
+	$font-size: map-get($map, font-size);
+	$height: map-get($map, height);
+	$line-height: map-get($map, line-height);
+	$margin-bottom: map-get($map, margin-bottom);
+	$margin-left: map-get($map, margin-left);
+	$margin-right: map-get($map, margin-right);
+	$margin-top: map-get($map, margin-top);
+	$padding-x: map-get($map, padding-x);
+	$padding-y: map-get($map, padding-y);
+	$text-transform: map-get($map, text-transform);
+
+	$item-spacer-x: map-get($map, item-spacer-x);
+	$item-spacer-y: map-get($map, item-spacer-y);
+
+	$lexicon-icon-height: setter(map-get($map, lexicon-icon-height), map-get($map, lexicon-icon-width));
+	$lexicon-icon-margin-top: map-get($map, lexicon-icon-margin-top);
+	$lexicon-icon-width: map-get($map, lexicon-icon-width);
+
+	$sticker-border-radius: map-get($map, sticker-border-radius);
+	$sticker-size: map-get($map, sticker-size);
+
+	$close: setter(map-get($map, close), ());
+
+	border-width: $border-width;
+	font-size: $font-size;
+	height: auto;
+	line-height: $line-height;
+	margin-bottom: $margin-bottom;
+	margin-left: $margin-left;
+	margin-right: $margin-right;
+	margin-top: $margin-top;
+	min-height: $height;
+	padding-bottom: $padding-y;
+	padding-left: $padding-x;
+	padding-right: $padding-x;
+	padding-top: $padding-y;
+	text-transform: $text-transform;
+
+	// Inline Item in Labels are deprecated in v2.0.0-rc.11 use .label-item
+	// pattern instead
+	.inline-item {
+		a,
+		.btn-unstyled,
+		.close {
+			margin-top: $lexicon-icon-margin-top;
+		}
+
+		.lexicon-icon {
+			height: $lexicon-icon-height;
+			margin-top: $lexicon-icon-margin-top;
+			width: $lexicon-icon-width;
+		}
+	}
+
+	.label-item {
+		margin-bottom: $item-spacer-y;
+		margin-top: $item-spacer-y;
+
+		.lexicon-icon {
+			height: $lexicon-icon-height;
+			margin-top: $lexicon-icon-margin-top;
+			width: $lexicon-icon-width;
+		}
+	}
+
+	.label-item-before {
+		margin-right: $item-spacer-x;
+	}
+
+	.label-item-after {
+		margin-left: $item-spacer-x;
+	}
+
+	.close {
+		@include clay-close($close);
+	}
+
+	.sticker {
+		border-radius: $sticker-border-radius;
+		height: $sticker-size;
+		line-height: $sticker-size;
+		width: $sticker-size;
+	}
+
+	.sticker-overlay {
+		border-radius: $sticker-border-radius;
+	}
+}
+
+/// A mixin for creating `.label` color variants.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// bg: {Color | String | Null},
+/// border-color: {Color | String | List | Null},
+/// color: {Color | String | Null},
+/// outline: {Number | String | Null},
+/// text-decoration: {String | Null},
+/// transition: {String | List | Null},
+/// hover-bg: {Color | String | Null},
+/// hover-border-color: {Color | String | List | Null},
+/// hover-color: {Color | String | Null},
+/// hover-text-decoration: {String | Null},
+/// focus-bg: {Color | String | Null},
+/// focus-border-color: {Color | String | List | Null},
+/// focus-box-shadow: {String | List | Null},
+/// focus-color: {Color | String | Null},
+/// focus-outline: {Number | String | Null},
+/// focus-text-decoration: {String | Null},
+/// disabled-bg: {Color | String | Null},
+/// disabled-border-color: {Color | String | List | Null},
+/// disabled-box-shadow: {String | List | Null},
+/// disabled-color: {Color | String | Null},
+/// link-color: {Color | String | Null},
+/// link-text-decoration: {String | Null},
+/// link-hover-color: {Color | String | Null},
+/// link-hover-text-decoration: {String | Null},
+/// close: {Map | Null}, // Pass parameters to `clay-close` mixin
+
+@mixin clay-label-variant($map) {
+	$bg: map-get($map, bg);
+	$border-color: map-get($map, border-color);
+	$color: map-get($map, color);
+	$outline: map-get($map, outline);
+	$text-decoration: map-get($map, text-decoration);
+	$transition: map-get($map, transition);
+	$hover-bg: map-get($map, hover-bg);
+	$hover-border-color: map-get($map, hover-border-color);
+	$hover-color: map-get($map, hover-color);
+	$hover-text-decoration: map-get($map, hover-text-decoration);
+	$focus-bg: map-get($map, focus-bg);
+	$focus-border-color: map-get($map, focus-border-color);
+	$focus-box-shadow: map-get($map, focus-box-shadow);
+	$focus-color: map-get($map, focus-color);
+	$focus-outline: map-get($map, focus-outline);
+	$focus-text-decoration: map-get($map, focus-text-decoration);
+	$disabled-bg: map-get($map, disabled-bg);
+	$disabled-border-color: map-get($map, disabled-border-color);
+	$disabled-box-shadow: map-get($map, disabled-box-shadow);
+	$disabled-color: map-get($map, disabled-color);
+	$link-color: map-get($map, link-color);
+	$link-text-decoration: map-get($map, link-text-decoration);
+	$link-hover-color: map-get($map, link-hover-color);
+	$link-hover-text-decoration: map-get($map, link-hover-text-decoration);
+	$close: setter(map-get($map, close), ());
+
+	background-color: $bg;
+	border-color: $border-color;
+	color: $color;
+	outline: $outline;
+	text-decoration: $text-decoration;
+	transition: $transition;
+
+	@at-root {
+		a#{&},
+		button#{&} {
+			&:hover {
+				background-color: $hover-bg;
+				border-color: $hover-border-color;
+				color: $hover-color;
+				text-decoration: $hover-text-decoration;
+			}
+
+			&:focus {
+				background-color: $focus-bg;
+				border-color: $focus-border-color;
+				box-shadow: $focus-box-shadow;
+				color: $focus-color;
+				outline: $focus-outline;
+				text-decoration: $focus-text-decoration;
+			}
+		}
+	}
+
+	&[tabindex] {
+		&:hover {
+			background-color: $hover-bg;
+			border-color: $hover-border-color;
+			color: $hover-color;
+			text-decoration: $hover-text-decoration;
+		}
+
+		&:focus {
+			background-color: $focus-bg;
+			border-color: $focus-border-color;
+			box-shadow: $focus-box-shadow;
+			color: $focus-color;
+			outline: $focus-outline;
+			text-decoration: $focus-text-decoration;
+		}
+	}
+
+	&:disabled,
+	&.disabled {
+		background-color: $disabled-bg;
+		border-color: $disabled-border-color;
+		box-shadow: $disabled-box-shadow;
+		color: $disabled-color;
+	}
+
+	a,
+	.btn-unstyled {
+		color: $link-color;
+		text-decoration: $link-text-decoration;
+
+		&:hover,
+		&:focus {
+			color: $link-hover-color;
+			text-decoration: $link-hover-text-decoration;
+		}
+	}
+
+	.close {
+		@include clay-close($close);
+	}
+}

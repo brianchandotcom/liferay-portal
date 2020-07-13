@@ -1,0 +1,105 @@
+////
+/// @group Utilities
+////
+
+/// A mixin to create custom underline highlights or overwrite highlights on an element using the CSS pseudo element `::after`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// bg: {Color | String | Null},
+/// border-radius: {Number | String | List | Null},
+/// bottom: {Number | String | Null},
+/// content: {String | Null},
+/// display: {String | Null},
+/// height: {Number | String | Null},
+/// left: {Number | String | Null},
+/// opacity: {Number | String | Null},
+/// position: {String | Null},
+/// right: {Number | String | Null},
+/// transition: {String | List | Null},
+/// top: {Number | String | Null},
+/// hover-bg: {Color | String | Null},
+/// hover-height: {Number | String | Null},
+/// hover-opacity: {Number | String | Null},
+/// focus-bg: {Color | String | Null},
+/// focus-height: {Number | String | Null},
+/// focus-opacity: {Number | String | Null},
+/// active-bg: {Color | String | Null},
+/// active-height: {Number | String | Null},
+/// active-opacity: {Number | String | Null},
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-after-highlight-variant($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$bg: map-get($map, bg);
+	$border-radius: map-get($map, border-radius);
+	$bottom: map-get($map, bottom);
+	$content: map-get($map, content);
+	$display: map-get($map, display);
+	$height: map-get($map, height);
+	$left: map-get($map, left);
+	$opacity: map-get($map, opacity);
+	$position: map-get($map, position);
+	$right: map-get($map, right);
+	$transition: map-get($map, transition);
+	$top: map-get($map, top);
+
+	$hover-bg: map-get($map, hover-bg);
+	$hover-height: map-get($map, hover-height);
+	$hover-opacity: map-get($map, hover-opacity);
+
+	$focus-bg: map-get($map, focus-bg);
+	$focus-height: map-get($map, focus-height);
+	$focus-opacity: map-get($map, focus-opacity);
+
+	$active-bg: map-get($map, active-bg);
+	$active-height: map-get($map, active-height);
+	$active-opacity: map-get($map, active-opacity);
+
+	@if ($enabled) {
+		&::after {
+			background-color: $bg;
+			border-radius: $border-radius;
+			bottom: $bottom;
+			content: $content;
+			display: $display;
+			height: $height;
+			left: $left;
+			opacity: $opacity;
+			position: $position;
+			right: $right;
+			transition: $transition;
+			top: $top;
+		}
+
+		&:hover,
+		&.hover {
+			&::after {
+				background-color: $hover-bg;
+				height: $hover-height;
+				opacity: $hover-opacity;
+			}
+		}
+
+		&:focus,
+		&.focus {
+			&::after {
+				background-color: $focus-bg;
+				height: $focus-height;
+				opacity: $focus-opacity;
+			}
+		}
+
+		&:active,
+		&.active {
+			&::after {
+				background-color: $active-bg;
+				height: $active-height;
+				opacity: $active-opacity;
+			}
+		}
+	}
+}

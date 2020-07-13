@@ -1,0 +1,7 @@
+@if $compat-toolbar {
+	.toolbar {
+		display: flex;
+
+		@extend .justify-content-between;
+	}
+}

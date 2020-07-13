@@ -1,0 +1,29 @@
+.form-control-inline {
+	background-color: transparent;
+	font-size: 1.125rem;
+	font-weight: 700;
+
+	&:not(:hover) {
+		border-color: transparent;
+	}
+
+	&::-webkit-input-placeholder {
+		color: #A7A9BC;
+		font-style: italic;
+	}
+
+	&:-ms-input-placeholder {
+		color: #A7A9BC;
+		font-style: italic;
+	}
+
+	&::-ms-input-placeholder {
+		color: #A7A9BC;
+		font-style: italic;
+	}
+
+	&::placeholder {
+		color: #A7A9BC;
+		font-style: italic;
+	}
+}

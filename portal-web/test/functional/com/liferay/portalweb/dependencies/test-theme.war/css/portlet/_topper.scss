@@ -1,0 +1,186 @@
+%display-portlet-topper {
+	@include media-query(sm) {
+		opacity: 1;
+
+		@include transform(translateY(-97%));
+	}
+}
+
+%display-portlet-content-editable {
+	@include media-query(sm) {
+		border-color: $portlet-topper-border;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+
+.portlet {
+	margin-bottom: 10px;
+	position: relative;
+
+	> .portlet-content-editable {
+		border-color: transparent;
+	}
+
+	> .portlet-topper {
+		display: none;
+
+		@include media-query(sm) {
+			@include display(flex);
+
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+
+			@include transition(opacity 0.25s, transform 0.25s);
+
+			top: 0;
+		}
+	}
+
+	&.open {
+		> .portlet-content-editable {
+			@extend %display-portlet-content-editable;
+		}
+
+		> .portlet-topper {
+			@extend %display-portlet-topper;
+		}
+	}
+}
+
+.portlet {
+	&:hover, &.focus {
+		> .portlet-content-editable {
+			@extend %display-portlet-content-editable;
+		}
+
+		> .portlet-topper {
+			@extend %display-portlet-topper;
+		}
+	}
+}
+
+.portlet-content-editable {
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-content-border-radius;
+	border-style: solid;
+	border-width: $portlet-content-border-width;
+}
+
+/* ---------- Portlet topper ---------- */
+
+.portlet-actions {
+	float: right;
+}
+
+.portlet-name-text {
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.portlet-options {
+	display: inline-block;
+}
+
+.portlet-title-default {
+	box-flex: 1;
+	-moz-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	line-height: 2;
+
+	@include text-overflow;
+}
+
+.portlet-title-menu {
+	box-flex: 0;
+	-moz-flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	flex: 0 1 auto;
+
+	> span > a {
+		display: inline-block;
+		text-decoration: none;
+	}
+}
+
+.portlet-topper {
+	background-color: $portlet-topper-bg;
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-topper-border-radius;
+	border-style: solid;
+	border-width: $portlet-topper-border-width;
+	color: $portlet-topper-color;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 3px 12px 3px 24px;
+	position: relative;
+}
+
+.portlet-topper-toolbar {
+	margin: 0;
+	padding-left: 0;
+
+	> a, > span > a, .lfr-icon-menu > a {
+		color: $portlet-topper-link-color;
+	}
+
+	> a {
+		&:focus, &:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.lfr-configurator-visibility {
+	@include media-query(null, $screen-xs-max) {
+		opacity: 0.5;
+	}
+
+	@include media-query(sm) {
+		.portlet {
+			&:hover, &.focus, &.open {
+				.portlet-topper {
+					opacity: 0.5;
+				}
+			}
+		}
+
+		.portlet-content-editable {
+			opacity: 0.5;
+		}
+	}
+}
+
+/* ---------- Portlet controls in mobile ---------- */
+
+.controls-visible {
+	.portlet-content-editable {
+		@include media-query(null, $screen-xs-max) {
+			border-color: $portlet-topper-border;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+
+	.portlet-topper {
+		@include media-query(null, $screen-xs-max) {
+			display: -webkit-box;
+			display: -moz-box;
+			display: box;
+			display: -moz-flex;
+			display: -ms-flexbox;
+			display: flex;
+		}
+	}
+
+	.portlet-topper-toolbar {
+		display: block;
+	}
+}

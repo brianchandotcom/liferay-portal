@@ -1,0 +1,218 @@
+.pagination {
+	flex-wrap: wrap;
+	font-size: $pagination-font-size;
+	margin-bottom: $pagination-margin-bottom;
+}
+
+.pagination-bar {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+
+	@include clay-scale-component {
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.pagination {
+		@include clay-scale-component {
+			margin-top: $pagination-margin-top-mobile;
+		}
+	}
+}
+
+// Pagination Link
+
+.page-link {
+	@include clay-link($pagination-link);
+
+	&:hover {
+		@include clay-link($pagination-link-hover);
+	}
+
+	&:focus {
+		@include clay-link($pagination-link-focus);
+	}
+
+	&:active,
+	&.active {
+		@include clay-link($pagination-link-active);
+	}
+
+	&:disabled,
+	&.disabled {
+		@include clay-link($pagination-link-disabled);
+	}
+}
+
+.page-item.active,
+.page-item.show {
+	.page-link {
+		@include clay-link($pagination-link-active);
+	}
+}
+
+.page-item.disabled {
+	.page-link {
+		@include clay-link($pagination-link-disabled);
+	}
+}
+
+// Pagination Item
+
+.page-item {
+	@include clay-container($pagination-item);
+}
+
+.page-item:first-child .page-link,
+.page-link-first {
+	border-radius: $pagination-link-first-border-radius;
+}
+
+.page-item:last-child .page-link,
+.page-link-last {
+	border-radius: $pagination-link-last-border-radius;
+}
+
+// Pagination Items Per Page
+
+.pagination-items-per-page {
+	font-size: $pagination-items-per-page-font-size;
+	margin-bottom: $pagination-margin-bottom;
+
+	> a,
+	> button {
+		@include clay-link($pagination-items-per-page-link);
+
+		&:hover {
+			@include clay-link($pagination-items-per-page-link-hover);
+		}
+
+		&:focus {
+			@include clay-link($pagination-items-per-page-link-focus);
+		}
+
+		&:active,
+		&.active {
+			@include clay-link($pagination-items-per-page-link-active);
+		}
+
+		&:disabled,
+		&.disabled {
+			@include clay-link($pagination-items-per-page-link-disabled);
+		}
+	}
+
+	&.active,
+	&.show {
+		> a,
+		> button {
+			@include clay-link($pagination-items-per-page-link-active);
+		}
+	}
+
+	&.disabled {
+		> a,
+		> button {
+			@include clay-link($pagination-items-per-page-link-disabled);
+		}
+	}
+
+	+ .pagination-results {
+		@include clay-scale-component {
+			margin-left: auto;
+		}
+	}
+}
+
+.page-item .dropdown-menu,
+.pagination-items-per-page .dropdown-menu {
+	margin-bottom: $pagination-dropdown-menu-spacer-y;
+	margin-top: $pagination-dropdown-menu-spacer-y;
+}
+
+.pagination-results {
+	border-color: transparent;
+	border-style: solid;
+	border-width: $pagination-border-width;
+	color: $pagination-results-color;
+	font-size: $pagination-font-size;
+	line-height: $pagination-line-height;
+	margin-bottom: $pagination-margin-bottom;
+	margin-right: auto;
+	max-width: 100%;
+	padding: $pagination-padding-y $pagination-padding-x;
+	word-wrap: break-word;
+}
+
+// Pagination Sizes
+
+.pagination-sm {
+	.pagination-items-per-page {
+		@include border-radius($pagination-link-border-radius-sm);
+
+		.lexicon-icon {
+			margin-left: $pagination-items-per-page-lexicon-icon-margin-left-sm;
+			margin-right: $pagination-items-per-page-lexicon-icon-margin-top-sm;
+		}
+	}
+
+	.pagination-items-per-page > a,
+	.pagination-items-per-page > .btn-unstyled {
+		font-size: $pagination-font-size-sm;
+		height: $pagination-item-height-sm;
+		line-height: $pagination-line-height-sm;
+		padding: $pagination-padding-y-sm $pagination-padding-x;
+	}
+
+	.pagination-results {
+		font-size: $pagination-font-size-sm;
+		line-height: $pagination-line-height-sm;
+		padding: $pagination-padding-y-sm $pagination-padding-x;
+	}
+
+	.page-link {
+		font-size: $pagination-font-size-sm;
+		height: $pagination-item-height-sm;
+		line-height: $pagination-line-height-sm;
+
+		&.btn-unstyled {
+			padding: $pagination-padding-y-sm $pagination-padding-x-sm;
+		}
+	}
+}
+
+.pagination-lg {
+	.pagination-items-per-page {
+		@include border-radius($pagination-link-border-radius-lg);
+
+		.lexicon-icon {
+			margin-left: $pagination-items-per-page-lexicon-icon-margin-left-lg;
+			margin-right: $pagination-items-per-page-lexicon-icon-margin-top-lg;
+		}
+	}
+
+	.pagination-items-per-page > a,
+	.pagination-items-per-page > .btn-unstyled {
+		font-size: $pagination-font-size-lg;
+		height: $pagination-item-height-lg;
+		line-height: $pagination-line-height-lg;
+		padding: $pagination-padding-y-lg $pagination-padding-x;
+	}
+
+	.pagination-results {
+		font-size: $pagination-font-size-lg;
+		line-height: $pagination-line-height-lg;
+		padding: $pagination-padding-y-lg $pagination-padding-x;
+	}
+
+	.page-link {
+		font-size: $pagination-font-size-lg;
+		height: $pagination-item-height-lg;
+		line-height: $pagination-line-height-lg;
+
+		&.btn-unstyled {
+			padding: $pagination-padding-y-lg $pagination-padding-x-lg;
+		}
+	}
+}

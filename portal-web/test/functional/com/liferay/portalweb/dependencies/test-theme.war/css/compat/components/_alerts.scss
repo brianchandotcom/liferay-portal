@@ -1,0 +1,26 @@
+@if $compat-alerts {
+	.alert .close .lexicon-icon {
+		display: inline-block;
+	}
+
+	.alert-dismissable {
+		padding-bottom: $alert-dismissible-padding-bottom;
+		padding-left: $alert-dismissible-padding-left;
+		padding-right: $alert-dismissible-padding-right;
+		padding-top: $alert-dismissible-padding-top;
+
+		.close {
+			position: absolute;
+		}
+	}
+
+	.alert-fluid.alert-dismissable {
+		.container, .container-fluid {
+			padding-bottom: $alert-dismissible-padding-bottom;
+			padding-left: $alert-dismissible-padding-left;
+			padding-right: calc(#{$alert-dismissible-padding-right} + #{$grid-gutter-width / 2});
+			padding-top: $alert-dismissible-padding-top;
+			position: relative;
+		}
+	}
+}

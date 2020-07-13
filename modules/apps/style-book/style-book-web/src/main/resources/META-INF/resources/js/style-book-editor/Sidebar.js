@@ -38,37 +38,39 @@ function SidebarContent() {
 
 	return (
 		<div className="style-book-editor__sidebar-content">
-			<ClayDropDown
-				active={active}
-				alignmentPosition={Align.BottomLeft}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						className="form-control form-control-select form-control-sm mb-3 text-left"
-						displayType="secondary"
-						small
-						type="button"
-					>
-						{selectedCategory.name}
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{tokenCategories.map((tokenCategories, index) => (
-						<ClayDropDown.Item
-							key={index}
-							onClick={() => {
-								setSelectedCategory(tokenCategories);
-								setActive(false);
-							}}
+			{selectedCategory && (
+				<ClayDropDown
+					active={active}
+					alignmentPosition={Align.BottomLeft}
+					onActiveChange={setActive}
+					trigger={
+						<ClayButton
+							className="form-control form-control-select form-control-sm mb-3 text-left"
+							displayType="secondary"
+							small
+							type="button"
 						>
-							{tokenCategories.name}
-						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+							{selectedCategory.name}
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						{tokenCategories.map((tokenCategories, index) => (
+							<ClayDropDown.Item
+								key={index}
+								onClick={() => {
+									setSelectedCategory(tokenCategories);
+									setActive(false);
+								}}
+							>
+								{tokenCategories.name}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			)}
 
-			{selectedCategory.tokenSets.map(({name, tokens}) => (
+			{selectedCategory?.tokenSets.map(({name, tokens}) => (
 				<TokenSet key={name} name={name} tokens={tokens} />
 			))}
 		</div>

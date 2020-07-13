@@ -23,9 +23,9 @@ const StyleBookEditor = ({
 	namespace,
 	publishURL,
 	saveDraftURL,
-	tokenCategories,
-	tokenValues: initialTokenValues,
-}) => {
+	tokenCategories = [],
+	tokenValues: initialTokenValues = {},
+} = {}) => {
 	const [tokenValues, setTokenValues] = useState(initialTokenValues);
 
 	useEffect(() => {

@@ -41,11 +41,11 @@ definition {
 			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Blogs Entry: Title");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Blogs Entry: Description");
 
 		OpenGraph.mapEditableTextToField(
@@ -59,11 +59,11 @@ definition {
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Blogs Entry: Subtitle");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Blogs Entry: Content");
 	}
 
@@ -83,11 +83,11 @@ definition {
 			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Document: Title");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Document: Description");
 
 		OpenGraph.mapEditableTextToField(
@@ -101,11 +101,11 @@ definition {
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Document: File Name");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Document: Content Type");
 	}
 
@@ -125,11 +125,11 @@ definition {
 			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Basic Web Content: Title");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Basic Web Content: Description");
 
 		OpenGraph.mapEditableTextToField(
@@ -143,11 +143,11 @@ definition {
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "title",
+			mappedField = "Title",
 			mappedFieldValue = "Basic Web Content: Basic Web Content *");
 
 		OpenGraph.viewMappedField(
-			mappedField = "description",
+			mappedField = "Description",
 			mappedFieldValue = "Basic Web Content: Content");
 	}
 

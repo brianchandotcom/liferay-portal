@@ -1146,6 +1146,8 @@ components:
             type: object
         FragmentFieldBackgroundImage:
             properties:
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"
             type: object

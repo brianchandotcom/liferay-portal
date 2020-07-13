@@ -21,6 +21,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import org.gradle.api.Action;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -33,6 +34,8 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,22 +57,31 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		_configureConventionBasePlugin(antBuilder, basePluginConvention);
 
-		_configureArtifacts(project, antBuilder, basePluginConvention);
-		_configureVersion(project, antBuilder);
+		TaskProvider<Delete> cleanTaskProvider = GradleUtil.getTaskProvider(
+			project, BasePlugin.CLEAN_TASK_NAME, Delete.class);
+		TaskProvider<Task> warTaskProvider = GradleUtil.getTaskProvider(
+			project, _WAR_TASK_NAME);
 
-		_configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
+		_configureTaskCleanProvider(cleanTaskProvider);
+
+		_configureArtifacts(
+			project, antBuilder, basePluginConvention, warTaskProvider);
+		_configureVersion(project, antBuilder);
 	}
 
-	private void _configureAntTask(Project project, String targetName) {
-		String antTaskName = _antTaskNamer.transform(targetName);
+	private void _configureTaskCleanProvider(
+		TaskProvider<Delete> cleanTaskProvider) {
 
-		if (targetName.equals(antTaskName)) {
-			return;
-		}
+		cleanTaskProvider.configure(
+			new Action<Delete>() {
 
-		Task task = GradleUtil.getTask(project, targetName);
+				@Override
+				public void execute(Delete cleanDelete) {
+					cleanDelete.dependsOn(
+						_antTaskNamer.transform(cleanDelete.getName()));
+				}
 
-		task.dependsOn(antTaskName);
+			});
 	}
 
 	private void _configureConventionBasePlugin(
@@ -82,7 +94,8 @@ public class LiferayAntPlugin implements Plugin<Project> {
 	@SuppressWarnings("serial")
 	private void _configureArtifacts(
 		final Project project, AntBuilder antBuilder,
-		final BasePluginConvention basePluginConvention) {
+		final BasePluginConvention basePluginConvention,
+		final TaskProvider<Task> warTaskProvider) {
 
 		ArtifactHandler artifacts = project.getArtifacts();
 
@@ -96,9 +109,7 @@ public class LiferayAntPlugin implements Plugin<Project> {
 				public void doCall(
 					ConfigurablePublishArtifact configurablePublishArtifact) {
 
-					Task warTask = GradleUtil.getTask(project, _WAR_TASK_NAME);
-
-					configurablePublishArtifact.builtBy(warTask);
+					configurablePublishArtifact.builtBy(warTaskProvider.get());
 
 					configurablePublishArtifact.setName(
 						basePluginConvention.getArchivesBaseName());

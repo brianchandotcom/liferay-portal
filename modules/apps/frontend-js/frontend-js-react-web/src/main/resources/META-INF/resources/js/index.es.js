@@ -20,6 +20,7 @@ export {default as useInterval} from './hooks/useInterval.es';
 export {default as useIsMounted} from './hooks/useIsMounted.es';
 export {default as usePrevious} from './hooks/usePrevious.es';
 export {default as useStateSafe} from './hooks/useStateSafe.es';
+export {default as useThunk} from './hooks/useThunk.es';
 export {default as useTimeout} from './hooks/useTimeout.es';
 
 // Egregious hack because react-dnd expects `window.process` to exist:

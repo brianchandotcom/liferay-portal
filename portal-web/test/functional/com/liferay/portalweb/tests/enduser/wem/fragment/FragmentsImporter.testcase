@@ -969,27 +969,7 @@ definition {
 
 	@description = "This is a test case for LPS-101256. Can duplicate fragment in layout elements in composition."
 	@priority = "4"
-	test ImportFragmentWithDupicateFragmentComposition {
-		task ("Navigate to the fragment import screen") {
-			FragmentsAdminNavigator.gotoImportCollection();
-		}
-
-		task ("Import fragment dependencies") {
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "collections-duplcatefragment.zip");
-
-			SelectFrameTop();
-
-			Click.mouseDownMouseUp(
-				key_text = "Import",
-				locator1 = "Modal#ANY_BUTTON");
-		}
-
-		task ("Assert the zip imported properly") {
-			AssertElementNotPresent(locator1 = "Message#ERROR");
-		}
-
+	test ImportFragmentWithDuplicateFragmentComposition {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1001,16 +981,134 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			composition = "true",
-			fragmentName = "New Fragment Name");
+		task ("Add a Container to page") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
 
-		AssertElementPresent(locator1 = "//div[contains(@class,'col-4')]//li[contains(@class,'title')][contains(.,'Heading')]");
+		task ("Add a Grid element to Container") {
+			Click(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
-		AssertElementPresent(locator1 = "xpath=(//div[contains(@class,'col-4')]//li[contains(@class,'title')][contains(.,'Heading')])[2]");
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Grid",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
+				value1 = "");
 
-		AssertElementPresent(locator1 = "//div[contains(@class,'col-4')]/following::li[contains(@class,'title')][contains(.,'Heading')]");
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Add a Heading to first module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "1",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Duplicate the Heading fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Heading");
+		}
+
+		task ("Add a Heading below Grid inside Container") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				value1 = "");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Save Composition") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(fragmentName = "New Composition");
+		}
+
+		task ("Export the new composition") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
+		}
+
+		task ("Assert the new composition is shown in page") {
+			PageEditor.addFragment(
+				collectionName = "Saved Fragments",
+				composition = "true",
+				fragmentName = "New Composition");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
 	}
 
 	@description = "This is a test case for LPS-101256. The fragment replacing HTML,CSS,JS,JSON in dependencies survives after importing."

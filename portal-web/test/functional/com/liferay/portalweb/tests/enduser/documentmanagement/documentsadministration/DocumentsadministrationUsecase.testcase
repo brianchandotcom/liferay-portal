@@ -1274,6 +1274,10 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		SitePages.addPrivatePage(
 			pageName = "DM Site Page Name - Global",
 			siteTemplate = "true");

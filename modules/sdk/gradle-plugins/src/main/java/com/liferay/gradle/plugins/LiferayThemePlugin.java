@@ -111,6 +111,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				BuildLangTask.class);
 		TaskProvider<Copy> deployTaskProvider = GradleUtil.getTaskProvider(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
+		final TaskProvider<Task> gulpBuildTaskProvider =
+			GradleUtil.getTaskProvider(project, _GULP_BUILD_TASK_NAME);
 
 		_configureTaskBuildLangProvider(buildLangTaskProvider);
 		_configureTaskCleanProvider(cleanTaskProvider);
@@ -120,7 +122,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		_configureProject(project, packageJsonMap);
 
-		TaskContainer taskContainer = project.getTasks();
+		final TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
 			ExecuteGulpTask.class,
@@ -134,7 +136,36 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 			});
 
-		_configureArtifacts(project);
+		ArtifactHandler artifacts = project.getArtifacts();
+
+		artifacts.add(
+			Dependency.ARCHIVES_CONFIGURATION, _getWarFile(project),
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(
+					ConfigurablePublishArtifact configurablePublishArtifact) {
+
+					Task packageRunBuildTask = taskContainer.findByName(
+						NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
+
+					if (packageRunBuildTask != null) {
+						gulpBuildTaskProvider.configure(
+							new Action<Task>() {
+
+								@Override
+								public void execute(Task gulpBuildTask) {
+									gulpBuildTask.finalizedBy(
+										NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
+								}
+
+							});
+					}
+
+					configurablePublishArtifact.builtBy(gulpBuildTaskProvider);
+				}
+
+			});
 	}
 
 	private void _configureTaskCreateLiferayThemeJsonProvider(
@@ -226,36 +257,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		}
 
 		basePluginConvention.setArchivesBaseName(name);
-	}
-
-	@SuppressWarnings("serial")
-	private void _configureArtifacts(final Project project) {
-		ArtifactHandler artifacts = project.getArtifacts();
-
-		File warFile = _getWarFile(project);
-
-		artifacts.add(
-			Dependency.ARCHIVES_CONFIGURATION, warFile,
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(
-					ConfigurablePublishArtifact configurablePublishArtifact) {
-
-					Task gulpBuildTask = GradleUtil.getTask(
-						project, _GULP_BUILD_TASK_NAME);
-
-					if (GradleUtil.hasTask(
-							project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
-
-						gulpBuildTask.finalizedBy(
-							NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
-					}
-
-					configurablePublishArtifact.builtBy(gulpBuildTask);
-				}
-
-			});
 	}
 
 	private void _configureConfigurationDefault(

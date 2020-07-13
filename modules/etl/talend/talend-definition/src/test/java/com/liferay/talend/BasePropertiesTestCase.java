@@ -58,7 +58,7 @@ public abstract class BasePropertiesTestCase {
 
 	protected ComponentProperties
 			getDefaultInitializedComponentPropertiesInstance(
-				Class<?> propertyClass)
+				Class<? extends ComponentProperties> propertyClass)
 		throws Exception {
 
 		Constructor<? extends ComponentProperties> constructor =

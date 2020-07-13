@@ -18,6 +18,7 @@ import org.talend.components.api.component.ComponentDefinition;
 import org.talend.components.api.service.common.DefinitionRegistry;
 import org.talend.components.api.test.AbstractComponentTest2;
 import org.talend.components.liferay.LiferayFamilyDefinition;
+import org.talend.daikon.definition.Definition;
 import org.talend.daikon.definition.service.DefinitionRegistryService;
 
 /**
@@ -39,7 +40,7 @@ public abstract class LiferayAbstractComponentTestCase
 	}
 
 	protected void assertComponentIsRegistered(
-		Class<?> componentClass, String name) {
+		Class<? extends Definition> componentClass, String name) {
 
 		assertComponentIsRegistered(
 			ComponentDefinition.class, name, componentClass);

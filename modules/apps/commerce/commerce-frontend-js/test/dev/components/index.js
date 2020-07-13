@@ -16,7 +16,7 @@ module.exports = [
 	{
 		entry: 'AddToCart',
 		name: 'Add To Cart',
-		page: 'add-to-cart.html',
+		page: 'mini-compare.html'
 	},
 	{
 		entry: 'Autocomplete',
@@ -52,6 +52,11 @@ module.exports = [
 		entry: 'MiniCart',
 		name: 'Mini Cart',
 		page: 'mini-cart.html',
+	},
+    {
+		entry: 'MiniCompare',
+		name: 'Mini Compare',
+		page: 'mini-compare.html'
 	},
 	{
 		entry: 'SidePanel',

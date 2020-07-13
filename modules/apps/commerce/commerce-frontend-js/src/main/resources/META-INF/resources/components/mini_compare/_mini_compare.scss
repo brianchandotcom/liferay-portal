@@ -1,0 +1,71 @@
+.mini-compare {
+	background: white;
+	border-radius: 4px 4px 0 0;
+	box-shadow: 0 17px 84px 0 rgba(52, 55, 62, 0.2);
+	display: inline-flex;
+	padding: $spacer;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	opacity: 0.3;
+	transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+	transform: translateX(-50%) translateY(100%);
+
+	&.active {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+
+	&-item {
+		margin-right: $spacer;
+		position: relative;
+
+		@media screen and (hover: none) {
+			margin-right: $spacer;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border: 2px dashed $border-color;
+			opacity: 1;
+			transition: opacity 0.2s ease-in;
+		}
+
+		&.active {
+			&::after {
+				opacity: 0;
+			}
+
+			.mini-compare-delete {
+				transform: scale(0.6) translate(50%, -50%);
+				opacity: 1;
+			}
+
+			.mini-compare-thumbnail {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+	}
+
+	&-thumbnail {
+		transform: scale(0.6);
+		opacity: 0;
+		transition: all 0.2s ease-in;
+	}
+
+	&-delete {
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: all 0.2s ease-in;
+		z-index: 10;
+		opacity: 0;
+		transform: scale(0) translate(50%, -50%);
+	}
+}

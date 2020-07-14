@@ -117,6 +117,10 @@ public class JenkinsSlave implements Comparable<JenkinsSlave> {
 		return _idle;
 	}
 
+	public boolean isReachable() {
+		return JenkinsResultsParserUtil.isReachable(getName());
+	}
+
 	public boolean isOffline() {
 		return _offline;
 	}

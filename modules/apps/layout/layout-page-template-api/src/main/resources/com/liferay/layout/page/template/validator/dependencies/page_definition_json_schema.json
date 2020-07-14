@@ -146,15 +146,43 @@
 			"properties": {
 				"columnViewportConfig": {
 					"additionalProperties": false,
+					"deprecationMessage": "Deprecated as of Athanasius (7.3.x), replaced by columnViewports",
 					"properties": {
 						"landscapeMobile": {
-							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
 						},
 						"portraitMobile": {
-							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
 						},
 						"tablet": {
-							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
 						}
 					},
 					"title": "The columnViewportConfig Schema",

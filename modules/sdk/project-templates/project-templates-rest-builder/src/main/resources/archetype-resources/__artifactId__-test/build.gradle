@@ -1,3 +1,9 @@
+configurations.all {
+	resolutionStrategy {
+		force group: 'com.liferay.portal', name: 'com.liferay.portal.test', version: '7.1.0'
+	}
+}
+
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
@@ -24,10 +30,4 @@ dependencies {
 	testIntegrationCompile group: "org.slf4j", name: "slf4j-api"
 	testIntegrationCompile project("${apiPath}")
 	testIntegrationCompile project("${clientPath}")
-}
-
-configurations.all {
-	resolutionStrategy {
-		force group: 'com.liferay.portal', name: 'com.liferay.portal.test', version: '7.1.0'
-	}
 }

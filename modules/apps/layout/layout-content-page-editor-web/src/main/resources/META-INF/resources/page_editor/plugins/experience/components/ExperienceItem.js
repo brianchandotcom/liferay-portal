@@ -154,7 +154,7 @@ const ExperienceItem = ({
 				{editable && (
 					<div className="px-2">
 						<ClayButtonWithIcon
-							className="mx-2 text-secondary"
+							className="component-action mx-2 text-secondary"
 							disabled={lockedIncreasePriority}
 							displayType="unstyled"
 							onClick={handlePriorityIncrease}
@@ -167,7 +167,7 @@ const ExperienceItem = ({
 						/>
 
 						<ClayButtonWithIcon
-							className="mx-2 text-secondary"
+							className="component-action mx-2 text-secondary"
 							disabled={lockedDecreasePriority}
 							displayType="unstyled"
 							onClick={handlePriorityDecrease}
@@ -180,7 +180,7 @@ const ExperienceItem = ({
 						/>
 
 						<ClayButtonWithIcon
-							className="mx-2 text-secondary"
+							className="component-action mx-2 text-secondary"
 							displayType="unstyled"
 							onClick={handleExperienceEdit}
 							small
@@ -190,7 +190,7 @@ const ExperienceItem = ({
 						/>
 
 						<ClayButtonWithIcon
-							className="mx-2 text-secondary"
+							className="component-action mx-2 text-secondary"
 							displayType="unstyled"
 							onClick={handleExperienceDelete}
 							small

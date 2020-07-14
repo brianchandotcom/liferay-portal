@@ -36,6 +36,8 @@ import com.liferay.portal.util.PortalImpl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -117,13 +119,19 @@ public class ContentDashboardDropdownItemsProviderTest {
 			contentDashboardDropdownItemsProvider.getDropdownItems(
 				contentDashboardItem);
 
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		Stream<DropdownItem> stream = dropdownItems.stream();
+
+		DropdownItem editDropdownItem = stream.filter(
+			dropdownItem -> Objects.equals(
+				String.valueOf(dropdownItem.get("label")), "edit")
+		).findFirst(
+		).orElseThrow(
+			() -> new AssertionError("edit dropdownItem not found")
+		);
 
 		Assert.assertEquals(
-			"edit", _http.getPath(String.valueOf(dropdownItem.get("label"))));
-		Assert.assertEquals(
 			"validURL",
-			_http.getPath(String.valueOf(dropdownItem.get("href"))));
+			_http.getPath(String.valueOf(editDropdownItem.get("href"))));
 	}
 
 	@Test
@@ -165,12 +173,20 @@ public class ContentDashboardDropdownItemsProviderTest {
 			contentDashboardDropdownItemsProvider.getDropdownItems(
 				contentDashboardItem);
 
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		Stream<DropdownItem> stream = dropdownItems.stream();
+
+		DropdownItem viewDropdownItem = stream.filter(
+			dropdownItem -> Objects.equals(
+				String.valueOf(dropdownItem.get("label")), "view")
+		).findFirst(
+		).orElseThrow(
+			() -> new AssertionError("view dropdownItem not found")
+		);
 
 		Assert.assertEquals(
 			HtmlUtil.escapeURL(String.valueOf(mockLiferayPortletURL)),
 			_http.getParameter(
-				String.valueOf(dropdownItem.get("href")), "p_l_back_url"));
+				String.valueOf(viewDropdownItem.get("href")), "p_l_back_url"));
 	}
 
 	@Test
@@ -213,12 +229,20 @@ public class ContentDashboardDropdownItemsProviderTest {
 			contentDashboardDropdownItemsProvider.getDropdownItems(
 				contentDashboardItem);
 
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		Stream<DropdownItem> stream = dropdownItems.stream();
+
+		DropdownItem viewDropdownItem = stream.filter(
+			dropdownItem -> Objects.equals(
+				String.valueOf(dropdownItem.get("label")), "view")
+		).findFirst(
+		).orElseThrow(
+			() -> new AssertionError("view dropdownItem not found")
+		);
 
 		Assert.assertEquals(
 			backURL,
 			_http.getParameter(
-				String.valueOf(dropdownItem.get("href")), "p_l_back_url"));
+				String.valueOf(viewDropdownItem.get("href")), "p_l_back_url"));
 	}
 
 	@Test
@@ -263,13 +287,19 @@ public class ContentDashboardDropdownItemsProviderTest {
 			contentDashboardDropdownItemsProvider.getDropdownItems(
 				contentDashboardItem);
 
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		Stream<DropdownItem> stream = dropdownItems.stream();
+
+		DropdownItem viewDropdownItem = stream.filter(
+			dropdownItem -> Objects.equals(
+				String.valueOf(dropdownItem.get("label")), "view")
+		).findFirst(
+		).orElseThrow(
+			() -> new AssertionError("view dropdownItem not found")
+		);
 
 		Assert.assertEquals(
-			"view", _http.getPath(String.valueOf(dropdownItem.get("label"))));
-		Assert.assertEquals(
 			"validURL",
-			_http.getPath(String.valueOf(dropdownItem.get("href"))));
+			_http.getPath(String.valueOf(viewDropdownItem.get("href"))));
 	}
 
 	private static Http _http;

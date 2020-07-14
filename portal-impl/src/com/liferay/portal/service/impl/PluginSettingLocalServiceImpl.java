@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.impl.PluginSettingImpl;
 import com.liferay.portal.service.base.PluginSettingLocalServiceBaseImpl;
@@ -33,6 +35,7 @@ public class PluginSettingLocalServiceImpl
 	extends PluginSettingLocalServiceBaseImpl {
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkPermission(long userId, String pluginId, String pluginType)
 		throws PortalException {
 

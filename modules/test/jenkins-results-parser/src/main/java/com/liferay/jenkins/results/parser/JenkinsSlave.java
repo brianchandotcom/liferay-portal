@@ -73,6 +73,21 @@ public class JenkinsSlave implements Comparable<JenkinsSlave> {
 		return _name.compareTo(jenkinsSlave.getName());
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof JenkinsSlave) {
+			JenkinsSlave jenkinsSlave = (JenkinsSlave)object;
+
+			if (compareTo(jenkinsSlave) == 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return super.equals(object);
+	}
+
 	public Build getCurrentBuild() {
 		JSONObject jsonObject = null;
 
@@ -117,12 +132,12 @@ public class JenkinsSlave implements Comparable<JenkinsSlave> {
 		return _idle;
 	}
 
-	public boolean isReachable() {
-		return JenkinsResultsParserUtil.isReachable(getName());
-	}
-
 	public boolean isOffline() {
 		return _offline;
+	}
+
+	public boolean isReachable() {
+		return JenkinsResultsParserUtil.isReachable(getName());
 	}
 
 	public void takeSlavesOffline(String offlineReason) {

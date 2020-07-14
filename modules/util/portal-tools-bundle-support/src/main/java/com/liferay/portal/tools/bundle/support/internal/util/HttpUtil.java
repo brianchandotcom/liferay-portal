@@ -177,7 +177,7 @@ public class HttpUtil {
 
 				if (index > 0) {
 					fileName = dispositionValue.substring(
-						index + 10, dispositionValue.length() - 1);
+						index + "filename=".length());
 				}
 			}
 			else {

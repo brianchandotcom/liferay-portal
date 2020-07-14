@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
-import com.liferay.layout.admin.web.internal.configuration.util.CollectionLayoutsConfigurationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -158,7 +157,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		).addPrimaryDropdownItem(
 			() ->
 				_layoutsAdminDisplayContext.isShowPublicPages() &&
-				CollectionLayoutsConfigurationUtil.enabled() &&
 				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
 				 _layoutsAdminDisplayContext.isFirstColumn() ||
 				 !_layoutsAdminDisplayContext.hasLayouts()),
@@ -183,10 +181,9 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				CollectionLayoutsConfigurationUtil.enabled() &&
-				(_layoutsAdminDisplayContext.isPrivateLayout() ||
-				 _layoutsAdminDisplayContext.isFirstColumn() ||
-				 !_layoutsAdminDisplayContext.hasLayouts()),
+				_layoutsAdminDisplayContext.isPrivateLayout() ||
+				_layoutsAdminDisplayContext.isFirstColumn() ||
+				!_layoutsAdminDisplayContext.hasLayouts(),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_layoutsAdminDisplayContext.getSelectLayoutCollectionURL(

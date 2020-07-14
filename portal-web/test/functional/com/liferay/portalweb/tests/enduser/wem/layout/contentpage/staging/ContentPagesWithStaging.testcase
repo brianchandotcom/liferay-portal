@@ -246,9 +246,6 @@ definition {
 	@description = "This is a test for LPS-114174. Can create a Collection Page based on Collections or Collection Providers in Staging site."
 	@priority = "4"
 	test AddCollectionPageInLocalLiveStaging {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.CollectionLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 		for (var i : list "3,2,1") {

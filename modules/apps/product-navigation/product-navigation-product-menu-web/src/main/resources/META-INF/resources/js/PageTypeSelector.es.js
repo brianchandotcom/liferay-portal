@@ -87,25 +87,24 @@ function PageTypeSelector(props) {
 								{Liferay.Language.get('add-page')}
 							</ClayDropDown.Item>
 						)}
-						{props.showAddCollectionPages &&
-							props.addCollectionLayoutURL && (
-								<ClayDropDown.Item
-									data-value={Liferay.Language.get(
-										'add-collection-page'
-									)}
-									key={Liferay.Language.get(
-										'add-collection-page'
-									)}
-									onClick={handleOnAddCollectionPageClick}
-									title={Liferay.Language.get(
-										'add-collection-page'
-									)}
-								>
-									{Liferay.Language.get(
-										'add-collection-page'
-									)}
-								</ClayDropDown.Item>
-							)}
+						{props.addCollectionLayoutURL && (
+							<ClayDropDown.Item
+								data-value={Liferay.Language.get(
+									'add-collection-page'
+								)}
+								key={Liferay.Language.get(
+									'add-collection-page'
+								)}
+								onClick={handleOnAddCollectionPageClick}
+								title={Liferay.Language.get(
+									'add-collection-page'
+								)}
+							>
+								{Liferay.Language.get(
+									'add-collection-page'
+								)}
+							</ClayDropDown.Item>
+						)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>

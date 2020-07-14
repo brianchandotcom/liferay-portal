@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.layout.admin.web.internal.configuration.util.CollectionLayoutsConfigurationUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -367,20 +366,12 @@ public class MillerColumnsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (_layoutsAdminDisplayContext.isShowAddRootLayoutButton()) {
-			if (!CollectionLayoutsConfigurationUtil.enabled()) {
-				jsonArray.put(
-					_getAddRootLayoutActionJSONObject(
-						privatePages, "quickAction"));
-			}
-			else {
-				jsonArray.put(
-					_getAddRootLayoutActionJSONObject(
-						privatePages, "layoutAction")
-				).put(
-					_getAddLayoutCollectionActionJSONObject(
-						LayoutConstants.DEFAULT_PLID, privatePages)
-				);
-			}
+			jsonArray.put(
+				_getAddRootLayoutActionJSONObject(privatePages, "layoutAction")
+			).put(
+				_getAddLayoutCollectionActionJSONObject(
+					LayoutConstants.DEFAULT_PLID, privatePages)
+			);
 		}
 
 		if (_layoutsAdminDisplayContext.isShowFirstColumnConfigureAction()) {
@@ -465,18 +456,12 @@ public class MillerColumnsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (_layoutsAdminDisplayContext.isShowAddChildPageAction(layout)) {
-			if (!CollectionLayoutsConfigurationUtil.enabled()) {
-				jsonArray.put(
-					_getAddChildPageActionJSONObject(layout, "quickAction"));
-			}
-			else {
-				jsonArray.put(
-					_getAddChildPageActionJSONObject(layout, "layoutAction")
-				).put(
-					_getAddLayoutCollectionActionJSONObject(
-						layout.getPlid(), layout.isPrivateLayout())
-				);
-			}
+			jsonArray.put(
+				_getAddChildPageActionJSONObject(layout, "layoutAction")
+			).put(
+				_getAddLayoutCollectionActionJSONObject(
+					layout.getPlid(), layout.isPrivateLayout())
+			);
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();

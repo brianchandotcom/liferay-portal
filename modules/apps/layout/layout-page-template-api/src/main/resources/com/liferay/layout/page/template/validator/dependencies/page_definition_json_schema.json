@@ -36,7 +36,7 @@
 			"title": "The ClassPKReference Schema",
 			"type": "object"
 		},
-		"CollectionDefinition": {
+		"PageCollectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"collectionConfig": {
@@ -127,10 +127,10 @@
 					"type": "string"
 				}
 			},
-			"title": "The CollectionDefinition Schema",
+			"title": "The PageCollectionDefinition Schema",
 			"type": "object"
 		},
-		"CollectionItemDefinition": {
+		"PageCollectionItemDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"collectionItemConfig": {
@@ -138,10 +138,10 @@
 					"type": "object"
 				}
 			},
-			"title": "The CollectionItemDefinition Schema",
+			"title": "The PageCollectionItemDefinition Schema",
 			"type": "object"
 		},
-		"ColumnDefinition": {
+		"PageColumnDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"columnViewportConfig": {
@@ -202,7 +202,7 @@
 					"type": "integer"
 				}
 			},
-			"title": "The ColumnDefinition Schema",
+			"title": "The PageColumnDefinition Schema",
 			"type": "object"
 		},
 		"ColumnViewport": {
@@ -249,7 +249,7 @@
 			"title": "The ContextReference Schema",
 			"type": "object"
 		},
-		"DropZoneDefinition": {
+		"PageDropZoneDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"fragmentSettings": {
@@ -265,7 +265,7 @@
 					"type": "object"
 				}
 			},
-			"title": "The DropZoneDefinition Schema",
+			"title": "The PageDropZoneDefinition Schema",
 			"type": "object"
 		},
 		"Fragment": {
@@ -288,11 +288,6 @@
 				"key"
 			],
 			"title": "The fragment Schema",
-			"type": "object"
-		},
-		"FragmentDropZoneDefinition": {
-			"additionalProperties": false,
-			"title": "The FragmentDropZoneDefinition Schema",
 			"type": "object"
 		},
 		"FragmentField": {
@@ -458,7 +453,7 @@
 			"title": "The FragmentInlineValue Schema",
 			"type": "object"
 		},
-		"FragmentInstanceDefinition": {
+		"PageFragmentInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"fragment": {
@@ -496,7 +491,7 @@
 					"type": "array"
 				}
 			},
-			"title": "The FragmentInstanceDefinition Schema",
+			"title": "The PageFragmentInstanceDefinition Schema",
 			"type": "object"
 		},
 		"FragmentLink": {
@@ -626,7 +621,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/CollectionDefinition"
+								"$ref": "#/definitions/PageCollectionDefinition"
 							}
 						}
 					}
@@ -642,7 +637,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/CollectionItemDefinition"
+								"$ref": "#/definitions/PageCollectionItemDefinition"
 							}
 						}
 					}
@@ -658,7 +653,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/ColumnDefinition"
+								"$ref": "#/definitions/PageColumnDefinition"
 							}
 						}
 					}
@@ -674,7 +669,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/DropZoneDefinition"
+								"$ref": "#/definitions/PageDropZoneDefinition"
 							}
 						}
 					}
@@ -690,7 +685,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/FragmentInstanceDefinition"
+								"$ref": "#/definitions/PageFragmentInstanceDefinition"
 							}
 						}
 					}
@@ -706,7 +701,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/FragmentDropZoneDefinition"
+								"$ref": "#/definitions/PageDropZoneDefinition"
 							}
 						}
 					}
@@ -722,7 +717,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/RowDefinition"
+								"$ref": "#/definitions/PageRowDefinition"
 							}
 						}
 					}
@@ -738,7 +733,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/RootDefinition"
+								"$ref": "#/definitions/PageRootDefinition"
 							}
 						}
 					}
@@ -754,7 +749,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/SectionDefinition"
+								"$ref": "#/definitions/PageSectionDefinition"
 							}
 						}
 					}
@@ -770,7 +765,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/WidgetInstanceDefinition"
+								"$ref": "#/definitions/PageWidgetInstanceDefinition"
 							}
 						}
 					}
@@ -811,12 +806,12 @@
 			"title": "The PageElement Schema",
 			"type": "object"
 		},
-		"RootDefinition": {
+		"PageRootDefinition": {
 			"additionalProperties": false,
-			"title": "The RootDefinition Schema",
+			"title": "The PageRootDefinition Schema",
 			"type": "object"
 		},
-		"RowDefinition": {
+		"PageRowDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"gutters": {
@@ -908,7 +903,7 @@
 					"type": "string"
 				}
 			},
-			"title": "The RowDefinition Schema",
+			"title": "The PageRowDefinition Schema",
 			"type": "object"
 		},
 		"RowViewport": {
@@ -944,7 +939,7 @@
 			"title": "The RowViewport Schema",
 			"type": "object"
 		},
-		"SectionDefinition": {
+		"PageSectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"backgroundColor": {
@@ -1211,7 +1206,7 @@
 					"type": "object"
 				}
 			},
-			"title": "The SectionDefinition Schema",
+			"title": "The PageSectionDefinition Schema",
 			"type": "object"
 		},
 		"WidgetInstance": {
@@ -1259,7 +1254,7 @@
 			"title": "The WidgetInstance Schema",
 			"type": "object"
 		},
-		"WidgetInstanceDefinition": {
+		"PageWidgetInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"widgetInstance": {
@@ -1271,7 +1266,7 @@
 			"required": [
 				"widgetInstance"
 			],
-			"title": "The WidgetInstanceDefinition Schema",
+			"title": "The PageWidgetInstanceDefinition Schema",
 			"type": "object"
 		}
 	},

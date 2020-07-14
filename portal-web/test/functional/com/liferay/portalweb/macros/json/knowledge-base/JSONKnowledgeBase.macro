@@ -1,0 +1,142 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a kB article"
+	macro addkBArticle {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+			var folderId = JSONKnowledgeBase.getFolderIdByFolderName(
+				folderName = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+				-u test@liferay.com:test \
+				-d portletId=0 \
+				-d parentResourceClassNameId=${parentResourceClassNameId} \
+				-d parentResourcePrimKey=${folderId} \
+				-d title=${kbArticleTitle} \
+				-d urlTitle= \
+				-d content=<p>${kbArticleContent}</p> \
+				-d description= \
+				-d sourceURL= \
+				-d sections= \
+				-d selectedFileNames=
+		''';
+
+		echo("## Adding a 'KBArticle' with the following info using JSONWS:");
+
+		echo("## * Name: ${kbArticleTitle}");
+
+		echo("## * Description: ${kbArticleContent}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a kB folder"
+	macro addkBFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(parentFolderName)) {
+			Variables.assertDefined(parameterList = "${parentFolderName},${groupName}");
+
+			var folderId = JSONKnowledgeBase.getFolderIdByFolderName(
+				folderName = "${parentFolderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentResourceClassNameId=${parentResourceClassNameId} \
+				-d parentResourcePrimKey=${folderId} \
+				-d name=${kbFolderName} \
+				-d description=${kbFolderDescription}
+		''';
+
+		echo("## Adding a 'KBFolder' with the following info using JSONWS:");
+
+		echo("## * Name: ${folderName}");
+
+		echo("## * Description: ${description}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a kB template"
+	macro addkBTemplate {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbtemplate/add-kb-template \
+				-u test@liferay.com:test \
+				-d portletId=0 \
+				-d title=${kbTemplateTitle} \
+				-d content=${kbTemplateContent}
+		''';
+
+		echo("## Adding a 'KBArticle' with the following info using JSONWS:");
+
+		echo("## * Name: ${kbTemplateTitle}");
+
+		echo("## * Description: ${kbTemplateContent}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
+	macro getFolderIdByFolderName {
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbfolder/get-kb-folders \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentKBFolderId=0 \
+				-d start=0 \
+				-d end=1
+		''';
+
+		var kbFolderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['kbFolderId']");
+		var kbFolderId = StringUtil.replace("${kbFolderId}", "[&quot;", "");
+		var kbFolderId = StringUtil.replace("${kbFolderId}", "&quot;]", "");
+
+		if ("${kbFolderId}" == "[]") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${kbFolderId}";
+		}
+	}
+
+}

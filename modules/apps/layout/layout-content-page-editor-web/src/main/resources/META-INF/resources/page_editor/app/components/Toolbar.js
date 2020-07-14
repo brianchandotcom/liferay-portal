@@ -208,14 +208,6 @@ function ToolbarBody() {
 						segmentsExperienceId={segmentsExperienceId}
 					/>
 				</li>
-				<li className="nav-item">
-					<ViewportSizeSelector
-						onSizeSelected={(size) =>
-							dispatch(Actions.switchViewportSize({size}))
-						}
-						selectedSize={selectedViewportSize}
-					/>
-				</li>
 				{!config.singleSegmentsExperienceMode &&
 					segmentsExperimentStatus && (
 						<li className="nav-item pl-2">
@@ -225,6 +217,14 @@ function ToolbarBody() {
 							/>
 						</li>
 					)}
+				<li className="nav-item">
+					<ViewportSizeSelector
+						onSizeSelected={(size) =>
+							dispatch(Actions.switchViewportSize({size}))
+						}
+						selectedSize={selectedViewportSize}
+					/>
+				</li>
 			</ul>
 
 			<ul className="navbar-nav" onClick={deselectItem}>

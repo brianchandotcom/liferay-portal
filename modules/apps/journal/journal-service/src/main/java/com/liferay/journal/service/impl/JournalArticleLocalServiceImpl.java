@@ -7965,13 +7965,15 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(article.getGroupId()),
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
-		subscriptionSender.addPersistedSubscribers(
-			DDMStructure.class.getName(), ddmStructure.getStructureId());
+		if (ddmStructure != null) {
+			subscriptionSender.addPersistedSubscribers(
+				DDMStructure.class.getName(), ddmStructure.getStructureId());
+		}
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

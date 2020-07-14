@@ -115,7 +115,7 @@ public class MBUtil {
 			return "ckeditor_bbcode";
 		}
 
-		return "ckeditor";
+		return "ckeditor_classic";
 	}
 
 	public static String getHtmlQuoteBody(

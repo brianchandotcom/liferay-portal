@@ -24,7 +24,7 @@ if (Validator.isNull(body)) {
 	}
 }
 
-Editor editor = InputEditorTag.getEditor(request, "ckeditor");
+Editor editor = InputEditorTag.getEditor(request, "ckeditor_classic");
 %>
 
 <liferay-editor:editor

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext = new EditStyleBookEntryDisplayContext(request, renderResponse);
+EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext = new EditStyleBookEntryDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <div>

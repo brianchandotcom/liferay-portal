@@ -16,10 +16,13 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.util.GroupURLProvider;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -27,6 +30,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,11 +41,15 @@ import javax.servlet.http.HttpServletRequest;
 public class EditStyleBookEntryDisplayContext {
 
 	public EditStyleBookEntryDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_groupURLProvider = (GroupURLProvider)_renderRequest.getAttribute(
+			GroupURLProvider.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -51,6 +59,15 @@ public class EditStyleBookEntryDisplayContext {
 	public Map<String, Object> getStyleBookEditorData() {
 		return HashMapBuilder.<String, Object>put(
 			"namespace", _renderResponse.getNamespace()
+		).put(
+			"previewURL",
+			() -> {
+				String layoutURL = _groupURLProvider.getGroupLayoutsURL(
+					_themeDisplay.getScopeGroup(), false, _renderRequest);
+
+				return HttpUtil.addParameter(
+					layoutURL, "p_l_mode", Constants.PREVIEW);
+			}
 		).put(
 			"publishURL",
 			() -> {
@@ -129,7 +146,9 @@ public class EditStyleBookEntryDisplayContext {
 		_renderResponse.setTitle(_getStyleBookEntryTitle());
 	}
 
+	private final GroupURLProvider _groupURLProvider;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private StyleBookEntry _styleBookEntry;
 	private Long _styleBookEntryId;

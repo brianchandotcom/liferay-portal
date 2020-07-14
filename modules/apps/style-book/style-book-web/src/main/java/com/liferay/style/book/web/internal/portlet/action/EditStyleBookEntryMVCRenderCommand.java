@@ -15,12 +15,14 @@
 package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.site.util.GroupURLProvider;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,7 +41,13 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			GroupURLProvider.class.getName(), _groupURLProvider);
+
 		return "/edit_style_book_entry.jsp";
 	}
+
+	@Reference
+	private GroupURLProvider _groupURLProvider;
 
 }

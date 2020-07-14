@@ -1144,7 +1144,7 @@ definition {
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Any");
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
 		}
 
 		task ("Add a Collection Display to page") {

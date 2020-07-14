@@ -94,7 +94,7 @@ definition {
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
 
-		AssetListsAdmin.selectItemType(itemType = "Any");
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
 
@@ -265,7 +265,7 @@ definition {
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
 
-		AssetListsAdmin.selectItemType(itemType = "Any");
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
@@ -699,7 +699,7 @@ definition {
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
 
-		AssetListsAdmin.selectItemType(itemType = "Any");
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
 

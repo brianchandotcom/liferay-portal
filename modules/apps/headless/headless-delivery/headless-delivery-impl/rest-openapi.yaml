@@ -1223,6 +1223,8 @@ components:
             description:
                 ""
             properties:
+                defaultFragmentInlineValue:
+                    $ref: "#/components/schemas/FragmentInlineValue"
                 defaultValue:
                     $ref: "#/components/schemas/FragmentInlineValue"
                 mapping:

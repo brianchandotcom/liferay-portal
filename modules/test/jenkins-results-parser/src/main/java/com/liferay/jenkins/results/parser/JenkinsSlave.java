@@ -148,6 +148,11 @@ public class JenkinsSlave implements Comparable<JenkinsSlave> {
 		_setSlaveStatus(offlineReason, false);
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 	public void update() {
 		_jenkinsMaster.update();
 	}

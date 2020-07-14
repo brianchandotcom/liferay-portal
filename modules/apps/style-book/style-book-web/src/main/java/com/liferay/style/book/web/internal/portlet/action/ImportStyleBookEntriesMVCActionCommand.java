@@ -81,14 +81,18 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 		try {
 			List<StyleBookEntryZipProcessor.ImportResultEntry>
-				importResultEntries =
+				styleBookEntryZipProcessorImportResultEntries =
 					_styleBookEntryZipProcessor.importStyleBookEntries(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(), file, overwrite);
 
-			if (ListUtil.isNotEmpty(importResultEntries)) {
+			if (ListUtil.isNotEmpty(
+					styleBookEntryZipProcessorImportResultEntries)) {
+
 				SessionMessages.add(
-					actionRequest, "importResultEntries", importResultEntries);
+					actionRequest,
+					"styleBookEntryZipProcessorImportResultEntries",
+					styleBookEntryZipProcessorImportResultEntries);
 			}
 
 			SessionMessages.add(actionRequest, "success");

@@ -33,21 +33,24 @@ public class ImportStyleBookDisplayContext {
 		_renderRequest = renderRequest;
 	}
 
-	public List<String> getImportResultEntries(
+	public List<String> getStyleBookEntryZipProcessorImportResultEntries(
 		StyleBookEntryZipProcessor.ImportResultEntry.Status status) {
 
-		List<StyleBookEntryZipProcessor.ImportResultEntry> importResultEntries =
-			_getImportResultEntries();
+		List<StyleBookEntryZipProcessor.ImportResultEntry>
+			styleBookEntryZipProcessorImportResultEntries =
+				_getStyleBookEntryZipProcessorImportResultEntries();
 
-		if (ListUtil.isEmpty(importResultEntries)) {
+		if (ListUtil.isEmpty(styleBookEntryZipProcessorImportResultEntries)) {
 			return null;
 		}
 
 		Stream<StyleBookEntryZipProcessor.ImportResultEntry> stream =
-			importResultEntries.stream();
+			styleBookEntryZipProcessorImportResultEntries.stream();
 
 		return stream.filter(
-			importResultEntry -> importResultEntry.getStatus() == status
+			styleBookEntryZipProcessorImportResultEntry ->
+				styleBookEntryZipProcessorImportResultEntry.getStatus() ==
+					status
 		).map(
 			StyleBookEntryZipProcessor.ImportResultEntry::getName
 		).collect(
@@ -56,21 +59,23 @@ public class ImportStyleBookDisplayContext {
 	}
 
 	private List<StyleBookEntryZipProcessor.ImportResultEntry>
-		_getImportResultEntries() {
+		_getStyleBookEntryZipProcessorImportResultEntries() {
 
-		if (_importResultEntries != null) {
-			return _importResultEntries;
+		if (_styleBookEntryZipProcessorImportResultEntries != null) {
+			return _styleBookEntryZipProcessorImportResultEntries;
 		}
 
-		_importResultEntries =
+		_styleBookEntryZipProcessorImportResultEntries =
 			(List<StyleBookEntryZipProcessor.ImportResultEntry>)
-				SessionMessages.get(_renderRequest, "importResultEntries");
+				SessionMessages.get(
+					_renderRequest,
+					"styleBookEntryZipProcessorImportResultEntries");
 
-		return _importResultEntries;
+		return _styleBookEntryZipProcessorImportResultEntries;
 	}
 
-	private List<StyleBookEntryZipProcessor.ImportResultEntry>
-		_importResultEntries;
 	private final RenderRequest _renderRequest;
+	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+		_styleBookEntryZipProcessorImportResultEntries;
 
 }

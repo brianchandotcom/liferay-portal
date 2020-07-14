@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -319,8 +318,10 @@ public class LayoutPageTemplateEntryServiceTest {
 					getLayoutPageTemplateCollectionId());
 
 		LayoutPrototype layoutPrototype =
-			_layoutPrototypeService.getLayoutPrototype(
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		Assert.assertNotNull(layoutPrototype);
 
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getName(),
@@ -518,8 +519,5 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Inject
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
-
-	@Inject
-	private LayoutPrototypeService _layoutPrototypeService;
 
 }

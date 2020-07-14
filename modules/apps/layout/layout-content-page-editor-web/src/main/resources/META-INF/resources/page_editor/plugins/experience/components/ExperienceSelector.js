@@ -360,7 +360,7 @@ const ExperiencesSelectorHeader = ({
 }) => {
 	return (
 		<>
-			<ClayLayout.ContentRow verticalAlign="center">
+			<ClayLayout.ContentRow className="mb-3" verticalAlign="center">
 				<ClayLayout.ContentCol expand>
 					<h3 className="mb-0">
 						{Liferay.Language.get('select-experience')}
@@ -381,7 +381,7 @@ const ExperiencesSelectorHeader = ({
 			</ClayLayout.ContentRow>
 
 			{canCreateExperiences && (
-				<p className="mt-3 text-secondary">
+				<p className="text-secondary">
 					{showEmptyStateMessage
 						? Liferay.Language.get(
 								'experience-help-message-empty-state'

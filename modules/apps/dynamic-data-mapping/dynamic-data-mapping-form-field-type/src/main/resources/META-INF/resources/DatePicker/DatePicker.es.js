@@ -124,6 +124,8 @@ const DatePicker = ({
 	const inputRef = useRef(null);
 	const maskInstance = useRef(null);
 
+	const [expanded, setExpand] = useState(false);
+
 	const initialValueMemoized = useMemo(() => transformToDate(initialValue), [
 		initialValue,
 	]);
@@ -174,13 +176,22 @@ const DatePicker = ({
 			<ClayDatePicker
 				dateFormat={dateMask}
 				disabled={disabled}
+				expanded={expanded}
 				initialMonth={getInitialMonth(value)}
+				onExpandedChange={(expand) => {
+					setExpand(expand);
+				}}
 				onInput={(event) => {
 					maskInstance.current.update(event.target.value);
 				}}
 				onNavigation={handleNavigation}
-				onValueChange={(value) => {
+				onValueChange={(value, eventType) => {
 					setValue(value);
+
+					if (eventType === 'click') {
+						setExpand(false);
+						inputRef.current.focus();
+					}
 
 					if (
 						!value ||

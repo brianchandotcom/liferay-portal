@@ -574,7 +574,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106776. Can change section background color, duplicate sectiion and row."
+	@description = "This is a test for LPS-106776 and LPS-102959. Configure the Container and Grid elements."
 	@priority = "5"
 	test ConfigureLayoutElements {
 		task ("Add a content page") {
@@ -588,23 +588,25 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Add a section") {
+		task ("Add a Container") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 		}
 
-		task ("Configure the section") {
+		task ("Configure the Container") {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "warning",
 				panel = "Styles");
 		}
 
-		task ("View the fragment style") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'bg-warning')]");
+		task ("View the Container style") {
+			PageEditor.viewContainerStyle(
+				backgroundColor = "warning",
+				position = "1");
 		}
 
-		task ("Duplicate the fragment") {
+		task ("Duplicate the Container") {
 			PageEditor.gotoDuplicate(fragmentName = "Container");
 		}
 
@@ -612,18 +614,39 @@ definition {
 			PageEditor.viewDuplicateFragment(fragmentName = "Container");
 		}
 
-		task ("Add a row") {
+		task ("Add a Grid below the Container") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid",
 				targetFragmentName = "Container");
 		}
 
-		task ("Duplicate the fragment") {
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "Configuration");
+
+			PageEditor.editLayoutGrid(
+				inverseOrder = "true",
+				layout = "1 Module per Row",
+				panel = "Styles",
+				verticalAlignment = "Bottom");
+		}
+
+		task ("View the Grid style") {
+			PageEditor.viewGridStyle(
+				columnCount = "2",
+				inverseOrder = "true",
+				layout = "12",
+				position = "1",
+				verticalAlignment = "Bottom");
+		}
+
+		task ("Duplicate the Gird") {
 			PageEditor.gotoDuplicate(fragmentName = "Grid");
 		}
 
-		task ("View the duplicate row fragment") {
+		task ("View the duplicate Grid fragment") {
 			PageEditor.viewDuplicateFragment(fragmentName = "Grid");
 		}
 	}

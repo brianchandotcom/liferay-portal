@@ -90,7 +90,7 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 
 <liferay-frontend:component
 	componentId="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%=
+	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"accountEntryName", role.getTitle(locale)
 		).put(
@@ -98,6 +98,6 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 		).put(
 			"selectAccountUsersURL", selectAccountUsersURL
 		).build()
-	%>"
+	%>'
 	module="account_entries_admin/js/AccountUsersManagementToolbarDefaultEventHandler.es"
 />

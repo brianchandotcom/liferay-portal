@@ -194,14 +194,18 @@ const mockTimeSpanOptions = [
 
 const mockTrafficSources = [
 	{
+		countryKeywords: [],
 		helpMessage: 'Testing Help Message',
 		name: 'testing',
+		share: 100,
 		title: 'Testing',
 		value: 32178,
 	},
 	{
+		countryKeywords: [],
 		helpMessage: 'Second Testing Help Message',
 		name: 'second-testing',
+		share: 0,
 		title: 'Second Testing',
 	},
 ];

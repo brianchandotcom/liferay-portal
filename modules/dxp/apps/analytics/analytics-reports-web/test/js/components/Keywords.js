@@ -22,9 +22,15 @@ describe('Keywords', () => {
 	it('renders message no best keywords when content was published today', () => {
 		const mockCurrentPage = {
 			data: {
+				countryKeywords: [
+					{
+						countryCode: 'us',
+						countryName: 'United States',
+						keywords: [],
+					},
+				],
 				helpMessage:
 					'This number refers to the volume of people that find your page through a search engine.',
-				keywords: [],
 				name: 'organic',
 				share: 0,
 				title: 'Organic',

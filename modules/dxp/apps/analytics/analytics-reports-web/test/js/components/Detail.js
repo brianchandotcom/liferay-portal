@@ -18,40 +18,84 @@ import Detail from '../../../src/main/resources/META-INF/resources/js/components
 
 const mockCurrentPage = {
 	data: {
-		helpMessage:
-			'This number refers to the volume of people that find your page through a search engine.',
-		keywords: [
+		countryKeywords: [
 			{
-				keyword: 'commerce',
-				position: 1,
-				searchVolume: 12300,
-				traffic: 90000,
+				countryCode: 'us',
+				countryName: 'United States',
+				keywords: [
+					{
+						keyword: 'commerce',
+						position: 1,
+						searchVolume: 12300,
+						traffic: 90000,
+					},
+					{
+						keyword: 'e-commerce',
+						position: 2,
+						searchVolume: 9800,
+						traffic: 14800,
+					},
+					{
+						keyword: 'what is commerce',
+						position: 3,
+						searchVolume: 9500,
+						traffic: 14000,
+					},
+					{
+						keyword: 'what is e-commerce',
+						position: 4,
+						searchVolume: 8700,
+						traffic: 12100,
+					},
+					{
+						keyword:
+							'commerce definition for new business strategy',
+						position: 5,
+						searchVolume: 7100,
+						traffic: 10100,
+					},
+				],
 			},
 			{
-				keyword: 'e-commerce',
-				position: 2,
-				searchVolume: 9800,
-				traffic: 14800,
-			},
-			{
-				keyword: 'what is commerce',
-				position: 3,
-				searchVolume: 9500,
-				traffic: 14000,
-			},
-			{
-				keyword: 'what is e-commerce',
-				position: 4,
-				searchVolume: 8700,
-				traffic: 12100,
-			},
-			{
-				keyword: 'commerce definition for new business strategy',
-				position: 5,
-				searchVolume: 7100,
-				traffic: 10100,
+				countryCode: 'es',
+				countryName: 'Spain',
+				keywords: [
+					{
+						keyword: 'commerce',
+						position: 1,
+						searchVolume: 12300,
+						traffic: 90000,
+					},
+					{
+						keyword: 'e-commerce',
+						position: 2,
+						searchVolume: 9800,
+						traffic: 14800,
+					},
+					{
+						keyword: 'what is commerce',
+						position: 3,
+						searchVolume: 9500,
+						traffic: 14000,
+					},
+					{
+						keyword: 'what is e-commerce',
+						position: 4,
+						searchVolume: 8700,
+						traffic: 12100,
+					},
+					{
+						keyword:
+							'commerce definition for new business strategy',
+						position: 5,
+						searchVolume: 7100,
+						traffic: 10100,
+					},
+				],
 			},
 		],
+		helpMessage:
+			'This number refers to the volume of people that find your page through a search engine.',
 		name: 'organic',
 		share: 0,
 		title: 'Organic',
@@ -101,7 +145,7 @@ describe('Detail', () => {
 		expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);
 	});
 
-	it('displays the top five relevant keywords sorted by traffic', async () => {
+	it('displays the top five relevant keywords by country sorted by traffic', async () => {
 		const {getByText} = render(
 			<Detail
 				currentPage={mockCurrentPage}
@@ -119,6 +163,9 @@ describe('Detail', () => {
 		await wait(() =>
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
 		);
+
+		expect(getByText('United States')).toBeInTheDocument();
+		expect(getByText('Spain')).toBeInTheDocument();
 
 		expect(getByText('commerce')).toBeInTheDocument();
 		expect(getByText('90,000')).toBeInTheDocument();

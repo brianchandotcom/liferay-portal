@@ -266,6 +266,11 @@ $productMenuWidth: 320px;
 	.translate-article {
 		nav {
 			height: auto;
+			position: fixed;
+			transition: left ease $productMenuTransitionDuration,
+				width ease $productMenuTransitionDuration;
+			width: 100%;
+			z-index: $toolbarZIndex;
 
 			> .container-fluid {
 				padding: 0;
@@ -317,7 +322,12 @@ $productMenuWidth: 320px;
 
 		.translate-body-form {
 			background-color: #fff;
+			margin-top: $toolbarHeight;
 			padding: 1.5rem;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: $toolbarDesktopHeight;
+			}
 
 			div[contenteditable='false'] {
 				border: 1px solid $gray-300;

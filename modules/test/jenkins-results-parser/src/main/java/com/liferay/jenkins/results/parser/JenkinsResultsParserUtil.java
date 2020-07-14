@@ -74,6 +74,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -192,6 +193,22 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static <T> List<T> concatenate(
+		List<List<T>> lists, boolean allowDuplicates) {
+
+		Collection<T> concatenatedCollection = new ArrayList<>();
+
+		if (!allowDuplicates) {
+			concatenatedCollection = new HashSet<>();
+		}
+
+		for (List<T> list : lists) {
+			concatenatedCollection.addAll(list);
+		}
+
+		return new ArrayList<>(concatenatedCollection);
 	}
 
 	public static void copy(File sourceFile, File targetFile)
@@ -1743,6 +1760,10 @@ public class JenkinsResultsParserUtil {
 		return randomList;
 	}
 
+	public static <T> T getRandomListItem(List<T> list) {
+		return list.get(getRandomValue(0, list.size() - 1));
+	}
+
 	public static String getRandomString(Collection<String> collection) {
 		if ((collection == null) || collection.isEmpty()) {
 			throw new IllegalArgumentException("Collection is null or empty");
@@ -1770,19 +1791,34 @@ public class JenkinsResultsParserUtil {
 	public static List<JenkinsSlave> getReachableJenkinsSlaves(
 		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
 
-		List<JenkinsSlave> onlineJenkinsSlaves = new ArrayList<>();
+		List<Callable<List<JenkinsSlave>>> callables = new ArrayList<>(
+			jenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-			jenkinsMaster.update();
+			Callable<List<JenkinsSlave>> callable =
+				new Callable<List<JenkinsSlave>>() {
 
-			for (JenkinsSlave onlineJenkinsSlave :
-					jenkinsMaster.getOnlineJenkinsSlaves()) {
+					@Override
+					public List<JenkinsSlave> call() throws Exception {
+						jenkinsMaster.update();
 
-				if (!onlineJenkinsSlaves.contains(onlineJenkinsSlave)) {
-					onlineJenkinsSlaves.add(onlineJenkinsSlave);
-				}
-			}
+						return jenkinsMaster.getOnlineJenkinsSlaves();
+					}
+
+				};
+
+			callables.add(callable);
 		}
+
+		ThreadPoolExecutor threadPoolExecutor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+				jenkinsMasters.size(), true);
+
+		ParallelExecutor<List<JenkinsSlave>> parallelExecutor =
+			new ParallelExecutor<>(callables, threadPoolExecutor);
+
+		List<JenkinsSlave> onlineJenkinsSlaves = concatenate(
+			parallelExecutor.execute(), false);
 
 		Collections.sort(onlineJenkinsSlaves);
 
@@ -1794,22 +1830,20 @@ public class JenkinsResultsParserUtil {
 			targetSlaveCount);
 
 		while (randomJenkinsSlaves.size() < targetSlaveCount) {
-			JenkinsSlave randomJenkinsSlave = onlineJenkinsSlaves.get(
-				getRandomValue(0, onlineJenkinsSlaves.size() - 1));
+			JenkinsSlave randomJenkinsSlave = getRandomListItem(
+				onlineJenkinsSlaves);
 
 			onlineJenkinsSlaves.remove(randomJenkinsSlave);
 
-			if (!randomJenkinsSlave.isReachable()) {
-				continue;
+			if (randomJenkinsSlave.isReachable()) {
+				randomJenkinsSlaves.add(randomJenkinsSlave);
 			}
-
-			randomJenkinsSlaves.add(randomJenkinsSlave);
 
 			if (onlineJenkinsSlaves.isEmpty() &&
 				(randomJenkinsSlaves.size() < targetSlaveCount)) {
 
 				throw new RuntimeException(
-					"Unable to find enough reachable slaves");
+					"Unable to find enough reachable Jenkins slaves");
 			}
 		}
 

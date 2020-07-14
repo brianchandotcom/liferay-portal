@@ -42,7 +42,6 @@ import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -58,11 +57,11 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletModel;
@@ -71,6 +70,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
@@ -132,8 +132,6 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Predicate;
-
-import jodd.bean.BeanUtil;
 
 /**
  * <p>
@@ -774,30 +772,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		element = groupElement.addElement("staged-model");
 
-		if (classedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)classedModel;
+		long groupId = _getGroupId(classedModel);
 
-			element.addAttribute(
-				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
-			element.addAttribute("uuid", stagedGroupedModel.getUuid());
+		if (groupId > 0) {
+			element.addAttribute("group-id", String.valueOf(groupId));
 		}
-		else if (classedModel instanceof StagedModel) {
+
+		if (classedModel instanceof StagedModel) {
 			StagedModel stagedModel = (StagedModel)classedModel;
 
 			element.addAttribute("uuid", stagedModel.getUuid());
-		}
-
-		long groupIdAttribute = GetterUtil.getLong(
-			element.attributeValue("group-id"));
-
-		if (groupIdAttribute <= 0) {
-			long groupId = BeanPropertiesUtil.getLongSilent(
-				classedModel, "groupId");
-
-			if (groupId > 0) {
-				element.addAttribute("group-id", String.valueOf(groupId));
-			}
 		}
 
 		return element;
@@ -1193,14 +1177,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Object getZipEntryAsObject(Element element, String path) {
 		Object object = fromXML(getZipEntryAsString(path));
 
-		Attribute classNameAttribute = element.attribute("attached-class-name");
+		if (object instanceof TypedModel) {
+			Attribute classNameAttribute = element.attribute(
+				"attached-class-name");
 
-		if ((object != null) && (classNameAttribute != null)) {
-			String className = classNameAttribute.getText();
+			if (classNameAttribute != null) {
+				TypedModel typedModel = (TypedModel)object;
 
-			BeanPropertiesUtil.setProperty(object, "className", className);
-			BeanPropertiesUtil.setProperty(
-				object, "classNameId", PortalUtil.getClassNameId(className));
+				typedModel.setClassNameId(
+					PortalUtil.getClassNameId(classNameAttribute.getText()));
+			}
 		}
 
 		return object;
@@ -2025,8 +2011,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
-		long groupId = BeanPropertiesUtil.getLongSilent(
-			classedModel, "groupId");
+		long groupId = _getGroupId(classedModel);
 
 		if (groupId > 0) {
 			referenceElement.addAttribute("group-id", String.valueOf(groupId));
@@ -2469,20 +2454,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected void populateClassNameAttribute(
 		ClassedModel classedModel, Element element) {
 
-		String attachedClassName = null;
+		if (classedModel instanceof TypedModel) {
+			TypedModel typedModel = (TypedModel)classedModel;
 
-		if (classedModel instanceof AttachedModel) {
-			AttachedModel attachedModel = (AttachedModel)classedModel;
-
-			attachedClassName = attachedModel.getClassName();
-		}
-		else if (BeanUtil.hasProperty(classedModel, "className")) {
-			attachedClassName = BeanPropertiesUtil.getStringSilent(
-				classedModel, "className");
-		}
-
-		if (Validator.isNotNull(attachedClassName)) {
-			element.addAttribute("attached-class-name", attachedClassName);
+			element.addAttribute(
+				"attached-class-name", typedModel.getClassName());
 		}
 	}
 
@@ -2550,6 +2526,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return null;
+	}
+
+	private long _getGroupId(ClassedModel classedModel) {
+		if (classedModel instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)classedModel;
+
+			return groupedModel.getGroupId();
+		}
+
+		return 0;
 	}
 
 	private long _getOldPrimaryKey(Map<Long, Long> map, long value) {

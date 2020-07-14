@@ -176,7 +176,7 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, _name, "com.test",
 			mavenExecutor, "-Dpackage=" + _packageName,
-			"-DliferayVersion=" + _liferayVersion);
+			"-DliferayVersion=" + _liferayVersion, "-DbuildType=maven");
 
 		if (isBuildProjects()) {
 			String projectPath;

@@ -41,6 +41,7 @@
 		<requiredProperty key="author">
 		</requiredProperty>
 		<requiredProperty key="buildType">
+			<defaultValue>gradle</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="clientPath">
 			<defaultValue>:${artifactId}-client</defaultValue>

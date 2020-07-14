@@ -31,8 +31,24 @@ export default function App() {
 
 	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);
-	const languageId = useSelector((state) => state.languageId);
 	const layoutData = useSelector((state) => state.layoutData);
+
+	return (
+		<DragAndDropContextProvider layoutData={layoutData}>
+			<LanguageDirection />
+			<DragPreview />
+			<Toolbar />
+			<LayoutViewport
+				mainItemId={mainItemId}
+				useMasterLayout={masterLayoutData.items}
+			/>
+			{createPortal(<Sidebar />, document.body)}
+		</DragAndDropContextProvider>
+	);
+}
+
+const LanguageDirection = () => {
+	const languageId = useSelector((state) => state.languageId);
 
 	useEffect(() => {
 		const currentLanguageDirection = config.languageDirection[languageId];
@@ -44,15 +60,5 @@ export default function App() {
 		}
 	}, [languageId]);
 
-	return (
-		<DragAndDropContextProvider layoutData={layoutData}>
-			<DragPreview />
-			<Toolbar />
-			<LayoutViewport
-				mainItemId={mainItemId}
-				useMasterLayout={masterLayoutData.items}
-			/>
-			{createPortal(<Sidebar />, document.body)}
-		</DragAndDropContextProvider>
-	);
-}
+	return null;
+};

@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -172,6 +173,19 @@ public class InfoForm {
 		InfoLocalizedValue<String> labelInfoLocalizedValue) {
 
 		_builder.labelInfoLocalizedValue(labelInfoLocalizedValue);
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{_infoFieldSetEntriesByName: ");
+		sb.append(_builder._infoFieldSetEntriesByName);
+		sb.append(", name: ");
+		sb.append(_builder._name);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static class Builder {

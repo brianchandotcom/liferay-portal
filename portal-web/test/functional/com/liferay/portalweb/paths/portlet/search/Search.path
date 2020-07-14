@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUGGESTION_WIDGET_ELLIPSIS_ICON</td>
+	<td>//div[contains(@class,'portlet-borderless')]//header[@class='portlet-topper' and contains(.,'Suggestions')]//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG_FACET_CLOUD_LAYOUT</td>
 	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${tagName}')]</td>
 	<td></td>

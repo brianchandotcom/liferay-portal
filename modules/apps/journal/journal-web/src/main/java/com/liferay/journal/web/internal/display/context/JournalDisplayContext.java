@@ -49,6 +49,7 @@ import com.liferay.journal.web.internal.security.permission.resource.JournalArti
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
+import com.liferay.journal.web.internal.translation.exporter.TranslationInfoItemFieldValuesExporterTrackerUtil;
 import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.journal.web.internal.util.JournalArticleTranslation;
 import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
@@ -101,18 +102,19 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -560,7 +562,14 @@ public class JournalDisplayContext {
 			"props",
 			HashMapBuilder.<String, Object>put(
 				"availableExportFileFormats",
-				Arrays.asList("XLIFF 1.2", "XLIFF 2.0")
+				TranslationInfoItemFieldValuesExporterTrackerUtil.
+					getTranslationInfoItemFieldValuesExporters(
+					).stream(
+					).map(
+						TranslationInfoItemFieldValuesExporter::getMimeType
+					).collect(
+						Collectors.toList()
+					)
 			).put(
 				"availableTargetLocales",
 				ExportTranslationUtil.getLocalesJSONJArray(

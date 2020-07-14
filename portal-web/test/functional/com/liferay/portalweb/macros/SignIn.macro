@@ -61,6 +61,18 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
+		var defaultPortalURL = PropsUtil.get("default.portal.url");
+
+		SignIn.signInSpecificURL(url = "${defaultPortalURL}");
+
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+			SignIn.agreeToTermsOfUse();
+		}
+
+		if (IsElementPresent(locator1 = "Select#QUESTION")) {
+			SignIn.setPasswordReminder();
+		}
+
 		var portalURL = PropsUtil.get("portal.url");
 		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");

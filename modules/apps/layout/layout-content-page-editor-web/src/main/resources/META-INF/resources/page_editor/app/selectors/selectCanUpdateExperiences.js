@@ -15,6 +15,6 @@
 /**
  * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
  */
-export default function selectCanSwitchEditMode({permissions}) {
-	return !permissions.LOCKED_SEGMENTS_EXPERIMENT && permissions.UPDATE;
+export default function selectCanUpdateExperiences({permissions}) {
+	return permissions.UPDATE || permissions.UPDATE_LAYOUT_CONTENT;
 }

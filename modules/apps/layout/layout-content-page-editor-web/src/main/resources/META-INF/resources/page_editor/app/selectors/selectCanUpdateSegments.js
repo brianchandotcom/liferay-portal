@@ -16,8 +16,5 @@
  * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
  */
 export default function selectCanUpdateSegments({permissions}) {
-	return (
-		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-		permissions.EDIT_SEGMENTS_ENTRY
-	);
+	return permissions.EDIT_SEGMENTS_ENTRY;
 }

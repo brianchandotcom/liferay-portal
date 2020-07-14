@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
@@ -97,7 +98,12 @@ public class DDMTemplateTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<DDMTemplateTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(DDMTemplateTable.INSTANCE);
+		parentTableReferenceInfoBuilder.groupedModel(
+			DDMTemplateTable.INSTANCE
+		).singleColumnReference(
+			DDMTemplateTable.INSTANCE.classPK,
+			DDMStructureTable.INSTANCE.structureId
+		);
 	}
 
 	@Override

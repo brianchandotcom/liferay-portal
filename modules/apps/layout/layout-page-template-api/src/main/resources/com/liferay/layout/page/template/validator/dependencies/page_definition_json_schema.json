@@ -36,175 +36,6 @@
 			"title": "The ClassPKReference Schema",
 			"type": "object"
 		},
-		"PageCollectionDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"collectionConfig": {
-					"additionalProperties": false,
-					"allOf": [
-						{
-							"if": {
-								"properties": {
-									"collectionType": {
-										"const": "Collection"
-									}
-								}
-							},
-							"then": {
-								"properties": {
-									"collectionReference": {
-										"$ref": "#/definitions/ClassPKReference"
-									}
-								}
-							}
-						},
-						{
-							"if": {
-								"properties": {
-									"collectionType": {
-										"const": "CollectionProvider"
-									}
-								}
-							},
-							"then": {
-								"properties": {
-									"collectionReference": {
-										"$ref": "#/definitions/ClassNameReference"
-									}
-								}
-							}
-						}
-					],
-					"properties": {
-						"collectionReference": {
-							"oneOf": [
-								{
-									"$ref": "#/definitions/ClassNameReference"
-								},
-								{
-									"$ref": "#/definitions/ClassPKReference"
-								}
-							],
-							"title": "The collectionReference Schema",
-							"type": "object"
-						},
-						"collectionType": {
-							"enum": [
-								"Collection",
-								"CollectionProvider"
-							],
-							"title": "The collectionType Schema",
-							"type": "string"
-						}
-					},
-					"required": [
-						"collectionReference",
-						"collectionType"
-					],
-					"title": "The collectionConfig Schema",
-					"type": "object"
-				},
-				"listItemStyle": {
-					"title": "The listItemStyle Schema",
-					"type": "string"
-				},
-				"listStyle": {
-					"title": "The listStyle Schema",
-					"type": "string"
-				},
-				"numberOfColumns": {
-					"minimum": 0,
-					"title": "The numberOfColumns Schema",
-					"type": "integer"
-				},
-				"numberOfItems": {
-					"minimum": 0,
-					"title": "The numberOfItems Schema",
-					"type": "integer"
-				},
-				"templateKey": {
-					"title": "The templateKey Schema",
-					"type": "string"
-				}
-			},
-			"title": "The PageCollectionDefinition Schema",
-			"type": "object"
-		},
-		"PageCollectionItemDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"collectionItemConfig": {
-					"title": "The collectionItemConfig Schema",
-					"type": "object"
-				}
-			},
-			"title": "The PageCollectionItemDefinition Schema",
-			"type": "object"
-		},
-		"PageColumnDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"columnViewportConfig": {
-					"additionalProperties": false,
-					"deprecationMessage": "Deprecated as of Athanasius (7.3.x), replaced by columnViewports",
-					"properties": {
-						"landscapeMobile": {
-							"additionalProperties": false,
-							"properties": {
-								"size": {
-									"maximum": 12,
-									"minimum": 1,
-									"title": "The size Schema",
-									"type": "integer"
-								}
-							},
-							"type": "object"
-						},
-						"portraitMobile": {
-							"additionalProperties": false,
-							"properties": {
-								"size": {
-									"maximum": 12,
-									"minimum": 1,
-									"title": "The size Schema",
-									"type": "integer"
-								}
-							},
-							"type": "object"
-						},
-						"tablet": {
-							"additionalProperties": false,
-							"properties": {
-								"size": {
-									"maximum": 12,
-									"minimum": 1,
-									"title": "The size Schema",
-									"type": "integer"
-								}
-							},
-							"type": "object"
-						}
-					},
-					"title": "The columnViewportConfig Schema",
-					"type": "object"
-				},
-				"columnViewports": {
-					"items": {
-						"$ref": "#/definitions/ColumnViewport"
-					},
-					"title": "The rowViewports Schema",
-					"type": "array"
-				},
-				"size": {
-					"maximum": 12,
-					"minimum": 1,
-					"title": "The size Schema",
-					"type": "integer"
-				}
-			},
-			"title": "The PageColumnDefinition Schema",
-			"type": "object"
-		},
 		"ColumnViewport": {
 			"additionalProperties": false,
 			"properties": {
@@ -227,7 +58,8 @@
 				}
 			},
 			"required": [
-				"columnViewportDefinition", "id"
+				"columnViewportDefinition",
+				"id"
 			],
 			"type": "object"
 		},
@@ -247,25 +79,6 @@
 				"contextSource"
 			],
 			"title": "The ContextReference Schema",
-			"type": "object"
-		},
-		"PageDropZoneDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"fragmentSettings": {
-					"oneOf": [
-						{
-							"$ref": "#/definitions/FragmentSettingsAllowed"
-						},
-						{
-							"$ref": "#/definitions/FragmentSettingsUnallowed"
-						}
-					],
-					"title": "The fragmentSettings Schema",
-					"type": "object"
-				}
-			},
-			"title": "The PageDropZoneDefinition Schema",
 			"type": "object"
 		},
 		"Fragment": {
@@ -453,47 +266,6 @@
 			"title": "The FragmentInlineValue Schema",
 			"type": "object"
 		},
-		"PageFragmentInstanceDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"fragment": {
-					"$ref": "#/definitions/Fragment"
-				},
-				"fragmentConfig": {
-					"title": "The fragmentConfig Schema",
-					"type": "object"
-				},
-				"fragmentFields": {
-					"items": {
-						"additionalProperties": false,
-						"properties": {
-							"id": {
-								"title": "The id Schema",
-								"type": "string"
-							},
-							"value": {
-								"$ref": "#/definitions/FragmentField"
-							}
-						},
-						"required": [
-							"id"
-						],
-						"type": "object"
-					},
-					"title": "The fragmentFields Schema",
-					"type": "array"
-				},
-				"widgetInstances": {
-					"items": {
-						"$ref": "#/definitions/WidgetInstance"
-					},
-					"title": "The widgetInstances Schema",
-					"type": "array"
-				}
-			},
-			"title": "The PageFragmentInstanceDefinition Schema",
-			"type": "object"
-		},
 		"FragmentLink": {
 			"additionalProperties": false,
 			"properties": {
@@ -605,6 +377,194 @@
 				"unallowedFragments"
 			],
 			"title": "The FragmentSettingsUnallowed Schema",
+			"type": "object"
+		},
+		"PageCollectionDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionConfig": {
+					"additionalProperties": false,
+					"allOf": [
+						{
+							"if": {
+								"properties": {
+									"collectionType": {
+										"const": "Collection"
+									}
+								}
+							},
+							"then": {
+								"properties": {
+									"collectionReference": {
+										"$ref": "#/definitions/ClassPKReference"
+									}
+								}
+							}
+						},
+						{
+							"if": {
+								"properties": {
+									"collectionType": {
+										"const": "CollectionProvider"
+									}
+								}
+							},
+							"then": {
+								"properties": {
+									"collectionReference": {
+										"$ref": "#/definitions/ClassNameReference"
+									}
+								}
+							}
+						}
+					],
+					"properties": {
+						"collectionReference": {
+							"oneOf": [
+								{
+									"$ref": "#/definitions/ClassNameReference"
+								},
+								{
+									"$ref": "#/definitions/ClassPKReference"
+								}
+							],
+							"title": "The collectionReference Schema",
+							"type": "object"
+						},
+						"collectionType": {
+							"enum": [
+								"Collection",
+								"CollectionProvider"
+							],
+							"title": "The collectionType Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"collectionReference",
+						"collectionType"
+					],
+					"title": "The collectionConfig Schema",
+					"type": "object"
+				},
+				"listItemStyle": {
+					"title": "The listItemStyle Schema",
+					"type": "string"
+				},
+				"listStyle": {
+					"title": "The listStyle Schema",
+					"type": "string"
+				},
+				"numberOfColumns": {
+					"minimum": 0,
+					"title": "The numberOfColumns Schema",
+					"type": "integer"
+				},
+				"numberOfItems": {
+					"minimum": 0,
+					"title": "The numberOfItems Schema",
+					"type": "integer"
+				},
+				"templateKey": {
+					"title": "The templateKey Schema",
+					"type": "string"
+				}
+			},
+			"title": "The PageCollectionDefinition Schema",
+			"type": "object"
+		},
+		"PageCollectionItemDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionItemConfig": {
+					"title": "The collectionItemConfig Schema",
+					"type": "object"
+				}
+			},
+			"title": "The PageCollectionItemDefinition Schema",
+			"type": "object"
+		},
+		"PageColumnDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"columnViewportConfig": {
+					"additionalProperties": false,
+					"deprecationMessage": "Deprecated as of Athanasius (7.3.x), replaced by columnViewports",
+					"properties": {
+						"landscapeMobile": {
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
+						},
+						"portraitMobile": {
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
+						},
+						"tablet": {
+							"additionalProperties": false,
+							"properties": {
+								"size": {
+									"maximum": 12,
+									"minimum": 1,
+									"title": "The size Schema",
+									"type": "integer"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"title": "The columnViewportConfig Schema",
+					"type": "object"
+				},
+				"columnViewports": {
+					"items": {
+						"$ref": "#/definitions/ColumnViewport"
+					},
+					"title": "The rowViewports Schema",
+					"type": "array"
+				},
+				"size": {
+					"maximum": 12,
+					"minimum": 1,
+					"title": "The size Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The PageColumnDefinition Schema",
+			"type": "object"
+		},
+		"PageDropZoneDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"fragmentSettings": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/FragmentSettingsAllowed"
+						},
+						{
+							"$ref": "#/definitions/FragmentSettingsUnallowed"
+						}
+					],
+					"title": "The fragmentSettings Schema",
+					"type": "object"
+				}
+			},
+			"title": "The PageDropZoneDefinition Schema",
 			"type": "object"
 		},
 		"PageElement": {
@@ -806,6 +766,47 @@
 			"title": "The PageElement Schema",
 			"type": "object"
 		},
+		"PageFragmentInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"fragment": {
+					"$ref": "#/definitions/Fragment"
+				},
+				"fragmentConfig": {
+					"title": "The fragmentConfig Schema",
+					"type": "object"
+				},
+				"fragmentFields": {
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"id": {
+								"title": "The id Schema",
+								"type": "string"
+							},
+							"value": {
+								"$ref": "#/definitions/FragmentField"
+							}
+						},
+						"required": [
+							"id"
+						],
+						"type": "object"
+					},
+					"title": "The fragmentFields Schema",
+					"type": "array"
+				},
+				"widgetInstances": {
+					"items": {
+						"$ref": "#/definitions/WidgetInstance"
+					},
+					"title": "The widgetInstances Schema",
+					"type": "array"
+				}
+			},
+			"title": "The PageFragmentInstanceDefinition Schema",
+			"type": "object"
+		},
 		"PageRootDefinition": {
 			"additionalProperties": false,
 			"title": "The PageRootDefinition Schema",
@@ -904,39 +905,6 @@
 				}
 			},
 			"title": "The PageRowDefinition Schema",
-			"type": "object"
-		},
-		"RowViewport": {
-			"additionalProperties": false,
-			"properties": {
-				"id": {
-					"title": "The id Schema",
-					"type": "string"
-				},
-				"rowViewportDefinition": {
-					"additionalProperties": false,
-					"properties": {
-						"modulesPerRow": {
-							"title": "The modulesPerRow Schema",
-							"type": "integer"
-						},
-						"reverseOrder": {
-							"title": "The reverseOrder Schema",
-							"type": "boolean"
-						},
-						"verticalAlignment": {
-							"title": "The verticalAlignment Schema",
-							"type": "string"
-						}
-					},
-					"title": "The rowViewportDefinition Schema",
-					"type": "object"
-				}
-			},
-			"required": [
-				"id", "rowViewportDefinition"
-			],
-			"title": "The RowViewport Schema",
 			"type": "object"
 		},
 		"PageSectionDefinition": {
@@ -1209,6 +1177,55 @@
 			"title": "The PageSectionDefinition Schema",
 			"type": "object"
 		},
+		"PageWidgetInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"widgetInstance": {
+					"$ref": "#/definitions/WidgetInstance",
+					"title": "The widgetInstance Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"widgetInstance"
+			],
+			"title": "The PageWidgetInstanceDefinition Schema",
+			"type": "object"
+		},
+		"RowViewport": {
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"title": "The id Schema",
+					"type": "string"
+				},
+				"rowViewportDefinition": {
+					"additionalProperties": false,
+					"properties": {
+						"modulesPerRow": {
+							"title": "The modulesPerRow Schema",
+							"type": "integer"
+						},
+						"reverseOrder": {
+							"title": "The reverseOrder Schema",
+							"type": "boolean"
+						},
+						"verticalAlignment": {
+							"title": "The verticalAlignment Schema",
+							"type": "string"
+						}
+					},
+					"title": "The rowViewportDefinition Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"id",
+				"rowViewportDefinition"
+			],
+			"title": "The RowViewport Schema",
+			"type": "object"
+		},
 		"WidgetInstance": {
 			"additionalProperties": false,
 			"properties": {
@@ -1252,21 +1269,6 @@
 				"widgetName"
 			],
 			"title": "The WidgetInstance Schema",
-			"type": "object"
-		},
-		"PageWidgetInstanceDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"widgetInstance": {
-					"$ref": "#/definitions/WidgetInstance",
-					"title": "The widgetInstance Schema",
-					"type": "object"
-				}
-			},
-			"required": [
-				"widgetInstance"
-			],
-			"title": "The PageWidgetInstanceDefinition Schema",
 			"type": "object"
 		}
 	},

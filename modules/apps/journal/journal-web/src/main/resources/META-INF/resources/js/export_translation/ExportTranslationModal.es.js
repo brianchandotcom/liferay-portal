@@ -34,7 +34,7 @@ const ExportTranslationModal = ({
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
 
-	const [exportFileFormat, setExportFileFormat] = useState(
+	const [exportMimeType, setExportMimeType] = useState(
 		availableExportFileFormats[0].mimeType
 	);
 
@@ -50,7 +50,7 @@ const ExportTranslationModal = ({
 		exportTranslationURL,
 		{
 			articleId: articleIds[0],
-			exportFileFormat,
+			exportMimeType,
 			sourceLanguageId,
 			targetLanguageIds: selectedTargetLanguageIds.join(','),
 		}
@@ -113,11 +113,11 @@ const ExportTranslationModal = ({
 		else {
 			return (
 				<ClaySelect
-					name={`_${namespace}_exportFileFormat`}
+					name={`_${namespace}_exportMimeType`}
 					onChange={(e) => {
-						setExportFileFormat(e.currentTarget.value);
+						setExportMimeType(e.currentTarget.value);
 					}}
-					value={exportFileFormat}
+					value={exportMimeType}
 				>
 					{availableExportFileFormats.map((exportFileFormat) => (
 						<ClaySelect.Option

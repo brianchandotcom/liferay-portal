@@ -85,20 +85,20 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			String exportFileFormat = ParamUtil.getString(
-				resourceRequest, "exportFileFormat");
+			String exportMimeType = ParamUtil.getString(
+				resourceRequest, "exportMimeType");
 
 			Optional<TranslationInfoItemFieldValuesExporter>
 				exportFileFormatOptional =
 					_translationInfoItemFieldValuesExporterTracker.
 						getTranslationInfoItemFieldValuesExporterOptional(
-							exportFileFormat);
+							exportMimeType);
 
 			TranslationInfoItemFieldValuesExporter
 				translationInfoItemFieldValuesExporter =
 					exportFileFormatOptional.orElseThrow(
 						() -> new PortalException(
-							"Unknown export file format: " + exportFileFormat));
+							"Unknown export mimeType: " + exportMimeType));
 
 			for (String targetLanguageId :
 					ParamUtil.getStringValues(

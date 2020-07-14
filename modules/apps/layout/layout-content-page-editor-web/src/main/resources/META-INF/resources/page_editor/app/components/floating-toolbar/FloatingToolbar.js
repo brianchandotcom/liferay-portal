@@ -156,6 +156,16 @@ function FloatingToolbar({
 	}, [globalContext]);
 
 	useEffect(() => {
+		alignElement(toolbarRef.current, itemElement, () => {
+			alignElement(
+				panelRef.current,
+				toolbarRef.current || itemElement,
+				() => {
+					setHidden(false);
+				}
+			);
+		});
+
 		if (!itemElement) {
 			return;
 		}
@@ -174,18 +184,6 @@ function FloatingToolbar({
 		if (show && marginValue) {
 			toolbarRef.current.style.transform = `translate(${marginValue}px)`;
 		}
-	}, [itemElement, languageId, show]);
-
-	useEffect(() => {
-		alignElement(toolbarRef.current, itemElement, () => {
-			alignElement(
-				panelRef.current,
-				toolbarRef.current || itemElement,
-				() => {
-					setHidden(false);
-				}
-			);
-		});
 	}, [
 		alignElement,
 		item.config,
@@ -196,6 +194,7 @@ function FloatingToolbar({
 		show,
 		windowScrollPosition,
 		windowWidth,
+		languageId,
 	]);
 
 	useEffect(() => {

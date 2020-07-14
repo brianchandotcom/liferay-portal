@@ -15,6 +15,7 @@
 package com.liferay.translation.exporter;
 
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.localized.InfoLocalizedValue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,10 @@ public interface TranslationInfoItemFieldValuesExporter {
 			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException;
+
+	public default InfoLocalizedValue<String> getLabelInfoLocalizedValue() {
+		return InfoLocalizedValue.localize(getClass(), getMimeType());
+	}
 
 	public String getMimeType();
 

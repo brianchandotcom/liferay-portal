@@ -52,5 +52,5 @@ export default function ExperimentsLabel({label, value}) {
 
 ExperimentsLabel.propTypes = {
 	label: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
+	value: PropTypes.number.isRequired,
 };

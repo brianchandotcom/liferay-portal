@@ -16,9 +16,11 @@ import React, {useCallback, useContext, useReducer} from 'react';
 
 import {useFromControlsId, useToControlsId} from '../CollectionItemContext';
 
-const EditableProcessorContext = React.createContext(null);
 const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};
 const SET_EDITABLE_UNIQUE_ID = 'SET_EDITABLE_UNIQUE_ID';
+
+const EditableProcessorDispatchContext = React.createContext(() => {});
+const EditableProcessorStateContext = React.createContext(INITIAL_STATE);
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === SET_EDITABLE_UNIQUE_ID) {
@@ -32,30 +34,32 @@ function reducer(state = INITIAL_STATE, action) {
 }
 
 export function EditableProcessorContextProvider({children}) {
-	const store = useReducer(reducer, INITIAL_STATE);
+	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
 	return (
-		<EditableProcessorContext.Provider value={store}>
-			{children}
-		</EditableProcessorContext.Provider>
+		<EditableProcessorDispatchContext.Provider value={dispatch}>
+			<EditableProcessorStateContext.Provider value={state}>
+				{children}
+			</EditableProcessorStateContext.Provider>
+		</EditableProcessorDispatchContext.Provider>
 	);
 }
 
 export function useEditableProcessorClickPosition() {
-	const [state] = useContext(EditableProcessorContext);
+	const state = useContext(EditableProcessorStateContext);
 
 	return state.editableClickPosition;
 }
 
 export function useEditableProcessorUniqueId() {
-	const [state] = useContext(EditableProcessorContext);
+	const state = useContext(EditableProcessorStateContext);
 	const fromControlsId = useFromControlsId();
 
 	return fromControlsId(state.editableUniqueId);
 }
 
 export function useIsProcessorEnabled() {
-	const [state] = useContext(EditableProcessorContext);
+	const state = useContext(EditableProcessorStateContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(
@@ -66,7 +70,7 @@ export function useIsProcessorEnabled() {
 }
 
 export function useSetEditableProcessorUniqueId() {
-	const [, dispatch] = useContext(EditableProcessorContext);
+	const dispatch = useContext(EditableProcessorDispatchContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(

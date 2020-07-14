@@ -14,10 +14,16 @@
 		max-width: 100%;
 		width: 12em;
 	}
+}
 
-	p {
-		white-space: normal;
-	}
+.page-editor__toolbar-experience__dropdown-menu.toggled {
+	display: block;
+	left: 0;
+	max-width: 100vw;
+	position: absolute;
+	top: 0;
+	width: 808px;
+	z-index: $modalZIndex + 1;
 
 	li.dropdown-menu__experience {
 		background-color: $white;
@@ -41,14 +47,4 @@
 			border-color: $primary-l1;
 		}
 	}
-}
-
-.page-editor__toolbar-experience__dropdown-menu.toggled {
-	display: block;
-	left: 0;
-	max-width: 100vw;
-	position: absolute;
-	top: 0;
-	width: 808px;
-	z-index: $modalZIndex + 1;
 }

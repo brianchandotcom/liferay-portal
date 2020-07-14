@@ -12,8 +12,10 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -86,140 +88,137 @@ const ExperienceItem = ({
 	});
 
 	return (
-		<li aria-checked={active} className={itemClassName} role="listitem">
-			<span className="overflow-hidden p-2 w-100">
-				<button
-					className="align-items-baseline btn btn-unstyled d-flex justify-content-between p-2 text-dark title w-100"
-					onClick={handleSelect}
-					type="button"
-				>
-					<span className="d-flex flex-column flex-grow-1 text-truncate">
-						<strong className="text-truncate">
-							{experience.name}
+		<ClayList.Item
+			aria-checked={active}
+			className={itemClassName}
+			role="listitem"
+		>
+			<ClayList.ItemField expand>
+				<ClayButton displayType="unstyled" onClick={handleSelect}>
+					<strong className="text-truncate">
+						{experience.name}
 
-							{experience.hasLockedSegmentsExperiment && (
-								<>
-									<ClayIcon
-										className="ml-2 text-secondary"
-										onMouseEnter={() =>
-											setShowtoolTip(true)
-										}
-										onMouseLeave={() =>
-											setShowtoolTip(false)
-										}
-										ref={iconRef}
-										symbol="lock"
-									/>
-
-									{showtoolTip && (
-										<Popover
-											anchor={iconRef.current}
-											header={Liferay.Language.get(
-												'experience-locked'
-											)}
-										>
-											{Liferay.Language.get(
-												'edit-is-not-allowed-for-this-experience'
-											)}
-										</Popover>
-									)}
-								</>
-							)}
-						</strong>
-
-						<span className="audience d-block text-truncate">
-							<span className="mr-1 text-secondary">
-								{Liferay.Language.get('audience')}
-							</span>
-							{experience.segmentsEntryName}
-						</span>
-
-						{experience.segmentsExperimentStatus && (
-							<div>
-								<span className="font-weight-normal mr-1 text-secondary">
-									{Liferay.Language.get('ab-test')}
-								</span>
-
-								<ExperimentLabel
-									label={
-										experience.segmentsExperimentStatus
-											.label
-									}
-									value={
-										experience.segmentsExperimentStatus
-											.value
-									}
+						{experience.hasLockedSegmentsExperiment && (
+							<>
+								<ClayIcon
+									className="ml-2 text-secondary"
+									onMouseEnter={() => setShowtoolTip(true)}
+									onMouseLeave={() => setShowtoolTip(false)}
+									ref={iconRef}
+									symbol="lock"
 								/>
-							</div>
+
+								{showtoolTip && (
+									<Popover
+										anchor={iconRef.current}
+										header={Liferay.Language.get(
+											'experience-locked'
+										)}
+									>
+										{Liferay.Language.get(
+											'edit-is-not-allowed-for-this-experience'
+										)}
+									</Popover>
+								)}
+							</>
 						)}
+					</strong>
+
+					<span className="text-truncate">
+						<span className="mr-1 text-secondary">
+							{Liferay.Language.get('audience')}
+						</span>
+						{experience.segmentsEntryName}
 					</span>
-				</button>
-			</span>
 
-			{editable && (
-				<div className="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
-					<ClayButtonWithIcon
-						className="component-action mx-2 text-secondary"
-						disabled={lockedIncreasePriority}
-						displayType="unstyled"
-						monospaced
-						onClick={handlePriorityIncrease}
-						small
-						symbol="angle-up"
-						title={Liferay.Language.get('prioritize-experience')}
-						type="button"
-					/>
+					{experience.segmentsExperimentStatus && (
+						<div>
+							<span className="font-weight-normal mr-1 text-secondary">
+								{Liferay.Language.get('ab-test')}
+							</span>
 
-					<ClayButtonWithIcon
-						className="component-action mx-2 text-secondary"
-						disabled={lockedDecreasePriority}
-						displayType="unstyled"
-						monospaced
-						onClick={handlePriorityDecrease}
-						small
-						symbol="angle-down"
-						title={Liferay.Language.get('deprioritize-experience')}
-						type="button"
-					/>
+							<ExperimentLabel
+								label={
+									experience.segmentsExperimentStatus.label
+								}
+								value={
+									experience.segmentsExperimentStatus.value
+								}
+							/>
+						</div>
+					)}
+				</ClayButton>
+			</ClayList.ItemField>
 
-					<ClayButtonWithIcon
-						className="component-action mx-2 text-secondary"
-						displayType="unstyled"
-						monospaced
-						onClick={handleExperienceEdit}
-						small
-						symbol="pencil"
-						title={Liferay.Language.get('edit-experience')}
-						type="button"
-					/>
+			<ClayList.ItemField className="align-self-center">
+				{editable && (
+					<div className="px-2">
+						<ClayButtonWithIcon
+							className="mx-2 text-secondary"
+							disabled={lockedIncreasePriority}
+							displayType="unstyled"
+							onClick={handlePriorityIncrease}
+							small
+							symbol="angle-up"
+							title={Liferay.Language.get(
+								'prioritize-experience'
+							)}
+							type="button"
+						/>
 
-					<ClayButtonWithIcon
-						className="component-action mx-2 text-secondary"
-						displayType="unstyled"
-						monospaced
-						onClick={handleExperienceDelete}
-						small
-						symbol="times-circle"
-						title={Liferay.Language.get('delete-experience')}
-						type="button"
-					/>
-				</div>
-			)}
+						<ClayButtonWithIcon
+							className="mx-2 text-secondary"
+							disabled={lockedDecreasePriority}
+							displayType="unstyled"
+							onClick={handlePriorityDecrease}
+							small
+							symbol="angle-down"
+							title={Liferay.Language.get(
+								'deprioritize-experience'
+							)}
+							type="button"
+						/>
 
-			{experience.hasLockedSegmentsExperiment &&
-				experience.segmentsExperimentURL && (
-					<div className="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
-						<a
-							className="btn btn-borderless btn-monospaced btn-sm btn-unstyled component-action mr-0 mx-2 text-secondary"
-							href={experience.segmentsExperimentURL}
-							onClick={handleExperimentNavigation}
-							title={Liferay.Language.get('go-to-test-details')}
-						>
-							<ClayIcon symbol="test" />
-						</a>
+						<ClayButtonWithIcon
+							className="mx-2 text-secondary"
+							displayType="unstyled"
+							onClick={handleExperienceEdit}
+							small
+							symbol="pencil"
+							title={Liferay.Language.get('edit-experience')}
+							type="button"
+						/>
+
+						<ClayButtonWithIcon
+							className="mx-2 text-secondary"
+							displayType="unstyled"
+							onClick={handleExperienceDelete}
+							small
+							symbol="times-circle"
+							title={Liferay.Language.get('delete-experience')}
+							type="button"
+						/>
 					</div>
 				)}
-		</li>
+
+				{experience.hasLockedSegmentsExperiment &&
+					experience.segmentsExperimentURL && (
+						<div className="px-2">
+							<ClayLink
+								className="component-action mx-2"
+								displayType="secondary"
+								href={experience.segmentsExperimentURL}
+								onClick={handleExperimentNavigation}
+								title={Liferay.Language.get(
+									'go-to-test-details'
+								)}
+							>
+								<ClayIcon symbol="test" />
+							</ClayLink>
+						</div>
+					)}
+			</ClayList.ItemField>
+		</ClayList.Item>
 	);
 };
 

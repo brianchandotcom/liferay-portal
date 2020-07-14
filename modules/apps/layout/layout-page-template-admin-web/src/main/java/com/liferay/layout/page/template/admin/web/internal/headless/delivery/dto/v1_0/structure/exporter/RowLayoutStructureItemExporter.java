@@ -16,14 +16,16 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
-import com.liferay.headless.delivery.dto.v1_0.RowViewportConfig;
-import com.liferay.headless.delivery.dto.v1_0.RowViewportConfigDefinition;
+import com.liferay.headless.delivery.dto.v1_0.RowViewport;
+import com.liferay.headless.delivery.dto.v1_0.RowViewportDefinition;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,7 +62,7 @@ public class RowLayoutStructureItemExporter
 						reverseOrder = getReverseOrder();
 						verticalAlignment = getVerticalAlignment();
 
-						setRowViewportConfig(
+						setRowViewports(
 							() -> {
 								Map<String, JSONObject>
 									rowViewportConfigurations =
@@ -73,21 +75,27 @@ public class RowLayoutStructureItemExporter
 									return null;
 								}
 
-								return new RowViewportConfig() {
-									{
-										landscapeMobile =
-											_toRowViewportConfigDefinition(
-												rowViewportConfigurations,
-												ViewportSize.MOBILE_LANDSCAPE);
-										portraitMobile =
-											_toRowViewportConfigDefinition(
-												rowViewportConfigurations,
-												ViewportSize.PORTRAIT_MOBILE);
-										tablet = _toRowViewportConfigDefinition(
-											rowViewportConfigurations,
-											ViewportSize.TABLET);
-									}
-								};
+								List<RowViewport> rowViewports =
+									new ArrayList<RowViewport>() {
+										{
+											add(
+												_toRowViewport(
+													rowViewportConfigurations,
+													ViewportSize.
+														MOBILE_LANDSCAPE));
+											add(
+												_toRowViewport(
+													rowViewportConfigurations,
+													ViewportSize.
+														PORTRAIT_MOBILE));
+											add(
+												_toRowViewport(
+													rowViewportConfigurations,
+													ViewportSize.TABLET));
+										}
+									};
+
+								return rowViewports.toArray(new RowViewport[0]);
 							});
 					}
 				};
@@ -96,7 +104,20 @@ public class RowLayoutStructureItemExporter
 		};
 	}
 
-	private RowViewportConfigDefinition _toRowViewportConfigDefinition(
+	private RowViewport _toRowViewport(
+		Map<String, JSONObject> rowViewportConfigurationsMap,
+		ViewportSize viewportSize) {
+
+		return new RowViewport() {
+			{
+				id = viewportSize.getViewportSizeId();
+				rowViewportDefinition = _toRowViewportDefinition(
+					rowViewportConfigurationsMap, viewportSize);
+			}
+		};
+	}
+
+	private RowViewportDefinition _toRowViewportDefinition(
 		Map<String, JSONObject> rowViewportConfigurations,
 		ViewportSize viewportSize) {
 
@@ -109,7 +130,7 @@ public class RowLayoutStructureItemExporter
 		JSONObject jsonObject = rowViewportConfigurations.get(
 			viewportSize.getViewportSizeId());
 
-		return new RowViewportConfigDefinition() {
+		return new RowViewportDefinition() {
 			{
 				setModulesPerRow(
 					() -> {

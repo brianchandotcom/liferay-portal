@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const Collapse = ({children, indentation, label, open}) => {
+const Collapse = ({children, label, open}) => {
 	const [isOpen, setIsOpen] = useState(open);
 	const collapseIcon = isOpen ? 'angle-down-small' : 'angle-right-small';
 	const collapseIconClassName = isOpen ? 'open' : 'closed';
@@ -34,10 +34,7 @@ const Collapse = ({children, indentation, label, open}) => {
 		<div
 			className={classNames(
 				'sidebar__collapse',
-				'panel-group panel-group-flush',
-				{
-					'ml-3': indentation,
-				}
+				'panel-group panel-group-flush'
 			)}
 		>
 			<button
@@ -53,21 +50,22 @@ const Collapse = ({children, indentation, label, open}) => {
 				)}
 				onClick={handleClick}
 			>
-				<span className="c-inner" tabIndex="-1">
+				<span className="c-inner ellipsis" tabIndex="-1">
 					{label}
 					<span className={`collapse-icon-${collapseIconClassName}`}>
 						<ClayIcon key={collapseIcon} symbol={collapseIcon} />
 					</span>
 				</span>
 			</button>
-			{isOpen && children}
+			<div className="sidebar__collapse-content">
+				{isOpen && children}
+			</div>
 		</div>
 	);
 };
 
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
-	indentation: PropTypes.bool,
 	label: PropTypes.string.isRequired,
 	open: PropTypes.bool,
 };

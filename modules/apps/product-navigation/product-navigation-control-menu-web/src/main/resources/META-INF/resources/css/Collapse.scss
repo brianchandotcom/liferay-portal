@@ -21,7 +21,21 @@
 		}
 	}
 
+	.ellipsis {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.sheet-subtitle {
 		line-height: inherit;
+	}
+
+	.sidebar__collapse {
+		margin-left: 1rem;
+
+		> &-content {
+			margin-left: 1rem;
+		}
 	}
 }

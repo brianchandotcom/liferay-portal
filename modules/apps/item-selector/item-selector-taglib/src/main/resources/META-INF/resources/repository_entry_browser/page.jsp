@@ -352,6 +352,16 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													icon="documents-and-media"
 													title="<%= title %>"
 												>
+													<liferay-frontend:vertical-card-footer>
+														<span class="text-secondary">
+															<clay:icon
+																symbol="books"
+															/>
+
+															<small>Company Assets</small>
+														</span>
+													</liferay-frontend:vertical-card-footer>
+
 													<liferay-frontend:vertical-card-sticker-bottom>
 														<liferay-document-library:mime-type-sticker
 															cssClass="sticker-bottom-left sticker-secondary"
@@ -370,6 +380,16 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
 												>
+													<liferay-frontend:vertical-card-footer>
+														<span class="text-secondary">
+															<clay:icon
+																symbol="books"
+															/>
+
+															<small>Company Assets</small>
+														</span>
+													</liferay-frontend:vertical-card-footer>
+
 													<liferay-frontend:vertical-card-sticker-bottom>
 														<liferay-document-library:mime-type-sticker
 															cssClass="sticker-bottom-left sticker-secondary"

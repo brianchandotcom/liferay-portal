@@ -69,6 +69,7 @@ public interface PluginSettingLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting addPluginSetting(PluginSetting pluginSetting);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkPermission(long userId, String pluginId, String pluginType)
 		throws PortalException;
 
@@ -189,7 +190,7 @@ public interface PluginSettingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public PluginSetting getDefaultPluginSetting();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

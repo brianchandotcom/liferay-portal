@@ -301,7 +301,7 @@ public class ContainerLayoutStructureItemExporter
 			{
 				mapping = new Mapping() {
 					{
-						defaultValue = fragmentInlineValue;
+						defaultFragmentInlineValue = fragmentInlineValue;
 						itemReference = _toItemReference(jsonObject);
 
 						setFieldKey(

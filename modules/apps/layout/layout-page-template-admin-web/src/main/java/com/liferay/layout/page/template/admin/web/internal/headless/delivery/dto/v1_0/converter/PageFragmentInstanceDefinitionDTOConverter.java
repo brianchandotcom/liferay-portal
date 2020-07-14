@@ -650,7 +650,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 			{
 				mapping = new Mapping() {
 					{
-						defaultValue = fragmentInlineValue;
+						defaultFragmentInlineValue = fragmentInlineValue;
 						itemReference = _toItemReference(jsonObject);
 
 						setFieldKey(

@@ -1583,55 +1583,6 @@ public class JenkinsResultsParserUtil {
 		return plural;
 	}
 
-	public static List<JenkinsSlave> getOnlineJenkinsSlaves(
-		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
-
-		List<JenkinsSlave> onlineJenkinsSlaves = new ArrayList<>();
-
-		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-			jenkinsMaster.update();
-
-			for (JenkinsSlave onlineJenkinsSlave :
-					jenkinsMaster.getOnlineJenkinsSlaves()) {
-
-				if (!onlineJenkinsSlaves.contains(onlineJenkinsSlave)) {
-					onlineJenkinsSlaves.add(onlineJenkinsSlave);
-				}
-			}
-		}
-
-		Collections.sort(onlineJenkinsSlaves);
-
-		if (targetSlaveCount == null) {
-			targetSlaveCount = onlineJenkinsSlaves.size();
-		}
-
-		List<JenkinsSlave> randomJenkinsSlaves = new ArrayList<>(
-			targetSlaveCount);
-
-		while (randomJenkinsSlaves.size() < targetSlaveCount) {
-			JenkinsSlave randomJenkinsSlave = onlineJenkinsSlaves.get(
-				getRandomValue(0, onlineJenkinsSlaves.size() - 1));
-
-			onlineJenkinsSlaves.remove(randomJenkinsSlave);
-
-			if (!randomJenkinsSlave.isReachable()) {
-				continue;
-			}
-
-			randomJenkinsSlaves.add(randomJenkinsSlave);
-
-			if (onlineJenkinsSlaves.isEmpty() &&
-				(randomJenkinsSlaves.size() < targetSlaveCount)) {
-
-				throw new RuntimeException(
-					"Unable to find enough reachable slaves");
-			}
-		}
-
-		return randomJenkinsSlaves;
-	}
-
 	public static String getPathRelativeTo(File file, File relativeToFile) {
 		try {
 			String filePath = getCanonicalPath(file);
@@ -1814,6 +1765,55 @@ public class JenkinsResultsParserUtil {
 		double randomDouble = Math.random();
 
 		return Math.min(start, end) + (int)Math.floor(size * randomDouble);
+	}
+
+	public static List<JenkinsSlave> getReachableJenkinsSlaves(
+		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
+
+		List<JenkinsSlave> onlineJenkinsSlaves = new ArrayList<>();
+
+		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+			jenkinsMaster.update();
+
+			for (JenkinsSlave onlineJenkinsSlave :
+					jenkinsMaster.getOnlineJenkinsSlaves()) {
+
+				if (!onlineJenkinsSlaves.contains(onlineJenkinsSlave)) {
+					onlineJenkinsSlaves.add(onlineJenkinsSlave);
+				}
+			}
+		}
+
+		Collections.sort(onlineJenkinsSlaves);
+
+		if (targetSlaveCount == null) {
+			targetSlaveCount = onlineJenkinsSlaves.size();
+		}
+
+		List<JenkinsSlave> randomJenkinsSlaves = new ArrayList<>(
+			targetSlaveCount);
+
+		while (randomJenkinsSlaves.size() < targetSlaveCount) {
+			JenkinsSlave randomJenkinsSlave = onlineJenkinsSlaves.get(
+				getRandomValue(0, onlineJenkinsSlaves.size() - 1));
+
+			onlineJenkinsSlaves.remove(randomJenkinsSlave);
+
+			if (!randomJenkinsSlave.isReachable()) {
+				continue;
+			}
+
+			randomJenkinsSlaves.add(randomJenkinsSlave);
+
+			if (onlineJenkinsSlaves.isEmpty() &&
+				(randomJenkinsSlaves.size() < targetSlaveCount)) {
+
+				throw new RuntimeException(
+					"Unable to find enough reachable slaves");
+			}
+		}
+
+		return randomJenkinsSlaves;
 	}
 
 	public static String getRegexLiteral(String string) {

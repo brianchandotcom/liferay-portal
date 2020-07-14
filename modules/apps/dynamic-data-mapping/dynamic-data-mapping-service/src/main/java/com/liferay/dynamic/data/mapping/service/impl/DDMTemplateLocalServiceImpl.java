@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -59,9 +61,11 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -575,7 +579,7 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		for (long ancestorSiteGroupId :
-				_portal.getAncestorSiteGroupIds(groupId)) {
+				_getAncestorSiteAndDepotGroupIds(groupId)) {
 
 			template = ddmTemplatePersistence.fetchByG_C_T(
 				ancestorSiteGroupId, classNameId, templateKey);
@@ -664,7 +668,7 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		for (long ancestorSiteGroupId :
-				_portal.getAncestorSiteGroupIds(groupId)) {
+				_getAncestorSiteAndDepotGroupIds(groupId)) {
 
 			template = ddmTemplatePersistence.fetchByG_C_T(
 				ancestorSiteGroupId, classNameId, templateKey);
@@ -745,7 +749,7 @@ public class DDMTemplateLocalServiceImpl
 
 		ddmTemplates.addAll(
 			ddmTemplatePersistence.findByG_C_C(
-				_portal.getAncestorSiteGroupIds(groupId), classNameId,
+				_getAncestorSiteAndDepotGroupIds(groupId), classNameId,
 				classPK));
 
 		return ddmTemplates;
@@ -1814,6 +1818,22 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
+		try {
+			return ArrayUtil.append(
+				_portal.getAncestorSiteGroupIds(groupId),
+				ListUtil.toLongArray(
+					_depotEntryLocalService.getGroupConnectedDepotEntries(
+						groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					DepotEntry::getGroupId));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return new long[0];
+		}
+	}
+
 	private boolean _isTemplateCreationEnabled() {
 		Settings ddmWebConfigurationSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
@@ -1842,6 +1862,9 @@ public class DDMTemplateLocalServiceImpl
 
 	@Reference
 	private DDMXML _ddmXML;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

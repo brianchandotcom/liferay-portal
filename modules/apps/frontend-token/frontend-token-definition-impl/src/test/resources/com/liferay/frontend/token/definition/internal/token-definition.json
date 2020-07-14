@@ -1,0 +1,109 @@
+{
+	"tokenCategories": [
+		{
+			"label": "general",
+			"name": "general"
+		},
+		{
+			"label": "layout",
+			"name": "layout"
+		}
+	],
+	"tokenSets": [
+		{
+			"label": "grid",
+			"name": "grid"
+		},
+		{
+			"label": "links",
+			"name": "links"
+		}
+	],
+	"tokens": [
+		{
+			"editorType": "ColorPicker",
+			"label": "link-color",
+			"name": "linkColor",
+			"tokenCategoryName": "general",
+			"tokenSetName": "links",
+			"type": "String",
+			"validValues": [
+				{
+					"label": "salmon",
+					"value": "Salmon"
+				},
+				{
+					"label": "red",
+					"value": "Red"
+				}
+			]
+		},
+		{
+			"label": "jersey-type",
+			"name": "jerseyType",
+			"tokenCategoryName": "colors",
+			"tokenSetName": "colorCombinations",
+			"type": "String",
+			"validValues": [
+				{
+					"label": "home",
+					"value": "Home"
+				},
+				{
+					"label": "away",
+					"value": "Away"
+				},
+				{
+					"label": "third",
+					"value": "Third"
+				}
+			]
+		},
+		{
+			"label": "text-underline",
+			"name": "linkTextUnderline",
+			"tokenCategoryName": "general",
+			"tokenSetName": "links",
+			"type": "Boolean"
+		},
+		{
+			"editorType": "ColorPicker",
+			"label": "link-hover-color",
+			"name": "linkHoverColor",
+			"tokenCategoryName": "general",
+			"tokenSetName": "links",
+			"type": "String"
+		},
+		{
+			"label": "text-underline",
+			"name": "linkHoverTextUnderline",
+			"tokenCategoryName": "general",
+			"tokenSetName": "links",
+			"type": "Boolean"
+		},
+		{
+			"label": "number-of-columns",
+			"name": "gridNumberOfColumns",
+			"tokenCategoryName": "layout",
+			"tokenSetName": "grid",
+			"type": "Integer",
+			"validValues": [
+				{
+					"label": "1",
+					"value": 1
+				},
+				{
+					"label": "3",
+					"value": 3
+				}
+			]
+		},
+		{
+			"label": "gutter",
+			"name": "gridGutterWidth",
+			"tokenCategoryName": "layout",
+			"tokenSetName": "grid",
+			"type": "String"
+		}
+	]
+}

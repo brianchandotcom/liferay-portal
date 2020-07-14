@@ -354,6 +354,14 @@ definition {
 		return "${searchURL}";
 	}
 
+	macro gotoConfigureSuggestionsOptions {
+		MouseOver.mouseOverNotVisible(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+	}
+
 	macro gotoEmbeddedOptions {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
 

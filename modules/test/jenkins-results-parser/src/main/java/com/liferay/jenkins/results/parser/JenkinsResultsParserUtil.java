@@ -1586,7 +1586,7 @@ public class JenkinsResultsParserUtil {
 	public static List<String> getOnlineJenkinsSlaves(
 		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
 
-		Set<String> onlineJenkinsSlaveNames = new TreeSet<>();
+		List<String> onlineJenkinsSlaveNames = new ArrayList<>();
 
 		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 			jenkinsMaster.update();
@@ -1594,9 +1594,13 @@ public class JenkinsResultsParserUtil {
 			for (JenkinsSlave onlineJenkinsSlave :
 					jenkinsMaster.getOnlineJenkinsSlaves()) {
 
-				onlineJenkinsSlaveNames.add(onlineJenkinsSlave.getName());
+				if (!onlineJenkinsSlaveNames.contains(onelinJenkinsSlave.getName())) {
+					onlineJenkinsSlaveNames.add(onlineJenkinsSlave.getName());
+				}
 			}
 		}
+
+		Collections.sort(onlineJenkinsSlaveNames);
 
 		if (targetSlaveCount == null) {
 			targetSlaveCount = onlineJenkinsSlaveNames.size();

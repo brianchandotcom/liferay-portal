@@ -188,6 +188,13 @@
 					"title": "The columnViewportConfig Schema",
 					"type": "object"
 				},
+				"columnViewports": {
+					"items": {
+						"$ref": "#/definitions/ColumnViewport"
+					},
+					"title": "The rowViewports Schema",
+					"type": "array"
+				},
 				"size": {
 					"maximum": 12,
 					"minimum": 1,
@@ -198,17 +205,30 @@
 			"title": "The ColumnDefinition Schema",
 			"type": "object"
 		},
-		"ColumnViewportConfigDefinition": {
+		"ColumnViewport": {
 			"additionalProperties": false,
 			"properties": {
-				"size": {
-					"maximum": 12,
-					"minimum": 1,
-					"title": "The size Schema",
-					"type": "integer"
+				"columnViewportDefinition": {
+					"additionalProperties": false,
+					"properties": {
+						"size": {
+							"maximum": 12,
+							"minimum": 1,
+							"title": "The size Schema",
+							"type": "integer"
+						}
+					},
+					"title": "The columnViewportDefinition Schema",
+					"type": "object"
+				},
+				"id": {
+					"title": "The id Schema",
+					"type": "string"
 				}
 			},
-			"title": "The ColumnViewportConfigDefinition Schema",
+			"required": [
+				"columnViewportDefinition", "id"
+			],
 			"type": "object"
 		},
 		"ContextReference": {

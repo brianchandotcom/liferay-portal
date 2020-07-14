@@ -54,13 +54,13 @@ public class ContentDashboardDropdownItemsProvider {
 	public List<DropdownItem> getDropdownItems(
 		ContentDashboardItem contentDashboardItem) {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			_liferayPortletRequest);
+
 		Locale locale = _portal.getLocale(_liferayPortletRequest);
 
 		return DropdownItemList.of(
 			() -> {
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(_liferayPortletRequest);
-
 				if (!contentDashboardItem.isViewURLEnabled(
 						httpServletRequest)) {
 
@@ -77,9 +77,6 @@ public class ContentDashboardDropdownItemsProvider {
 				return dropdownItem;
 			},
 			() -> {
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(_liferayPortletRequest);
-
 				if (!contentDashboardItem.isEditURLEnabled(
 						httpServletRequest)) {
 
@@ -92,6 +89,28 @@ public class ContentDashboardDropdownItemsProvider {
 					_getURLWithBackURL(
 						contentDashboardItem.getEditURL(httpServletRequest)));
 				dropdownItem.setLabel(_language.get(locale, "edit"));
+
+				return dropdownItem;
+			},
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setHref("#");
+				dropdownItem.setLabel(_language.get(locale, "info"));
+
+				return dropdownItem;
+			},
+			() -> {
+				if (!contentDashboardItem.isViewURLEnabled(
+						httpServletRequest)) {
+
+					return null;
+				}
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setHref("#");
+				dropdownItem.setLabel(_language.get(locale, "metrics"));
 
 				return dropdownItem;
 			});

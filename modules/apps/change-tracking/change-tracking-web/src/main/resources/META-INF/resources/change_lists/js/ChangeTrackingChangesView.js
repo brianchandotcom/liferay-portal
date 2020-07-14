@@ -36,6 +36,7 @@ class ChangeTrackingChangesView extends React.Component {
 			renderCTEntryURL,
 			renderDiffURL,
 			spritemap,
+			typeNames,
 		} = props;
 
 		this.changes = changes;
@@ -45,6 +46,7 @@ class ChangeTrackingChangesView extends React.Component {
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
 		this.spritemap = spritemap;
+		this.typeNames = typeNames;
 
 		this.state = {
 			ascending: true,
@@ -196,6 +198,14 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getDisplayNodes(ascending, column, delta, nodes, page) {
+		for (let i = 0; i < nodes.length; i++) {
+			const node = nodes[i];
+
+			if (!node.typeName) {
+				node.typeName = this._getTypeName(node);
+			}
+		}
+
 		let displayNodes = nodes.slice(0);
 
 		if (column === 'title') {
@@ -333,7 +343,7 @@ class ChangeTrackingChangesView extends React.Component {
 					parents.push({
 						id: element.id,
 						title: element.title,
-						typeName: element.typeName,
+						typeName: this._getTypeName(element),
 					});
 
 					child.parents = parents;
@@ -562,6 +572,14 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rows;
+	}
+
+	_getTypeName(node) {
+		if (!node.modelClassNameId) {
+			return null;
+		}
+
+		return this.typeNames[node.modelClassNameId.toString()];
 	}
 
 	_handleDeltaChange(delta) {

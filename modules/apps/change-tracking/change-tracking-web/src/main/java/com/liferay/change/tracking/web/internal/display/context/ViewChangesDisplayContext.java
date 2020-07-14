@@ -149,6 +149,8 @@ public class ViewChangesDisplayContext {
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
+			"typeNames", _getTypeNamesJSONObject()
 		).build();
 	}
 
@@ -272,8 +274,6 @@ public class ViewChangesDisplayContext {
 				).put(
 					"title", title
 				).put(
-					"typeName", _getTypeName(ctEntry.getModelClassNameId())
-				).put(
 					"userId", ctEntry.getUserId()
 				).put(
 					"userName", ctEntry.getUserName()
@@ -305,6 +305,11 @@ public class ViewChangesDisplayContext {
 
 			Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(classNameId);
 
+			_typeNameMap.computeIfAbsent(
+				classNameId,
+				key -> _ctDisplayRendererRegistry.getTypeName(
+					_themeDisplay.getLocale(), classNameId));
+
 			for (long classPK : classPKs) {
 				CTEntry ctEntry = ctEntryMap.get(classPK);
 
@@ -312,8 +317,6 @@ public class ViewChangesDisplayContext {
 					"modelClassNameId", classNameId
 				).put(
 					"modelClassPK", classPK
-				).put(
-					"typeName", _getTypeName(classNameId)
 				);
 
 				JSONArray dropdownItemsJSONArray =
@@ -505,7 +508,10 @@ public class ViewChangesDisplayContext {
 				nodeIdsJSONArray.put(rootDisplayNode.getInt("id"));
 			}
 
-			String typeName = _getTypeName(entry.getKey());
+			String typeName = _typeNameMap.computeIfAbsent(
+				entry.getKey(),
+				key -> _ctDisplayRendererRegistry.getTypeName(
+					_themeDisplay.getLocale(), entry.getKey()));
 
 			contextViewJSONObject.put(typeName, nodeIdsJSONArray);
 
@@ -528,11 +534,15 @@ public class ViewChangesDisplayContext {
 		return ctEntryMap;
 	}
 
-	private String _getTypeName(long classNameId) {
-		return _typeNameMap.computeIfAbsent(
-			classNameId,
-			key -> _ctDisplayRendererRegistry.getTypeName(
-				_themeDisplay.getLocale(), classNameId));
+	private JSONObject _getTypeNamesJSONObject() {
+		JSONObject typeNamesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<Long, String> entry : _typeNameMap.entrySet()) {
+			typeNamesJSONObject.put(
+				String.valueOf(entry.getKey()), entry.getValue());
+		}
+
+		return typeNamesJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

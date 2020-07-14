@@ -2136,13 +2136,37 @@ components:
                 reverseOrder:
                     type: boolean
                 rowViewportConfig:
+                    deprecated: true
+                    description:
+                        "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
                     properties:
                         landscapeMobile:
-                            $ref: "#/components/schemas/RowViewportConfigDefinition"
+                            properties:
+                                modulesPerRow:
+                                    type: integer
+                                reverseOrder:
+                                    type: boolean
+                                verticalAlignment:
+                                    type: string
+                            type: object
                         portraitMobile:
-                            $ref: "#/components/schemas/RowViewportConfigDefinition"
+                            properties:
+                                modulesPerRow:
+                                    type: integer
+                                reverseOrder:
+                                    type: boolean
+                                verticalAlignment:
+                                    type: string
+                            type: object
                         tablet:
-                            $ref: "#/components/schemas/RowViewportConfigDefinition"
+                            properties:
+                                modulesPerRow:
+                                    type: integer
+                                reverseOrder:
+                                    type: boolean
+                                verticalAlignment:
+                                    type: string
+                            type: object
                     type: object
                 verticalAlignment:
                     type: string

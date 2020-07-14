@@ -18,7 +18,6 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
-import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
 
@@ -44,10 +43,7 @@ public class LayoutFriendlyURLTableReferenceDefinition
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			LayoutFriendlyURLTable.INSTANCE
-		).singleColumnReference(
-			LayoutFriendlyURLTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		);
+			LayoutFriendlyURLTable.INSTANCE);
 	}
 
 	@Override

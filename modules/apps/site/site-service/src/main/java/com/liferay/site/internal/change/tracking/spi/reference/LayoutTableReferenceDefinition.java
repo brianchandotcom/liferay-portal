@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
@@ -46,6 +47,8 @@ public class LayoutTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.singleColumnReference(
 			LayoutTable.INSTANCE.iconImageId, ImageTable.INSTANCE.imageId
+		).singleColumnReference(
+			LayoutTable.INSTANCE.plid, LayoutFriendlyURLTable.INSTANCE.plid
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE

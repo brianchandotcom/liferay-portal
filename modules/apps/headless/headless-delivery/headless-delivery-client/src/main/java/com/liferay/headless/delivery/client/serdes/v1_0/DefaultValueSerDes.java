@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentMappedValue;
+import com.liferay.headless.delivery.client.dto.v1_0.DefaultValue;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentMappedValueSerDes {
+public class DefaultValueSerDes {
 
-	public static FragmentMappedValue toDTO(String json) {
-		FragmentMappedValueJSONParser fragmentMappedValueJSONParser =
-			new FragmentMappedValueJSONParser();
+	public static DefaultValue toDTO(String json) {
+		DefaultValueJSONParser defaultValueJSONParser =
+			new DefaultValueJSONParser();
 
-		return fragmentMappedValueJSONParser.parseToDTO(json);
+		return defaultValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentMappedValue[] toDTOs(String json) {
-		FragmentMappedValueJSONParser fragmentMappedValueJSONParser =
-			new FragmentMappedValueJSONParser();
+	public static DefaultValue[] toDTOs(String json) {
+		DefaultValueJSONParser defaultValueJSONParser =
+			new DefaultValueJSONParser();
 
-		return fragmentMappedValueJSONParser.parseToDTOs(json);
+		return defaultValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentMappedValue fragmentMappedValue) {
-		if (fragmentMappedValue == null) {
+	public static String toJSON(DefaultValue defaultValue) {
+		if (defaultValue == null) {
 			return "null";
 		}
 
@@ -55,36 +55,28 @@ public class FragmentMappedValueSerDes {
 
 		sb.append("{");
 
-		if (fragmentMappedValue.getDefaultFragmentInlineValue() != null) {
+		if (defaultValue.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultFragmentInlineValue\": ");
+			sb.append("\"value\": ");
 
-			sb.append(
-				String.valueOf(
-					fragmentMappedValue.getDefaultFragmentInlineValue()));
+			sb.append("\"");
+
+			sb.append(_escape(defaultValue.getValue()));
+
+			sb.append("\"");
 		}
 
-		if (fragmentMappedValue.getDefaultValue() != null) {
+		if (defaultValue.getValue_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultValue\": ");
+			sb.append("\"value_i18n\": ");
 
-			sb.append(String.valueOf(fragmentMappedValue.getDefaultValue()));
-		}
-
-		if (fragmentMappedValue.getMapping() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"mapping\": ");
-
-			sb.append(String.valueOf(fragmentMappedValue.getMapping()));
+			sb.append(_toJSON(defaultValue.getValue_i18n()));
 		}
 
 		sb.append("}");
@@ -93,88 +85,64 @@ public class FragmentMappedValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentMappedValueJSONParser fragmentMappedValueJSONParser =
-			new FragmentMappedValueJSONParser();
+		DefaultValueJSONParser defaultValueJSONParser =
+			new DefaultValueJSONParser();
 
-		return fragmentMappedValueJSONParser.parseToMap(json);
+		return defaultValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		FragmentMappedValue fragmentMappedValue) {
-
-		if (fragmentMappedValue == null) {
+	public static Map<String, String> toMap(DefaultValue defaultValue) {
+		if (defaultValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentMappedValue.getDefaultFragmentInlineValue() == null) {
-			map.put("defaultFragmentInlineValue", null);
+		if (defaultValue.getValue() == null) {
+			map.put("value", null);
 		}
 		else {
-			map.put(
-				"defaultFragmentInlineValue",
-				String.valueOf(
-					fragmentMappedValue.getDefaultFragmentInlineValue()));
+			map.put("value", String.valueOf(defaultValue.getValue()));
 		}
 
-		if (fragmentMappedValue.getDefaultValue() == null) {
-			map.put("defaultValue", null);
+		if (defaultValue.getValue_i18n() == null) {
+			map.put("value_i18n", null);
 		}
 		else {
-			map.put(
-				"defaultValue",
-				String.valueOf(fragmentMappedValue.getDefaultValue()));
-		}
-
-		if (fragmentMappedValue.getMapping() == null) {
-			map.put("mapping", null);
-		}
-		else {
-			map.put(
-				"mapping", String.valueOf(fragmentMappedValue.getMapping()));
+			map.put("value_i18n", String.valueOf(defaultValue.getValue_i18n()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentMappedValueJSONParser
-		extends BaseJSONParser<FragmentMappedValue> {
+	public static class DefaultValueJSONParser
+		extends BaseJSONParser<DefaultValue> {
 
 		@Override
-		protected FragmentMappedValue createDTO() {
-			return new FragmentMappedValue();
+		protected DefaultValue createDTO() {
+			return new DefaultValue();
 		}
 
 		@Override
-		protected FragmentMappedValue[] createDTOArray(int size) {
-			return new FragmentMappedValue[size];
+		protected DefaultValue[] createDTOArray(int size) {
+			return new DefaultValue[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentMappedValue fragmentMappedValue, String jsonParserFieldName,
+			DefaultValue defaultValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "defaultFragmentInlineValue")) {
-
+			if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					fragmentMappedValue.setDefaultFragmentInlineValue(
-						FragmentInlineValueSerDes.toDTO(
+					defaultValue.setValue((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value_i18n")) {
+				if (jsonParserFieldValue != null) {
+					defaultValue.setValue_i18n(
+						(Map)DefaultValueSerDes.toMap(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
-				if (jsonParserFieldValue != null) {
-					fragmentMappedValue.setDefaultValue(
-						DefaultValueSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "mapping")) {
-				if (jsonParserFieldValue != null) {
-					fragmentMappedValue.setMapping(
-						MappingSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

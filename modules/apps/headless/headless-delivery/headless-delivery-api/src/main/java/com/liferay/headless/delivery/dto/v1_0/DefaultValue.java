@@ -42,35 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentMappedValue")
+@GraphQLName("DefaultValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentMappedValue")
-public class FragmentMappedValue {
+@XmlRootElement(name = "DefaultValue")
+public class DefaultValue {
 
-	public static FragmentMappedValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentMappedValue.class, json);
+	public static DefaultValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(DefaultValue.class, json);
 	}
 
 	@Schema
-	@Valid
-	public FragmentInlineValue getDefaultFragmentInlineValue() {
-		return defaultFragmentInlineValue;
+	public String getValue() {
+		return value;
 	}
 
-	public void setDefaultFragmentInlineValue(
-		FragmentInlineValue defaultFragmentInlineValue) {
-
-		this.defaultFragmentInlineValue = defaultFragmentInlineValue;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@JsonIgnore
-	public void setDefaultFragmentInlineValue(
-		UnsafeSupplier<FragmentInlineValue, Exception>
-			defaultFragmentInlineValueUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
 		try {
-			defaultFragmentInlineValue =
-				defaultFragmentInlineValueUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,58 +77,25 @@ public class FragmentMappedValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentInlineValue defaultFragmentInlineValue;
-
-	@Schema(
-		description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue"
-	)
-	@Valid
-	public DefaultValue getDefaultValue() {
-		return defaultValue;
-	}
-
-	public void setDefaultValue(DefaultValue defaultValue) {
-		this.defaultValue = defaultValue;
-	}
-
-	@JsonIgnore
-	public void setDefaultValue(
-		UnsafeSupplier<DefaultValue, Exception> defaultValueUnsafeSupplier) {
-
-		try {
-			defaultValue = defaultValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Deprecated
-	@GraphQLField(
-		description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue"
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DefaultValue defaultValue;
+	protected String value;
 
 	@Schema
 	@Valid
-	public Mapping getMapping() {
-		return mapping;
+	public Map<String, String> getValue_i18n() {
+		return value_i18n;
 	}
 
-	public void setMapping(Mapping mapping) {
-		this.mapping = mapping;
+	public void setValue_i18n(Map<String, String> value_i18n) {
+		this.value_i18n = value_i18n;
 	}
 
 	@JsonIgnore
-	public void setMapping(
-		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
+	public void setValue_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			value_i18nUnsafeSupplier) {
 
 		try {
-			mapping = mappingUnsafeSupplier.get();
+			value_i18n = value_i18nUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -145,7 +107,7 @@ public class FragmentMappedValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Mapping mapping;
+	protected Map<String, String> value_i18n;
 
 	@Override
 	public boolean equals(Object object) {
@@ -153,13 +115,13 @@ public class FragmentMappedValue {
 			return true;
 		}
 
-		if (!(object instanceof FragmentMappedValue)) {
+		if (!(object instanceof DefaultValue)) {
 			return false;
 		}
 
-		FragmentMappedValue fragmentMappedValue = (FragmentMappedValue)object;
+		DefaultValue defaultValue = (DefaultValue)object;
 
-		return Objects.equals(toString(), fragmentMappedValue.toString());
+		return Objects.equals(toString(), defaultValue.toString());
 	}
 
 	@Override
@@ -174,34 +136,28 @@ public class FragmentMappedValue {
 
 		sb.append("{");
 
-		if (defaultFragmentInlineValue != null) {
+		if (value != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultFragmentInlineValue\": ");
+			sb.append("\"value\": ");
 
-			sb.append(String.valueOf(defaultFragmentInlineValue));
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
 		}
 
-		if (defaultValue != null) {
+		if (value_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultValue\": ");
+			sb.append("\"value_i18n\": ");
 
-			sb.append(String.valueOf(defaultValue));
-		}
-
-		if (mapping != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"mapping\": ");
-
-			sb.append(String.valueOf(mapping));
+			sb.append(_toJSON(value_i18n));
 		}
 
 		sb.append("}");
@@ -210,7 +166,7 @@ public class FragmentMappedValue {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DefaultValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

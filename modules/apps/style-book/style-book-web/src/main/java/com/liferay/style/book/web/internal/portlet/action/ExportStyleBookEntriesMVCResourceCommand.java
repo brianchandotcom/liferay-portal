@@ -83,7 +83,8 @@ public class ExportStyleBookEntriesMVCResourceCommand
 				}
 			}
 
-			File file = _exportHelper.exportStyleBookEntries(styleBookEntries);
+			File file = _styleBookEntryZipProcessor.exportStyleBookEntries(
+				styleBookEntries);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
@@ -98,9 +99,9 @@ public class ExportStyleBookEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private StyleBookEntryZipProcessor _exportHelper;
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 
 }

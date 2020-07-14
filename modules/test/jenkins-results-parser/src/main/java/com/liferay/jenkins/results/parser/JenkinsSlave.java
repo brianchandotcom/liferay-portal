@@ -22,7 +22,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsSlave {
+public class JenkinsSlave implements Comparable<JenkinsSlave> {
 
 	public JenkinsSlave() {
 		this(
@@ -66,6 +66,11 @@ public class JenkinsSlave {
 		_name = jenkinsSlaveJSONObject.getString("displayName");
 
 		update(jenkinsSlaveJSONObject);
+	}
+
+	@Override
+	public int compareTo(JenkinsSlave jenkinsSlave) {
+		return _name.compareTo(jenkinsSlave.getName());
 	}
 
 	public Build getCurrentBuild() {

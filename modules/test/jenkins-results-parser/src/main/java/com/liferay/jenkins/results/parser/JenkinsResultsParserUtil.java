@@ -1826,28 +1826,28 @@ public class JenkinsResultsParserUtil {
 			targetSlaveCount = onlineJenkinsSlaves.size();
 		}
 
-		List<JenkinsSlave> randomJenkinsSlaves = new ArrayList<>(
+		List<JenkinsSlave> reachableJenkinsSlaves = new ArrayList<>(
 			targetSlaveCount);
 
-		while (randomJenkinsSlaves.size() < targetSlaveCount) {
+		while (reachableJenkinsSlaves.size() < targetSlaveCount) {
 			JenkinsSlave randomJenkinsSlave = getRandomListItem(
 				onlineJenkinsSlaves);
 
 			onlineJenkinsSlaves.remove(randomJenkinsSlave);
 
 			if (randomJenkinsSlave.isReachable()) {
-				randomJenkinsSlaves.add(randomJenkinsSlave);
+				reachableJenkinsSlaves.add(randomJenkinsSlave);
 			}
 
 			if (onlineJenkinsSlaves.isEmpty() &&
-				(randomJenkinsSlaves.size() < targetSlaveCount)) {
+				(reachableJenkinsSlaves.size() < targetSlaveCount)) {
 
 				throw new RuntimeException(
 					"Unable to find enough reachable Jenkins slaves");
 			}
 		}
 
-		return randomJenkinsSlaves;
+		return reachableJenkinsSlaves;
 	}
 
 	public static String getRegexLiteral(String string) {

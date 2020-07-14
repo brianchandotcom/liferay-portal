@@ -2519,6 +2519,8 @@ components:
                                     An absolute URL to the rendered content.
                                 format: uri
                                 type: string
+                            renderedContentValue:
+                                type: string
                         type: object
                     readOnly: true
                     type: array

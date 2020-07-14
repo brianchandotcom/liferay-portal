@@ -791,15 +791,58 @@
 				},
 				"rowViewportConfig": {
 					"additionalProperties": false,
+					"deprecationMessage": "Deprecated as of Athanasius (7.3.x), replaced by rowViewports",
 					"properties": {
 						"landscapeMobile": {
-							"$ref": "#/definitions/RowViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"modulesPerRow": {
+									"title": "The modulesPerRow Schema",
+									"type": "integer"
+								},
+								"reverseOrder": {
+									"title": "The reverseOrder Schema",
+									"type": "boolean"
+								},
+								"verticalAlignment": {
+									"title": "The verticalAlignment Schema",
+									"type": "string"
+								}
+							}
 						},
 						"portraitMobile": {
-							"$ref": "#/definitions/RowViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"modulesPerRow": {
+									"title": "The modulesPerRow Schema",
+									"type": "integer"
+								},
+								"reverseOrder": {
+									"title": "The reverseOrder Schema",
+									"type": "boolean"
+								},
+								"verticalAlignment": {
+									"title": "The verticalAlignment Schema",
+									"type": "string"
+								}
+							}
 						},
 						"tablet": {
-							"$ref": "#/definitions/RowViewportConfigDefinition"
+							"additionalProperties": false,
+							"properties": {
+								"modulesPerRow": {
+									"title": "The modulesPerRow Schema",
+									"type": "integer"
+								},
+								"reverseOrder": {
+									"title": "The reverseOrder Schema",
+									"type": "boolean"
+								},
+								"verticalAlignment": {
+									"title": "The verticalAlignment Schema",
+									"type": "string"
+								}
+							}
 						}
 					},
 					"title": "The rowViewportConfig Schema",

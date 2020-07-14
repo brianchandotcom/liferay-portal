@@ -23,7 +23,7 @@ import {FRAGMENT_CONFIGURATION_ROLES} from '../../config/constants/fragmentConfi
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
-import {useSelector} from '../../store/index';
+import {useSelector, useSelectorCallback} from '../../store/index';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from '../fragment-content/FragmentContent';
@@ -32,14 +32,12 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
 	);
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-
-	const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
-
-	const fragmentEntryLink =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId];
-
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
 	const [setRef, itemElement] = useSetRef(ref);
+	const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
 	const floatingToolbarButtons = useMemo(() => {
 		const buttons = [];

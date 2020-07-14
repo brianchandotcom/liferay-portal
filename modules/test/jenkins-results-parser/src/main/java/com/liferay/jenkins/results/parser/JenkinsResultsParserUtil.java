@@ -1794,7 +1794,7 @@ public class JenkinsResultsParserUtil {
 		List<Callable<List<JenkinsSlave>>> callables = new ArrayList<>(
 			jenkinsMasters.size());
 
-		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+		for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
 			Callable<List<JenkinsSlave>> callable =
 				new Callable<List<JenkinsSlave>>() {
 

@@ -616,7 +616,7 @@ public class HttpImpl implements Http {
 			return StringPool.BLANK;
 		}
 
-		String queryString = uri.getQuery();
+		String queryString = uri.getRawQuery();
 
 		if (queryString == null) {
 			return StringPool.BLANK;

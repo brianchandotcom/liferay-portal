@@ -134,6 +134,48 @@ describe('RatingsStackedStars', () => {
 					queryByRole(result.baseElement, 'button')
 				).toBeInTheDocument();
 			});
+
+			describe('later the user vote 5/5 stars', () => {
+				beforeEach(() => {
+					act(() => {
+						fireEvent.click(starsRadios[0]);
+					});
+				});
+
+				it('increase the user score', () => {
+					expect(result.getByRole('group')).toHaveFormValues({
+						_random_namespace_rating: '1',
+					});
+				});
+
+				it('has voted pural title', () => {
+					expect(starsRadiosWrapper.title).toBe(
+						'you-have-rated-this-x-stars-out-of-x'
+					);
+				});
+			});
+
+			describe('finally the user unvote', () => {
+				beforeEach(() => {
+					act(() => {
+						fireEvent.click(
+							queryByRole(result.baseElement, 'button')
+						);
+					});
+				});
+
+				it('delete the user score', () => {
+					expect(result.getByRole('group')).toHaveFormValues({
+						_random_namespace_rating: undefined,
+					});
+				});
+
+				it('has not render delete button', () => {
+					expect(
+						queryByRole(result.baseElement, 'button')
+					).not.toBeInTheDocument();
+				});
+			});
 		});
 	});
 });

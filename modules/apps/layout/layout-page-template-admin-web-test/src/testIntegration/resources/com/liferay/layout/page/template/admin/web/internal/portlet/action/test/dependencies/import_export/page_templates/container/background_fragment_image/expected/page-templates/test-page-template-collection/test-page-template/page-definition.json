@@ -49,7 +49,7 @@
 						"definition": {
 							"backgroundFragmentImage": {
 								"url": {
-									"defaultValue": {
+									"defaultFragmentInlineValue": {
 										"value": "https://avatars1.githubusercontent.com/u/131436"
 									},
 									"mapping": {

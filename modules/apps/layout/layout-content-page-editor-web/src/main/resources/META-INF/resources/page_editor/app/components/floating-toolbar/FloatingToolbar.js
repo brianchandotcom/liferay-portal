@@ -483,7 +483,7 @@ const align = (element, anchor, {globalContext, rtl}) => {
 
 	Align.align(element, anchor, ELEMENT_POSITION[vertical][horizontal], false);
 
-	if (globalContext.iframe) {
+	if (globalContext.iframe && globalContext.document.contains(anchor)) {
 		const {left, top} = globalContext.iframe.getBoundingClientRect();
 
 		element.style.transform = `translateX(${left}px) translateY(${top}px)`;

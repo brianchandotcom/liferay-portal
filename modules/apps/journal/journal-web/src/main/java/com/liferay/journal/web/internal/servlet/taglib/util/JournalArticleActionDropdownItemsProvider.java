@@ -141,8 +141,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && (previewContentArticleAction != null),
 			previewContentArticleAction
 		).add(
-			() -> hasViewPermission && hasUpdatePermission,
-			_getViewHistoryArticleActionUnsafeConsumer()
+			() -> importExportEnabled, _getTranslateActionUnsafeConsumer()
 		).add(
 			() -> importExportEnabled,
 			_getExportForTranslationActionUnsafeConsumer()
@@ -150,10 +149,11 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> importExportEnabled,
 			_getImportTranslationActionUnsafeConsumer()
 		).add(
-			() -> importExportEnabled, _getTranslateActionUnsafeConsumer()
-		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
+		).add(
+			() -> hasViewPermission && hasUpdatePermission,
+			_getViewHistoryArticleActionUnsafeConsumer()
 		).add(
 			_getViewUsagesArticleActionUnsafeConsumer()
 		).add(

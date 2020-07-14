@@ -14,23 +14,21 @@
 
 package com.liferay.translation.exporter;
 
-import com.liferay.info.item.InfoItemFieldValues;
+import java.util.Collection;
+import java.util.Optional;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Locale;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alejandro Tardín
  */
-public interface TranslationInfoItemFieldValuesExporter {
+@ProviderType
+public interface TranslationInfoItemFieldValuesExporterTracker {
 
-	public InputStream exportInfoItemFieldValues(
-			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
-			Locale targetLocale)
-		throws IOException;
+	public Collection<TranslationInfoItemFieldValuesExporter>
+		getTranslationInfoItemFieldValueExporters();
 
-	public String getMimeType();
+	public Optional<TranslationInfoItemFieldValuesExporter>
+		getTranslationInfoItemFieldValuesExporterOptional(String mimeType);
 
 }

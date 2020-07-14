@@ -111,6 +111,11 @@ public class XLIFFInfoFormTranslationExporter
 		return new ByteArrayInputStream(formattedString.getBytes());
 	}
 
+	@Override
+	public String getMimeType() {
+		return "application/xliff+xml";
+	}
+
 	private String _getStringValue(Object value) {
 		if (value == null) {
 			return null;

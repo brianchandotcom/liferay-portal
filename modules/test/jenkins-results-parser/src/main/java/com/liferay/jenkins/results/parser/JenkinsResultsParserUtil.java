@@ -74,7 +74,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -1584,43 +1583,45 @@ public class JenkinsResultsParserUtil {
 		return plural;
 	}
 
-	public static List<String> getOnlineSlaves(
+	public static List<String> getOnlineJenkinsSlaves(
 		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
 
-		Set<String> jenkinsSlaveNames = new TreeSet<>();
+		Set<String> onlineJenkinsSlaveNames = new TreeSet<>();
 
 		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 			jenkinsMaster.update();
 
-			for (JenkinsSlave jenkinsSlave : jenkinsMaster.getOnlineSlaves()) {
-				jenkinsSlaveNames.add(jenkinsSlave.getName());
+			for (JenkinsSlave onlineJenkinsSlave :
+					jenkinsMaster.getOnlineJenkinsSlaves()) {
+
+				onlineJenkinsSlaveNames.add(onlineJenkinsSlave.getName());
 			}
 		}
 
 		if (targetSlaveCount == null) {
-			targetSlaveCount = jenkinsSlaveNames.size();
+			targetSlaveCount = onlineJenkinsSlaveNames.size();
 		}
 
-		List<String> randomSlaves = new ArrayList<>(targetSlaveCount);
+		List<String> randomJenkinsSlaves = new ArrayList<>(targetSlaveCount);
 
-		while (randomSlaves.size() < targetSlaveCount) {
-			String randomSlave = getRandomString(jenkinsSlaveNames);
+		while (randomJenkinsSlaves.size() < targetSlaveCount) {
+			String randomSlave = getRandomString(onlineJenkinsSlaveNames);
 
-			jenkinsSlaveNames.remove(randomSlave);
+			onlineJenkinsSlaveNames.remove(randomSlave);
 
 			if (isReachable(randomSlave)) {
-				randomSlaves.add(randomSlave);
+				randomJenkinsSlaves.add(randomSlave);
 			}
 
-			if (jenkinsSlaveNames.isEmpty() &&
-				(randomSlaves.size() < targetSlaveCount)) {
+			if (onlineJenkinsSlaveNames.isEmpty() &&
+				(randomJenkinsSlaves.size() < targetSlaveCount)) {
 
 				throw new RuntimeException(
 					"Unable to find enough reachable slaves");
 			}
 		}
 
-		return randomSlaves;
+		return randomJenkinsSlaves;
 	}
 
 	public static String getPathRelativeTo(File file, File relativeToFile) {

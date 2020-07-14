@@ -237,12 +237,22 @@ components:
                 - className
                 - classPK
             type: object
-        ColumnViewportConfigDefinition:
+        ColumnViewport:
+            additionalProperties: false
             properties:
-                size:
-                    maximum: 12
-                    minimum: 1
-                    type: integer
+                columnViewportDefinition:
+                    additionalProperties: false
+                    properties:
+                        size:
+                            maximum: 12
+                            minimum: 1
+                            type: integer
+                    type: object
+                id:
+                    type: string
+            required:
+                - columnViewportDefinition
+                - id
             type: object
         Comment:
             description:
@@ -2069,6 +2079,10 @@ components:
                                     type: integer
                             type: object
                     type: object
+                columnViewports:
+                    items:
+                        $ref: "#/components/schemas/ColumnViewport"
+                    type: array
                 size:
                     maximum: 12
                     minimum: 1

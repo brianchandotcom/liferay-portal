@@ -190,7 +190,8 @@ definition {
 			dmDocumentTitle = "DM Document Type Contract Title",
 			dmDocumentTypeName = "DM Document Type Name",
 			fieldName = "Date",
-			fieldValue = "01/01/2022");
+			fieldValue = "01/01/2022",
+			numberField = "123");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

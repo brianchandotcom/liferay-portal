@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMERIC</td>
+	<td>//div[@data-field-name='Numeric']//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_GRAPH_CUSTOM_TITLE</td>
 	<td>//div[input[contains(@id,'openGraphTitle')]]//input[@type='text']</td>
 	<td></td>

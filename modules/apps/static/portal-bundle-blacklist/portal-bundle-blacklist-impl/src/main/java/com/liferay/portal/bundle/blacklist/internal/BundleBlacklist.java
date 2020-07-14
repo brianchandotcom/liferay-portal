@@ -14,6 +14,7 @@
 
 package com.liferay.portal.bundle.blacklist.internal;
 
+import com.liferay.osgi.util.BundleUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,7 +45,6 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.framework.startlevel.BundleStartLevel;
-import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -77,12 +77,9 @@ public class BundleBlacklist {
 
 		BundleContext systemBundleContext = systemBundle.getBundleContext();
 
-		FrameworkWiring frameworkWiring = systemBundle.adapt(
-			FrameworkWiring.class);
-
 		if (_selfMonitorBundleListener == null) {
 			_selfMonitorBundleListener = new SelfMonitorBundleListener(
-				bundle, systemBundleContext, frameworkWiring, _lpkgDeployer,
+				bundle, systemBundleContext, _lpkgDeployer,
 				_uninstalledBundles);
 		}
 
@@ -102,7 +99,7 @@ public class BundleBlacklist {
 
 		bundleContext.addBundleListener(_bundleListener);
 
-		_scanBundles(bundleContext, frameworkWiring);
+		_scanBundles(bundleContext);
 
 		Set<Map.Entry<String, UninstalledBundleData>> entrySet =
 			_uninstalledBundles.entrySet();
@@ -120,9 +117,12 @@ public class BundleBlacklist {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
 
-				BundleUtil.reinstallBundle(
-					frameworkWiring, entry.getValue(), bundleContext,
-					_lpkgDeployer);
+				UninstalledBundleData uninstalledBundleData = entry.getValue();
+
+				BundleUtil.installBundle(
+					bundleContext, _lpkgDeployer,
+					uninstalledBundleData.getLocation(),
+					uninstalledBundleData.getStartLevel());
 
 				iterator.remove();
 
@@ -234,9 +234,7 @@ public class BundleBlacklist {
 		}
 	}
 
-	private void _scanBundles(
-		BundleContext bundleContext, FrameworkWiring frameworkWiring) {
-
+	private void _scanBundles(BundleContext bundleContext) {
 		List<Bundle> uninstalledBundles = new ArrayList<>();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
@@ -248,7 +246,7 @@ public class BundleBlacklist {
 		}
 
 		if (!uninstalledBundles.isEmpty()) {
-			BundleUtil.refreshBundles(frameworkWiring, uninstalledBundles);
+			BundleUtil.refreshBundles(bundleContext, uninstalledBundles);
 		}
 	}
 

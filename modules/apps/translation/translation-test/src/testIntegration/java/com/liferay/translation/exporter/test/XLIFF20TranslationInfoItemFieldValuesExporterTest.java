@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class XLIFFTranslationInfoItemFieldValuesExporterTest {
+public class XLIFF20TranslationInfoItemFieldValuesExporterTest {
 
 	@ClassRule
 	@Rule

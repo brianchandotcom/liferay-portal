@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
@@ -96,11 +95,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			ddmFormRenderingContext.getHttpServletRequest(), writer,
 			componentDescriptor,
 			getContext(ddmForm, ddmFormLayout, ddmFormRenderingContext));
-
-		DynamicIncludeUtil.include(
-			ddmFormRenderingContext.getHttpServletRequest(),
-			ddmFormRenderingContext.getHttpServletResponse(),
-			DDMFormRenderer.class.getName() + "#formRendered", true);
 
 		return writer.toString();
 	}

@@ -12,6 +12,8 @@
  * details.
  */
 
+import '../../css/main.scss';
+
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import React, {

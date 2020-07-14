@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
-import com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfig;
-import com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfigDefinition;
+import com.liferay.headless.delivery.dto.v1_0.ColumnViewport;
+import com.liferay.headless.delivery.dto.v1_0.ColumnViewportDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.responsive.ViewportSize;
@@ -24,6 +24,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,7 +56,7 @@ public class ColumnLayoutStructureItemExporter
 					{
 						size = columnLayoutStructureItem.getSize();
 
-						setColumnViewportConfig(
+						setColumnViewports(
 							() -> {
 								Map<String, JSONObject>
 									columnViewportConfigurations =
@@ -67,22 +69,28 @@ public class ColumnLayoutStructureItemExporter
 									return null;
 								}
 
-								return new ColumnViewportConfig() {
-									{
-										landscapeMobile =
-											_toColumnViewportConfigDefinition(
-												columnViewportConfigurations,
-												ViewportSize.MOBILE_LANDSCAPE);
-										portraitMobile =
-											_toColumnViewportConfigDefinition(
-												columnViewportConfigurations,
-												ViewportSize.PORTRAIT_MOBILE);
-										tablet =
-											_toColumnViewportConfigDefinition(
-												columnViewportConfigurations,
-												ViewportSize.TABLET);
-									}
-								};
+								List<ColumnViewport> columnViewports =
+									new ArrayList<ColumnViewport>() {
+										{
+											add(
+												_toColumnViewport(
+													columnViewportConfigurations,
+													ViewportSize.
+														MOBILE_LANDSCAPE));
+											add(
+												_toColumnViewport(
+													columnViewportConfigurations,
+													ViewportSize.
+														PORTRAIT_MOBILE));
+											add(
+												_toColumnViewport(
+													columnViewportConfigurations,
+													ViewportSize.TABLET));
+										}
+									};
+
+								return columnViewports.toArray(
+									new ColumnViewport[0]);
 							});
 					}
 				};
@@ -91,20 +99,34 @@ public class ColumnLayoutStructureItemExporter
 		};
 	}
 
-	private ColumnViewportConfigDefinition _toColumnViewportConfigDefinition(
-		Map<String, JSONObject> columnViewportConfigurations,
+	private ColumnViewport _toColumnViewport(
+		Map<String, JSONObject> columnViewportConfigurationsMap,
 		ViewportSize viewportSize) {
 
-		if (!columnViewportConfigurations.containsKey(
+		return new ColumnViewport() {
+			{
+				columnViewportDefinition =
+					_toColumnViewportColumnViewportDefinition(
+						columnViewportConfigurationsMap, viewportSize);
+				id = viewportSize.getViewportSizeId();
+			}
+		};
+	}
+
+	private ColumnViewportDefinition _toColumnViewportColumnViewportDefinition(
+		Map<String, JSONObject> columnViewportConfigurationsMap,
+		ViewportSize viewportSize) {
+
+		if (!columnViewportConfigurationsMap.containsKey(
 				viewportSize.getViewportSizeId())) {
 
 			return null;
 		}
 
-		JSONObject jsonObject = columnViewportConfigurations.get(
+		JSONObject jsonObject = columnViewportConfigurationsMap.get(
 			viewportSize.getViewportSizeId());
 
-		return new ColumnViewportConfigDefinition() {
+		return new ColumnViewportDefinition() {
 			{
 				setSize(
 					() -> {

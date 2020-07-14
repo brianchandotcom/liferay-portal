@@ -34,7 +34,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly project("${apiPath}")
-	
+
 	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "@com.liferay.portal.tools.rest.builder.version@"
 }
 

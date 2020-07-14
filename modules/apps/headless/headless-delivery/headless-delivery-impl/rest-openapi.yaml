@@ -2168,6 +2168,10 @@ components:
                                     type: string
                             type: object
                     type: object
+                rowViewports:
+                    items:
+                        $ref: "#/components/schemas/RowViewport"
+                    type: array
                 verticalAlignment:
                     type: string
             type: object
@@ -2405,14 +2409,24 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
-        RowViewportConfigDefinition:
+        RowViewport:
+            additionalProperties: false
             properties:
-                modulesPerRow:
-                    type: integer
-                reverseOrder:
-                    type: boolean
-                verticalAlignment:
+                id:
                     type: string
+                rowViewportDefinition:
+                    additionalProperties: false
+                    properties:
+                        modulesPerRow:
+                            type: integer
+                        reverseOrder:
+                            type: boolean
+                        verticalAlignment:
+                            type: string
+                    type: object
+            required:
+                - id
+                - rowViewportDefinition
             type: object
         StructuredContent:
             description:

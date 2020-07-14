@@ -1583,10 +1583,10 @@ public class JenkinsResultsParserUtil {
 		return plural;
 	}
 
-	public static List<String> getOnlineJenkinsSlaves(
+	public static List<JenkinsSlave> getOnlineJenkinsSlaves(
 		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
 
-		List<String> onlineJenkinsSlaveNames = new ArrayList<>();
+		List<JenkinsSlave> onlineJenkinsSlaves = new ArrayList<>();
 
 		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 			jenkinsMaster.update();
@@ -1594,32 +1594,34 @@ public class JenkinsResultsParserUtil {
 			for (JenkinsSlave onlineJenkinsSlave :
 					jenkinsMaster.getOnlineJenkinsSlaves()) {
 
-				if (!onlineJenkinsSlaveNames.contains(
-						onlineJenkinsSlave.getName())) {
-
-					onlineJenkinsSlaveNames.add(onlineJenkinsSlave.getName());
+				if (!onlineJenkinsSlaves.contains(onlineJenkinsSlave)) {
+					onlineJenkinsSlaves.add(onlineJenkinsSlave);
 				}
 			}
 		}
 
-		Collections.sort(onlineJenkinsSlaveNames);
+		Collections.sort(onlineJenkinsSlaves);
 
 		if (targetSlaveCount == null) {
-			targetSlaveCount = onlineJenkinsSlaveNames.size();
+			targetSlaveCount = onlineJenkinsSlaves.size();
 		}
 
-		List<String> randomJenkinsSlaves = new ArrayList<>(targetSlaveCount);
+		List<JenkinsSlave> randomJenkinsSlaves = new ArrayList<>(
+			targetSlaveCount);
 
 		while (randomJenkinsSlaves.size() < targetSlaveCount) {
-			String randomSlave = getRandomString(onlineJenkinsSlaveNames);
+			JenkinsSlave randomJenkinsSlave = onlineJenkinsSlaves.get(
+				getRandomValue(0, onlineJenkinsSlaves.size() - 1));
 
-			onlineJenkinsSlaveNames.remove(randomSlave);
+			onlineJenkinsSlaves.remove(randomJenkinsSlave);
 
-			if (isReachable(randomSlave)) {
-				randomJenkinsSlaves.add(randomSlave);
+			if (!randomJenkinsSlave.isReachable()) {
+				continue;
 			}
 
-			if (onlineJenkinsSlaveNames.isEmpty() &&
+			randomJenkinsSlaves.add(randomJenkinsSlave);
+
+			if (onlineJenkinsSlaves.isEmpty() &&
 				(randomJenkinsSlaves.size() < targetSlaveCount)) {
 
 				throw new RuntimeException(

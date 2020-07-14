@@ -143,9 +143,21 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_fileInstall = fileInstall;
 		_properties = properties;
 		_bundleContext = bundleContext;
+
+		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
+		_filter = properties.get(FILTER);
+		_fragmentScope = properties.get(FRAGMENT_SCOPE);
+		_noInitialDelay = _getBoolean(properties, NO_INITIAL_DELAY, false);
+		_optionalScope = properties.get(OPTIONAL_SCOPE);
+		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
+		_startBundles = _getBoolean(properties, START_NEW_BUNDLES, true);
+		_startLevel = GetterUtil.getInteger(properties.get(START_LEVEL));
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
-		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
+		_useStartActivationPolicy = _getBoolean(
+			properties, USE_START_ACTIVATION_POLICY, true);
+		_useStartTransient = _getBoolean(
+			properties, USE_START_TRANSIENT, false);
 
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
 
@@ -162,23 +174,13 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					" because it is not a directory"));
 		}
 
-		_startBundles = _getBoolean(properties, START_NEW_BUNDLES, true);
-		_useStartTransient = _getBoolean(
-			properties, USE_START_TRANSIENT, false);
-		_useStartActivationPolicy = _getBoolean(
-			properties, USE_START_ACTIVATION_POLICY, true);
-		_filter = properties.get(FILTER);
-		_noInitialDelay = _getBoolean(properties, NO_INITIAL_DELAY, false);
-		_startLevel = GetterUtil.getInteger(properties.get(START_LEVEL));
-		_activeLevel = GetterUtil.getInteger(properties.get(ACTIVE_LEVEL));
-		_fragmentScope = properties.get(FRAGMENT_SCOPE);
-		_optionalScope = properties.get(OPTIONAL_SCOPE);
 		_webStartLevel = GetterUtil.getInteger(
 			properties.get(WEB_START_LEVEL), _startLevel);
-		_bundleContext.addBundleListener(this);
 
 		scanner = new Scanner(
 			_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
+
+		_bundleContext.addBundleListener(this);
 	}
 
 	@Override

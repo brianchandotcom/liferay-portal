@@ -54,8 +54,6 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -251,26 +249,6 @@ public class LayoutPageTemplateEntryServiceTest {
 	}
 
 	@Test
-	public void testAssertNameOfLayoutPrototype() throws PortalException {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateTestUtil.addWidgetLayoutPageTemplateEntry(
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
-
-		LayoutPrototype layoutPrototype =
-			_layoutPrototypeService.getLayoutPrototype(
-				layoutPageTemplateEntry.getLayoutPrototypeId());
-
-		Map<Locale, String> nameMap = layoutPrototype.getNameMap();
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			layoutPrototype.getDefaultLanguageId());
-
-		Assert.assertEquals(
-			layoutPageTemplateEntry.getName(), nameMap.get(locale));
-	}
-
-	@Test
 	public void testDeleteLayoutPageTemplateEntries() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -331,6 +309,22 @@ public class LayoutPageTemplateEntryServiceTest {
 		Assert.assertNull(
 			_layoutPrototypeLocalService.fetchLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId()));
+	}
+
+	@Test
+	public void testLayoutPrototypeName() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addWidgetLayoutPageTemplateEntry(
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			layoutPrototype.getName(LocaleUtil.getMostRelevantLocale()));
 	}
 
 	@Test

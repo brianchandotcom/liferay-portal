@@ -118,6 +118,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 					while (rs2.next()) {
 						String data = rs2.getString("data_");
+
 						long formInstanceRecordId = rs2.getLong(
 							"formInstanceRecordId");
 
@@ -160,8 +161,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 	private DDMForm _getDDMForm(long structureId) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select parentStructureId, definition, storageType from " +
-					"DDMStructure where structureId = ?")) {
+				"select definition from DDMStructure where structureId = ?")) {
 
 			ps.setLong(1, structureId);
 
@@ -204,13 +204,11 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 		while (iterator.hasNext()) {
 			JSONObject jsonObject = iterator.next();
 
-			String name = jsonObject.getString("name");
-
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 			ddmFormFieldValue.setDDMFormValues(ddmFormValues);
 			ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
-			ddmFormFieldValue.setName(name);
+			ddmFormFieldValue.setName(jsonObject.getString("name"));
 
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 

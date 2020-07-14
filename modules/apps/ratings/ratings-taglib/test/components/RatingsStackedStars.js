@@ -12,8 +12,10 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, fireEvent, queryByRole, render} from '@testing-library/react';
 import React from 'react';
+import {act} from 'react-dom/test-utils';
 
 import TYPES from '../../src/main/resources/META-INF/resources/js/RATINGS_TYPES';
 import Ratings from '../../src/main/resources/META-INF/resources/js/Ratings';
@@ -55,6 +57,12 @@ describe('RatingsStackedStars', () => {
 		it('has vote title', () => {
 			expect(starsRadiosWrapper.title).toBe('vote');
 		});
+
+		it('without vote has not render delete button', () => {
+			expect(
+				queryByRole(result.baseElement, 'button')
+			).not.toBeInTheDocument();
+		});
 	});
 
 	describe('when rendered with enabled = false', () => {
@@ -78,6 +86,54 @@ describe('RatingsStackedStars', () => {
 			expect(starsRadiosWrapper.title).toBe(
 				'ratings-are-disabled-in-staging'
 			);
+		});
+	});
+
+	describe('when there is no server response', () => {
+		beforeEach(() => {
+			fetch.mockResponse(JSON.stringify({}));
+		});
+
+		afterEach(() => {
+			fetch.resetMocks();
+		});
+
+		describe('and the user votes 1/5 stars', () => {
+			let starsRadios;
+			let starsRadiosWrapper;
+			let result;
+
+			beforeEach(() => {
+				result = renderComponent({
+					userScore: 0,
+				});
+				starsRadios = result.getAllByRole('radio');
+				starsRadiosWrapper = result.baseElement.querySelector(
+					'.ratings-stacked-stars-vote-stars'
+				);
+
+				act(() => {
+					fireEvent.click(starsRadios[4]);
+				});
+			});
+
+			it('increases the user score', () => {
+				expect(result.getByRole('group')).toHaveFormValues({
+					_random_namespace_rating: '0.2',
+				});
+			});
+
+			it('has voted singular title', () => {
+				expect(starsRadiosWrapper.title).toBe(
+					'you-have-rated-this-x-star-out-of-x'
+				);
+			});
+
+			it('with vote has render delete button', () => {
+				expect(
+					queryByRole(result.baseElement, 'button')
+				).toBeInTheDocument();
+			});
 		});
 	});
 });

@@ -119,10 +119,11 @@ export const useSelector = (selector, compareEqual = DEFAULT_COMPARE_EQUAL) => {
 	);
 
 	const [selectorState, setSelectorState] = useState(initialState);
+	const selectorCallback = useCallback(selector, []);
 
 	useEffect(() => {
 		const onStoreChange = () => {
-			const nextState = selector(getState());
+			const nextState = selectorCallback(getState());
 
 			if (!compareEqual(selectorState, nextState)) {
 				setSelectorState(nextState);
@@ -137,7 +138,55 @@ export const useSelector = (selector, compareEqual = DEFAULT_COMPARE_EQUAL) => {
 	}, [
 		compareEqual,
 		getState,
-		selector,
+		selectorCallback,
+		selectorState,
+		subscribe,
+		unsubscribe,
+	]);
+
+	return selectorState;
+};
+
+export const useSelectorCallback = (
+	selector,
+	dependencies,
+	compareEqual = DEFAULT_COMPARE_EQUAL
+) => {
+	const getState = useContext(StoreGetStateContext);
+	const [subscribe, unsubscribe] = useContext(StoreSubscriptionContext);
+
+	const initialState = useMemo(
+		() => selector(getState()),
+
+		// We really want to call selector here just on component mount.
+		// This provides an initial value that will be recalculated when
+		// store suscription has been called.
+		// eslint-disable-next-line
+		[]
+	);
+
+	const [selectorState, setSelectorState] = useState(initialState);
+	const selectorCallback = useCallback(selector, dependencies);
+
+	useEffect(() => {
+		const onStoreChange = () => {
+			const nextState = selectorCallback(getState());
+
+			if (!compareEqual(selectorState, nextState)) {
+				setSelectorState(nextState);
+			}
+		};
+
+		onStoreChange();
+		subscribe(onStoreChange);
+
+		return () => {
+			unsubscribe(onStoreChange);
+		};
+	}, [
+		compareEqual,
+		getState,
+		selectorCallback,
 		selectorState,
 		subscribe,
 		unsubscribe,

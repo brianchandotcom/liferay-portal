@@ -21,7 +21,7 @@ import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editable
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useSelector} from '../../store/index';
+import {useSelector, useSelectorCallback} from '../../store/index';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
 import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
@@ -77,11 +77,11 @@ const FragmentContent = React.forwardRef(
 			[isMounted]
 		);
 
-		const fragmentEntryLinks = useSelector(
-			(state) => state.fragmentEntryLinks
+		const fragmentEntryLink = useSelectorCallback(
+			(state) => state.fragmentEntryLinks[fragmentEntryLinkId],
+			[fragmentEntryLinkId]
 		);
 
-		const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
 		const languageId = useSelector((state) => state.languageId);
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 

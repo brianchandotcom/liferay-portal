@@ -246,11 +246,17 @@ public class FragmentLayoutStructureItemImporter
 			return jsonObject;
 		}
 
-		Map<String, Object> defaultValueMap = (Map<String, Object>)map.get(
-			"defaultValue");
+		Map<String, Object> defaultFragmentInlineValueMap =
+			(Map<String, Object>)map.get("defaultFragmentInlineValue");
 
-		if (defaultValueMap != null) {
-			jsonObject.put("defaultValue", defaultValueMap.get("value"));
+		if (defaultFragmentInlineValueMap == null) {
+			defaultFragmentInlineValueMap = (Map<String, Object>)map.get(
+				"defaultValue");
+		}
+
+		if (defaultFragmentInlineValueMap != null) {
+			jsonObject.put(
+				"defaultValue", defaultFragmentInlineValueMap.get("value"));
 		}
 
 		_processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
@@ -274,8 +280,13 @@ public class FragmentLayoutStructureItemImporter
 			return jsonObject;
 		}
 
-		Map<String, Object> defaultValueMap = (Map<String, Object>)hrefMap.get(
-			"defaultValue");
+		Map<String, Object> defaultFragmentInlineValueMap =
+			(Map<String, Object>)hrefMap.get("defaultFragmentInlineValue");
+
+		if (defaultFragmentInlineValueMap == null) {
+			defaultFragmentInlineValueMap = (Map<String, Object>)hrefMap.get(
+				"defaultValue");
+		}
 
 		String target = (String)fragmentLinkMap.get("target");
 
@@ -292,8 +303,8 @@ public class FragmentLayoutStructureItemImporter
 			return jsonObject;
 		}
 
-		if (defaultValueMap != null) {
-			value = defaultValueMap.get("value");
+		if (defaultFragmentInlineValueMap != null) {
+			value = defaultFragmentInlineValueMap.get("value");
 		}
 
 		if (value != null) {

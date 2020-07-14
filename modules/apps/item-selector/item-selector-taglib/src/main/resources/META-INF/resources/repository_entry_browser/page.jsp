@@ -187,6 +187,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
+								name="location"
+							>
+								<span class="text-secondary">
+									<clay:icon
+										symbol="books"
+									/>
+
+									<small>Company Assets</small>
+								</span>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
 								name="size"
 								value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
 							/>
@@ -233,6 +245,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										<%= HtmlUtil.escape(folder.getName()) %>
 									</span>
 								</a>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								name="location"
+							>
+								<span class="text-secondary">
+									<clay:icon
+										symbol="books"
+									/>
+
+									<small>Company Assets</small>
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text

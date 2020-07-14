@@ -50,6 +50,7 @@ const ExportTranslationModal = ({
 		exportTranslationURL,
 		{
 			articleId: articleIds[0],
+			exportFileFormat,
 			sourceLanguageId,
 			targetLanguageIds: selectedTargetLanguageIds.join(','),
 		}

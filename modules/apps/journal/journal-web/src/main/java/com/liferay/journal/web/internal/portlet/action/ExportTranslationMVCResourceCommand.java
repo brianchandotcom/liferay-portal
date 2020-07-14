@@ -32,10 +32,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Optional;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -82,6 +85,21 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
+			String exportFileFormat = ParamUtil.getString(
+				resourceRequest, "exportFileFormat");
+
+			Optional<TranslationInfoItemFieldValuesExporter>
+				exportFileFormatOptional =
+					_translationInfoItemFieldValuesExporterTracker.
+						getTranslationInfoItemFieldValuesExporterOptional(
+							exportFileFormat);
+
+			TranslationInfoItemFieldValuesExporter
+				translationInfoItemFieldValuesExporter =
+					exportFileFormatOptional.orElseThrow(
+						() -> new PortalException(
+							"Unknown export file format: " + exportFileFormat));
+
 			for (String targetLanguageId :
 					ParamUtil.getStringValues(
 						resourceRequest, "targetLanguageIds")) {
@@ -92,7 +110,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						article.getTitle(themeDisplay.getLocale()),
 						StringPool.DASH, sourceLanguageId, StringPool.DASH,
 						targetLanguageId, ".xlf"),
-					_translationInfoItemFieldValuesExporter.
+					translationInfoItemFieldValuesExporter.
 						exportInfoItemFieldValues(
 							infoItemFieldValuesProvider.getInfoItemFieldValues(
 								article),
@@ -125,7 +143,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporter
-		_translationInfoItemFieldValuesExporter;
+	private TranslationInfoItemFieldValuesExporterTracker
+		_translationInfoItemFieldValuesExporterTracker;
 
 }

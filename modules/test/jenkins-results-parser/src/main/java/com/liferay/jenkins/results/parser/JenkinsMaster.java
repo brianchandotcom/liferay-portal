@@ -146,6 +146,18 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		return _masterName;
 	}
 
+	public List<JenkinsSlave> getOnlineSlaves() {
+		List<JenkinsSlave> jenkinsSlaves = new ArrayList<>();
+
+		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
+			if (!jenkinsSlave.isOffline()) {
+				jenkinsSlaves.add(jenkinsSlave);
+			}
+		}
+
+		return jenkinsSlaves;
+	}
+
 	public int getOnlineSlavesCount() {
 		int onlineSlavesCount = 0;
 

@@ -1,0 +1,139 @@
+{
+	"$id": "http://example.com/root.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"definitions": {
+		"Token": {
+			"additionalProperties": false,
+			"properties": {
+				"editorType": {
+					"enum": [
+						"ColorPicker"
+					],
+					"title": "The Editor Type used to edit the Token",
+					"type": "string"
+				},
+				"label": {
+					"title": "The Language Key of the Token Label",
+					"type": "string"
+				},
+				"name": {
+					"title": "Name of the Token",
+					"type": "string"
+				},
+				"tokenCategoryName": {
+					"title": "Name of the TokenCategory associated to the Token",
+					"type": "string"
+				},
+				"tokenSetName": {
+					"title": "Name of the TokenSet associated to the Token",
+					"type": "string"
+				},
+				"type": {
+					"enum": [
+						"Boolean",
+						"Integer",
+						"Number",
+						"String"
+					],
+					"title": "Type of the Token",
+					"type": "string"
+				},
+				"validValues": {
+					"items": {
+						"additionalProperties": false,
+						"not": {
+							"type": "null"
+						},
+						"properties": {
+							"label": {
+								"title": "The Language Key of the Valid Value",
+								"type": "string"
+							},
+							"value": {
+								"title": "Value",
+								"type": "string"
+							}
+						},
+						"required": [
+							"value"
+						],
+						"title": "Valid Value",
+						"type": "object"
+					},
+					"minItems": 1,
+					"title": "Valid Values",
+					"type": "array"
+				}
+			},
+			"required": [
+				"mappings",
+				"name",
+				"type"
+			],
+			"type": "object"
+		},
+		"TokenCategory": {
+			"additionalProperties": false,
+			"properties": {
+				"label": {
+					"title": "The Language Key to obtain the label of the Token Category",
+					"type": "string"
+				},
+				"name": {
+					"title": "Name of the Token Category",
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			],
+			"type": "object"
+		},
+		"TokenSet": {
+			"additionalProperties": false,
+			"properties": {
+				"label": {
+					"title": "The Language Key to obtain the label of the Token Set",
+					"type": "string"
+				},
+				"name": {
+					"title": "Name of the Token Set",
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			],
+			"type": "object"
+		}
+	},
+	"properties": {
+		"tokenCategories": {
+			"items": {
+				"$ref": "#/definitions/TokenCategory"
+			},
+			"title": "Tokens",
+			"type": "array"
+		},
+		"tokenSets": {
+			"items": {
+				"$ref": "#/definitions/TokenSet"
+			},
+			"title": "Tokens",
+			"type": "array"
+		},
+		"tokens": {
+			"items": {
+				"$ref": "#/definitions/Token"
+			},
+			"title": "Tokens",
+			"type": "array"
+		}
+	},
+	"required": [
+		"tokens"
+	],
+	"title": "The Design Tokens Definition Schema",
+	"type": "object"
+}

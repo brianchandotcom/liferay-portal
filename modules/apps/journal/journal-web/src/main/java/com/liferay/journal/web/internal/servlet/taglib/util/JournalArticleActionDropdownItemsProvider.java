@@ -67,6 +67,8 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -780,7 +782,12 @@ public class JournalArticleActionDropdownItemsProvider {
 		if (hasViewPermission &&
 			FFImportExportTranslationConfigurationUtil.enabled()) {
 
-			return true;
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+				_themeDisplay.getSiteGroupId());
+
+			if (availableLocales.size() > 1) {
+				return true;
+			}
 		}
 
 		return false;

@@ -56,8 +56,8 @@ public class JournalArticleInfoItemFormVariationsProvider
 				infoItemFormVariations.add(
 					new InfoItemFormVariation(
 						String.valueOf(ddmStructure.getStructureId()),
-						InfoLocalizedValue.builder(
-						).addValues(
+						InfoLocalizedValue.<String>builder(
+						).values(
 							ddmStructure.getNameMap()
 						).build()));
 			}

@@ -73,7 +73,7 @@ public class LayoutPageTemplateTestUtil {
 				TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
@@ -103,7 +103,7 @@ public class LayoutPageTemplateTestUtil {
 				TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

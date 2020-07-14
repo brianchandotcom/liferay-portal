@@ -13,6 +13,7 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -32,7 +33,6 @@ import {
 import {executeAsyncAction, getRandomId, loadData} from './utilities/index';
 import {logError} from './utilities/logError';
 import getJsModule from './utilities/modules';
-import {showNotification} from './utilities/notifications';
 import {getViewById} from './views/index';
 
 function DatasetDisplay({
@@ -119,15 +119,16 @@ function DatasetDisplay({
 					setLoading(false);
 				})
 				.catch((err) => {
-					showNotification(
-						Liferay.Language.get('unexpected-error'),
-						'danger'
-					);
-					setLoading(false);
-					throw new Error(
+					logError(
 						`Requested module: ${currentViewModuleUrl} not available`,
 						err
 					);
+					openToast({
+						message: Liferay.Language.get('unexpected-error'),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+					setLoading(false);
 				});
 		}
 	}, [
@@ -172,10 +173,13 @@ function DatasetDisplay({
 				const {message, showSuccessNotification} = successNotification;
 
 				if (showSuccessNotification) {
-					const notificationMessage =
-						message || Liferay.Language.get('table-data-updated');
-
-					showNotification(notificationMessage, 'success');
+					openToast({
+						message:
+							message ||
+							Liferay.Language.get('table-data-updated'),
+						title: Liferay.Language.get('success'),
+						type: 'success',
+					});
 				}
 
 				setLoading(false);
@@ -184,11 +188,11 @@ function DatasetDisplay({
 			.catch((error) => {
 				logError(error);
 				setLoading(false);
-
-				showNotification(
-					Liferay.Language.get('unexpected-error'),
-					'danger'
-				);
+				openToast({
+					message: Liferay.Language.get('unexpected-error'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
 			});
 	}
 
@@ -387,11 +391,11 @@ function DatasetDisplay({
 			})
 			.catch((error) => {
 				logError(error);
-
-				showNotification(
-					Liferay.Language.get('unexpected-error'),
-					'danger'
-				);
+				openToast({
+					message: Liferay.Language.get('unexpected-error'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
 			});
 	}
 

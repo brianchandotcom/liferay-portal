@@ -12,8 +12,8 @@
  * details.
  */
 
-export const logError = (error) => {
+export const logError = (...errors) => {
 	if (process.env.NODE_ENV === 'development') {
-		console.error(error);
+		console.error(...errors);
 	}
 };

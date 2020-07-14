@@ -348,10 +348,14 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(article.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
+
+		if (ddmStructure == null) {
+			return;
+		}
 
 		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
 			containerModelId = article.getFolderId();

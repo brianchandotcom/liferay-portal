@@ -1810,9 +1810,8 @@ public class JenkinsResultsParserUtil {
 			callables.add(callable);
 		}
 
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				jenkinsMasters.size(), true);
+		ThreadPoolExecutor threadPoolExecutor = getNewThreadPoolExecutor(
+			jenkinsMasters.size(), true);
 
 		ParallelExecutor<List<JenkinsSlave>> parallelExecutor =
 			new ParallelExecutor<>(callables, threadPoolExecutor);

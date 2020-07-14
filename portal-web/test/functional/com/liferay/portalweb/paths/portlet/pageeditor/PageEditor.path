@@ -571,6 +571,21 @@
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'no-gutters')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>GRID_CONFIGURATION_INVERSE_ORDER</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'flex-column-reverse')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_CONFIGURATION_LAYOUT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'col-xs-${key_layout}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_CONFIGURATION_VERTICAL_ALIGNMENT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'${key_verticalAlignment}')]</td>
+	<td></td>
+</tr>
 <!--LANGUAGE_MENU-->
 <tr>
 	<td>DROPDOWN</td>

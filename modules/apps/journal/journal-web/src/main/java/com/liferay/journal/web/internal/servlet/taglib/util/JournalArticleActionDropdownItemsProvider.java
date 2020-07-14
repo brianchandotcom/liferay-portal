@@ -118,7 +118,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		UnsafeConsumer<DropdownItem, Exception> viewContentArticleAction =
 			_getViewContentArticleActionUnsafeConsumer();
 
-		boolean importExportEnabled = _isImportExportEnabled(hasViewPermission);
+		boolean importExportTranslationEnabled =
+			_isImportExportTranslationEnabled(hasViewPermission);
 
 		return DropdownItemListBuilder.add(
 			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
@@ -146,13 +147,14 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && hasUpdatePermission,
 			_getViewHistoryArticleActionUnsafeConsumer()
 		).add(
-			() -> importExportEnabled,
+			() -> importExportTranslationEnabled,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
-			() -> importExportEnabled,
+			() -> importExportTranslationEnabled,
 			_getImportTranslationActionUnsafeConsumer()
 		).add(
-			() -> importExportEnabled, _getTranslateActionUnsafeConsumer()
+			() -> importExportTranslationEnabled,
+			_getTranslateActionUnsafeConsumer()
 		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
@@ -778,7 +780,9 @@ public class JournalArticleActionDropdownItemsProvider {
 		};
 	}
 
-	private boolean _isImportExportEnabled(boolean hasViewPermission) {
+	private boolean _isImportExportTranslationEnabled(
+		boolean hasViewPermission) {
+
 		if (hasViewPermission &&
 			FFImportExportTranslationConfigurationUtil.enabled()) {
 

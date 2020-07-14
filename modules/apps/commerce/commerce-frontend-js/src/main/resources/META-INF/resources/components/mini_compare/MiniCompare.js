@@ -26,17 +26,17 @@ import {
 	REMOVE_ITEM_FROM_COMPARE,
 	ITEM_REMOVED_FROM_COMPARE
 } from '../../utilities/eventsDefinitions';
-import {fetchParams} from '../../utilities';
+import {fetchParams} from '../../utilities/index';
 
 function Item(props) {
 	return (
 		<div className={classnames('mini-compare-item', props.id && 'active')}>
-			<ClaySticker className="mini-compare-thumbnail" size="lg">
-				<img className="sticker-img" src={props.thumbnail} />
+			<ClaySticker className="mini-compare-thumbnail-container" size="lg">
+				<div className="mini-compare-thumbnail" style={{backgroundImage: `url('${props.thumbnail}')`}} />
 			</ClaySticker>
 			<ClayButtonWithIcon
 				className="mini-compare-delete"
-				displayType="secondary"
+				displayType="unstyled"
 				onClick={props.onDelete}
 				small
 				symbol="times"

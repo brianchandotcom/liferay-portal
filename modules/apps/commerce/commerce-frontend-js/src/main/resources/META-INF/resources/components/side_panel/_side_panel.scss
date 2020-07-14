@@ -1,0 +1,168 @@
+$header-height: 65px;
+
+.side-panel {
+	background-color: #f1f2f5;
+	bottom: 0;
+	box-shadow: -10px 20px 30px rgba(39, 40, 51, 0.15);
+	position: fixed;
+	right: 0;
+	top: 0;
+	transition: transform ease 500ms, box-shadow ease 500ms, width ease 500ms;
+	width: 70%;
+	will-change: transform, box-shadow, opacity, width;
+	z-index: 989;
+
+	&-close {
+		opacity: 0.5;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: top ease-in-out 0.1s, right ease-in-out 0.1s,
+			opacity ease-in 0.2s;
+		z-index: 1;
+
+		&-menu {
+			opacity: 1;
+			right: 16px;
+			top: 4px;
+		}
+
+		&-simple {
+			opacity: 1;
+			right: 20px;
+			top: 29px;
+		}
+	}
+
+	&.is-hidden {
+		box-shadow: 0 0 0 rgba(39, 40, 51, 0.15);
+		transform: translateX(100%);
+	}
+
+	&-xs {
+		width: 25%;
+	}
+	&-sm {
+		width: 33%;
+	}
+	&-md {
+		width: 50%;
+	}
+	&-lg {
+		width: 66%;
+	}
+	&-xl {
+		width: 75%;
+	}
+	&-full {
+		width: 100%;
+	}
+
+	iframe {
+		height: 100%;
+		width: 100%;
+	}
+
+	.loader {
+		align-items: center;
+		bottom: 0;
+		display: flex;
+		justify-content: center;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+	}
+
+	&:not(.is-loading) .loader {
+		opacity: 0;
+		pointer-events: none;
+		transition: all ease 200ms;
+	}
+
+	&.is-loading iframe {
+		display: none;
+	}
+
+	.nav {
+		border-bottom: 1px solid #dddee7;
+	}
+
+	.side-menu {
+		border-bottom-width: 0;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		position: absolute;
+		right: 100%;
+		top: 0;
+	}
+
+	.tab-content,
+	.tab-pane {
+		height: 100%;
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.side-panel-iframe {
+	&-content {
+		padding: map-get($spacers, 4) map-get($spacers, 3);
+	}
+
+	.page-header {
+		position: sticky;
+		top: $header-height;
+		z-index: 10;
+	}
+
+	&-header {
+		align-items: center;
+		background: #f7f7f7;
+		border-bottom: 1px solid $border-color;
+		display: flex;
+		height: $header-height;
+		justify-content: space-between;
+		padding: map-get($spacers, 1) map-get($spacers, 3);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	&-title {
+		font-weight: 600;
+	}
+
+	&-menu-wrapper {
+		border-bottom: 1px solid #e7e7ed;
+		position: sticky;
+		top: 0;
+	}
+
+	&-wrapper {
+		padding: map-get($spacers, 4) map-get($spacers, 3);
+	}
+}
+
+.side-panel-nav-cover {
+	background: white;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	right: 0;
+	transform: translateX(100%);
+	transition: opacity 0.2s ease-in, transform 0.4s ease-in, left 0.4s ease-in;
+	z-index: 988;
+
+	body.open & {
+		left: $liferay-sidebars-width;
+	}
+
+	&.is-visible {
+		opacity: 1;
+		transform: translateY(0%);
+	}
+}

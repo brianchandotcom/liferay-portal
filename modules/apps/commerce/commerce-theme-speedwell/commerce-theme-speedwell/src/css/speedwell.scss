@@ -4,6 +4,7 @@
 
 @import './overrides/button';
 @import './overrides/dataset-display';
+@import './overrides/mini-compare';
 
 @import './overrides';
 @import './portlet';
@@ -20,7 +21,6 @@
 @import 'components/minium_card';
 @import 'components/minium_frame';
 @import 'components/minium_product_tiles';
-@import 'components/minium_products_compare';
 @import 'components/pagination_bar';
 @import 'components/price';
 @import 'components/product_detail';

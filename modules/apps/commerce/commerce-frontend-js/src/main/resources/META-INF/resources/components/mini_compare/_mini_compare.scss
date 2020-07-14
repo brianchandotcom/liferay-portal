@@ -1,20 +1,29 @@
 .mini-compare {
 	background: white;
 	border-radius: 4px 4px 0 0;
+	bottom: 0;
 	box-shadow: 0 17px 84px 0 rgba(52, 55, 62, 0.2);
 	display: inline-flex;
-	padding: $spacer;
-	position: fixed;
-	bottom: 0;
 	left: 50%;
 	opacity: 0.3;
-	transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+	padding: $spacer;
+	position: fixed;
 	transform: translateX(-50%) translateY(100%);
+	transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 
 	&.active {
 		opacity: 1;
 		transform: translateX(-50%) translateY(0);
-	}
+    }
+    
+    body.open & {
+        transform: translateX(calc(-50% + #{$liferay-sidebars-width / 2})) translateY(100%);
+        
+        &.active {
+            opacity: 1;
+            transform: translateX(calc(-50% + #{$liferay-sidebars-width / 2})) translateY(0);
+        }
+    }
 
 	&-item {
 		margin-right: $spacer;
@@ -25,14 +34,15 @@
 		}
 
 		&::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 0;
+            border: 2px dashed $border-color;
+            border-radius: 4px;
 			bottom: 0;
+			content: '';
 			left: 0;
-			border: 2px dashed $border-color;
 			opacity: 1;
+			position: absolute;
+			right: 0;
+			top: 0;
 			transition: opacity 0.2s ease-in;
 		}
 
@@ -42,30 +52,44 @@
 			}
 
 			.mini-compare-delete {
-				transform: scale(0.6) translate(50%, -50%);
 				opacity: 1;
+				transform: scale(0.6) translate(50%, -50%);
 			}
 
-			.mini-compare-thumbnail {
-				transform: scale(1);
+			.mini-compare-thumbnail-container {
 				opacity: 1;
+				transform: scale(1);
 			}
 		}
-	}
+    }
+    
+    &-thumbnail {
+        background-position: 50%;
+        background-size: cover;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
 
-	&-thumbnail {
+	&-thumbnail-container {
+        opacity: 0;
+        position: relative;
 		transform: scale(0.6);
-		opacity: 0;
 		transition: all 0.2s ease-in;
 	}
 
 	&-delete {
+        background-color: white;
+        border-color: $gray-400;
+        color: $secondary-text;
+        opacity: 0;
 		position: absolute;
 		right: 0;
 		top: 0;
 		transition: all 0.2s ease-in;
-		z-index: 10;
-		opacity: 0;
 		transform: scale(0) translate(50%, -50%);
+        z-index: 10;
 	}
 }

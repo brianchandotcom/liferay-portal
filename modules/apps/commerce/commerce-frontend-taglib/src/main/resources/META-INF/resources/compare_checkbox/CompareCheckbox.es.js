@@ -24,7 +24,7 @@ class CompareCheckbox extends Component {
 		window.Liferay.on('compareIsAvailable', this._enableCompare, this);
 		window.Liferay.on('compareIsUnavailable', this._disableCompare, this);
 		window.Liferay.on(
-			'productRemovedFromCompare',
+			'itemRemovedFromCompare',
 			this._removeFromCompare,
 			this
 		);
@@ -38,7 +38,7 @@ class CompareCheckbox extends Component {
 			this
 		);
 		window.Liferay.detach(
-			'productRemovedFromCompare',
+			'itemRemovedFromCompare',
 			this._removeFromCompare,
 			this
 		);
@@ -74,11 +74,13 @@ class CompareCheckbox extends Component {
 	_handleCompareCheckbox(evt) {
 		evt.preventDefault();
 		this.inCompare = !this.inCompare;
-
-		return Liferay.fire('toggleProductToCompare', {
-			id: this.productId,
-			thumbnail: this.pictureUrl || null,
-		});
+		Liferay.fire(
+			this.inCompare ? 'addItemToCompare' : 'removeItemFromCompare',
+			{
+				id: this.productId,
+				thumbnail: this.pictureUrl || null
+			}
+		);
 	}
 }
 

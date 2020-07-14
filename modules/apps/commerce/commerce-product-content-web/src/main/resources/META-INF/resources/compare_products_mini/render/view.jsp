@@ -38,63 +38,15 @@ HttpServletRequest originalHttpServletRequest = PortalUtil.getOriginalServletReq
 List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(commerceContext.getCommerceChannelGroupId(), commerceAccountId, originalHttpServletRequest.getSession());
 %>
 
-<c:if test="<%= !cpCatalogEntries.isEmpty() %>">
-	<div id="<portlet:namespace />compareProductsMiniContainer">
-		<div class="compare-products-mini-header">
-			<a class="collapse-icon lfr-compare-products-mini-header" href="javascript:;">
-				<span class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpCatalogEntries.size(), cpDefinitionIds.size()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></span>
+<div id="mini-compare-root"></div>
 
-				<span class="collapse-icon-open">
-					<liferay-ui:icon
-						icon="angle-down"
-						markupView="lexicon"
-					/>
-				</span>
-				<span class="collapse-icon-closed">
-					<liferay-ui:icon
-						icon="angle-up"
-						markupView="lexicon"
-					/>
-				</span>
-			</a>
-		</div>
-
-		<div class="lfr-compare-products-mini-content">
-			<ul class="card-page">
-
-				<%
-				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentHelper.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId(), renderRequest, renderResponse));
-				%>
-
-					<li class="card-page-item">
-						<liferay-commerce-product:product-list-entry-renderer
-							CPCatalogEntry = "<%= cpCatalogEntry %>"
-						/>
-					</li>
-
-				<%
-				}
-				%>
-
-				<li class="card-page-item card-page-item-shrink">
-					<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentHelper.getClearCompareProductsURL(renderRequest, renderResponse)) %>"><liferay-ui:message key="clear-all" /></a>
-				</li>
-				<li class="card-page-item card-page-item-shrink">
-					<aui:button cssClass="btn-primary" href="<%= HtmlUtil.escape(cpCompareContentHelper.getCompareProductsURL(themeDisplay)) %>" value="compare" />
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<aui:script use="aui-toggler">
-		new A.Toggler({
-			animated: true,
-			content:
-				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-content',
-			expanded: true,
-			header:
-				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header',
-		});
-	</aui:script>
-</c:if>
+<aui:script require="commerce-frontend-js/components/mini_compare/entry as miniCompare">
+	miniCompare.default('mini-compare', 'mini-compare-root', {
+		compareProductsURL: '/test',
+		editCompareProductActionURL: '/test',
+		items: [],
+		itemsLimit: 5,
+		portletNamespace: 'portletNamespace',
+		spritemap: '/o/admin-theme/images/clay/icons.svg'
+	});
+</aui:script>

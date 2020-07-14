@@ -57,7 +57,7 @@ export function Filter(props) {
 	}, [props.moduleUrl]);
 
 	return Component ? (
-		<div className="dataset-filter test">
+		<div className="dataset-filter">
 			<Component {...props} />
 		</div>
 	) : (

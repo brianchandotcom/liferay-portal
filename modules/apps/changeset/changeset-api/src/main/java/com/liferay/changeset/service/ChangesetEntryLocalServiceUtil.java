@@ -85,15 +85,12 @@ public class ChangesetEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteChangesetEntries(long changesetCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteChangesetEntries(long changesetCollectionId) {
 		getService().deleteChangesetEntries(changesetCollectionId);
 	}
 
 	public static void deleteChangesetEntries(
-			java.util.Set<Long> changesetEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.util.Set<Long> changesetEntryIds) {
 
 		getService().deleteChangesetEntries(changesetEntryIds);
 	}

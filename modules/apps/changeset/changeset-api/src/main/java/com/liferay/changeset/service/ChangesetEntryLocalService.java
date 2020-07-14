@@ -97,11 +97,9 @@ public interface ChangesetEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteChangesetEntries(long changesetCollectionId)
-		throws PortalException;
+	public void deleteChangesetEntries(long changesetCollectionId);
 
-	public void deleteChangesetEntries(Set<Long> changesetEntryIds)
-		throws PortalException;
+	public void deleteChangesetEntries(Set<Long> changesetEntryIds);
 
 	/**
 	 * Deletes the changeset entry from the database. Also notifies the appropriate model listeners.

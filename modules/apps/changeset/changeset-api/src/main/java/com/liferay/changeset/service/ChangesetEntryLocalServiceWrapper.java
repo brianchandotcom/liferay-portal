@@ -86,17 +86,13 @@ public class ChangesetEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteChangesetEntries(long changesetCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void deleteChangesetEntries(long changesetCollectionId) {
 		_changesetEntryLocalService.deleteChangesetEntries(
 			changesetCollectionId);
 	}
 
 	@Override
-	public void deleteChangesetEntries(java.util.Set<Long> changesetEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void deleteChangesetEntries(java.util.Set<Long> changesetEntryIds) {
 		_changesetEntryLocalService.deleteChangesetEntries(changesetEntryIds);
 	}
 

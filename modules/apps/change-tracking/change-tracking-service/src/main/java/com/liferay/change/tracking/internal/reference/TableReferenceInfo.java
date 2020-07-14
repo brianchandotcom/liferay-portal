@@ -26,17 +26,22 @@ import java.util.Map;
 public class TableReferenceInfo<T extends Table<T>> {
 
 	public TableReferenceInfo(
-		TableReferenceDefinition<T> tableReferenceDefinition,
+		TableReferenceDefinition<T> tableReferenceDefinition, long classNameId,
 		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap,
 		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap) {
 
 		_tableReferenceDefinition = tableReferenceDefinition;
+		_classNameId = classNameId;
 		_parentTableJoinHoldersMap = parentTableJoinHoldersMap;
 		_childTableJoinHoldersMap = childTableJoinHoldersMap;
 	}
 
 	public Map<Table<?>, List<TableJoinHolder>> getChildTableJoinHoldersMap() {
 		return _childTableJoinHoldersMap;
+	}
+
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
 	public Map<Table<?>, List<TableJoinHolder>> getParentTableJoinHoldersMap() {
@@ -49,6 +54,7 @@ public class TableReferenceInfo<T extends Table<T>> {
 
 	private final Map<Table<?>, List<TableJoinHolder>>
 		_childTableJoinHoldersMap;
+	private final long _classNameId;
 	private final Map<Table<?>, List<TableJoinHolder>>
 		_parentTableJoinHoldersMap;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;

@@ -119,7 +119,7 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition,
+				tableReferenceDefinition, MainExampleTable.CLASS_NAME_ID,
 				MainExampleTable.INSTANCE.mainExampleId);
 
 		Assert.assertNotNull(tableReferenceInfo);
@@ -151,6 +151,10 @@ public class TableReferenceInfoFactoryTest {
 		Assert.assertTrue(
 			parentTableJoinHoldersMap.toString(),
 			parentTableJoinHoldersMap.isEmpty());
+
+		Assert.assertEquals(
+			MainExampleTable.CLASS_NAME_ID,
+			tableReferenceInfo.getClassNameId());
 	}
 
 	@Test
@@ -245,7 +249,7 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition,
+				tableReferenceDefinition, ReferenceExampleTable.CLASS_NAME_ID,
 				ReferenceExampleTable.INSTANCE.referenceExampleId);
 
 		Assert.assertNotNull(tableReferenceInfo);
@@ -349,6 +353,10 @@ public class TableReferenceInfoFactoryTest {
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
 			parentJoinHolder.getChildPKColumn());
+
+		Assert.assertEquals(
+			ReferenceExampleTable.CLASS_NAME_ID,
+			tableReferenceInfo.getClassNameId());
 	}
 
 	@Test
@@ -630,7 +638,7 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition,
+				tableReferenceDefinition, MainExampleTable.CLASS_NAME_ID,
 				MainExampleTable.INSTANCE.mainExampleId);
 
 		Assert.assertNotNull(tableReferenceInfo);
@@ -652,6 +660,10 @@ public class TableReferenceInfoFactoryTest {
 		Assert.assertTrue(
 			parentTableJoinHoldersMap.toString(),
 			parentTableJoinHoldersMap.isEmpty());
+
+		Assert.assertEquals(
+			MainExampleTable.CLASS_NAME_ID,
+			tableReferenceInfo.getClassNameId());
 	}
 
 	private static List<TableReferenceAppender> _tableReferenceAppenders;
@@ -670,6 +682,8 @@ public class TableReferenceInfoFactoryTest {
 	}
 
 	private static class MainExampleTable extends BaseTable<MainExampleTable> {
+
+		public static final long CLASS_NAME_ID = 1;
 
 		public static final MainExampleTable INSTANCE = new MainExampleTable();
 
@@ -693,6 +707,8 @@ public class TableReferenceInfoFactoryTest {
 
 	private static class ReferenceExampleTable
 		extends BaseTable<ReferenceExampleTable> {
+
+		public static final long CLASS_NAME_ID = 2;
 
 		public static final ReferenceExampleTable INSTANCE =
 			new ReferenceExampleTable();

@@ -31,7 +31,7 @@
 		&.dropdown-menu__experience--active,
 		&:focus {
 			background-color: $primary-l3;
-			border-color: $primary-l1;
+			border: 1px solid $primary-l1;
 		}
 	}
 }

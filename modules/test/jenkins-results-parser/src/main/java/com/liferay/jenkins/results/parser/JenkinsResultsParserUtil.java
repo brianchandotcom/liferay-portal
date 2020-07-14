@@ -1594,7 +1594,9 @@ public class JenkinsResultsParserUtil {
 			for (JenkinsSlave onlineJenkinsSlave :
 					jenkinsMaster.getOnlineJenkinsSlaves()) {
 
-				if (!onlineJenkinsSlaveNames.contains(onlineJenkinsSlave.getName())) {
+				if (!onlineJenkinsSlaveNames.contains(
+						onlineJenkinsSlave.getName())) {
+
 					onlineJenkinsSlaveNames.add(onlineJenkinsSlave.getName());
 				}
 			}

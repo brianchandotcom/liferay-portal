@@ -23,6 +23,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -36,6 +38,10 @@ public interface DTOConverterContext {
 	}
 
 	public default DTOConverterRegistry getDTOConverterRegistry() {
+		return null;
+	}
+
+	public default HttpServletRequest getHttpServletRequest() {
 		return null;
 	}
 

@@ -4233,10 +4233,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										</then>
 									</elseif>
 									<else>
-										<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" outputproperty="app.server.log" resolveexecutable="true">
-											<arg line="${app.server.start.executable.arg.line}" />
-											<env key="JAVA_HOME" path="${java.jdk.home}" />
-										</exec>
+										<start-app-server-cmd-bash />
 									</else>
 								</if>
 
@@ -4299,10 +4296,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											</then>
 										</elseif>
 										<else>
-											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" output="app.server.log" resolveexecutable="true">
-												<arg line="${app.server.start.executable.arg.line}" />
-												<env key="JAVA_HOME" path="${java.jdk.home}" />
-											</exec>
+											<start-app-server-cmd-bash />
 										</else>
 									</if>
 								</daemons>
@@ -4311,6 +4305,71 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-app-server-cmd-bash">
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					Runnable runnable = new Runnable() {
+
+						public void run() {
+							StringBuilder sb = new StringBuilder();
+
+							if (JenkinsResultsParserUtil.isWindows()) {
+								sb.append("cmd.exe /c ");
+							}
+							else {
+								sb.append("/bin/bash ");
+							}
+
+							sb.append(project.getProperty("app.server.start.executable"));
+							sb.append(" ");
+							sb.append(project.getProperty("app.server.start.executable.arg.line"));
+
+							Runtime runtime = Runtime.getRuntime();
+
+							Process process = runtime.exec(sb.toString(), new String[] {"JAVA_HOME=" + project.getProperty("java.jdk.home")}, new File(project.getProperty("test.app.server.bin.dir")));
+
+							InputStream inputStream = process.getInputStream();
+
+							int appServerLogByte;
+
+							long appServerLogSize = 0;
+
+							Integer appServerLogMaxSize = Integer.valueOf(project.getProperty("app.server.log.max.size.in.mb")) * 1024 * 1024;
+
+							try {
+								while ((appServerLogByte = inputStream.read()) != -1) {
+									appServerLogSize++;
+
+									if (appServerLogSize > appServerLogMaxSize) {
+										continue;
+									}
+
+									System.out.print((char)appServerLogByte);
+								}
+							}
+							catch (IOException ioException) {
+								throw new RuntimeException(ioException);
+							}
+							finally {
+								inputStream.close();
+							}
+
+							process.waitFor();
+						}
+
+					};
+
+					Thread thread = new Thread(runnable);
+
+					thread.start();
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 

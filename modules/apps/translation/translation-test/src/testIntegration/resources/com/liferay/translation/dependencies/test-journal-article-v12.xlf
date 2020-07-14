@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="com.liferay.journal.model.JournalArticle:$ARTICLE_ID" source-language="en-US" target-language="es-ES" tool="Liferay">
+		<body>
+			<trans-unit id="title">
+				<source xml:lang="en-US"><![CDATA[Test Article]]></source>
+				<target xml:lang="es-ES"><![CDATA[Test Article]]></target>
+			</trans-unit>
+			<trans-unit id="HTML4acl">
+				<source xml:lang="en-US"><![CDATA[<p>Some HTML</p>]]></source>
+				<target xml:lang="es-ES"><![CDATA[<p>Un poco de HTML</p>]]></target>
+			</trans-unit>
+			<trans-unit id="Text1gf6">
+				<source xml:lang="en-US"><![CDATA[Some Text]]></source>
+				<target xml:lang="es-ES"><![CDATA[Un poco de texto]]></target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -39,6 +39,10 @@ ext {
 	]
 }
 
+task portalYarnCheckFormat
+task portalYarnFormat
+task portalYarnInstall
+
 if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 	apply plugin: "com.gradle.build-scan"
 
@@ -81,6 +85,28 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	bndPrintJarFiles = new ConcurrentSkipListSet<File>()
 }
 
+if (FileUtil.exists(rootProject, "private/yarn.lock")) {
+	gradle.beforeProject {
+		if (it.path.equals(":private")) {
+			configure(it) {
+				apply plugin: "com.liferay.yarn.defaults.plugin"
+			}
+		}
+	}
+
+	portalYarnCheckFormat {
+		dependsOn ":private:yarnCheckFormat"
+	}
+
+	portalYarnFormat {
+		dependsOn ":private:yarnFormat"
+	}
+
+	portalYarnInstall {
+		dependsOn ":private:yarnInstall"
+	}
+}
+
 buildDir = new File(rootDir.parentFile, "build")
 
 for (String gradleVersion in ["5.6.4"]) {
@@ -116,6 +142,18 @@ for (String gradleVersion in ["5.6.4"]) {
 		includeEmptyDirs = false
 		into new File(buildDir, "gradle-${gradleVersion}-sources")
 	}
+}
+
+portalYarnCheckFormat {
+	dependsOn ":yarnCheckFormat"
+}
+
+portalYarnFormat {
+	dependsOn ":yarnFormat"
+}
+
+portalYarnInstall {
+	dependsOn ":yarnInstall"
 }
 
 gradle.beforeProject {

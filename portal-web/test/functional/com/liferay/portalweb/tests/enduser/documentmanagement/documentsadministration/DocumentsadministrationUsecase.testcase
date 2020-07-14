@@ -147,7 +147,8 @@ definition {
 
 	@priority = "5"
 	test AddDocumentTypeAndMetadata {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

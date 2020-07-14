@@ -13,48 +13,25 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {AddPanelContext} from './AddPanel';
-import TabItem from './TabItem';
+import Collection from './Collection';
 
 const CONTENT_TAB_ID = 'content';
 
-const SearchResultsPanel = ({alertTitle, filteredTabs}) => {
-	const {displayGrid} = useContext(AddPanelContext);
-
-	return filteredTabs.map((tab, index) =>
+const SearchResultsPanel = ({alertTitle, filteredTabs}) =>
+	filteredTabs.map((tab, index) =>
 		tab.collections.length ? (
-			<ul
-				className={classNames('list-unstyled', {
-					grid: displayGrid && tab.id === CONTENT_TAB_ID,
-				})}
-				key={index}
-			>
-				{tab.collections
-					.reduce(
-						(acc, collection) =>
-							acc.concat(
-								collection.children.filter(
-									(item) =>
-										!acc.some(
-											({itemId}) => itemId === item.itemId
-										)
-								)
-							),
-						[]
-					)
-					.map((item) => (
-						<React.Fragment key={item.itemId}>
-							<TabItem item={item} />
-							{item.portletItems?.length && (
-								<TabPortletItem items={item.portletItems} />
-							)}
-						</React.Fragment>
-					))}
-			</ul>
+			tab.collections.map((collection, index) => (
+				<Collection
+					collection={collection}
+					isContentTab={tab.id === CONTENT_TAB_ID}
+					isSearchResult
+					key={index}
+					open
+				/>
+			))
 		) : (
 			<ClayAlert
 				displayType="info"
@@ -65,15 +42,6 @@ const SearchResultsPanel = ({alertTitle, filteredTabs}) => {
 			</ClayAlert>
 		)
 	);
-};
-
-const TabPortletItem = ({items}) => (
-	<ul className="list-unstyled">
-		{items.map((item) => (
-			<TabItem item={item} key={item.data.portletItemId} />
-		))}
-	</ul>
-);
 
 SearchResultsPanel.proptypes = {
 	alertTitle: PropTypes.string.isRequired,

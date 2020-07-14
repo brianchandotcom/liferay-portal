@@ -848,6 +848,13 @@
 					"title": "The rowViewportConfig Schema",
 					"type": "object"
 				},
+				"rowViewports": {
+					"items": {
+						"$ref": "#/definitions/RowViewport"
+					},
+					"title": "The rowViewports Schema",
+					"type": "array"
+				},
 				"verticalAlignment": {
 					"title": "The verticalAlignment Schema",
 					"type": "string"
@@ -856,23 +863,37 @@
 			"title": "The RowDefinition Schema",
 			"type": "object"
 		},
-		"RowViewportConfigDefinition": {
+		"RowViewport": {
 			"additionalProperties": false,
 			"properties": {
-				"modulesPerRow": {
-					"title": "The modulesPerRow Schema",
-					"type": "integer"
-				},
-				"reverseOrder": {
-					"title": "The reverseOrder Schema",
-					"type": "boolean"
-				},
-				"verticalAlignment": {
-					"title": "The verticalAlignment Schema",
+				"id": {
+					"title": "The id Schema",
 					"type": "string"
+				},
+				"rowViewportDefinition": {
+					"additionalProperties": false,
+					"properties": {
+						"modulesPerRow": {
+							"title": "The modulesPerRow Schema",
+							"type": "integer"
+						},
+						"reverseOrder": {
+							"title": "The reverseOrder Schema",
+							"type": "boolean"
+						},
+						"verticalAlignment": {
+							"title": "The verticalAlignment Schema",
+							"type": "string"
+						}
+					},
+					"title": "The rowViewportDefinition Schema",
+					"type": "object"
 				}
 			},
-			"title": "The RowViewportConfigDefinition Schema",
+			"required": [
+				"id", "rowViewportDefinition"
+			],
+			"title": "The RowViewport Schema",
 			"type": "object"
 		},
 		"SectionDefinition": {

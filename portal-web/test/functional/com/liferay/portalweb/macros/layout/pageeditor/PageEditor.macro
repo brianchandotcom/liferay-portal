@@ -1791,6 +1791,19 @@ definition {
 				locator1 = "PageEditor#GRID_COLUMN");
 		}
 
+		if (isSet(inverseOrder)) {
+			AssertElementPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_INVERSE_ORDER");
+		}
+
+		if (isSet(layout)) {
+			AssertElementPresent(
+				key_layout = "${layout}",
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_LAYOUT");
+		}
+
 		if (isSet(spaceBetweenColumns)) {
 			if ("${spaceBetweenColumns}" == "true") {
 				AssertElementNotPresent(
@@ -1802,6 +1815,25 @@ definition {
 					key_position = "${position}",
 					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
+		}
+
+		if ("${verticalAlignment}" == "Top") {
+			AssertElementPresent(
+				key_position = "${position}",
+				key_verticalAlignment = "",
+				locator1 = "PageEditor#GRID_CONFIGURATION_VERTICAL_ALIGNMENT");
+		}
+		else if ("${verticalAlignment}" == "Middle") {
+			AssertElementPresent(
+				key_position = "${position}",
+				key_verticalAlignment = "middle",
+				locator1 = "PageEditor#GRID_CONFIGURATION_VERTICAL_ALIGNMENT");
+		}
+		else if ("${verticalAlignment}" == "Bottom") {
+			AssertElementPresent(
+				key_position = "${position}",
+				key_verticalAlignment = "bottom",
+				locator1 = "PageEditor#GRID_CONFIGURATION_VERTICAL_ALIGNMENT");
 		}
 	}
 

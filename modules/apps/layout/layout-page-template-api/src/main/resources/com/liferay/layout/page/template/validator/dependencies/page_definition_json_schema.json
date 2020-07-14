@@ -482,7 +482,22 @@
 			"additionalProperties": false,
 			"properties": {
 				"defaultValue": {
-					"$ref": "#/definitions/FragmentInlineValue"
+					"additionalProperties": false,
+					"deprecationMessage": "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue",
+					"properties": {
+						"value": {
+							"title": "The value Schema",
+							"type": "string"
+						},
+						"value_i18n": {
+							"additionalProperties": {
+								"type": "string"
+							},
+							"title": "The value_i18n Schema",
+							"type": "object"
+						}
+					},
+					"type": "object"
 				},
 				"mapping": {
 					"additionalProperties": false,

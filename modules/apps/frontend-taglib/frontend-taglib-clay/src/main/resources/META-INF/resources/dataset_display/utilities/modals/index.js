@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 import {CLAY_MODAL_SIZES_MAP, MODAL_HEIGHT_MAP} from './constants';
 
 export function resolveModalSize(modalTarget) {
@@ -34,15 +36,9 @@ export function resolveModalHeight(size) {
 		: MODAL_HEIGHT_MAP[size];
 }
 
-export function openPermissionsModal(uri) {
-	Liferay.Util.openWindow({
-		dialog: {
-			destroyOnHide: true,
-		},
-		dialogIframe: {
-			bodyCssClass: 'dialog-with-footer',
-		},
+export function openPermissionsModal(url) {
+	openModal({
 		title: Liferay.Language.get('permissions'),
-		uri,
+		url,
 	});
 }

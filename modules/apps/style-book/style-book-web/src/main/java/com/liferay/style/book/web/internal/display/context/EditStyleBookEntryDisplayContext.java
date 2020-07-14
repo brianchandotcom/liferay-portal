@@ -73,6 +73,8 @@ public class EditStyleBookEntryDisplayContext {
 
 				return actionURL.toString();
 			}
+		).put(
+			"styleBookEntryId", _getStyleBookEntryId()
 		).build();
 	}
 

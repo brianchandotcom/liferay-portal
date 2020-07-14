@@ -28,6 +28,7 @@ import {useCollectionItemIndex} from '../components/CollectionItemContext';
 import {useSelectItem} from '../components/Controls';
 import {getToControlsId} from '../components/layout-data-items/Collection';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useSelector} from '../store/index';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -85,8 +86,10 @@ const DRAG_DROP_TARGET_TYPE = {
 const initialDragDrop = {
 	dispatch: null,
 
-	layoutData: {
-		items: [],
+	layoutDataRef: {
+		current: {
+			items: [],
+		},
 	},
 
 	state: {
@@ -153,7 +156,7 @@ export const NotDraggableArea = ({children}) => (
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
-	const {dispatch, layoutData, state} = useContext(DragAndDropContext);
+	const {dispatch, layoutDataRef, state} = useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 
 	const [{isDraggingSource}, handlerRef, previewRef] = useDrag({
@@ -168,7 +171,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 		end() {
 			computeDrop({
 				dispatch,
-				layoutData,
+				layoutDataRef,
 				onDragEnd,
 				state,
 			});
@@ -234,7 +237,7 @@ export function useDropClear() {
 
 export function useDropTarget(_targetItem) {
 	const collectionItemIndex = useCollectionItemIndex();
-	const {dispatch, layoutData, state, targetRefs} = useContext(
+	const {dispatch, layoutDataRef, state, targetRefs} = useContext(
 		DragAndDropContext
 	);
 
@@ -251,15 +254,15 @@ export function useDropTarget(_targetItem) {
 	const isOverTarget =
 		state.dropTargetItem &&
 		targetItem &&
-		toControlsId(layoutData, state.dropTargetItem) ===
-			toControlsId(layoutData, targetItem);
+		toControlsId(layoutDataRef, state.dropTargetItem) ===
+			toControlsId(layoutDataRef, targetItem);
 
 	const [, setDropTargetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
 		hover({getSourceItem}, monitor) {
 			computeHover({
 				dispatch,
-				layoutData,
+				layoutDataRef,
 				monitor,
 				sourceItem: getSourceItem(),
 				targetItem,
@@ -269,14 +272,14 @@ export function useDropTarget(_targetItem) {
 	});
 
 	useEffect(() => {
-		const itemId = toControlsId(layoutData, targetItem);
+		const itemId = toControlsId(layoutDataRef, targetItem);
 
 		targetRefs.set(itemId, targetRef);
 
 		return () => {
 			targetRefs.delete(itemId);
 		};
-	}, [layoutData, targetItem, targetRef, targetRefs]);
+	}, [layoutDataRef, targetItem, targetRef, targetRefs]);
 
 	const setTargetRef = useCallback(
 		(element) => {
@@ -296,7 +299,11 @@ export function useDropTarget(_targetItem) {
 	};
 }
 
-export const DragAndDropContextProvider = ({children, layoutData}) => {
+export const DragAndDropContextProvider = ({children}) => {
+	const layoutDataRef = useRef({
+		items: [],
+	});
+
 	const [state, reducerDispatch] = useReducer(
 		(state, nextState) =>
 			Object.keys(state).some((key) => state[key] !== nextState[key])
@@ -311,19 +318,26 @@ export const DragAndDropContextProvider = ({children, layoutData}) => {
 		return throttle(reducerDispatch, 100);
 	}, [reducerDispatch]);
 
+	useSelector((state) => {
+		layoutDataRef.current = state.layoutData;
+
+		return null;
+	});
+
 	return (
 		<DragAndDropContext.Provider
-			value={{dispatch, layoutData, state, targetRefs}}
+			value={{dispatch, layoutDataRef, state, targetRefs}}
 		>
 			{children}
 		</DragAndDropContext.Provider>
 	);
 };
 
-function computeDrop({dispatch, layoutData, onDragEnd, state}) {
+function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	if (state.droppable && state.dropItem && state.dropTargetItem) {
 		if (state.elevate) {
-			const parentItem = layoutData.items[state.dropTargetItem.parentId];
+			const parentItem =
+				layoutDataRef.current.items[state.dropTargetItem.parentId];
 
 			const siblingPosition = parentItem.children.indexOf(
 				state.dropTargetItem.itemId
@@ -356,7 +370,7 @@ function computeDrop({dispatch, layoutData, onDragEnd, state}) {
 
 function computeHover({
 	dispatch,
-	layoutData,
+	layoutDataRef,
 	monitor,
 	siblingItem = null,
 	sourceItem,
@@ -375,7 +389,7 @@ function computeHover({
 
 	// Dragging over itself or a descendant
 
-	if (itemIsAncestor(sourceItem, targetItem, layoutData)) {
+	if (itemIsAncestor(sourceItem, targetItem, layoutDataRef)) {
 		return dispatch({
 			...initialDragDrop.state,
 			type: DRAG_DROP_TARGET_TYPE.DRAGGING_TO_ITSELF,
@@ -392,7 +406,7 @@ function computeHover({
 	] = getItemPosition(
 		siblingItem || targetItem,
 		monitor,
-		layoutData,
+		layoutDataRef,
 		targetRefs
 	);
 
@@ -404,7 +418,8 @@ function computeHover({
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsEmpty =
-			layoutData.items[targetItem.itemId].children.length === 0;
+			layoutDataRef.current.items[targetItem.itemId].children.length ===
+			0;
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
@@ -417,7 +432,7 @@ function computeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutData),
+			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -429,7 +444,10 @@ function computeHover({
 	// - dropItem should be child of dropTargetItem
 	// - dropItem should be sibling of siblingItem
 
-	if (siblingItem && checkAllowedChild(sourceItem, targetItem, layoutData)) {
+	if (
+		siblingItem &&
+		checkAllowedChild(sourceItem, targetItem, layoutDataRef)
+	) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
@@ -448,9 +466,9 @@ function computeHover({
 
 	if (elevationDepth) {
 		const getElevatedTargetItem = (sibling, maximumDepth) => {
-			const parent = layoutData.items[sibling.parentId]
+			const parent = layoutDataRef.current.items[sibling.parentId]
 				? {
-						...layoutData.items[sibling.parentId],
+						...layoutDataRef.current.items[sibling.parentId],
 						collectionItemIndex: sibling.collectionItemIndex,
 				  }
 				: null;
@@ -459,14 +477,14 @@ function computeHover({
 				const [siblingPositionWithMiddle] = getItemPosition(
 					sibling,
 					monitor,
-					layoutData,
+					layoutDataRef,
 					targetRefs
 				);
 
 				const [parentPositionWithMiddle] = getItemPosition(
 					parent,
 					monitor,
-					layoutData,
+					layoutDataRef,
 					targetRefs
 				);
 
@@ -474,7 +492,7 @@ function computeHover({
 					(siblingPositionWithMiddle === targetPositionWithMiddle ||
 						parentPositionWithMiddle ===
 							targetPositionWithMiddle) &&
-					checkAllowedChild(sourceItem, parent, layoutData)
+					checkAllowedChild(sourceItem, parent, layoutDataRef)
 				) {
 					if (maximumDepth > 1) {
 						const [
@@ -505,7 +523,7 @@ function computeHover({
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
 			return computeHover({
 				dispatch,
-				layoutData,
+				layoutDataRef,
 				monitor,
 				siblingItem,
 				sourceItem,
@@ -522,13 +540,15 @@ function computeHover({
  * @param {object} parent
  * @return {boolean}
  */
-function checkAllowedChild(child, parent, layoutData) {
+function checkAllowedChild(child, parent, layoutDataRef) {
 	const parentIsInsideCollection = (function checkItemInsideCollection(item) {
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 			return true;
 		}
 		else if (item.parentId) {
-			return checkItemInsideCollection(layoutData.items[item.parentId]);
+			return checkItemInsideCollection(
+				layoutDataRef.current.items[item.parentId]
+			);
 		}
 	})(parent);
 
@@ -546,16 +566,16 @@ function checkAllowedChild(child, parent, layoutData) {
  * Checks if the given parent is indeed parent of given child.
  * @param {object} child
  * @param {object} parent
- * @param {object} layoutData
+ * @param {object} layoutDataRef
  * @return {boolean}
  */
-function itemIsAncestor(child, parent, layoutData) {
+function itemIsAncestor(child, parent, layoutDataRef) {
 	if (child && parent) {
 		return child.itemId !== parent.itemId
 			? itemIsAncestor(
 					child,
-					layoutData.items[parent.parentId],
-					layoutData
+					layoutDataRef.current.items[parent.parentId],
+					layoutDataRef
 			  )
 			: true;
 	}
@@ -577,8 +597,8 @@ const MAXIMUM_ELEVATION_STEPS = 3;
  * the way up until MAXIMUM_ELEVATION_STEPS has been reached or there are no
  * more valid ancestors.
  */
-function getItemPosition(item, monitor, layoutData, targetRefs) {
-	const targetRef = targetRefs.get(toControlsId(layoutData, item));
+function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
+	const targetRef = targetRefs.get(toControlsId(layoutDataRef, item));
 
 	if (!targetRef || !targetRef.current) {
 		return [null, null, 0];
@@ -634,15 +654,15 @@ function getItemPosition(item, monitor, layoutData, targetRefs) {
 /**
  * Translates the given item ID into a collectionId-itemId if the item is
  * inside a collection. Otherwise, returns the plain itemId.
- * @param {object} layoutData
+ * @param {object} layoutDataRef
  * @param {object} item
  * @return {string}
  */
-function toControlsId(layoutData, item) {
+function toControlsId(layoutDataRef, item) {
 	const baseItem = item;
 
-	const computeControlsId = (layoutData, item) => {
-		const parent = layoutData.items[item.parentId];
+	const computeControlsId = (layoutDataRef, item) => {
+		const parent = layoutDataRef.current.items[item.parentId];
 
 		if (
 			item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem &&
@@ -655,11 +675,11 @@ function toControlsId(layoutData, item) {
 			)(baseItem.itemId);
 		}
 		else if (parent) {
-			return computeControlsId(layoutData, parent);
+			return computeControlsId(layoutDataRef, parent);
 		}
 
 		return baseItem.itemId;
 	};
 
-	return computeControlsId(layoutData, item);
+	return computeControlsId(layoutDataRef, item);
 }

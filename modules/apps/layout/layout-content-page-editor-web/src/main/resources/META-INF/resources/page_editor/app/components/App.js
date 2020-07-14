@@ -31,10 +31,9 @@ export default function App() {
 
 	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);
-	const layoutData = useSelector((state) => state.layoutData);
 
 	return (
-		<DragAndDropContextProvider layoutData={layoutData}>
+		<DragAndDropContextProvider>
 			<LanguageDirection />
 			<DragPreview />
 			<Toolbar />

@@ -36,11 +36,11 @@ definition {
 
 	@priority = "4"
 	test AddChildArticleToKBArticleViaKBAdmin {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addChildArticleViaKBAdmin(
 			kbArticleTitle = "Knowledge Base Article Title",
@@ -113,9 +113,7 @@ definition {
 	test AddKBArticleViaTemplateCP {
 		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleViaTemplateCP";
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.addCP(
+		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
 
@@ -366,9 +364,7 @@ definition {
 	test CancelEditKBArticle {
 		property test.name.skip.portal.instance = "CPKnowledgebase#CancelEditKBArticle";
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -393,7 +389,8 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
 
@@ -405,9 +402,7 @@ definition {
 
 	@priority = "4"
 	test DeleteKBArticleViaKBAdmin {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -424,11 +419,12 @@ definition {
 
 	@priority = "4"
 	test DeleteKBFolder {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
 
@@ -443,9 +439,7 @@ definition {
 
 	@priority = "4"
 	test EditKBArticleAndAddAttachmentViaKBAdmin {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -467,9 +461,7 @@ definition {
 
 	@priority = "4"
 	test EditKBArticleViaKBAdmin {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -489,11 +481,12 @@ definition {
 
 	@priority = "4"
 	test EditKBFolder {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
 
@@ -551,9 +544,7 @@ definition {
 	}
 
 	test SaveEditedKBArticleAsDraft {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 

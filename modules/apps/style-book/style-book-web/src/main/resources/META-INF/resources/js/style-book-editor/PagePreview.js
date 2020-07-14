@@ -19,7 +19,7 @@ import {StyleBookContext} from './StyleBookContext';
 export default function PagePreview() {
 	const iframeRef = useRef();
 
-	const {tokenValues = {}} = useContext(StyleBookContext);
+	const {tokenValues = {}, previewURL} = useContext(StyleBookContext);
 
 	useEffect(() => {
 		if (iframeRef.current) {
@@ -37,7 +37,7 @@ export default function PagePreview() {
 			<iframe
 				className="style-book-editor__page-preview-frame"
 				ref={iframeRef}
-				src="/web/guest"
+				src={previewURL}
 			/>
 		</div>
 	);

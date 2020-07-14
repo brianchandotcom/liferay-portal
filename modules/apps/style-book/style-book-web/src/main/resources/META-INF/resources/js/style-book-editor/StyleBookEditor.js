@@ -21,8 +21,10 @@ import {StyleBookContextProvider} from './StyleBookContext';
 
 const StyleBookEditor = ({
 	namespace,
+	previewURL,
 	publishURL,
 	saveDraftURL,
+	styleBookEntryId,
 	tokenCategories = [],
 	tokenValues: initialTokenValues = {},
 } = {}) => {
@@ -35,18 +37,27 @@ const StyleBookEditor = ({
 
 		const body = objectToFormData({
 			[`${namespace}tokenValues`]: JSON.stringify(tokenValues),
+			[`${namespace}styleBookEntryId`]: styleBookEntryId,
 		});
 
 		fetch(saveDraftURL, {body, method: 'post'});
-	}, [initialTokenValues, namespace, saveDraftURL, tokenValues]);
+	}, [
+		initialTokenValues,
+		namespace,
+		saveDraftURL,
+		styleBookEntryId,
+		tokenValues,
+	]);
 
 	return (
 		<StyleBookContextProvider
 			value={{
 				namespace,
+				previewURL,
 				publishURL,
 				saveDraftURL,
 				setTokenValues,
+				styleBookEntryId,
 				tokenCategories,
 				tokenValues,
 			}}

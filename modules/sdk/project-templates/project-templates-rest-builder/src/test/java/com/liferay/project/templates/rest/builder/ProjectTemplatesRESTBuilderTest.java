@@ -93,7 +93,7 @@ public class ProjectTemplatesRESTBuilderTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-Dpackage=" + packageName,
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-DbuildType=maven");
 
 		testExists(mavenProjectDir, name + "-api/pom.xml");
 		testExists(mavenProjectDir, name + "-client/pom.xml");
@@ -130,7 +130,7 @@ public class ProjectTemplatesRESTBuilderTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-Dpackage=" + packageName,
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-DbuildType=maven");
 
 		File mavenBndFile = testExists(mavenProjectDir, name + "-api/bnd.bnd");
 
@@ -183,7 +183,7 @@ public class ProjectTemplatesRESTBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-Dpackage=" + packageName);
+			mavenExecutor, "-Dpackage=" + packageName, "-DbuildType=maven");
 
 		String mavenResult = executeMaven(
 			new File(mavenProjectDir, implProjectName), mavenExecutor,

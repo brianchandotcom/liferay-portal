@@ -41,7 +41,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
@@ -89,7 +88,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -103,9 +101,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.xstream.configurator.XStreamConfigurator;
@@ -128,10 +124,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import jodd.bean.BeanUtil;
 
@@ -884,19 +884,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element getMissingReferenceElement(ClassedModel classedModel) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("missing-reference[@class-name='");
-		sb.append(ExportImportClassedModelUtil.getClassName(classedModel));
-		sb.append("' and @class-pk='");
-		sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
-		sb.append("']");
-
-		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-		Node node = xPath.selectSingleNode(_missingReferencesElement);
-
-		return (Element)node;
+		return _searchFirstChildElementWithPredicate(
+			_missingReferencesElement, "missing-reference",
+			childElement ->
+				Objects.equals(
+					childElement.attributeValue("class-name"),
+					ExportImportClassedModelUtil.getClassName(classedModel)) &&
+				Objects.equals(
+					childElement.attributeValue("class-pk"),
+					String.valueOf(classedModel.getPrimaryKeyObj())));
 	}
 
 	@Override
@@ -2144,17 +2140,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("staged-model[@");
-		sb.append(attribute);
-		sb.append(StringPool.EQUAL);
-		sb.append(HtmlUtil.escapeXPathAttribute(value));
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-		return (Element)xPath.selectSingleNode(parentElement);
+		return _searchFirstChildElementWithPredicate(
+			parentElement, "staged-model",
+			childElement -> Objects.equals(
+				childElement.attributeValue(attribute), value));
 	}
 
 	protected Element getExportDataGroupElement(String name) {
@@ -2192,8 +2181,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
 		}
 
-		Element groupElement = (Element)_importDataRootElement.selectSingleNode(
-			".//" + name);
+		Element groupElement = _deepSearchForFirstChildElement(
+			_importDataRootElement, name);
 
 		if (groupElement == null) {
 			return SAXReaderUtil.createElement("EMPTY-ELEMENT");
@@ -2236,25 +2225,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 				String groupId = referenceElement.attributeValue("group-id");
 				String uuid = referenceElement.attributeValue("uuid");
 
-				StringBuilder sb = new StringBuilder(5);
-
-				sb.append("staged-model[@uuid=");
-				sb.append(HtmlUtil.escapeXPathAttribute(uuid));
-
-				if (groupId != null) {
-					sb.append(" and @group-id=");
-					sb.append(HtmlUtil.escapeXPathAttribute(groupId));
-				}
-
-				sb.append(StringPool.CLOSE_BRACKET);
-
-				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
 				Element groupElement = getImportDataGroupElement(
 					clazz.getSimpleName());
 
-				referenceDataElement = (Element)xPath.selectSingleNode(
-					groupElement);
+				Predicate<Element> childElementPredicate =
+					childElement -> Objects.equals(
+						childElement.attributeValue("uuid"), uuid);
+
+				if (groupId != null) {
+					childElementPredicate = childElementPredicate.and(
+						childElement -> Objects.equals(
+							childElement.attributeValue("group-id"), groupId));
+				}
+
+				referenceDataElement = _searchFirstChildElementWithPredicate(
+					groupElement, "staged-model", childElementPredicate);
 			}
 
 			if (referenceDataElement == null) {
@@ -2281,40 +2266,52 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return Collections.emptyList();
 		}
 
-		StringBundler sb = new StringBundler(13);
+		List<Element> referenceElements = new ArrayList<>();
 
-		sb.append("reference[@class-name=");
-		sb.append(HtmlUtil.escapeXPathAttribute(className));
+		for (Element referenceElement :
+				referencesElement.elements("reference")) {
 
-		if (groupId > 0) {
-			sb.append(" and @group-id='");
-			sb.append(groupId);
-			sb.append(StringPool.APOSTROPHE);
+			if (!Objects.equals(
+					referenceElement.attributeValue("class-name"), className)) {
+
+				continue;
+			}
+
+			if ((groupId > 0) &&
+				!Objects.equals(
+					referenceElement.attributeValue("group-id"),
+					String.valueOf(groupId))) {
+
+				continue;
+			}
+
+			if (Validator.isNotNull(uuid) &&
+				!Objects.equals(
+					referenceElement.attributeValue("uuid"), uuid)) {
+
+				continue;
+			}
+
+			if (Validator.isNotNull(classPK) &&
+				!Objects.equals(
+					referenceElement.attributeValue("class-pk"),
+					String.valueOf(classPK))) {
+
+				continue;
+			}
+
+			if ((referenceType != null) &&
+				!Objects.equals(
+					referenceElement.attributeValue("type"),
+					String.valueOf(referenceType))) {
+
+				continue;
+			}
+
+			referenceElements.add(referenceElement);
 		}
 
-		if (Validator.isNotNull(uuid)) {
-			sb.append(" and @uuid=");
-			sb.append(HtmlUtil.escapeXPathAttribute(uuid));
-		}
-
-		if (Validator.isNotNull(classPK)) {
-			sb.append(" and @class-pk='");
-			sb.append(classPK);
-			sb.append(StringPool.APOSTROPHE);
-		}
-
-		if (referenceType != null) {
-			sb.append(" and @type=");
-			sb.append(HtmlUtil.escapeXPathAttribute(referenceType));
-		}
-
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-		List<Node> nodes = xPath.selectNodes(referencesElement);
-
-		return ListUtil.fromArray(nodes.toArray(new Element[0]));
+		return referenceElements;
 	}
 
 	protected List<Element> getReferenceElements(
@@ -2533,6 +2530,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	private Element _deepSearchForFirstChildElement(
+		Element parentElement, String childElementName) {
+
+		Queue<Element> queue = new LinkedList<>();
+
+		queue.add(parentElement);
+
+		Element currentElement = null;
+
+		while ((currentElement = queue.poll()) != null) {
+			for (Element childElement : currentElement.elements()) {
+				if (childElementName.equals(childElement.getName())) {
+					return childElement;
+				}
+
+				queue.add(childElement);
+			}
+		}
+
+		return null;
+	}
+
 	private long _getOldPrimaryKey(Map<Long, Long> map, long value) {
 		for (Map.Entry<Long, Long> entry : map.entrySet()) {
 			if (entry.getValue() == value) {
@@ -2670,6 +2689,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return false;
+	}
+
+	private Element _searchFirstChildElementWithPredicate(
+		Element parentElement, String childElementName,
+		Predicate<Element> childElementPredicate) {
+
+		for (Element childElement : parentElement.elements(childElementName)) {
+			if (childElementPredicate.test(childElement)) {
+				return childElement;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Class<?>[] _XSTREAM_DEFAULT_ALLOWED_TYPES = {

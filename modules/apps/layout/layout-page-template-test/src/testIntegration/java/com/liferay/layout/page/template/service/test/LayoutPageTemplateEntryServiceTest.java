@@ -34,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -53,6 +53,8 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -271,16 +273,17 @@ public class LayoutPageTemplateEntryServiceTest {
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId());
 
-		LayoutPrototype persistedLayoutPrototype =
-			_layoutPrototypeLocalService.getLayoutPrototype(
-				layoutPageTemplateEntry.getLayoutPrototypeId());
-
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.getLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId());
 
+		Map<Locale, String> nameMap = layoutPrototype.getNameMap();
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			layoutPrototype.getDefaultLanguageId());
+
 		Assert.assertEquals(
-			layoutPrototype.getName(), persistedLayoutPrototype.getName());
+			layoutPageTemplateEntry.getName(), nameMap.get(locale));
 	}
 
 	@Test
@@ -515,9 +518,6 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Inject
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Inject
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Inject
 	private LayoutPrototypeService _layoutPrototypeService;

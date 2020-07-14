@@ -40,14 +40,12 @@ describe('RatingsStackedStars', () => {
 	describe('when rendered with the default props', () => {
 		let starsRadios;
 		let result;
-		let starsRadiosWrapper;
+		let starsRadiosFieldset;
 
 		beforeEach(() => {
 			result = renderComponent();
 			starsRadios = result.getAllByRole('radio');
-			starsRadiosWrapper = result.baseElement.querySelector(
-				'.ratings-stacked-stars-vote-stars'
-			);
+			starsRadiosFieldset = result.getByRole('group')
 		});
 
 		it('is enabled', () => {
@@ -55,7 +53,7 @@ describe('RatingsStackedStars', () => {
 		});
 
 		it('has vote title', () => {
-			expect(starsRadiosWrapper.title).toBe('vote');
+			expect(starsRadiosFieldset.title).toBe('vote');
 		});
 
 		it('without vote has not render delete button', () => {
@@ -68,14 +66,12 @@ describe('RatingsStackedStars', () => {
 	describe('when rendered with enabled = false', () => {
 		let starsRadios;
 		let result;
-		let starsRadiosWrapper;
+		let starsRadiosFieldset;
 
 		beforeEach(() => {
 			result = renderComponent({enabled: false});
 			starsRadios = result.getAllByRole('radio');
-			starsRadiosWrapper = result.baseElement.querySelector(
-				'.ratings-stacked-stars-vote-stars'
-			);
+			starsRadiosFieldset = result.getByRole('group')
 		});
 
 		it('is disabled', () => {
@@ -83,7 +79,7 @@ describe('RatingsStackedStars', () => {
 		});
 
 		it('has disabled title', () => {
-			expect(starsRadiosWrapper.title).toBe(
+			expect(starsRadiosFieldset.title).toBe(
 				'ratings-are-disabled-in-staging'
 			);
 		});
@@ -100,7 +96,7 @@ describe('RatingsStackedStars', () => {
 
 		describe('and the user votes 1/5 stars', () => {
 			let starsRadios;
-			let starsRadiosWrapper;
+			let starsRadiosFieldset;
 			let result;
 
 			beforeEach(() => {
@@ -108,9 +104,7 @@ describe('RatingsStackedStars', () => {
 					userScore: 0,
 				});
 				starsRadios = result.getAllByRole('radio');
-				starsRadiosWrapper = result.baseElement.querySelector(
-					'.ratings-stacked-stars-vote-stars'
-				);
+				starsRadiosFieldset = result.getByRole('group')
 
 				act(() => {
 					fireEvent.click(starsRadios[4]);
@@ -124,7 +118,7 @@ describe('RatingsStackedStars', () => {
 			});
 
 			it('has voted singular title', () => {
-				expect(starsRadiosWrapper.title).toBe(
+				expect(starsRadiosFieldset.title).toBe(
 					'you-have-rated-this-x-star-out-of-x'
 				);
 			});
@@ -149,7 +143,7 @@ describe('RatingsStackedStars', () => {
 				});
 
 				it('has voted pural title', () => {
-					expect(starsRadiosWrapper.title).toBe(
+					expect(starsRadiosFieldset.title).toBe(
 						'you-have-rated-this-x-stars-out-of-x'
 					);
 				});

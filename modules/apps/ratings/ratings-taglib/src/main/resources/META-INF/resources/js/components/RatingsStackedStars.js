@@ -34,7 +34,7 @@ export default function RatingsStackedStars({
 }) {
 	return (
 		<ClayTooltipProvider>
-			<fieldset className="ratings-stacked-stars ratings-stars">
+			<div className="ratings-stacked-stars ratings-stars">
 				<div
 					className="ratings-stars-average"
 					title={averageScore.toFixed(1)}
@@ -78,7 +78,7 @@ export default function RatingsStackedStars({
 						'ratings-stacked-stars-vote'
 					)}
 				>
-					<div
+					<fieldset
 						className="ratings-stacked-stars-vote-stars"
 						title={getTitle()}
 					>
@@ -134,7 +134,7 @@ export default function RatingsStackedStars({
 								</Fragment>
 							);
 						})}
-					</div>
+					</fieldset>
 
 					{score !== 0 && (
 						<ClayButton
@@ -151,7 +151,7 @@ export default function RatingsStackedStars({
 						</ClayButton>
 					)}
 				</div>
-			</fieldset>
+			</div>
 		</ClayTooltipProvider>
 	);
 }

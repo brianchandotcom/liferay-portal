@@ -146,8 +146,22 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
 		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
+
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
-		_verifyWatchedDir();
+
+		if (!_watchedDirectory.exists()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					_watchedDirectory + " does not exist, please create it.");
+			}
+		}
+		else if (!_watchedDirectory.isDirectory()) {
+			throw new RuntimeException(
+				StringBundler.concat(
+					"File Install cannot monitor ", _watchedDirectory,
+					" because it is not a directory"));
+		}
+
 		_startBundles = _getBoolean(properties, START_NEW_BUNDLES, true);
 		_useStartTransient = _getBoolean(
 			properties, USE_START_TRANSIENT, false);
@@ -1287,21 +1301,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		return bundles;
-	}
-
-	private void _verifyWatchedDir() {
-		if (!_watchedDirectory.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					_watchedDirectory + " does not exist, please create it.");
-			}
-		}
-		else if (!_watchedDirectory.isDirectory()) {
-			throw new RuntimeException(
-				StringBundler.concat(
-					"File Install cannot monitor ", _watchedDirectory,
-					" because it is not a directory"));
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

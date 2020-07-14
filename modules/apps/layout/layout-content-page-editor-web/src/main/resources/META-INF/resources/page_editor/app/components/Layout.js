@@ -199,10 +199,42 @@ function LayoutDataItemContent({
 	...otherProps
 }) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
+	const componentRef = useRef(null);
+
+	return (
+		<>
+			<LayoutDataItemInteractionFilter
+				componentRef={componentRef}
+				item={item}
+			/>
+
+			<Component item={item} layoutData={layoutData} ref={componentRef}>
+				{item.children.map((childId) => {
+					return (
+						<LayoutDataItem
+							{...otherProps}
+							fragmentEntryLinks={fragmentEntryLinks}
+							item={layoutData.items[childId]}
+							key={childId}
+							layoutData={layoutData}
+						/>
+					);
+				})}
+			</Component>
+		</>
+	);
+}
+
+LayoutDataItemContent.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired,
+};
+
+const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
 	const activationOrigin = useActivationOrigin();
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();
-	const componentRef = useRef(null);
 
 	useEffect(() => {
 		if (
@@ -219,25 +251,10 @@ function LayoutDataItemContent({
 		}
 	}, [activationOrigin, componentRef, isActive, isMounted]);
 
-	return (
-		<Component item={item} layoutData={layoutData} ref={componentRef}>
-			{item.children.map((childId) => {
-				return (
-					<LayoutDataItem
-						{...otherProps}
-						fragmentEntryLinks={fragmentEntryLinks}
-						item={layoutData.items[childId]}
-						key={childId}
-						layoutData={layoutData}
-					/>
-				);
-			})}
-		</Component>
-	);
-}
+	return null;
+};
 
-LayoutDataItemContent.propTypes = {
-	fragmentEntryLinks: PropTypes.object.isRequired,
+LayoutDataItemInteractionFilter.propTypes = {
+	componentRef: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };

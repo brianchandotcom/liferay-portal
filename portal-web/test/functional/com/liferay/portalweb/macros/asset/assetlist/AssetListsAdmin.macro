@@ -287,16 +287,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro selectItemType {
-		Panel.expandPanel(panel = "Source");
-
-		Select(
-			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "${itemType}");
-
-		PortletEntry.save();
-	}
-
 	macro viewAssetList {
 		var key_title = "${assetListTitle}";
 		var key_type = "${type}";

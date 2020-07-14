@@ -15,13 +15,7 @@
 import classNames from 'classnames';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {AddPanelContext, normalizeContent} from './AddPanel';
 import Collapse from './Collapse';
@@ -47,68 +41,26 @@ const TabsContent = ({tab, tabIndex}) => {
 		? filteredContent.collections
 		: tab.collections;
 
-	const searchValueLowerCase = useMemo(() => searchValue.toLowerCase(), [
-		searchValue,
-	]);
-
-	const collectionFilter = useCallback((collection) => {
-		return collection.collections.reduce((acc, item) => {
-			return item.collections?.length > 0
-				? acc.concat(item.children, collectionFilter(item))
-				: acc.concat(item.children);
-		}, []);
-	}, []);
-
-	const itemFilter = useCallback(
-		(item) => item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1,
-		[searchValueLowerCase]
-	);
-
 	const filteredWidgets = useMemo(
 		() =>
-			searchValueLowerCase
+			searchValue
 				? [
 						{
 							...tab,
-							collections: tab.collections
-								.map((collection) => {
-									let filteredChildren = collection.children;
-
-									if (collection.collections) {
-										filteredChildren = filteredChildren.concat(
-											collection.collections
-												.map(collectionFilter)
-												.flat()
-										);
-									}
-
-									return {
-										...collection,
-										children:
-											collection.label
-												.toLowerCase()
-												.indexOf(
-													searchValueLowerCase
-												) !== -1
-												? filteredChildren
-												: filteredChildren.filter(
-														itemFilter
-												  ),
-									};
-								})
-								.filter(
-									(collection) => collection.children.length
-								),
+							collections: collectionFilter(
+								tab.collections,
+								searchValue
+							),
 						},
 				  ]
 				: tab,
-		[collectionFilter, itemFilter, searchValueLowerCase, tab]
+		[searchValue, tab]
 	);
 
 	useEffect(() => {
-		if (searchValueLowerCase || totalItems) {
+		if (searchValue || totalItems) {
 			const body = {
-				[`${namespace}keywords`]: searchValueLowerCase,
+				[`${namespace}keywords`]: searchValue.toLowerCase(),
 			};
 
 			if (totalItems) {
@@ -142,7 +94,7 @@ const TabsContent = ({tab, tabIndex}) => {
 		else {
 			return setFilteredContent(tab);
 		}
-	}, [getContentsURL, namespace, searchValueLowerCase, tab, totalItems]);
+	}, [getContentsURL, namespace, searchValue, tab, totalItems]);
 
 	return (
 		<>
@@ -152,7 +104,7 @@ const TabsContent = ({tab, tabIndex}) => {
 				value={searchValue}
 			/>
 			{isContentTab && <ContentOptions onChangeSelect={setTotalItems} />}
-			{isContentTab && searchValue ? (
+			{searchValue ? (
 				<SearchResultsPanel
 					alertTitle={
 						isContentTab
@@ -163,7 +115,9 @@ const TabsContent = ({tab, tabIndex}) => {
 									'there-are-no-widgets-on-this-page'
 							  )
 					}
-					filteredTabs={[filteredContent]}
+					filteredTabs={
+						isContentTab ? [filteredContent] : filteredWidgets
+					}
 				/>
 			) : (
 				<ul className="list-unstyled">
@@ -229,6 +183,43 @@ const TabPortletItem = ({items}) => (
 		))}
 	</ul>
 );
+
+const collectionFilter = (collections, searchValue) => {
+	const searchValueLowerCase = searchValue.toLowerCase();
+
+	const itemFilter = (item) =>
+		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
+
+	const hasChildren = (collection) => {
+		if (collection.children?.length) {
+			return true;
+		}
+
+		return collection.collections?.some(hasChildren) ?? false;
+	};
+
+	return collections
+		.reduce((acc, collection) => {
+			if (itemFilter(collection)) {
+				return [...acc, collection];
+			}
+			else {
+				const updateCollection = {
+					...collection,
+					children: collection.children.filter(itemFilter),
+					...(collection.collections?.length && {
+						collections: collectionFilter(
+							collection.collections,
+							searchValueLowerCase
+						),
+					}),
+				};
+
+				return [...acc, updateCollection];
+			}
+		}, [])
+		.filter(hasChildren);
+};
 
 TabsContent.propTypes = {
 	tab: PropTypes.shape({

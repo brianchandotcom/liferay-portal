@@ -26,6 +26,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 
@@ -34,7 +40,6 @@ import java.io.CharConversionException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -85,17 +90,56 @@ public class XLIFFInfoFormTranslationImporter
 		try {
 			File tempFile = FileUtil.createTempFile(inputStream);
 
-			RawDocument document = new RawDocument(
-				tempFile.toURI(), StringPool.UTF8,
-				LocaleId.fromString(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault())),
-				LocaleId.fromString(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
+			String encoding = StringPool.UTF8;
+
+			LocaleId sourceLocaleId = LocaleId.fromString(
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			LocaleId targetLocaleId = LocaleId.fromString(
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			try {
+				Document document = SAXReaderUtil.read(tempFile);
+
+				Element rootElement = document.getRootElement();
+
+				Attribute encodingAttribute = rootElement.attribute("encoding");
+
+				if (encodingAttribute != null) {
+					encoding = encodingAttribute.getValue();
+				}
+
+				Element fileElement = rootElement.element("file");
+
+				if (fileElement != null) {
+					Attribute sourceLanguageAttribute = fileElement.attribute(
+						"source-language");
+
+					if (sourceLanguageAttribute != null) {
+						sourceLocaleId = LocaleId.fromString(
+							sourceLanguageAttribute.getValue());
+					}
+
+					Attribute targetLanguageAttribute = fileElement.attribute(
+						"target-language");
+
+					if (targetLanguageAttribute != null) {
+						targetLocaleId = LocaleId.fromString(
+							targetLanguageAttribute.getValue());
+					}
+				}
+			}
+			catch (DocumentException documentException) {
+				throw new XLIFFFileException.MustBeValid(documentException);
+			}
+
+			RawDocument rawDocument = new RawDocument(
+				tempFile.toURI(), encoding, sourceLocaleId, targetLocaleId);
 
 			AutoXLIFFFilter filter = new AutoXLIFFFilter();
 
 			try {
-				filter.open(document);
+				filter.open(rawDocument);
 
 				Stream<Event> stream = filter.stream();
 
@@ -137,9 +181,9 @@ public class XLIFFInfoFormTranslationImporter
 			InfoItemClassPKReference infoItemClassPKReference)
 		throws XLIFFFileException {
 
-		_validateDocumentPartVersion(events);
-
 		StartSubDocument startSubDocument = _getStartSubDocument(events);
+
+		_validateDocumentPartVersion(events);
 
 		_validateXLIFFStartSubDocument(
 			infoItemClassPKReference, startSubDocument);
@@ -173,7 +217,11 @@ public class XLIFFInfoFormTranslationImporter
 
 							consumer.accept(
 								new InfoFieldValue<>(
-									infoField, firstContent.getText()));
+									infoField,
+									InfoLocalizedValue.builder(
+									).value(
+										targetLocale, firstContent.getText()
+									).build()));
 						}
 					}
 				}
@@ -455,5 +503,8 @@ public class XLIFFInfoFormTranslationImporter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private SAXReader _saxReader;
 
 }

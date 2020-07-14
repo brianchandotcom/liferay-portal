@@ -22,6 +22,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
@@ -60,7 +61,11 @@ const RowWithControls = React.forwardRef(
 		if (selectCanUpdateItemConfiguration) {
 			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowStyles);
 
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
+			if (selectedViewportSize === VIEWPORT_SIZES.desktop) {
+				buttons.push(
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+				);
+			}
 		}
 
 		const {verticalAlignment} = rowResponsiveConfig;

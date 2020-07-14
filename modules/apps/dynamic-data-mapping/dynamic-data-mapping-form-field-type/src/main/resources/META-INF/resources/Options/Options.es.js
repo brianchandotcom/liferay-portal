@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -91,7 +91,6 @@ const refreshFields = (
 						option
 				  )
 				: false,
-			id: random(),
 			...option,
 			value: option.value
 				? option.value
@@ -122,7 +121,7 @@ const Options = ({
 	onChange,
 	value = {},
 }) => {
-	const normalizedValue = useMemo(() => {
+	const [normalizedValue, setNormalizedValue] = useState(() => {
 		const formattedValue = {...value};
 
 		Object.keys(value).forEach((languageId) => {
@@ -131,10 +130,28 @@ const Options = ({
 					({value}) => !!value
 				);
 			}
+
+			formattedValue[languageId] = formattedValue[languageId].map(
+				(option) => {
+					return {
+						id: random(),
+						...option,
+						value:
+							!option.value &&
+							option.label.toLowerCase() ===
+								Liferay.Language.get('option').toLowerCase()
+								? getDefaultOptionValue(
+										generateOptionValueUsingOptionLabel,
+										option.label
+								  )
+								: option.value,
+					};
+				}
+			);
 		});
 
 		return formattedValue;
-	}, [defaultLanguageId, value]);
+	});
 
 	const [fields, setFields] = useState(() => {
 		const options =
@@ -246,7 +263,11 @@ const Options = ({
 
 	const set = (fields) => {
 		setFields(fields);
-		onChange(fieldsFilter(fields));
+
+		const synchronizedNormalizedValue = fieldsFilter(fields);
+
+		setNormalizedValue(synchronizedNormalizedValue);
+		onChange(synchronizedNormalizedValue);
 	};
 
 	const add = (fields, index, property, value) => {

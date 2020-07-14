@@ -1101,6 +1101,44 @@ definition {
 		}
 		else if ("${panel}" == "Styles") {
 			Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_STYLE_BUTTON");
+
+			if (isSet(layout)) {
+				Select(
+					key_fieldLabel = "Layout",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${layout}");
+
+				Pause(locator1 = "3000");
+			}
+
+			if (isSet(verticalAlignment)) {
+				Select(
+					key_fieldLabel = "Vertical Alignment",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${verticalAlignment}");
+
+				Pause(locator1 = "3000");
+			}
+
+			if ("${inverseOrder}" == "true") {
+				if (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Inverse order", locator1 = "Checkbox#ANY_CHECKBOX")) {
+					Click.clickAtNotVisible(
+						key_fieldLabel = "Inverse order",
+						locator1 = "Checkbox#CHECKBOX_LABEL");
+				}
+
+				Pause(locator1 = "3000");
+			}
+
+			if ("${inverseOrder}" == "false") {
+				if (IsChecked(checkboxName = "Inverse order", locator1 = "Checkbox#ANY_CHECKBOX")) {
+					Click.clickAtNotVisible(
+						key_fieldLabel = "Inverse order",
+						locator1 = "Checkbox#CHECKBOX_LABEL");
+				}
+
+				Pause(locator1 = "3000");
+			}
 		}
 
 		PageEditor.waitForAutoSave();

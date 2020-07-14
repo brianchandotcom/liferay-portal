@@ -204,6 +204,18 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return gitRepositoryGitDetailsTempMap.get("github.sender.username");
 	}
 
+	public Build getControllerBuild() {
+		String controllerBuildURL = getParameterValue("CONTROLLER_BUILD_URL");
+
+		if ((controllerBuildURL == null) &&
+			controllerBuildURL.matches("https?:\\/\\/.*")) {
+
+			return null;
+		}
+
+		return BuildFactory.newBuild(controllerBuildURL, null);
+	}
+
 	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();

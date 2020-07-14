@@ -239,7 +239,7 @@ public class FileInstallImplBundleActivator
 		}
 
 		for (DirectoryWatcher directoryWatcher : toUpdate) {
-			Scanner scanner = directoryWatcher.scanner;
+			Scanner scanner = directoryWatcher.getScanner();
 
 			scanner.updateChecksum(file);
 		}

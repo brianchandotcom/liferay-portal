@@ -177,7 +177,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_webStartLevel = GetterUtil.getInteger(
 			properties.get(WEB_START_LEVEL), _startLevel);
 
-		scanner = new Scanner(
+		_scanner = new Scanner(
 			_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
 
 		_bundleContext.addBundleListener(this);
@@ -221,7 +221,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		interrupt();
 
 		try {
-			scanner.close();
+			_scanner.close();
 		}
 		catch (IOException ioException) {
 		}
@@ -235,6 +235,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public Map<String, String> getProperties() {
 		return _properties;
+	}
+
+	public Scanner getScanner() {
+		return _scanner;
 	}
 
 	public void removeFileInstaller(FileInstaller fileInstaller) {
@@ -293,7 +297,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				if ((frameworkStartLevel.getStartLevel() >= _activeLevel) &&
 					(_systemBundle.getState() == Bundle.ACTIVE)) {
 
-					Set<File> files = scanner.scan(false);
+					Set<File> files = _scanner.scan(false);
 
 					if (files != null) {
 						_process(files);
@@ -326,7 +330,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		if (_noInitialDelay) {
 			_initializeCurrentManagedBundles();
 
-			Set<File> files = scanner.scan(true);
+			Set<File> files = _scanner.scan(true);
 
 			if (files != null) {
 				try {
@@ -340,8 +344,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		super.start();
 	}
-
-	public final Scanner scanner;
 
 	protected void findBundlesWithFragmentsToRefresh(Set<Bundle> toRefresh) {
 		Set<Bundle> fragments = new HashSet<>();
@@ -579,7 +581,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 			else {
 				if (artifact != null) {
-					artifact.setChecksum(scanner.getChecksum(file));
+					artifact.setChecksum(_scanner.getChecksum(file));
 
 					modified.add(artifact);
 				}
@@ -587,7 +589,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					artifact = new Artifact();
 
 					artifact.setPath(file);
-					artifact.setChecksum(scanner.getChecksum(file));
+					artifact.setChecksum(_scanner.getChecksum(file));
 
 					created.add(artifact);
 				}
@@ -796,7 +798,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 		}
 
-		scanner.initialize(checksums);
+		_scanner.initialize(checksums);
 	}
 
 	private Bundle _install(Artifact artifact) {
@@ -1324,6 +1326,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final long _poll;
 	private final Set<File> _processingFailures = new HashSet<>();
 	private final Map<String, String> _properties;
+	private final Scanner _scanner;
 	private final boolean _startBundles;
 	private final int _startLevel;
 	private final AtomicBoolean _stateChanged = new AtomicBoolean();

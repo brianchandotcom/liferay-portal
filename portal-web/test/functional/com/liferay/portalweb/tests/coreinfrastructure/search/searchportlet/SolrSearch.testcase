@@ -319,9 +319,7 @@ definition {
 
 		Portlet.addPG(portletName = "Suggestions");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Suggestions",
-			portletOption = "Configuration");
+		SearchPortlets.gotoConfigureSuggestionsOptions();
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

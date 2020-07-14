@@ -35,7 +35,7 @@ const ExportTranslationModal = ({
 	const {namespace} = useContext(ExportTranslationContext);
 
 	const [exportFileFormat, setExportFileFormat] = useState(
-		availableExportFileFormats[0]
+		availableExportFileFormats[0].mimeType
 	);
 
 	const [sourceLanguageId, setSourceLanguageId] = useState(
@@ -103,7 +103,12 @@ const ExportTranslationModal = ({
 
 	const ExportFileFormats = () => {
 		if (availableExportFileFormats.length == 1) {
-			return <ClayInput readOnly value={availableExportFileFormats[0]} />;
+			return (
+				<ClayInput
+					readOnly
+					value={availableExportFileFormats[0].displayName}
+				/>
+			);
 		}
 		else {
 			return (
@@ -116,9 +121,9 @@ const ExportTranslationModal = ({
 				>
 					{availableExportFileFormats.map((exportFileFormat) => (
 						<ClaySelect.Option
-							key={exportFileFormat}
-							label={exportFileFormat}
-							value={exportFileFormat}
+							key={exportFileFormat.mimeType}
+							label={exportFileFormat.displayName}
+							value={exportFileFormat.mimeType}
 						/>
 					))}
 				</ClaySelect>
@@ -223,7 +228,12 @@ const ExportTranslationModal = ({
 
 ExportTranslationModal.propTypes = {
 	articleIds: PropTypes.array,
-	availableExportFileFormats: PropTypes.arrayOf(PropTypes.string).isRequired,
+	availableExportFileFormats: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			mimeType: PropTypes.string,
+		})
+	).isRequired,
 	availableSourceLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,

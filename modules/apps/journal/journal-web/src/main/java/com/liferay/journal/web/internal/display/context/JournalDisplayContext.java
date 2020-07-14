@@ -566,7 +566,7 @@ public class JournalDisplayContext {
 					getTranslationInfoItemFieldValuesExporters(
 					).stream(
 					).map(
-						TranslationInfoItemFieldValuesExporter::getMimeType
+						this::_getExportFileFormatJSONObject
 					).collect(
 						Collectors.toList()
 					)
@@ -1419,6 +1419,21 @@ public class JournalDisplayContext {
 				"redirect).*(folderId=", getFolderId(), ")"));
 
 		return entriesChecker;
+	}
+
+	private JSONObject _getExportFileFormatJSONObject(
+		TranslationInfoItemFieldValuesExporter
+			translationInfoItemFieldValuesExporter) {
+
+		return JSONUtil.put(
+			"displayName",
+			translationInfoItemFieldValuesExporter.getLabelInfoLocalizedValue(
+			).getValue(
+				_themeDisplay.getLocale()
+			)
+		).put(
+			"mimeType", translationInfoItemFieldValuesExporter.getMimeType()
+		);
 	}
 
 	private String _getFeedsURL() {

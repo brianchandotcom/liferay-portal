@@ -46,6 +46,7 @@ public class PluginSettingLocalServiceImpl
 	}
 
 	@Override
+	@Transactional(enabled = false)
 	public PluginSetting getDefaultPluginSetting() {
 		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
 

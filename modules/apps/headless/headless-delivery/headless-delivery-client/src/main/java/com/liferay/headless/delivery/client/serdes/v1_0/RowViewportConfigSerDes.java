@@ -155,22 +155,21 @@ public class RowViewportConfigSerDes {
 			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
 				if (jsonParserFieldValue != null) {
 					rowViewportConfig.setLandscapeMobile(
-						RowViewportConfigDefinitionSerDes.toDTO(
+						LandscapeMobileSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
 				if (jsonParserFieldValue != null) {
 					rowViewportConfig.setPortraitMobile(
-						RowViewportConfigDefinitionSerDes.toDTO(
+						PortraitMobileSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "tablet")) {
 				if (jsonParserFieldValue != null) {
 					rowViewportConfig.setTablet(
-						RowViewportConfigDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
+						TabletSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

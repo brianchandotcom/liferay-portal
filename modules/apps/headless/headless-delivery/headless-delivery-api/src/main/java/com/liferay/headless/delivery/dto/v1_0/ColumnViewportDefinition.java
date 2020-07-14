@@ -33,7 +33,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,32 +43,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ColumnViewportConfig")
+@GraphQLName("ColumnViewportDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnViewportConfig")
-public class ColumnViewportConfig {
+@XmlRootElement(name = "ColumnViewportDefinition")
+public class ColumnViewportDefinition {
 
-	public static ColumnViewportConfig toDTO(String json) {
-		return ObjectMapperUtil.readValue(ColumnViewportConfig.class, json);
+	public static ColumnViewportDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(ColumnViewportDefinition.class, json);
 	}
 
+	@DecimalMax("12")
+	@DecimalMin("1")
 	@Schema
-	@Valid
-	public LandscapeMobile getLandscapeMobile() {
-		return landscapeMobile;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setLandscapeMobile(LandscapeMobile landscapeMobile) {
-		this.landscapeMobile = landscapeMobile;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
 	@JsonIgnore
-	public void setLandscapeMobile(
-		UnsafeSupplier<LandscapeMobile, Exception>
-			landscapeMobileUnsafeSupplier) {
-
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
 		try {
-			landscapeMobile = landscapeMobileUnsafeSupplier.get();
+			size = sizeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -79,66 +78,7 @@ public class ColumnViewportConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LandscapeMobile landscapeMobile;
-
-	@Schema
-	@Valid
-	public PortraitMobile getPortraitMobile() {
-		return portraitMobile;
-	}
-
-	public void setPortraitMobile(PortraitMobile portraitMobile) {
-		this.portraitMobile = portraitMobile;
-	}
-
-	@JsonIgnore
-	public void setPortraitMobile(
-		UnsafeSupplier<PortraitMobile, Exception>
-			portraitMobileUnsafeSupplier) {
-
-		try {
-			portraitMobile = portraitMobileUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PortraitMobile portraitMobile;
-
-	@Schema
-	@Valid
-	public Tablet getTablet() {
-		return tablet;
-	}
-
-	public void setTablet(Tablet tablet) {
-		this.tablet = tablet;
-	}
-
-	@JsonIgnore
-	public void setTablet(
-		UnsafeSupplier<Tablet, Exception> tabletUnsafeSupplier) {
-
-		try {
-			tablet = tabletUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Tablet tablet;
+	protected Integer size;
 
 	@Override
 	public boolean equals(Object object) {
@@ -146,14 +86,14 @@ public class ColumnViewportConfig {
 			return true;
 		}
 
-		if (!(object instanceof ColumnViewportConfig)) {
+		if (!(object instanceof ColumnViewportDefinition)) {
 			return false;
 		}
 
-		ColumnViewportConfig columnViewportConfig =
-			(ColumnViewportConfig)object;
+		ColumnViewportDefinition columnViewportDefinition =
+			(ColumnViewportDefinition)object;
 
-		return Objects.equals(toString(), columnViewportConfig.toString());
+		return Objects.equals(toString(), columnViewportDefinition.toString());
 	}
 
 	@Override
@@ -168,34 +108,14 @@ public class ColumnViewportConfig {
 
 		sb.append("{");
 
-		if (landscapeMobile != null) {
+		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"landscapeMobile\": ");
+			sb.append("\"size\": ");
 
-			sb.append(String.valueOf(landscapeMobile));
-		}
-
-		if (portraitMobile != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"portraitMobile\": ");
-
-			sb.append(String.valueOf(portraitMobile));
-		}
-
-		if (tablet != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"tablet\": ");
-
-			sb.append(String.valueOf(tablet));
+			sb.append(size);
 		}
 
 		sb.append("}");
@@ -204,7 +124,7 @@ public class ColumnViewportConfig {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfig",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnViewportDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

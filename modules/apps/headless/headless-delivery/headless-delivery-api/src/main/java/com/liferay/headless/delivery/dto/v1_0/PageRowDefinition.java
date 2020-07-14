@@ -163,7 +163,9 @@ public class PageRowDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
 
-	@Schema
+	@Schema(
+		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
+	)
 	@Valid
 	public RowViewportConfig getRowViewportConfig() {
 		return rowViewportConfig;
@@ -189,9 +191,41 @@ public class PageRowDefinition {
 		}
 	}
 
-	@GraphQLField
+	@Deprecated
+	@GraphQLField(
+		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewportConfig rowViewportConfig;
+
+	@Schema
+	@Valid
+	public RowViewport[] getRowViewports() {
+		return rowViewports;
+	}
+
+	public void setRowViewports(RowViewport[] rowViewports) {
+		this.rowViewports = rowViewports;
+	}
+
+	@JsonIgnore
+	public void setRowViewports(
+		UnsafeSupplier<RowViewport[], Exception> rowViewportsUnsafeSupplier) {
+
+		try {
+			rowViewports = rowViewportsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected RowViewport[] rowViewports;
 
 	@Schema
 	public String getVerticalAlignment() {
@@ -296,6 +330,26 @@ public class PageRowDefinition {
 			sb.append("\"rowViewportConfig\": ");
 
 			sb.append(String.valueOf(rowViewportConfig));
+		}
+
+		if (rowViewports != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rowViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < rowViewports.length; i++) {
+				sb.append(String.valueOf(rowViewports[i]));
+
+				if ((i + 1) < rowViewports.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (verticalAlignment != null) {

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ColumnViewportConfig;
+import com.liferay.headless.delivery.client.dto.v1_0.RowViewport;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ColumnViewportConfigSerDes {
+public class RowViewportSerDes {
 
-	public static ColumnViewportConfig toDTO(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+	public static RowViewport toDTO(String json) {
+		RowViewportJSONParser rowViewportJSONParser =
+			new RowViewportJSONParser();
 
-		return columnViewportConfigJSONParser.parseToDTO(json);
+		return rowViewportJSONParser.parseToDTO(json);
 	}
 
-	public static ColumnViewportConfig[] toDTOs(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+	public static RowViewport[] toDTOs(String json) {
+		RowViewportJSONParser rowViewportJSONParser =
+			new RowViewportJSONParser();
 
-		return columnViewportConfigJSONParser.parseToDTOs(json);
+		return rowViewportJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ColumnViewportConfig columnViewportConfig) {
-		if (columnViewportConfig == null) {
+	public static String toJSON(RowViewport rowViewport) {
+		if (rowViewport == null) {
 			return "null";
 		}
 
@@ -55,35 +55,28 @@ public class ColumnViewportConfigSerDes {
 
 		sb.append("{");
 
-		if (columnViewportConfig.getLandscapeMobile() != null) {
+		if (rowViewport.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"landscapeMobile\": ");
+			sb.append("\"id\": ");
 
-			sb.append(
-				String.valueOf(columnViewportConfig.getLandscapeMobile()));
+			sb.append("\"");
+
+			sb.append(_escape(rowViewport.getId()));
+
+			sb.append("\"");
 		}
 
-		if (columnViewportConfig.getPortraitMobile() != null) {
+		if (rowViewport.getRowViewportDefinition() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"portraitMobile\": ");
+			sb.append("\"rowViewportDefinition\": ");
 
-			sb.append(String.valueOf(columnViewportConfig.getPortraitMobile()));
-		}
-
-		if (columnViewportConfig.getTablet() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"tablet\": ");
-
-			sb.append(String.valueOf(columnViewportConfig.getTablet()));
+			sb.append(String.valueOf(rowViewport.getRowViewportDefinition()));
 		}
 
 		sb.append("}");
@@ -92,85 +85,68 @@ public class ColumnViewportConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+		RowViewportJSONParser rowViewportJSONParser =
+			new RowViewportJSONParser();
 
-		return columnViewportConfigJSONParser.parseToMap(json);
+		return rowViewportJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		ColumnViewportConfig columnViewportConfig) {
-
-		if (columnViewportConfig == null) {
+	public static Map<String, String> toMap(RowViewport rowViewport) {
+		if (rowViewport == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (columnViewportConfig.getLandscapeMobile() == null) {
-			map.put("landscapeMobile", null);
+		if (rowViewport.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(rowViewport.getId()));
+		}
+
+		if (rowViewport.getRowViewportDefinition() == null) {
+			map.put("rowViewportDefinition", null);
 		}
 		else {
 			map.put(
-				"landscapeMobile",
-				String.valueOf(columnViewportConfig.getLandscapeMobile()));
-		}
-
-		if (columnViewportConfig.getPortraitMobile() == null) {
-			map.put("portraitMobile", null);
-		}
-		else {
-			map.put(
-				"portraitMobile",
-				String.valueOf(columnViewportConfig.getPortraitMobile()));
-		}
-
-		if (columnViewportConfig.getTablet() == null) {
-			map.put("tablet", null);
-		}
-		else {
-			map.put("tablet", String.valueOf(columnViewportConfig.getTablet()));
+				"rowViewportDefinition",
+				String.valueOf(rowViewport.getRowViewportDefinition()));
 		}
 
 		return map;
 	}
 
-	public static class ColumnViewportConfigJSONParser
-		extends BaseJSONParser<ColumnViewportConfig> {
+	public static class RowViewportJSONParser
+		extends BaseJSONParser<RowViewport> {
 
 		@Override
-		protected ColumnViewportConfig createDTO() {
-			return new ColumnViewportConfig();
+		protected RowViewport createDTO() {
+			return new RowViewport();
 		}
 
 		@Override
-		protected ColumnViewportConfig[] createDTOArray(int size) {
-			return new ColumnViewportConfig[size];
+		protected RowViewport[] createDTOArray(int size) {
+			return new RowViewport[size];
 		}
 
 		@Override
 		protected void setField(
-			ColumnViewportConfig columnViewportConfig,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			RowViewport rowViewport, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setLandscapeMobile(
-						LandscapeMobileSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					rowViewport.setId((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "rowViewportDefinition")) {
+
 				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setPortraitMobile(
-						PortraitMobileSerDes.toDTO(
+					rowViewport.setRowViewportDefinition(
+						RowViewportDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "tablet")) {
-				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setTablet(
-						TabletSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

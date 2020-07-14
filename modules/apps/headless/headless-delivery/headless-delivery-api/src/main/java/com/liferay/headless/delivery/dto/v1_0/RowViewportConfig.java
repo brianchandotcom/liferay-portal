@@ -53,19 +53,17 @@ public class RowViewportConfig {
 
 	@Schema
 	@Valid
-	public RowViewportConfigDefinition getLandscapeMobile() {
+	public LandscapeMobile getLandscapeMobile() {
 		return landscapeMobile;
 	}
 
-	public void setLandscapeMobile(
-		RowViewportConfigDefinition landscapeMobile) {
-
+	public void setLandscapeMobile(LandscapeMobile landscapeMobile) {
 		this.landscapeMobile = landscapeMobile;
 	}
 
 	@JsonIgnore
 	public void setLandscapeMobile(
-		UnsafeSupplier<RowViewportConfigDefinition, Exception>
+		UnsafeSupplier<LandscapeMobile, Exception>
 			landscapeMobileUnsafeSupplier) {
 
 		try {
@@ -81,21 +79,21 @@ public class RowViewportConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewportConfigDefinition landscapeMobile;
+	protected LandscapeMobile landscapeMobile;
 
 	@Schema
 	@Valid
-	public RowViewportConfigDefinition getPortraitMobile() {
+	public PortraitMobile getPortraitMobile() {
 		return portraitMobile;
 	}
 
-	public void setPortraitMobile(RowViewportConfigDefinition portraitMobile) {
+	public void setPortraitMobile(PortraitMobile portraitMobile) {
 		this.portraitMobile = portraitMobile;
 	}
 
 	@JsonIgnore
 	public void setPortraitMobile(
-		UnsafeSupplier<RowViewportConfigDefinition, Exception>
+		UnsafeSupplier<PortraitMobile, Exception>
 			portraitMobileUnsafeSupplier) {
 
 		try {
@@ -111,22 +109,21 @@ public class RowViewportConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewportConfigDefinition portraitMobile;
+	protected PortraitMobile portraitMobile;
 
 	@Schema
 	@Valid
-	public RowViewportConfigDefinition getTablet() {
+	public Tablet getTablet() {
 		return tablet;
 	}
 
-	public void setTablet(RowViewportConfigDefinition tablet) {
+	public void setTablet(Tablet tablet) {
 		this.tablet = tablet;
 	}
 
 	@JsonIgnore
 	public void setTablet(
-		UnsafeSupplier<RowViewportConfigDefinition, Exception>
-			tabletUnsafeSupplier) {
+		UnsafeSupplier<Tablet, Exception> tabletUnsafeSupplier) {
 
 		try {
 			tablet = tabletUnsafeSupplier.get();
@@ -141,7 +138,7 @@ public class RowViewportConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewportConfigDefinition tablet;
+	protected Tablet tablet;
 
 	@Override
 	public boolean equals(Object object) {

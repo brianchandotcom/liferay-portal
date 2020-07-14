@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.PageRowDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.RowViewport;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -105,6 +107,29 @@ public class PageRowDefinitionSerDes {
 			sb.append(String.valueOf(pageRowDefinition.getRowViewportConfig()));
 		}
 
+		if (pageRowDefinition.getRowViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rowViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageRowDefinition.getRowViewports().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(pageRowDefinition.getRowViewports()[i]));
+
+				if ((i + 1) < pageRowDefinition.getRowViewports().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -183,6 +208,15 @@ public class PageRowDefinitionSerDes {
 				String.valueOf(pageRowDefinition.getRowViewportConfig()));
 		}
 
+		if (pageRowDefinition.getRowViewports() == null) {
+			map.put("rowViewports", null);
+		}
+		else {
+			map.put(
+				"rowViewports",
+				String.valueOf(pageRowDefinition.getRowViewports()));
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() == null) {
 			map.put("verticalAlignment", null);
 		}
@@ -241,6 +275,18 @@ public class PageRowDefinitionSerDes {
 					pageRowDefinition.setRowViewportConfig(
 						RowViewportConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "rowViewports")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setRowViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RowViewportSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RowViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {

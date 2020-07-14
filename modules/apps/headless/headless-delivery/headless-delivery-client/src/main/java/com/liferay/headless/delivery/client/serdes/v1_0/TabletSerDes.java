@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.RowViewportConfigDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.Tablet;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,28 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RowViewportConfigDefinitionSerDes {
+public class TabletSerDes {
 
-	public static RowViewportConfigDefinition toDTO(String json) {
-		RowViewportConfigDefinitionJSONParser
-			rowViewportConfigDefinitionJSONParser =
-				new RowViewportConfigDefinitionJSONParser();
+	public static Tablet toDTO(String json) {
+		TabletJSONParser tabletJSONParser = new TabletJSONParser();
 
-		return rowViewportConfigDefinitionJSONParser.parseToDTO(json);
+		return tabletJSONParser.parseToDTO(json);
 	}
 
-	public static RowViewportConfigDefinition[] toDTOs(String json) {
-		RowViewportConfigDefinitionJSONParser
-			rowViewportConfigDefinitionJSONParser =
-				new RowViewportConfigDefinitionJSONParser();
+	public static Tablet[] toDTOs(String json) {
+		TabletJSONParser tabletJSONParser = new TabletJSONParser();
 
-		return rowViewportConfigDefinitionJSONParser.parseToDTOs(json);
+		return tabletJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		RowViewportConfigDefinition rowViewportConfigDefinition) {
-
-		if (rowViewportConfigDefinition == null) {
+	public static String toJSON(Tablet tablet) {
+		if (tablet == null) {
 			return "null";
 		}
 
@@ -59,27 +53,27 @@ public class RowViewportConfigDefinitionSerDes {
 
 		sb.append("{");
 
-		if (rowViewportConfigDefinition.getModulesPerRow() != null) {
+		if (tablet.getModulesPerRow() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"modulesPerRow\": ");
 
-			sb.append(rowViewportConfigDefinition.getModulesPerRow());
+			sb.append(tablet.getModulesPerRow());
 		}
 
-		if (rowViewportConfigDefinition.getReverseOrder() != null) {
+		if (tablet.getReverseOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"reverseOrder\": ");
 
-			sb.append(rowViewportConfigDefinition.getReverseOrder());
+			sb.append(tablet.getReverseOrder());
 		}
 
-		if (rowViewportConfigDefinition.getVerticalAlignment() != null) {
+		if (tablet.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -88,8 +82,7 @@ public class RowViewportConfigDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(
-				_escape(rowViewportConfigDefinition.getVerticalAlignment()));
+			sb.append(_escape(tablet.getVerticalAlignment()));
 
 			sb.append("\"");
 		}
@@ -100,87 +93,75 @@ public class RowViewportConfigDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RowViewportConfigDefinitionJSONParser
-			rowViewportConfigDefinitionJSONParser =
-				new RowViewportConfigDefinitionJSONParser();
+		TabletJSONParser tabletJSONParser = new TabletJSONParser();
 
-		return rowViewportConfigDefinitionJSONParser.parseToMap(json);
+		return tabletJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		RowViewportConfigDefinition rowViewportConfigDefinition) {
-
-		if (rowViewportConfigDefinition == null) {
+	public static Map<String, String> toMap(Tablet tablet) {
+		if (tablet == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (rowViewportConfigDefinition.getModulesPerRow() == null) {
+		if (tablet.getModulesPerRow() == null) {
 			map.put("modulesPerRow", null);
 		}
 		else {
-			map.put(
-				"modulesPerRow",
-				String.valueOf(rowViewportConfigDefinition.getModulesPerRow()));
+			map.put("modulesPerRow", String.valueOf(tablet.getModulesPerRow()));
 		}
 
-		if (rowViewportConfigDefinition.getReverseOrder() == null) {
+		if (tablet.getReverseOrder() == null) {
 			map.put("reverseOrder", null);
 		}
 		else {
-			map.put(
-				"reverseOrder",
-				String.valueOf(rowViewportConfigDefinition.getReverseOrder()));
+			map.put("reverseOrder", String.valueOf(tablet.getReverseOrder()));
 		}
 
-		if (rowViewportConfigDefinition.getVerticalAlignment() == null) {
+		if (tablet.getVerticalAlignment() == null) {
 			map.put("verticalAlignment", null);
 		}
 		else {
 			map.put(
 				"verticalAlignment",
-				String.valueOf(
-					rowViewportConfigDefinition.getVerticalAlignment()));
+				String.valueOf(tablet.getVerticalAlignment()));
 		}
 
 		return map;
 	}
 
-	public static class RowViewportConfigDefinitionJSONParser
-		extends BaseJSONParser<RowViewportConfigDefinition> {
+	public static class TabletJSONParser extends BaseJSONParser<Tablet> {
 
 		@Override
-		protected RowViewportConfigDefinition createDTO() {
-			return new RowViewportConfigDefinition();
+		protected Tablet createDTO() {
+			return new Tablet();
 		}
 
 		@Override
-		protected RowViewportConfigDefinition[] createDTOArray(int size) {
-			return new RowViewportConfigDefinition[size];
+		protected Tablet[] createDTOArray(int size) {
+			return new Tablet[size];
 		}
 
 		@Override
 		protected void setField(
-			RowViewportConfigDefinition rowViewportConfigDefinition,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			Tablet tablet, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
 				if (jsonParserFieldValue != null) {
-					rowViewportConfigDefinition.setModulesPerRow(
+					tablet.setModulesPerRow(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
 				if (jsonParserFieldValue != null) {
-					rowViewportConfigDefinition.setReverseOrder(
-						(Boolean)jsonParserFieldValue);
+					tablet.setReverseOrder((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
 				if (jsonParserFieldValue != null) {
-					rowViewportConfigDefinition.setVerticalAlignment(
-						(String)jsonParserFieldValue);
+					tablet.setVerticalAlignment((String)jsonParserFieldValue);
 				}
 			}
 			else {

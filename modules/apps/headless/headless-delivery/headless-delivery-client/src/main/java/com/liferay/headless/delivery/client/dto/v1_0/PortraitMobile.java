@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.PageRowDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PortraitMobileSerDes;
 
 import java.util.Objects;
 
@@ -26,32 +26,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageRowDefinition implements Cloneable {
+public class PortraitMobile implements Cloneable {
 
-	public static PageRowDefinition toDTO(String json) {
-		return PageRowDefinitionSerDes.toDTO(json);
+	public static PortraitMobile toDTO(String json) {
+		return PortraitMobileSerDes.toDTO(json);
 	}
-
-	public Boolean getGutters() {
-		return gutters;
-	}
-
-	public void setGutters(Boolean gutters) {
-		this.gutters = gutters;
-	}
-
-	public void setGutters(
-		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
-
-		try {
-			gutters = guttersUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean gutters;
 
 	public Integer getModulesPerRow() {
 		return modulesPerRow;
@@ -74,27 +53,6 @@ public class PageRowDefinition implements Cloneable {
 
 	protected Integer modulesPerRow;
 
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
-	}
-
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
-	}
-
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
-
-		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer numberOfColumns;
-
 	public Boolean getReverseOrder() {
 		return reverseOrder;
 	}
@@ -115,49 +73,6 @@ public class PageRowDefinition implements Cloneable {
 	}
 
 	protected Boolean reverseOrder;
-
-	public RowViewportConfig getRowViewportConfig() {
-		return rowViewportConfig;
-	}
-
-	public void setRowViewportConfig(RowViewportConfig rowViewportConfig) {
-		this.rowViewportConfig = rowViewportConfig;
-	}
-
-	public void setRowViewportConfig(
-		UnsafeSupplier<RowViewportConfig, Exception>
-			rowViewportConfigUnsafeSupplier) {
-
-		try {
-			rowViewportConfig = rowViewportConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected RowViewportConfig rowViewportConfig;
-
-	public RowViewport[] getRowViewports() {
-		return rowViewports;
-	}
-
-	public void setRowViewports(RowViewport[] rowViewports) {
-		this.rowViewports = rowViewports;
-	}
-
-	public void setRowViewports(
-		UnsafeSupplier<RowViewport[], Exception> rowViewportsUnsafeSupplier) {
-
-		try {
-			rowViewports = rowViewportsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected RowViewport[] rowViewports;
 
 	public String getVerticalAlignment() {
 		return verticalAlignment;
@@ -181,8 +96,8 @@ public class PageRowDefinition implements Cloneable {
 	protected String verticalAlignment;
 
 	@Override
-	public PageRowDefinition clone() throws CloneNotSupportedException {
-		return (PageRowDefinition)super.clone();
+	public PortraitMobile clone() throws CloneNotSupportedException {
+		return (PortraitMobile)super.clone();
 	}
 
 	@Override
@@ -191,13 +106,13 @@ public class PageRowDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof PageRowDefinition)) {
+		if (!(object instanceof PortraitMobile)) {
 			return false;
 		}
 
-		PageRowDefinition pageRowDefinition = (PageRowDefinition)object;
+		PortraitMobile portraitMobile = (PortraitMobile)object;
 
-		return Objects.equals(toString(), pageRowDefinition.toString());
+		return Objects.equals(toString(), portraitMobile.toString());
 	}
 
 	@Override
@@ -208,7 +123,7 @@ public class PageRowDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return PageRowDefinitionSerDes.toJSON(this);
+		return PortraitMobileSerDes.toJSON(this);
 	}
 
 }

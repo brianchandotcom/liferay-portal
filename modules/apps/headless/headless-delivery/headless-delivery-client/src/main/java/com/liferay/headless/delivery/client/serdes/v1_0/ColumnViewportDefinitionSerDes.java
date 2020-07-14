@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ColumnViewportConfigDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.ColumnViewportDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,28 +30,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ColumnViewportConfigDefinitionSerDes {
+public class ColumnViewportDefinitionSerDes {
 
-	public static ColumnViewportConfigDefinition toDTO(String json) {
-		ColumnViewportConfigDefinitionJSONParser
-			columnViewportConfigDefinitionJSONParser =
-				new ColumnViewportConfigDefinitionJSONParser();
+	public static ColumnViewportDefinition toDTO(String json) {
+		ColumnViewportDefinitionJSONParser columnViewportDefinitionJSONParser =
+			new ColumnViewportDefinitionJSONParser();
 
-		return columnViewportConfigDefinitionJSONParser.parseToDTO(json);
+		return columnViewportDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static ColumnViewportConfigDefinition[] toDTOs(String json) {
-		ColumnViewportConfigDefinitionJSONParser
-			columnViewportConfigDefinitionJSONParser =
-				new ColumnViewportConfigDefinitionJSONParser();
+	public static ColumnViewportDefinition[] toDTOs(String json) {
+		ColumnViewportDefinitionJSONParser columnViewportDefinitionJSONParser =
+			new ColumnViewportDefinitionJSONParser();
 
-		return columnViewportConfigDefinitionJSONParser.parseToDTOs(json);
+		return columnViewportDefinitionJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		ColumnViewportConfigDefinition columnViewportConfigDefinition) {
+		ColumnViewportDefinition columnViewportDefinition) {
 
-		if (columnViewportConfigDefinition == null) {
+		if (columnViewportDefinition == null) {
 			return "null";
 		}
 
@@ -59,14 +57,14 @@ public class ColumnViewportConfigDefinitionSerDes {
 
 		sb.append("{");
 
-		if (columnViewportConfigDefinition.getSize() != null) {
+		if (columnViewportDefinition.getSize() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"size\": ");
 
-			sb.append(columnViewportConfigDefinition.getSize());
+			sb.append(columnViewportDefinition.getSize());
 		}
 
 		sb.append("}");
@@ -75,55 +73,52 @@ public class ColumnViewportConfigDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ColumnViewportConfigDefinitionJSONParser
-			columnViewportConfigDefinitionJSONParser =
-				new ColumnViewportConfigDefinitionJSONParser();
+		ColumnViewportDefinitionJSONParser columnViewportDefinitionJSONParser =
+			new ColumnViewportDefinitionJSONParser();
 
-		return columnViewportConfigDefinitionJSONParser.parseToMap(json);
+		return columnViewportDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ColumnViewportConfigDefinition columnViewportConfigDefinition) {
+		ColumnViewportDefinition columnViewportDefinition) {
 
-		if (columnViewportConfigDefinition == null) {
+		if (columnViewportDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (columnViewportConfigDefinition.getSize() == null) {
+		if (columnViewportDefinition.getSize() == null) {
 			map.put("size", null);
 		}
 		else {
-			map.put(
-				"size",
-				String.valueOf(columnViewportConfigDefinition.getSize()));
+			map.put("size", String.valueOf(columnViewportDefinition.getSize()));
 		}
 
 		return map;
 	}
 
-	public static class ColumnViewportConfigDefinitionJSONParser
-		extends BaseJSONParser<ColumnViewportConfigDefinition> {
+	public static class ColumnViewportDefinitionJSONParser
+		extends BaseJSONParser<ColumnViewportDefinition> {
 
 		@Override
-		protected ColumnViewportConfigDefinition createDTO() {
-			return new ColumnViewportConfigDefinition();
+		protected ColumnViewportDefinition createDTO() {
+			return new ColumnViewportDefinition();
 		}
 
 		@Override
-		protected ColumnViewportConfigDefinition[] createDTOArray(int size) {
-			return new ColumnViewportConfigDefinition[size];
+		protected ColumnViewportDefinition[] createDTOArray(int size) {
+			return new ColumnViewportDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			ColumnViewportConfigDefinition columnViewportConfigDefinition,
+			ColumnViewportDefinition columnViewportDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "size")) {
 				if (jsonParserFieldValue != null) {
-					columnViewportConfigDefinition.setSize(
+					columnViewportDefinition.setSize(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}

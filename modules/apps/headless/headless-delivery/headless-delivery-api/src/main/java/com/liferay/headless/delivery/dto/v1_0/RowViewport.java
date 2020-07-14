@@ -33,8 +33,9 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,31 +44,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ColumnViewportConfigDefinition")
+@GraphQLName("RowViewport")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnViewportConfigDefinition")
-public class ColumnViewportConfigDefinition {
+@Schema(requiredProperties = {"id", "rowViewportDefinition"})
+@XmlRootElement(name = "RowViewport")
+public class RowViewport {
 
-	public static ColumnViewportConfigDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			ColumnViewportConfigDefinition.class, json);
+	public static RowViewport toDTO(String json) {
+		return ObjectMapperUtil.readValue(RowViewport.class, json);
 	}
 
-	@DecimalMax("12")
-	@DecimalMin("1")
 	@Schema
-	public Integer getSize() {
-		return size;
+	public String getId() {
+		return id;
 	}
 
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
-			size = sizeUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -79,7 +78,41 @@ public class ColumnViewportConfigDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer size;
+	@NotEmpty
+	protected String id;
+
+	@Schema
+	@Valid
+	public RowViewportDefinition getRowViewportDefinition() {
+		return rowViewportDefinition;
+	}
+
+	public void setRowViewportDefinition(
+		RowViewportDefinition rowViewportDefinition) {
+
+		this.rowViewportDefinition = rowViewportDefinition;
+	}
+
+	@JsonIgnore
+	public void setRowViewportDefinition(
+		UnsafeSupplier<RowViewportDefinition, Exception>
+			rowViewportDefinitionUnsafeSupplier) {
+
+		try {
+			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected RowViewportDefinition rowViewportDefinition;
 
 	@Override
 	public boolean equals(Object object) {
@@ -87,15 +120,13 @@ public class ColumnViewportConfigDefinition {
 			return true;
 		}
 
-		if (!(object instanceof ColumnViewportConfigDefinition)) {
+		if (!(object instanceof RowViewport)) {
 			return false;
 		}
 
-		ColumnViewportConfigDefinition columnViewportConfigDefinition =
-			(ColumnViewportConfigDefinition)object;
+		RowViewport rowViewport = (RowViewport)object;
 
-		return Objects.equals(
-			toString(), columnViewportConfigDefinition.toString());
+		return Objects.equals(toString(), rowViewport.toString());
 	}
 
 	@Override
@@ -110,14 +141,28 @@ public class ColumnViewportConfigDefinition {
 
 		sb.append("{");
 
-		if (size != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"size\": ");
+			sb.append("\"id\": ");
 
-			sb.append(size);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
+		}
+
+		if (rowViewportDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rowViewportDefinition\": ");
+
+			sb.append(String.valueOf(rowViewportDefinition));
 		}
 
 		sb.append("}");
@@ -126,7 +171,7 @@ public class ColumnViewportConfigDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfigDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewport",
 		name = "x-class-name"
 	)
 	public String xClassName;

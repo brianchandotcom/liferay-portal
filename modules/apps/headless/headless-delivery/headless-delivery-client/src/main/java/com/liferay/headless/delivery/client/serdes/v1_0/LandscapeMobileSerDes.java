@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ColumnViewportConfig;
+import com.liferay.headless.delivery.client.dto.v1_0.LandscapeMobile;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ColumnViewportConfigSerDes {
+public class LandscapeMobileSerDes {
 
-	public static ColumnViewportConfig toDTO(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+	public static LandscapeMobile toDTO(String json) {
+		LandscapeMobileJSONParser landscapeMobileJSONParser =
+			new LandscapeMobileJSONParser();
 
-		return columnViewportConfigJSONParser.parseToDTO(json);
+		return landscapeMobileJSONParser.parseToDTO(json);
 	}
 
-	public static ColumnViewportConfig[] toDTOs(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+	public static LandscapeMobile[] toDTOs(String json) {
+		LandscapeMobileJSONParser landscapeMobileJSONParser =
+			new LandscapeMobileJSONParser();
 
-		return columnViewportConfigJSONParser.parseToDTOs(json);
+		return landscapeMobileJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ColumnViewportConfig columnViewportConfig) {
-		if (columnViewportConfig == null) {
+	public static String toJSON(LandscapeMobile landscapeMobile) {
+		if (landscapeMobile == null) {
 			return "null";
 		}
 
@@ -55,35 +55,38 @@ public class ColumnViewportConfigSerDes {
 
 		sb.append("{");
 
-		if (columnViewportConfig.getLandscapeMobile() != null) {
+		if (landscapeMobile.getModulesPerRow() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"landscapeMobile\": ");
+			sb.append("\"modulesPerRow\": ");
 
-			sb.append(
-				String.valueOf(columnViewportConfig.getLandscapeMobile()));
+			sb.append(landscapeMobile.getModulesPerRow());
 		}
 
-		if (columnViewportConfig.getPortraitMobile() != null) {
+		if (landscapeMobile.getReverseOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"portraitMobile\": ");
+			sb.append("\"reverseOrder\": ");
 
-			sb.append(String.valueOf(columnViewportConfig.getPortraitMobile()));
+			sb.append(landscapeMobile.getReverseOrder());
 		}
 
-		if (columnViewportConfig.getTablet() != null) {
+		if (landscapeMobile.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"tablet\": ");
+			sb.append("\"verticalAlignment\": ");
 
-			sb.append(String.valueOf(columnViewportConfig.getTablet()));
+			sb.append("\"");
+
+			sb.append(_escape(landscapeMobile.getVerticalAlignment()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -92,85 +95,83 @@ public class ColumnViewportConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ColumnViewportConfigJSONParser columnViewportConfigJSONParser =
-			new ColumnViewportConfigJSONParser();
+		LandscapeMobileJSONParser landscapeMobileJSONParser =
+			new LandscapeMobileJSONParser();
 
-		return columnViewportConfigJSONParser.parseToMap(json);
+		return landscapeMobileJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		ColumnViewportConfig columnViewportConfig) {
-
-		if (columnViewportConfig == null) {
+	public static Map<String, String> toMap(LandscapeMobile landscapeMobile) {
+		if (landscapeMobile == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (columnViewportConfig.getLandscapeMobile() == null) {
-			map.put("landscapeMobile", null);
+		if (landscapeMobile.getModulesPerRow() == null) {
+			map.put("modulesPerRow", null);
 		}
 		else {
 			map.put(
-				"landscapeMobile",
-				String.valueOf(columnViewportConfig.getLandscapeMobile()));
+				"modulesPerRow",
+				String.valueOf(landscapeMobile.getModulesPerRow()));
 		}
 
-		if (columnViewportConfig.getPortraitMobile() == null) {
-			map.put("portraitMobile", null);
+		if (landscapeMobile.getReverseOrder() == null) {
+			map.put("reverseOrder", null);
 		}
 		else {
 			map.put(
-				"portraitMobile",
-				String.valueOf(columnViewportConfig.getPortraitMobile()));
+				"reverseOrder",
+				String.valueOf(landscapeMobile.getReverseOrder()));
 		}
 
-		if (columnViewportConfig.getTablet() == null) {
-			map.put("tablet", null);
+		if (landscapeMobile.getVerticalAlignment() == null) {
+			map.put("verticalAlignment", null);
 		}
 		else {
-			map.put("tablet", String.valueOf(columnViewportConfig.getTablet()));
+			map.put(
+				"verticalAlignment",
+				String.valueOf(landscapeMobile.getVerticalAlignment()));
 		}
 
 		return map;
 	}
 
-	public static class ColumnViewportConfigJSONParser
-		extends BaseJSONParser<ColumnViewportConfig> {
+	public static class LandscapeMobileJSONParser
+		extends BaseJSONParser<LandscapeMobile> {
 
 		@Override
-		protected ColumnViewportConfig createDTO() {
-			return new ColumnViewportConfig();
+		protected LandscapeMobile createDTO() {
+			return new LandscapeMobile();
 		}
 
 		@Override
-		protected ColumnViewportConfig[] createDTOArray(int size) {
-			return new ColumnViewportConfig[size];
+		protected LandscapeMobile[] createDTOArray(int size) {
+			return new LandscapeMobile[size];
 		}
 
 		@Override
 		protected void setField(
-			ColumnViewportConfig columnViewportConfig,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			LandscapeMobile landscapeMobile, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
+			if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
 				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setLandscapeMobile(
-						LandscapeMobileSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					landscapeMobile.setModulesPerRow(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
+			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
 				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setPortraitMobile(
-						PortraitMobileSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					landscapeMobile.setReverseOrder(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "tablet")) {
+			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
 				if (jsonParserFieldValue != null) {
-					columnViewportConfig.setTablet(
-						TabletSerDes.toDTO((String)jsonParserFieldValue));
+					landscapeMobile.setVerticalAlignment(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else {

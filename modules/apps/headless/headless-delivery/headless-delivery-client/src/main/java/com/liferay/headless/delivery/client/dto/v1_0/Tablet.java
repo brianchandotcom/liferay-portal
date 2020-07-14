@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.RowViewportConfigDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.TabletSerDes;
 
 import java.util.Objects;
 
@@ -26,10 +26,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RowViewportConfigDefinition implements Cloneable {
+public class Tablet implements Cloneable {
 
-	public static RowViewportConfigDefinition toDTO(String json) {
-		return RowViewportConfigDefinitionSerDes.toDTO(json);
+	public static Tablet toDTO(String json) {
+		return TabletSerDes.toDTO(json);
 	}
 
 	public Integer getModulesPerRow() {
@@ -96,10 +96,8 @@ public class RowViewportConfigDefinition implements Cloneable {
 	protected String verticalAlignment;
 
 	@Override
-	public RowViewportConfigDefinition clone()
-		throws CloneNotSupportedException {
-
-		return (RowViewportConfigDefinition)super.clone();
+	public Tablet clone() throws CloneNotSupportedException {
+		return (Tablet)super.clone();
 	}
 
 	@Override
@@ -108,15 +106,13 @@ public class RowViewportConfigDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewportConfigDefinition)) {
+		if (!(object instanceof Tablet)) {
 			return false;
 		}
 
-		RowViewportConfigDefinition rowViewportConfigDefinition =
-			(RowViewportConfigDefinition)object;
+		Tablet tablet = (Tablet)object;
 
-		return Objects.equals(
-			toString(), rowViewportConfigDefinition.toString());
+		return Objects.equals(toString(), tablet.toString());
 	}
 
 	@Override
@@ -127,7 +123,7 @@ public class RowViewportConfigDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return RowViewportConfigDefinitionSerDes.toJSON(this);
+		return TabletSerDes.toJSON(this);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.ColumnViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -66,6 +68,32 @@ public class PageColumnDefinitionSerDes {
 				String.valueOf(pageColumnDefinition.getColumnViewportConfig()));
 		}
 
+		if (pageColumnDefinition.getColumnViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"columnViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageColumnDefinition.getColumnViewports().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						pageColumnDefinition.getColumnViewports()[i]));
+
+				if ((i + 1) <
+						pageColumnDefinition.getColumnViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageColumnDefinition.getSize() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -106,6 +134,15 @@ public class PageColumnDefinitionSerDes {
 				String.valueOf(pageColumnDefinition.getColumnViewportConfig()));
 		}
 
+		if (pageColumnDefinition.getColumnViewports() == null) {
+			map.put("columnViewports", null);
+		}
+		else {
+			map.put(
+				"columnViewports",
+				String.valueOf(pageColumnDefinition.getColumnViewports()));
+		}
+
 		if (pageColumnDefinition.getSize() == null) {
 			map.put("size", null);
 		}
@@ -139,6 +176,18 @@ public class PageColumnDefinitionSerDes {
 					pageColumnDefinition.setColumnViewportConfig(
 						ColumnViewportConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "columnViewports")) {
+				if (jsonParserFieldValue != null) {
+					pageColumnDefinition.setColumnViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ColumnViewportSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ColumnViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "size")) {

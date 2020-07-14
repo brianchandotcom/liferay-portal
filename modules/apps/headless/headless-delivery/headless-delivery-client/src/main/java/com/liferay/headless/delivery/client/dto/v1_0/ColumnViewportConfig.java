@@ -32,18 +32,16 @@ public class ColumnViewportConfig implements Cloneable {
 		return ColumnViewportConfigSerDes.toDTO(json);
 	}
 
-	public ColumnViewportConfigDefinition getLandscapeMobile() {
+	public LandscapeMobile getLandscapeMobile() {
 		return landscapeMobile;
 	}
 
-	public void setLandscapeMobile(
-		ColumnViewportConfigDefinition landscapeMobile) {
-
+	public void setLandscapeMobile(LandscapeMobile landscapeMobile) {
 		this.landscapeMobile = landscapeMobile;
 	}
 
 	public void setLandscapeMobile(
-		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
+		UnsafeSupplier<LandscapeMobile, Exception>
 			landscapeMobileUnsafeSupplier) {
 
 		try {
@@ -54,20 +52,18 @@ public class ColumnViewportConfig implements Cloneable {
 		}
 	}
 
-	protected ColumnViewportConfigDefinition landscapeMobile;
+	protected LandscapeMobile landscapeMobile;
 
-	public ColumnViewportConfigDefinition getPortraitMobile() {
+	public PortraitMobile getPortraitMobile() {
 		return portraitMobile;
 	}
 
-	public void setPortraitMobile(
-		ColumnViewportConfigDefinition portraitMobile) {
-
+	public void setPortraitMobile(PortraitMobile portraitMobile) {
 		this.portraitMobile = portraitMobile;
 	}
 
 	public void setPortraitMobile(
-		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
+		UnsafeSupplier<PortraitMobile, Exception>
 			portraitMobileUnsafeSupplier) {
 
 		try {
@@ -78,19 +74,18 @@ public class ColumnViewportConfig implements Cloneable {
 		}
 	}
 
-	protected ColumnViewportConfigDefinition portraitMobile;
+	protected PortraitMobile portraitMobile;
 
-	public ColumnViewportConfigDefinition getTablet() {
+	public Tablet getTablet() {
 		return tablet;
 	}
 
-	public void setTablet(ColumnViewportConfigDefinition tablet) {
+	public void setTablet(Tablet tablet) {
 		this.tablet = tablet;
 	}
 
 	public void setTablet(
-		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
-			tabletUnsafeSupplier) {
+		UnsafeSupplier<Tablet, Exception> tabletUnsafeSupplier) {
 
 		try {
 			tablet = tabletUnsafeSupplier.get();
@@ -100,7 +95,7 @@ public class ColumnViewportConfig implements Cloneable {
 		}
 	}
 
-	protected ColumnViewportConfigDefinition tablet;
+	protected Tablet tablet;
 
 	@Override
 	public ColumnViewportConfig clone() throws CloneNotSupportedException {

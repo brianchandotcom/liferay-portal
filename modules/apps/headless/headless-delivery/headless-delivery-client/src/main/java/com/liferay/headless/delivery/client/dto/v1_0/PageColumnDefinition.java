@@ -56,6 +56,28 @@ public class PageColumnDefinition implements Cloneable {
 
 	protected ColumnViewportConfig columnViewportConfig;
 
+	public ColumnViewport[] getColumnViewports() {
+		return columnViewports;
+	}
+
+	public void setColumnViewports(ColumnViewport[] columnViewports) {
+		this.columnViewports = columnViewports;
+	}
+
+	public void setColumnViewports(
+		UnsafeSupplier<ColumnViewport[], Exception>
+			columnViewportsUnsafeSupplier) {
+
+		try {
+			columnViewports = columnViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ColumnViewport[] columnViewports;
+
 	public Integer getSize() {
 		return size;
 	}

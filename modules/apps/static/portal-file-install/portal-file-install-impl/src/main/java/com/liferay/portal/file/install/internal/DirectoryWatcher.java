@@ -46,7 +46,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
@@ -149,8 +148,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_poll = GetterUtil.getLong(properties.get(POLL), 2000);
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
 		_verifyWatchedDir();
-		_tmpDir = _getFile(properties, TMPDIR, null);
-		_prepareTempDir();
 		_startBundles = _getBoolean(properties, START_NEW_BUNDLES, true);
 		_useStartTransient = _getBoolean(
 			properties, USE_START_TRANSIENT, false);
@@ -1005,45 +1002,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		return _stateChanged.get();
 	}
 
-	private void _prepareDir(File dir) {
-		if (!dir.exists() && !dir.mkdirs()) {
-			throw new RuntimeException("Unable to create folder: " + dir);
-		}
-
-		if (!dir.isDirectory()) {
-			throw new RuntimeException(
-				"Unable to start FileInstall. " + dir + " is not a directory.");
-		}
-	}
-
-	private void _prepareTempDir() {
-		if (_tmpDir == null) {
-			File javaIoTmpdir = new File(System.getProperty("java.io.tmpdir"));
-
-			if (!javaIoTmpdir.exists() && !javaIoTmpdir.mkdirs()) {
-				throw new IllegalStateException(
-					"Unable to create temporary directory " + javaIoTmpdir);
-			}
-
-			Random random = new Random();
-
-			while (_tmpDir == null) {
-				File file = new File(
-					javaIoTmpdir,
-					"fileinstall-" + String.valueOf(random.nextLong()));
-
-				if (!file.exists() && file.mkdirs()) {
-					_tmpDir = file;
-
-					_tmpDir.deleteOnExit();
-				}
-			}
-		}
-		else {
-			_prepareDir(_tmpDir);
-		}
-	}
-
 	private void _process(Set<File> files) throws InterruptedException {
 		Lock readLock = _fileInstall.getReadLock();
 
@@ -1369,7 +1327,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final int _startLevel;
 	private final AtomicBoolean _stateChanged = new AtomicBoolean();
 	private final Bundle _systemBundle;
-	private File _tmpDir;
 	private final boolean _useStartActivationPolicy;
 	private final boolean _useStartTransient;
 	private final File _watchedDirectory;

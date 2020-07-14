@@ -246,8 +246,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
-				"containerItemEnabled",
-				_ffLayoutContentPageEditorConfiguration.containerItemEnabled()
+				"containerItemFlexEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					containerItemFlexEnabled()
 			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(

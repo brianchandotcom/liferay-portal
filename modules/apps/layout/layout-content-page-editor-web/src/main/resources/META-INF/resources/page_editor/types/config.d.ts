@@ -32,7 +32,7 @@ export interface Config {
 		};
 	};
 
-	containerItemEnabled: boolean;
+	containerItemFlexEnabled: boolean;
 
 	defaultEditorConfigurations: {
 		[key: 'comment' | 'rich-text' | 'text']: {

@@ -28,6 +28,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFLayoutContentPageEditorConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean containerItemEnabled();
+	public boolean containerItemFlexEnabled();
 
 }

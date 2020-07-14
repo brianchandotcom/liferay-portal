@@ -87,7 +87,7 @@ export const ContainerStylesPanel = ({item}) => {
 					<p>{Liferay.Language.get('styles')}</p>
 				</div>
 
-				{config.containerItemEnabled && (
+				{config.containerItemFlexEnabled && (
 					<SelectField
 						field={{
 							label: Liferay.Language.get('content-display'),

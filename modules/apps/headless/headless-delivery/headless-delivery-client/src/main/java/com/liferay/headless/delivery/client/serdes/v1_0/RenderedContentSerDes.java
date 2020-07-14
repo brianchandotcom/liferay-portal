@@ -107,6 +107,20 @@ public class RenderedContentSerDes {
 			sb.append("\"");
 		}
 
+		if (renderedContent.getRenderedContentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"renderedContentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContent.getRenderedContentValue()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -162,6 +176,15 @@ public class RenderedContentSerDes {
 				String.valueOf(renderedContent.getRenderedContentURL()));
 		}
 
+		if (renderedContent.getRenderedContentValue() == null) {
+			map.put("renderedContentValue", null);
+		}
+		else {
+			map.put(
+				"renderedContentValue",
+				String.valueOf(renderedContent.getRenderedContentValue()));
+		}
+
 		return map;
 	}
 
@@ -211,6 +234,14 @@ public class RenderedContentSerDes {
 
 				if (jsonParserFieldValue != null) {
 					renderedContent.setRenderedContentURL(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "renderedContentValue")) {
+
+				if (jsonParserFieldValue != null) {
+					renderedContent.setRenderedContentValue(
 						(String)jsonParserFieldValue);
 				}
 			}

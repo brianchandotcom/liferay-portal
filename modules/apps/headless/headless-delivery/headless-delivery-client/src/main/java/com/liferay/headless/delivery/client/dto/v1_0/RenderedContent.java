@@ -121,6 +121,27 @@ public class RenderedContent implements Cloneable {
 
 	protected String renderedContentURL;
 
+	public String getRenderedContentValue() {
+		return renderedContentValue;
+	}
+
+	public void setRenderedContentValue(String renderedContentValue) {
+		this.renderedContentValue = renderedContentValue;
+	}
+
+	public void setRenderedContentValue(
+		UnsafeSupplier<String, Exception> renderedContentValueUnsafeSupplier) {
+
+		try {
+			renderedContentValue = renderedContentValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String renderedContentValue;
+
 	@Override
 	public RenderedContent clone() throws CloneNotSupportedException {
 		return (RenderedContent)super.clone();

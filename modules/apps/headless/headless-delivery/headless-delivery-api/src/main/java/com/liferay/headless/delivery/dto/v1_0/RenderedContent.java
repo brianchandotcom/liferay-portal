@@ -172,6 +172,34 @@ public class RenderedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	@Schema
+	public String getRenderedContentValue() {
+		return renderedContentValue;
+	}
+
+	public void setRenderedContentValue(String renderedContentValue) {
+		this.renderedContentValue = renderedContentValue;
+	}
+
+	@JsonIgnore
+	public void setRenderedContentValue(
+		UnsafeSupplier<String, Exception> renderedContentValueUnsafeSupplier) {
+
+		try {
+			renderedContentValue = renderedContentValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String renderedContentValue;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -247,6 +275,20 @@ public class RenderedContent {
 			sb.append("\"");
 
 			sb.append(_escape(renderedContentURL));
+
+			sb.append("\"");
+		}
+
+		if (renderedContentValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"renderedContentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContentValue));
 
 			sb.append("\"");
 		}

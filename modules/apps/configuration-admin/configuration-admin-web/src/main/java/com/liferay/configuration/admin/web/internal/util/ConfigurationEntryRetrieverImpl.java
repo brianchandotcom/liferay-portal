@@ -322,7 +322,7 @@ public class ConfigurationEntryRetrieverImpl
 	private ServiceTrackerMap<String, ConfigurationCategory>
 		_configurationCategoryServiceTrackerMap;
 
-	@Reference
+	@Reference(target = "(filter.visibility=true)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	private ServiceTrackerMap<String, ConfigurationScreen>

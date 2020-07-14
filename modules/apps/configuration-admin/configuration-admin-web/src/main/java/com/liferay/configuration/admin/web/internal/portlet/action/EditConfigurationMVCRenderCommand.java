@@ -210,7 +210,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 	private ServiceTrackerMap<String, List<ConfigurationMenuItem>>
 		_configurationMenuItemsServiceTrackerMap;
 
-	@Reference
+	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference

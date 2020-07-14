@@ -188,7 +188,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
-	@Reference
+	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference

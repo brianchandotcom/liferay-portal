@@ -480,7 +480,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
-	@Reference
+	@Reference(target = "(!(filter.visibility=*))")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference

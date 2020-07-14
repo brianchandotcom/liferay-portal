@@ -317,7 +317,7 @@ public class ExportConfigurationMVCResourceCommand
 		return properties;
 	}
 
-	@Reference
+	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

@@ -404,7 +404,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	private ConfigurationFormRendererRetriever
 		_configurationFormRendererRetriever;
 
-	@Reference
+	@Reference(target = "(!(filter.visibility=*))")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference

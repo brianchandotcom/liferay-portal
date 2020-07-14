@@ -244,7 +244,18 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntry.getName(),
 			persistedLayoutPageTemplateEntry.getName());
 
-		Assert.assertNotNull(layoutPageTemplateEntry.getLayoutPrototypeId());
+		Assert.assertNotEquals(
+			0, layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		Assert.assertNotNull(layoutPrototype);
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			layoutPrototype.getName(LocaleUtil.getMostRelevantLocale()));
 	}
 
 	@Test
@@ -308,24 +319,6 @@ public class LayoutPageTemplateEntryServiceTest {
 		Assert.assertNull(
 			_layoutPrototypeLocalService.fetchLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId()));
-	}
-
-	@Test
-	public void testLayoutPrototypeName() throws PortalException {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateTestUtil.addWidgetLayoutPageTemplateEntry(
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
-
-		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.fetchLayoutPrototype(
-				layoutPageTemplateEntry.getLayoutPrototypeId());
-
-		Assert.assertNotNull(layoutPrototype);
-
-		Assert.assertEquals(
-			layoutPageTemplateEntry.getName(),
-			layoutPrototype.getName(LocaleUtil.getMostRelevantLocale()));
 	}
 
 	@Test

@@ -17,6 +17,31 @@
 					"title": "The Language Key of the Token Label",
 					"type": "string"
 				},
+				"mappings": {
+					"items": {
+						"additionalProperties": false,
+						"not": {
+							"type": "null"
+						},
+						"properties": {
+							"type": {
+								"title": "The Type of the Mapping",
+								"type": "string"
+							},
+							"value": {
+								"title": "The Value of the Mapping for the Token",
+								"type": "string"
+							}
+						},
+						"required": [
+							"type",
+							"value"
+						],
+						"type": "object"
+					},
+					"title": "The Mappings of the Token",
+					"type": "array"
+				},
 				"name": {
 					"title": "Name of the Token",
 					"type": "string"

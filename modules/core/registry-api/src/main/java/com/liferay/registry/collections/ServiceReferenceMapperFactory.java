@@ -18,6 +18,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 
+import java.util.function.Function;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -71,6 +73,27 @@ public class ServiceReferenceMapperFactory {
 				else {
 					emitter.emit((K)propertyValue);
 				}
+			}
+
+		};
+	}
+
+	public static <K, S> ServiceReferenceMapper<K, S> create(
+		final Function<S, K> getterFunction) {
+
+		return new ServiceReferenceMapper<K, S>() {
+
+			@Override
+			public void map(
+				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				S service = registry.getService(serviceReference);
+
+				emitter.emit(getterFunction.apply(service));
+
+				registry.ungetService(serviceReference);
 			}
 
 		};

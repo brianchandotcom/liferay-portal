@@ -46,7 +46,8 @@ public class LiferayWorkspaceYarnPlugin extends LiferayYarnPlugin {
 		super.apply(project);
 
 		TaskProvider<SetUpYarnTask> setUpYarnTaskProvider =
-			_addTaskProviderSetUpYarn(project);
+			GradleUtil.addTaskProvider(
+				project, SET_UP_YARN_TASK_NAME, SetUpYarnTask.class);
 
 		final TaskProvider<YarnInstallTask> yarnInstallTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -64,13 +65,6 @@ public class LiferayWorkspaceYarnPlugin extends LiferayYarnPlugin {
 				}
 
 			});
-	}
-
-	private TaskProvider<SetUpYarnTask> _addTaskProviderSetUpYarn(
-		Project project) {
-
-		return GradleUtil.addTaskProvider(
-			project, SET_UP_YARN_TASK_NAME, SetUpYarnTask.class);
 	}
 
 	private void _configureNodeProject(

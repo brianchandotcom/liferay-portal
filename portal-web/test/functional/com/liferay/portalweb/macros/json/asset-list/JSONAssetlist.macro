@@ -13,6 +13,17 @@ definition {
 			type = "${type}");
 	}
 
+	macro addDynamicAssetListEntryWithItemType {
+		Variables.assertDefined(parameterList = "${groupName},${itemType},${title}");
+
+		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}");
+
+		JSONAssetlistAPI._addDynamicAssetListEntry(
+			groupId = "${groupId}",
+			itemType = "${itemType}",
+			title = "${title}");
+	}
+
 	macro addManualAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 

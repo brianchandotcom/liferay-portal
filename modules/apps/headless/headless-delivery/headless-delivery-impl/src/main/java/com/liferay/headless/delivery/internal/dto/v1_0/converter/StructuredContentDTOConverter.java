@@ -244,7 +244,7 @@ public class StructuredContentDTOConverter
 						BaseStructuredContentResourceImpl.class,
 						"getStructuredContentRenderedContentTemplate", uriInfo,
 						journalArticle.getResourcePrimKey(),
-						ddmTemplate.getTemplateId());
+						ddmTemplate.getTemplateKey());
 
 					setRenderedContentValue(
 						() -> {

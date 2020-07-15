@@ -77,10 +77,10 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					displayType="secondary"
 					dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), remainingTypes, className, classPK, title, url) %>"
 					icon="share"
-					label="share"
 					monospaced="<%= true %>"
 					propsTransformer="bookmarks/SocialBookmarksDropdownPropsTransformer"
 					small="<%= true %>"
+					title="share"
 				/>
 
 			<%

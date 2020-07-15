@@ -1370,13 +1370,15 @@ definition {
 
 		BlogsAggregatorPortlet.viewParentOrganizationPG(
 			orgName = "Organization2 Name",
-			parentOrgName = "");
+			parentOrgName = "",
+			portletName = "Blogs Aggregator");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsAggregatorPortlet.viewParentOrganizationPG(
 			orgName = "Organization3 Name",
-			parentOrgName = "Organization1 Name");
+			parentOrgName = "Organization1 Name",
+			portletName = "Blogs Aggregator");
 	}
 
 }

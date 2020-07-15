@@ -163,9 +163,9 @@ public class XLIFFInfoFormTranslationImporter
 			InfoItemClassPKReference infoItemClassPKReference)
 		throws XLIFFFileException {
 
-		StartSubDocument startSubDocument = _getStartSubDocument(events);
-
 		_validateDocumentPartVersion(events);
+
+		StartSubDocument startSubDocument = _getStartSubDocument(events);
 
 		_validateXLIFFStartSubDocument(
 			infoItemClassPKReference, startSubDocument);

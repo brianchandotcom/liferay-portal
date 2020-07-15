@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
@@ -24,7 +23,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -42,13 +40,6 @@ public class ModelPermissions implements Cloneable, Serializable {
 
 	public static final String RESOURCE_NAME_UNINITIALIZED =
 		ModelPermissions.class.getName() + "#UNINITIALIZED";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public ModelPermissions() {
-	}
 
 	public ModelPermissions(String resourceName) {
 		setResourceName(resourceName);
@@ -85,48 +76,12 @@ public class ModelPermissions implements Cloneable, Serializable {
 		return actionIds.toArray(new String[0]);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<String> getActionIdsList(String roleName) {
-		Set<String> actionIds = _actionIdsMap.get(roleName);
-
-		return ListUtil.fromCollection(actionIds);
-	}
-
 	public String getResourceName() {
 		return _resourceName;
 	}
 
 	public Collection<String> getRoleNames() {
 		return _actionIdsMap.keySet();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public Collection<String> getRoleNames(String actionId) {
-		Set<String> roleNames = new HashSet<>();
-
-		for (Map.Entry<String, Set<String>> entry : _actionIdsMap.entrySet()) {
-			Set<String> actionIds = entry.getValue();
-
-			if (actionIds.contains(actionId)) {
-				roleNames.add(entry.getKey());
-			}
-		}
-
-		return roleNames;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isEmpty() {
-		return _actionIdsMap.isEmpty();
 	}
 
 	public boolean isUsed() {
@@ -139,40 +94,6 @@ public class ModelPermissions implements Cloneable, Serializable {
 
 	public void setUsed(boolean used) {
 		_used = used;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ModelPermissions(
-		Map<String, Set<String>> roleNamesMap,
-		Map<String, Set<String>> actionIdsMap) {
-
-		this(actionIdsMap, RESOURCE_NAME_UNINITIALIZED, false);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ModelPermissions(
-		Map<String, Set<String>> roleNamesMap,
-		Map<String, Set<String>> actionIdsMap, String resourceName) {
-
-		this(actionIdsMap, resourceName, false);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ModelPermissions(
-		Map<String, Set<String>> roleNamesMap,
-		Map<String, Set<String>> actionIdsMap, String resourceName,
-		boolean used) {
-
-		this(actionIdsMap, resourceName, used);
 	}
 
 	private ModelPermissions(

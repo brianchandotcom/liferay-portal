@@ -121,7 +121,6 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 			groupPermissions, modelPermissions.getActionIds(roleName));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testCreateWithGuestAndGroupPermissions() {
 		String[] groupPermissions = {ActionKeys.VIEW};
@@ -136,9 +135,6 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 				RoleConstants.GUEST));
 
 		Assert.assertEquals(expectedRoleNames, modelPermissions.getRoleNames());
-
-		Assert.assertEquals(
-			expectedRoleNames, modelPermissions.getRoleNames(ActionKeys.VIEW));
 	}
 
 	@Test

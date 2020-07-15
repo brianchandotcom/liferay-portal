@@ -280,13 +280,6 @@ public class DDMStructurePersistenceTest {
 	}
 
 	@Test
-	public void testCountByClassNameId() throws Exception {
-		_persistence.countByClassNameId(RandomTestUtil.nextLong());
-
-		_persistence.countByClassNameId(0L);
-	}
-
-	@Test
 	public void testCountByStructureKey() throws Exception {
 		_persistence.countByStructureKey("");
 

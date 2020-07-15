@@ -25,7 +25,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -142,8 +141,5 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	)
 	private InfoItemFieldValuesUpdater<JournalArticle>
 		_journalArticleInfoItemFieldValuesUpdater;
-
-	@Reference
-	private JournalArticleService _journalArticleService;
 
 }

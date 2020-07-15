@@ -161,6 +161,8 @@ definition {
 			key_pageName = "${parentPageName}",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
 
+		DropdownMenuItem.click(menuItem = "Add Page");
+
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			navigationMenus = "${navigationMenus}",

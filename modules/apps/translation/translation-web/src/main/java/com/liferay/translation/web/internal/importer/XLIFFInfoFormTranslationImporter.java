@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 
+import java.io.CharConversionException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -120,6 +121,11 @@ public class XLIFFInfoFormTranslationImporter
 				invalidParameterException);
 		}
 		catch (XLIFFException xliffException) {
+			if (xliffException.getCause() instanceof CharConversionException) {
+				throw new XLIFFFileException.MustHaveCorrectEncoding(
+					xliffException);
+			}
+
 			throw new XLIFFFileException.MustBeValid(xliffException);
 		}
 	}

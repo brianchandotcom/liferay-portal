@@ -408,10 +408,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	/**
 	 * Deletes the role with the primary key and its associated permissions.
 	 *
-	 * <p>
-	 * This is the recommended delete method for API consumers.
-	 * </p>
-	 *
 	 * @param  roleId the primary key of the role
 	 * @return the deleted role
 	 */

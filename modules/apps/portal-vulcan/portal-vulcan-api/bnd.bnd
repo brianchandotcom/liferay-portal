@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.graphql.contributor,\
 	com.liferay.portal.vulcan.graphql.servlet,\
 	com.liferay.portal.vulcan.graphql.util,\
+	com.liferay.portal.vulcan.jaxrs.context,\
 	com.liferay.portal.vulcan.jaxrs.exception.mapper,\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\

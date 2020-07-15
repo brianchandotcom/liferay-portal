@@ -76,8 +76,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 
 	@Override
 	public Object clone() {
-		return new ModelPermissions(
-			new HashMap<>(_actionIdsMap), _resourceName, _used);
+		return new ModelPermissions(_actionIdsMap, _resourceName, _used);
 	}
 
 	public String[] getActionIds(String roleName) {

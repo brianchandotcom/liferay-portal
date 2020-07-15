@@ -46,25 +46,29 @@ export const StoreAPIContextProvider = ({
 	children,
 	dispatch = DEFAULT_DISPATCH,
 	getState = DEFAULT_GET_STATE,
+	stateChanged,
 }) => {
-	const subscribers = useRef([]);
+	const subscribers = useRef(new Set());
 
 	const subscribe = useCallback((subscriber) => {
-		subscribers.current = [...subscribers.current, subscriber];
+		subscribers.current.add(subscriber);
 	}, []);
 
 	const unsubscribe = useCallback((subscriber) => {
-		subscribers.current = subscribers.current.filter(
-			(_subscriber) => _subscriber !== subscriber
-		);
+		subscribers.current.delete(subscriber);
 	}, []);
+
+	const subscriptionContext = useMemo(() => [subscribe, unsubscribe], [
+		subscribe,
+		unsubscribe,
+	]);
 
 	useEffect(() => {
 		subscribers.current.forEach((subscriber) => subscriber());
-	}, [getState]);
+	}, [stateChanged]);
 
 	return (
-		<StoreSubscriptionContext.Provider value={[subscribe, unsubscribe]}>
+		<StoreSubscriptionContext.Provider value={subscriptionContext}>
 			<StoreDispatchContext.Provider value={dispatch}>
 				<StoreGetStateContext.Provider value={getState}>
 					{children}
@@ -87,10 +91,19 @@ export const StoreContextProvider = ({children, initialState, reducer}) => {
 		useUndo(useReducer(reducer, initialState))
 	);
 
-	const getState = useCallback(() => state, [state]);
+	const stateRef = useRef(state);
+	const getState = useCallback(() => stateRef.current, []);
+
+	useEffect(() => {
+		stateRef.current = state;
+	}, [state]);
 
 	return (
-		<StoreAPIContextProvider dispatch={dispatch} getState={getState}>
+		<StoreAPIContextProvider
+			dispatch={dispatch}
+			getState={getState}
+			stateChanged={state}
+		>
 			{children}
 		</StoreAPIContextProvider>
 	);

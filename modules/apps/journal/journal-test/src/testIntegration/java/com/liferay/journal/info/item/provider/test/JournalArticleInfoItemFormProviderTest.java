@@ -102,54 +102,15 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		List<InfoField> infoFields = infoForm.getAllInfoFields();
 
-		infoFields.sort(Comparator.comparing(InfoField::getName));
+		infoFields.sort(
+			Comparator.comparing(
+				InfoField::getName, String::compareToIgnoreCase));
 
 		Assert.assertEquals(infoFields.toString(), 20, infoFields.size());
 
 		Iterator<InfoField> iterator = infoFields.iterator();
 
 		InfoField infoField = iterator.next();
-
-		Assert.assertEquals("DDM_Text", infoField.getName());
-		Assert.assertTrue(infoField.isLocalizable());
-		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-
-		infoField = iterator.next();
-
-		Assert.assertEquals("HTML", infoField.getName());
-		Assert.assertTrue(infoField.isLocalizable());
-		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-
-		Optional<Boolean> htmlAttributeOptional =
-			infoField.getAttributeOptional(TextInfoFieldType.HTML);
-
-		Assert.assertTrue(htmlAttributeOptional.get());
-
-		Optional<Boolean> multilineAttributeOptional =
-			infoField.getAttributeOptional(TextInfoFieldType.MULTILINE);
-
-		Assert.assertTrue(multilineAttributeOptional.get());
-
-		infoField = iterator.next();
-
-		Assert.assertEquals("TextBox", infoField.getName());
-		Assert.assertTrue(infoField.isLocalizable());
-		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-
-		htmlAttributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
-
-		Assert.assertFalse(htmlAttributeOptional.isPresent());
-
-		multilineAttributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.MULTILINE);
-
-		Assert.assertTrue(multilineAttributeOptional.get());
-
-		infoField = iterator.next();
 
 		Assert.assertEquals("audience", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
@@ -186,13 +147,20 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoField = iterator.next();
 
+		Assert.assertEquals("DDM_Text", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
 		Assert.assertEquals("description", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
-		htmlAttributeOptional = infoField.getAttributeOptional(
-			TextInfoFieldType.HTML);
+		Optional<Boolean> htmlAttributeOptional =
+			infoField.getAttributeOptional(TextInfoFieldType.HTML);
 
 		Assert.assertTrue(htmlAttributeOptional.get());
 
@@ -202,6 +170,23 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertFalse(infoField.isLocalizable());
 		Assert.assertEquals(
 			URLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals("HTML", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		htmlAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.HTML);
+
+		Assert.assertTrue(htmlAttributeOptional.get());
+
+		Optional<Boolean> multilineAttributeOptional =
+			infoField.getAttributeOptional(TextInfoFieldType.MULTILINE);
+
+		Assert.assertTrue(multilineAttributeOptional.get());
 
 		infoField = iterator.next();
 
@@ -258,6 +243,23 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertFalse(infoField.isLocalizable());
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals("TextBox", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		htmlAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.HTML);
+
+		Assert.assertFalse(htmlAttributeOptional.isPresent());
+
+		multilineAttributeOptional = infoField.getAttributeOptional(
+			TextInfoFieldType.MULTILINE);
+
+		Assert.assertTrue(multilineAttributeOptional.get());
 
 		infoField = iterator.next();
 

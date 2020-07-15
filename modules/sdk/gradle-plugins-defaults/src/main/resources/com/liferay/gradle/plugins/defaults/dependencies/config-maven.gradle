@@ -68,7 +68,7 @@ tasks.withType(Upload) {
 					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases"
 				}
 
-				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases")) {
+				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && repositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases")) {
 					repositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-releases"
 				}
 
@@ -82,7 +82,7 @@ tasks.withType(Upload) {
 					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots"
 				}
 
-				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots")) {
+				if (project.path.startsWith(":dxp:") && !project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.contains("-demo-") && !project.path.contains("-demo-data-") && snapshotRepositoryURL.equals("https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-snapshots")) {
 					snapshotRepositoryURL = "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-private-snapshots"
 				}
 

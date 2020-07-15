@@ -81,9 +81,9 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				)}
 
 				<FragmentContent
+					elementRef={setRef}
 					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 					itemId={item.itemId}
-					ref={setRef}
 				/>
 			</>
 		</Topper>

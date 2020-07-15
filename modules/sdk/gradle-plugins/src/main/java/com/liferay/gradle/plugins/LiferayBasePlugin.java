@@ -47,6 +47,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Andrea Di Giorgi
@@ -80,21 +81,27 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		_configureConfigurationPortal(
 			project, liferayExtension, portalConfiguration);
 
-		Copy copy = _addTaskDeploy(project, liferayExtension);
+		TaskProvider<Copy> deployTaskProvider = GradleUtil.addTaskProvider(
+			project, DEPLOY_TASK_NAME, Copy.class);
+
+		_configureTaskDeployProvider(
+			project, liferayExtension, deployTaskProvider);
 
 		String dockerContainerId = GradleUtil.getTaskPrefixedProperty(
-			copy, "docker.container.id");
+			project.getPath(), deployTaskProvider.getName(),
+			"docker.container.id");
 		String dockerFilesDir = GradleUtil.getTaskPrefixedProperty(
-			copy, "docker.files.dir");
+			project.getPath(), deployTaskProvider.getName(),
+			"docker.files.dir");
 
-		if (dockerContainerId != null) {
-			DockerCopyTask dockerCopyTask = _addTaskDockerCopy(
-				project, copy, liferayExtension, dockerContainerId);
+		if (Validator.isNotNull(dockerContainerId)) {
+			TaskProvider<DockerCopyTask> dockerCopyTaskProvider =
+				GradleUtil.addTaskProvider(
+					project, DOCKER_COPY_TASK_NAME, DockerCopyTask.class);
 
-			_configureTaskDeploy(copy, dockerCopyTask);
-		}
-		else if (dockerFilesDir != null) {
-			_configureTaskDeploy(copy, liferayExtension, dockerFilesDir);
+			_configureTaskDeployProvider(
+				liferayExtension, deployTaskProvider, dockerCopyTaskProvider,
+				dockerContainerId, dockerFilesDir);
 		}
 
 		GradleUtil.applyScript(
@@ -172,96 +179,140 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			});
 	}
 
-	private Copy _addTaskDeploy(
-		Project project, final LiferayExtension liferayExtension) {
+	private void _configureTaskDeployProvider(
+		final Project project, final LiferayExtension liferayExtension,
+		TaskProvider<Copy> deployTaskProvider) {
 
-		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
-
-		copy.doLast(
-			new Action<Task>() {
+		deployTaskProvider.configure(
+			new Action<Copy>() {
 
 				@Override
-				public void execute(Task task) {
-					Logger logger = task.getLogger();
+				public void execute(Copy deployCopy) {
+					deployCopy.doLast(
+						new Action<Task>() {
 
-					if (logger.isLifecycleEnabled()) {
-						Copy copy = (Copy)task;
+							@Override
+							public void execute(Task task) {
+								Logger logger = task.getLogger();
 
-						logger.lifecycle(
-							"Files of {} deployed to {}", copy.getProject(),
-							copy.getDestinationDir());
+								if (logger.isLifecycleEnabled()) {
+									Copy copy = (Copy)task;
+
+									logger.lifecycle(
+										"Files of {} deployed to {}", project,
+										copy.getDestinationDir());
+								}
+							}
+
+						});
+
+					deployCopy.into(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return liferayExtension.getDeployDir();
+							}
+
+						});
+
+					deployCopy.setDescription(
+						"Assembles the project and deploys it to Liferay.");
+					deployCopy.setGroup(BasePlugin.BUILD_GROUP);
+				}
+
+			});
+	}
+
+	private void _configureTaskDeployProvider(
+		final LiferayExtension liferayExtension,
+		final TaskProvider<Copy> deployTaskProvider,
+		final TaskProvider<DockerCopyTask> dockerCopyTaskProvider,
+		final String dockerContainerId, final String dockerFilesDir) {
+
+		deployTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy deployCopy) {
+					if (dockerContainerId != null) {
+						deployCopy.finalizedBy(dockerCopyTaskProvider);
+
+						deployCopy.setEnabled(false);
+					}
+					else if (dockerFilesDir != null) {
+						deployCopy.into(
+							new Callable<File>() {
+
+								@Override
+								public File call() throws Exception {
+									String relativePath = FileUtil.relativize(
+										liferayExtension.getDeployDir(),
+										liferayExtension.getLiferayHome());
+
+									return new File(
+										dockerFilesDir, relativePath);
+								}
+
+							});
 					}
 				}
 
 			});
 
-		copy.into(
-			new Callable<File>() {
+		dockerCopyTaskProvider.configure(
+			new Action<DockerCopyTask>() {
 
 				@Override
-				public File call() throws Exception {
-					return liferayExtension.getDeployDir();
+				public void execute(DockerCopyTask dockerCopyTask) {
+					dockerCopyTask.dependsOn(deployTaskProvider);
+
+					dockerCopyTask.setContainerId(dockerContainerId);
+
+					dockerCopyTask.setDeployDir(
+						new Callable<String>() {
+
+							@Override
+							public String call() throws Exception {
+								StringBuilder sb = new StringBuilder();
+
+								sb.append(dockerCopyTask.getLiferayHome());
+								sb.append('/');
+
+								String relativePath = FileUtil.relativize(
+									liferayExtension.getDeployDir(),
+									liferayExtension.getLiferayHome());
+
+								sb.append(relativePath);
+
+								String deployDir = sb.toString();
+
+								return deployDir.replace('\\', '/');
+							}
+
+						});
+
+					dockerCopyTask.setDescription(
+						"Deploys the project to the Docker container.");
+					dockerCopyTask.setGroup(BasePlugin.BUILD_GROUP);
+
+					dockerCopyTask.setSourceFile(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								Copy deployCopy = deployTaskProvider.get();
+
+								FileCollection fileCollection =
+									deployCopy.getSource();
+
+								return fileCollection.getSingleFile();
+							}
+
+						});
 				}
 
 			});
-
-		copy.setDescription("Assembles the project and deploys it to Liferay.");
-		copy.setGroup(BasePlugin.BUILD_GROUP);
-
-		return copy;
-	}
-
-	private DockerCopyTask _addTaskDockerCopy(
-		Project project, final Copy copy,
-		final LiferayExtension liferayExtension, String dockerContainerId) {
-
-		final DockerCopyTask dockerCopyTask = GradleUtil.addTask(
-			project, DOCKER_COPY_TASK_NAME, DockerCopyTask.class);
-
-		dockerCopyTask.dependsOn(copy);
-
-		dockerCopyTask.setContainerId(dockerContainerId);
-
-		dockerCopyTask.setDeployDir(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(dockerCopyTask.getLiferayHome());
-					sb.append('/');
-
-					String relativePath = FileUtil.relativize(
-						liferayExtension.getDeployDir(),
-						liferayExtension.getLiferayHome());
-
-					sb.append(relativePath);
-
-					String deployDir = sb.toString();
-
-					return deployDir.replace('\\', '/');
-				}
-
-			});
-
-		dockerCopyTask.setDescription(
-			"Deploys the project to the Docker container.");
-		dockerCopyTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		dockerCopyTask.setSourceFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					FileCollection fileCollection = copy.getSource();
-
-					return fileCollection.getSingleFile();
-				}
-
-			});
-
-		return dockerCopyTask;
 	}
 
 	private void _configureConfigurations(
@@ -305,33 +356,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		};
 
 		configurationContainer.all(action);
-	}
-
-	private void _configureTaskDeploy(
-		Copy copy, DockerCopyTask dockerCopyTask) {
-
-		copy.finalizedBy(dockerCopyTask);
-
-		copy.setEnabled(false);
-	}
-
-	private void _configureTaskDeploy(
-		Copy copy, final LiferayExtension liferayExtension,
-		final String dockerFilesDir) {
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					String relativePath = FileUtil.relativize(
-						liferayExtension.getDeployDir(),
-						liferayExtension.getLiferayHome());
-
-					return new File(dockerFilesDir, relativePath);
-				}
-
-			});
 	}
 
 	private void _configureTaskDirectDeploy(

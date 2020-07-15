@@ -38,9 +38,13 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(addGuestPermissions))) {
+			var addGuestPermissions = "false";
+		}
+
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGroupPermissions = "true",
-			addGuestPermissions = "true",
+			addGuestPermissions = "${addGuestPermissions}",
 			assetTagNames = "${assetTagNames}",
 			workflowAction = "${workflowAction}");
 

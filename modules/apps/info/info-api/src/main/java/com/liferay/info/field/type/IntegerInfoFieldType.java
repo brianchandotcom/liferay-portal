@@ -16,7 +16,9 @@ package com.liferay.info.field.type;
 
 /**
  * @author Alejandro Tardín
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public class IntegerInfoFieldType implements InfoFieldType {
 
 	public static final IntegerInfoFieldType INSTANCE =

@@ -207,8 +207,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 	public Build getControllerBuild() {
 		String controllerBuildURL = getParameterValue("CONTROLLER_BUILD_URL");
 
-		if ((controllerBuildURL == null) &&
-			controllerBuildURL.matches("https?:\\/\\/.*")) {
+		if ((controllerBuildURL == null) ||
+			!controllerBuildURL.matches("https?://.*")) {
 
 			return null;
 		}

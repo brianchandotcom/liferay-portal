@@ -69,7 +69,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		LiferayExtension liferayExtension = extensionContainer.create(
+		final LiferayExtension liferayExtension = extensionContainer.create(
 			LiferayPlugin.PLUGIN_NAME, LiferayExtension.class, project);
 
 		ConfigurationContainer configurationContainer =
@@ -141,7 +141,19 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 			});
 
-		_configureTasksDirectDeploy(project, liferayExtension);
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DirectDeployTask.class,
+			new Action<DirectDeployTask>() {
+
+				@Override
+				public void execute(DirectDeployTask directDeployTask) {
+					_configureTaskDirectDeploy(
+						directDeployTask, liferayExtension);
+				}
+
+			});
 	}
 
 	private void _configureConfigurationPortal(
@@ -388,24 +400,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return liferayExtension.getAppServerType();
-				}
-
-			});
-	}
-
-	private void _configureTasksDirectDeploy(
-		Project project, final LiferayExtension liferayExtension) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			DirectDeployTask.class,
-			new Action<DirectDeployTask>() {
-
-				@Override
-				public void execute(DirectDeployTask directDeployTask) {
-					_configureTaskDirectDeploy(
-						directDeployTask, liferayExtension);
 				}
 
 			});

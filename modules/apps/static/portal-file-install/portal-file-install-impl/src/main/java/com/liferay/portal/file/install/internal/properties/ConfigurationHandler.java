@@ -307,7 +307,7 @@ public class ConfigurationHandler {
 			String charString = _readQuoted(pushbackReader);
 
 			if ((charString != null) && (charString.length() > 0)) {
-				return Character.valueOf(charString.charAt(0));
+				return charString.charAt(0);
 			}
 
 			return null;

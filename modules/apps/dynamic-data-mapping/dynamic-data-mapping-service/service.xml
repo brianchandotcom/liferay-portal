@@ -402,9 +402,6 @@
 		<finder name="ParentStructureId" return-type="Collection">
 			<finder-column name="parentStructureId" />
 		</finder>
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="StructureKey" return-type="Collection">
 			<finder-column name="structureKey" />
 		</finder>
@@ -522,10 +519,7 @@
 		<column name="structureId" type="long" />
 
 		<!-- Finder methods -->
-
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
+		
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
 		</finder>
@@ -707,9 +701,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="TemplateId" return-type="Collection">
 			<finder-column name="templateId" />
 		</finder>

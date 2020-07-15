@@ -62,7 +62,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 
 		if (contains("${sitePageType}", "{sitePageType}")) {
 			var sitePageType = "Widget Page";

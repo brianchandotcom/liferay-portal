@@ -187,7 +187,7 @@ definition {
 		var key_breadcrumbName="Pages";
 
 		if ("${siteTemplate}" == "true") {
-			LexiconEntry.gotoAdd();
+			LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 		}
 		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Private Page");

@@ -513,7 +513,6 @@ definition {
 
 	@priority = "4"
 	test ViewAvailableCalendars {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarManageCalendar#ViewAvailableCalendars";
 
 		GlobalMenu.gotoPortlet(

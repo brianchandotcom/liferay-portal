@@ -490,8 +490,6 @@ definition {
 	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
 	@priority = "5"
 	test ApplySearchesForAllAssignees {
-		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -897,8 +895,6 @@ definition {
 	@description = "LRQA-53660 Automate LPS-87571 [Reports] Filter the list of items for a certain process"
 	@priority = "5"
 	test FilterAllItemsList {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

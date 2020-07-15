@@ -113,9 +113,6 @@ definition {
 
 	@priority = "5"
 	test DeleteRepeatingAllFollowing {
-		property portal.upstream = "quarantine";
-
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Calendar#DeleteEventRepeatingAllFollowing";
 
 		CalendarNavigator.gotoAddEvent();

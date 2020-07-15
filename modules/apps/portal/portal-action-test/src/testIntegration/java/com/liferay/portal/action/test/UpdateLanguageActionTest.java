@@ -115,7 +115,7 @@ public class UpdateLanguageActionTest {
 	public void testAssetI18nRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
 
-		String[] urls = _getURLsForAsset();
+		String[] urls = _getAssetURLs();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
@@ -129,7 +129,7 @@ public class UpdateLanguageActionTest {
 	public void testAssetRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
 
-		String[] urls = _getURLsForAsset();
+		String[] urls = _getAssetURLs();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
@@ -143,7 +143,7 @@ public class UpdateLanguageActionTest {
 	public void testControlPanelI18nRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(true);
 
-		String bareURL = _getURLForControlPanel();
+		String bareURL = _getControlPanelURL();
 
 		_assertRedirect(themeDisplay, bareURL, bareURL);
 		_assertRedirect(themeDisplay, bareURL, _sourceLocalePrepend + bareURL);
@@ -153,7 +153,7 @@ public class UpdateLanguageActionTest {
 	public void testControlPanelRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(false);
 
-		String bareURL = _getURLForControlPanel();
+		String bareURL = _getControlPanelURL();
 
 		_assertRedirect(themeDisplay, bareURL, bareURL);
 		_assertRedirect(
@@ -165,7 +165,7 @@ public class UpdateLanguageActionTest {
 	public void testPublicPageI18nRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
 
-		String[] urls = _getURLsForPublicPage();
+		String[] urls = _getPublicPageURLs();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
@@ -179,7 +179,7 @@ public class UpdateLanguageActionTest {
 	public void testPublicPageRedirect() throws PortalException {
 		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
 
-		String[] urls = _getURLsForPublicPage();
+		String[] urls = _getPublicPageURLs();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
@@ -204,6 +204,60 @@ public class UpdateLanguageActionTest {
 			mockHttpServletRequest, themeDisplay, _targetLocale);
 
 		Assert.assertEquals(expectedRedirect, redirect);
+	}
+
+	private String[] _getAssetURLs() {
+		String sourceLocaleLayoutURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
+
+		String defaultLocaleLayoutURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() +
+					_layout.getFriendlyURL(_defaultLocale);
+
+		String assetFriendlyURL = Portal.FRIENDLY_URL_SEPARATOR + "asset";
+
+		String queryString = StringPool.QUESTION + "queryString";
+
+		String bareSourceURL = StringBundler.concat(
+			sourceLocaleLayoutURL, assetFriendlyURL, queryString);
+
+		String bareDefaultURL = StringBundler.concat(
+			defaultLocaleLayoutURL, assetFriendlyURL, queryString);
+
+		return new String[] {bareSourceURL, bareDefaultURL};
+	}
+
+	private String _getControlPanelURL() {
+		String controlPanelLayoutURL = StringBundler.concat(
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+			_group.getFriendlyURL(),
+			VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+			GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
+			_controlPanelLayout.getFriendlyURL());
+
+		String queryString = StringPool.QUESTION + "queryString";
+
+		return controlPanelLayoutURL + queryString;
+	}
+
+	private String[] _getPublicPageURLs() {
+		String sourceLocaleLayoutURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
+
+		String defaultLocaleLayoutURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() +
+					_layout.getFriendlyURL(_defaultLocale);
+
+		String queryString = StringPool.QUESTION + "queryString";
+
+		String bareSourceURL = sourceLocaleLayoutURL + queryString;
+		String bareDefaultURL = defaultLocaleLayoutURL + queryString;
+
+		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
 	private ThemeDisplay _getThemeDisplayForControlPanel(boolean i18n) {
@@ -232,60 +286,6 @@ public class UpdateLanguageActionTest {
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		return themeDisplay;
-	}
-
-	private String _getURLForControlPanel() {
-		String controlPanelLayoutURL = StringBundler.concat(
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-			_group.getFriendlyURL(),
-			VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
-			GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-			_controlPanelLayout.getFriendlyURL());
-
-		String queryString = StringPool.QUESTION + "queryString";
-
-		return controlPanelLayoutURL + queryString;
-	}
-
-	private String[] _getURLsForAsset() {
-		String sourceLocaleLayoutURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
-
-		String defaultLocaleLayoutURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() +
-					_layout.getFriendlyURL(_defaultLocale);
-
-		String assetFriendlyURL = Portal.FRIENDLY_URL_SEPARATOR + "asset";
-
-		String queryString = StringPool.QUESTION + "queryString";
-
-		String bareSourceURL = StringBundler.concat(
-			sourceLocaleLayoutURL, assetFriendlyURL, queryString);
-
-		String bareDefaultURL = StringBundler.concat(
-			defaultLocaleLayoutURL, assetFriendlyURL, queryString);
-
-		return new String[] {bareSourceURL, bareDefaultURL};
-	}
-
-	private String[] _getURLsForPublicPage() {
-		String sourceLocaleLayoutURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
-
-		String defaultLocaleLayoutURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() +
-					_layout.getFriendlyURL(_defaultLocale);
-
-		String queryString = StringPool.QUESTION + "queryString";
-
-		String bareSourceURL = sourceLocaleLayoutURL + queryString;
-		String bareDefaultURL = defaultLocaleLayoutURL + queryString;
-
-		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
 	private static Locale _defaultLocale;

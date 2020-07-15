@@ -26,6 +26,9 @@ import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.node.NodeExtension;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.workspace.LiferayWorkspaceYarnPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
@@ -83,6 +86,7 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.provider.Property;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Compression;
@@ -172,6 +176,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, DockerRemoteApiPlugin.class);
 		GradleUtil.applyPlugin(project, LifecycleBasePlugin.class);
+
+		String nodePackageManager = workspaceExtension.getNodePackageManager();
+
+		if (nodePackageManager.equals("yarn")) {
+			GradleUtil.applyPlugin(project, LiferayWorkspaceYarnPlugin.class);
+		}
+		else {
+			_configureNpmProject(project);
+		}
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
@@ -1097,6 +1110,45 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerStopContainer;
+	}
+
+	private void _configureNpmProject(Project project) {
+		project.subprojects(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					project.afterEvaluate(
+						new Action<Project>() {
+
+							@Override
+							public void execute(Project project) {
+								TaskContainer taskContainer =
+									project.getTasks();
+
+								taskContainer.withType(
+									NpmInstallTask.class,
+									new Action<NpmInstallTask>() {
+
+										@Override
+										public void execute(
+											NpmInstallTask npmInstallTask) {
+
+											NodeExtension nodeExtension =
+												GradleUtil.getExtension(
+													npmInstallTask.getProject(),
+													NodeExtension.class);
+
+											nodeExtension.setUseNpm(true);
+										}
+
+									});
+							}
+
+						});
+				}
+
+			});
 	}
 
 	@SuppressWarnings("serial")

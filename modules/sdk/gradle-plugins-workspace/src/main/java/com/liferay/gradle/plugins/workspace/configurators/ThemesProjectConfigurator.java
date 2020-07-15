@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
+import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
@@ -93,6 +94,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(assembleTask);
 
+			_configureTaskGulpBuild(project);
+
 			Callable<ConfigurableFileCollection> warSourcePath =
 				new Callable<ConfigurableFileCollection>() {
 
@@ -151,7 +154,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 					if (Files.exists(gulpfileJsPath) &&
 						Files.exists(packageJsonPath) &&
-						_hasThemeBuildScript(packageJsonPath)) {
+						_isLiferayTheme(packageJsonPath)) {
 
 						projectDirs.add(dirPath.toFile());
 
@@ -209,10 +212,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
 			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
 
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		Map<String, Object> packageJsonMap =
-			(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(
+			packageJsonFile);
 
 		Map<String, String> liferayThemeMap =
 			(Map<String, String>)packageJsonMap.get("liferayTheme");
@@ -227,6 +228,28 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		buildThemeTask.setParentName(baseTheme);
 		buildThemeTask.setTemplateExtension(templateLanguage);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _configureTaskGulpBuild(Project project) {
+		File packageJsonFile = project.file("package.json");
+
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(
+			packageJsonFile);
+
+		Map<String, String> scriptsMap =
+			(Map<String, String>)packageJsonMap.get("scripts");
+
+		if (scriptsMap != null) {
+			String buildScript = scriptsMap.get("build");
+
+			if ((buildScript != null) && !buildScript.equals("")) {
+				ExecuteGulpTask executeGulpTask =
+					(ExecuteGulpTask)GradleUtil.getTask(project, "gulpBuild");
+
+				executeGulpTask.setEnabled(false);
+			}
+		}
 	}
 
 	private void _configureWar(Project project) {
@@ -256,7 +279,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean _hasThemeBuildScript(Path packageJsonPath) {
+	private boolean _isLiferayTheme(Path packageJsonPath) {
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
 			packageJsonPath.toFile());
 

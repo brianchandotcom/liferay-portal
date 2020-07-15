@@ -142,6 +142,8 @@ public class WorkspaceExtension {
 		_homeDir = _getProperty(
 			settings, "home.dir",
 			BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME);
+		_nodePackageManager = _getProperty(
+			settings, "node.package.manager", _NODE_PACKAGE_MANAGER);
 		_targetPlatformVersion = _getProperty(
 			settings, "target.platform.version",
 			_getDefaultTargetplatformVersion());
@@ -276,6 +278,10 @@ public class WorkspaceExtension {
 		return GradleUtil.toFile(_gradle.getRootProject(), _homeDir);
 	}
 
+	public String getNodePackageManager() {
+		return GradleUtil.toString(_nodePackageManager);
+	}
+
 	public String getProduct() {
 		return GradleUtil.toString(_product);
 	}
@@ -368,6 +374,10 @@ public class WorkspaceExtension {
 
 	public void setHomeDir(Object homeDir) {
 		_homeDir = homeDir;
+	}
+
+	public void setNodePackageManager(Object nodePackageManager) {
+		_nodePackageManager = nodePackageManager;
 	}
 
 	public void setProduct(Object product) {
@@ -530,6 +540,8 @@ public class WorkspaceExtension {
 	private static final String _DOCKER_IMAGE_LIFERAY =
 		"liferay/portal:7.2.0-ga1";
 
+	private static final String _NODE_PACKAGE_MANAGER = "npm";
+
 	private static final String _PRODUCT_INFO_URL =
 		"https://releases.liferay.com/tools/workspace/.product_info.json";
 
@@ -550,6 +562,7 @@ public class WorkspaceExtension {
 	private Object _environment;
 	private final Gradle _gradle;
 	private Object _homeDir;
+	private Object _nodePackageManager;
 	private Object _product;
 	private final Map<String, ProductInfo> _productInfos = new HashMap<>();
 	private final Set<ProjectConfigurator> _projectConfigurators =

@@ -24,6 +24,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.tasks.SourceSet;
@@ -32,6 +35,46 @@ import org.gradle.api.tasks.SourceSet;
  * @author Andrea Di Giorgi
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
+
+	public static List<String> findFile(
+			final Path path, final String fileName, final List<String> excludes,
+			final boolean childrenOnly)
+		throws IOException {
+
+		final List<String> paths = new ArrayList<>();
+
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (childrenOnly && dirPath.equals(path)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					if (_isExcludedDirName(dirPath.getFileName(), excludes)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (Files.exists(dirPath.resolve(fileName))) {
+						Path relativePath = path.relativize(dirPath);
+
+						paths.add(relativePath.toString());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return paths;
+	}
 
 	public static File getJavaClassesDir(SourceSet sourceSet) {
 		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
@@ -56,6 +99,22 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);
 		}
+	}
+
+	private static boolean _isExcludedDirName(
+		Path path, List<String> excludes) {
+
+		String dirName = String.valueOf(path);
+
+		if (dirName == null) {
+			return false;
+		}
+
+		if (excludes.contains(dirName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static void _moveTree(

@@ -19,14 +19,14 @@ import useAutoExtendSession from '../../core/hooks/useAutoExtendSession';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
-import useParseURL from '../utils/useParseURL';
+import useParseURL from './URLParser';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
+import URLParser from "./URLParser";
 
 export default function App() {
-	useParseURL();
 	useAutoExtendSession();
 
 	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
@@ -35,6 +35,7 @@ export default function App() {
 	return (
 		<DragAndDropContextProvider>
 			<LanguageDirection />
+			<URLParser />
 			<DragPreview />
 			<Toolbar />
 			<LayoutViewport

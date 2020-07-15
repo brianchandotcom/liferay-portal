@@ -14,12 +14,12 @@
 
 import {useCallback, useEffect} from 'react';
 
-import {switchSidebarPanel} from '../actions/index';
-import {useSelectItem} from '../components/Controls';
+import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../config/constants/highlightedCommentIdKey';
 import {useDispatch, useSelector} from '../store/index';
+import {useSelectItem} from './Controls';
 
-export default function useParseURL() {
+export default function URLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const dispatch = useDispatch();
@@ -91,4 +91,6 @@ export default function useParseURL() {
 			});
 		}
 	}, [selectFragment]);
+
+	return null;
 }

@@ -107,12 +107,20 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 		return ParamUtil.getBoolean(liferayPortletRequest, "showCreateButton");
 	}
 
+	public boolean isShowFilter() {
+		return ParamUtil.getBoolean(liferayPortletRequest, "showFilter", true);
+	}
+
 	public boolean isSingleSelect() {
 		return ParamUtil.getBoolean(liferayPortletRequest, "singleSelect");
 	}
 
 	@Override
 	protected String[] getNavigationKeys() {
+		if (!isShowFilter()) {
+			return new String[0];
+		}
+
 		return new String[] {"current-account-users", "all-users"};
 	}
 

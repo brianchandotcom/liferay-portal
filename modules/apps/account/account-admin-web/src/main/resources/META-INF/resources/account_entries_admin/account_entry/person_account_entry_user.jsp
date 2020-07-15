@@ -136,6 +136,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 	<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectPersonAccountEntryUser" %>' />
 	<portlet:param name="navigation" value="all-users" />
 	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="showFilter" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="singleSelect" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>
 

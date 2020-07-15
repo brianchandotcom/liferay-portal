@@ -86,6 +86,10 @@ public interface RoleLocalService
 	 * Adds a role with additional parameters. The user is reindexed after role
 	 * is added.
 	 *
+	 * <p>
+	 * This is the recommended add method for API consumers.
+	 * </p>
+	 *
 	 * @param userId the primary key of the user
 	 * @param className the name of the class for which the role is created
 	 (optionally <code>null</code>)
@@ -1029,6 +1033,10 @@ public interface RoleLocalService
 
 	/**
 	 * Updates the role with the primary key.
+	 *
+	 * <p>
+	 * This is the recommended update method for API consumers.
+	 * </p>
 	 *
 	 * @param roleId the primary key of the role
 	 * @param name the role's new name

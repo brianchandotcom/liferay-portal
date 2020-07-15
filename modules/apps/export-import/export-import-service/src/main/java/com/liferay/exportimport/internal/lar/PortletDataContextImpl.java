@@ -377,14 +377,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey) {
-		boolean value = hasPrimaryKey(clazz, primaryKey);
-
-		if (!value) {
-			_primaryKeys.add(
-				getPrimaryKeyString(clazz, (Serializable)primaryKey));
-		}
-
-		return value;
+		return !_primaryKeys.add(
+			getPrimaryKeyString(clazz, (Serializable)primaryKey));
 	}
 
 	@Override

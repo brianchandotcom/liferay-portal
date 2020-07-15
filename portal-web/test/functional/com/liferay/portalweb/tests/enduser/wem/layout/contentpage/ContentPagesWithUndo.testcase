@@ -327,15 +327,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",

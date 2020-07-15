@@ -39,15 +39,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -303,15 +298,10 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "Web Content Article",
 				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1372,15 +1362,10 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "Web Content Article",
 				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1775,15 +1760,10 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Document as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "Document",
 				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Document");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1927,15 +1907,10 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "Web Content Article",
 				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 		}
 
 		task ("Add a manual Collections and select three Blogs entries") {
@@ -2196,15 +2171,10 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Blogs Entry",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Blogs Entry");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2275,15 +2245,10 @@ definition {
 				sourceFileName = "Document_${i}.jpg");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Document",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Document");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2352,15 +2317,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2532,15 +2492,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2612,15 +2567,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2722,15 +2672,10 @@ definition {
 			PortletEntry.publish();
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",

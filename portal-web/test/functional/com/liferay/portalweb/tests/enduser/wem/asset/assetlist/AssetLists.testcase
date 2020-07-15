@@ -90,8 +90,9 @@ definition {
 		}
 
 		task ("Create a dynamic asset list") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Dynamic Asset List Test");
 		}
 
@@ -238,8 +239,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -296,8 +298,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -354,8 +357,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -412,8 +416,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -498,8 +503,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -556,8 +562,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -614,8 +621,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
@@ -672,8 +680,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					JSONAssetlist.addDynamicAssetListEntry(
+					JSONAssetlist.addDynamicAssetListEntryWithItemType(
 						groupName = "Test Site Name",
+						itemType = "All Types",
 						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 

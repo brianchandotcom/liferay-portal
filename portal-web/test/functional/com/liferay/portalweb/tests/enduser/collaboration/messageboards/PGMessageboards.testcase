@@ -904,9 +904,8 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		for (var num : list "1,2") {
-			Navigator.gotoPage(pageName = "Message Boards Page");
-
-			MessageboardsThread.addPG(
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject ${num}");
 		}
@@ -922,14 +921,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

@@ -1701,6 +1701,130 @@ definition {
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 	}
 
+	@description = "LRQA-53653 Automate LPS-89014 Update and delete SLA"
+	@priority = "5"
+	test UpdateandDeleteSLA {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0001",
+			slaDefinitionName = "One min",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_slaTitle = "One min",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		Pause(locator1 = "80000");
+
+		Navigator.openURL();
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "0",
+			key_overdue = "1",
+			key_pending = "1",
+			key_untracked = "0");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+
+		WorkflowMetrics.goToEditSLA(slaName = "One min");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "One day",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickUpdate();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_UPDATE_MESSAGE");
+
+		AssertElementPresent(
+			key_slaTitle = "One day",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		Pause(locator1 = "30000");
+
+		Navigator.openURL();
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Refresh();
+
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "1",
+			key_overdue = "0",
+			key_pending = "1",
+			key_untracked = "0");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+
+		WorkflowMetrics.goToDeleteSLA(slaName = "One day");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_EMPTY_MESSAGE");
+	}
+
 	@description = "Verify that the filters from All Items page are correctly loaded when accessed via Metrics Pending/Completed cards"
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {

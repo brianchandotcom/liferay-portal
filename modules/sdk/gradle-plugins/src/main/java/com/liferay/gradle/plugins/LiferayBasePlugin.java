@@ -44,6 +44,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -60,12 +61,15 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		LiferayExtension liferayExtension = _addLiferayExtension(project);
-
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		LangBuilderDefaultsPlugin.INSTANCE.apply(project);
 		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
+
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		LiferayExtension liferayExtension = extensionContainer.create(
+			LiferayPlugin.PLUGIN_NAME, LiferayExtension.class, project);
 
 		_addConfigurationPortal(project, liferayExtension);
 
@@ -159,13 +163,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		AppServer appServer = liferayExtension.getAppServer();
 
 		appServer.addAdditionalDependencies(PORTAL_CONFIGURATION_NAME);
-	}
-
-	private LiferayExtension _addLiferayExtension(Project project) {
-		LiferayExtension liferayExtension = GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
-
-		return liferayExtension;
 	}
 
 	private Copy _addTaskDeploy(

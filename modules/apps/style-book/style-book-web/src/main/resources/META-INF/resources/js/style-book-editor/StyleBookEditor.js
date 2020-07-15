@@ -19,26 +19,45 @@ import PagePreview from './PagePreview';
 import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
 import {config, initializeConfig} from './config';
+import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
 	const [tokenValues, setTokenValues] = useState(initialTokenValues);
+	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 
 	useEffect(() => {
 		if (tokenValues === initialTokenValues) {
 			return;
 		}
 
+		setDraftStatus(DRAFT_STATUS.saving);
+
 		const body = objectToFormData({
 			[`${config.namespace}tokenValues`]: JSON.stringify(tokenValues),
 			[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
 		});
 
-		fetch(config.saveDraftURL, {body, method: 'post'});
+		fetch(config.saveDraftURL, {body, method: 'post'})
+			.then((response) => {
+				setDraftStatus(
+					response.ok
+						? DRAFT_STATUS.draftSaved
+						: DRAFT_STATUS.notSaved
+				);
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				setDraftStatus(DRAFT_STATUS.notSaved);
+			});
 	}, [initialTokenValues, tokenValues]);
 
 	return (
 		<StyleBookContextProvider
 			value={{
+				draftStatus,
 				setTokenValues,
 				tokenValues,
 			}}

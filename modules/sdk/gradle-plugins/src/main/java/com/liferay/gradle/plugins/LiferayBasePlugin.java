@@ -71,7 +71,14 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = extensionContainer.create(
 			LiferayPlugin.PLUGIN_NAME, LiferayExtension.class, project);
 
-		_addConfigurationPortal(project, liferayExtension);
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration portalConfiguration = configurationContainer.create(
+			PORTAL_CONFIGURATION_NAME);
+
+		_configureConfigurationPortal(
+			project, liferayExtension, portalConfiguration);
 
 		Copy copy = _addTaskDeploy(project, liferayExtension);
 
@@ -97,72 +104,72 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		_configureTasksDirectDeploy(project, liferayExtension);
 	}
 
-	private Configuration _addConfigurationPortal(
-		final Project project, final LiferayExtension liferayExtension) {
+	private void _configureConfigurationPortal(
+		final Project project, final LiferayExtension liferayExtension,
+		Configuration portalConfiguration) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, PORTAL_CONFIGURATION_NAME);
+		portalConfiguration.setDescription(
+			"Configures the classpath from the local Liferay bundle.");
+		portalConfiguration.setVisible(false);
 
-		configuration.defaultDependencies(
+		portalConfiguration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesPortal(project, liferayExtension);
+					File appServerClassesPortalDir = new File(
+						liferayExtension.getAppServerPortalDir(),
+						"WEB-INF/classes");
+
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME,
+						appServerClassesPortalDir);
+
+					File appServerLibPortalDir = new File(
+						liferayExtension.getAppServerPortalDir(),
+						"WEB-INF/lib");
+
+					FileTree appServerLibPortalDirJarFiles =
+						FileUtil.getJarsFileTree(
+							project, appServerLibPortalDir);
+
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME,
+						appServerLibPortalDirJarFiles);
+
+					FileTree appServerLibGlobalDirJarFiles =
+						FileUtil.getJarsFileTree(
+							project,
+							liferayExtension.getAppServerLibGlobalDir(),
+							"mail.jar");
+
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME,
+						appServerLibGlobalDirJarFiles);
+
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME, "com.liferay",
+						"net.sf.jargs", "1.0");
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME,
+						"com.thoughtworks.qdox", "qdox", "1.12.1");
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME, "javax.activation",
+						"activation", "1.1");
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME, "javax.servlet",
+						"javax.servlet-api", "3.0.1");
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME, "javax.servlet.jsp",
+						"javax.servlet.jsp-api", "2.3.1");
+
+					AppServer appServer = liferayExtension.getAppServer();
+
+					appServer.addAdditionalDependencies(
+						PORTAL_CONFIGURATION_NAME);
 				}
 
 			});
-
-		configuration.setDescription(
-			"Configures the classpath from the local Liferay bundle.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
-	private void _addDependenciesPortal(
-		Project project, LiferayExtension liferayExtension) {
-
-		File appServerClassesPortalDir = new File(
-			liferayExtension.getAppServerPortalDir(), "WEB-INF/classes");
-
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, appServerClassesPortalDir);
-
-		File appServerLibPortalDir = new File(
-			liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
-
-		FileTree appServerLibPortalDirJarFiles = FileUtil.getJarsFileTree(
-			project, appServerLibPortalDir);
-
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, appServerLibPortalDirJarFiles);
-
-		FileTree appServerLibGlobalDirJarFiles = FileUtil.getJarsFileTree(
-			project, liferayExtension.getAppServerLibGlobalDir(), "mail.jar");
-
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, appServerLibGlobalDirJarFiles);
-
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, "com.liferay", "net.sf.jargs",
-			"1.0");
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, "com.thoughtworks.qdox", "qdox",
-			"1.12.1");
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, "javax.activation",
-			"activation", "1.1");
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, "javax.servlet",
-			"javax.servlet-api", "3.0.1");
-		GradleUtil.addDependency(
-			project, PORTAL_CONFIGURATION_NAME, "javax.servlet.jsp",
-			"javax.servlet.jsp-api", "2.3.1");
-
-		AppServer appServer = liferayExtension.getAppServer();
-
-		appServer.addAdditionalDependencies(PORTAL_CONFIGURATION_NAME);
 	}
 
 	private Copy _addTaskDeploy(

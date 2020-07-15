@@ -237,6 +237,15 @@
 			height: $product-menu-list-group-heading-border-width;
 		}
 
+		&.collapsed {
+			font-weight: 400;
+
+			&:after {
+				background-color: $product-menu-list-group-heading-collapsed-border;
+				height: $product-menu-list-group-heading-collapsed-border-width;
+			}
+		}
+
 		&.navigation-link {
 			box-sizing: border-box;
 			font-size: 0.75rem;
@@ -258,13 +267,9 @@
 			}
 		}
 
-		&.collapsed {
-			font-weight: 400;
-
-			&:after {
-				background-color: $product-menu-list-group-heading-collapsed-border;
-				height: $product-menu-list-group-heading-collapsed-border-width;
-			}
+		&.first-layout {
+			color: white;
+			font-weight: bolder;
 		}
 
 		&.panel-header:not(.collapsed) {

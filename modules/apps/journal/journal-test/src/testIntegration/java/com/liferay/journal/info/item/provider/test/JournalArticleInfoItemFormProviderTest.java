@@ -25,7 +25,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.IntegerInfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -215,7 +215,7 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertEquals("integer", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
 		Assert.assertEquals(
-			IntegerInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+			NumberInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = iterator.next();
 

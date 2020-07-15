@@ -1176,6 +1176,25 @@ definition {
 			taskName = "Completed");
 	}
 
+	@description = "LRQA-53649 Automate LPS-87560: Verify metrics available or not for CE and DXP customers"
+	@priority = "5"
+	test MetricsAvailableForDXP {
+		property portal.acceptance = "true";
+
+		var key_workflowProcessName = "Single Approver";
+
+		Navigator.openURL();
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME",
+			value1 = "Single Approver");
+	}
+
 	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"
 	@priority = "5"
 	test ReassignWorkflowInstance {

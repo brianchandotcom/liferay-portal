@@ -219,10 +219,10 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 				JSONObject valueJSONObject = jsonObject.getJSONObject("value");
 
-				for (String key : valueJSONObject.keySet()) {
+				for (String languageId : valueJSONObject.keySet()) {
 					value.addString(
-						LocaleUtil.fromLanguageId(key),
-						valueJSONObject.getString(key));
+						LocaleUtil.fromLanguageId(languageId),
+						valueJSONObject.getString(languageId));
 				}
 			}
 			else {
@@ -259,10 +259,10 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 						ddmFormFieldValue.getType());
 
 			if (ddmFormFieldTypeReportProcessor != null) {
-				String fieldName = ddmFormFieldValue.getName();
+				String ddmFormFieldValueName = ddmFormFieldValue.getName();
 
 				JSONObject fieldJSONObject = dataJSONObject.getJSONObject(
-					fieldName);
+					ddmFormFieldValueName);
 
 				if (fieldJSONObject == null) {
 					fieldJSONObject = JSONUtil.put(
@@ -281,7 +281,8 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 						DDMFormInstanceReportConstants.
 							EVENT_ADD_RECORD_VERSION);
 
-				dataJSONObject.put(fieldName, processedFieldJSONObject);
+				dataJSONObject.put(
+					ddmFormFieldValueName, processedFieldJSONObject);
 			}
 		}
 

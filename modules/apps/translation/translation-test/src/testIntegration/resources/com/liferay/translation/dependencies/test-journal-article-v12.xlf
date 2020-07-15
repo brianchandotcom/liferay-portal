@@ -15,6 +15,10 @@
 				<source xml:lang="en-US"><![CDATA[Some Text]]></source>
 				<target xml:lang="es-ES"><![CDATA[Un poco de texto]]></target>
 			</trans-unit>
+			<trans-unit id="Integer2cc6">
+				<source xml:lang="en-US"><![CDATA[1]]></source>
+				<target xml:lang="es-ES"><![CDATA[1]]></target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

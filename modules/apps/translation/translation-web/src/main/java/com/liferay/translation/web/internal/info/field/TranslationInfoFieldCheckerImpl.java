@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.info.field;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
@@ -31,9 +32,18 @@ public class TranslationInfoFieldCheckerImpl
 
 	@Override
 	public boolean isTranslatable(InfoField infoField) {
-		if (infoField.isLocalizable() &&
-			Objects.equals(
+		if (!infoField.isLocalizable()) {
+			return false;
+		}
+
+		if (Objects.equals(
 				infoField.getInfoFieldType(), TextInfoFieldType.INSTANCE)) {
+
+			return true;
+		}
+
+		if (Objects.equals(
+				infoField.getInfoFieldType(), NumberInfoFieldType.INSTANCE)) {
 
 			return true;
 		}

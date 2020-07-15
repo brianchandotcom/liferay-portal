@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_EMPTY_MESSAGE</td>
+	<td>//div[contains(., 'SLA allows to define and measure process performance.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_ERROR_MESSAGE</td>
 	<td>//div[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>
@@ -121,6 +126,11 @@
 <tr>
 	<td>SLA_FORM_DURATION_FIELD</td>
 	<td>//label[contains(@data-testid,'duration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_RECORD_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_slaName}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,6 +161,11 @@
 <tr>
 	<td>SLA_TABLE</td>
 	<td>//div[contains(@class, 'table-responsive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_UPDATE_MESSAGE</td>
+	<td>//div[contains(., 'One or more SLAs are being updated. There may be a delay before SLA changes are fully propagated.')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -135,10 +135,6 @@
 			<finder-column name="companyId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
-		<finder name="C_DDMTK" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="DDMTemplateKey" />
-		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
@@ -201,11 +197,6 @@
 		<finder name="C_V_ST" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="version" />
-			<finder-column name="status" />
-		</finder>
-		<finder name="C_ED_ST" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="expirationDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_F_C_NotST" return-type="Collection">

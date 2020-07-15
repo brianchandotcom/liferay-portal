@@ -155,9 +155,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="ThreadId" return-type="MBDiscussion" unique="true">
 			<finder-column name="threadId" />
 		</finder>

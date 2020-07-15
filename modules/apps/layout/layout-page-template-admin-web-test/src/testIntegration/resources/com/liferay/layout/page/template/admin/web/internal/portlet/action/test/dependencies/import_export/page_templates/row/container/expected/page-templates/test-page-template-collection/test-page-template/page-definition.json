@@ -6,26 +6,44 @@
 					"gutters": true,
 					"modulesPerRow": 1,
 					"numberOfColumns": 1,
-					"rowViewportConfig": {
-						"landscapeMobile": {
+					"rowViewports": [
+						{
+							"id": "landscapeMobile",
+							"rowViewportDefinition": {
+							}
 						},
-						"portraitMobile": {
+						{
+							"id": "portraitMobile",
+							"rowViewportDefinition": {
+							}
 						},
-						"tablet": {
+						{
+							"id": "tablet",
+							"rowViewportDefinition": {
+							}
 						}
-					}
+					]
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"columnViewportConfig": {
-								"landscapeMobile": {
+							"columnViewports": [
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "landscapeMobile"
 								},
-								"portraitMobile": {
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "portraitMobile"
 								},
-								"tablet": {
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "tablet"
 								}
-							},
+							],
 							"size": 12
 						},
 						"pageElements": [

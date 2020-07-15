@@ -380,11 +380,12 @@ public interface SubscriptionLocalService
 		long companyId, String className, long classPK);
 
 	/**
-	 * Returns all the subscriptions to the class name.
-	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 Returns all the subscriptions to the class name.
 	 * @param className the entity's class name
 	 * @return the subscriptions to the class name
 	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Subscription> getSubscriptions(String className);
 
@@ -397,11 +398,12 @@ public interface SubscriptionLocalService
 	public int getSubscriptionsCount();
 
 	/**
-	 * Returns the number of the subscriptions to the class name.
-	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 Returns the number of the subscriptions to the class name.
 	 * @param className the entity's class name
 	 * @return the subscriptions to the class name
 	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSubscriptionsCount(String className);
 

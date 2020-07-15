@@ -23,9 +23,9 @@ import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
-	[DRAFT_STATUS.draftSaved]: 'Draft saved',
+	[DRAFT_STATUS.draftSaved]: Liferay.Language.get('draft-saved'),
 	[DRAFT_STATUS.notSaved]: '',
-	[DRAFT_STATUS.saving]: 'Saving...',
+	[DRAFT_STATUS.saving]: `${Liferay.Language.get('saving')}...`,
 };
 
 export default function Toolbar() {
@@ -61,7 +61,7 @@ export default function Toolbar() {
 				</span>
 			</div>
 			<ClayButton displayType="primary" onClick={onClick} small>
-				Publish
+				{Liferay.Language.get('publish')}
 			</ClayButton>
 		</div>
 	);

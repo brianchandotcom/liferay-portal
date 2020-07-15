@@ -12,17 +12,8 @@
  * details.
  */
 
-import React from 'react';
+export let config = {};
 
-export const StyleBookContext = React.createContext({
-	setTokenValues: () => {},
-	tokenValues: {},
-});
-
-export function StyleBookContextProvider({children, value}) {
-	return (
-		<StyleBookContext.Provider value={value}>
-			{children}
-		</StyleBookContext.Provider>
-	);
+export function initializeConfig(backendConfig) {
+	config = backendConfig;
 }

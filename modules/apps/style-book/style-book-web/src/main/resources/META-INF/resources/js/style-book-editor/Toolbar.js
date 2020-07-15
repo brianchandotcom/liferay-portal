@@ -29,21 +29,17 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StyleBookContext} from './StyleBookContext';
+import {config} from './config';
 
 export default function Toolbar() {
-	const {namespace, publishURL, styleBookEntryId} = useContext(
-		StyleBookContext
-	);
-
 	const onClick = () => {
 		const body = objectToFormData({
-			[`${namespace}styleBookEntryId`]: styleBookEntryId,
+			[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
 		});
 
-		fetch(publishURL, {body, method: 'POST'});
+		fetch(config.publishURL, {body, method: 'POST'});
 	};
 
 	return (

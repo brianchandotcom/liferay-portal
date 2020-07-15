@@ -31,15 +31,14 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
+import {config} from './config';
 
 export default function Token({name}) {
-	const {tokenValues = {}, setTokenValues, namespace} = useContext(
-		StyleBookContext
-	);
+	const {tokenValues = {}, setTokenValues} = useContext(StyleBookContext);
 
 	const [tokenValue, setTokenValue] = useState(tokenValues[name] || '');
 
-	const id = `${namespace}_tokenId_${name}`;
+	const id = `${config.namespace}_tokenId_${name}`;
 
 	const updateTokenValues = (value) => {
 		if (value) {

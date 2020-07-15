@@ -14,11 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {StyleBookContext} from './StyleBookContext';
 import TokenSet from './TokenSet';
 import Toolbar from './Toolbar';
+import {config} from './config';
 
 export default function Sidebar() {
 	return (
@@ -30,7 +30,7 @@ export default function Sidebar() {
 }
 
 function SidebarContent() {
-	const {tokenCategories} = useContext(StyleBookContext);
+	const tokenCategories = config.tokenCategories;
 	const [active, setActive] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(
 		tokenCategories[0]

@@ -18,16 +18,9 @@ import React, {useEffect, useState} from 'react';
 import PagePreview from './PagePreview';
 import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
+import {config, initializeConfig} from './config';
 
-const StyleBookEditor = ({
-	namespace,
-	previewURL,
-	publishURL,
-	saveDraftURL,
-	styleBookEntryId,
-	tokenCategories = [],
-	tokenValues: initialTokenValues = {},
-} = {}) => {
+const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
 	const [tokenValues, setTokenValues] = useState(initialTokenValues);
 
 	useEffect(() => {
@@ -36,29 +29,17 @@ const StyleBookEditor = ({
 		}
 
 		const body = objectToFormData({
-			[`${namespace}tokenValues`]: JSON.stringify(tokenValues),
-			[`${namespace}styleBookEntryId`]: styleBookEntryId,
+			[`${config.namespace}tokenValues`]: JSON.stringify(tokenValues),
+			[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
 		});
 
-		fetch(saveDraftURL, {body, method: 'post'});
-	}, [
-		initialTokenValues,
-		namespace,
-		saveDraftURL,
-		styleBookEntryId,
-		tokenValues,
-	]);
+		fetch(config.saveDraftURL, {body, method: 'post'});
+	}, [initialTokenValues, tokenValues]);
 
 	return (
 		<StyleBookContextProvider
 			value={{
-				namespace,
-				previewURL,
-				publishURL,
-				saveDraftURL,
 				setTokenValues,
-				styleBookEntryId,
-				tokenCategories,
 				tokenValues,
 			}}
 		>
@@ -70,4 +51,23 @@ const StyleBookEditor = ({
 	);
 };
 
-export default StyleBookEditor;
+export default function ({
+	namespace,
+	previewURL,
+	publishURL,
+	saveDraftURL,
+	styleBookEntryId,
+	tokenCategories = [],
+	tokenValues = {},
+} = {}) {
+	initializeConfig({
+		namespace,
+		previewURL,
+		publishURL,
+		saveDraftURL,
+		styleBookEntryId,
+		tokenCategories,
+	});
+
+	return <StyleBookEditor tokenValues={tokenValues} />;
+}

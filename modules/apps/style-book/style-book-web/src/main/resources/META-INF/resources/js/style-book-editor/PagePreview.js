@@ -15,11 +15,12 @@
 import React, {useContext, useEffect, useRef} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
+import {config} from './config';
 
 export default function PagePreview() {
 	const iframeRef = useRef();
 
-	const {tokenValues = {}, previewURL} = useContext(StyleBookContext);
+	const {tokenValues = {}} = useContext(StyleBookContext);
 
 	useEffect(() => {
 		if (iframeRef.current) {
@@ -37,7 +38,7 @@ export default function PagePreview() {
 			<iframe
 				className="style-book-editor__page-preview-frame"
 				ref={iframeRef}
-				src={previewURL}
+				src={config.previewURL}
 			/>
 		</div>
 	);

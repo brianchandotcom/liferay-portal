@@ -65,17 +65,17 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 
 	@Test
 	public void testAccountEntryOrganizationRelDeleted() throws Exception {
-		_organization = OrganizationTestUtil.addOrganization();
+		Organization organization = OrganizationTestUtil.addOrganization();
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			_accountEntry.getAccountEntryId(),
-			_organization.getOrganizationId());
+			organization.getOrganizationId());
 
 		Assert.assertTrue(
 			_accountEntryOrganizationRelLocalService.
 				hasAccountEntryOrganizationRel(
 					_accountEntry.getAccountEntryId(),
-					_organization.getOrganizationId()));
+					organization.getOrganizationId()));
 
 		_accountEntryLocalService.deleteAccountEntry(_accountEntry);
 
@@ -87,19 +87,19 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 			_accountEntryOrganizationRelLocalService.
 				hasAccountEntryOrganizationRel(
 					_accountEntry.getAccountEntryId(),
-					_organization.getOrganizationId()));
+					organization.getOrganizationId()));
 	}
 
 	@Test
 	public void testAccountEntryUserRelDeleted() throws Exception {
-		_user = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId(), _user.getUserId());
+			_accountEntry.getAccountEntryId(), user.getUserId());
 
 		Assert.assertTrue(
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
-				_accountEntry.getAccountEntryId(), _user.getUserId()));
+				_accountEntry.getAccountEntryId(), user.getUserId()));
 
 		_accountEntryLocalService.deleteAccountEntry(_accountEntry);
 
@@ -109,17 +109,17 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 
 		Assert.assertFalse(
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
-				_accountEntry.getAccountEntryId(), _user.getUserId()));
+				_accountEntry.getAccountEntryId(), user.getUserId()));
 	}
 
 	@Test
 	public void testAccountGroupAccountEntryRelDeleted() throws Exception {
-		_accountGroup = AccountGroupTestUtil.addAccountGroup(
+		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
 		_accountGroupAccountEntryRelLocalService.addAccountGroupAccountEntryRel(
-			_accountGroup.getAccountGroupId(),
+			accountGroup.getAccountGroupId(),
 			_accountEntry.getAccountEntryId());
 
 		_accountEntryLocalService.deleteAccountEntry(
@@ -129,7 +129,7 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 			0,
 			_accountGroupAccountEntryRelLocalService.
 				getAccountGroupAccountEntryRelsCountByAccountGroupId(
-					_accountGroup.getAccountGroupId()));
+					accountGroup.getAccountGroupId()));
 	}
 
 	@Test
@@ -160,8 +160,6 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
-	private AccountGroup _accountGroup;
-
 	@Inject
 	private AccountGroupAccountEntryRelLocalService
 		_accountGroupAccountEntryRelLocalService;
@@ -172,11 +170,7 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	private Organization _organization;
-
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	private User _user;
 
 }

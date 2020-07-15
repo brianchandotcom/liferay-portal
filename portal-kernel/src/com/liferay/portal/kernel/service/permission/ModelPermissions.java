@@ -15,11 +15,13 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,26 +54,20 @@ public class ModelPermissions implements Cloneable, Serializable {
 		setResourceName(resourceName);
 	}
 
-	public void addRolePermissions(String roleName, String actionId) {
-		Set<String> actionIds = _actionIdsMap.get(roleName);
-
-		if (actionIds == null) {
-			actionIds = new HashSet<>();
-
-			_actionIdsMap.put(roleName, actionIds);
-		}
-
-		actionIds.add(actionId);
-	}
-
-	public void addRolePermissions(String roleName, String[] actionIds) {
-		if (actionIds == null) {
+	public void addRolePermissions(String roleName, String... actionIds) {
+		if (ArrayUtil.isEmpty(actionIds)) {
 			return;
 		}
 
-		for (String actionId : actionIds) {
-			addRolePermissions(roleName, actionId);
+		Set<String> actionIdSet = _actionIdsMap.get(roleName);
+
+		if (actionIdSet == null) {
+			actionIdSet = new HashSet<>();
+
+			_actionIdsMap.put(roleName, actionIdSet);
 		}
+
+		Collections.addAll(actionIdSet, actionIds);
 	}
 
 	@Override

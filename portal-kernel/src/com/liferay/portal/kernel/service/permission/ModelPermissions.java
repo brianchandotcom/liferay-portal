@@ -36,10 +36,6 @@ public interface ModelPermissions extends Cloneable, Serializable {
 
 	public Collection<String> getRoleNames();
 
-	public boolean isUsed();
-
 	public void setResourceName(String resourceName);
-
-	public void setUsed(boolean used);
 
 }

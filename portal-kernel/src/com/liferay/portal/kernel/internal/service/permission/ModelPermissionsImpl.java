@@ -40,6 +40,26 @@ public class ModelPermissionsImpl implements ModelPermissions {
 	public static final String RESOURCE_NAME_UNINITIALIZED =
 		ModelPermissions.class.getName() + "#UNINITIALIZED";
 
+	public static boolean isUsed(ModelPermissions modelPermissions) {
+		if (modelPermissions instanceof ModelPermissionsImpl) {
+			ModelPermissionsImpl modelPermissionsImpl =
+				(ModelPermissionsImpl)modelPermissions;
+
+			return modelPermissionsImpl._used;
+		}
+
+		return false;
+	}
+
+	public static void setUsed(ModelPermissions modelPermissions) {
+		if (modelPermissions instanceof ModelPermissionsImpl) {
+			ModelPermissionsImpl modelPermissionsImpl =
+				(ModelPermissionsImpl)modelPermissions;
+
+			modelPermissionsImpl._used = true;
+		}
+	}
+
 	public ModelPermissionsImpl(String resourceName) {
 		setResourceName(resourceName);
 	}
@@ -88,18 +108,8 @@ public class ModelPermissionsImpl implements ModelPermissions {
 	}
 
 	@Override
-	public boolean isUsed() {
-		return _used;
-	}
-
-	@Override
 	public void setResourceName(String resourceName) {
 		_resourceName = Objects.requireNonNull(resourceName);
-	}
-
-	@Override
-	public void setUsed(boolean used) {
-		_used = used;
 	}
 
 	private ModelPermissionsImpl(

@@ -100,7 +100,7 @@ public class ResourcePermissionLocalServiceImpl
 			serviceContext.getModelPermissions();
 
 		if (_matches(modelPermissions, auditedModel.getModelClassName())) {
-			modelPermissions.setUsed(true);
+			ModelPermissionsImpl.setUsed(modelPermissions);
 
 			addModelResourcePermissions(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
@@ -155,7 +155,7 @@ public class ResourcePermissionLocalServiceImpl
 				RoleConstants.OWNER, new String[0]);
 		}
 
-		modelPermissions.setUsed(true);
+		ModelPermissionsImpl.setUsed(modelPermissions);
 
 		// Individual Permissions
 
@@ -1617,7 +1617,7 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
-		modelPermissions.setUsed(true);
+		ModelPermissionsImpl.setUsed(modelPermissions);
 
 		for (String roleName : modelPermissions.getRoleNames()) {
 			Role role = getRole(companyId, groupId, roleName);
@@ -1996,7 +1996,7 @@ public class ResourcePermissionLocalServiceImpl
 		if (ModelPermissionsImpl.RESOURCE_NAME_FIRST_RESOURCE.equals(
 				modelPermissions.getResourceName())) {
 
-			if (!modelPermissions.isUsed()) {
+			if (!ModelPermissionsImpl.isUsed(modelPermissions)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						new Exception(

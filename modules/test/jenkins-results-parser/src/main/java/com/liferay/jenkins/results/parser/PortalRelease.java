@@ -129,6 +129,36 @@ public class PortalRelease {
 		return _getURL(_glassFishFileNamePattern);
 	}
 
+	public String getHTMLReport() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<ul>");
+
+		URL[] urls = {
+			getDependenciesURL(), getGlassFishURL(), getJBossURL(),
+			getOSGiURL(), getPortalWarURL(), getSQLURL(), getTomcatURL(),
+			getToolsURL(), getWildFlyURL()
+		};
+
+		for (URL url : urls) {
+			if (url == null) {
+				continue;
+			}
+
+			String urlString = url.toString();
+
+			sb.append("<li><a href=\"");
+			sb.append(urlString);
+			sb.append("\">");
+			sb.append(urlString.replaceAll(".+/([^/]+)", "$1"));
+			sb.append("</a></li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
 	public URL getJBossURL() {
 		return _getURL(_jbossFileNamePattern);
 	}

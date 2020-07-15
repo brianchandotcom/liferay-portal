@@ -102,6 +102,24 @@ public class PortalFixpackRelease {
 		}
 	}
 
+	public String getHTMLReport() {
+		StringBuilder sb = new StringBuilder();
+
+		String urlString = String.valueOf(getPortalFixpackURL());
+
+		sb.append("<ul>");
+
+		sb.append("<li><a href=\"");
+		sb.append(urlString);
+		sb.append("\">");
+		sb.append(urlString.replaceAll(".+/([^/]+)", "$1"));
+		sb.append("</a></li>");
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
 	public URL getPortalFixpackURL() {
 		return _portalFixpackURL;
 	}

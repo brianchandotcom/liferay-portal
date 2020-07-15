@@ -1621,12 +1621,9 @@ public class ResourcePermissionLocalServiceImpl
 		for (String roleName : modelPermissions.getRoleNames()) {
 			Role role = getRole(companyId, groupId, roleName);
 
-			List<String> actionIds = modelPermissions.getActionIdsList(
-				roleName);
-
 			setResourcePermissions(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-				role.getRoleId(), actionIds.toArray(new String[0]));
+				role.getRoleId(), modelPermissions.getActionIds(roleName));
 		}
 	}
 

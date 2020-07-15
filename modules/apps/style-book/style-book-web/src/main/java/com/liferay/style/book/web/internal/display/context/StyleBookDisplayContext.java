@@ -88,7 +88,7 @@ public class StyleBookDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<StyleBookEntry> styleBookEntriesSearchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_liferayPortletRequest, getPortletURL(), null,
 				"there-are-no-style-books");
 

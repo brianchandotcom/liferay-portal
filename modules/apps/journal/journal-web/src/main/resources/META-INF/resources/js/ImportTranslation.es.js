@@ -18,6 +18,10 @@ import {usePrevious} from 'frontend-js-react-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 const VALID_EXTENSIONS = '.xliff,.xlf';
+const XLIFF_ID_ATTRIBUTE = {
+	[1.2]: 'original',
+	default: 'id',
+};
 
 export default function ImportTranslation({
 	articleResourcePrimKey,
@@ -58,9 +62,15 @@ export default function ImportTranslation({
 					'text/xml'
 				);
 
-				const fileElement = xmlDoc.getElementsByTagName('file')[0];
+				const xliffVersion = xmlDoc
+					.getElementsByTagName('xliff')[0]
+					.getAttribute('version');
 
-				const fileId = fileElement.getAttribute('id');
+				const fileElement = xmlDoc.getElementsByTagName('file')[0];
+				const fileId = fileElement.getAttribute(
+					XLIFF_ID_ATTRIBUTE[xliffVersion] ||
+						XLIFF_ID_ATTRIBUTE.default
+				);
 
 				const id = fileId.substring(fileId.indexOf(':') + 1);
 

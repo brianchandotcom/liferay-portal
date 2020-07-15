@@ -145,9 +145,17 @@ definition {
 	macro viewDateEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 
-		FormFields.viewDateLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewDateLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewDateLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		FormFields.viewDateValue(
 			fieldLabel = "${fieldLabel}",
@@ -198,9 +206,17 @@ definition {
 	macro viewMultilineTextEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 
-		FormFields.viewTextLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewTextLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewTextLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		FormFields.viewMultilineTextValue(
 			fieldName = "${fieldName}",
@@ -232,9 +248,17 @@ definition {
 	macro viewRadioEntry {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
-		FormFields.viewRadioLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewRadioLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewRadioLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		FormFields.viewRadioValue(
 			fieldName = "${fieldName}",
@@ -244,9 +268,17 @@ definition {
 	macro viewSelectEntry {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
-		FormFields.viewSelectLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewSelectLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewSelectLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		FormFields.viewSelectValue(fieldName = "${fieldName}");
 	}
@@ -261,9 +293,17 @@ definition {
 	macro viewTextEntry {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
-		FormFields.viewTextLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewTextLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewTextLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		FormFields.viewTextValue(
 			fieldName = "${fieldName}",
@@ -271,9 +311,17 @@ definition {
 	}
 
 	macro viewUploadFile {
-		FormFields.viewUploadLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		if (isSet(fieldLabelRequired)) {
+			FormFields.viewUploadLabel(
+				fieldLabel = "${fieldLabelRequired}",
+				fieldLabelRequired = "${fieldLabelRequired}",
+				fieldName = "${fieldName}");
+		}
+		else {
+			FormFields.viewUploadLabel(
+				fieldLabel = "${fieldLabel}",
+				fieldName = "${fieldName}");
+		}
 
 		var key_fieldName = "${fieldName}";
 		var key_uploadFileName = "${uploadFileName}";

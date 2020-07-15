@@ -1292,21 +1292,29 @@ definition {
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Hobbies",
+			fieldLabelRequired = "Hobbies Required");
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
 
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Hobby 2",
+			fieldLabelRequired = "Hobbies edited Required",
 			fieldName = "Hobbies edited");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Marital Status",
+			fieldLabelRequired = "Marital Status Required");
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Marital Status 3",
+			fieldLabelRequired = "Marital Status Required",
 			fieldName = "Marital Status");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Occupation");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Occupation",
+			fieldLabelRequired = "Occupation Required");
 		FormViewBuilder.validateSelectFromListField(
 			optionValue = "Occupation 2",
 			rowNumber = "2");
@@ -1316,10 +1324,14 @@ definition {
 			fieldLabel = "Testing Changed Name",
 			fieldName = "Nickname");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Full name");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Full name",
+			fieldLabelRequired = "Full name Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Number of children");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Number of children",
+			fieldLabelRequired = "Number of children Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
@@ -1328,7 +1340,9 @@ definition {
 
 		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
 		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Date of birth");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
+			fieldLabel = "Date of birth",
+			fieldLabelRequired = "Date of birth Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 
 		FormViewBuilder.save();
@@ -1337,19 +1351,29 @@ definition {
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Occupation");
+		FormViewBuilder.validateFieldLabel(
+			fieldLabel = "Occupation",
+			fieldLabelRequired = "Occupation Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Marital Status");
+		FormViewBuilder.validateFieldLabel(
+			fieldLabel = "Marital Status",
+			fieldLabelRequired = "Marital Status Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.validateFieldLabel(
+			fieldLabel = "Full name",
+			fieldLabelRequired = "Full name Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.validateFieldLabel(
+			fieldLabel = "Number of children",
+			fieldLabelRequired = "Number of children Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.validateFieldLabel(
+			fieldLabel = "Date of birth",
+			fieldLabelRequired = "Date of birth Required");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 

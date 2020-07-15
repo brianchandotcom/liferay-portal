@@ -66,7 +66,9 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReade
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.SiteParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
+import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.EntityExtensionWriterInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
+import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.PageEntityExtensionWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 
 import javax.ws.rs.core.Feature;
@@ -102,6 +104,7 @@ public class VulcanFeature implements Feature {
 	@Override
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(BeanValidationInterceptor.class);
+		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(DateParamConverterProvider.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
@@ -118,6 +121,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(NoSuchModelExceptionMapper.class);
 		featureContext.register(NotAcceptableExceptionMapper.class);
 		featureContext.register(ObjectMapperContextResolver.class);
+		featureContext.register(PageEntityExtensionWriterInterceptor.class);
 		featureContext.register(PaginationContextProvider.class);
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);

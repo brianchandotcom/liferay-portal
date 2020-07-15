@@ -277,6 +277,10 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<DDMStructureLink> getClassNameStructureLinks(
 		long classNameId) {

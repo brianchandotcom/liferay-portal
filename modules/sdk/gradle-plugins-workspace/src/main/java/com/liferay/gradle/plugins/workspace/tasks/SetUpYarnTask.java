@@ -77,7 +77,8 @@ public class SetUpYarnTask extends DefaultTask {
 
 		Path rootPath = rootDir.toPath();
 
-		return FileUtil.findFile(rootPath, "package.json", getExcludes(), true);
+		return FileUtil.getRelativePaths(
+			rootPath, "package.json", getExcludes(), true);
 	}
 
 	public void setExcludes(Iterable<Object> excludes) {

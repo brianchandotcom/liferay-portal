@@ -36,7 +36,7 @@ import org.gradle.api.tasks.SourceSet;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
-	public static List<String> findFile(
+	public static List<String> getRelativePaths(
 			final Path path, final String fileName, final List<String> excludes,
 			final boolean childrenOnly)
 		throws IOException {

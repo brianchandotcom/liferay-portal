@@ -868,7 +868,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED Liferay Connector to SAML 2.0");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -878,8 +878,8 @@ definition {
 			configurationName = "SAML Configuration",
 			configurationScope = "System Scope");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
+		GlobalMenu.gotoPortlet(
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 

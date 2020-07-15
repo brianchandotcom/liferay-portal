@@ -202,13 +202,19 @@ public class XLIFFInfoFormTranslationImporter
 
 							TextFragment firstContent = value.getFirstContent();
 
-							InfoField infoField = new InfoField(
-								TextInfoFieldType.INSTANCE,
+							InfoField infoField = InfoField.builder(
+							).infoFieldType(
+								TextInfoFieldType.INSTANCE
+							).name(
+								textUnit.getId()
+							).labelInfoLocalizedValue(
 								InfoLocalizedValue.<String>builder(
 								).value(
 									targetLocale, textUnit.getId()
-								).build(),
-								true, textUnit.getId());
+								).build()
+							).localizable(
+								true
+							).build();
 
 							consumer.accept(
 								new InfoFieldValue<>(

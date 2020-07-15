@@ -1,12 +1,12 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.3.1",
-		"@clayui/drop-down": "3.4.4",
-		"@clayui/form": "3.8.0",
+		"@clayui/drop-down": "3.4.6",
+		"@clayui/form": "3.9.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/loading-indicator": "3.1.0",
 		"@clayui/sticker": "3.1.1",
-		"@clayui/tooltip": "3.3.1",
+		"@clayui/tooltip": "3.3.2",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",

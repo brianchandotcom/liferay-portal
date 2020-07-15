@@ -1,9 +1,9 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.3.1",
-		"@clayui/drop-down": "3.4.4",
+		"@clayui/drop-down": "3.4.6",
 		"@clayui/icon": "3.0.5",
-		"@clayui/layout": "3.1.0",
+		"@clayui/layout": "3.1.1",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",

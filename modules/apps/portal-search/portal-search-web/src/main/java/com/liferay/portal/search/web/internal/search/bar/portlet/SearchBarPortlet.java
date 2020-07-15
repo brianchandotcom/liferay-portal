@@ -118,6 +118,11 @@ public class SearchBarPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPortletPreferences, themeDisplay);
 
+		SearchResponse searchResponse = getSearchResponse(
+			portletSharedSearchResponse, searchBarPortletPreferences);
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
 		return searchBarPortletDisplayBuilder.setDestination(
 			searchBarPortletPreferences.getDestinationString()
 		).setEmptySearchEnabled(
@@ -125,7 +130,7 @@ public class SearchBarPortlet extends MVCPortlet {
 		).setInvisible(
 			searchBarPortletPreferences.isInvisible()
 		).setKeywords(
-			portletSharedSearchResponse.getKeywordsOptional()
+			Optional.ofNullable(searchRequest.getQueryString())
 		).setKeywordsParameterName(
 			keywordsParameterName
 		).setPaginationStartParameterName(
@@ -185,6 +190,14 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		return optional.orElse(
 			searchBarPortletPreferences.getScopeParameterName());
+	}
+
+	protected SearchResponse getSearchResponse(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		SearchBarPortletPreferences searchBarPortletPreferences) {
+
+		return portletSharedSearchResponse.getFederatedSearchResponse(
+			searchBarPortletPreferences.getFederatedSearchKeyOptional());
 	}
 
 	protected boolean isEmptySearchEnabled(

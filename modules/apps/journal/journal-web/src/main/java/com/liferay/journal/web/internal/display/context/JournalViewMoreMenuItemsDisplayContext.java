@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -83,6 +87,30 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		}
 
 		return _ddmStructures;
+	}
+
+	public String getDDMStructureScopeName(
+			DDMStructure ddmStructure, Locale locale)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (ddmStructure.getGroupId() == scopeGroup.getGroupId()) {
+			if (scopeGroup.getType() == GroupConstants.TYPE_DEPOT) {
+				return LanguageUtil.get(
+					_httpServletRequest, "current-asset-library");
+			}
+
+			return LanguageUtil.get(_httpServletRequest, "current-site");
+		}
+
+		Group ddmStructureGroup = GroupLocalServiceUtil.getGroup(
+			ddmStructure.getGroupId());
+
+		return ddmStructureGroup.getName(locale);
 	}
 
 	public SearchContainer<DDMStructure> getDDMStructuresSearchContainer()

@@ -24,6 +24,7 @@ export default function DropdownMenu({
 	icon,
 	items,
 	label,
+	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
 	...otherProps

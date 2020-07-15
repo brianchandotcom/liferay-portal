@@ -19,7 +19,7 @@ import com.liferay.exportimport.kernel.lifecycle.EventAwareExportImportLifecycle
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.internal.exportimport.content.processor.JournalArticleExportImportCache;
+import com.liferay.journal.internal.exportimport.content.processor.JournalArticleExportImportProcessorCache;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.model.StagedModel;
 
@@ -233,7 +233,8 @@ public class JournalCacheExportImportLifecycleListener
 	}
 
 	@Reference
-	private JournalArticleExportImportCache _journalArticleExportImportCache;
+	private JournalArticleExportImportProcessorCache
+		_journalArticleExportImportCache;
 
 	private JournalContent _journalContent;
 

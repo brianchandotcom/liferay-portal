@@ -24,8 +24,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = JournalArticleExportImportCache.class)
-public class JournalArticleExportImportCache {
+@Component(
+	immediate = true, service = JournalArticleExportImportProcessorCache.class
+)
+public class JournalArticleExportImportProcessorCache {
 
 	public void clear() {
 		_portalCache.removeAll();
@@ -42,7 +44,7 @@ public class JournalArticleExportImportCache {
 	@Activate
 	protected void activate() {
 		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
-			JournalArticleExportImportCache.class.getName());
+			JournalArticleExportImportProcessorCache.class.getName());
 	}
 
 	private static PortalCache<String, String> _portalCache;

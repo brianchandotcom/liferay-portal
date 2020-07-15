@@ -651,7 +651,8 @@ public class JournalArticleExportImportContentProcessor
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private JournalArticleExportImportCache _journalArticleExportImportCache;
+	private JournalArticleExportImportProcessorCache
+		_journalArticleExportImportCache;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

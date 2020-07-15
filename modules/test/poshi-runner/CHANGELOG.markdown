@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.271
+
+### WebDriver
+
+* [POSHI-88](https://issues.liferay.com/browse/POSHI-88) - Make executeJavaScript more flexible to receive strings and xpath locators
+
 ## 1.0.270
 
 ### Other

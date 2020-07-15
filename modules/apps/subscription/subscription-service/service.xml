@@ -35,9 +35,6 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

@@ -19,6 +19,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 import java.io.PushbackReader;
@@ -261,30 +262,22 @@ public class ConfigurationHandler {
 		}
 	}
 
-	// simple types (string & primitive wrappers)
-
 	private static Object _readSimple(int code, PushbackReader pushbackReader)
 		throws IOException {
 
 		if (code == -1) {
 			return null;
 		}
-		else if (code == _TOKEN_SIMPLE_STRING) {
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_STRING) {
 			return _readQuoted(pushbackReader);
 		}
-		else if ((code == _TOKEN_SIMPLE_INTEGER) ||
-				 (code == _TOKEN_PRIMITIVE_INT)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_INTEGER) {
 			return Integer.valueOf(_readQuoted(pushbackReader));
 		}
-		else if ((code == _TOKEN_SIMPLE_LONG) ||
-				 (code == _TOKEN_PRIMITIVE_LONG)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_LONG) {
 			return Long.valueOf(_readQuoted(pushbackReader));
 		}
-		else if ((code == _TOKEN_SIMPLE_FLOAT) ||
-				 (code == _TOKEN_PRIMITIVE_FLOAT)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_FLOAT) {
 			String floatString = _readQuoted(pushbackReader);
 
 			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
@@ -294,9 +287,7 @@ public class ConfigurationHandler {
 			return Float.intBitsToFloat(
 				GetterUtil.getIntegerStrict(floatString));
 		}
-		else if ((code == _TOKEN_SIMPLE_DOUBLE) ||
-				 (code == _TOKEN_PRIMITIVE_DOUBLE)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_DOUBLE) {
 			String doubleString = _readQuoted(pushbackReader);
 
 			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
@@ -306,19 +297,13 @@ public class ConfigurationHandler {
 			return Double.longBitsToDouble(
 				GetterUtil.getLongStrict(doubleString));
 		}
-		else if ((code == _TOKEN_SIMPLE_BYTE) ||
-				 (code == _TOKEN_PRIMITIVE_BYTE)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_BYTE) {
 			return Byte.valueOf(_readQuoted(pushbackReader));
 		}
-		else if ((code == _TOKEN_SIMPLE_SHORT) ||
-				 (code == _TOKEN_PRIMITIVE_SHORT)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_SHORT) {
 			return Short.valueOf(_readQuoted(pushbackReader));
 		}
-		else if ((code == _TOKEN_SIMPLE_CHARACTER) ||
-				 (code == _TOKEN_PRIMITIVE_CHAR)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_CHARACTER) {
 			String charString = _readQuoted(pushbackReader);
 
 			if ((charString != null) && (charString.length() > 0)) {
@@ -327,9 +312,7 @@ public class ConfigurationHandler {
 
 			return null;
 		}
-		else if ((code == _TOKEN_SIMPLE_BOOLEAN) ||
-				 (code == _TOKEN_PRIMITIVE_BOOLEAN)) {
-
+		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_BOOLEAN) {
 			return Boolean.valueOf(_readQuoted(pushbackReader));
 		}
 		else {
@@ -348,7 +331,7 @@ public class ConfigurationHandler {
 
 		int code = type;
 
-		if (_codeToType.containsKey(type)) {
+		if (_codeToType.containsKey(Character.toUpperCase(type))) {
 			code = _read(pushbackReader);
 		}
 		else {
@@ -482,8 +465,6 @@ public class ConfigurationHandler {
 		}
 	}
 
-	// primitives
-
 	private static void _writeSimple(Writer writer, Object value)
 		throws IOException {
 
@@ -537,27 +518,6 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_EQ = '=';
 
-	private static final int _TOKEN_PRIMITIVE_BOOLEAN = 'b';
-
-	private static final int _TOKEN_PRIMITIVE_BYTE = 'x';
-
-	// private constructor, this class is not to be instantiated from the
-	// outside
-
-	private static final int _TOKEN_PRIMITIVE_CHAR = 'c';
-
-	// ---------- Configuration Input Implementation ---------------------------
-
-	private static final int _TOKEN_PRIMITIVE_DOUBLE = 'd';
-
-	private static final int _TOKEN_PRIMITIVE_FLOAT = 'f';
-
-	private static final int _TOKEN_PRIMITIVE_INT = 'i';
-
-	private static final int _TOKEN_PRIMITIVE_LONG = 'l';
-
-	private static final int _TOKEN_PRIMITIVE_SHORT = 's';
-
 	private static final int _TOKEN_SIMPLE_BOOLEAN = 'B';
 
 	private static final int _TOKEN_SIMPLE_BYTE = 'X';
@@ -582,36 +542,27 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_VEC_CLOS = ')';
 
-	// ---------- Configuration Output Implementation --------------------------
-
 	private static final int _TOKEN_VEC_OPEN = '(';
 
 	private static final Map<Object, Object> _codeToType = new HashMap<>();
-
 	private static final Map<Object, Object> _typeToCode =
-		new HashMap<Object, Object>() {
-			{
-				put(Boolean.class, _TOKEN_SIMPLE_BOOLEAN);
-				put(Byte.class, _TOKEN_SIMPLE_BYTE);
-				put(Character.class, _TOKEN_SIMPLE_CHARACTER);
-				put(Double.class, _TOKEN_SIMPLE_DOUBLE);
-				put(Float.class, _TOKEN_SIMPLE_FLOAT);
-				put(Integer.class, _TOKEN_SIMPLE_INTEGER);
-				put(Long.class, _TOKEN_SIMPLE_LONG);
-				put(Short.class, _TOKEN_SIMPLE_SHORT);
-
-				// primitives
-
-				put(Boolean.TYPE, _TOKEN_PRIMITIVE_BOOLEAN);
-				put(Byte.TYPE, _TOKEN_PRIMITIVE_BYTE);
-				put(Character.TYPE, _TOKEN_PRIMITIVE_CHAR);
-				put(Double.TYPE, _TOKEN_PRIMITIVE_DOUBLE);
-				put(Float.TYPE, _TOKEN_PRIMITIVE_FLOAT);
-				put(Integer.TYPE, _TOKEN_PRIMITIVE_INT);
-				put(Long.TYPE, _TOKEN_PRIMITIVE_LONG);
-				put(Short.TYPE, _TOKEN_PRIMITIVE_SHORT);
-			}
-		};
+		HashMapBuilder.<Object, Object>put(
+			Boolean.class, _TOKEN_SIMPLE_BOOLEAN
+		).put(
+			Byte.class, _TOKEN_SIMPLE_BYTE
+		).put(
+			Character.class, _TOKEN_SIMPLE_CHARACTER
+		).put(
+			Double.class, _TOKEN_SIMPLE_DOUBLE
+		).put(
+			Float.class, _TOKEN_SIMPLE_FLOAT
+		).put(
+			Integer.class, _TOKEN_SIMPLE_INTEGER
+		).put(
+			Long.class, _TOKEN_SIMPLE_LONG
+		).put(
+			Short.class, _TOKEN_SIMPLE_SHORT
+		).build();
 
 	static {
 		for (Map.Entry<Object, Object> entry : _typeToCode.entrySet()) {

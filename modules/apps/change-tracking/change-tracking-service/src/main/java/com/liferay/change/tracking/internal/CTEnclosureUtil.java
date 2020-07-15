@@ -67,19 +67,19 @@ public class CTEnclosureUtil {
 	}
 
 	public static Set<Map.Entry<Long, Long>> getEnclosureParentEntries(
-		CTClosure ctClosure, Map<Long, Set<Long>> ctEntryMap) {
+		CTClosure ctClosure, Map<Long, Set<Long>> enclosureMap) {
 
 		Set<Map.Entry<Long, Long>> parentEntries = new HashSet<>();
 
 		_collectParentEntries(
-			ctClosure, ctEntryMap, new LinkedList<>(),
+			ctClosure, enclosureMap, new LinkedList<>(),
 			ctClosure.getRootPKsMap(), parentEntries);
 
 		return parentEntries;
 	}
 
 	private static void _collectParentEntries(
-		CTClosure ctClosure, Map<Long, Set<Long>> ctEntryMap,
+		CTClosure ctClosure, Map<Long, Set<Long>> enclosureMap,
 		Deque<Map.Entry<Long, Long>> backtraceEntries,
 		Map<Long, List<Long>> childPKsMap,
 		Set<Map.Entry<Long, Long>> parentEntries) {
@@ -88,7 +88,7 @@ public class CTEnclosureUtil {
 			long classNameId = entry.getKey();
 
 			for (long classPK : entry.getValue()) {
-				Set<Long> classPKs = ctEntryMap.get(classNameId);
+				Set<Long> classPKs = enclosureMap.get(classNameId);
 
 				if ((classPKs != null) && classPKs.contains(classPK)) {
 					parentEntries.addAll(backtraceEntries);
@@ -99,7 +99,7 @@ public class CTEnclosureUtil {
 							classNameId, classPK));
 
 					_collectParentEntries(
-						ctClosure, ctEntryMap, backtraceEntries,
+						ctClosure, enclosureMap, backtraceEntries,
 						ctClosure.getChildPKsMap(classNameId, classPK),
 						parentEntries);
 

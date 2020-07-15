@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -73,44 +74,29 @@ public class RowLayoutStructureItemImporter
 					(String)definitionMap.get("verticalAlignment"));
 			}
 
-			if (definitionMap.containsKey("rowViewportConfig")) {
+			if (definitionMap.containsKey("rowViewports")) {
+				List<Map<String, Object>> rowViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"rowViewports");
+
+				for (Map<String, Object> rowViewport : rowViewports) {
+					_processRowViewportDefinition(
+						rowLayoutStructureItem,
+						(Map<String, Object>)rowViewport.get(
+							"rowViewportDefinition"),
+						(String)rowViewport.get("id"));
+				}
+			}
+			else if (definitionMap.containsKey("rowViewportConfig")) {
 				Map<String, Object> rowViewportConfigurations =
 					(Map<String, Object>)definitionMap.get("rowViewportConfig");
 
 				for (Map.Entry<String, Object> entry :
 						rowViewportConfigurations.entrySet()) {
 
-					Map<String, Object> rowViewportConfiguration =
-						(Map<String, Object>)entry.getValue();
-
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-					if (rowViewportConfiguration.containsKey("modulesPerRow")) {
-						jsonObject.put(
-							"modulesPerRow",
-							GetterUtil.getInteger(
-								rowViewportConfiguration.get("modulesPerRow")));
-					}
-
-					if (rowViewportConfiguration.containsKey("reverseOrder")) {
-						jsonObject.put(
-							"reverseOrder",
-							GetterUtil.getBoolean(
-								rowViewportConfiguration.get("reverseOrder")));
-					}
-
-					if (rowViewportConfiguration.containsKey(
-							"verticalAlignment")) {
-
-						jsonObject.put(
-							"verticalAlignment",
-							GetterUtil.getString(
-								rowViewportConfiguration.get(
-									"verticalAlignment")));
-					}
-
-					rowLayoutStructureItem.setViewportConfiguration(
-						entry.getKey(), jsonObject);
+					_processRowViewportDefinition(
+						rowLayoutStructureItem,
+						(Map<String, Object>)entry.getValue(), entry.getKey());
 				}
 			}
 		}
@@ -121,6 +107,37 @@ public class RowLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.ROW;
+	}
+
+	private void _processRowViewportDefinition(
+		RowLayoutStructureItem rowLayoutStructureItem,
+		Map<String, Object> rowViewportDefinitionMap, String rowViewportId) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (rowViewportDefinitionMap.containsKey("modulesPerRow")) {
+			jsonObject.put(
+				"modulesPerRow",
+				GetterUtil.getInteger(
+					rowViewportDefinitionMap.get("modulesPerRow")));
+		}
+
+		if (rowViewportDefinitionMap.containsKey("reverseOrder")) {
+			jsonObject.put(
+				"reverseOrder",
+				GetterUtil.getBoolean(
+					rowViewportDefinitionMap.get("reverseOrder")));
+		}
+
+		if (rowViewportDefinitionMap.containsKey("verticalAlignment")) {
+			jsonObject.put(
+				"verticalAlignment",
+				GetterUtil.getString(
+					rowViewportDefinitionMap.get("verticalAlignment")));
+		}
+
+		rowLayoutStructureItem.setViewportConfiguration(
+			rowViewportId, jsonObject);
 	}
 
 }

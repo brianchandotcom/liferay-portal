@@ -231,7 +231,7 @@ public class DataEngineNativeObjectObserver {
 			return new DataDefinitionField[0];
 		}
 
-		List<DataDefinitionField> list = new ArrayList<>();
+		List<DataDefinitionField> dataDefinitionFieldsList = new ArrayList<>();
 
 		for (DataEngineNativeObjectField dataEngineNativeObjectField :
 				dataEngineNativeObjectFields) {
@@ -302,10 +302,10 @@ public class DataEngineNativeObjectObserver {
 				}
 			}
 
-			list.add(dataDefinitionField);
+			dataDefinitionFieldsList.add(dataDefinitionField);
 		}
 
-		return list.toArray(new DataDefinitionField[0]);
+		return dataDefinitionFieldsList.toArray(new DataDefinitionField[0]);
 	}
 
 	private static final String[] _BASIC_FIELD_TYPES = {

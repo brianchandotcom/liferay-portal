@@ -54,11 +54,12 @@
 		<finder name="MirrorActivityId" return-type="SocialActivity">
 			<finder-column name="mirrorActivityId" />
 		</finder>
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="ReceiverUserId" return-type="Collection">
 			<finder-column name="receiverUserId" />
+		</finder>
+		<finder name="CompanyId_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />

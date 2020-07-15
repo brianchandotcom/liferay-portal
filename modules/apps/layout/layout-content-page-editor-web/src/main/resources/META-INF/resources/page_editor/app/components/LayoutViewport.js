@@ -13,7 +13,6 @@
  */
 
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import debounceRAF from '../../core/debounceRAF';

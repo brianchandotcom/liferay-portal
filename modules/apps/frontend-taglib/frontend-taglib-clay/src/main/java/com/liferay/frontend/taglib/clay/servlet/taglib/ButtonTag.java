@@ -322,7 +322,13 @@ public class ButtonTag extends BaseContainerTag {
 			JspWriter jspWriter = pageContext.getOut();
 
 			if (Validator.isNotNull(_icon)) {
-				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
+				jspWriter.write("<span class=\"inline-item");
+
+				if (Validator.isNotNull(_label)) {
+					jspWriter.write(" inline-item-before");
+				}
+
+				jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
 				jspWriter.write(_icon);
 				jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
 				jspWriter.write("512\"><use xlink:href=\"");
@@ -338,7 +344,7 @@ public class ButtonTag extends BaseContainerTag {
 
 				jspWriter.write("#");
 				jspWriter.write(_icon);
-				jspWriter.write("\" /></svg>");
+				jspWriter.write("\" /></svg></span>");
 			}
 
 			if (Validator.isNotNull(_label)) {

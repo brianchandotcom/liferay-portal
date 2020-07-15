@@ -213,6 +213,10 @@ public class DocumentDTOConverter
 	private AdaptedImage _toAdaptedImage(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
+		if (adaptiveMedia == null) {
+			return null;
+		}
+
 		return new AdaptedImage() {
 			{
 				contentUrl = String.valueOf(adaptiveMedia.getURI());

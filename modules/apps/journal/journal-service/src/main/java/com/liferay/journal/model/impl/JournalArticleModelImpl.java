@@ -171,29 +171,27 @@ public class JournalArticleModelImpl
 
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 128L;
+	public static final long FOLDERID_COLUMN_BITMASK = 128L;
 
-	public static final long FOLDERID_COLUMN_BITMASK = 256L;
+	public static final long GROUPID_COLUMN_BITMASK = 256L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 512L;
+	public static final long INDEXABLE_COLUMN_BITMASK = 512L;
 
-	public static final long INDEXABLE_COLUMN_BITMASK = 1024L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 1024L;
 
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 2048L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 2048L;
 
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4096L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 4096L;
 
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 8192L;
+	public static final long STATUS_COLUMN_BITMASK = 8192L;
 
-	public static final long STATUS_COLUMN_BITMASK = 16384L;
+	public static final long URLTITLE_COLUMN_BITMASK = 16384L;
 
-	public static final long URLTITLE_COLUMN_BITMASK = 32768L;
+	public static final long USERID_COLUMN_BITMASK = 32768L;
 
-	public static final long USERID_COLUMN_BITMASK = 65536L;
+	public static final long UUID_COLUMN_BITMASK = 65536L;
 
-	public static final long UUID_COLUMN_BITMASK = 131072L;
-
-	public static final long VERSION_COLUMN_BITMASK = 262144L;
+	public static final long VERSION_COLUMN_BITMASK = 131072L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -1119,17 +1117,7 @@ public class JournalArticleModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
-
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
-		}
-
 		_expirationDate = expirationDate;
-	}
-
-	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
 	}
 
 	@JSON
@@ -1772,9 +1760,6 @@ public class JournalArticleModelImpl
 		journalArticleModelImpl._originalDisplayDate =
 			journalArticleModelImpl._displayDate;
 
-		journalArticleModelImpl._originalExpirationDate =
-			journalArticleModelImpl._expirationDate;
-
 		journalArticleModelImpl._originalIndexable =
 			journalArticleModelImpl._indexable;
 
@@ -2116,7 +2101,6 @@ public class JournalArticleModelImpl
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
 	private Date _reviewDate;
 	private boolean _indexable;
 	private boolean _originalIndexable;

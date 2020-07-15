@@ -221,13 +221,6 @@ public class MBDiscussionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByClassNameId() throws Exception {
-		_persistence.countByClassNameId(RandomTestUtil.nextLong());
-
-		_persistence.countByClassNameId(0L);
-	}
-
-	@Test
 	public void testCountByThreadId() throws Exception {
 		_persistence.countByThreadId(RandomTestUtil.nextLong());
 

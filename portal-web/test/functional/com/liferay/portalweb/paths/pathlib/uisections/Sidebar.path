@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Sidebar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Sidebar</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>ADD_FIELD_TARGET</td>
+    <td>//div[contains(@class,'col-empty')]/div</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_FIELD_TYPE</td>
+    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldType}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>BACK</td>
+    <td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_BOTTOM_DROP_TARGET</td>
+    <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>ACTIVE_TAB</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,30 +58,29 @@ public class ColumnLayoutStructureItemImporter
 
 		columnLayoutStructureItem.setSize((Integer)definitionMap.get("size"));
 
-		if (!definitionMap.containsKey("columnViewportConfig")) {
-			return columnLayoutStructureItem;
-		}
+		if (definitionMap.containsKey("columnViewports")) {
+			List<Map<String, Object>> columnViewports =
+				(List<Map<String, Object>>)definitionMap.get("columnViewports");
 
-		Map<String, Object> columnViewportConfigurations =
-			(Map<String, Object>)definitionMap.get("columnViewportConfig");
-
-		for (Map.Entry<String, Object> entry :
-				columnViewportConfigurations.entrySet()) {
-
-			Map<String, Object> columnViewportConfiguration =
-				(Map<String, Object>)entry.getValue();
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			if (columnViewportConfiguration.containsKey("size")) {
-				jsonObject.put(
-					"size",
-					GetterUtil.getInteger(
-						columnViewportConfiguration.get("size")));
+			for (Map<String, Object> columnViewport : columnViewports) {
+				_processColumnViewportDefinition(
+					columnLayoutStructureItem,
+					(Map<String, Object>)columnViewport.get(
+						"columnViewportDefinition"),
+					(String)columnViewport.get("id"));
 			}
+		}
+		else if (definitionMap.containsKey("columnViewportConfig")) {
+			Map<String, Object> columnViewportConfigurations =
+				(Map<String, Object>)definitionMap.get("columnViewportConfig");
 
-			columnLayoutStructureItem.setViewportConfiguration(
-				entry.getKey(), jsonObject);
+			for (Map.Entry<String, Object> entry :
+					columnViewportConfigurations.entrySet()) {
+
+				_processColumnViewportDefinition(
+					columnLayoutStructureItem,
+					(Map<String, Object>)entry.getValue(), entry.getKey());
+			}
 		}
 
 		return columnLayoutStructureItem;
@@ -89,6 +89,23 @@ public class ColumnLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.COLUMN;
+	}
+
+	private void _processColumnViewportDefinition(
+		ColumnLayoutStructureItem columnLayoutStructureItem,
+		Map<String, Object> columnViewportDefinitionMap,
+		String columnViewportId) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (columnViewportDefinitionMap.containsKey("size")) {
+			jsonObject.put(
+				"size",
+				GetterUtil.getInteger(columnViewportDefinitionMap.get("size")));
+		}
+
+		columnLayoutStructureItem.setViewportConfiguration(
+			columnViewportId, jsonObject);
 	}
 
 }

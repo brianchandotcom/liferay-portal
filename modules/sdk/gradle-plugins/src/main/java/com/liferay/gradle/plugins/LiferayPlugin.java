@@ -41,6 +41,9 @@ public class LiferayPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		Class<? extends Plugin<Project>> clazz;
 
 		if (_isAnt(project)) {
@@ -57,6 +60,8 @@ public class LiferayPlugin implements Plugin<Project> {
 		}
 
 		GradleUtil.applyPlugin(project, clazz);
+
+		// Other
 
 		PluginContainer pluginContainer = project.getPlugins();
 

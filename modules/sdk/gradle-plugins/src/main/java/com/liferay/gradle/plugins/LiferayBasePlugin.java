@@ -62,15 +62,22 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		LangBuilderDefaultsPlugin.INSTANCE.apply(project);
 		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
 
+		// Extensions
+
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		final LiferayExtension liferayExtension = extensionContainer.create(
 			LiferayPlugin.PLUGIN_NAME, LiferayExtension.class, project);
+
+		// Configurations
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -80,6 +87,8 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		_configureConfigurationPortal(
 			project, liferayExtension, portalConfiguration);
+
+		// Tasks
 
 		TaskProvider<Copy> deployTaskProvider = GradleUtil.addTaskProvider(
 			project, DEPLOY_TASK_NAME, Copy.class);
@@ -103,6 +112,8 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				liferayExtension, deployTaskProvider, dockerCopyTaskProvider,
 				dockerContainerId, dockerFilesDir);
 		}
+
+		// Other
 
 		GradleUtil.applyScript(
 			project, _getScriptLiferayExtension(project), project);

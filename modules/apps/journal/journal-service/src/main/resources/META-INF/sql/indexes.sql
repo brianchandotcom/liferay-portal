@@ -1,7 +1,5 @@
 create index IX_F1C2B662 on JournalArticle (DDMStructureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_A01DB92F on JournalArticle (DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
-create index IX_1C4302D3 on JournalArticle (classNameId, DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
-create index IX_CB14A5FE on JournalArticle (classNameId, expirationDate, status, ctCollectionId);
 create index IX_AAF3B581 on JournalArticle (companyId, ctCollectionId);
 create index IX_6D9F9567 on JournalArticle (companyId, status, ctCollectionId);
 create index IX_F12AB4A3 on JournalArticle (companyId, version, ctCollectionId);

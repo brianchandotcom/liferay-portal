@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,7 +53,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -222,16 +221,13 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 				for (String languageId : valueJSONObject.keySet()) {
 					value.addString(
 						LocaleUtil.fromLanguageId(languageId),
-						valueJSONObject.getString(languageId));
+						GetterUtil.getString(
+							valueJSONObject.getString(languageId)));
 				}
 			}
 			else {
 				value = new UnlocalizedValue(
-					Optional.of(
-						jsonObject.get("value")
-					).orElse(
-						StringPool.BLANK
-					).toString());
+					GetterUtil.getString(jsonObject.get("value")));
 			}
 
 			ddmFormFieldValue.setValue(value);

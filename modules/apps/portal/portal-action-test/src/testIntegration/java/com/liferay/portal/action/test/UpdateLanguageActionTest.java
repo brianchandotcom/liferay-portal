@@ -38,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -114,72 +113,84 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testAssetI18nRedirect() throws PortalException {
-		_setThemeDisplayForLayout(true);
+		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
+
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(themeDisplay, bareDefaultURL, bareSourceURL);
+		_assertRedirect(
+			themeDisplay, bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
 	public void testAssetRedirect() throws PortalException {
-		_setThemeDisplayForLayout(false);
+		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
+
 		String[] urls = _getURLsForAsset();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(themeDisplay, bareDefaultURL, bareSourceURL);
+		_assertRedirect(
+			themeDisplay, bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
 	public void testControlPanelI18nRedirect() throws PortalException {
-		_setThemeDisplayForControlPanel(true);
+		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(true);
+
 		String bareURL = _getURLForControlPanel();
 
-		_assertRedirect(bareURL, bareURL);
-		_assertRedirect(bareURL, _sourceLocalePrepend + bareURL);
+		_assertRedirect(themeDisplay, bareURL, bareURL);
+		_assertRedirect(themeDisplay, bareURL, _sourceLocalePrepend + bareURL);
 	}
 
 	@Test
 	public void testControlPanelRedirect() throws PortalException {
-		_setThemeDisplayForControlPanel(false);
+		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(false);
+
 		String bareURL = _getURLForControlPanel();
 
-		_assertRedirect(bareURL, bareURL);
+		_assertRedirect(themeDisplay, bareURL, bareURL);
 		_assertRedirect(
-			_sourceLocalePrepend + bareURL, _sourceLocalePrepend + bareURL);
+			themeDisplay, _sourceLocalePrepend + bareURL,
+			_sourceLocalePrepend + bareURL);
 	}
 
 	@Test
 	public void testPublicPageI18nRedirect() throws PortalException {
-		_setThemeDisplayForLayout(true);
+		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
+
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(themeDisplay, bareDefaultURL, bareSourceURL);
+		_assertRedirect(
+			themeDisplay, bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
 	public void testPublicPageRedirect() throws PortalException {
-		_setThemeDisplayForLayout(false);
+		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
+
 		String[] urls = _getURLsForPublicPage();
 
 		String bareSourceURL = urls[0];
 		String bareDefaultURL = urls[1];
 
-		_assertRedirect(bareDefaultURL, bareSourceURL);
-		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(themeDisplay, bareDefaultURL, bareSourceURL);
+		_assertRedirect(
+			themeDisplay, bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
-	private void _assertRedirect(String expectedRedirect, String url)
+	private void _assertRedirect(
+			ThemeDisplay themeDisplay, String expectedRedirect, String url)
 		throws PortalException {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -190,9 +201,37 @@ public class UpdateLanguageActionTest {
 		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
 
 		String redirect = updateLanguageAction.getRedirect(
-			mockHttpServletRequest, _themeDisplay, _targetLocale);
+			mockHttpServletRequest, themeDisplay, _targetLocale);
 
 		Assert.assertEquals(expectedRedirect, redirect);
+	}
+
+	private ThemeDisplay _getThemeDisplayForControlPanel(boolean i18n) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		if (i18n) {
+			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
+
+		themeDisplay.setLayout(_controlPanelLayout);
+
+		return themeDisplay;
+	}
+
+	private ThemeDisplay _getThemeDisplayForLayout(boolean i18n) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		if (i18n) {
+			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
+
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		return themeDisplay;
 	}
 
 	private String _getURLForControlPanel() {
@@ -249,30 +288,6 @@ public class UpdateLanguageActionTest {
 		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
-	private void _setThemeDisplayForControlPanel(boolean i18n) {
-		_themeDisplay = new ThemeDisplay();
-
-		if (i18n) {
-			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-			_themeDisplay.setI18nPath(_sourceLocalePrepend);
-		}
-
-		_themeDisplay.setLayout(_controlPanelLayout);
-	}
-
-	private void _setThemeDisplayForLayout(boolean i18n) {
-		_themeDisplay = new ThemeDisplay();
-
-		if (i18n) {
-			_themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-			_themeDisplay.setI18nPath(_sourceLocalePrepend);
-		}
-
-		_themeDisplay.setLayout(_layout);
-		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-	}
-
 	private static Locale _defaultLocale;
 	private static final Locale _sourceLocale = LocaleUtil.FRANCE;
 	private static String _sourceLocalePrepend;
@@ -285,6 +300,5 @@ public class UpdateLanguageActionTest {
 	private Group _group;
 
 	private Layout _layout;
-	private ThemeDisplay _themeDisplay;
 
 }

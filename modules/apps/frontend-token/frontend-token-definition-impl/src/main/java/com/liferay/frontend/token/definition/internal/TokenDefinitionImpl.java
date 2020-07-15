@@ -21,15 +21,15 @@ import com.liferay.frontend.token.definition.TokenDefinition;
  */
 public class TokenDefinitionImpl implements TokenDefinition {
 
-	public TokenDefinitionImpl(String rawDefinition) {
-		_rawDefinition = rawDefinition;
+	public TokenDefinitionImpl(String rawTokenDefinition) {
+		_rawTokenDefinition = rawTokenDefinition;
 	}
 
 	@Override
-	public String getRawDefinition() {
-		return _rawDefinition;
+	public String getRawTokenDefinition() {
+		return _rawTokenDefinition;
 	}
 
-	private final String _rawDefinition;
+	private final String _rawTokenDefinition;
 
 }

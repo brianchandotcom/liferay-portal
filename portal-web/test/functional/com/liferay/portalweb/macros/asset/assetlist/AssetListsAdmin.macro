@@ -29,9 +29,11 @@ definition {
 	macro addKeywordsFilter {
 		Panel.expandPanel(panel = "Source");
 
-		Select(
-			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "All Types");
+		if (!(IsSelectedLabel(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT", value1 = "All Types"))) {
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+				value1 = "All Types");
+		}
 
 		Panel.expandPanel(panel = "Filter");
 

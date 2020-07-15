@@ -59,6 +59,15 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Test(expected = XLIFFFileException.MustHaveCorrectEncoding.class)
+	public void testImportXLIFF2FailsFileIncorrectEncoding() throws Exception {
+		_xliffTranslationInfoItemFieldValuesImporter.importInfoItemFieldValues(
+			_group.getGroupId(),
+			new InfoItemClassPKReference(JournalArticle.class.getName(), 122),
+			TranslationTestUtil.readFileToInputStream(
+				"test-journal-article-122-iso-8859-encoding.xlf"));
+	}
+
 	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
 	public void testImportXLIFF2FailsFileInvalidGroupLanguage()
 		throws Exception {

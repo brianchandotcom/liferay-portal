@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.exportimport;
+package com.liferay.journal.internal.exportimport.content.processor;
 
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;

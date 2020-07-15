@@ -225,51 +225,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeployProvider(
-		final Project project, final LiferayExtension liferayExtension,
-		TaskProvider<Copy> deployTaskProvider) {
-
-		deployTaskProvider.configure(
-			new Action<Copy>() {
-
-				@Override
-				public void execute(Copy deployCopy) {
-					deployCopy.doLast(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								Logger logger = task.getLogger();
-
-								if (logger.isLifecycleEnabled()) {
-									Copy copy = (Copy)task;
-
-									logger.lifecycle(
-										"Files of {} deployed to {}", project,
-										copy.getDestinationDir());
-								}
-							}
-
-						});
-
-					deployCopy.into(
-						new Callable<File>() {
-
-							@Override
-							public File call() throws Exception {
-								return liferayExtension.getDeployDir();
-							}
-
-						});
-
-					deployCopy.setDescription(
-						"Assembles the project and deploys it to Liferay.");
-					deployCopy.setGroup(BasePlugin.BUILD_GROUP);
-				}
-
-			});
-	}
-
-	private void _configureTaskDeployProvider(
 		final LiferayExtension liferayExtension,
 		final TaskProvider<Copy> deployTaskProvider,
 		final TaskProvider<DockerCopyTask> dockerCopyTaskProvider,
@@ -355,6 +310,51 @@ public class LiferayBasePlugin implements Plugin<Project> {
 							}
 
 						});
+				}
+
+			});
+	}
+
+	private void _configureTaskDeployProvider(
+		final Project project, final LiferayExtension liferayExtension,
+		TaskProvider<Copy> deployTaskProvider) {
+
+		deployTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy deployCopy) {
+					deployCopy.doLast(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								Logger logger = task.getLogger();
+
+								if (logger.isLifecycleEnabled()) {
+									Copy copy = (Copy)task;
+
+									logger.lifecycle(
+										"Files of {} deployed to {}", project,
+										copy.getDestinationDir());
+								}
+							}
+
+						});
+
+					deployCopy.into(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return liferayExtension.getDeployDir();
+							}
+
+						});
+
+					deployCopy.setDescription(
+						"Assembles the project and deploys it to Liferay.");
+					deployCopy.setGroup(BasePlugin.BUILD_GROUP);
 				}
 
 			});

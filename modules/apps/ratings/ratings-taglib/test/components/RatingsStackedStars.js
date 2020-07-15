@@ -45,7 +45,7 @@ describe('RatingsStackedStars', () => {
 		beforeEach(() => {
 			result = renderComponent();
 			starsRadios = result.getAllByRole('radio');
-			starsRadiosFieldset = result.getByRole('group')
+			starsRadiosFieldset = result.getByRole('group');
 		});
 
 		it('is enabled', () => {
@@ -71,7 +71,7 @@ describe('RatingsStackedStars', () => {
 		beforeEach(() => {
 			result = renderComponent({enabled: false});
 			starsRadios = result.getAllByRole('radio');
-			starsRadiosFieldset = result.getByRole('group')
+			starsRadiosFieldset = result.getByRole('group');
 		});
 
 		it('is disabled', () => {
@@ -104,7 +104,7 @@ describe('RatingsStackedStars', () => {
 					userScore: 0,
 				});
 				starsRadios = result.getAllByRole('radio');
-				starsRadiosFieldset = result.getByRole('group')
+				starsRadiosFieldset = result.getByRole('group');
 
 				act(() => {
 					fireEvent.click(starsRadios[4]);
@@ -136,13 +136,13 @@ describe('RatingsStackedStars', () => {
 					});
 				});
 
-				it('increase the user score', () => {
+				it('increases the user score', () => {
 					expect(result.getByRole('group')).toHaveFormValues({
 						_random_namespace_rating: '1',
 					});
 				});
 
-				it('has voted pural title', () => {
+				it('has voted plural title', () => {
 					expect(starsRadiosFieldset.title).toBe(
 						'you-have-rated-this-x-stars-out-of-x'
 					);
@@ -158,7 +158,7 @@ describe('RatingsStackedStars', () => {
 					});
 				});
 
-				it('delete the user score', () => {
+				it('deletes the user score', () => {
 					expect(result.getByRole('group')).toHaveFormValues({
 						_random_namespace_rating: undefined,
 					});

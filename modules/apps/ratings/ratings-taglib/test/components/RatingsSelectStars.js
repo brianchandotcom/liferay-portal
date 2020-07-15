@@ -128,11 +128,11 @@ describe('RatingsSelectStars', () => {
 					});
 				});
 
-				it('increase the user score', () => {
+				it('increases the user score', () => {
 					expect(starsDropdownToggle.value).toBe('5');
 				});
 
-				it('has voted pural title', () => {
+				it('has voted plural title', () => {
 					expect(starsDropdownToggle.title).toBe(
 						'you-have-rated-this-x-stars-out-of-x'
 					);
@@ -146,7 +146,7 @@ describe('RatingsSelectStars', () => {
 					});
 				});
 
-				it('delete the user score', () => {
+				it('deletes the user score', () => {
 					expect(starsDropdownToggle.value).toBe('0');
 				});
 
@@ -273,7 +273,7 @@ describe('RatingsSelectStars', () => {
 					});
 				});
 
-				it('delete the user score', () => {
+				it('deletes the user score', () => {
 					expect(starsDropdownToggle.value).toBe('0');
 				});
 

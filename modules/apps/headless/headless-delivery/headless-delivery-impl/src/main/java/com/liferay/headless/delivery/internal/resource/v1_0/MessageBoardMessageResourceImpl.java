@@ -50,6 +50,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -421,11 +422,12 @@ public class MessageBoardMessageResourceImpl
 			_getExpandoBridgeAttributes(messageBoardMessage), siteId,
 			messageBoardMessage.getViewableByAsString());
 
-		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
-
 		String link = contextHttpServletRequest.getHeader("Link");
 
 		if (link == null) {
+			UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
+				contextUriInfo);
+
 			link = String.valueOf(
 				uriBuilder.replacePath(
 					"/"

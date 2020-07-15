@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
@@ -25,8 +26,6 @@ import io.swagger.v3.oas.integration.api.OpenApiContext;
 import io.swagger.v3.oas.integration.api.OpenApiScanner;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
-
-import java.net.URI;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,9 +97,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		if (uriInfo != null) {
 			Server server = new Server();
 
-			URI uri = uriInfo.getBaseUri();
-
-			server.setUrl(uri.toString());
+			server.setUrl(UriInfoUtil.getBasePath(uriInfo));
 
 			openAPI.setServers(Collections.singletonList(server));
 		}

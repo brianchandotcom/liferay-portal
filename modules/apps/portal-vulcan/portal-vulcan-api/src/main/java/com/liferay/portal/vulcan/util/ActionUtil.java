@@ -26,8 +26,6 @@ import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import java.net.URI;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -167,9 +165,7 @@ public class ActionUtil {
 			}
 		}
 
-		URI baseURI = uriInfo.getBaseUri();
-
-		String baseURIString = baseURI.toString();
+		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
 
 		if (baseURIString.contains("/graphql")) {
 			String operation = null;
@@ -205,7 +201,8 @@ public class ActionUtil {
 
 		return HashMapBuilder.put(
 			"href",
-			uriInfo.getBaseUriBuilder(
+			UriInfoUtil.getBaseUriBuilder(
+				uriInfo
 			).path(
 				_getVersion(uriInfo)
 			).path(

@@ -21,6 +21,9 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
+import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
+import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
@@ -77,6 +80,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -97,6 +101,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1583,6 +1588,9 @@ public class DataDefinitionResourceImpl
 	@Reference
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
+
+	@Reference
+	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

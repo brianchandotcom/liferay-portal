@@ -134,7 +134,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//ul[contains(@class,'property-builder-fields-container')]</td>
+	<td>//div[contains(@class,'data-layout-builder-sidebar')]</td>
 	<td></td>
 </tr>
 <tr>

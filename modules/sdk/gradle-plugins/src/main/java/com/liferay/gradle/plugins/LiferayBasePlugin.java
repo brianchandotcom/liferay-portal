@@ -107,7 +107,40 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		GradleUtil.applyScript(
 			project, _getScriptLiferayExtension(project), project);
 
-		_configureConfigurations(project, liferayExtension);
+		configurationContainer.all(
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					ResolutionStrategy resolutionStrategy =
+						configuration.getResolutionStrategy();
+
+					resolutionStrategy.eachDependency(
+						new Action<DependencyResolveDetails>() {
+
+							@Override
+							public void execute(
+								DependencyResolveDetails
+									dependencyResolveDetails) {
+
+								ModuleVersionSelector moduleVersionSelector =
+									dependencyResolveDetails.getRequested();
+
+								String version =
+									moduleVersionSelector.getVersion();
+
+								if (version.equals("default")) {
+									dependencyResolveDetails.useVersion(
+										liferayExtension.getDefaultVersion(
+											moduleVersionSelector));
+								}
+							}
+
+						});
+				}
+
+			});
+
 		_configureTasksDirectDeploy(project, liferayExtension);
 	}
 
@@ -313,49 +346,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureConfigurations(
-		Project project, final LiferayExtension liferayExtension) {
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Action<Configuration> action = new Action<Configuration>() {
-
-			@Override
-			public void execute(Configuration configuration) {
-				ResolutionStrategy resolutionStrategy =
-					configuration.getResolutionStrategy();
-
-				resolutionStrategy.eachDependency(
-					new Action<DependencyResolveDetails>() {
-
-						@Override
-						public void execute(
-							DependencyResolveDetails dependencyResolveDetails) {
-
-							ModuleVersionSelector moduleVersionSelector =
-								dependencyResolveDetails.getRequested();
-
-							String version = moduleVersionSelector.getVersion();
-
-							if (!version.equals("default")) {
-								return;
-							}
-
-							version = liferayExtension.getDefaultVersion(
-								moduleVersionSelector);
-
-							dependencyResolveDetails.useVersion(version);
-						}
-
-					});
-			}
-
-		};
-
-		configurationContainer.all(action);
 	}
 
 	private void _configureTaskDirectDeploy(

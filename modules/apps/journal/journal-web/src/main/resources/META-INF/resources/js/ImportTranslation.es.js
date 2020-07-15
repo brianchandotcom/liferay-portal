@@ -47,7 +47,7 @@ export default function ImportTranslation({
 			const reader = new FileReader();
 
 			reader.addEventListener('loadend', (event) => {
-				parseFile(importFile.name, event.target.result);
+				parseFile(event.target.result);
 			});
 
 			reader.readAsText(importFile);
@@ -55,7 +55,7 @@ export default function ImportTranslation({
 	}, [importFile, parseFile, saveDraftBtnId, submitBtnId, worflowPending]);
 
 	const parseFile = useCallback(
-		(filename, fileData) => {
+		(fileData) => {
 			try {
 				const xmlDoc = new DOMParser().parseFromString(
 					fileData,
@@ -84,6 +84,7 @@ export default function ImportTranslation({
 			}
 			catch (_error) {
 				setHasError(true);
+				setImportFile(null);
 			}
 		},
 		[articleResourcePrimKey]

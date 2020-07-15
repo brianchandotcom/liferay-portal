@@ -452,18 +452,17 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									<liferay-ui:search-container-column-text
 										colspan="<%= 3 %>"
 									>
-										<liferay-ui:app-view-entry
-											author="<%= folder.getUserName() %>"
-											createDate="<%= folder.getCreateDate() %>"
-											description="<%= folder.getDescription() %>"
-											displayStyle="descriptive"
-											folder="<%= true %>"
-											markupView="lexicon"
-											modifiedDate="<%= folder.getModifiedDate() %>"
-											showCheckbox="<%= false %>"
-											title="<%= folder.getName() %>"
-											url="<%= viewFolderURL.toString() %>"
-										/>
+										<h5>
+											<a href="<%= HtmlUtil.escapeAttribute(viewFolderURL.toString()) %>" title="<%= folder.getName() %>">
+												<strong><%= HtmlUtil.escape(folder.getName()) %></strong>
+											</a>
+										</h5>
+
+										<h6 class="text-default">
+											<liferay-ui:message key="created" />:
+
+											<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - folder.getCreateDate().getTime(), true), HtmlUtil.escape(folder.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+										</h6>
 									</liferay-ui:search-container-column-text>
 
 								<%
@@ -500,23 +499,21 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										colspan="<%= 2 %>"
 									>
 										<div class="item-preview" data-href="<%= Validator.isNotNull(thumbnailSrc) ? HtmlUtil.escapeHREF(DLURLHelperUtil.getImagePreviewURL(fileEntry, themeDisplay)) : themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
-											<liferay-ui:app-view-entry
-												assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
-												assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
-												assetTagClassName="<%= DLFileEntry.class.getName() %>"
-												assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
-												author="<%= fileEntry.getUserName() %>"
-												createDate="<%= fileEntry.getCreateDate() %>"
-												description="<%= fileEntry.getDescription() %>"
-												displayStyle="descriptive"
-												groupId="<%= fileEntry.getGroupId() %>"
-												markupView="lexicon"
-												modifiedDate="<%= fileEntry.getModifiedDate() %>"
-												showCheckbox="<%= false %>"
-												status="<%= latestFileVersion.getStatus() %>"
-												title="<%= title %>"
-												version="<%= String.valueOf(fileEntry.getVersion()) %>"
-											/>
+											<h5>
+												<strong><%= title %></strong>
+											</h5>
+
+											<h6 class="text-default">
+												<liferay-ui:message key="version" />:
+
+												<%= String.valueOf(fileEntry.getVersion()) %>
+											</h6>
+
+											<h6 class="text-default">
+												<liferay-ui:message key="last-updated" />:
+
+												<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+											</h6>
 										</div>
 									</liferay-ui:search-container-column-text>
 

@@ -125,8 +125,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLayoutURL(getLayoutURL());
 
 		if (_modelPermissions != null) {
-			serviceContext.setModelPermissions(
-				(ModelPermissions)_modelPermissions.clone());
+			serviceContext.setModelPermissions(_modelPermissions.clone());
 		}
 
 		serviceContext.setModifiedDate(getModifiedDate());

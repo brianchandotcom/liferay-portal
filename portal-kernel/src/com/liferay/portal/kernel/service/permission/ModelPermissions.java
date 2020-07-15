@@ -14,99 +14,32 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
-
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer
  */
-public class ModelPermissions implements Cloneable, Serializable {
+@ProviderType
+public interface ModelPermissions extends Cloneable, Serializable {
 
-	public static final String RESOURCE_NAME_ALL_RESOURCES =
-		ModelPermissions.class.getName() + "#ALL_RESOURCES";
+	public void addRolePermissions(String roleName, String... actionIds);
 
-	public static final String RESOURCE_NAME_FIRST_RESOURCE =
-		ModelPermissions.class.getName() + "#FIRST_RESOURCE";
+	public ModelPermissions clone();
 
-	public static final String RESOURCE_NAME_UNINITIALIZED =
-		ModelPermissions.class.getName() + "#UNINITIALIZED";
+	public String[] getActionIds(String roleName);
 
-	public ModelPermissions(String resourceName) {
-		setResourceName(resourceName);
-	}
+	public String getResourceName();
 
-	public void addRolePermissions(String roleName, String... actionIds) {
-		if (ArrayUtil.isEmpty(actionIds)) {
-			return;
-		}
+	public Collection<String> getRoleNames();
 
-		Set<String> actionIdSet = _actionIdsMap.get(roleName);
+	public boolean isUsed();
 
-		if (actionIdSet == null) {
-			actionIdSet = new HashSet<>();
+	public void setResourceName(String resourceName);
 
-			_actionIdsMap.put(roleName, actionIdSet);
-		}
-
-		Collections.addAll(actionIdSet, actionIds);
-	}
-
-	@Override
-	public Object clone() {
-		return new ModelPermissions(_actionIdsMap, _resourceName, _used);
-	}
-
-	public String[] getActionIds(String roleName) {
-		Set<String> actionIds = _actionIdsMap.get(roleName);
-
-		if (actionIds == null) {
-			return StringPool.EMPTY_ARRAY;
-		}
-
-		return actionIds.toArray(new String[0]);
-	}
-
-	public String getResourceName() {
-		return _resourceName;
-	}
-
-	public Collection<String> getRoleNames() {
-		return _actionIdsMap.keySet();
-	}
-
-	public boolean isUsed() {
-		return _used;
-	}
-
-	public void setResourceName(String resourceName) {
-		_resourceName = Objects.requireNonNull(resourceName);
-	}
-
-	public void setUsed(boolean used) {
-		_used = used;
-	}
-
-	private ModelPermissions(
-		Map<String, Set<String>> actionIdsMap, String resourceName,
-		boolean used) {
-
-		_actionIdsMap.putAll(actionIdsMap);
-		_resourceName = Objects.requireNonNull(resourceName);
-		_used = used;
-	}
-
-	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
-	private String _resourceName = RESOURCE_NAME_UNINITIALIZED;
-	private boolean _used;
+	public void setUsed(boolean used);
 
 }

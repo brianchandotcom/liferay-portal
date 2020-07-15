@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.internal.service.permission.ModelPermissionsImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
@@ -1979,7 +1980,7 @@ public class ResourcePermissionLocalServiceImpl
 		ModelPermissions modelPermissions, String resourcePermissionName) {
 
 		if ((modelPermissions == null) ||
-			ModelPermissions.RESOURCE_NAME_UNINITIALIZED.equals(
+			ModelPermissionsImpl.RESOURCE_NAME_UNINITIALIZED.equals(
 				modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {
@@ -1992,7 +1993,7 @@ public class ResourcePermissionLocalServiceImpl
 			return false;
 		}
 
-		if (ModelPermissions.RESOURCE_NAME_FIRST_RESOURCE.equals(
+		if (ModelPermissionsImpl.RESOURCE_NAME_FIRST_RESOURCE.equals(
 				modelPermissions.getResourceName())) {
 
 			if (!modelPermissions.isUsed()) {
@@ -2016,7 +2017,7 @@ public class ResourcePermissionLocalServiceImpl
 			return false;
 		}
 
-		if (ModelPermissions.RESOURCE_NAME_ALL_RESOURCES.equals(
+		if (ModelPermissionsImpl.RESOURCE_NAME_ALL_RESOURCES.equals(
 				modelPermissions.getResourceName())) {
 
 			if (_log.isDebugEnabled()) {

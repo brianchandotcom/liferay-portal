@@ -67,7 +67,7 @@ public class TokenDefinitionRegistryImplTest {
 		try (InputStream inputStream = _tokenDefinitionJsonURL.openStream()) {
 			Assert.assertEquals(
 				StringUtil.read(inputStream),
-				tokenDefinition.getRawDefinition());
+				tokenDefinition.getRawTokenDefinition());
 		}
 	}
 

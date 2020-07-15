@@ -19,6 +19,6 @@ package com.liferay.frontend.token.definition;
  */
 public interface TokenDefinition {
 
-	public String getRawDefinition();
+	public String getRawTokenDefinition();
 
 }

@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -122,22 +124,22 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testCreateWithGuestAndGroupPermissions() throws Exception {
+	public void testCreateWithGuestAndGroupPermissions() {
 		String[] groupPermissions = {ActionKeys.VIEW};
 		String[] guestPermissions = {ActionKeys.VIEW};
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			groupPermissions, guestPermissions);
 
-		Collection<String> roleNames = modelPermissions.getRoleNames();
+		Set<String> expectedRoleNames = new HashSet<>(
+			Arrays.asList(
+				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
+				RoleConstants.GUEST));
 
-		Assert.assertEquals(roleNames.toString(), 2, roleNames.size());
-
-		Collection<String> viewActionIdRoleNames =
-			modelPermissions.getRoleNames(ActionKeys.VIEW);
+		Assert.assertEquals(expectedRoleNames, modelPermissions.getRoleNames());
 
 		Assert.assertEquals(
-			viewActionIdRoleNames.toString(), 2, viewActionIdRoleNames.size());
+			expectedRoleNames, modelPermissions.getRoleNames(ActionKeys.VIEW));
 	}
 
 	@Test

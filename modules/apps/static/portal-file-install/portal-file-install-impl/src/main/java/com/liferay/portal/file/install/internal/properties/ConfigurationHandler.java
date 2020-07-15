@@ -64,13 +64,13 @@ public class ConfigurationHandler {
 		int c1 = _ignorableWhiteSpace(pushbackReader);
 
 		while (true) {
-			if (c1 != '\\') {
+			if (c1 != CharPool.BACK_SLASH) {
 				break;
 			}
 
 			int c2 = pushbackReader.read();
 
-			if ((c2 == '\r') || (c2 == '\n')) {
+			if ((c2 == CharPool.RETURN) || (c2 == CharPool.NEW_LINE)) {
 				c1 = _ignorableWhiteSpace(pushbackReader);
 			}
 			else {
@@ -98,14 +98,14 @@ public class ConfigurationHandler {
 	private static int _read(PushbackReader pushbackReader) throws IOException {
 		int c = pushbackReader.read();
 
-		if (c == '\r') {
+		if (c == CharPool.RETURN) {
 			int c1 = pushbackReader.read();
 
-			if (c1 != '\n') {
+			if (c1 != CharPool.NEW_LINE) {
 				pushbackReader.unread(c1);
 			}
 
-			c = '\n';
+			c = CharPool.NEW_LINE;
 		}
 
 		return c;
@@ -154,7 +154,7 @@ public class ConfigurationHandler {
 				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 			}
 
-			if (spaces == _TOKEN_ARR_CLOS) {
+			if (spaces == CharPool.CLOSE_BRACKET) {
 				Class<?> type = (Class)_codeToType.get(typeCode);
 
 				Object array = Array.newInstance(type, list.size());
@@ -168,7 +168,7 @@ public class ConfigurationHandler {
 			else if (spaces < 0) {
 				return null;
 			}
-			else if (spaces != _TOKEN_COMMA) {
+			else if (spaces != CharPool.COMMA) {
 				return null;
 			}
 		}
@@ -200,13 +200,13 @@ public class ConfigurationHandler {
 				spaces = _ignorablePageBreakAndWhiteSpace(pushbackReader);
 			}
 
-			if (spaces == _TOKEN_VEC_CLOS) {
+			if (spaces == CharPool.CLOSE_PARENTHESIS) {
 				return collection;
 			}
 			else if (spaces < 0) {
 				return null;
 			}
-			else if (spaces != _TOKEN_COMMA) {
+			else if (spaces != CharPool.COMMA) {
 				return null;
 			}
 		}
@@ -220,23 +220,23 @@ public class ConfigurationHandler {
 		while (true) {
 			int c = _read(pushbackReader);
 
-			if (c == '\\') {
+			if (c == CharPool.BACK_SLASH) {
 				c = _read(pushbackReader);
 
 				if (c == 'b') {
 					sb.append('\b');
 				}
 				else if (c == 't') {
-					sb.append('\t');
+					sb.append(CharPool.TAB);
 				}
 				else if (c == 'n') {
-					sb.append('\n');
+					sb.append(CharPool.NEW_LINE);
 				}
 				else if (c == 'f') {
 					sb.append('\f');
 				}
 				else if (c == 'r') {
-					sb.append('\r');
+					sb.append(CharPool.RETURN);
 				}
 				else if (c == 'u') {
 					char[] charBuffer = new char[4];
@@ -338,10 +338,10 @@ public class ConfigurationHandler {
 			type = _TOKEN_SIMPLE_STRING;
 		}
 
-		if (code == _TOKEN_ARR_OPEN) {
+		if (code == CharPool.OPEN_BRACKET) {
 			return _readArray(type, pushbackReader);
 		}
-		else if (code == _TOKEN_VEC_OPEN) {
+		else if (code == CharPool.OPEN_PARENTHESIS) {
 			return _readCollection(type, pushbackReader);
 		}
 		else if (code == _TOKEN_VAL_OPEN) {
@@ -365,7 +365,7 @@ public class ConfigurationHandler {
 
 		_writeType(writer, clazz.getComponentType());
 
-		writer.write(_TOKEN_ARR_OPEN);
+		writer.write(CharPool.OPEN_BRACKET);
 
 		writer.write(_COLLECTION_LINE_BREAK);
 
@@ -374,7 +374,7 @@ public class ConfigurationHandler {
 		}
 
 		writer.write(_INDENT);
-		writer.write(_TOKEN_ARR_CLOS);
+		writer.write(CharPool.CLOSE_BRACKET);
 	}
 
 	private static void _writeCollection(
@@ -382,9 +382,9 @@ public class ConfigurationHandler {
 		throws IOException {
 
 		if (collection.isEmpty()) {
-			writer.write(_TOKEN_VEC_OPEN);
+			writer.write(CharPool.OPEN_PARENTHESIS);
 			writer.write(_COLLECTION_LINE_BREAK);
-			writer.write(_TOKEN_VEC_CLOS);
+			writer.write(CharPool.CLOSE_PARENTHESIS);
 		}
 		else {
 			Iterator<?> iterator = collection.iterator();
@@ -393,7 +393,7 @@ public class ConfigurationHandler {
 
 			_writeType(writer, firstElement.getClass());
 
-			writer.write(_TOKEN_VEC_OPEN);
+			writer.write(CharPool.OPEN_PARENTHESIS);
 			writer.write(_COLLECTION_LINE_BREAK);
 
 			_writeCollectionElement(writer, firstElement);
@@ -402,7 +402,7 @@ public class ConfigurationHandler {
 				_writeCollectionElement(writer, iterator.next());
 			}
 
-			writer.write(_TOKEN_VEC_CLOS);
+			writer.write(CharPool.CLOSE_PARENTHESIS);
 		}
 	}
 
@@ -413,7 +413,7 @@ public class ConfigurationHandler {
 
 		_writeSimple(writer, element);
 
-		writer.write(_TOKEN_COMMA);
+		writer.write(CharPool.COMMA);
 		writer.write(_COLLECTION_LINE_BREAK);
 	}
 
@@ -432,25 +432,26 @@ public class ConfigurationHandler {
 			c = simple.charAt(i);
 
 			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) ||
-				(c == CharPool.SPACE) || (c == _TOKEN_EQ) ||
-				(c == _TOKEN_BRACE_OPEN) || (c == _TOKEN_BRACE_CLOS)) {
+				(c == CharPool.SPACE) || (c == CharPool.EQUAL) ||
+				(c == CharPool.OPEN_CURLY_BRACE) ||
+				(c == CharPool.CLOSE_CURLY_BRACE)) {
 
-				writer.write('\\');
+				writer.write(CharPool.BACK_SLASH);
 				writer.write(c);
 			}
 			else if (c == '\b') {
 				writer.write("\\b");
 			}
-			else if (c == '\t') {
+			else if (c == CharPool.TAB) {
 				writer.write("\\t");
 			}
-			else if (c == '\n') {
+			else if (c == CharPool.NEW_LINE) {
 				writer.write("\\n");
 			}
 			else if (c == '\f') {
 				writer.write("\\f");
 			}
-			else if (c == '\r') {
+			else if (c == CharPool.RETURN) {
 				writer.write("\\r");
 			}
 			else if (c < CharPool.SPACE) {
@@ -506,18 +507,6 @@ public class ConfigurationHandler {
 
 	private static final String _INDENT = "  ";
 
-	private static final int _TOKEN_ARR_CLOS = ']';
-
-	private static final int _TOKEN_ARR_OPEN = '[';
-
-	private static final int _TOKEN_BRACE_CLOS = '}';
-
-	private static final int _TOKEN_BRACE_OPEN = '{';
-
-	private static final int _TOKEN_COMMA = ',';
-
-	private static final int _TOKEN_EQ = '=';
-
 	private static final int _TOKEN_SIMPLE_BOOLEAN = 'B';
 
 	private static final int _TOKEN_SIMPLE_BYTE = 'X';
@@ -539,10 +528,6 @@ public class ConfigurationHandler {
 	private static final int _TOKEN_VAL_CLOS = '"'; // '}';
 
 	private static final int _TOKEN_VAL_OPEN = '"'; // '{';
-
-	private static final int _TOKEN_VEC_CLOS = ')';
-
-	private static final int _TOKEN_VEC_OPEN = '(';
 
 	private static final Map<Object, Object> _codeToType = new HashMap<>();
 	private static final Map<Object, Object> _typeToCode =

@@ -503,8 +503,8 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			textBoxFieldName = "TextBox",
+			webContentRichText = "WC WebContent TextBox",
 			webContentText = "WC WebContent Text",
-			webContentTextBox = "WC WebContent TextBox",
 			webContentTitle = "WC WebContent Title");
 
 		AssertElementPresent(locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')][contains(.,'WC WebContent Text')]");

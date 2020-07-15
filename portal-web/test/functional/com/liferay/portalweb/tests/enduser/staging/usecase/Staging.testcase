@@ -2456,8 +2456,8 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "Structure Name",
 			templateName = "Template Name",
+			webContentRichText = "Staging Web Content Body",
 			webContentText = "Staging Web Content Text",
-			webContentTextBox = "Staging Web Content Body",
 			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();

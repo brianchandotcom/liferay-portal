@@ -331,7 +331,7 @@ definition {
 			fieldName = "BannerTitle",
 			fieldName2 = "BannerHeading",
 			webContentImage = "Spaceport.jpg",
-			webContentTextBox = "Space Program Academy of Continuing Education",
+			webContentRichText = "Space Program Academy of Continuing Education",
 			webContentTextBox2 = "Dare to dream out of this world",
 			webContentTitle = "S.P.A.C.E. Banner");
 
@@ -344,7 +344,7 @@ definition {
 			fieldName = "BannerTitle",
 			fieldName2 = "BannerHeading",
 			webContentImage = "Spaceport.jpg",
-			webContentTextBox = "Space Program Academy of Continuing Education",
+			webContentRichText = "Space Program Academy of Continuing Education",
 			webContentTextBox2 = "Dare to dream out of this world",
 			webContentTitle = "S.P.A.C.E. Banner");
 	}
@@ -533,8 +533,8 @@ definition {
 
 		WebContent.addWithStructureCP(
 			fieldName = "title",
-			webContentTextBox = "Green Waste",
-			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentRichText = "Green Waste",
+			webContentRichTextList = "Mowed Lawns,Mulched Branches,Compost Bin",
 			webContentTitle = "Agricultural Science Front Page");
 
 		PortletEntry.publish();
@@ -543,8 +543,8 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			fieldName = "title",
-			webContentTextBox = "Green Waste",
-			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentRichText = "Green Waste",
+			webContentRichTextList = "Mowed Lawns,Mulched Branches,Compost Bin",
 			webContentTitle = "Agricultural Science Front Page");
 	}
 

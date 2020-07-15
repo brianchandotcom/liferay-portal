@@ -257,8 +257,8 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
+			webContentRichText = "Rich Text",
 			webContentText = "Text",
-			webContentTextBox = "Text Box",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -302,7 +302,7 @@ definition {
 
 		AssertNotEditable(
 			key_fieldName = "TextBox",
-			locator1 = "DDMField#TEXT_BOX");
+			locator1 = "DDMField#RICH_TEXT");
 	}
 
 	@description = "This is a use case for LPS-69560."

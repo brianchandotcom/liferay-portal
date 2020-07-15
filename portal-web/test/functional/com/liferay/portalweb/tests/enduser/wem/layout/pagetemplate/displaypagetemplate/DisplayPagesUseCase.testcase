@@ -844,7 +844,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			fieldName = "Content",
-			webContentTextBox = "Webcontent Content",
+			webContentRichText = "Webcontent Content",
 			webContentTitle = "Webcontent Title");
 
 		WebContent.addWithTagCP(tagNameList = "tag1,tag2,tag3");

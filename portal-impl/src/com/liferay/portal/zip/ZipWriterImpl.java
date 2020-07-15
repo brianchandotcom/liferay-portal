@@ -14,6 +14,7 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
@@ -37,7 +38,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
+import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -74,6 +80,17 @@ public class ZipWriterImpl implements ZipWriter {
 	@Override
 	public void addEntry(String name, byte[] bytes) throws IOException {
 		if (bytes == null) {
+			return;
+		}
+
+		if (ExportImportThreadLocal.isExportInProcess()) {
+			if (_exportQueue == null) {
+				_exportQueue = new LinkedList<>();
+			}
+
+			_exportQueue.add(
+				new AbstractMap.SimpleImmutableEntry<>(name, bytes));
+
 			return;
 		}
 
@@ -146,6 +163,39 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public File getFile() {
+		if (_exportQueue != null) {
+			try (FileSystem fileSystem = FileSystems.newFileSystem(
+					_uri, Collections.emptyMap())) {
+
+				Iterator<Map.Entry<String, byte[]>> iterator =
+					_exportQueue.iterator();
+
+				while (iterator.hasNext()) {
+					Map.Entry<String, byte[]> entry = iterator.next();
+
+					iterator.remove();
+
+					Path path = fileSystem.getPath(entry.getKey());
+
+					Path parentPath = path.getParent();
+
+					if (parentPath != null) {
+						Files.createDirectories(parentPath);
+					}
+
+					Files.write(
+						path, entry.getValue(), StandardOpenOption.CREATE,
+						StandardOpenOption.TRUNCATE_EXISTING,
+						StandardOpenOption.WRITE);
+				}
+
+				_exportQueue = null;
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
+			}
+		}
+
 		return _file;
 	}
 
@@ -166,6 +216,7 @@ public class ZipWriterImpl implements ZipWriter {
 	public void umount() {
 	}
 
+	private List<Map.Entry<String, byte[]>> _exportQueue;
 	private final File _file;
 	private final URI _uri;
 

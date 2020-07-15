@@ -86,6 +86,9 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			_configureTaskDeploy(copy, liferayExtension, dockerFilesDir);
 		}
 
+		GradleUtil.applyScript(
+			project, _getScriptLiferayExtension(project), project);
+
 		_configureConfigurations(project, liferayExtension);
 		_configureTasksDirectDeploy(project, liferayExtension);
 	}
@@ -161,19 +164,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	private LiferayExtension _addLiferayExtension(Project project) {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
-
-		String name = _getConfigLiferayScriptName(
-			PortalTools.getPortalVersion(project));
-
-		ClassLoader classLoader = LiferayBasePlugin.class.getClassLoader();
-
-		URL url = classLoader.getResource(name);
-
-		if (url == null) {
-			name = _getConfigLiferayScriptName(null);
-		}
-
-		GradleUtil.applyScript(project, name, project);
 
 		return liferayExtension;
 	}
@@ -403,10 +393,12 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			});
 	}
 
-	private String _getConfigLiferayScriptName(String portalVersion) {
+	private String _getScriptLiferayExtension(Project project) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("com/liferay/gradle/plugins/dependencies/config-liferay");
+
+		String portalVersion = PortalTools.getPortalVersion(project);
 
 		if (Validator.isNotNull(portalVersion)) {
 			sb.append('-');
@@ -415,7 +407,15 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 		sb.append(".gradle");
 
-		return sb.toString();
+		ClassLoader classLoader = LiferayBasePlugin.class.getClassLoader();
+
+		URL url = classLoader.getResource(sb.toString());
+
+		if (url != null) {
+			return sb.toString();
+		}
+
+		return "com/liferay/gradle/plugins/dependencies/config-liferay.gradle";
 	}
 
 }

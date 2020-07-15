@@ -92,9 +92,8 @@ public class UpdateLanguageAction implements Action {
 
 		// Send redirect
 
-		String redirect = getRedirect(httpServletRequest, themeDisplay, locale);
-
-		httpServletResponse.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(
+			getRedirect(httpServletRequest, themeDisplay, locale));
 
 		return null;
 	}

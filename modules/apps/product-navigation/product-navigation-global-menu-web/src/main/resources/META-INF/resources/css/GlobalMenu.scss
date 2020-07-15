@@ -63,6 +63,14 @@ $tab-header-height: 38px;
 	margin: 0;
 	padding: 0.2rem;
 
+	@include media-breakpoint-down(xs) {
+		@at-root {
+			.mobile #{&} {
+				padding-bottom: 7rem;
+			}
+		}
+	}
+
 	@include media-breakpoint-up(sm) {
 		padding: 1.5rem 2.5rem 1.5rem 1.75rem;
 	}

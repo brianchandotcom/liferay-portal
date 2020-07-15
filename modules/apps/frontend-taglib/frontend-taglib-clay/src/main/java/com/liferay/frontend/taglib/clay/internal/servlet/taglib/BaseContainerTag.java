@@ -259,6 +259,8 @@ public class BaseContainerTag extends AttributesTagSupport {
 			props.putAll(_additionalProps);
 		}
 
+		props.putAll(getDynamicAttributes());
+
 		return props;
 	}
 

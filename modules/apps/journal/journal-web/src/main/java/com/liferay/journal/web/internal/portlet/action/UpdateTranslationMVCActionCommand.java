@@ -65,8 +65,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			JournalArticle article = ActionUtil.getArticle(actionRequest);
-			UnicodeProperties infoFieldUnicodeProperties =
-				PropertiesParamUtil.getProperties(actionRequest, "infoField--");
 
 			_journalArticleInfoItemFieldValuesUpdater.
 				updateFromInfoItemFieldValues(
@@ -77,8 +75,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 							JournalArticle.class.getName(),
 							article.getResourcePrimKey())
 					).infoFieldValues(
-						_getInfoFieldValues(
-							actionRequest, article, infoFieldUnicodeProperties)
+						_getInfoFieldValues(actionRequest, article)
 					).build());
 		}
 		catch (Exception exception) {
@@ -117,8 +114,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
-		ActionRequest actionRequest, JournalArticle article,
-		UnicodeProperties infoFieldUnicodeProperties) {
+		ActionRequest actionRequest, JournalArticle article) {
+
+		UnicodeProperties infoFieldUnicodeProperties =
+			PropertiesParamUtil.getProperties(actionRequest, "infoField--");
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 

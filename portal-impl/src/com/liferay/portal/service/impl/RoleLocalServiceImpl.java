@@ -100,6 +100,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Adds a role with additional parameters. The user is reindexed after role
 	 * is added.
 	 *
+	 * <p>
+	 * This is the recommended add method for API consumers.
+	 * </p>
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  className the name of the class for which the role is created
 	 *         (optionally <code>null</code>)
@@ -403,6 +407,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	/**
 	 * Deletes the role with the primary key and its associated permissions.
+	 *
+	 * <p>
+	 * This is the recommended delete method for API consumers.
+	 * </p>
 	 *
 	 * @param  roleId the primary key of the role
 	 * @return the deleted role
@@ -1516,6 +1524,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	/**
 	 * Updates the role with the primary key.
+	 *
+	 * <p>
+	 * This is the recommended update method for API consumers.
+	 * </p>
 	 *
 	 * @param  roleId the primary key of the role
 	 * @param  name the role's new name

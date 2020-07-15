@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * @author Michael Hashimoto
  */

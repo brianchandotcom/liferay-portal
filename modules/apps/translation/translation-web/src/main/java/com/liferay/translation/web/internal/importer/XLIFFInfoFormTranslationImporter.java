@@ -87,7 +87,7 @@ public class XLIFFInfoFormTranslationImporter
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {
 
-		try {
+		try (AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
 			File tempFile = FileUtil.createTempFile(inputStream);
 
 			String encoding = StringPool.UTF8;
@@ -98,76 +98,64 @@ public class XLIFFInfoFormTranslationImporter
 			LocaleId targetLocaleId = LocaleId.fromString(
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
-			try {
-				Document document = SAXReaderUtil.read(tempFile);
+			Document document = SAXReaderUtil.read(tempFile);
 
-				Element rootElement = document.getRootElement();
+			Element rootElement = document.getRootElement();
 
-				Attribute encodingAttribute = rootElement.attribute("encoding");
+			Attribute encodingAttribute = rootElement.attribute("encoding");
 
-				if (encodingAttribute != null) {
-					encoding = encodingAttribute.getValue();
-				}
-
-				Element fileElement = rootElement.element("file");
-
-				if (fileElement != null) {
-					Attribute sourceLanguageAttribute = fileElement.attribute(
-						"source-language");
-
-					if (sourceLanguageAttribute != null) {
-						sourceLocaleId = LocaleId.fromString(
-							sourceLanguageAttribute.getValue());
-					}
-
-					Attribute targetLanguageAttribute = fileElement.attribute(
-						"target-language");
-
-					if (targetLanguageAttribute != null) {
-						targetLocaleId = LocaleId.fromString(
-							targetLanguageAttribute.getValue());
-					}
-				}
+			if (encodingAttribute != null) {
+				encoding = encodingAttribute.getValue();
 			}
-			catch (DocumentException documentException) {
-				throw new XLIFFFileException.MustBeValid(documentException);
+
+			Element fileElement = rootElement.element("file");
+
+			if (fileElement != null) {
+				Attribute sourceLanguageAttribute = fileElement.attribute(
+					"source-language");
+
+				if (sourceLanguageAttribute != null) {
+					sourceLocaleId = LocaleId.fromString(
+						sourceLanguageAttribute.getValue());
+				}
+
+				Attribute targetLanguageAttribute = fileElement.attribute(
+					"target-language");
+
+				if (targetLanguageAttribute != null) {
+					targetLocaleId = LocaleId.fromString(
+						targetLanguageAttribute.getValue());
+				}
 			}
 
 			RawDocument rawDocument = new RawDocument(
 				tempFile.toURI(), encoding, sourceLocaleId, targetLocaleId);
 
-			try (AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
-				filter.open(rawDocument);
+			filter.open(rawDocument);
 
-				Stream<Event> stream = filter.stream();
+			Stream<Event> stream = filter.stream();
 
-				List<Event> events = stream.collect(Collectors.toList());
+			List<Event> events = stream.collect(Collectors.toList());
 
-				if (_isVersion20(events)) {
-					return _getInfoItemFieldValuesXLIFFv20(
-						groupId, infoItemClassPKReference, tempFile);
-				}
-
-				return _getInfoItemFieldValuesXLIFFv12(
-					events, infoItemClassPKReference);
+			if (_isVersion20(events)) {
+				return _getInfoItemFieldValuesXLIFFv20(
+					groupId, infoItemClassPKReference, tempFile);
 			}
-			catch (OkapiIllegalFilterOperationException
-						okapiIllegalFilterOperationException) {
 
-				throw new XLIFFFileException.MustBeValid(
-					okapiIllegalFilterOperationException);
+			return _getInfoItemFieldValuesXLIFFv12(
+				events, infoItemClassPKReference);
+		}
+		catch (DocumentException | OkapiIllegalFilterOperationException |
+			   XLIFFException exception) {
+			if (exception.getCause() instanceof CharConversionException) {
+				throw new XLIFFFileException.MustHaveCorrectEncoding(
+					exception);
 			}
+			throw new XLIFFFileException.MustBeValid(exception);
 		}
 		catch (InvalidParameterException invalidParameterException) {
 			throw new XLIFFFileException.MustHaveValidParameter(
 				invalidParameterException);
-		}
-		catch (XLIFFException xliffException) {
-			if (xliffException.getCause() instanceof CharConversionException) {
-				throw new XLIFFFileException.MustHaveCorrectEncoding(
-					xliffException);
-			}
-			throw new XLIFFFileException.MustBeValid(xliffException);
 		}
 	}
 

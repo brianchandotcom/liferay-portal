@@ -33,12 +33,12 @@ public class ImportStyleBookDisplayContext {
 		_renderRequest = renderRequest;
 	}
 
-	public List<String> getStyleBookEntryZipProcessorImportResultEntries(
+	public List<String> getStyleBookEntryZipProcessorImportResultEntriesNames(
 		StyleBookEntryZipProcessor.ImportResultEntry.Status status) {
 
 		List<StyleBookEntryZipProcessor.ImportResultEntry>
 			styleBookEntryZipProcessorImportResultEntries =
-				_getStyleBookEntryZipProcessorImportResultEntries();
+				_getStyleBookEntryZipProcessorImportResultEntriesNames();
 
 		if (ListUtil.isEmpty(styleBookEntryZipProcessorImportResultEntries)) {
 			return null;
@@ -59,7 +59,7 @@ public class ImportStyleBookDisplayContext {
 	}
 
 	private List<StyleBookEntryZipProcessor.ImportResultEntry>
-		_getStyleBookEntryZipProcessorImportResultEntries() {
+		_getStyleBookEntryZipProcessorImportResultEntriesNames() {
 
 		if (_styleBookEntryZipProcessorImportResultEntries != null) {
 			return _styleBookEntryZipProcessorImportResultEntries;

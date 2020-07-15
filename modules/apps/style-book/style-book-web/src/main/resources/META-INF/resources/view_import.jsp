@@ -33,25 +33,25 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 	<liferay-frontend:edit-form-body>
 
 		<%
-		List<String> draftStyleBookEntryZipProcessorImportResultEntries = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntries(StyleBookEntryZipProcessor.ImportResultEntry.Status.IMPORTED_DRAFT);
+		List<String> draftStyleBookEntryZipProcessorImportResultEntriesNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntriesNames(StyleBookEntryZipProcessor.ImportResultEntry.Status.IMPORTED_DRAFT);
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(draftStyleBookEntryZipProcessorImportResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(draftStyleBookEntryZipProcessorImportResultEntriesNames) %>">
 			<clay:alert
 				dismissible="<%= true %>"
-				message='<%= LanguageUtil.format(request, "the-following-style-books-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftStyleBookEntryZipProcessorImportResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
+				message='<%= LanguageUtil.format(request, "the-following-style-books-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftStyleBookEntryZipProcessorImportResultEntriesNames, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 			/>
 		</c:if>
 
 		<%
-		List<String> invalidStyleBookEntryZipProcessorImportResultEntries = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntries(StyleBookEntryZipProcessor.ImportResultEntry.Status.INVALID);
+		List<String> invalidStyleBookEntryZipProcessorImportResultEntriesNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntriesNames(StyleBookEntryZipProcessor.ImportResultEntry.Status.INVALID);
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(invalidStyleBookEntryZipProcessorImportResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(invalidStyleBookEntryZipProcessorImportResultEntriesNames) %>">
 			<clay:alert
 				dismissible="<%= true %>"
 				displayType="warning"
-				message='<%= LanguageUtil.format(request, "the-following-style-books-could-not-be-imported-x", "<strong>" + StringUtil.merge(invalidStyleBookEntryZipProcessorImportResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
+				message='<%= LanguageUtil.format(request, "the-following-style-books-could-not-be-imported-x", "<strong>" + StringUtil.merge(invalidStyleBookEntryZipProcessorImportResultEntriesNames, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 			/>
 		</c:if>
 

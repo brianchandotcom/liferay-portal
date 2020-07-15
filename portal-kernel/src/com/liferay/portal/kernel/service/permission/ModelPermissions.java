@@ -53,16 +53,6 @@ public class ModelPermissions implements Cloneable, Serializable {
 	}
 
 	public void addRolePermissions(String roleName, String actionId) {
-		Set<String> roleNames = _roleNamesMap.get(actionId);
-
-		if (roleNames == null) {
-			roleNames = new HashSet<>();
-
-			_roleNamesMap.put(actionId, roleNames);
-		}
-
-		roleNames.add(roleName);
-
 		Set<String> actionIds = _actionIdsMap.get(roleName);
 
 		if (actionIds == null) {
@@ -87,8 +77,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 	@Override
 	public Object clone() {
 		return new ModelPermissions(
-			new HashMap<>(_roleNamesMap), new HashMap<>(_actionIdsMap),
-			_resourceName, _used);
+			new HashMap<>(_actionIdsMap), _resourceName, _used);
 	}
 
 	public String[] getActionIds(String roleName) {
@@ -119,11 +108,19 @@ public class ModelPermissions implements Cloneable, Serializable {
 		return _actionIdsMap.keySet();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public Collection<String> getRoleNames(String actionId) {
-		Set<String> roleNames = _roleNamesMap.get(actionId);
+		Set<String> roleNames = new HashSet<>();
 
-		if (roleNames == null) {
-			roleNames = new HashSet<>();
+		for (Map.Entry<String, Set<String>> entry : _actionIdsMap.entrySet()) {
+			Set<String> actionIds = entry.getValue();
+
+			if (actionIds.contains(actionId)) {
+				roleNames.add(entry.getKey());
+			}
 		}
 
 		return roleNames;
@@ -153,7 +150,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap) {
 
-		this(roleNamesMap, actionIdsMap, RESOURCE_NAME_UNINITIALIZED);
+		this(actionIdsMap, RESOURCE_NAME_UNINITIALIZED, false);
 	}
 
 	/**
@@ -164,18 +161,25 @@ public class ModelPermissions implements Cloneable, Serializable {
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap, String resourceName) {
 
-		_roleNamesMap.putAll(roleNamesMap);
-		_actionIdsMap.putAll(actionIdsMap);
-		_resourceName = Objects.requireNonNull(resourceName);
-		_used = false;
+		this(actionIdsMap, resourceName, false);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected ModelPermissions(
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap, String resourceName,
 		boolean used) {
 
-		_roleNamesMap.putAll(roleNamesMap);
+		this(actionIdsMap, resourceName, used);
+	}
+
+	private ModelPermissions(
+		Map<String, Set<String>> actionIdsMap, String resourceName,
+		boolean used) {
+
 		_actionIdsMap.putAll(actionIdsMap);
 		_resourceName = Objects.requireNonNull(resourceName);
 		_used = used;
@@ -183,7 +187,6 @@ public class ModelPermissions implements Cloneable, Serializable {
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
 	private String _resourceName = RESOURCE_NAME_UNINITIALIZED;
-	private final Map<String, Set<String>> _roleNamesMap = new HashMap<>();
 	private boolean _used;
 
 }

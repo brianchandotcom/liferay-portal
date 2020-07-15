@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -119,10 +118,10 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		Assert.assertEquals(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, roleName);
 		Assert.assertArrayEquals(
-			groupPermissions,
-			modelPermissions.getActionIds(roleName));
+			groupPermissions, modelPermissions.getActionIds(roleName));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testCreateWithGuestAndGroupPermissions() {
 		String[] groupPermissions = {ActionKeys.VIEW};

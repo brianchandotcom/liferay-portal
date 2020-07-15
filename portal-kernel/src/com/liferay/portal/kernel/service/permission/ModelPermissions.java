@@ -126,6 +126,10 @@ public class ModelPermissions implements Cloneable, Serializable {
 		return roleNames;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEmpty() {
 		return _actionIdsMap.isEmpty();
 	}

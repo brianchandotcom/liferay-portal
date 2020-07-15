@@ -17,10 +17,11 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -36,7 +37,7 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -71,15 +72,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 					JournalArticle.class.getName(),
 					article.getResourcePrimKey()));
 
-			for (InfoFieldValue<Object> infoFieldValue :
-					_getInfoFieldValues(article)) {
-
-				InfoField infoField = infoFieldValue.getInfoField();
-
-				if (infoField == null) {
-					continue;
-				}
-
+			for (InfoField infoField : _getInfoFields(article)) {
 				String value = infoFieldUnicodeProperties.get(
 					infoField.getName());
 
@@ -121,19 +114,14 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return new InfoFieldValue<>(infoField, value);
 	}
 
-	private Collection<InfoFieldValue<Object>> _getInfoFieldValues(
-		JournalArticle article) {
+	private List<InfoField> _getInfoFields(JournalArticle article) {
+		InfoItemFormProvider<JournalArticle> infoItemFormProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class, JournalArticle.class.getName());
 
-		InfoItemFieldValuesProvider<JournalArticle>
-			infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					JournalArticle.class.getName());
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(article);
 
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(article);
-
-		return infoItemFieldValues.getInfoFieldValues();
+		return infoForm.getAllInfoFields();
 	}
 
 	private Locale _getTargetLocale(ActionRequest actionRequest) {

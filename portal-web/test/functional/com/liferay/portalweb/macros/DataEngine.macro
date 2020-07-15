@@ -1,0 +1,57 @@
+definition {
+
+	macro addField {
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tab = "Builder")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+			Navigator.gotoNavTab(navTab = "Fields");
+		}
+
+		Type.sendKeys(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${fieldType}");
+
+		if (isSet(rowNum)) {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_rowNum = "${rowNum}",
+				locator1 = "Sidebar#ADD_FIELD_TYPE",
+				locator2 = "Sidebar#FIELD_BOTTOM_DROP_TARGET",
+				value1 = "${fieldType}");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "Sidebar#ADD_FIELD_TYPE",
+				locator2 = "Sidebar#ADD_FIELD_TARGET",
+				value1 = "${fieldType}");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+
+		var rowNum = ${rowNum} + 1;
+	}
+
+	macro addFields {
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tab = "Builder")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+			Navigator.gotoNavTab(navTab = "Fields");
+		}
+
+		for (var fieldType : list "${fieldTypeList}") {
+			var key_fieldType = "${fieldType}";
+
+			DoubleClick(locator1 = "Sidebar#ADD_FIELD_TYPE");
+
+			AssertElementPresent(
+				key_tab = "Basic",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			Click(locator1 = "Sidebar#BACK");
+		}
+	}
+
+}

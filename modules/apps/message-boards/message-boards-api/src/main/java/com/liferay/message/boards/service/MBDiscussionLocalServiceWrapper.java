@@ -284,6 +284,10 @@ public class MBDiscussionLocalServiceWrapper
 		return _mbDiscussionLocalService.getDiscussion(className, classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<MBDiscussion> getDiscussions(String className) {
 		return _mbDiscussionLocalService.getDiscussions(className);

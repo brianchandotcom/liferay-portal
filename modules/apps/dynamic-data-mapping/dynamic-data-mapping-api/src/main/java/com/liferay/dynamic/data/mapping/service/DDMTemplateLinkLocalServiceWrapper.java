@@ -349,6 +349,10 @@ public class DDMTemplateLinkLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<DDMTemplateLink> getTemplateLinks(long classNameId) {
 		return _ddmTemplateLinkLocalService.getTemplateLinks(classNameId);

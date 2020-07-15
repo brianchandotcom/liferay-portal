@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Pei-Jung Lan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 
@@ -159,7 +160,6 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
-	@DeleteAfterTestRun
 	private AccountGroup _accountGroup;
 
 	@Inject
@@ -172,13 +172,11 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	@DeleteAfterTestRun
 	private Organization _organization;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	@DeleteAfterTestRun
 	private User _user;
 
 }

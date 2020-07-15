@@ -253,7 +253,7 @@ definition {
 	}
 
 	macro addPublicPageUnderSitePagesVariation {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		SitePages._selectPageType(
 			collectionName = "${collectionName}",

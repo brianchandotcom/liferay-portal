@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,27 +67,19 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			JournalArticle article = ActionUtil.getArticle(actionRequest);
 			UnicodeProperties infoFieldUnicodeProperties =
 				PropertiesParamUtil.getProperties(actionRequest, "infoField--");
-			InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
-				new InfoItemClassPKReference(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey()));
-
-			for (InfoField infoField : _getInfoFields(article)) {
-				String value = infoFieldUnicodeProperties.get(
-					infoField.getName());
-
-				if (value == null) {
-					continue;
-				}
-
-				infoItemFieldValues.add(
-					_createInfoFieldValue(
-						infoField.getName(), _getTargetLocale(actionRequest),
-						value));
-			}
 
 			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				updateFromInfoItemFieldValues(
+					article,
+					InfoItemFieldValues.builder(
+					).infoItemClassPKReference(
+						new InfoItemClassPKReference(
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey())
+					).infoFieldValues(
+						_getInfoFieldValues(
+							actionRequest, article, infoFieldUnicodeProperties)
+					).build());
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -121,6 +114,28 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(article);
 
 		return infoForm.getAllInfoFields();
+	}
+
+	private List<InfoFieldValue<Object>> _getInfoFieldValues(
+		ActionRequest actionRequest, JournalArticle article,
+		UnicodeProperties infoFieldUnicodeProperties) {
+
+		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+
+		for (InfoField infoField : _getInfoFields(article)) {
+			String value = infoFieldUnicodeProperties.get(infoField.getName());
+
+			if (value == null) {
+				continue;
+			}
+
+			infoFieldValues.add(
+				_createInfoFieldValue(
+					infoField.getName(), _getTargetLocale(actionRequest),
+					value));
+		}
+
+		return infoFieldValues;
 	}
 
 	private Locale _getTargetLocale(ActionRequest actionRequest) {

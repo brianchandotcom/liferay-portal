@@ -462,11 +462,12 @@ public class SubscriptionLocalServiceWrapper
 	}
 
 	/**
-	 * Returns all the subscriptions to the class name.
-	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 Returns all the subscriptions to the class name.
 	 * @param className the entity's class name
 	 * @return the subscriptions to the class name
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<Subscription> getSubscriptions(String className) {
 		return _subscriptionLocalService.getSubscriptions(className);
@@ -483,11 +484,12 @@ public class SubscriptionLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the number of the subscriptions to the class name.
-	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 Returns the number of the subscriptions to the class name.
 	 * @param className the entity's class name
 	 * @return the subscriptions to the class name
 	 */
+	@Deprecated
 	@Override
 	public int getSubscriptionsCount(String className) {
 		return _subscriptionLocalService.getSubscriptionsCount(className);

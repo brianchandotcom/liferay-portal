@@ -243,6 +243,10 @@ public interface MBDiscussionLocalService
 	public MBDiscussion getDiscussion(String className, long classPK)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBDiscussion> getDiscussions(String className);
 

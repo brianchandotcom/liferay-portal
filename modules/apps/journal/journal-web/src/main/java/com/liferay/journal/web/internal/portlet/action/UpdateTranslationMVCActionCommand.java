@@ -16,7 +16,6 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -88,21 +87,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private InfoFieldValue<Object> _createInfoFieldValue(
-		String fieldName, Locale locale, String value) {
-
-		InfoLocalizedValue<String> infoLocalizedValue =
-			InfoLocalizedValue.<String>builder(
-			).addValue(
-				locale, fieldName
-			).build();
-
-		InfoField infoField = new InfoField(
-			TextInfoFieldType.INSTANCE, infoLocalizedValue, true, fieldName);
-
-		return new InfoFieldValue<>(infoField, value);
-	}
-
 	private List<InfoField> _getInfoFields(JournalArticle article) {
 		InfoItemFormProvider<JournalArticle> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -124,14 +108,15 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		for (InfoField infoField : _getInfoFields(article)) {
 			String value = infoFieldUnicodeProperties.get(infoField.getName());
 
-			if (value == null) {
-				continue;
+			if (value != null) {
+				infoFieldValues.add(
+					new InfoFieldValue<>(
+						infoField,
+						InfoLocalizedValue.builder(
+						).value(
+							_getTargetLocale(actionRequest), value
+						).build()));
 			}
-
-			infoFieldValues.add(
-				_createInfoFieldValue(
-					infoField.getName(), _getTargetLocale(actionRequest),
-					value));
 		}
 
 		return infoFieldValues;

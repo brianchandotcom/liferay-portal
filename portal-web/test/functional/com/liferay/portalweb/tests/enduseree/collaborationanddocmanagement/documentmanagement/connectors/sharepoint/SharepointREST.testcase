@@ -446,9 +446,10 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMNavigator.gotoRepository(
-			dmRepositoryName = "Collaboration Test Application",
-			guest = "true");
+		AssertClick(
+			key_dmFolderName = "Collaboration Test Application",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "Collaboration Test Application");
 
 		if (IsElementNotPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
 			Navigator.openURL();

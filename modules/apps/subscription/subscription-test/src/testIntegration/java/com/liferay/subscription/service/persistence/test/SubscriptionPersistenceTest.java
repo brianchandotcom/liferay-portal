@@ -199,13 +199,6 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByClassNameId() throws Exception {
-		_persistence.countByClassNameId(RandomTestUtil.nextLong());
-
-		_persistence.countByClassNameId(0L);
-	}
-
-	@Test
 	public void testCountByG_U() throws Exception {
 		_persistence.countByG_U(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

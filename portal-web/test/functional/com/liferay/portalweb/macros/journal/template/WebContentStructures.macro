@@ -12,10 +12,10 @@ definition {
 		}
 
 		if (isSet(structureDescription)) {
+			Navigator.gotoSidebarTab(tabName = "Properties");
+
 			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
 		}
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addFavoriteStructure {

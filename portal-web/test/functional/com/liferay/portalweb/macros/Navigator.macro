@@ -154,6 +154,14 @@ definition {
 		Navigator._gotoPage(pageName = "${pageName}");
 	}
 
+	macro gotoSidebarTab {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "Sidebar#TAB");
+
+		AssertElementPresent(locator1 = "Sidebar#ACTIVE_TAB");
+	}
+
 	macro gotoSitePage {
 		Navigator.openSiteURL(
 			baseURL = "${baseURL}",

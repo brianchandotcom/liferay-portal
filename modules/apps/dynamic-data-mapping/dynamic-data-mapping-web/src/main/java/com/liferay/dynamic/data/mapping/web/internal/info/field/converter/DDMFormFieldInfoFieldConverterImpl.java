@@ -80,13 +80,10 @@ public class DDMFormFieldInfoFieldConverterImpl
 		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.CHECKBOX)) {
 			return BooleanInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER)) {
-			return NumberInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER)) {
-			return NumberInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL)) {
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER)) {
+
 			return NumberInfoFieldType.INSTANCE;
 		}
 

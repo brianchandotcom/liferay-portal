@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -206,17 +207,10 @@ public class ServiceContext implements Cloneable, Serializable {
 			}
 		}
 
-		String[] groupPermissions = groupPermissionsList.toArray(new String[0]);
-		String[] guestPermissions = guestPermissionsList.toArray(new String[0]);
-
-		ModelPermissions modelPermissions = new ModelPermissions(modelName);
-
-		modelPermissions.addRolePermissions(
-			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
-		modelPermissions.addRolePermissions(
-			RoleConstants.GUEST, guestPermissions);
-
-		setModelPermissions(modelPermissions);
+		setModelPermissions(
+			ModelPermissionsFactory.create(
+				groupPermissionsList.toArray(new String[0]),
+				guestPermissionsList.toArray(new String[0]), modelName));
 	}
 
 	/**

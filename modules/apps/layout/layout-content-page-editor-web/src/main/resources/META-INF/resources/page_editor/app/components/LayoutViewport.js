@@ -26,16 +26,14 @@ import GlobalContextProvider from './GlobalContext';
 import Layout from './Layout';
 import MasterLayout from './MasterLayout';
 
-export default function LayoutViewport({
-	mainItemId,
-	useMasterLayout,
-	withinMasterPage = false,
-}) {
+export default function LayoutViewport() {
 	const handleRef = useRef();
 	const [element, setElement] = useState(null);
 	const [layoutWidth, setLayoutWidth] = useState();
 	const [resizing, setResizing] = useState(false);
 	const selectItem = useSelectItem();
+	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -112,9 +110,7 @@ export default function LayoutViewport({
 				`page-editor__layout-viewport--size-${selectedViewportSize}`,
 				{
 					'page-editor__layout-viewport__resizing': resizing,
-					'page-editor__layout-viewport--with-sidebar': !withinMasterPage,
-					'page-editor__layout-viewport--with-sidebar-open':
-						sidebarOpen && !withinMasterPage,
+					'page-editor__layout-viewport--with-sidebar-open': sidebarOpen,
 				}
 			)}
 		>
@@ -134,7 +130,7 @@ export default function LayoutViewport({
 				>
 					<DisabledArea />
 
-					{useMasterLayout ? (
+					{masterLayoutData ? (
 						<MasterLayout />
 					) : (
 						<Layout mainItemId={mainItemId} />
@@ -146,14 +142,8 @@ export default function LayoutViewport({
 				<div
 					className="page-editor__layout-viewport__handle"
 					ref={handleRef}
-				></div>
+				/>
 			)}
 		</div>
 	);
 }
-
-Layout.propTypes = {
-	mainItemId: PropTypes.string.isRequired,
-	useMasterLayout: PropTypes.object,
-	withinMasterPage: PropTypes.bool,
-};

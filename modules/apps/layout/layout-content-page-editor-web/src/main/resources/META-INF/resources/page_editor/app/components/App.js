@@ -12,40 +12,47 @@
  * details.
  */
 
+import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {createPortal} from 'react-dom';
 
 import useAutoExtendSession from '../../core/hooks/useAutoExtendSession';
+import {INIT} from '../actions/types';
 import {config} from '../config/index';
-import {useSelector} from '../store/index';
+import {reducer} from '../reducers/index';
+import {StoreContextProvider, useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
-import useParseURL from './URLParser';
+import {ControlsProvider} from './Controls';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
-import URLParser from "./URLParser";
+import URLParser from './URLParser';
 
-export default function App() {
+export default function App({state}) {
+	const initialState = reducer(state, {type: INIT});
+
 	useAutoExtendSession();
 
-	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
-	const masterLayoutData = useSelector((state) => state.masterLayoutData);
-
 	return (
-		<DragAndDropContextProvider>
+		<StoreContextProvider initialState={initialState} reducer={reducer}>
 			<LanguageDirection />
 			<URLParser />
-			<DragPreview />
-			<Toolbar />
-			<LayoutViewport
-				mainItemId={mainItemId}
-				useMasterLayout={masterLayoutData.items}
-			/>
-			{createPortal(<Sidebar />, document.body)}
-		</DragAndDropContextProvider>
+			<ControlsProvider>
+				<Toolbar />
+				<DragAndDropContextProvider>
+					<DragPreview />
+					<LayoutViewport />
+					{createPortal(<Sidebar />, document.body)}
+				</DragAndDropContextProvider>
+			</ControlsProvider>
+		</StoreContextProvider>
 	);
 }
+
+App.propTypes = {
+	state: PropTypes.object.isRequired,
+};
 
 const LanguageDirection = () => {
 	const languageId = useSelector((state) => state.languageId);

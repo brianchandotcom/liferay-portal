@@ -20,8 +20,11 @@ import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
 import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
+import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
+	useCloseProductMenu();
+
 	const [tokenValues, setTokenValues] = useState(initialTokenValues);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 

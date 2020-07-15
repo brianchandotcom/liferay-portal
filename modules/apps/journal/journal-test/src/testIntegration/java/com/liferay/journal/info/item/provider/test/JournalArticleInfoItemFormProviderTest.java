@@ -112,7 +112,8 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		InfoField infoField = iterator.next();
 
-		Assert.assertEquals("audience", infoField.getName());
+		Assert.assertEquals(
+			"audience", StringUtil.toLowerCase(infoField.getName()));
 		Assert.assertFalse(infoField.isLocalizable());
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
@@ -232,7 +233,8 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoField = iterator.next();
 
-		Assert.assertEquals("stage", infoField.getName());
+		Assert.assertEquals(
+			"stage", StringUtil.toLowerCase(infoField.getName()));
 		Assert.assertFalse(infoField.isLocalizable());
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
@@ -270,7 +272,8 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoField = iterator.next();
 
-		Assert.assertEquals("topic", infoField.getName());
+		Assert.assertEquals(
+			"topic", StringUtil.toLowerCase(infoField.getName()));
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 

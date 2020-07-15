@@ -27,8 +27,10 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
+import org.gradle.api.plugins.PluginContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -56,13 +58,21 @@ public class LiferayPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, clazz);
 
-		GradleUtil.withPlugin(
-			project, JavaPlugin.class,
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
 			new Action<JavaPlugin>() {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					_configureJavaExtension(project);
+					ExtensionContainer extensionContainer =
+						project.getExtensions();
+
+					JavaPluginExtension javaPluginExtension =
+						extensionContainer.getByType(JavaPluginExtension.class);
+
+					javaPluginExtension.disableAutoTargetJvm();
 				}
 
 			});
@@ -82,13 +92,6 @@ public class LiferayPlugin implements Plugin<Project> {
 
 	protected Class<? extends Plugin<Project>> getThemePluginClass() {
 		return LiferayThemePlugin.class;
-	}
-
-	private void _configureJavaExtension(Project project) {
-		JavaPluginExtension javaPluginExtension = GradleUtil.getExtension(
-			project, JavaPluginExtension.class);
-
-		javaPluginExtension.disableAutoTargetJvm();
 	}
 
 	private boolean _isAnt(Project project) {

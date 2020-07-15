@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
@@ -207,7 +206,7 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(
 					locale);
 
-				return numberFormat.format(GetterUtil.getDouble(valueString));
+				return numberFormat.format(numberFormat.parse(valueString));
 			}
 			else if (Objects.equals(ddmFormFieldValue.getType(), "ddm-image") ||
 					 Objects.equals(ddmFormFieldValue.getType(), "image")) {

@@ -19,7 +19,6 @@ create index IX_52822F39 on MBCategory (uuid_[$COLUMN_LENGTH:75$], ctCollectionI
 create unique index IX_5DD5248D on MBCategory (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create unique index IX_F4BC4496 on MBDiscussion (classNameId, classPK, ctCollectionId);
-create index IX_D8237269 on MBDiscussion (classNameId, ctCollectionId);
 create unique index IX_393E413A on MBDiscussion (threadId, ctCollectionId);
 create index IX_4C2D9FB5 on MBDiscussion (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_383E288F on MBDiscussion (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

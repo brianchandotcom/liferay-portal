@@ -519,7 +519,7 @@
 		<column name="structureId" type="long" />
 
 		<!-- Finder methods -->
-		
+
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
 		</finder>

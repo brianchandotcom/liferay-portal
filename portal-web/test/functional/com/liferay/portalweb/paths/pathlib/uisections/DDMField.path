@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>COLOR_PICKER_COLOR</td>
-	<td>//a[@class='palette-item-inner'][@title='#${key_colorCode}']</td>
+	<td>//button[contains(@class,'clay-color-btn')][@title='${key_colorCode}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -59,8 +59,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEXT_BOX</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//textarea</td>
+	<td>RICH_TEXT</td>
+	<td>//p[contains(.,'${key_fieldName}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

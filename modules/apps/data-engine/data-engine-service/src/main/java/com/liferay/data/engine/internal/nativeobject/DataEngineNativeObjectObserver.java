@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.internal.nativeobject;
 
+import com.liferay.data.engine.internal.petra.executor.DataEngineNativeObjectPortalExecutor;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;

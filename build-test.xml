@@ -7452,12 +7452,16 @@ go</echo>
 											<arg value="-Pliferay.home=${liferay.home}/osgi-temp" />
 										</gradle-execute>
 
-										<copy todir="${liferay.home}/osgi-temp/deploy">
-											<fileset dir="${liferay.home}/deploy">
+										<copy
+											todir="${liferay.home}/osgi-temp/deploy"
+										>
+											<fileset
+												dir="${liferay.home}/deploy"
+											>
 												<include name="${osgi.app.name}*hook*.war" />
 											</fileset>
 										</copy>
-										
+
 										<delete>
 											<fileset
 												dir="${liferay.home}/deploy"

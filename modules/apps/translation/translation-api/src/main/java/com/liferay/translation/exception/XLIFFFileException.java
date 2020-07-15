@@ -78,6 +78,25 @@ public class XLIFFFileException extends PortalException {
 
 	}
 
+	public static class MustHaveCorrectEncoding extends XLIFFFileException {
+
+		public MustHaveCorrectEncoding() {
+		}
+
+		public MustHaveCorrectEncoding(String msg) {
+			super(msg);
+		}
+
+		public MustHaveCorrectEncoding(String msg, Throwable cause) {
+			super(msg, cause);
+		}
+
+		public MustHaveCorrectEncoding(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 	public static class MustHaveValidId extends XLIFFFileException {
 
 		public MustHaveValidId() {

@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,38 +64,43 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
-			InfoField infoField = infoFieldValue.getInfoField();
+			_getInfoLocalizedValueOptional(
+				infoFieldValue
+			).ifPresent(
+				infoLocalizedValue -> {
+					InfoField infoField = infoFieldValue.getInfoField();
 
-			InfoLocalizedValue<String> labelInfoLocalizedValue =
-				infoField.getLabelInfoLocalizedValue();
+					for (Locale locale :
+							infoLocalizedValue.getAvailableLocales()) {
 
-			for (Locale locale :
-					labelInfoLocalizedValue.getAvailableLocales()) {
+						if ((infoFieldValue.getValue(locale) != null) &&
+							(infoFieldValue.getValue(locale) instanceof
+								String)) {
 
-				if ((infoFieldValue.getValue(locale) != null) &&
-					(infoFieldValue.getValue(locale) instanceof String)) {
+							translatedLocales.add(locale);
 
-					translatedLocales.add(locale);
+							String fieldName = infoField.getName();
 
-					String fieldName = infoField.getName();
+							String valueString = String.valueOf(
+								infoFieldValue.getValue(locale));
 
-					String valueString = String.valueOf(
-						infoFieldValue.getValue(locale));
+							if (Objects.equals("description", fieldName)) {
+								importedLocaleDescriptionMap.put(
+									locale, valueString);
+							}
+							else if (Objects.equals("title", fieldName)) {
+								importedLocaleTitleMap.put(locale, valueString);
+							}
+							else {
+								fieldNameContentMap.put(fieldName, valueString);
 
-					if (Objects.equals("description", fieldName)) {
-						importedLocaleDescriptionMap.put(locale, valueString);
-					}
-					else if (Objects.equals("title", fieldName)) {
-						importedLocaleTitleMap.put(locale, valueString);
-					}
-					else {
-						fieldNameContentMap.put(fieldName, valueString);
-
-						importedLocaleContentMap.put(
-							locale, fieldNameContentMap);
+								importedLocaleContentMap.put(
+									locale, fieldNameContentMap);
+							}
+						}
 					}
 				}
-			}
+			);
 		}
 
 		Map<Locale, String> titleMap = article.getTitleMap();
@@ -123,6 +129,18 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			article.getArticleId(), article.getVersion(), titleMap,
 			descriptionMap, translatedContent, article.getLayoutUuid(),
 			ServiceContextThreadLocal.getServiceContext());
+	}
+
+	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(
+		InfoFieldValue<Object> infoFieldValue) {
+
+		Object value = infoFieldValue.getValue();
+
+		if (value instanceof InfoLocalizedValue) {
+			return Optional.of((InfoLocalizedValue)value);
+		}
+
+		return Optional.empty();
 	}
 
 	private String _getTranslatedContent(

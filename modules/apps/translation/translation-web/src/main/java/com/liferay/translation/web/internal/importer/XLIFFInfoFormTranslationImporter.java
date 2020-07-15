@@ -104,7 +104,11 @@ public class XLIFFInfoFormTranslationImporter
 
 						consumer.accept(
 							new InfoFieldValue<>(
-								infoField, value.getPlainText()));
+								infoField,
+								InfoLocalizedValue.builder(
+								).value(
+									targetLocale, value.getPlainText()
+								).build()));
 					}
 				}
 			).infoItemClassPKReference(

@@ -46,12 +46,13 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 </div>
 
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
-	<clay:navigation-bar
-		cssClass="forms-navigation-bar"
-		id="formsNavigationBar"
-		inverted="<%= true %>"
-		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
-	/>
+	<div class="forms-navigation-bar">
+		<clay:navigation-bar
+			id="formsNavigationBar"
+			inverted="<%= true %>"
+			navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
+		/>
+	</div>
 
 	<nav class="hide management-bar management-bar-light navbar navbar-expand-md toolbar-group-field" id="<portlet:namespace />managementToolbar">
 		<clay:container-fluid

@@ -14,13 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+import java.net.URL;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalTopLevelBuild
 	extends DefaultTopLevelBuild
 	implements AnalyticsCloudBranchInformationBuild,
-			   PluginsBranchInformationBuild, PortalBranchInformationBuild {
+			   PluginsBranchInformationBuild, PortalBranchInformationBuild,
+			   PortalFixpackReleaseBuild, PortalReleaseBuild {
 
 	public PortalTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
@@ -60,5 +64,57 @@ public class PortalTopLevelBuild
 	public BranchInformation getPortalBranchInformation() {
 		return getBranchInformation("portal");
 	}
+
+	@Override
+	public PortalFixpackRelease getPortalFixpackRelease() {
+		if (_portalFixpackRelease != null) {
+			return _portalFixpackRelease;
+		}
+
+		Build controllerBuild = getControllerBuild();
+
+		if (controllerBuild == null) {
+			return null;
+		}
+
+		String portalFixPackVersion = controllerBuild.getParameterValue(
+			"PORTAL_FIX_PACK_VERSION");
+
+		if (portalFixPackVersion == null) {
+			return null;
+		}
+
+		_portalFixpackRelease = new PortalFixpackRelease(
+			portalFixPackVersion, getPortalRelease());
+
+		return _portalFixpackRelease;
+	}
+
+	@Override
+	public PortalRelease getPortalRelease() {
+		if (_portalRelease != null) {
+			return _portalRelease;
+		}
+
+		Build controllerBuild = getControllerBuild();
+
+		if (controllerBuild == null) {
+			return null;
+		}
+
+		String portalBundleVersion = controllerBuild.getParameterValue(
+			"PORTAL_BUNDLE_VERSION");
+
+		if (portalBundleVersion == null) {
+			return null;
+		}
+
+		_portalRelease = new PortalRelease(portalBundleVersion);
+
+		return _portalRelease;
+	}
+
+	private PortalFixpackRelease _portalFixpackRelease;
+	private PortalRelease _portalRelease;
 
 }

@@ -532,15 +532,6 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_DDMTK() throws Exception {
-		_persistence.countByC_DDMTK(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_DDMTK(0L, "null");
-
-		_persistence.countByC_DDMTK(0L, (String)null);
-	}
-
-	@Test
 	public void testCountByLtD_S() throws Exception {
 		_persistence.countByLtD_S(
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
@@ -682,15 +673,6 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByC_V_ST(0L, 0D, 0);
-	}
-
-	@Test
-	public void testCountByC_ED_ST() throws Exception {
-		_persistence.countByC_ED_ST(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextDate(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_ED_ST(0L, RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test

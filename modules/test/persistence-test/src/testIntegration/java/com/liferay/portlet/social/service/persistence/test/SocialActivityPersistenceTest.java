@@ -240,17 +240,18 @@ public class SocialActivityPersistenceTest {
 	}
 
 	@Test
-	public void testCountByClassNameId() throws Exception {
-		_persistence.countByClassNameId(RandomTestUtil.nextLong());
-
-		_persistence.countByClassNameId(0L);
-	}
-
-	@Test
 	public void testCountByReceiverUserId() throws Exception {
 		_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByReceiverUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId_C() throws Exception {
+		_persistence.countByCompanyId_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId_C(0L, 0L);
 	}
 
 	@Test

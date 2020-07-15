@@ -20,6 +20,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.headless.delivery.dto.v1_0.ContentElement;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentElementEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -88,32 +89,58 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			_assetHelper.searchCount(searchContext, new AssetEntryQuery()));
 	}
 
+	private BooleanFilter _getAssetBooleanFilter() {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		BooleanFilter journalArticleBooleanFilter = new BooleanFilter();
+
+		journalArticleBooleanFilter.addRequiredTerm(
+			Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
+		journalArticleBooleanFilter.addRequiredTerm("head", true);
+
+		booleanFilter.add(
+			journalArticleBooleanFilter, BooleanClauseOccur.SHOULD);
+
+		BooleanFilter assetBooleanFilter = new BooleanFilter();
+
+		assetBooleanFilter.addTerm(
+			Field.ENTRY_CLASS_NAME, JournalArticle.class.getName(),
+			BooleanClauseOccur.MUST_NOT);
+
+		booleanFilter.add(assetBooleanFilter, BooleanClauseOccur.SHOULD);
+
+		return booleanFilter;
+	}
+
 	private SearchContext _getAssetSearchContext(
 		Filter filter, String search, Long siteId, Sort[] sorts,
 		Pagination pagination) {
 
 		SearchContext searchContext = new SearchContext();
 
-		if (filter != null) {
-			BooleanQuery booleanQuery = new BooleanQueryImpl() {
-				{
-					BooleanFilter booleanFilter = new BooleanFilter();
+		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+			{
+				BooleanFilter booleanFilter = new BooleanFilter();
 
+				if (filter != null) {
 					booleanFilter.add(filter, BooleanClauseOccur.MUST);
-					booleanFilter.addRequiredTerm(
-						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-					booleanFilter.addRequiredTerm("head", true);
-
-					setPreBooleanFilter(booleanFilter);
 				}
-			};
 
-			searchContext.setBooleanClauses(
-				new BooleanClause[] {
-					BooleanClauseFactoryUtil.create(
-						booleanQuery, BooleanClauseOccur.MUST.getName())
-				});
-		}
+				booleanFilter.addRequiredTerm(
+					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+
+				booleanFilter.add(
+					_getAssetBooleanFilter(), BooleanClauseOccur.MUST);
+
+				setPreBooleanFilter(booleanFilter);
+			}
+		};
+
+		searchContext.setBooleanClauses(
+			new BooleanClause[] {
+				BooleanClauseFactoryUtil.create(
+					booleanQuery, BooleanClauseOccur.MUST.getName())
+			});
 
 		searchContext.setCompanyId(contextCompany.getCompanyId());
 

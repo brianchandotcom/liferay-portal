@@ -17,7 +17,7 @@
 <%@ include file="/control_menu/init.jsp" %>
 
 <%
-boolean globalMenuApp = GetterUtil.getBoolean(request.getAttribute("liferay-product-navigation:control-menu:globalMenuApp"));
+boolean applicationsMenuApp = GetterUtil.getBoolean(request.getAttribute("liferay-product-navigation:control-menu:applicationsMenuApp"));
 
 ProductNavigationControlMenuCategoryRegistry productNavigationControlMenuCategoryRegistry = ServletContextUtil.getProductNavigationControlMenuCategoryRegistry();
 
@@ -43,7 +43,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 	<div class="control-menu-container">
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
 
-		<div class="control-menu control-menu-level-1 control-menu-level-1-<%= globalMenuApp ? "light" : "dark" %> d-print-none" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
+		<div class="control-menu control-menu-level-1 control-menu-level-1-<%= applicationsMenuApp ? "light" : "dark" %> d-print-none" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
 			<clay:container-fluid>
 				<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
 

@@ -81,11 +81,11 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-product-navigation:control-menu:globalMenuApp",
-			_isGlobalMenuApp(httpServletRequest));
+			"liferay-product-navigation:control-menu:applicationsMenuApp",
+			_isApplicationsMenuApp(httpServletRequest));
 	}
 
-	private boolean _isGlobalMenuApp(HttpServletRequest httpServletRequest) {
+	private boolean _isApplicationsMenuApp(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

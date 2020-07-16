@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
-		"mvc.command.name=/global_menu/panel_apps"
+		"mvc.command.name=/applications_menu/panel_apps"
 	},
 	service = MVCResourceCommand.class
 )

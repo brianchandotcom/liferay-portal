@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/global_menu/init.jsp" %>
+<%@ include file="/applications_menu/init.jsp" %>
 
 <%
 ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new ApplicationsMenuDisplayContext(request);

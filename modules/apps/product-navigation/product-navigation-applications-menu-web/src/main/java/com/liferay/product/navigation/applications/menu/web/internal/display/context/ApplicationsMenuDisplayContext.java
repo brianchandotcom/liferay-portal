@@ -71,7 +71,7 @@ public class ApplicationsMenuDisplayContext {
 						PortletRequest.RESOURCE_PHASE);
 
 				applicationsMenuPanelAppsURL.setResourceID(
-					"/global_menu/panel_apps");
+					"/applications_menu/panel_apps");
 
 				return applicationsMenuPanelAppsURL.toString();
 			}

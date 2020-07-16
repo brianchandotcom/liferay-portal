@@ -59,7 +59,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 
 		var cleanupCkEditorResources = function () {
 			if (!ckEditorInstances && ckEditorDisposeResources) {
-				window.CKEDITOR = undefined;
+				delete window.CKEDITOR;
 
 				ckEditorInstances = 0;
 				ckEditorDisposeResources = false;

@@ -54,7 +54,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 				alloyEditorDisposeResources = false;
 
 				if (CKEDITOR && Object.keys(CKEDITOR.instances).length === 0) {
-					window.CKEDITOR = undefined;
+					delete window.CKEDITOR;
 				}
 			}
 		};

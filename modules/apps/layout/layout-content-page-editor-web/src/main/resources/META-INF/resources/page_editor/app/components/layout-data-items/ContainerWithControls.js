@@ -21,7 +21,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import {config} from '../../config/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';

@@ -228,7 +228,8 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateDefaultStyleBookEntry(
-		long styleBookEntryId, boolean defaultStyleBookEntry) {
+			long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws PortalException {
 
 		StyleBookEntry styleBookEntry = fetchStyleBookEntry(styleBookEntryId);
 
@@ -246,10 +247,32 @@ public class StyleBookEntryLocalServiceImpl
 
 			oldDefaultStyleBookEntry.setDefaultStyleBookEntry(false);
 
+			// Draft
+
+			StyleBookEntry oldDefaultDraftStyleBookEntry = fetchDraft(
+				oldDefaultStyleBookEntry);
+
+			if (oldDefaultDraftStyleBookEntry != null) {
+				oldDefaultDraftStyleBookEntry.setDefaultStyleBookEntry(
+					defaultStyleBookEntry);
+
+				updateDraft(oldDefaultDraftStyleBookEntry);
+			}
+
 			styleBookEntryPersistence.update(oldDefaultStyleBookEntry);
 		}
 
 		styleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
+
+		// Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
+
+			updateDraft(draftStyleBookEntry);
+		}
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
@@ -265,6 +288,16 @@ public class StyleBookEntryLocalServiceImpl
 
 		styleBookEntry.setName(name);
 
+		// Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setName(name);
+
+			updateDraft(draftStyleBookEntry);
+		}
+
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
@@ -277,6 +310,16 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		// Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setPreviewFileEntryId(previewFileEntryId);
+
+			updateDraft(draftStyleBookEntry);
+		}
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
@@ -294,6 +337,17 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setName(name);
 		styleBookEntry.setTokensValues(tokensValues);
 
+		// Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setName(name);
+			draftStyleBookEntry.setTokensValues(tokensValues);
+
+			updateDraft(draftStyleBookEntry);
+		}
+
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
@@ -306,6 +360,16 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		styleBookEntry.setTokensValues(tokensValues);
+
+		// Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			draftStyleBookEntry.setTokensValues(tokensValues);
+
+			updateDraft(draftStyleBookEntry);
+		}
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}

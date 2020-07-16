@@ -71,14 +71,37 @@ class AccountUserEmailDomainValidator extends PortletBase {
 
 	getEmailDomainFieldRule_() {
 		const accountEntryNames = this.accountEntryNames;
+		const blockedDomains = this.blockedDomains.split(',');
 		const validDomains = this.validDomains.split(',');
 		const validatorName = 'emailDomain';
 
 		return {
 			body(val, field) {
 				const emailDomain = val.substr(val.indexOf('@') + 1);
+				var errorMessage;
+				var hasError = false;
 
-				if (!validDomains.includes(emailDomain)) {
+				if (blockedDomains.includes(emailDomain)) {
+					hasError = true;
+
+					errorMessage = Liferay.Util.sub(
+						Liferay.Language.get('x-is-a-blocked-domain'),
+						emailDomain
+					);
+				}
+				else if (!validDomains.includes(emailDomain)) {
+					hasError = true;
+
+					errorMessage = Liferay.Util.sub(
+						Liferay.Language.get(
+							'x-is-not-a-valid-domain-for-the-following-accounts-x'
+						),
+						emailDomain,
+						accountEntryNames
+					);
+				}
+
+				if (hasError) {
 					const fieldName = field.get('name');
 
 					const errorMessages = this.get('fieldStrings');
@@ -87,13 +110,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 						errorMessages[fieldName] = {};
 					}
 
-					errorMessages[fieldName][validatorName] = Liferay.Util.sub(
-						Liferay.Language.get(
-							'x-is-not-a-valid-domain-for-the-following-accounts-x'
-						),
-						emailDomain,
-						accountEntryNames
-					);
+					errorMessages[fieldName][validatorName] = errorMessage;
 
 					return false;
 				}
@@ -178,6 +195,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 
 AccountUserEmailDomainValidator.STATE = {
 	accountEntryNames: Config.string,
+	blockedDomains: Config.string,
 	validDomains: Config.string,
 	viewValidDomainsURL: Config.string,
 };

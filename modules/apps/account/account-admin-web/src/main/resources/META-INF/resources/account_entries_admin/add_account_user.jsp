@@ -141,6 +141,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 			HashMapBuilder.<String, Object>put(
 				"accountEntryNames", accountEntryDisplay.getName()
 			).put(
+				"blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId())
+			).put(
 				"validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA)
 			).put(
 				"viewValidDomainsURL", viewValidDomainsURL.toString()

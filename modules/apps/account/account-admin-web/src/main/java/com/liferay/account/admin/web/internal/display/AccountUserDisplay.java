@@ -26,8 +26,11 @@ import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -48,6 +51,28 @@ import javax.servlet.http.HttpServletRequest;
  * @author Pei-Jung Lan
  */
 public class AccountUserDisplay {
+
+	public static String getBlockedDomains(long companyId) {
+		try {
+			AccountEntryEmailDomainsConfiguration
+				accountEntryEmailDomainsConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						AccountEntryEmailDomainsConfiguration.class, companyId);
+
+			String[] blockedDomains = StringUtil.split(
+				accountEntryEmailDomainsConfiguration.blockedEmailDomains(),
+				StringPool.NEW_LINE);
+
+			return StringUtil.merge(blockedDomains, StringPool.COMMA);
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException, configurationException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static AccountUserDisplay of(User user) {
 		if (user == null) {
@@ -268,6 +293,9 @@ public class AccountUserDisplay {
 
 		return StringPool.BLANK;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountUserDisplay.class);
 
 	private final String _accountEntryNamesStyle;
 	private final long _companyId;

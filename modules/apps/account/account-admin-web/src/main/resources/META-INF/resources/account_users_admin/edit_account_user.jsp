@@ -63,6 +63,8 @@ AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 			HashMapBuilder.<String, Object>put(
 				"accountEntryNames", accountUserDisplay.getAccountEntryNamesString(request)
 			).put(
+				"blockedDomains", AccountUserDisplay.getBlockedDomains(themeDisplay.getCompanyId())
+			).put(
 				"validDomains", accountUserDisplay.getValidDomainsString()
 			).put(
 				"viewValidDomainsURL", viewValidDomainsURL.toString()

@@ -37,18 +37,9 @@ export const FragmentStylesPanel = ({item}) => {
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
-		(fieldSet) =>
-			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style
-	);
-
-	const defaultConfigurationValues =
-		fragmentEntryLink.defaultConfigurationValues;
-
-	const onValueSelect = useCallback(
+	const onCustomStyleValueSelect = useCallback(
 		(name, value) => {
 			const configurationValues = getConfigurationValues(
-				defaultConfigurationValues,
 				fragmentEntryLink
 			);
 
@@ -65,31 +56,14 @@ export const FragmentStylesPanel = ({item}) => {
 				})
 			);
 		},
-		[
-			defaultConfigurationValues,
-			dispatch,
-			fragmentEntryLink,
-			segmentsExperienceId,
-		]
+		[dispatch, fragmentEntryLink, segmentsExperienceId]
 	);
 
 	return (
-		<>
-			{fieldSets.map((fieldSet, index) => {
-				return (
-					<FieldSet
-						configurationValues={getConfigurationValues(
-							defaultConfigurationValues,
-							fragmentEntryLink
-						)}
-						fields={fieldSet.fields}
-						key={index}
-						label={fieldSet.label}
-						onValueSelect={onValueSelect}
-					/>
-				);
-			})}
-		</>
+		<CustomStyles
+			fragmentEntryLink={fragmentEntryLink}
+			onValueSelect={onCustomStyleValueSelect}
+		/>
 	);
 };
 
@@ -101,9 +75,39 @@ FragmentStylesPanel.propTypes = {
 	}),
 };
 
-function getConfigurationValues(defaultConfigurationValues, fragmentEntryLink) {
+const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
+	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
+		(fieldSet) =>
+			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style
+	);
+
+	return (
+		<div className="page-editor__floating-toolbar__panel__custom-styles">
+			{fieldSets.map((fieldSet, index) => {
+				return (
+					<FieldSet
+						configurationValues={getConfigurationValues(
+							fragmentEntryLink
+						)}
+						fields={fieldSet.fields}
+						key={index}
+						label={fieldSet.label}
+						onValueSelect={onValueSelect}
+					/>
+				);
+			})}
+		</div>
+	);
+};
+
+CustomStyles.propTypes = {
+	fragmentEntryLink: PropTypes.object.isRequired,
+	onValueSelect: PropTypes.func.isRequired,
+};
+
+function getConfigurationValues(fragmentEntryLink) {
 	return {
-		...defaultConfigurationValues,
+		...fragmentEntryLink.defaultConfigurationValues,
 		...fragmentEntryLink.editableValues[
 			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 		],

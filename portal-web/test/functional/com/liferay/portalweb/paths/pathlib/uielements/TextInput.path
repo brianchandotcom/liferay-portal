@@ -165,6 +165,11 @@
 </tr>
 <tr>
 	<td>DDM</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DE_DDM</td>
 	<td>//div[@data-field-name='${key_fieldName}']//input</td>
 	<td></td>
 </tr>

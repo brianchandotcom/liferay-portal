@@ -40,20 +40,26 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.model.uid.UIDFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +120,42 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			getPermissionChecker(), ctCollection, ActionKeys.DELETE);
 
 		return ctCollectionLocalService.deleteCTCollection(ctCollection);
+	}
+
+	@Override
+	public void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
+
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
+
+			throw new PortalException(
+				"Change tracking collection " + ctCollection + " is read only");
+		}
+
+		List<CTEntry> discardCTEntries =
+			ctCollectionLocalService.getDiscardCTEntries(
+				ctCollectionId, modelClassNameId, modelClassPK);
+
+		Map<Long, List<CTEntry>> ctEntryMap = new HashMap<>();
+
+		for (CTEntry ctEntry : discardCTEntries) {
+			List<CTEntry> ctEntries = ctEntryMap.computeIfAbsent(
+				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
+
+			ctEntries.add(ctEntry);
+		}
+
+		for (Map.Entry<Long, List<CTEntry>> entry : ctEntryMap.entrySet()) {
+			_discardCTEntries(ctCollection, entry.getKey(), entry.getValue());
+		}
 	}
 
 	@Override
@@ -180,90 +222,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 				continue;
 			}
 
-			CTService<?> ctService = _ctServiceRegistry.getCTService(
-				classNameId);
-
-			ctService.updateWithUnsafeFunction(
-				ctPersistence -> {
-					Set<String> primaryKeyNames =
-						ctPersistence.getCTColumnNames(
-							CTColumnResolutionType.PK);
-
-					if (primaryKeyNames.size() != 1) {
-						throw new IllegalArgumentException(
-							StringBundler.concat(
-								"{primaryKeyNames=", primaryKeyNames,
-								", tableName=", ctPersistence.getTableName(),
-								"}"));
-					}
-
-					Iterator<String> iterator = primaryKeyNames.iterator();
-
-					String primaryKeyName = iterator.next();
-
-					StringBundler sb = new StringBundler(
-						(2 * ctEntries.size()) + 7);
-
-					sb.append("delete from ");
-					sb.append(ctPersistence.getTableName());
-					sb.append(" where ctCollectionId = ");
-					sb.append(ctCollection.getCtCollectionId());
-					sb.append(" and ");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
-
-					for (CTEntry ctEntry : ctEntries) {
-						sb.append(ctEntry.getModelClassPK());
-						sb.append(", ");
-					}
-
-					sb.setStringAt(")", sb.index() - 1);
-
-					Connection connection = CurrentConnectionUtil.getConnection(
-						ctPersistence.getDataSource());
-
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(sb.toString())) {
-
-						preparedStatement.executeUpdate();
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
-
-					for (String mappingTableName :
-							ctPersistence.getMappingTableNames()) {
-
-						sb.setStringAt(mappingTableName, 1);
-
-						try (PreparedStatement preparedStatement =
-								connection.prepareStatement(sb.toString())) {
-
-							preparedStatement.executeUpdate();
-						}
-						catch (Exception exception) {
-							throw new SystemException(exception);
-						}
-					}
-
-					return null;
-				});
-
-			List<Long> sourceModelClassPKs = new ArrayList<>(ctEntries.size());
-
-			for (CTEntry ctEntry : ctEntries) {
-				sourceModelClassPKs.add(ctEntry.getModelClassPK());
-
-				ctEntryPersistence.remove(ctEntry);
-			}
-
-			for (CTAutoResolutionInfo ctAutoResolutionInfo :
-					_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
-						ctCollection.getCtCollectionId(), classNameId,
-						ArrayUtil.toLongArray(sourceModelClassPKs))) {
-
-				_ctAutoResolutionInfoPersistence.remove(ctAutoResolutionInfo);
-			}
+			_discardCTEntries(ctCollection, classNameId, ctEntries);
 		}
 	}
 
@@ -356,6 +315,121 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			userId, ctCollectionId, name, description);
 	}
 
+	private void _discardCTEntries(
+		CTCollection ctCollection, long classNameId, List<CTEntry> ctEntries) {
+
+		CTService<?> ctService = _ctServiceRegistry.getCTService(classNameId);
+
+		ctService.updateWithUnsafeFunction(
+			ctPersistence -> {
+				Set<String> primaryKeyNames = ctPersistence.getCTColumnNames(
+					CTColumnResolutionType.PK);
+
+				if (primaryKeyNames.size() != 1) {
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"{primaryKeyNames=", primaryKeyNames,
+							", tableName=", ctPersistence.getTableName(), "}"));
+				}
+
+				Iterator<String> iterator = primaryKeyNames.iterator();
+
+				String primaryKeyName = iterator.next();
+
+				StringBundler sb = new StringBundler(
+					(2 * ctEntries.size()) + 7);
+
+				sb.append("delete from ");
+				sb.append(ctPersistence.getTableName());
+				sb.append(" where ctCollectionId = ");
+				sb.append(ctCollection.getCtCollectionId());
+				sb.append(" and ");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
+
+				for (CTEntry ctEntry : ctEntries) {
+					sb.append(ctEntry.getModelClassPK());
+					sb.append(", ");
+				}
+
+				sb.setStringAt(")", sb.index() - 1);
+
+				Connection connection = CurrentConnectionUtil.getConnection(
+					ctPersistence.getDataSource());
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(sb.toString())) {
+
+					preparedStatement.executeUpdate();
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
+
+				for (String mappingTableName :
+						ctPersistence.getMappingTableNames()) {
+
+					sb.setStringAt(mappingTableName, 1);
+
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(sb.toString())) {
+
+						preparedStatement.executeUpdate();
+					}
+					catch (Exception exception) {
+						throw new SystemException(exception);
+					}
+				}
+
+				return null;
+			});
+
+		List<Long> modelClassPKs = new ArrayList<>(ctEntries.size());
+
+		for (CTEntry ctEntry : ctEntries) {
+			modelClassPKs.add(ctEntry.getModelClassPK());
+
+			ctEntryPersistence.remove(ctEntry);
+		}
+
+		for (CTAutoResolutionInfo ctAutoResolutionInfo :
+				_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
+					ctCollection.getCtCollectionId(), classNameId,
+					ArrayUtil.toLongArray(modelClassPKs))) {
+
+			_ctAutoResolutionInfoPersistence.remove(ctAutoResolutionInfo);
+		}
+
+		Indexer<?> indexer = _indexerRegistry.getIndexer(
+			ctService.getModelClass());
+
+		if (indexer != null) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					List<String> uids = new ArrayList<>(ctEntries.size());
+
+					for (CTEntry ctEntry : ctEntries) {
+						if (ctEntry.getChangeType() !=
+								CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+							uids.add(
+								_uidFactory.getUID(
+									indexer.getClassName(),
+									ctEntry.getModelClassPK(),
+									ctEntry.getCtCollectionId()));
+						}
+					}
+
+					_indexWriterHelper.deleteDocuments(
+						indexer.getSearchEngineId(),
+						ctCollection.getCompanyId(), uids,
+						indexer.isCommitImmediately());
+
+					return null;
+				});
+		}
+	}
+
 	private Predicate _getPredicate(
 		long companyId, int status, String keywords) {
 
@@ -427,9 +501,18 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 	private CustomSQL _customSQL;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
 	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private UIDFactory _uidFactory;
 
 }

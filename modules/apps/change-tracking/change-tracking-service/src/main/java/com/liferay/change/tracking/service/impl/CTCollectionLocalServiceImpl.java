@@ -24,9 +24,11 @@ import com.liferay.change.tracking.internal.CTEnclosureUtil;
 import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.CTTableMapperHelper;
+import com.liferay.change.tracking.internal.closure.Node;
 import com.liferay.change.tracking.internal.conflict.CTConflictChecker;
 import com.liferay.change.tracking.internal.conflict.ConstraintResolverConflictInfo;
 import com.liferay.change.tracking.internal.conflict.ModificationConflictInfo;
+import com.liferay.change.tracking.internal.reference.TableReferenceDefinitionManager;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
@@ -67,9 +69,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -435,6 +442,140 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public List<CTEntry> getDiscardCTEntries(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		CTClosure ctClosure = _ctClosureFactory.create(ctCollectionId);
+
+		Set<Node> nodes = new HashSet<>();
+
+		int rootCount = ctEntryPersistence.countByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+
+		if (rootCount == 0) {
+			Map<Long, List<Long>> pksMap = ctClosure.getChildPKsMap(
+				modelClassNameId, modelClassPK);
+
+			Deque<Map.Entry<Long, ? extends Collection<Long>>> queue =
+				new LinkedList<>(pksMap.entrySet());
+
+			Map.Entry<Long, ? extends Collection<Long>> entry = null;
+
+			while ((entry = queue.poll()) != null) {
+				long classNameId = entry.getKey();
+
+				for (long classPK : entry.getValue()) {
+					int count = ctEntryPersistence.countByC_MCNI_MCPK(
+						ctCollectionId, classNameId, classPK);
+
+					if (count == 0) {
+						Map<Long, ? extends Collection<Long>> childPKsMap =
+							ctClosure.getChildPKsMap(classNameId, classPK);
+
+						if (!childPKsMap.isEmpty()) {
+							queue.addAll(childPKsMap.entrySet());
+						}
+					}
+					else {
+						nodes.add(new Node(classNameId, classPK));
+					}
+				}
+			}
+		}
+		else {
+			nodes.add(new Node(modelClassNameId, modelClassPK));
+		}
+
+		Map<Long, Set<Long>> discardRootsMap = new HashMap<>();
+
+		CTEnclosureUtil.visitParentEntries(
+			ctClosure,
+			(classNameId, classPK, backtraceEntries) -> {
+				if (!nodes.contains(new Node(classNameId, classPK))) {
+					return false;
+				}
+
+				long previousModelClassNameId = classNameId;
+
+				Iterator<Map.Entry<Long, Long>> iterator =
+					backtraceEntries.iterator();
+
+				Map.Entry<Long, Long> highestRequiredBacktraceEntry = null;
+
+				while (iterator.hasNext()) {
+					Map.Entry<Long, Long> backtraceEntry = iterator.next();
+
+					long backtraceClassNameId = backtraceEntry.getKey();
+					long backtraceClassPK = backtraceEntry.getValue();
+
+					Set<Long> classPKs = discardRootsMap.get(
+						backtraceClassNameId);
+
+					if ((classPKs != null) &&
+						classPKs.contains(backtraceClassPK)) {
+
+						break;
+					}
+
+					CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
+						ctCollectionId, backtraceClassNameId, backtraceClassPK);
+
+					if (ctEntry == null) {
+						break;
+					}
+
+					if ((ctEntry.getChangeType() !=
+							CTConstants.CT_CHANGE_TYPE_DELETION) &&
+						_tableReferenceDefinitionManager.isChildModelOptional(
+							previousModelClassNameId, backtraceClassNameId)) {
+
+						break;
+					}
+
+					highestRequiredBacktraceEntry = backtraceEntry;
+
+					previousModelClassNameId = backtraceClassNameId;
+				}
+
+				if (highestRequiredBacktraceEntry != null) {
+					Set<Long> classPKs = discardRootsMap.computeIfAbsent(
+						highestRequiredBacktraceEntry.getKey(),
+						key -> new HashSet<>());
+
+					classPKs.add(highestRequiredBacktraceEntry.getValue());
+				}
+
+				return true;
+			});
+
+		if (discardRootsMap.isEmpty()) {
+			discardRootsMap.put(
+				modelClassNameId, Collections.singleton(modelClassPK));
+		}
+
+		Map<Long, Set<Long>> discardEnclosureMap =
+			CTEnclosureUtil.getEnclosureMap(
+				ctClosure, discardRootsMap.entrySet());
+
+		List<CTEntry> ctEntries = new ArrayList<>(discardEnclosureMap.size());
+
+		for (Map.Entry<Long, Set<Long>> entry :
+				discardEnclosureMap.entrySet()) {
+
+			for (long classPK : entry.getValue()) {
+				CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
+					ctCollectionId, entry.getKey(), classPK);
+
+				if (ctEntry != null) {
+					ctEntries.add(ctEntry);
+				}
+			}
+		}
+
+		return ctEntries;
+	}
+
+	@Override
 	public boolean isCTEntryEnclosed(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
@@ -659,5 +800,8 @@ public class CTCollectionLocalServiceImpl
 
 	private ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
 		_serviceTrackerMap;
+
+	@Reference
+	private TableReferenceDefinitionManager _tableReferenceDefinitionManager;
 
 }

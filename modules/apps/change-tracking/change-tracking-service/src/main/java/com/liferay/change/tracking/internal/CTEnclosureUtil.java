@@ -17,6 +17,7 @@ package com.liferay.change.tracking.internal;
 import com.liferay.change.tracking.closure.CTClosure;
 
 import java.util.AbstractMap;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
@@ -35,15 +36,22 @@ public class CTEnclosureUtil {
 	public static Map<Long, Set<Long>> getEnclosureMap(
 		CTClosure ctClosure, long modelClassNameId, long modelClassPK) {
 
+		return getEnclosureMap(
+			ctClosure,
+			Collections.singleton(
+				new AbstractMap.SimpleImmutableEntry<>(
+					modelClassNameId, Collections.singleton(modelClassPK))));
+	}
+
+	public static Map<Long, Set<Long>> getEnclosureMap(
+		CTClosure ctClosure, Set<Map.Entry<Long, Set<Long>>> rootEntries) {
+
 		Map<Long, Set<Long>> enclosureMap = new HashMap<>();
 
-		Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>();
+		Queue<Map.Entry<Long, ? extends Collection<Long>>> queue =
+			new LinkedList<>(rootEntries);
 
-		queue.add(
-			new AbstractMap.SimpleImmutableEntry<>(
-				modelClassNameId, Collections.singletonList(modelClassPK)));
-
-		Map.Entry<Long, List<Long>> entry = null;
+		Map.Entry<Long, ? extends Collection<Long>> entry = null;
 
 		while ((entry = queue.poll()) != null) {
 			long classNameId = entry.getKey();
@@ -53,7 +61,7 @@ public class CTEnclosureUtil {
 					classNameId, key -> new HashSet<>());
 
 				if (classPKs.add(classPK)) {
-					Map<Long, List<Long>> childPKsMap =
+					Map<Long, ? extends Collection<Long>> childPKsMap =
 						ctClosure.getChildPKsMap(classNameId, classPK);
 
 					if (!childPKsMap.isEmpty()) {
@@ -71,40 +79,63 @@ public class CTEnclosureUtil {
 
 		Set<Map.Entry<Long, Long>> parentEntries = new HashSet<>();
 
-		_collectParentEntries(
-			ctClosure, enclosureMap, new LinkedList<>(),
-			ctClosure.getRootPKsMap(), parentEntries);
+		visitParentEntries(
+			ctClosure,
+			(classNameId, classPK, backtraceEntries) -> {
+				Set<Long> classPKs = enclosureMap.get(classNameId);
+
+				if ((classPKs != null) && classPKs.contains(classPK)) {
+					parentEntries.addAll(backtraceEntries);
+
+					return true;
+				}
+
+				return false;
+			});
 
 		return parentEntries;
 	}
 
-	private static void _collectParentEntries(
-		CTClosure ctClosure, Map<Long, Set<Long>> enclosureMap,
+	public static void visitParentEntries(
+		CTClosure ctClosure, BacktraceVisitor backtraceVisitor) {
+
+		_visitParentEntries(
+			ctClosure, ctClosure.getRootPKsMap(), new LinkedList<>(),
+			backtraceVisitor);
+	}
+
+	public interface BacktraceVisitor {
+
+		public boolean visit(
+			long classNameId, long classPK,
+			Deque<Map.Entry<Long, Long>> backtraceEntries);
+
+	}
+
+	private static void _visitParentEntries(
+		CTClosure ctClosure, Map<Long, List<Long>> childPKsMap,
 		Deque<Map.Entry<Long, Long>> backtraceEntries,
-		Map<Long, List<Long>> childPKsMap,
-		Set<Map.Entry<Long, Long>> parentEntries) {
+		BacktraceVisitor backtraceVisitor) {
 
 		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
 			long classNameId = entry.getKey();
 
 			for (long classPK : entry.getValue()) {
-				Set<Long> classPKs = enclosureMap.get(classNameId);
+				if (backtraceVisitor.visit(
+						classNameId, classPK, backtraceEntries)) {
 
-				if ((classPKs != null) && classPKs.contains(classPK)) {
-					parentEntries.addAll(backtraceEntries);
+					continue;
 				}
-				else {
-					backtraceEntries.push(
-						new AbstractMap.SimpleImmutableEntry<>(
-							classNameId, classPK));
 
-					_collectParentEntries(
-						ctClosure, enclosureMap, backtraceEntries,
-						ctClosure.getChildPKsMap(classNameId, classPK),
-						parentEntries);
+				backtraceEntries.push(
+					new AbstractMap.SimpleImmutableEntry<>(
+						classNameId, classPK));
 
-					backtraceEntries.pop();
-				}
+				_visitParentEntries(
+					ctClosure, ctClosure.getChildPKsMap(classNameId, classPK),
+					backtraceEntries, backtraceVisitor);
+
+				backtraceEntries.pop();
 			}
 		}
 	}

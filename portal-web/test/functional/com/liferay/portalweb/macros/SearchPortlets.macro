@@ -15,13 +15,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		// Workaround for LPS-116952
-
-		Click(locator1 = "//div[contains(@class,'panel-group')]/button/span[contains(.,'Search')]");
-
-		/*Type.sendKeysApplicationSearch(
+		Type.sendKeysApplicationSearch(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-			value1 = "search");*/
+			value1 = "search");
 
 		for (var portletName : list "${searchPortletList}") {
 			Portlet._clickAddPortlet(portletName = "${portletName}");

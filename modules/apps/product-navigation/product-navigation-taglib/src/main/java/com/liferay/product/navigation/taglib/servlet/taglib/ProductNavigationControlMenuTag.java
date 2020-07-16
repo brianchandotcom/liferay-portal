@@ -98,7 +98,9 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 			ServletContextUtil.getPanelAppRegistry(),
 			ServletContextUtil.getPanelCategoryRegistry());
 
-		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+		if (!panelCategoryHelper.isApplicationsMenuApp(
+				themeDisplay.getPpid())) {
+
 			return false;
 		}
 

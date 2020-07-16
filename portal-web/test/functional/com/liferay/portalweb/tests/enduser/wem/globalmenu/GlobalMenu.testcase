@@ -39,7 +39,7 @@ definition {
 			ProductMenuHelper.openProductMenu();
 
 			AssertElementPresent(
-				key_panel = "global_menu-applications",
+				key_panel = "applications_menu-applications",
 				locator1 = "ProductMenu#PANEL_COLLAPSED");
 
 			AssertElementPresent(
@@ -110,7 +110,7 @@ definition {
 			ProductMenuHelper.openProductMenu();
 
 			AssertElementPresent(
-				key_panel = "global_menu-applications",
+				key_panel = "applications_menu-applications",
 				locator1 = "ProductMenu#PANEL_COLLAPSED");
 
 			AssertElementPresent(

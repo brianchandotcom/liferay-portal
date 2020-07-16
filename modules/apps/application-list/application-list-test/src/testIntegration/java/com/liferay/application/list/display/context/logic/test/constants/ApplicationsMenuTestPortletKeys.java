@@ -17,10 +17,10 @@ package com.liferay.application.list.display.context.logic.test.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class GlobalMenuTestPortletKeys {
+public class ApplicationsMenuTestPortletKeys {
 
-	public static final String GLOBAL_MENU_TEST_PORTLET =
+	public static final String APPLICATIONS_MENU_TEST_PORTLET =
 		"com_liferay_application_list_display_context_logic_test" +
-			"GlobalMenuTestPortlet";
+			"ApplicationsMenuTestPortlet";
 
 }

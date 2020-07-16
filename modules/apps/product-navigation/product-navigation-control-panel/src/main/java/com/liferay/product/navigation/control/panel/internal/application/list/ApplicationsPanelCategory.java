@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.GLOBAL_MENU,
+		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU,
 		"panel.category.order:Integer=50"
 	},
 	service = PanelCategory.class
@@ -38,12 +38,13 @@ public class ApplicationsPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS;
+		return PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.global_menu.applications");
+		return LanguageUtil.get(
+			locale, "category.applications_menu.applications");
 	}
 
 }

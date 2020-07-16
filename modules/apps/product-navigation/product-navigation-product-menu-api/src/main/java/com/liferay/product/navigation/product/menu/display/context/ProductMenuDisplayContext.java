@@ -77,7 +77,7 @@ public class ProductMenuDisplayContext {
 		_childPanelCategories.addAll(
 			0,
 			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.GLOBAL_MENU,
+				PanelCategoryKeys.APPLICATIONS_MENU,
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroup()));
 
@@ -131,7 +131,7 @@ public class ProductMenuDisplayContext {
 
 				for (PanelCategory panelCategory :
 						_panelCategoryRegistry.getChildPanelCategories(
-							PanelCategoryKeys.GLOBAL_MENU)) {
+							PanelCategoryKeys.APPLICATIONS_MENU)) {
 
 					if (panelCategoryHelper.containsPortlet(
 							_themeDisplay.getPpid(), panelCategory.getKey(),

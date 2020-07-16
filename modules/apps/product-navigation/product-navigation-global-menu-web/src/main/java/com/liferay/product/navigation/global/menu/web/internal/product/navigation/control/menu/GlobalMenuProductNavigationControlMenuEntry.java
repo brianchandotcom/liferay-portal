@@ -91,13 +91,13 @@ public class GlobalMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		List<PanelCategory> globalMenuPanelCategories =
+		List<PanelCategory> applicationsMenuPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.GLOBAL_MENU,
+				PanelCategoryKeys.APPLICATIONS_MENU,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
-		for (PanelCategory panelCategory : globalMenuPanelCategories) {
+		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
 			List<PanelCategory> childPanelCategories =
 				_panelCategoryRegistry.getChildPanelCategories(
 					panelCategory.getKey(), themeDisplay.getPermissionChecker(),

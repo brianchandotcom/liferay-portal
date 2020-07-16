@@ -21,6 +21,23 @@ import com.liferay.portal.kernel.util.PortletCategoryKeys;
  */
 public interface PanelCategoryKeys {
 
+	public static final String APPLICATIONS_MENU = "applications_menu";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS =
+		"applications_menu.applications";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_COMMERCE =
+		"applications_menu.applications.commerce";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_COMMUNICATION =
+		"applications_menu.applications.communication";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_CONTENT =
+		"applications_menu.applications.content";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_CUSTOM_APPS =
+		"applications_menu.applications.custom.apps";
+
 	public static final String CONTROL_PANEL = "control_panel";
 
 	public static final String CONTROL_PANEL_APPS =
@@ -46,23 +63,6 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTROL_PANEL_WORKFLOW =
 		PortletCategoryKeys.CONTROL_PANEL_WORKFLOW;
-
-	public static final String GLOBAL_MENU = "global_menu";
-
-	public static final String GLOBAL_MENU_APPLICATIONS =
-		"global_menu.applications";
-
-	public static final String GLOBAL_MENU_APPLICATIONS_COMMERCE =
-		"global_menu.applications.commerce";
-
-	public static final String GLOBAL_MENU_APPLICATIONS_COMMUNICATION =
-		"global_menu.applications.communication";
-
-	public static final String GLOBAL_MENU_APPLICATIONS_CONTENT =
-		"global_menu.applications.content";
-
-	public static final String GLOBAL_MENU_APPLICATIONS_CUSTOM_APPS =
-		"global_menu.applications.custom.apps";
 
 	public static final String HIDDEN = "hidden";
 

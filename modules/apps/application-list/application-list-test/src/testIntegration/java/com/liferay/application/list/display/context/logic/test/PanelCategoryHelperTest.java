@@ -17,7 +17,7 @@ package com.liferay.application.list.display.context.logic.test;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.application.list.display.context.logic.test.constants.GlobalMenuTestPortletKeys;
+import com.liferay.application.list.display.context.logic.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -41,13 +41,14 @@ public class PanelCategoryHelperTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testIsGlobalMenuApp() {
+	public void testIsApplicationsMenuApp() {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 
 		Assert.assertTrue(
-			panelCategoryHelper.isGlobalMenuApp(
-				GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET));
+			panelCategoryHelper.isApplicationsMenuApp(
+				ApplicationsMenuTestPortletKeys.
+					APPLICATIONS_MENU_TEST_PORTLET));
 	}
 
 	@Inject

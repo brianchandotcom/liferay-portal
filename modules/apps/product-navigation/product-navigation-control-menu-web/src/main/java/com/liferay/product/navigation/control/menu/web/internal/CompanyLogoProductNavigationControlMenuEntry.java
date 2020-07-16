@@ -84,7 +84,9 @@ public class CompanyLogoProductNavigationControlMenuEntry
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 
-		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+		if (!panelCategoryHelper.isApplicationsMenuApp(
+				themeDisplay.getPpid())) {
+
 			return false;
 		}
 

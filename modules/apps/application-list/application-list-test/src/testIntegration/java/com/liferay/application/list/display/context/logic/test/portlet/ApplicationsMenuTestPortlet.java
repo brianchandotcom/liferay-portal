@@ -14,7 +14,7 @@
 
 package com.liferay.application.list.display.context.logic.test.portlet;
 
-import com.liferay.application.list.display.context.logic.test.constants.GlobalMenuTestPortletKeys;
+import com.liferay.application.list.display.context.logic.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.name=" + GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET
+		"javax.portlet.name=" + ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET
 	},
 	service = Portlet.class
 )
-public class GlobalMenuTestPortlet extends MVCPortlet {
+public class ApplicationsMenuTestPortlet extends MVCPortlet {
 }

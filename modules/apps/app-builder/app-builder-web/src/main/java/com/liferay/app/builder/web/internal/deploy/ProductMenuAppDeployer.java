@@ -80,7 +80,7 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 					new ServiceRegistration<?>[] {
 						_deployPanelApp(
 							appBuilderApp.getCompanyId(),
-							PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS,
+							PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS,
 							applicationsMenuLabel,
 							JSONUtil.toLongArray(
 								jsonObject.getJSONArray("siteIds"))),
@@ -97,7 +97,7 @@ public class ProductMenuAppDeployer extends BaseAppDeployer {
 			String menuLabel;
 
 			if (Objects.equals(
-					PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS, scope)) {
+					PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS, scope)) {
 
 				menuLabel = applicationsMenuLabel;
 			}

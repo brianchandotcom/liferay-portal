@@ -198,7 +198,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 						<div class="permission-navigation-item-content toggler-content toggler-content-expanded">
 
 							<%
-							for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS)) {
+							for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS)) {
 								List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
 							%>
 

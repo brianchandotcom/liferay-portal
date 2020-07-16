@@ -19,7 +19,7 @@ package com.liferay.app.builder.web.internal.constants;
  */
 public class AppBuilderPanelCategoryKeys {
 
-	public static final String GLOBAL_MENU_APPLICATIONS_APP_BUILDER =
-		"global_menu.applications.app_builder";
+	public static final String APPLICATIONS_MENU_APPLICATIONS_APP_BUILDER =
+		"applications_menu.applications.app_builder";
 
 }

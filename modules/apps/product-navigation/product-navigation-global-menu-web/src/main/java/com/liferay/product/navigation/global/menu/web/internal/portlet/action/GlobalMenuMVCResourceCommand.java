@@ -205,13 +205,13 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray panelCategoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<PanelCategory> globalMenuPanelCategories =
+		List<PanelCategory> applicationsMenuPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.GLOBAL_MENU,
+				PanelCategoryKeys.APPLICATIONS_MENU,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
-		for (PanelCategory panelCategory : globalMenuPanelCategories) {
+		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
 			JSONArray childPanelCategoriesJSONArray =
 				_getChildPanelCategoriesJSONArray(
 					httpServletRequest, panelCategory.getKey(), themeDisplay);

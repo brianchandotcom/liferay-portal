@@ -95,7 +95,7 @@ public class DepotPanelAppController {
 		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
 			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
 			_panelCategoryHelper.isControlPanelApp(portletId) ||
-			_panelCategoryHelper.isGlobalMenuApp(portletId)) {
+			_panelCategoryHelper.isApplicationsMenuApp(portletId)) {
 
 			return true;
 		}

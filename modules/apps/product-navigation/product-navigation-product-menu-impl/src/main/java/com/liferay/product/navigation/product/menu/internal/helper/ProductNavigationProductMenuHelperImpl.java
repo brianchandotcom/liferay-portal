@@ -85,7 +85,7 @@ public class ProductNavigationProductMenuHelperImpl
 		if (!enableGlobalMenu) {
 			childPanelCategories.addAll(
 				_panelCategoryRegistry.getChildPanelCategories(
-					PanelCategoryKeys.GLOBAL_MENU,
+					PanelCategoryKeys.APPLICATIONS_MENU,
 					themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroup()));
 		}
@@ -126,7 +126,9 @@ public class ProductNavigationProductMenuHelperImpl
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 
-		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+		if (!panelCategoryHelper.isApplicationsMenuApp(
+				themeDisplay.getPpid())) {
+
 			return false;
 		}
 

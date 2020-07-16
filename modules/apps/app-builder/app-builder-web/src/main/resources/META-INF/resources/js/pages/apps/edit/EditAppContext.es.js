@@ -43,7 +43,7 @@ const reducer = (state, action) => {
 
 			if (action.deploymentType == PRODUCT_MENU) {
 				settings = {
-					scope: ['global_menu.applications'],
+					scope: ['applications_menu.applications'],
 				};
 			}
 

@@ -17,7 +17,7 @@ package com.liferay.application.list.display.context.logic.test.application.list
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.application.list.display.context.logic.test.constants.GlobalMenuTestPortletKeys;
+import com.liferay.application.list.display.context.logic.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,20 +30,20 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS
+		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS
 	},
 	service = PanelApp.class
 )
-public class GlobalMenuTestPanelApp extends BasePanelApp {
+public class ApplicationsMenuTestPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET;
+		return ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET + ")",
+		target = "(javax.portlet.name=" + ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

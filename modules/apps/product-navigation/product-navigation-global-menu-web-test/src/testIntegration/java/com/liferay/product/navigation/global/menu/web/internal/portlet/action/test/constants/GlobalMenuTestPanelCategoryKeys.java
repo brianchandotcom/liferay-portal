@@ -19,7 +19,7 @@ package com.liferay.product.navigation.global.menu.web.internal.portlet.action.t
  */
 public class GlobalMenuTestPanelCategoryKeys {
 
-	public static final String GLOBAL_MENU_TEST_PANEL_CATEGORY =
-		"global_menu.test";
+	public static final String APPLICATIONS_MENU_TEST_PANEL_CATEGORY =
+		"applications_menu.test";
 
 }

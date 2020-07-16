@@ -56,10 +56,10 @@ public class ElasticsearchConnectionFixture
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
 			new ElasticsearchConfigurationWrapper() {
 				{
-					elasticsearchConfiguration =
+					setElasticsearchConfiguration(
 						ConfigurableUtil.createConfigurable(
 							ElasticsearchConfiguration.class,
-							_elasticsearchConfigurationProperties);
+							_elasticsearchConfigurationProperties));
 				}
 			};
 

@@ -67,14 +67,14 @@ public class HttpPortRangeTest {
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
 			new ElasticsearchConfigurationWrapper() {
 				{
-					elasticsearchConfiguration =
+					setElasticsearchConfiguration(
 						ConfigurableUtil.createConfigurable(
 							ElasticsearchConfiguration.class,
 							HashMapBuilder.<String, Object>put(
 								"embeddedHttpPort", _embeddedHttpPort
 							).put(
 								"sidecarHttpPort", _sidecarHttpPort
-							).build());
+							).build()));
 				}
 			};
 

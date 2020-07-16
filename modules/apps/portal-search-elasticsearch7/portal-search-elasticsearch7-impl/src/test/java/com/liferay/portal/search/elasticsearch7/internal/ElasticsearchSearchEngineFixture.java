@@ -118,13 +118,13 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 	protected static ElasticsearchConfigurationWrapper
 		createElasticsearchConfigurationWrapper(
-			Map<String, Object> properites) {
+			Map<String, Object> properties) {
 
 		return new ElasticsearchConfigurationWrapper() {
 			{
-				elasticsearchConfiguration =
+				setElasticsearchConfiguration(
 					ConfigurableUtil.createConfigurable(
-						ElasticsearchConfiguration.class, properites);
+						ElasticsearchConfiguration.class, properties));
 			}
 		};
 	}

@@ -24,7 +24,7 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -138,10 +138,10 @@ public class CompanyIdIndexNameBuilderTest {
 
 		return new ElasticsearchConfigurationWrapper() {
 			{
-				elasticsearchConfiguration =
+				setElasticsearchConfiguration(
 					ConfigurableUtil.createConfigurable(
 						ElasticsearchConfiguration.class,
-						new HashMap<Object, Object>());
+						Collections.emptyMap()));
 			}
 		};
 	}

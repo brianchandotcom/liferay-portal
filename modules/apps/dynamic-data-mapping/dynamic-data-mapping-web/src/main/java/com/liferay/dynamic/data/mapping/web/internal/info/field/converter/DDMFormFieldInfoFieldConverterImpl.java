@@ -41,32 +41,43 @@ public class DDMFormFieldInfoFieldConverterImpl
 	public InfoField convert(DDMFormField ddmFormField) {
 		LocalizedValue label = ddmFormField.getLabel();
 
-		InfoLocalizedValue<String> labelInfoLocalizedValue =
+		return _addAttributes(
+			ddmFormField,
+			InfoField.builder(
+			).infoFieldType(
+				_getInfoFieldType(ddmFormField)
+			).name(
+				ddmFormField.getName()
+			)
+		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(
 				label.getValues()
 			).defaultLocale(
 				label.getDefaultLocale()
-			).build();
+			).build()
+		).localizable(
+			ddmFormField.isLocalizable()
+		).build();
+	}
 
-		InfoField infoField = new InfoField(
-			_getInfoFieldType(ddmFormField), labelInfoLocalizedValue,
-			ddmFormField.isLocalizable(), ddmFormField.getName());
+	private InfoField.FinalStep _addAttributes(
+		DDMFormField ddmFormField, InfoField.FinalStep finalStep) {
 
 		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
 
-			infoField.addAttribute(TextInfoFieldType.HTML, true);
-			infoField.addAttribute(TextInfoFieldType.MULTILINE, true);
+			finalStep.attribute(TextInfoFieldType.HTML, true);
+			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
 		}
 
 		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
 
-			infoField.addAttribute(TextInfoFieldType.MULTILINE, true);
+			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
 		}
 
-		return infoField;
+		return finalStep;
 	}
 
 	private InfoFieldType _getInfoFieldType(DDMFormField ddmFormField) {

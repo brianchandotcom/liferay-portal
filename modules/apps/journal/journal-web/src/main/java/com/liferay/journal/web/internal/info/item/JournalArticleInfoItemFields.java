@@ -35,19 +35,20 @@ public interface JournalArticleInfoItemFields {
 		InfoLocalizedValue.localize(
 			"com.liferay.journal.lang", "author-profile-image"),
 		"authorProfileImage");
-
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		new InfoField<TextInfoFieldType>(
-			TextInfoFieldType.INSTANCE,
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"description"
+		).attribute(
+			TextInfoFieldType.HTML, true
+		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				JournalArticleInfoItemFields.class, "description"),
-			true, "description") {
-
-			{
-				addAttribute(TextInfoFieldType.HTML, true);
-			}
-		};
-
+				JournalArticleInfoItemFields.class, "description")
+		).localizable(
+			true
+		).build();
 	public static final InfoField displayPageUrlInfoField = new InfoField(
 		URLInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(

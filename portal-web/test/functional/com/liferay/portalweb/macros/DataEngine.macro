@@ -1,7 +1,7 @@
 definition {
 
 	macro addField {
-		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tab = "Builder")) {
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
@@ -33,7 +33,7 @@ definition {
 	}
 
 	macro addFields {
-		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tab = "Builder")) {
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
@@ -52,6 +52,23 @@ definition {
 
 			Click(locator1 = "Sidebar#BACK");
 		}
+	}
+
+	macro viewField {
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		var key_text = "${fieldName}";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		AssertTextEquals(
+			locator1 = "Button#ANY",
+			value1 = "${fieldName}");
+
+		AssertTextEquals.assertValue(
+			locator1 = "Sidebar#DDM_LABEL",
+			value1 = "${fieldFieldLabel}");
 	}
 
 }

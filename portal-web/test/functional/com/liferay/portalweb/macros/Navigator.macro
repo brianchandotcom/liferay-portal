@@ -157,7 +157,7 @@ definition {
 	macro gotoSidebarTab {
 		var key_tabName = "${tabName}";
 
-		Click(locator1 = "Sidebar#TAB");
+		Click.clickNoMouseOver(locator1 = "Sidebar#TAB");
 
 		AssertElementPresent(locator1 = "Sidebar#ACTIVE_TAB");
 	}

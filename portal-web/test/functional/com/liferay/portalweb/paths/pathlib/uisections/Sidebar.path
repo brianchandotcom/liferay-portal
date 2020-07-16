@@ -24,9 +24,19 @@
     <td></td>
 </tr>
 <tr>
+    <td>DDM_LABEL</td>
+    <td>//div[contains(@class,'sidebar')]//p[contains(.,'Label')]//following-sibling::input</td>
+    <td></td>
+</tr>
+<tr>
     <td>FIELD_BOTTOM_DROP_TARGET</td>
     <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
     <td></td>
+</tr>
+<tr>
+	<td>FORM_BUILDER</td>
+	<td>//div[contains(@class,'form-builder-drop-container')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ACTIVE_TAB</td>

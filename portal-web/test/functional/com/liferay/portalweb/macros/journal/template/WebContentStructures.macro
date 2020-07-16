@@ -3,7 +3,7 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
-		AssertVisible(locator1 = "DDMEditStructure#FORM_BUILDER");
+		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
 
 		WebContentStructures.addName(structureName = "${structureName}");
 

@@ -134,7 +134,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//div[contains(@class,'data-layout-builder-sidebar')]</td>
+	<td>//ul[contains(@class,'property-builder-fields-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,6 +145,11 @@
 <tr>
 	<td>FORM_FIELD</td>
 	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']/../../div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_CONTAINER</td>
+	<td>//div[contains(@class,'ddm-field-container')]//p[.='${key_fieldFieldLabel}']/../../div</td>
 	<td></td>
 </tr>
 <tr>

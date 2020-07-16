@@ -27,14 +27,12 @@ const getInputMask = (dateFormat, dateDelimiter) => {
 	dateFormat.split('').forEach((item) => {
 		if (item === dateDelimiter) {
 			inputMaskArray.push(dateDelimiter);
-		}
-		else if (item === 'Y') {
+		} else if (item === 'Y') {
 			inputMaskArray.push(/\d/);
 			inputMaskArray.push(/\d/);
 			inputMaskArray.push(/\d/);
 			inputMaskArray.push(/\d/);
-		}
-		else if (item === 'd' || item === 'm') {
+		} else if (item === 'd' || item === 'm') {
 			inputMaskArray.push(/\d/);
 			inputMaskArray.push(/\d/);
 		}
@@ -50,13 +48,11 @@ const getDateMask = (dateFormat, dateDelimiter) => {
 			let currentFormat;
 
 			if (item === '%Y') {
-				currentFormat = 'YYYY';
-			}
-			else if (item === '%m') {
+				currentFormat = 'yyyy';
+			} else if (item === '%m') {
 				currentFormat = 'MM';
-			}
-			else {
-				currentFormat = 'DD';
+			} else {
+				currentFormat = 'dd';
 			}
 
 			return currentFormat;

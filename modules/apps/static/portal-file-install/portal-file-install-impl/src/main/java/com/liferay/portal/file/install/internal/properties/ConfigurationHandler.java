@@ -155,7 +155,7 @@ public class ConfigurationHandler {
 			}
 
 			if (spaces == CharPool.CLOSE_BRACKET) {
-				Class<?> type = (Class)_codeToType.get(typeCode);
+				Class<?> type = _codeToType.get(typeCode);
 
 				Object array = Array.newInstance(type, list.size());
 
@@ -529,9 +529,9 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_VAL_OPEN = '"'; // '{';
 
-	private static final Map<Object, Object> _codeToType = new HashMap<>();
-	private static final Map<Object, Object> _typeToCode =
-		HashMapBuilder.<Object, Object>put(
+	private static final Map<Object, Class<?>> _codeToType = new HashMap<>();
+	private static final Map<Class<?>, Object> _typeToCode =
+		HashMapBuilder.<Class<?>, Object>put(
 			Boolean.class, _TOKEN_SIMPLE_BOOLEAN
 		).put(
 			Byte.class, _TOKEN_SIMPLE_BYTE
@@ -550,7 +550,7 @@ public class ConfigurationHandler {
 		).build();
 
 	static {
-		for (Map.Entry<Object, Object> entry : _typeToCode.entrySet()) {
+		for (Map.Entry<Class<?>, Object> entry : _typeToCode.entrySet()) {
 			_codeToType.put(entry.getValue(), entry.getKey());
 		}
 

@@ -48,11 +48,11 @@ export default withRouter(
 		const queryParams = useQueryParams(location);
 
 		useEffect(() => {
-			setPage(queryParams.get('page') || 1);
+			setPage(+queryParams.get('page') || 1);
 		}, [queryParams]);
 
 		useEffect(() => {
-			setPageSize(queryParams.get('pagesize') || 20);
+			setPageSize(+queryParams.get('pagesize') || 20);
 		}, [queryParams]);
 
 		const historyPushParser = historyPushWithSlug(history.push);

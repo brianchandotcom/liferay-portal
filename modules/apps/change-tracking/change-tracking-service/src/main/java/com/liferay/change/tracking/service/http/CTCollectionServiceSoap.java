@@ -116,6 +116,21 @@ public class CTCollectionServiceSoap {
 		}
 	}
 
+	public static void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws RemoteException {
+
+		try {
+			CTCollectionServiceUtil.discardCTEntries(
+				ctCollectionId, modelClassNameId, modelClassPK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws RemoteException {

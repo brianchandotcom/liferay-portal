@@ -62,6 +62,10 @@ public interface CTCollectionService extends BaseService {
 	public CTCollection deleteCTCollection(CTCollection ctCollection)
 		throws PortalException;
 
+	public void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException;
+
 	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws PortalException;

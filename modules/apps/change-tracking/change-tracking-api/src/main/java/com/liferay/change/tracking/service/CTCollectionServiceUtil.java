@@ -60,6 +60,14 @@ public class CTCollectionServiceUtil {
 		return getService().deleteCTCollection(ctCollection);
 	}
 
+	public static void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().discardCTEntries(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
 	public static void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

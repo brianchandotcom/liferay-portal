@@ -55,6 +55,15 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
+	public void discardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionService.discardCTEntries(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	@Override
 	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

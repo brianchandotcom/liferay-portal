@@ -18,7 +18,6 @@ import com.liferay.headless.admin.user.dto.v1_0.Site;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -30,10 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.validation.ValidationException;
 
@@ -51,18 +46,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
-	public Page<Site> getMyUserAccountSitesPage(Pagination pagination) {
-		List<Group> groups = contextUser.getGroups();
-
-		Stream<Group> stream = groups.stream();
+	public Page<Site> getMyUserAccountSitesPage(Pagination pagination)
+		throws Exception {
 
 		return Page.of(
 			transform(
-				stream.filter(
-					GroupModel::isSite
-				).collect(
-					Collectors.toList()
-				),
+				_groupService.getUserSitesGroups(
+					contextUser.getUserId(), pagination.getStartPosition(),
+					pagination.getEndPosition()),
 				this::_toSite));
 	}
 

@@ -16,8 +16,6 @@ package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -66,11 +64,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon() ||
-			  ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			   LayoutPermissionUtil.contains(
-				   themeDisplay.getPermissionChecker(),
-				   themeDisplay.getLayout(),
-				   ActionKeys.UPDATE_LAYOUT_CONTENT)))) {
+			  layout.isTypeAssetDisplay() || layout.isTypeContent())) {
 
 			return false;
 		}

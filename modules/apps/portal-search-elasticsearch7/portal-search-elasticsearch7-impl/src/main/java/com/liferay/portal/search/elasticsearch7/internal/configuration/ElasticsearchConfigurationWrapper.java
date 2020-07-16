@@ -14,18 +14,26 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.configuration;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -37,27 +45,27 @@ import org.osgi.service.component.annotations.Modified;
 public class ElasticsearchConfigurationWrapper {
 
 	public String additionalConfigurations() {
-		return elasticsearchConfiguration.additionalConfigurations();
+		return _elasticsearchConfiguration.additionalConfigurations();
 	}
 
 	public String additionalIndexConfigurations() {
-		return elasticsearchConfiguration.additionalIndexConfigurations();
+		return _elasticsearchConfiguration.additionalIndexConfigurations();
 	}
 
 	public String additionalTypeMappings() {
-		return elasticsearchConfiguration.additionalTypeMappings();
+		return _elasticsearchConfiguration.additionalTypeMappings();
 	}
 
 	public boolean authenticationEnabled() {
-		return elasticsearchConfiguration.authenticationEnabled();
+		return _elasticsearchConfiguration.authenticationEnabled();
 	}
 
 	public boolean bootstrapMlockAll() {
-		return elasticsearchConfiguration.bootstrapMlockAll();
+		return _elasticsearchConfiguration.bootstrapMlockAll();
 	}
 
 	public String clusterName() {
-		return elasticsearchConfiguration.clusterName();
+		return _elasticsearchConfiguration.clusterName();
 	}
 
 	/**
@@ -65,59 +73,59 @@ public class ElasticsearchConfigurationWrapper {
 	 */
 	@Deprecated
 	public int embeddedHttpPort() {
-		return elasticsearchConfiguration.embeddedHttpPort();
+		return _elasticsearchConfiguration.embeddedHttpPort();
 	}
 
 	public String httpCORSAllowOrigin() {
-		return elasticsearchConfiguration.httpCORSAllowOrigin();
+		return _elasticsearchConfiguration.httpCORSAllowOrigin();
 	}
 
 	public String httpCORSConfigurations() {
-		return elasticsearchConfiguration.httpCORSConfigurations();
+		return _elasticsearchConfiguration.httpCORSConfigurations();
 	}
 
 	public boolean httpCORSEnabled() {
-		return elasticsearchConfiguration.httpCORSEnabled();
+		return _elasticsearchConfiguration.httpCORSEnabled();
 	}
 
 	public boolean httpSSLEnabled() {
-		return elasticsearchConfiguration.httpSSLEnabled();
+		return _elasticsearchConfiguration.httpSSLEnabled();
 	}
 
 	public String indexNamePrefix() {
-		return elasticsearchConfiguration.indexNamePrefix();
+		return _elasticsearchConfiguration.indexNamePrefix();
 	}
 
 	public String indexNumberOfReplicas() {
-		return elasticsearchConfiguration.indexNumberOfReplicas();
+		return _elasticsearchConfiguration.indexNumberOfReplicas();
 	}
 
 	public String indexNumberOfShards() {
-		return elasticsearchConfiguration.indexNumberOfShards();
+		return _elasticsearchConfiguration.indexNumberOfShards();
 	}
 
 	public boolean logExceptionsOnly() {
-		return elasticsearchConfiguration.logExceptionsOnly();
+		return _elasticsearchConfiguration.logExceptionsOnly();
 	}
 
 	public String networkBindHost() {
-		return elasticsearchConfiguration.networkBindHost();
+		return _elasticsearchConfiguration.networkBindHost();
 	}
 
 	public String networkHost() {
-		return elasticsearchConfiguration.networkHost();
+		return _elasticsearchConfiguration.networkHost();
 	}
 
 	public String[] networkHostAddresses() {
-		return elasticsearchConfiguration.networkHostAddresses();
+		return _elasticsearchConfiguration.networkHostAddresses();
 	}
 
 	public String networkPublishHost() {
-		return elasticsearchConfiguration.networkPublishHost();
+		return _elasticsearchConfiguration.networkPublishHost();
 	}
 
 	public String nodeName() {
-		return elasticsearchConfiguration.nodeName();
+		return _elasticsearchConfiguration.nodeName();
 	}
 
 	/**
@@ -125,19 +133,19 @@ public class ElasticsearchConfigurationWrapper {
 	 */
 	@Deprecated
 	public OperationMode operationMode() {
-		return elasticsearchConfiguration.operationMode();
+		return _elasticsearchConfiguration.operationMode();
 	}
 
 	public String overrideTypeMappings() {
-		return elasticsearchConfiguration.overrideTypeMappings();
+		return _elasticsearchConfiguration.overrideTypeMappings();
 	}
 
 	public String password() {
-		return elasticsearchConfiguration.password();
+		return _elasticsearchConfiguration.password();
 	}
 
 	public boolean productionModeEnabled() {
-		return elasticsearchConfiguration.productionModeEnabled();
+		return _elasticsearchConfiguration.productionModeEnabled();
 	}
 
 	public void register(
@@ -148,55 +156,59 @@ public class ElasticsearchConfigurationWrapper {
 	}
 
 	public String remoteClusterConnectionId() {
-		return elasticsearchConfiguration.remoteClusterConnectionId();
+		return _elasticsearchConfiguration.remoteClusterConnectionId();
 	}
 
 	public RESTClientLoggerLevel restClientLoggerLevel() {
-		return elasticsearchConfiguration.restClientLoggerLevel();
+		return _elasticsearchConfiguration.restClientLoggerLevel();
 	}
 
 	public boolean sidecarDebug() {
-		return elasticsearchConfiguration.sidecarDebug();
+		return _elasticsearchConfiguration.sidecarDebug();
 	}
 
 	public String sidecarDebugSettings() {
-		return elasticsearchConfiguration.sidecarDebugSettings();
+		return _elasticsearchConfiguration.sidecarDebugSettings();
 	}
 
 	public long sidecarHeartbeatInterval() {
-		return elasticsearchConfiguration.sidecarHeartbeatInterval();
+		return _elasticsearchConfiguration.sidecarHeartbeatInterval();
 	}
 
 	public String sidecarHome() {
-		return elasticsearchConfiguration.sidecarHome();
+		return _elasticsearchConfiguration.sidecarHome();
 	}
 
 	public String sidecarHttpPort() {
-		return elasticsearchConfiguration.sidecarHttpPort();
+		return _elasticsearchConfiguration.sidecarHttpPort();
 	}
 
 	public String[] sidecarJVMOptions() {
-		return elasticsearchConfiguration.sidecarJVMOptions();
+		if (_propsMap.containsKey("sidecarJVMOptions")) {
+			return _propsElasticsearchConfiguration.sidecarJVMOptions();
+		}
+
+		return _elasticsearchConfiguration.sidecarJVMOptions();
 	}
 
 	public long sidecarShutdownTimeout() {
-		return elasticsearchConfiguration.sidecarShutdownTimeout();
+		return _elasticsearchConfiguration.sidecarShutdownTimeout();
 	}
 
 	public String transportTcpPort() {
-		return elasticsearchConfiguration.transportTcpPort();
+		return _elasticsearchConfiguration.transportTcpPort();
 	}
 
 	public String truststorePassword() {
-		return elasticsearchConfiguration.truststorePassword();
+		return _elasticsearchConfiguration.truststorePassword();
 	}
 
 	public String truststorePath() {
-		return elasticsearchConfiguration.truststorePath();
+		return _elasticsearchConfiguration.truststorePath();
 	}
 
 	public String truststoreType() {
-		return elasticsearchConfiguration.truststoreType();
+		return _elasticsearchConfiguration.truststoreType();
 	}
 
 	public void unregister(
@@ -207,24 +219,73 @@ public class ElasticsearchConfigurationWrapper {
 	}
 
 	public String userName() {
-		return elasticsearchConfiguration.username();
+		return _elasticsearchConfiguration.username();
 	}
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
+	protected void activate(Map<String, Object> map) {
+		Map<String, Object> propsMap = _getPropsMap(
+			_PROPS_KEYS, ElasticsearchConfiguration.class, _props);
+
+		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
+			ElasticsearchConfiguration.class, map);
+		_propsElasticsearchConfiguration = ConfigurableUtil.createConfigurable(
+			ElasticsearchConfiguration.class, propsMap);
+		_propsMap = propsMap;
 
 		_elasticsearchConfigurationObservers.forEach(
-			elasticsearchConfigurationObserver ->
-				elasticsearchConfigurationObserver.
-					onElasticsearchConfigurationUpdate());
+			ElasticsearchConfigurationObserver::
+				onElasticsearchConfigurationUpdate);
 	}
 
-	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+	protected void setElasticsearchConfiguration(
+		ElasticsearchConfiguration elasticsearchConfiguration) {
 
+		_elasticsearchConfiguration = elasticsearchConfiguration;
+	}
+
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
+	private static Map<String, Object> _getPropsMap(
+		String[] keys, Class<?> clazz, Props props) {
+
+		if (props == null) {
+			return Collections.emptyMap();
+		}
+
+		Properties properties = props.getProperties(
+			StringUtil.toLowerCase(clazz.getName()) + CharPool.PERIOD, true);
+
+		if ((properties == null) || properties.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Object> propsMap = new HashMap<>();
+
+		for (String key : keys) {
+			String property = properties.getProperty(
+				StringUtil.toLowerCase(key));
+
+			if (!Validator.isBlank(property)) {
+				propsMap.put(key, property);
+			}
+		}
+
+		return propsMap;
+	}
+
+	private static final String[] _PROPS_KEYS = {"sidecarJVMOptions"};
+
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Set<ElasticsearchConfigurationObserver>
 		_elasticsearchConfigurationObservers = new ConcurrentSkipListSet<>();
+	private Props _props;
+	private volatile ElasticsearchConfiguration
+		_propsElasticsearchConfiguration;
+	private volatile Map<String, Object> _propsMap = Collections.emptyMap();
 
 }

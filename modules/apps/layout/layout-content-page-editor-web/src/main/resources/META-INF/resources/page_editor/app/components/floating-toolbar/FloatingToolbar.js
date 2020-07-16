@@ -89,7 +89,10 @@ function FloatingToolbar({
 				try {
 					align(element, anchor, {
 						globalContext,
-						rtl: config.languageDirection?.[languageId] === 'rtl',
+						rtl:
+							config.languageDirection?.[
+								themeDisplay.getLanguageId()
+							] === 'rtl',
 					});
 				}
 				catch (error) {
@@ -108,7 +111,7 @@ function FloatingToolbar({
 				callback();
 			}
 		},
-		[globalContext, isMounted, languageId, show]
+		[globalContext, isMounted, show]
 	);
 
 	const handleButtonClick = useCallback(

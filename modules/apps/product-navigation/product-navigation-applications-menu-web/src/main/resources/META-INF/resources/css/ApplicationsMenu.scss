@@ -3,15 +3,15 @@
 $control-menu-height: 56px;
 $tab-header-height: 38px;
 
-.global-apps-menu-modal {
-	.global-apps-menu-header {
+.applications-menu-modal {
+	.applications-menu-header {
 		.autofit-row {
 			@include media-breakpoint-down(xs) {
 				flex-wrap: wrap;
 			}
 		}
 
-		.global-apps-menu-tabs {
+		.applications-menu-tabs {
 			@include media-breakpoint-down(xs) {
 				order: 1;
 				width: 100%;
@@ -59,7 +59,7 @@ $tab-header-height: 38px;
 	}
 }
 
-.global-apps-nav {
+.applications-menu-nav {
 	margin: 0;
 	padding: 0.2rem;
 
@@ -75,7 +75,7 @@ $tab-header-height: 38px;
 		padding: 1.5rem 2.5rem 1.5rem 1.75rem;
 	}
 
-	.global-apps-nav-header {
+	.applications-menu-nav-header {
 		color: $secondary;
 		font-size: 0.875rem;
 		font-weight: 700;
@@ -83,7 +83,7 @@ $tab-header-height: 38px;
 		text-transform: uppercase;
 	}
 
-	.global-apps-nav-subheader {
+	.applications-menu-nav-subheader {
 		color: $secondary;
 		font-size: 0.75rem;
 		font-weight: 600;
@@ -91,11 +91,11 @@ $tab-header-height: 38px;
 		text-transform: uppercase;
 	}
 
-	.global-apps-nav-item {
+	.applications-menu-nav-item {
 		margin-bottom: 0.5rem;
 	}
 
-	.global-apps-nav-link {
+	.applications-menu-nav-link {
 		color: $dark;
 		line-height: 1.5rem;
 
@@ -104,7 +104,7 @@ $tab-header-height: 38px;
 		}
 	}
 
-	.global-apps-nav-columns {
+	.applications-menu-nav-columns {
 		column-count: 1;
 		orphans: 1;
 		widows: 1;
@@ -127,7 +127,7 @@ $tab-header-height: 38px;
 	}
 }
 
-.global-apps-sites {
+.applications-menu-sites {
 	margin-bottom: 0;
 	width: 100%;
 

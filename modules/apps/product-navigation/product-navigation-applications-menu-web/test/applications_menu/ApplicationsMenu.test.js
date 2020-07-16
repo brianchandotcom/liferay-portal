@@ -17,7 +17,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import GlobalMenu from '../../src/main/resources/META-INF/resources/js/GlobalMenu';
+import ApplicationsMenu from '../../src/main/resources/META-INF/resources/js/ApplicationsMenu';
 
 const panelAppsURL = '/fetchUrl';
 
@@ -83,11 +83,11 @@ const mockedData = {
 	},
 };
 
-const renderGlobalMenu = () => {
-	return render(<GlobalMenu panelAppsURL={panelAppsURL} />);
+const renderApplicationsMenu = () => {
+	return render(<ApplicationsMenu panelAppsURL={panelAppsURL} />);
 };
 
-describe('GlobalMenu', () => {
+describe('ApplicationsMenu', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 		fetch.mockResponseOnce(JSON.stringify(mockedData));
@@ -103,14 +103,14 @@ describe('GlobalMenu', () => {
 		cleanup();
 	});
 
-	it('renders Global Menu button', () => {
-		const {getByTitle} = renderGlobalMenu({});
+	it('renders Applications Menu button', () => {
+		const {getByTitle} = renderApplicationsMenu({});
 
 		expect(getByTitle('applications-menu')).toBeInTheDocument();
 	});
 
-	it('fetches Global Menu data when trigger button is focused', async () => {
-		const {getByTitle} = renderGlobalMenu();
+	it('fetches Applications Menu data when trigger button is focused', async () => {
+		const {getByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
@@ -127,8 +127,8 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetches Global Menu data when trigger button is hovered', async () => {
-		const {getByTitle} = renderGlobalMenu();
+	it('fetches Applications Menu data when trigger button is hovered', async () => {
+		const {getByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
@@ -145,8 +145,8 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetches Global Menu data when trigger button is clicked', async () => {
-		const {getByTitle} = renderGlobalMenu();
+	it('fetches Applications Menu data when trigger button is clicked', async () => {
+		const {getByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
@@ -163,8 +163,8 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('renders Global Menu modal with a close button when trigger button is clicked', async () => {
-		const {getByTitle, queryByTitle} = renderGlobalMenu();
+	it('renders Applications Menu modal with a close button when trigger button is clicked', async () => {
+		const {getByTitle, queryByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		expect(queryByTitle('close')).not.toBeInTheDocument();
@@ -180,8 +180,8 @@ describe('GlobalMenu', () => {
 		expect(getByTitle('close')).toBeInTheDocument();
 	});
 
-	it('closes Global Menu modal when close button is clicked', async () => {
-		const {getByTitle} = renderGlobalMenu();
+	it('closes Applications Menu modal when close button is clicked', async () => {
+		const {getByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {
@@ -205,8 +205,8 @@ describe('GlobalMenu', () => {
 		expect(closeButton).not.toBeInTheDocument();
 	});
 
-	it('closes Global Menu modal when clicking outside', async () => {
-		const {getByTitle} = renderGlobalMenu();
+	it('closes Applications Menu modal when clicking outside', async () => {
+		const {getByTitle} = renderApplicationsMenu();
 		const trigger = getByTitle('applications-menu');
 
 		await act(async () => {

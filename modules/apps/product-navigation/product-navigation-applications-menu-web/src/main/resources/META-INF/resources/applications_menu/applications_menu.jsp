@@ -31,6 +31,6 @@ ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new Applications
 
 	<react:component
 		data="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
-		module="js/GlobalMenu"
+		module="js/ApplicationsMenu"
 	/>
 </li>

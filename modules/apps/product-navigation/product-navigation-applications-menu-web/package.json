@@ -9,7 +9,7 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
-	"name": "product-navigation-global-apps",
+	"name": "product-navigation-applications-menu",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

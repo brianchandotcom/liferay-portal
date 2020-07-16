@@ -17,7 +17,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 
-import '../css/GlobalMenu.scss';
+import '../css/ApplicationsMenu.scss';
 
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
@@ -28,11 +28,11 @@ import React, {useRef, useState} from 'react';
 const Sites = ({label, sites}) => {
 	return (
 		<>
-			<li className="global-apps-nav-subheader">{label}</li>
+			<li className="applications-menu-nav-subheader">{label}</li>
 
 			{sites.map(({key, label, logoURL, url}) => (
-				<li className="global-apps-nav-item" key={key}>
-					<a className="global-apps-nav-link" href={url}>
+				<li className="applications-menu-nav-item" key={key}>
+					<a className="applications-menu-nav-link" href={url}>
 						<ClaySticker
 							className="inline-item-before"
 							inline={true}
@@ -74,7 +74,7 @@ const AppsPanel = ({
 
 	return (
 		<>
-			<div className="border-bottom global-apps-menu-header">
+			<div className="border-bottom applications-menu-header">
 				<ClayLayout.ContainerFluid>
 					<ClayLayout.ContentRow verticalAlign="center">
 						<ClayLayout.ContentCol>
@@ -86,7 +86,7 @@ const AppsPanel = ({
 							{companyName}
 						</ClayLayout.ContentCol>
 						<ClayLayout.ContentCol
-							className="global-apps-menu-tabs"
+							className="applications-menu-tabs"
 							expand
 						>
 							<ClayTabs modern>
@@ -125,14 +125,14 @@ const AppsPanel = ({
 						aria-labelledby={`${portletNamespace}tab_${index}`}
 						key={`tabPane-${index}`}
 					>
-						<ClayLayout.Row className="global-apps-nav">
+						<ClayLayout.Row className="applications-menu-nav">
 							<ClayLayout.Col className="c-p-0" md>
-								<div className="global-apps-nav-columns">
+								<div className="applications-menu-nav-columns">
 									{childCategories.map(
 										({key, label, panelApps}) => (
 											<ClayLayout.Col key={key} md>
 												<ul className="list-unstyled">
-													<li className="global-apps-nav-header">
+													<li className="applications-menu-nav-header">
 														{label}
 													</li>
 
@@ -143,12 +143,12 @@ const AppsPanel = ({
 															url,
 														}) => (
 															<li
-																className="global-apps-nav-item"
+																className="applications-menu-nav-item"
 																key={portletId}
 															>
 																<a
 																	className={classNames(
-																		'component-link global-apps-nav-link',
+																		'component-link applications-menu-nav-link',
 																		{
 																			active:
 																				portletId ===
@@ -174,9 +174,9 @@ const AppsPanel = ({
 								</div>
 							</ClayLayout.Col>
 
-							<div className="global-apps-sites">
+							<div className="applications-menu-sites">
 								<ul className="bg-light list-unstyled rounded">
-									<li className="global-apps-nav-header">
+									<li className="applications-menu-nav-header">
 										{Liferay.Language.get('sites')}
 									</li>
 
@@ -240,7 +240,7 @@ const AppsPanel = ({
 	);
 };
 
-const GlobalMenu = ({
+const ApplicationsMenu = ({
 	companyName,
 	logoURL,
 	panelAppsURL,
@@ -282,7 +282,7 @@ const GlobalMenu = ({
 		<>
 			{visible && (
 				<ClayModal
-					className="global-apps-menu-modal"
+					className="applications-menu-modal"
 					observer={observer}
 					size="full"
 					status="info"
@@ -300,7 +300,7 @@ const GlobalMenu = ({
 
 			<ClayButtonWithIcon
 				className="dropdown-toggle lfr-portal-tooltip"
-				data-qa-id="globalMenu"
+				data-qa-id="applicationsMenu"
 				displayType="unstyled"
 				onClick={handleTriggerButtonClick}
 				onFocus={fetchCategories}
@@ -313,11 +313,11 @@ const GlobalMenu = ({
 	);
 };
 
-GlobalMenu.propTypes = {
+ApplicationsMenu.propTypes = {
 	companyName: PropTypes.string,
 	logoURL: PropTypes.string,
 	panelAppsURL: PropTypes.string,
 	selectedPortletId: PropTypes.string,
 };
 
-export default GlobalMenu;
+export default ApplicationsMenu;

@@ -261,7 +261,7 @@ export default function Sidebar() {
 						'page-editor__sidebar__content--open': sidebarOpen,
 						rtl:
 							config.languageDirection[
-								themeDisplay.getLanguageId()
+								themeDisplay?.getLanguageId()
 							] === 'rtl',
 					})}
 					onClick={deselectItem}

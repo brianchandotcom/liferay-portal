@@ -91,7 +91,7 @@ function FloatingToolbar({
 						globalContext,
 						rtl:
 							config.languageDirection?.[
-								themeDisplay.getLanguageId()
+								themeDisplay?.getLanguageId()
 							] === 'rtl',
 					});
 				}

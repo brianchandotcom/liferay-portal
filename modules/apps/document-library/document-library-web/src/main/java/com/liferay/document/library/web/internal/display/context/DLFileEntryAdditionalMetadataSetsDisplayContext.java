@@ -91,8 +91,13 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		}
 
 		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			_dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
-				ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId"));
+			long fileEntryTypeId = ParamUtil.getLong(
+				_httpServletRequest, "fileEntryTypeId");
+
+			if (fileEntryTypeId != 0) {
+				_dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+					fileEntryTypeId);
+			}
 		}
 		else {
 			_dlFileEntryType =
@@ -111,7 +116,9 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
 			DLFileEntryType dlFileEntryType = getDLFileEntryType();
 
-			if (dlFileEntryType.getDataDefinitionId() == 0) {
+			if ((dlFileEntryType == null) ||
+				(dlFileEntryType.getDataDefinitionId() == 0)) {
+
 				return null;
 			}
 

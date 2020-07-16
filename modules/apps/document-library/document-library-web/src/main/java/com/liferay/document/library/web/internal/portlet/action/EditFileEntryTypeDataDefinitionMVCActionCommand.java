@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -207,6 +208,9 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 				fileEntryType.getDataDefinitionId());
 
 			_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+
+			_dlFileEntryTypeLocalService.updateDDMStructureLinks(
+				fileEntryTypeId, Collections.emptySet());
 		}
 		catch (RequiredStructureException requiredStructureException) {
 			throw new RequiredFileEntryTypeException(

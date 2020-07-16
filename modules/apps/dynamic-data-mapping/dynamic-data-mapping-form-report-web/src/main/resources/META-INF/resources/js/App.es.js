@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import CardShortcut from './components/card-shortcut/CardShortcut.es';
 import CardList from './components/card/CardList.es';
 import Sidebar from './components/sidebar/Sidebar.es';
 import {SidebarContextProvider} from './components/sidebar/SidebarContext.es';
@@ -28,7 +29,13 @@ export default ({
 		formReportRecordsFieldValuesURL={formReportRecordsFieldValuesURL}
 		portletNamespace={portletNamespace}
 	>
-		<CardList data={data} fields={fields} />
+		<div className="report-cards-area" key="report-cards">
+			<CardList data={data} fields={fields} />
+		</div>
+
+		<div className="report-cards-shortcut" key="report-cards-shortcut">
+			<CardShortcut fields={fields} />
+		</div>
 
 		<Sidebar />
 	</SidebarContextProvider>

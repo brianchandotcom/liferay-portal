@@ -16,37 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
+
 <%
 CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.getAttribute(CPContentWebKeys.CP_COMPARE_CONTENT_HELPER);
 
 CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
 
 List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
-
-CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
-
-long commerceAccountId = 0;
-
-CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-if (commerceAccount != null) {
-	commerceAccountId = GetterUtil.getLong(commerceAccount.getCommerceAccountId());
-}
-
-HttpServletRequest originalHttpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(commerceContext.getCommerceChannelGroupId(), commerceAccountId, originalHttpServletRequest.getSession());
 %>
 
 <div id="mini-compare-root"></div>
 
 <aui:script require="commerce-frontend-js/components/mini_compare/entry as miniCompare">
 	miniCompare.default('mini-compare', 'mini-compare-root', {
-		compareProductsURL: '/test',
-		editCompareProductActionURL: '/test',
-		items: [],
-		itemsLimit: 5,
-		portletNamespace: 'portletNamespace',
-		spritemap: '/o/admin-theme/images/clay/icons.svg'
+		compareProductsURL: '<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
+		editCompareProductActionURL: '<portlet:actionURL name="editCompareProduct" />',
+		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>,
+		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
+		portletNamespace: '<portlet:namespace />',
+		spritemap: '<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>'
 	});
 </aui:script>

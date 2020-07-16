@@ -73,7 +73,9 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+	page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
+	page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.List" %><%@
@@ -90,4 +92,6 @@ page import="java.util.Set" %>
 
 <%
 String languageId = LanguageUtil.getLanguageId(locale);
+
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>

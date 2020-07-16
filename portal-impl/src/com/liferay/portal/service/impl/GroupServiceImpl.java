@@ -572,6 +572,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserSitesGroups(null, QueryUtil.ALL_POS);
 	}
 
+	@Override
+	public List<Group> getUserSitesGroups(long userId, int start, int end)
+		throws PortalException {
+
+		List<Group> groups = groupLocalService.getUserSitesGroups(
+			userId, start, end);
+
+		return filterGroups(groups);
+	}
+
 	/**
 	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is

@@ -2356,6 +2356,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return new ArrayList<>(siteGroups);
 	}
 
+	@Override
+	public List<Group> getUserSitesGroups(long userId, int start, int end)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		return groupFinder.findByCompanyId(
+			user.getCompanyId(),
+			LinkedHashMapBuilder.<String, Object>put(
+				"inherit", Boolean.TRUE
+			).put(
+				"site", Boolean.TRUE
+			).put(
+				"usersGroups", userId
+			).build(),
+			start, end, new GroupNameComparator(true));
+	}
+
 	/**
 	 * Returns <code>true</code> if the live group has a staging group.
 	 *

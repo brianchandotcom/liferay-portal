@@ -24,6 +24,7 @@ import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layou
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector, useSelectorCallback} from '../../store/index';
+import {useIsActive} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from '../fragment-content/FragmentContent';
@@ -36,6 +37,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
 	);
+	const isActive = useIsActive();
 	const [setRef, itemElement] = useSetRef(ref);
 	const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
@@ -72,7 +74,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	return (
 		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
 			<>
-				{showFloatingToolbar && (
+				{isActive(item.itemId) && showFloatingToolbar && (
 					<FloatingToolbar
 						buttons={floatingToolbarButtons}
 						item={item}

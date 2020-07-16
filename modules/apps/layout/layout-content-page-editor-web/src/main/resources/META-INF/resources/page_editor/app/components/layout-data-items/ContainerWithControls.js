@@ -25,6 +25,7 @@ import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateIte
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector} from '../../store/index';
+import {useIsActive} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Container from './Container';
@@ -37,6 +38,7 @@ const ContainerWithControls = React.forwardRef(
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
+		const isActive = useIsActive();
 		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
 		const [setRef, itemElement] = useSetRef(ref);
@@ -52,7 +54,7 @@ const ContainerWithControls = React.forwardRef(
 
 		return (
 			<>
-				{showFloatingToolbar && (
+				{isActive(item.itemId) && showFloatingToolbar && (
 					<FloatingToolbar
 						buttons={buttons}
 						item={item}

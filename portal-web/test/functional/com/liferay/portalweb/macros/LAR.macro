@@ -122,7 +122,13 @@ definition {
 	}
 
 	macro _importSite {
-		Pause(locator1 = "15000");
+		var i = "0";
+
+		while (IsElementNotPresent(locator1 = "Button#CONTINUE")) {
+			var i = ${i} + 1;
+
+			Pause(locator1 = "1000");
+		}
 
 		Click(locator1 = "Button#CONTINUE");
 
@@ -189,7 +195,13 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		Pause(locator1 = "15000");
+		var i = "0";
+
+		while ((IsElementNotPresent(locator1 = "Button#CONTINUE")) && (IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER"))) {
+			var i = ${i} + 1;
+
+			Pause(locator1 = "1000");
+		}
 
 		if ("${cannotImport}" == "true") {
 			AssertTextEquals(
@@ -267,7 +279,13 @@ definition {
 	macro _selectImportFileSite {
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = "7000");
+		var i = "0";
+
+		while (IsElementNotPresent(locator1 = "Button#SELECT_FILE")) {
+			var i = ${i} + 1;
+
+			Pause(locator1 = "1000");
+		}
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
@@ -282,7 +300,15 @@ definition {
 				value1 = "${larFileName}");
 		}
 
-		Pause(locator1 = "15000");
+		if ((isSet(importValidationMissingItem)) || (isSet(importCampaignValidationError)) || (isSet(importCampaignValidationError))) {
+			var j = "0";
+
+			while ((IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
+				var j = ${j} + 1;
+
+				Pause(locator1 = "1000");
+			}
+		}
 
 		if (isSet(importValidationMissingItem)) {
 			AssertTextEquals.assertPartialText(

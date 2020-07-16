@@ -127,8 +127,12 @@ definition {
 
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
 
+			var i = "0";
+
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = "3000");
+				var i = ${i} + 1;
+
+				Pause(locator1 = "1000");
 			}
 
 			AssertTextEquals(
@@ -765,7 +769,13 @@ definition {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_CUSTOM_PUBLICATION");
 		}
 
-		Pause(locator1 = "30000");
+		var i = "0";
+
+		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
+			var i = ${i} + 1;
+
+			Pause(locator1 = "1000");
+		}
 
 		if (isSet(failureExpected)) {
 			AssertTextEquals(
@@ -886,7 +896,13 @@ definition {
 			locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 			value1 = "Publish to Live");
 
-		Pause(locator1 = "10000");
+		var i = "0";
+
+		while ((IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) && (IsElementNotPresent(locator1 = "Staging#LATEST_PROCESS_RESULT"))) {
+			var i = ${i} + 1;
+
+			Pause(locator1 = "1000");
+		}
 
 		if (IsElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
 			AssertTextEquals(

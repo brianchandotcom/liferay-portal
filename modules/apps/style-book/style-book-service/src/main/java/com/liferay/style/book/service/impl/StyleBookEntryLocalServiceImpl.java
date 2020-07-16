@@ -131,10 +131,25 @@ public class StyleBookEntryLocalServiceImpl
 			userId, groupId, name, StringPool.BLANK,
 			styleBookEntry.getTokensValues(), serviceContext);
 
-		_copyStyleBookEntryPreviewFileEntry(
+		long previewFileEntryId = _copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, styleBookEntry, copyStyleBookEntry);
 
-		return copyStyleBookEntry;
+		//  Draft
+
+		StyleBookEntry draftStyleBookEntry = fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			StyleBookEntry copyDraftStyleBookEntry = getDraft(
+				copyStyleBookEntry);
+
+			copyDraftStyleBookEntry.setTokensValues(
+				draftStyleBookEntry.getTokensValues());
+
+			updateDraft(copyDraftStyleBookEntry);
+		}
+
+		return updatePreviewFileEntryId(
+			copyStyleBookEntry.getStyleBookEntryId(), previewFileEntryId);
 	}
 
 	@Override
@@ -374,13 +389,13 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
-	private void _copyStyleBookEntryPreviewFileEntry(
+	private long _copyStyleBookEntryPreviewFileEntry(
 			long userId, long groupId, StyleBookEntry styleBookEntry,
 			StyleBookEntry copyStyleBookEntry)
 		throws PortalException {
 
 		if (styleBookEntry.getPreviewFileEntryId() == 0) {
-			return;
+			return 0;
 		}
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
@@ -413,9 +428,7 @@ public class StyleBookEntryLocalServiceImpl
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
 			false);
 
-		updatePreviewFileEntryId(
-			copyStyleBookEntry.getStyleBookEntryId(),
-			fileEntry.getFileEntryId());
+		return fileEntry.getFileEntryId();
 	}
 
 	private String _getStyleBookEntryKey(String styleBookEntryKey) {

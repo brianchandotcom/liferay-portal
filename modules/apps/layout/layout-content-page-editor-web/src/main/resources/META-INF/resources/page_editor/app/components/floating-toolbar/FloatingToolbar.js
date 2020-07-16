@@ -189,25 +189,6 @@ function FloatingToolbar({
 				}
 			);
 		});
-
-		if (!itemElement) {
-			return;
-		}
-
-		const {
-			marginLeft: itemRefMarginLeft,
-			marginRight: itemRefMarginRight,
-		} = getComputedStyle(itemElement);
-
-		const rtl = config.languageDirection?.[languageId] === 'rtl';
-
-		const marginValue = rtl
-			? Math.abs(parseInt(itemRefMarginLeft, 10))
-			: parseInt(itemRefMarginRight, 10);
-
-		if (show && marginValue) {
-			toolbarRef.current.style.transform = `translate(${marginValue}px)`;
-		}
 	}, [
 		alignElement,
 		item.config,
@@ -505,10 +486,21 @@ const align = (element, anchor, {globalContext, rtl}) => {
 
 	Align.align(element, anchor, ELEMENT_POSITION[vertical][horizontal], false);
 
+	const {
+		marginLeft: anchorMarginLeft,
+		marginRight: anchorMarginRight,
+	} = getComputedStyle(anchor);
+
+	const margin = rtl
+		? Math.abs(parseInt(anchorMarginLeft, 10))
+		: parseInt(anchorMarginRight, 10);
+
 	if (globalContext.iframe && globalContext.document.contains(anchor)) {
 		const {left, top} = globalContext.iframe.getBoundingClientRect();
 
-		element.style.transform = `translateX(${left}px) translateY(${top}px)`;
+		element.style.transform = `translateX(${
+			left + margin
+		}px) translateY(${top}px)`;
 	}
 	else {
 		element.style.transform = '';

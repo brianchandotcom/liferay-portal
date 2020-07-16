@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.tasks.container.DockerCopyFileFromContainer
 
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-*.jar"], include: "*.jar").plus(fileTree(dir: pluginClasspathDir, include: "com.liferay.gradle.util-1.0.43.jar"))
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
 	}
 }
 

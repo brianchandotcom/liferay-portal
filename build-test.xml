@@ -7465,7 +7465,7 @@ go</echo>
 										<delete>
 											<fileset
 												dir="${liferay.home}/deploy"
-												includes="${osgi.app.name}-hook*.war"
+												includes="${osgi.app.name}*hook*.war"
 											/>
 										</delete>
 

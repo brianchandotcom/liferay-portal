@@ -26,7 +26,7 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 	.page-editor__collapse {
 		margin-left: 1rem;
 
-		> &-content {
+		& > &-content {
 			margin-left: 1rem;
 		}
 	}

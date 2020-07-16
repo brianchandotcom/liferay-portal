@@ -1073,7 +1073,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		// Social
 
-		_importSocialActivities(eventId, calendarBookingId);
+		_importSocialActivities(companyId, eventId, calendarBookingId);
 
 		return calendarBooking;
 	}
@@ -1260,10 +1260,12 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			ratingsStats.getAverageScore());
 	}
 
-	private void _importSocialActivities(long eventId, long calendarBookingId) {
+	private void _importSocialActivities(
+		long companyId, long eventId, long calendarBookingId) {
+
 		List<SocialActivity> socialActivities =
 			_socialActivityLocalService.getActivities(
-				_CLASS_NAME, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				companyId, _CLASS_NAME, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity socialActivity : socialActivities) {
 			if (socialActivity.getClassPK() == eventId) {

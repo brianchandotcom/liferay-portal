@@ -420,7 +420,7 @@ public class ConfigurationHandler {
 	private static void _writeQuoted(Writer writer, String simple)
 		throws IOException {
 
-		if ((simple == null) || (simple.length() == 0)) {
+		if (simple.isEmpty()) {
 			return;
 		}
 

@@ -43,4 +43,32 @@ definition {
 		MenuItem.click(menuItem = "Export for Translation");
 	}
 
+	macro gotoImportTranslation {
+		Click.waitForMenuToggleJSClick(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		MenuItem.click(menuItem = "Import Translation");
+	}
+
+	macro importTranslation {
+		Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
+
+		AssertClick(
+			locator1 = "Button#SELECT_FILE",
+			value1 = "Select File");
+
+		UploadTempFile.uploadTempFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${fileName}");
+
+		PortletEntry.publish();
+	}
+
+	macro translateFile {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "update-translation-file -Dtranslation.content.target.original=<target><![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<target><![CDATA[${contentTranslateion}]]></target> -Dtranslation.title.target.original=<target><![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<target><![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+	}
+
 }

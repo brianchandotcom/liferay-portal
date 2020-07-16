@@ -137,6 +137,13 @@ AUI.add(
 					});
 				},
 
+				_onChange(event) {
+					var instance = this;
+
+					instance._toggleBtnMove(event);
+					instance._toggleBtnSort(event);
+				},
+
 				_onSelectFocus(event, box) {
 					var instance = this;
 
@@ -283,6 +290,10 @@ AUI.add(
 					var moveBtnRight = contentBox.one('.move-right');
 
 					var target = event.target;
+					var selectedOptions = target
+						.get('options')
+						.getDOMNodes()
+						.filter((option) => option.selected).length;
 
 					if (moveBtnLeft && moveBtnRight && target) {
 						var btnDisabledLeft = true;
@@ -292,7 +303,8 @@ AUI.add(
 							if (target === instance._rightBox) {
 								if (
 									leftBoxMaxItems === -1 ||
-									instance._leftBox.get('length') <
+									instance._leftBox.get('length') +
+										selectedOptions <=
 										leftBoxMaxItems
 								) {
 									btnDisabledLeft = false;
@@ -301,7 +313,8 @@ AUI.add(
 							else if (target === instance._leftBox) {
 								if (
 									rightBoxMaxItems === -1 ||
-									instance._rightBox.get('length') <
+									instance._rightBox.get('length') +
+										selectedOptions <=
 										rightBoxMaxItems
 								) {
 									btnDisabledRight = false;
@@ -425,18 +438,20 @@ AUI.add(
 					);
 
 					instance._leftBox.after(
-						'valuechange',
-						A.bind('_toggleBtnSort', instance)
+						'change',
+						A.bind('_onChange', instance)
 					);
+
 					instance._leftBox.on(
 						'focus',
 						A.rbind('_onSelectFocus', instance, instance._rightBox)
 					);
 
 					instance._rightBox.after(
-						'valuechange',
-						A.bind('_toggleBtnSort', instance)
+						'change',
+						A.bind('_onChange', instance)
 					);
+
 					instance._rightBox.on(
 						'focus',
 						A.rbind('_onSelectFocus', instance, instance._leftBox)

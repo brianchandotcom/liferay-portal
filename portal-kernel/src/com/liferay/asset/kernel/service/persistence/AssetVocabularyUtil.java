@@ -1426,6 +1426,276 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
+	 * Returns all the asset vocabularies where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @return the matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByG_S(
+		long groupId, boolean system) {
+
+		return getPersistence().findByG_S(groupId, system);
+	}
+
+	/**
+	 * Returns a range of all the asset vocabularies where groupId = &#63; and system = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @return the range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByG_S(
+		long groupId, boolean system, int start, int end) {
+
+		return getPersistence().findByG_S(groupId, system, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and system = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByG_S(
+		long groupId, boolean system, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().findByG_S(
+			groupId, system, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and system = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	public static List<AssetVocabulary> findByG_S(
+		long groupId, boolean system, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S(
+			groupId, system, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first asset vocabulary in the ordered set where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset vocabulary
+	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary findByG_S_First(
+			long groupId, boolean system,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByG_S_First(
+			groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Returns the first asset vocabulary in the ordered set where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary fetchByG_S_First(
+		long groupId, boolean system,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().fetchByG_S_First(
+			groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset vocabulary
+	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary findByG_S_Last(
+			long groupId, boolean system,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByG_S_Last(
+			groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Returns the last asset vocabulary in the ordered set where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	 */
+	public static AssetVocabulary fetchByG_S_Last(
+		long groupId, boolean system,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().fetchByG_S_Last(
+			groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63; and system = &#63;.
+	 *
+	 * @param vocabularyId the primary key of the current asset vocabulary
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset vocabulary
+	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	 */
+	public static AssetVocabulary[] findByG_S_PrevAndNext(
+			long vocabularyId, long groupId, boolean system,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().findByG_S_PrevAndNext(
+			vocabularyId, groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @return the matching asset vocabularies that the user has permission to view
+	 */
+	public static List<AssetVocabulary> filterFindByG_S(
+		long groupId, boolean system) {
+
+		return getPersistence().filterFindByG_S(groupId, system);
+	}
+
+	/**
+	 * Returns a range of all the asset vocabularies that the user has permission to view where groupId = &#63; and system = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @return the range of matching asset vocabularies that the user has permission to view
+	 */
+	public static List<AssetVocabulary> filterFindByG_S(
+		long groupId, boolean system, int start, int end) {
+
+		return getPersistence().filterFindByG_S(groupId, system, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies that the user has permissions to view where groupId = &#63; and system = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset vocabularies that the user has permission to view
+	 */
+	public static List<AssetVocabulary> filterFindByG_S(
+		long groupId, boolean system, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+
+		return getPersistence().filterFindByG_S(
+			groupId, system, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63; and system = &#63;.
+	 *
+	 * @param vocabularyId the primary key of the current asset vocabulary
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset vocabulary
+	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	 */
+	public static AssetVocabulary[] filterFindByG_S_PrevAndNext(
+			long vocabularyId, long groupId, boolean system,
+			OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
+
+		return getPersistence().filterFindByG_S_PrevAndNext(
+			vocabularyId, groupId, system, orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset vocabularies where groupId = &#63; and system = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 */
+	public static void removeByG_S(long groupId, boolean system) {
+		getPersistence().removeByG_S(groupId, system);
+	}
+
+	/**
+	 * Returns the number of asset vocabularies where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @return the number of matching asset vocabularies
+	 */
+	public static int countByG_S(long groupId, boolean system) {
+		return getPersistence().countByG_S(groupId, system);
+	}
+
+	/**
+	 * Returns the number of asset vocabularies that the user has permission to view where groupId = &#63; and system = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param system the system
+	 * @return the number of matching asset vocabularies that the user has permission to view
+	 */
+	public static int filterCountByG_S(long groupId, boolean system) {
+		return getPersistence().filterCountByG_S(groupId, system);
+	}
+
+	/**
 	 * Returns the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

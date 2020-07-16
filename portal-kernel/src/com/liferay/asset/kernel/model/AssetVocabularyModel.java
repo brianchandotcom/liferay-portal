@@ -489,6 +489,27 @@ public interface AssetVocabularyModel
 	public void setSettings(String settings);
 
 	/**
+	 * Returns the system of this asset vocabulary.
+	 *
+	 * @return the system of this asset vocabulary
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this asset vocabulary is system.
+	 *
+	 * @return <code>true</code> if this asset vocabulary is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this asset vocabulary is system.
+	 *
+	 * @param system the system of this asset vocabulary
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the last publish date of this asset vocabulary.
 	 *
 	 * @return the last publish date of this asset vocabulary

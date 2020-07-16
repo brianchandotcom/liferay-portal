@@ -67,6 +67,8 @@ public class AssetVocabularyTable extends BaseTable<AssetVocabularyTable> {
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AssetVocabularyTable, String> settings = createColumn(
 		"settings_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetVocabularyTable, Boolean> system = createColumn(
+		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<AssetVocabularyTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

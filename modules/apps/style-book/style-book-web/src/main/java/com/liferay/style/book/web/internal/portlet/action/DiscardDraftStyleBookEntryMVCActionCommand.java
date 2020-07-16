@@ -96,9 +96,9 @@ public class DiscardDraftStyleBookEntryMVCActionCommand
 		DiscardDraftStyleBookEntryMVCActionCommand.class);
 
 	@Reference
-	private StyleBookEntryService _styleBookEntryService;
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryService _styleBookEntryService;
 
 }

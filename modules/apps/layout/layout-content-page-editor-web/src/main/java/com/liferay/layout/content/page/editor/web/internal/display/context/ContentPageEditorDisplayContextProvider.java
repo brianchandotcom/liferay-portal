@@ -28,6 +28,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.structure.LayoutStructureItemStylesProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -80,8 +81,9 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentEntryConfigurationParser, _fragmentRendererController,
 				_fragmentRendererTracker, httpServletRequest,
 				_infoDisplayContributorTracker, _infoItemServiceTracker,
-				_itemSelector, _pageEditorConfiguration, portletRequest,
-				renderResponse, _stagingGroupHelper);
+				_itemSelector, _layoutStructureItemStylesProvider,
+				_pageEditorConfiguration, portletRequest, renderResponse,
+				_stagingGroupHelper);
 		}
 
 		long classPK = GetterUtil.getLong(
@@ -107,8 +109,9 @@ public class ContentPageEditorDisplayContextProvider {
 			_fragmentEntryConfigurationParser, _fragmentRendererController,
 			_fragmentRendererTracker, httpServletRequest,
 			_infoDisplayContributorTracker, _infoItemServiceTracker,
-			_itemSelector, _pageEditorConfiguration, pageIsDisplayPage,
-			portletRequest, renderResponse);
+			_itemSelector, _layoutStructureItemStylesProvider,
+			_pageEditorConfiguration, pageIsDisplayPage, portletRequest,
+			renderResponse);
 	}
 
 	@Activate
@@ -176,6 +179,10 @@ public class ContentPageEditorDisplayContextProvider {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutStructureItemStylesProvider
+		_layoutStructureItemStylesProvider;
 
 	private volatile PageEditorConfiguration _pageEditorConfiguration;
 	private ServiceTrackerList

@@ -31,6 +31,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayou
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.util.structure.LayoutStructureItemStylesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,6 +68,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
+		LayoutStructureItemStylesProvider layoutStructureItemStylesProvider,
 		PageEditorConfiguration pageEditorConfiguration,
 		boolean pageIsDisplayPage, PortletRequest portletRequest,
 		RenderResponse renderResponse) {
@@ -78,7 +80,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, httpServletRequest,
 			infoDisplayContributorTracker, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse);
+			layoutStructureItemStylesProvider, pageEditorConfiguration,
+			portletRequest, renderResponse);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}

@@ -70,7 +70,7 @@ public class StyleBookEntryLocalServiceImpl
 	@Override
 	public StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
-			String tokensValue, ServiceContext serviceContext)
+			String tokensValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -104,7 +104,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setDefaultStyleBookEntry(false);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
-		styleBookEntry.setTokensValues(tokensValue);
+		styleBookEntry.setTokensValues(tokensValues);
 
 		return publishDraft(styleBookEntry);
 	}
@@ -299,13 +299,13 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateTokensValues(
-			long styleBookEntryId, String tokensValue)
+			long styleBookEntryId, String tokensValues)
 		throws PortalException {
 
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		styleBookEntry.setTokensValues(tokensValue);
+		styleBookEntry.setTokensValues(tokensValues);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}

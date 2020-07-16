@@ -229,6 +229,19 @@ public class UpdateLanguageActionTest {
 		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
+	private ThemeDisplay _getControlPanelThemeDisplay(boolean i18n) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		if (i18n) {
+			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
+
+		themeDisplay.setLayout(_controlPanelLayout);
+
+		return themeDisplay;
+	}
+
 	private String _getControlPanelURL() {
 		String controlPanelLayoutURL = StringBundler.concat(
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
@@ -240,6 +253,21 @@ public class UpdateLanguageActionTest {
 		String queryString = StringPool.QUESTION + "queryString";
 
 		return controlPanelLayoutURL + queryString;
+	}
+
+	private ThemeDisplay _getLayoutThemeDisplay(boolean i18n) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		if (i18n) {
+			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			themeDisplay.setI18nPath(_sourceLocalePrepend);
+		}
+
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		return themeDisplay;
 	}
 
 	private String[] _getPublicPageURLs() {
@@ -258,34 +286,6 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = defaultLocaleLayoutURL + queryString;
 
 		return new String[] {bareSourceURL, bareDefaultURL};
-	}
-
-	private ThemeDisplay _getControlPanelThemeDisplay(boolean i18n) {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		if (i18n) {
-			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-			themeDisplay.setI18nPath(_sourceLocalePrepend);
-		}
-
-		themeDisplay.setLayout(_controlPanelLayout);
-
-		return themeDisplay;
-	}
-
-	private ThemeDisplay _getLayoutThemeDisplay(boolean i18n) {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		if (i18n) {
-			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-			themeDisplay.setI18nPath(_sourceLocalePrepend);
-		}
-
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-
-		return themeDisplay;
 	}
 
 	private static Locale _defaultLocale;

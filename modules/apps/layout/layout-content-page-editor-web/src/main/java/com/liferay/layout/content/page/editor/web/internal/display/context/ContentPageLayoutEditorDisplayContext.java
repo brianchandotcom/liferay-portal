@@ -29,6 +29,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
+import com.liferay.layout.util.structure.LayoutStructureItemStylesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -92,6 +93,7 @@ public class ContentPageLayoutEditorDisplayContext
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
+		LayoutStructureItemStylesProvider layoutStructureItemStylesProvider,
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
 		StagingGroupHelper stagingGroupHelper) {
@@ -103,7 +105,8 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, httpServletRequest,
 			infoDisplayContributorTracker, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse);
+			layoutStructureItemStylesProvider, pageEditorConfiguration,
+			portletRequest, renderResponse);
 
 		_stagingGroupHelper = stagingGroupHelper;
 	}

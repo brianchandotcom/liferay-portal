@@ -68,6 +68,7 @@ import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemStylesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -184,6 +185,7 @@ public class ContentPageEditorDisplayContext {
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
+		LayoutStructureItemStylesProvider layoutStructureItemStylesProvider,
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse) {
 
@@ -197,6 +199,7 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererController = fragmentRendererController;
 		_fragmentRendererTracker = fragmentRendererTracker;
 		_itemSelector = itemSelector;
+		_layoutStructureItemStylesProvider = layoutStructureItemStylesProvider;
 		_pageEditorConfiguration = pageEditorConfiguration;
 		_portletRequest = portletRequest;
 		_renderResponse = renderResponse;
@@ -1983,6 +1986,8 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private LayoutStructure _layoutStructure;
+	private final LayoutStructureItemStylesProvider
+		_layoutStructureItemStylesProvider;
 	private LayoutStructure _masterLayoutStructure;
 	private final PageEditorConfiguration _pageEditorConfiguration;
 	private Integer _pageType;

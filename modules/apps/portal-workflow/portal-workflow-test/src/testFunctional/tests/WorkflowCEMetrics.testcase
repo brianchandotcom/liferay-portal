@@ -1,0 +1,38 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	property test.run.environment = "CE";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LRQA-53649 Automate LPS-87560: Verify metrics available or not for CE and DXP customers"
+	@priority = "5"
+	test MetricsUnavailableForCECustomers {
+		property portal.acceptance = "true";
+
+		GlobalMenuHelper.openGlobalMenu();
+
+		GlobalMenu.gotoPanel(panel = "Applications");
+
+		AssertElementNotPresent(
+			key_category = "Workflow",
+			key_portlet = "Metics",
+			locator1 = "GlobalMenu#PORTLET");
+	}
+
+}

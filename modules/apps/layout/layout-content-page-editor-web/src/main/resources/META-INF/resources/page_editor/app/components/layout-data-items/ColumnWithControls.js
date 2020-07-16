@@ -29,6 +29,7 @@ import resizeColumns from '../../thunks/resizeColumns';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {NotDraggableArea} from '../../utils/useDragAndDrop';
 import {useIsActive} from '../Controls';
+import {useGlobalContext} from '../GlobalContext';
 import {
 	useResizeContext,
 	useSetCustomRowContext,
@@ -91,6 +92,7 @@ const ColumnWithControls = React.forwardRef(
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
+		const globalContext = useGlobalContext();
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const [selectedColumn, setColumnSelected] = useState(null);
 		const selectedViewportSize = useSelector(
@@ -364,7 +366,7 @@ const ColumnWithControls = React.forwardRef(
 				}
 			},
 			false,
-			document.body
+			globalContext.document.body
 		);
 
 		useEventListener(
@@ -384,7 +386,7 @@ const ColumnWithControls = React.forwardRef(
 				}
 			},
 			false,
-			document.body
+			globalContext.document.body
 		);
 
 		const isActive = useIsActive();

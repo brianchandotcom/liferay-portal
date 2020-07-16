@@ -23,6 +23,7 @@ import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layou
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector} from '../../store/index';
+import {useIsActive} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
@@ -32,6 +33,7 @@ const CollectionWithControls = React.forwardRef(
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
 		);
+		const isActive = useIsActive();
 
 		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
@@ -56,7 +58,7 @@ const CollectionWithControls = React.forwardRef(
 						{children}
 					</Collection>
 
-					{showFloatingToolbar && (
+					{isActive(item.itemId) && showFloatingToolbar && (
 						<FloatingToolbar
 							buttons={buttons}
 							item={item}

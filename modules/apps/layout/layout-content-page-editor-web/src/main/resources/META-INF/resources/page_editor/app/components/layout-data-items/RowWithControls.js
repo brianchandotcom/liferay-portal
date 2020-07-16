@@ -28,6 +28,7 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {useIsActive} from '../Controls';
 import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
@@ -39,6 +40,7 @@ const RowWithControls = React.forwardRef(
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 		const [customRow, setCustomRow] = useState(false);
+		const isActive = useIsActive();
 
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
@@ -97,7 +99,7 @@ const RowWithControls = React.forwardRef(
 							updatedLayoutData,
 						}}
 					>
-						{showFloatingToolbar && (
+						{isActive(item.itemId) && showFloatingToolbar && (
 							<FloatingToolbar
 								buttons={buttons}
 								item={item}

@@ -36,8 +36,8 @@ public class DiscardWithCancelPolicy implements RejectedExecutionHandler {
 	 * immediately.
 	 *
 	 * <p>
-	 * Important: The task can only be canceled if it is a subtype of {@link
-	 * Future}.
+	 * <strong>Important:</strong> The task can only be canceled if it is a
+	 * subtype of {@link Future}.
 	 * </p>
 	 *
 	 * @param runnable the task

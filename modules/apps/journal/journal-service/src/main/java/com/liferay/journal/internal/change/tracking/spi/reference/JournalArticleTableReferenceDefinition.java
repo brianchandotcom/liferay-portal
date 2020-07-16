@@ -54,6 +54,9 @@ public class JournalArticleTableReferenceDefinition
 		childTableReferenceInfoBuilder.singleColumnReference(
 			JournalArticleTable.INSTANCE.articleId,
 			JournalContentSearchTable.INSTANCE.articleId
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey,
+			JournalArticleResourceTable.INSTANCE.resourcePrimKey
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				JournalArticleLocalizationTable.INSTANCE
@@ -118,9 +121,6 @@ public class JournalArticleTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			JournalArticleTable.INSTANCE
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey,
-			JournalArticleResourceTable.INSTANCE.resourcePrimKey
 		).singleColumnReference(
 			JournalArticleTable.INSTANCE.folderId,
 			JournalFolderTable.INSTANCE.folderId

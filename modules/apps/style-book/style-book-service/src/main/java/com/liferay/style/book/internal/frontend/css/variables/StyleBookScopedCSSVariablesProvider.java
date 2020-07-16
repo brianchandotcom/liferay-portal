@@ -31,6 +31,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,11 +77,22 @@ public class StyleBookScopedCSSVariablesProvider
 					Map<String, String> cssVariables = new HashMap<>();
 
 					try {
-						JSONObject jsonObject =
+						JSONObject tokensValuesJSONObject =
 							JSONFactoryUtil.createJSONObject(tokensValues);
 
-						for (String key : jsonObject.keySet()) {
-							cssVariables.put(key, jsonObject.getString(key));
+						Iterator<String> iterator =
+							tokensValuesJSONObject.keys();
+
+						while (iterator.hasNext()) {
+							String key = iterator.next();
+
+							JSONObject tokenValueJSONObject =
+								tokensValuesJSONObject.getJSONObject(key);
+
+							cssVariables.put(
+								tokenValueJSONObject.getString(
+									"cssVariableMapping"),
+								tokenValueJSONObject.getString("value"));
 						}
 					}
 					catch (JSONException jsonException) {

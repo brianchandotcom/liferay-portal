@@ -21,7 +21,7 @@ dependencies {
 	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
 	compileInclude group: "xalan", name: "serializer", version: "2.7.2"
 	compileInclude group: "xalan", name: "xalan", version: "2.7.2"
-	compileInclude group: "xerces", name: "xercesImpl", version: "2.9.1"
+	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.0"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 
 	compileOnly group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2"

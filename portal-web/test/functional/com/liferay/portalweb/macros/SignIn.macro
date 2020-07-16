@@ -114,7 +114,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'ClayToast.js')]");
+		WaitForElementPresent(locator1 = "//script[contains(@src,'OpenToast.es.js')]");
 
 		Alert.viewSuccessMessage();
 

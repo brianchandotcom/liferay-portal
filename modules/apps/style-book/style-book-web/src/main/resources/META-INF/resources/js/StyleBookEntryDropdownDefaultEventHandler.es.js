@@ -38,6 +38,10 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteStyleBookEntryPreviewURL);
 	}
 
+	discardDraftStyleBookEntry(itemData) {
+		this._send(itemData.discardDraftStyleBookEntryURL);
+	}
+
 	markAsDefaultStyleBookEntry(itemData) {
 		if (itemData.message !== '') {
 			if (confirm(Liferay.Language.get(itemData.message))) {

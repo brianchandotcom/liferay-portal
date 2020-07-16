@@ -79,6 +79,18 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		).add(
 			_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer()
 		).add(
+			() -> {
+				StyleBookEntry draftStyleBookEntry =
+					StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
+
+				if (draftStyleBookEntry != null) {
+					return true;
+				}
+
+				return false;
+			},
+			_getDiscardDraftStyleBookEntryActionUnsafeConsumer()
+		).add(
 			_getDeleteStyleBookEntryActionUnsafeConsumer()
 		).build();
 	}
@@ -155,6 +167,32 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDiscardDraftStyleBookEntryActionUnsafeConsumer() {
+
+		PortletURL discardDraftStyleBookEntryURL =
+			_renderResponse.createActionURL();
+
+		discardDraftStyleBookEntryURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/style_book/discard_draft_style_book_entry");
+
+		discardDraftStyleBookEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		discardDraftStyleBookEntryURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "discardDraftStyleBookEntry");
+			dropdownItem.putData(
+				"discardDraftStyleBookEntryURL",
+				discardDraftStyleBookEntryURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
 	}
 

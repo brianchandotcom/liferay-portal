@@ -43,7 +43,7 @@ export default function App({state}) {
 				<DragAndDropContextProvider>
 					<DragPreview />
 					<LayoutViewport />
-					{createPortal(<Sidebar />, document.body)}
+					<Sidebar />
 				</DragAndDropContextProvider>
 			</ControlsProvider>
 		</StoreContextProvider>

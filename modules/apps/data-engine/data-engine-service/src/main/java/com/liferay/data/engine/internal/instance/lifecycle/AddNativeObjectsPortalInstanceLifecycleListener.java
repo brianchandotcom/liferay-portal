@@ -42,13 +42,11 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 			_dataEngineNativeObjectTracker.getDataEngineNativeObjects();
 
 		dataEngineNativeObjects.forEach(
-			dataEngineNativeObject ->
-				_dataEngineNativeObjectPortalExecutor.execute(
-					() ->
-						_dataEngineNativeObjectObserver.
-							createDataEngineNativeObject(
-								company.getCompanyId(),
-								dataEngineNativeObject)));
+			dataEngineNativeObject -> _dataEngineNativeObjectPortalExecutor.execute(
+				() ->
+					_dataEngineNativeObjectObserver.
+						createDataEngineNativeObject(
+							company.getCompanyId(), dataEngineNativeObject)));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -60,11 +58,11 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 	private DataEngineNativeObjectObserver _dataEngineNativeObjectObserver;
 
 	@Reference
-	private DataEngineNativeObjectPortalExecutor
-		_dataEngineNativeObjectPortalExecutor;
+	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
-	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
+	private DataEngineNativeObjectPortalExecutor
+		_dataEngineNativeObjectPortalExecutor;
 
 	@Reference
 	private Portal _portal;

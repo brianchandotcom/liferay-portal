@@ -64,8 +64,14 @@ function FloatingToolbar({
 	const hoverItem = useHoverItem();
 	const toolbarRef = useRef(null);
 	const [hidden, setHidden] = useState(true);
-	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
-	const [windowWidth, setWindowWidth] = useState(0);
+
+	const [windowRect, setWindowRect] = useState({
+		globalContextWindowScrollPosition: 0,
+		globalContextWindowWidth: 0,
+		windowScrollPosition: 0,
+		windowWidth: 0,
+	});
+
 	const [show, setShow] = useState(false);
 	const updatedLayoutData = useUpdatedLayoutDataContext();
 	const globalContext = useGlobalContext();
@@ -135,26 +141,41 @@ function FloatingToolbar({
 	}, [isActive, item.itemId, itemElement]);
 
 	useEffect(() => {
-		const handleWindowResize = debounceRAF(() => {
-			setWindowWidth(globalContext.window.innerWidth);
+		const handleWindowRectChanged = debounceRAF(() => {
+			setWindowRect({
+				globalContextWindowScrollPosition: globalContext.window.scrollY,
+				globalContextWindowWidth: globalContext.window.innerWidth,
+				windowScrollPosition: window.scrollY,
+				windowWidth: window.innerWidth,
+			});
 		});
 
-		const handleWindowScroll = debounceRAF(() => {
-			setWindowScrollPosition(globalContext.window.scrollY);
-		});
+		globalContext.window.addEventListener(
+			'resize',
+			handleWindowRectChanged
+		);
+		globalContext.window.addEventListener(
+			'scroll',
+			handleWindowRectChanged
+		);
 
-		globalContext.window.addEventListener('resize', handleWindowResize);
-		globalContext.window.addEventListener('scroll', handleWindowScroll);
+		if (globalContext.window !== window) {
+			window.addEventListener('resize', handleWindowRectChanged);
+			window.addEventListener('scroll', handleWindowRectChanged);
+		}
 
 		return () => {
 			globalContext.window.removeEventListener(
 				'resize',
-				handleWindowResize
+				handleWindowRectChanged
 			);
 			globalContext.window.removeEventListener(
 				'scroll',
-				handleWindowScroll
+				handleWindowRectChanged
 			);
+
+			window.removeEventListener('resize', handleWindowRectChanged);
+			window.removeEventListener('scroll', handleWindowRectChanged);
 		};
 	}, [globalContext]);
 
@@ -195,9 +216,8 @@ function FloatingToolbar({
 		selectedViewportSize,
 		updatedLayoutData,
 		show,
-		windowScrollPosition,
-		windowWidth,
 		languageId,
+		windowRect,
 	]);
 
 	useEffect(() => {

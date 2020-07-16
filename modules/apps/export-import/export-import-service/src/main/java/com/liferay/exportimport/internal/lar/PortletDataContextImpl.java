@@ -504,7 +504,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addZipEntry(String path, Object object) {
-		addZipEntry(path, toXML(object));
+		if (isPathProcessed(path)) {
+			return;
+		}
+
+		try {
+			ZipWriter zipWriter = getZipWriter();
+
+			zipWriter.addEntry(path, toXML(object));
+		}
+		catch (IOException ioException) {
+			ExportImportIOException exportImportIOException =
+				new ExportImportIOException(
+					PortletDataContextImpl.class.getName(), ioException);
+
+			exportImportIOException.setFileName(path);
+			exportImportIOException.setType(
+				ExportImportIOException.ADD_ZIP_ENTRY_STRING);
+
+			throw new SystemException(exportImportIOException);
+		}
 	}
 
 	@Override

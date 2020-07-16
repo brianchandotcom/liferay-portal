@@ -113,7 +113,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testAssetI18nRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
+		ThemeDisplay themeDisplay = _getLayoutThemeDisplay(true);
 
 		String[] urls = _getAssetURLs();
 
@@ -127,7 +127,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testAssetRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
+		ThemeDisplay themeDisplay = _getLayoutThemeDisplay(false);
 
 		String[] urls = _getAssetURLs();
 
@@ -141,7 +141,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testControlPanelI18nRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(true);
+		ThemeDisplay themeDisplay = _getControlPanelThemeDisplay(true);
 
 		String bareURL = _getControlPanelURL();
 
@@ -151,7 +151,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testControlPanelRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForControlPanel(false);
+		ThemeDisplay themeDisplay = _getControlPanelThemeDisplay(false);
 
 		String bareURL = _getControlPanelURL();
 
@@ -163,7 +163,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testPublicPageI18nRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(true);
+		ThemeDisplay themeDisplay = _getLayoutThemeDisplay(true);
 
 		String[] urls = _getPublicPageURLs();
 
@@ -177,7 +177,7 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testPublicPageRedirect() throws PortalException {
-		ThemeDisplay themeDisplay = _getThemeDisplayForLayout(false);
+		ThemeDisplay themeDisplay = _getLayoutThemeDisplay(false);
 
 		String[] urls = _getPublicPageURLs();
 
@@ -260,7 +260,7 @@ public class UpdateLanguageActionTest {
 		return new String[] {bareSourceURL, bareDefaultURL};
 	}
 
-	private ThemeDisplay _getThemeDisplayForControlPanel(boolean i18n) {
+	private ThemeDisplay _getControlPanelThemeDisplay(boolean i18n) {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		if (i18n) {
@@ -273,7 +273,7 @@ public class UpdateLanguageActionTest {
 		return themeDisplay;
 	}
 
-	private ThemeDisplay _getThemeDisplayForLayout(boolean i18n) {
+	private ThemeDisplay _getLayoutThemeDisplay(boolean i18n) {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		if (i18n) {

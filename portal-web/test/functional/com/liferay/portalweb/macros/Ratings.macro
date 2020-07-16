@@ -34,17 +34,21 @@ definition {
 	}
 
 	macro rateStackedStars {
-		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
-
 		Click(
 			key_ratingStarCount = "${ratingStarCount}",
 			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_COUNT");
 
-		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
+		var count = "0";
 
-		AssertElementPresent(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
+		while ("${count}" != "${ratingStarCount}") {
+			var index = ${count} + 1;
+
+			AssertElementPresent(
+				key_ratingStarCount = "${index}",
+				locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
+
+			var count = ${count} + 1;
+		}
 	}
 
 	macro rateStar {
@@ -128,14 +132,20 @@ definition {
 	}
 
 	macro viewRateStackedStar {
-		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
+		var count = "0";
+
+		while ("${count}" != "${ratingStarCount}") {
+			var index = ${count} + 1;
+
+			AssertElementPresent(
+				key_ratingStarCount = "${index}",
+				locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
+
+			var count = ${count} + 1;
+		}
 
 		AssertElementPresent(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
-
-		AssertElementPresent(
-			key_ratingStarCount = "${ratingStarCount}",
+			key_averageStarCount = "${averageStarCount}",
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 

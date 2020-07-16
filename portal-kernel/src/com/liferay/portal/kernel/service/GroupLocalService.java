@@ -1143,6 +1143,10 @@ public interface GroupLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getUserSitesGroups(long userId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasOrganizationGroup(long organizationId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

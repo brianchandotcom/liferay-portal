@@ -661,6 +661,24 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.GroupSoap[]
+			getUserSitesGroups(long userId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Group> returnValue =
+				GroupServiceUtil.getUserSitesGroups(userId, start, end);
+
+			return com.liferay.portal.kernel.model.GroupSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is

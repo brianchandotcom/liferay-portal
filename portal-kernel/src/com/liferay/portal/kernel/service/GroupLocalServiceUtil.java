@@ -1554,6 +1554,13 @@ public class GroupLocalServiceUtil {
 		return getService().getUserSitesGroups(userId, includeAdministrative);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group>
+			getUserSitesGroups(long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserSitesGroups(userId, start, end);
+	}
+
 	public static boolean hasOrganizationGroup(
 		long organizationId, long groupId) {
 

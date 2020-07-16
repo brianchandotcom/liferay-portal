@@ -395,6 +395,13 @@ public class GroupServiceUtil {
 		return getService().getUserSitesGroups();
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group>
+			getUserSitesGroups(long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserSitesGroups(userId, start, end);
+	}
+
 	/**
 	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is

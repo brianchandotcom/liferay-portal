@@ -28,16 +28,21 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.TrashHelper;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import static com.liferay.portal.kernel.util.FastDateFormatFactoryUtil.getSimpleDateFormat;
+
+import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Adolfo Pérez
@@ -133,12 +138,17 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 			PortalUtil.getHttpServletRequest(renderRequest),
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-		return LanguageUtil.format(
-			_resourceBundle, "x-ago-by-x",
-			new Object[] {
-				modifiedDateDescription,
-				HtmlUtil.escape(_blogsEntry.getUserName())
-			});
+		Format shortDateFormat = 
+				getSimpleDateFormat("MM/dd/yy 'at' h:mm a", LocaleUtil.getDefault(), TimeZoneUtil.getDefault());
+		String startTag = "<span title=\"" + shortDateFormat.format(modifiedDate) + "\">";
+		String endTag = "</span>";
+		String text = LanguageUtil.format(
+				_resourceBundle, "x-ago-by-x",
+				new Object[] {
+					modifiedDateDescription,
+					HtmlUtil.escape(_blogsEntry.getUserName())
+				});
+		return startTag + text + endTag;
 	}
 
 	@Override

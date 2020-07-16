@@ -98,7 +98,7 @@ public class VerticalCardTag extends BaseClayCardTag {
 	}
 
 	public void setSubtitle(String subtitle) {
-		putValue("subtitle", subtitle);
+		putHTMLValue("subtitle", subtitle);
 	}
 
 	public void setTitle(String title) {

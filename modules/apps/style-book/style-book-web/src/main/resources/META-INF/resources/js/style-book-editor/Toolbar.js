@@ -30,6 +30,18 @@ const STATUS_TO_LABEL = {
 export default function Toolbar() {
 	const {draftStatus} = useContext(StyleBookContext);
 
+	const handleSubmit = (event) => {
+		if (
+			!confirm(
+				Liferay.Language.get(
+					'once-published-these-changes-will-affect-to-all-instances-of-the-site-using-these-properties.-do-you-want-to-publish-now'
+				)
+			)
+		) {
+			event.preventDefault();
+		}
+	};
+
 	return (
 		<div className="p-3 style-book-editor__toolbar">
 			<div>
@@ -62,6 +74,7 @@ export default function Toolbar() {
 				<ClayButton
 					disabled={config.pending}
 					displayType="primary"
+					onClick={handleSubmit}
 					small
 					type="submit"
 				>

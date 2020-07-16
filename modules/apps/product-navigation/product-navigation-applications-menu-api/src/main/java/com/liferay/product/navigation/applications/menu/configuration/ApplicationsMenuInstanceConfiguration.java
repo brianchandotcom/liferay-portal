@@ -25,16 +25,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "navigation", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration",
+	id = "com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration",
 	localization = "content/Language",
 	name = "applications-menu-instance-configuration-name"
 )
-public interface GlobalMenuInstanceConfiguration {
+public interface ApplicationsMenuInstanceConfiguration {
 
 	@Meta.AD(
 		deflt = "true", description = "enable-applications-menu-description",
 		name = "enable-applications-menu", required = false
 	)
-	public boolean enableGlobalMenu();
+	public boolean enableApplicationsMenu();
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.product.navigation.applications.menu.web.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class GlobalMenuInstanceConfigurationBeanDeclaration
+public class ApplicationsMenuInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return GlobalMenuInstanceConfiguration.class;
+		return ApplicationsMenuInstanceConfiguration.class;
 	}
 
 }

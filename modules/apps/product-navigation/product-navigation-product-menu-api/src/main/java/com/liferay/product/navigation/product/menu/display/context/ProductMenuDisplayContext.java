@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class ProductMenuDisplayContext {
 			PanelCategoryKeys.ROOT, _themeDisplay.getPermissionChecker(),
 			_themeDisplay.getScopeGroup());
 
-		if (_isEnableGlobalMenu()) {
+		if (_isEnableApplicationsMenu()) {
 			return _childPanelCategories;
 		}
 
@@ -125,7 +125,7 @@ public class ProductMenuDisplayContext {
 					}
 				}
 
-				if (_isEnableGlobalMenu()) {
+				if (_isEnableApplicationsMenu()) {
 					return _rootPanelCategoryKey;
 				}
 
@@ -179,40 +179,41 @@ public class ProductMenuDisplayContext {
 		return true;
 	}
 
-	private boolean _isEnableGlobalMenu() {
-		if (_enableGlobalMenu != null) {
-			return _enableGlobalMenu;
+	private boolean _isEnableApplicationsMenu() {
+		if (_enableApplicationsMenu != null) {
+			return _enableApplicationsMenu;
 		}
 
-		_enableGlobalMenu = false;
+		_enableApplicationsMenu = false;
 
 		try {
-			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class,
-					_themeDisplay.getCompanyId());
+			ApplicationsMenuInstanceConfiguration
+				applicationsMenuInstanceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						ApplicationsMenuInstanceConfiguration.class,
+						_themeDisplay.getCompanyId());
 
-			_enableGlobalMenu =
-				globalMenuInstanceConfiguration.enableGlobalMenu();
+			_enableApplicationsMenu =
+				applicationsMenuInstanceConfiguration.enableApplicationsMenu();
 
-			return _enableGlobalMenu;
+			return _enableApplicationsMenu;
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get global menu instance configuration",
+					"Unable to get applications menu instance configuration",
 					configurationException);
 			}
 		}
 
-		return _enableGlobalMenu;
+		return _enableApplicationsMenu;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductMenuDisplayContext.class);
 
 	private List<PanelCategory> _childPanelCategories;
-	private Boolean _enableGlobalMenu;
+	private Boolean _enableApplicationsMenu;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PanelCategoryRegistry _panelCategoryRegistry;

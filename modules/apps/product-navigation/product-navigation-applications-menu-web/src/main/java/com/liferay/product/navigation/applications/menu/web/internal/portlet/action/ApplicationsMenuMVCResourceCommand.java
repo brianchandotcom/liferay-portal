@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationGlobalMenuPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
@@ -64,12 +64,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ProductNavigationGlobalMenuPortletKeys.PRODUCT_NAVIGATION_GLOBAL_MENU,
+		"javax.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
 		"mvc.command.name=/global_menu/panel_apps"
 	},
 	service = MVCResourceCommand.class
 )
-public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
+public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -78,7 +78,30 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_getGlobalMenuContextJSONObject(resourceRequest, resourceResponse));
+			_getApplicationsMenuContextJSONObject(
+				resourceRequest, resourceResponse));
+	}
+
+	private JSONObject _getApplicationsMenuContextJSONObject(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.put(
+			"items",
+			_getPanelCategoriesJSONArray(httpServletRequest, themeDisplay)
+		).put(
+			"portletNamespace", resourceResponse.getNamespace()
+		).put(
+			"sites",
+			_getSitesJSONObject(
+				httpServletRequest, resourceRequest, resourceResponse,
+				themeDisplay)
+		);
 	}
 
 	private JSONArray _getChildPanelCategoriesJSONArray(
@@ -138,28 +161,6 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return childPanelCategoriesJSONArray;
-	}
-
-	private JSONObject _getGlobalMenuContextJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return JSONUtil.put(
-			"items",
-			_getPanelCategoriesJSONArray(httpServletRequest, themeDisplay)
-		).put(
-			"portletNamespace", resourceResponse.getNamespace()
-		).put(
-			"sites",
-			_getSitesJSONObject(
-				httpServletRequest, resourceRequest, resourceResponse,
-				themeDisplay)
-		);
 	}
 
 	private JSONObject _getPanelAppJSONObject(

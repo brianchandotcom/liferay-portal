@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
@@ -76,8 +76,8 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_isEnableGlobalMenu(themeDisplay.getCompanyId()) &&
-			_isGlobalMenuApp(themeDisplay)) {
+		if (_isApplicationsMenuApp(themeDisplay) &&
+			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
 
 			return;
 		}
@@ -143,28 +143,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
-	private boolean _isEnableGlobalMenu(long companyId) {
-		try {
-			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class, companyId);
-
-			if (globalMenuInstanceConfiguration.enableGlobalMenu()) {
-				return true;
-			}
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get global menu instance configuration",
-					configurationException);
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isGlobalMenuApp(ThemeDisplay themeDisplay) {
+	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {
 		if (Validator.isNull(themeDisplay.getPpid())) {
 			return false;
 		}
@@ -185,6 +164,30 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return true;
+	}
+
+	private boolean _isEnableApplicationsMenu(long companyId) {
+		try {
+			ApplicationsMenuInstanceConfiguration
+				applicationsMenuInstanceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						ApplicationsMenuInstanceConfiguration.class, companyId);
+
+			if (applicationsMenuInstanceConfiguration.
+					enableApplicationsMenu()) {
+
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get applications menu instance configuration",
+					configurationException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -17,7 +17,7 @@ package com.liferay.product.navigation.applications.menu.web.internal.portlet.ac
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.GlobalMenuTestPanelCategoryKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPanelCategoryKeys;
 
 import java.util.Locale;
 
@@ -34,17 +34,17 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class GlobalMenuTestPanelCategory extends BasePanelCategory {
+public class ApplicationsMenuTestPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return GlobalMenuTestPanelCategoryKeys.
+		return ApplicationsMenuTestPanelCategoryKeys.
 			APPLICATIONS_MENU_TEST_PANEL_CATEGORY;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return GlobalMenuTestPanelCategoryKeys.
+		return ApplicationsMenuTestPanelCategoryKeys.
 			APPLICATIONS_MENU_TEST_PANEL_CATEGORY;
 	}
 

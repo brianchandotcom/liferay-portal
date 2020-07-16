@@ -17,8 +17,8 @@ package com.liferay.product.navigation.applications.menu.web.internal.portlet.ac
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.GlobalMenuTestPanelCategoryKeys;
-import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.GlobalMenuTestPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPanelCategoryKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,20 +30,20 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + GlobalMenuTestPanelCategoryKeys.APPLICATIONS_MENU_TEST_PANEL_CATEGORY
+		"panel.category.key=" + ApplicationsMenuTestPanelCategoryKeys.APPLICATIONS_MENU_TEST_PANEL_CATEGORY
 	},
 	service = PanelApp.class
 )
-public class GlobalMenuTestPanelApp extends BasePanelApp {
+public class ApplicationsMenuTestPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET;
+		return ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET + ")",
+		target = "(javax.portlet.name=" + ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

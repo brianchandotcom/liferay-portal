@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.product.navigation.applications.menu.web.internal.portlet;
+package com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationGlobalMenuPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -28,19 +28,13 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.show-portlet-access-denied=false",
-		"com.liferay.portlet.system=true",
-		"com.liferay.portlet.use-default-template=false",
-		"javax.portlet.display-name=Simulation",
-		"javax.portlet.name=" + ProductNavigationGlobalMenuPortletKeys.PRODUCT_NAVIGATION_GLOBAL_MENU,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.name=" + ApplicationsMenuTestPortletKeys.APPLICATIONS_MENU_TEST_PORTLET
 	},
 	service = Portlet.class
 )
-public class ProductNavigationGlobalMenuPortlet extends MVCPortlet {
+public class ApplicationsMenuTestPortlet extends MVCPortlet {
 }

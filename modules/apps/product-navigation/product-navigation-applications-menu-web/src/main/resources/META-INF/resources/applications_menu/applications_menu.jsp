@@ -17,7 +17,7 @@
 <%@ include file="/global_menu/init.jsp" %>
 
 <%
-GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext(request);
+ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new ApplicationsMenuDisplayContext(request);
 %>
 
 <li class="control-menu-nav-item control-menu-nav-item-separator">
@@ -30,7 +30,7 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 	/>
 
 	<react:component
-		data="<%= globalMenuDisplayContext.getGlobalMenuComponentData() %>"
+		data="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
 		module="js/GlobalMenu"
 	/>
 </li>

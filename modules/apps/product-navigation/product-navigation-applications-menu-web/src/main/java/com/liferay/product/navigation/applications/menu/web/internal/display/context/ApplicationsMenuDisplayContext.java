@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
-import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationGlobalMenuPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
 
 import java.util.Map;
 
@@ -35,13 +35,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class GlobalMenuDisplayContext {
+public class ApplicationsMenuDisplayContext {
 
-	public GlobalMenuDisplayContext(HttpServletRequest httpServletRequest) {
+	public ApplicationsMenuDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
 		_httpServletRequest = httpServletRequest;
 	}
 
-	public Map<String, Object> getGlobalMenuComponentData()
+	public Map<String, Object> getApplicationsMenuComponentData()
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -61,16 +63,17 @@ public class GlobalMenuDisplayContext {
 		).put(
 			"panelAppsURL",
 			() -> {
-				LiferayPortletURL globalMenuPanelAppsURL =
+				LiferayPortletURL applicationsMenuPanelAppsURL =
 					PortletURLFactoryUtil.create(
 						_httpServletRequest,
-						ProductNavigationGlobalMenuPortletKeys.
-							PRODUCT_NAVIGATION_GLOBAL_MENU,
+						ProductNavigationApplicationsMenuPortletKeys.
+							PRODUCT_NAVIGATION_APPLICATIONS_MENU,
 						PortletRequest.RESOURCE_PHASE);
 
-				globalMenuPanelAppsURL.setResourceID("/global_menu/panel_apps");
+				applicationsMenuPanelAppsURL.setResourceID(
+					"/global_menu/panel_apps");
 
-				return globalMenuPanelAppsURL.toString();
+				return applicationsMenuPanelAppsURL.toString();
 			}
 		).put(
 			"selectedPortletId", themeDisplay.getPpid()

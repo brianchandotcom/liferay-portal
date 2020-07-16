@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class GlobalMenuProductNavigationControlMenuEntry
+public class ApplicationsMenuProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry {
 
 	@Override
@@ -67,19 +67,22 @@ public class GlobalMenuProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class,
-					themeDisplay.getCompanyId());
+			ApplicationsMenuInstanceConfiguration
+				applicationsMenuInstanceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						ApplicationsMenuInstanceConfiguration.class,
+						themeDisplay.getCompanyId());
 
-			if (!globalMenuInstanceConfiguration.enableGlobalMenu()) {
+			if (!applicationsMenuInstanceConfiguration.
+					enableApplicationsMenu()) {
+
 				return false;
 			}
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get global menu instance configuration",
+					"Unable to get applications menu instance configuration",
 					configurationException);
 			}
 		}
@@ -128,7 +131,7 @@ public class GlobalMenuProductNavigationControlMenuEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GlobalMenuProductNavigationControlMenuEntry.class);
+		ApplicationsMenuProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

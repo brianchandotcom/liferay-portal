@@ -17,9 +17,10 @@ package com.liferay.product.navigation.applications.menu.web.internal.portlet.ac
 /**
  * @author Eudaldo Alonso
  */
-public class GlobalMenuTestPanelCategoryKeys {
+public class ApplicationsMenuTestPortletKeys {
 
-	public static final String APPLICATIONS_MENU_TEST_PANEL_CATEGORY =
-		"applications_menu.test";
+	public static final String APPLICATIONS_MENU_TEST_PORTLET =
+		"com_liferay_product_navigation_applications_menu_web_internal_" +
+			"portlet_action_test_ApplicationsMenuTestPortlet";
 
 }

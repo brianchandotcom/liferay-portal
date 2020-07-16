@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -65,7 +65,7 @@ public class CompanyLogoProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_isEnableGlobalMenu(themeDisplay.getCompanyId())) {
+		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
 			return false;
 		}
 
@@ -102,20 +102,23 @@ public class CompanyLogoProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	private boolean _isEnableGlobalMenu(long companyId) {
+	private boolean _isEnableApplicationsMenu(long companyId) {
 		try {
-			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class, companyId);
+			ApplicationsMenuInstanceConfiguration
+				applicationsMenuInstanceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						ApplicationsMenuInstanceConfiguration.class, companyId);
 
-			if (globalMenuInstanceConfiguration.enableGlobalMenu()) {
+			if (applicationsMenuInstanceConfiguration.
+					enableApplicationsMenu()) {
+
 				return true;
 			}
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get global menu instance configuration",
+					"Unable to get applications menu instance configuration",
 					configurationException);
 			}
 		}

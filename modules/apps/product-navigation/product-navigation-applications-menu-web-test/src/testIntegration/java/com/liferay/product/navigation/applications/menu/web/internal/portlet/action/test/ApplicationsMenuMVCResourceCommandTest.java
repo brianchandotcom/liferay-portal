@@ -53,7 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
-import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.GlobalMenuTestPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.site.util.RecentGroupManager;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class GlobalMenuMVCResourceCommandTest {
+public class ApplicationsMenuMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
@@ -256,7 +256,8 @@ public class GlobalMenuMVCResourceCommandTest {
 		Assert.assertTrue(
 			_containsPortletId(
 				panelCategoriesJSONArray,
-				GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET));
+				ApplicationsMenuTestPortletKeys.
+					APPLICATIONS_MENU_TEST_PORTLET));
 	}
 
 	@Test

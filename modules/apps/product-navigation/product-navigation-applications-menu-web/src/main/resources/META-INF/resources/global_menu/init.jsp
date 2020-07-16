@@ -17,4 +17,4 @@
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.product.navigation.applications.menu.web.internal.display.context.GlobalMenuDisplayContext" %>
+<%@ page import="com.liferay.product.navigation.applications.menu.web.internal.display.context.ApplicationsMenuDisplayContext" %>

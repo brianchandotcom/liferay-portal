@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.product.navigation.applications.menu.web.internal.constants;
+package com.liferay.product.navigation.applications.menu.web.internal.portlet.action.test.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ProductNavigationGlobalMenuPortletKeys {
+public class ApplicationsMenuTestPanelCategoryKeys {
 
-	public static final String PRODUCT_NAVIGATION_GLOBAL_MENU =
-		"com_liferay_product_navigation_global_apps_web_internal_portlet_" +
-			"ProductNavigationGlobalMenuPortlet";
+	public static final String APPLICATIONS_MENU_TEST_PANEL_CATEGORY =
+		"applications_menu.test";
 
 }

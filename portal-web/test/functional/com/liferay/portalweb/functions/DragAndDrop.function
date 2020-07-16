@@ -212,17 +212,36 @@ Simulate.dragAndDrop(getWebElement(arguments[0]), getWebElement(arguments[1]));
 	function javaScriptDragAndDropToObject {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible("${locator1}");
+		var javaScript = '''
+Simulate = {
+	dragAndDrop: function (source, target) {
+		const dispatchEvent = function (type, element) {
+			const rect = element.getBoundingClientRect();
+			const event = document.createEvent('customEvent');
+			event.initEvent(type, true, true);
+			event.relatedTarget = element;
+			(event.clientX = rect.left + rect.width / 2),
+				(event.clientY = rect.top + rect.height / 2),
+				element.dispatchEvent(event);
+			return Promise.resolve();
+		};
+		dispatchEvent('dragstart', source)
+			.then(function () {
+				dispatchEvent('dragover', target);
+			})
+			.then(function () {
+				dispatchEvent('drop', target);
+			})
+			.then(function () {
+				dispatchEvent('dragend', source);
+			});
+	}
+};
 
-		selenium.mouseOver("${locator1}");
+Simulate.dragAndDrop(arguments[0], arguments[1]);
+		''';
 
-		selenium.waitForPartialTextCaseInsensitive("${locator1}", "${value1}");
-
-		selenium.waitForVisible("${locator2}");
-
-		selenium.mouseOver("${locator2}");
-
-		selenium.javaScriptDragAndDropToObject("${locator1}", "${locator2}");
+		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
 
 		selenium.assertJavaScriptErrors();
 

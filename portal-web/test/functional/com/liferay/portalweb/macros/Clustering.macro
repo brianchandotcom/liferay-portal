@@ -35,7 +35,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -143,7 +143,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");

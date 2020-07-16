@@ -81,7 +81,7 @@ definition {
 
 	macro gotoDepotViaSpaceIcon {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Guest");
+			ApplicationsMenu.gotoSite(site = "Guest");
 		}
 
 		ProductMenuHelper.openProductMenu();

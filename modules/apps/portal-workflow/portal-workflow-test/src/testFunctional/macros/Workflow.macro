@@ -435,7 +435,7 @@ definition {
 
 	macro duplicateSingleApproverWorkflow {
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
@@ -691,7 +691,7 @@ definition {
 	}
 
 	macro tearDownPortalWorkflow {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
@@ -733,7 +733,7 @@ definition {
 	}
 
 	macro tearDownSpecificWorkflowDefinition {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
@@ -743,7 +743,7 @@ definition {
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS")) {
 			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
 				panel = "Applications",
 				portlet = "Process Builder");
@@ -754,7 +754,7 @@ definition {
 
 	macro tearDownWorkflowDefinitions {
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");

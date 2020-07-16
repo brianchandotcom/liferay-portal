@@ -410,7 +410,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -435,7 +435,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -458,7 +458,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -491,7 +491,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -530,7 +530,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -559,7 +559,7 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

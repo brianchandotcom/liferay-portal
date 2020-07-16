@@ -82,7 +82,7 @@ definition {
 
 		User.loginPG();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -94,7 +94,7 @@ definition {
 			resourceName = "com.liferay.portal.kernel.model.Layout",
 			roleTitle = "Regrole Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -135,7 +135,7 @@ definition {
 	@description = "This case ensures that the user can mention the other user in a comment."
 	@priority = "5"
 	test ViewCommentMentionedUser {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -173,7 +173,7 @@ definition {
 	@description = "This case ensures a user cannot access a comment he is mentioned on after his permissions are revoked."
 	@priority = "5"
 	test ViewMentionAfterRevokingPermissions {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -185,7 +185,7 @@ definition {
 			resourceName = "com.liferay.portal.kernel.model.Layout",
 			roleTitle = "Regrole Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

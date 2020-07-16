@@ -48,7 +48,7 @@ definition {
 			fail("FAIL! Cannot find the warning message.");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
@@ -87,7 +87,7 @@ definition {
 			fail("FAIL! Cannot find the currrent user.");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");

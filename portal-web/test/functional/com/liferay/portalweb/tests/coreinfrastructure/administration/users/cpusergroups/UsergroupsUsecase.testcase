@@ -44,14 +44,14 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -60,7 +60,7 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn1");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -69,7 +69,7 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn2");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -83,14 +83,14 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -117,7 +117,7 @@ definition {
 			userGroupDescription = "UG UserGroup Name Description",
 			userGroupName = "UG UserGroup Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -191,13 +191,13 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "Control Panel");
 
 		AssertElementNotPresent(
 			key_category = "Sites",
-			locator1 = "GlobalMenu#CATEGORY");
+			locator1 = "ApplicationsMenu#CATEGORY");
 
 		User.logoutUserPG();
 
@@ -209,7 +209,7 @@ definition {
 			roleKey = "Test UserGroup Role",
 			roleTitle = "Test UserGroup Role");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -222,7 +222,7 @@ definition {
 			roleTitle = "Test UserGroup Role",
 			roleUser = "Test UserGroup Role");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -239,13 +239,13 @@ definition {
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "Control Panel");
 
 		AssertElementNotPresent(
 			key_category = "Sites",
-			locator1 = "GlobalMenu#CATEGORY");
+			locator1 = "ApplicationsMenu#CATEGORY");
 
 		User.logoutUserPG();
 
@@ -253,7 +253,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -267,7 +267,7 @@ definition {
 	test UserGroupSiteTemplates {
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteTemplates";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -280,7 +280,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -289,14 +289,14 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -305,7 +305,7 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "test");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -398,7 +398,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -453,7 +453,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -492,7 +492,7 @@ definition {
 				userScreenName = "usersn${userNumber}");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -501,7 +501,7 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userScreenName = "usersn1");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -510,7 +510,7 @@ definition {
 			roleTitle = "Roles Regrole Name",
 			userScreenName = "usersn1");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -519,7 +519,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -533,7 +533,7 @@ definition {
 			userName = "userfn1 userln1",
 			userScreenName = "usersn1");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -551,7 +551,7 @@ definition {
 			userGroupDescription = "UG UserGroup Name Description",
 			userGroupName = "UG UserGroup Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -560,7 +560,7 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn2");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -575,7 +575,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -597,7 +597,7 @@ definition {
 
 	@priority = "4"
 	test ViewUserGroupSiteRolePermissions {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -606,7 +606,7 @@ definition {
 
 		Role.add(roleTitle = "Roles Siterole Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");

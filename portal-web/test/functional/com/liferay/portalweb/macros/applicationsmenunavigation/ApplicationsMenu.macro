@@ -2,11 +2,11 @@ definition {
 
 	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoLocalizedSite {
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		AssertClick(
 			key_site = "${site}",
-			locator1 = "GlobalMenu#SITE_LINK",
+			locator1 = "ApplicationsMenu#SITE_LINK",
 			value1 = "${site}");
 	}
 
@@ -14,40 +14,40 @@ definition {
 		var key_panel = "${panel}";
 
 		AssertClick.assertPartialTextClickAt(
-			locator1 = "GlobalMenu#PANEL",
+			locator1 = "ApplicationsMenu#PANEL",
 			value1 = "${panel}");
 
-		AssertElementPresent(locator1 = "GlobalMenu#ACTIVE_PANEL");
+		AssertElementPresent(locator1 = "ApplicationsMenu#ACTIVE_PANEL");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	@summary = "Navigate to Applications Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		GlobalMenu.gotoPanel(panel = "${panel}");
+		ApplicationsMenu.gotoPanel(panel = "${panel}");
 
-		GlobalMenuHelper.gotoPortlet(
+		ApplicationsMenuHelper.gotoPortlet(
 			category = "${category}",
 			portlet = "${portlet}");
 	}
 
 	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoSite {
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		AssertClick(
 			key_site = "${site}",
-			locator1 = "GlobalMenu#SITE_LINK",
+			locator1 = "ApplicationsMenu#SITE_LINK",
 			value1 = "${site}");
 	}
 
 	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"
 	macro gotoSiteViaViewAll {
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		GlobalMenuHelper.openWorkspace();
+		ApplicationsMenuHelper.openWorkspace();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

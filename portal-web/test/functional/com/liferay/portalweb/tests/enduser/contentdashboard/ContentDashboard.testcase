@@ -43,7 +43,7 @@ definition {
 	@description = "Validate if the user can filter by title"
 	@priority = "5"
 	test ContentDashboardFilterByTitle {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");

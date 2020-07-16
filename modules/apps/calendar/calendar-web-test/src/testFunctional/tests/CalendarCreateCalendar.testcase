@@ -89,7 +89,7 @@ definition {
 
 	@priority = "4"
 	test AddUserCalendarToOtherCalendars {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -169,7 +169,7 @@ definition {
 	@description = "This is a use case for LPS-56229."
 	@priority = "3"
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -178,7 +178,7 @@ definition {
 
 		Role.add(roleTitle = "Calendar Site Role Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -189,7 +189,7 @@ definition {
 			roleTitle = "Calendar Site Role Name",
 			roleType = "Site");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -200,7 +200,7 @@ definition {
 			roleTitle = "Authenticated",
 			roleUser = "User");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -211,7 +211,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -221,14 +221,14 @@ definition {
 			userScreenName = "usersn");
 
 		for (var siteName : list "Site A,Site B,Site C") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "${siteName}");
 
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Users and Organizations");

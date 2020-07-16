@@ -109,7 +109,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "Announcements Entry Title");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Communication",
 			panel = "Applications",
 			portlet = "Announcements and Alerts");

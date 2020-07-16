@@ -85,7 +85,9 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 			_isApplicationsMenuApp(httpServletRequest));
 	}
 
-	private boolean _isApplicationsMenuApp(HttpServletRequest httpServletRequest) {
+	private boolean _isApplicationsMenuApp(
+		HttpServletRequest httpServletRequest) {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

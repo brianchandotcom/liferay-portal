@@ -65,7 +65,7 @@ definition {
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -220,7 +220,7 @@ definition {
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Communication",
 			panel = "Applications",
 			portlet = "Announcements and Alerts");

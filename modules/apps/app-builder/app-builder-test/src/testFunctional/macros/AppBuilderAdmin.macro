@@ -258,12 +258,12 @@ definition {
 		}
 	}
 
-	macro gotoCustomAppGlobalMenuApplications {
+	macro gotoCustomAppApplicationsMenuApplications {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "${portlet}",
 			panel = "Applications",
 			portlet = "${portlet}");
@@ -376,7 +376,7 @@ definition {
 	macro teardownAppBuilder {
 		Navigator.openURL();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -412,18 +412,18 @@ definition {
 			value1 = "UNDEPLOYED");
 	}
 
-	macro validateAppIsNotPresentOnGlobalMenuApplications {
+	macro validateAppIsNotPresentOnApplicationsMenuApplications {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "Applications");
 
 		AssertElementNotPresent(
 			key_category = "${portlet}",
-			locator1 = "GlobalMenu#CATEGORY");
+			locator1 = "ApplicationsMenu#CATEGORY");
 	}
 
 	macro validateAppIsNotPresentOnSite {

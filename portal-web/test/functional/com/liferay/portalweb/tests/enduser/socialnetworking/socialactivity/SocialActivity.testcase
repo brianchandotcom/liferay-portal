@@ -31,7 +31,7 @@ definition {
 	test CountUserStatisticsAfterEnablingSocialTracking {
 		property test.name.skip.portal.instance = "SocialActivity#CountUserStatisticsAfterEnablingSocialTracking";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -88,7 +88,7 @@ definition {
 	test DisableSocialTracking {
 		property test.name.skip.portal.instance = "SocialActivity#DisableSocialTracking";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

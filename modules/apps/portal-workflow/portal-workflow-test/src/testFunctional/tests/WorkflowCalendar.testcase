@@ -16,14 +16,14 @@ definition {
 		User.firstLoginPG();
 
 		if ("${testPortalInstance}" != "true") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Search");
 
 			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-			GlobalMenu.gotoSite(site = "${siteName}");
+			ApplicationsMenu.gotoSite(site = "${siteName}");
 		}
 
 		ProductMenu.gotoPortlet(

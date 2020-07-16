@@ -1570,7 +1570,7 @@ definition {
 		}
 
 		task ("Disable autogenerate structure key") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "System Settings");

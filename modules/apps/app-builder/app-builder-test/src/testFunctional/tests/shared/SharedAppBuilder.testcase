@@ -18,7 +18,7 @@ definition {
 
 		Navigator.openURL();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -149,7 +149,7 @@ definition {
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName}");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "${myAppName}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -853,7 +853,7 @@ definition {
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.clickDeploy();
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -907,7 +907,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Full");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Full");
 
 		AppBuilderAdmin.viewItem(itemName = "1");
 		DetailsView.editEntry();
@@ -931,14 +931,14 @@ definition {
 			radioOption = "Dog");
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -963,14 +963,14 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -989,7 +989,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -1009,7 +1009,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -1034,7 +1034,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");

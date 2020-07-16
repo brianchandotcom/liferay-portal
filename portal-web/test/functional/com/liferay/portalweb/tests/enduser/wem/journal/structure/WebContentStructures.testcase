@@ -224,7 +224,7 @@ definition {
 		property testray.component.names = "Web Content Administration";
 		property test.name.skip.portal.instance = "WebContentStructures#ValidateDDMNavigation";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

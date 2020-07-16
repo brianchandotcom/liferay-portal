@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_MENU_ICON</td>
-	<td>//div[contains(@class,'control-menu')]//button[@data-qa-id='globalMenu']</td>
+	<td>APPLICATIONS_MENU_ICON</td>
+	<td>//div[contains(@class,'control-menu')]//button[@data-qa-id='applicationsMenu']</td>
 	<td></td>
 </tr>
 <tr>

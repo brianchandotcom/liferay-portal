@@ -278,7 +278,7 @@ definition {
 	@description = "Validate if the anonymous user can ask questions and redirected to login."
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");

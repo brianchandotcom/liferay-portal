@@ -146,7 +146,7 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive2 {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -222,7 +222,7 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive3 {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -415,7 +415,7 @@ definition {
 	test StagingDemoLocalLive4 {
 		property testray.component.names = "Training";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -620,7 +620,7 @@ definition {
 
 	@priority = "4"
 	test StagingLocalLiveWorkflow {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -885,7 +885,7 @@ definition {
 	test StagingPublishPage {
 		property testray.component.names = "Training";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

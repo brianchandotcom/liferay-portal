@@ -1,0 +1,35 @@
+definition {
+
+	macro closeApplicationsMenu {
+		if (IsElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			Click(locator1 = "ApplicationsMenu#TOGGLE");
+		}
+
+		WaitForElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+	}
+
+	macro gotoPortlet {
+		AssertClick(
+			key_category = "${category}",
+			key_portlet = "${portlet}",
+			locator1 = "ApplicationsMenu#PORTLET",
+			value1 = "${portlet}");
+	}
+
+	macro openApplicationsMenu {
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			Click(locator1 = "ApplicationsMenu#TOGGLE");
+		}
+
+		WaitForElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+	}
+
+	macro openWorkspace {
+		if (IsElementNotPresent(locator1 = "Portlet#MODAL_TITLE")) {
+			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
+
+			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
+		}
+	}
+
+}

@@ -279,7 +279,7 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Monitoring");
@@ -291,7 +291,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Monitoring");
@@ -303,7 +303,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Monitoring");
@@ -317,7 +317,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Monitoring");

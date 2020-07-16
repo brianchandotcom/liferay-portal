@@ -23,13 +23,13 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DepotConfiguration#DisableDepot";
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "Applications");
 
 		AssertElementNotPresent(
 			key_category = "Asset Libraries",
-			locator1 = "GlobalMenu#CATEGORY");
+			locator1 = "ApplicationsMenu#CATEGORY");
 	}
 
 }

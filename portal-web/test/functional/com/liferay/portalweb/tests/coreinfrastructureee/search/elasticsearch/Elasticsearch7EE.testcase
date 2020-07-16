@@ -52,7 +52,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -72,7 +72,7 @@ definition {
 			searchAssetTitle = "Apple1",
 			searchAssetType = "Document");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -347,7 +347,7 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -791,7 +791,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -803,7 +803,7 @@ definition {
 
 		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -832,7 +832,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -869,7 +869,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch-local-cluster");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -906,7 +906,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -916,7 +916,7 @@ definition {
 			configurationName = "Cross-Cluster Replication",
 			configurationScope = "System Scope");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -953,7 +953,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -963,7 +963,7 @@ definition {
 			configurationName = "Learning to Rank",
 			configurationScope = "System Scope");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -1003,7 +1003,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");

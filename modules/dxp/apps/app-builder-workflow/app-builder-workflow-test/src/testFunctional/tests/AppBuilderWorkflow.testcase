@@ -32,7 +32,7 @@ definition {
 	test FilterAndOrderApps {
 		property portal.acceptance = "true";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -71,7 +71,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Apps");
@@ -204,7 +204,7 @@ definition {
 	test ValidateListOfStandardApps {
 		property portal.acceptance = "true";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -228,7 +228,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -245,7 +245,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Apps");

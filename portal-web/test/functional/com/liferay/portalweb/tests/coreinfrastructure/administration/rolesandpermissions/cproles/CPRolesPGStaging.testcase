@@ -56,7 +56,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -68,7 +68,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -77,7 +77,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -89,7 +89,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -138,7 +138,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -209,7 +209,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -221,7 +221,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -251,7 +251,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -263,7 +263,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");

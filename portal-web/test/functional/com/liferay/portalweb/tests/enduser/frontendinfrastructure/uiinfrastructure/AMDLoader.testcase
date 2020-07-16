@@ -23,7 +23,7 @@ definition {
 	test CheckAMDLoaderLogLevel {
 		property test.name.skip.portal.instance = "AMDLoader#CheckAMDLoaderLogLevel";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

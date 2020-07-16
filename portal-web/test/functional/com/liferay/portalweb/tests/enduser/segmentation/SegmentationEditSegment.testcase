@@ -72,7 +72,7 @@ definition {
 	@description = "Validate if the user can edit a segment with Organization Tag"
 	@priority = "5"
 	test EditSegmentUserByOrganizationTag {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -107,7 +107,7 @@ definition {
 
 		Button.clickSave();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -162,7 +162,7 @@ definition {
 	@description = "Validate if the user can edit a segment with User Tag"
 	@priority = "5"
 	test EditSegmentUserByUserTag {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -195,7 +195,7 @@ definition {
 
 		Button.clickSave();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

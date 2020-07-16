@@ -245,7 +245,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "Topic");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -1361,7 +1361,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "Topic");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

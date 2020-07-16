@@ -18,7 +18,7 @@ definition {
 	}
 
 	macro addPrefixHandlerInSystemSettings {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

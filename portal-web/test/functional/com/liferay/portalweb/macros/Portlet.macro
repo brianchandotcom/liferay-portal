@@ -465,14 +465,14 @@ definition {
 	}
 
 	macro viewNoPortletsPresentCP {
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = "${panel}");
 
 		AssertElementNotPresent(
 			key_category = "${category}",
 			key_portlet = "${portlet}",
-			locator1 = "GlobalMenu#PORTLET",
+			locator1 = "ApplicationsMenu#PORTLET",
 			value1 = "${portlet}");
 	}
 

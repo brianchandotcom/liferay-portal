@@ -24,15 +24,15 @@ definition {
 
 	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
 	@priority = "5"
-	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInDefaultInstance {
-		property test.name.skip.portal.instance = "GlobalMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInDefaultInstance";
+	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInDefaultInstance {
+		property test.name.skip.portal.instance = "ApplicationsMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInDefaultInstance";
 
 		task ("Assert Applications Menu icon is shown in Control Menu by default") {
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 		}
 
 		task ("Disable the Applications Menu") {
-			PortalSettings.disableGlobalAppsMenu();
+			PortalSettings.disableApplicationsMenu();
 		}
 
 		task ("Assert Applications and Control Panel are shown in Product Menu panel") {
@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("Navigate to Asset Libraries admin via Product Menu panel") {
-			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Content",
 				panel = "Global Menu-Applications",
 				portlet = "Asset Libraries");
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Navigate to Sites admin via Product Menu panel") {
-			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
@@ -70,17 +70,17 @@ definition {
 		}
 
 		task ("Enable the Applications Menu") {
-			PortalSettings.enableGlobalAppsMenu();
+			PortalSettings.enableApplicationsMenu();
 		}
 	}
 
 	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in virtual instance."
 	@priority = "4"
-	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInVirtualInstance {
-		property test.name.skip.portal.instance = "GlobalMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableGlobalAppsMenuInVirtualInstance";
+	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInVirtualInstance {
+		property test.name.skip.portal.instance = "ApplicationsMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInVirtualInstance";
 
 		task ("Add a virtual instance") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
@@ -99,11 +99,11 @@ definition {
 		}
 
 		task ("Assert Applications Menu icon is shown in Control Menu by default") {
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 		}
 
 		task ("Disable the Applications Menu") {
-			PortalSettings.disableGlobalAppsMenu();
+			PortalSettings.disableApplicationsMenu();
 		}
 
 		task ("Assert Applications and Control Panel are shown in Product Menu panel") {
@@ -119,7 +119,7 @@ definition {
 		}
 
 		task ("Navigate to Asset Libraries admin via Product Menu panel") {
-			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Content",
 				panel = "Global Menu-Applications",
 				portlet = "Asset Libraries");
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("Navigate to Sites admin via Product Menu panel") {
-			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
@@ -141,17 +141,17 @@ definition {
 		}
 
 		task ("Enable the Applications Menu") {
-			PortalSettings.enableGlobalAppsMenu();
+			PortalSettings.enableApplicationsMenu();
 		}
 	}
 
 	@description = "This is a use case for LPS-112990. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
 	@priority = "5"
-	test AssertLocationOfGlobalMenuIconAndUserAvatarIcon {
+	test AssertLocationOfApplicationsMenuIconAndUserAvatarIcon {
 		task ("The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page") {
 			Navigator.gotoPage(pageName = "Home");
 
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 		}
@@ -161,7 +161,7 @@ definition {
 
 			MetalComponent.waitForManagementBar();
 
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_CONTROL_MENU");
 
@@ -169,7 +169,7 @@ definition {
 
 			MetalComponent.waitForManagementBar();
 
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_CONTROL_MENU");
 		}
@@ -184,7 +184,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Guest");
 
-			AssertElementNotPresent(locator1 = "GlobalMenu#TOGGLE");
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 		}
@@ -204,7 +204,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 
@@ -212,7 +212,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertElementPresent(locator1 = "ControlMenu#GLOBAL_MENU_ICON");
+			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET");
 		}
@@ -220,9 +220,9 @@ definition {
 
 	@description = "This is a use case for LPS-115218. Can choose to a site in Product Menu when disable Applications Menu. Can navigate to site-scope applications in Product Menu when disable Global Apps Menu."
 	@priority = "5"
-	test NavigateToSiteAndSiteScopeApplicationsInProductMenuWhenDisableGlobalAppsMenu {
+	test NavigateToSiteAndSiteScopeApplicationsInProductMenuWhenDisableApplicationsMenu {
 		task ("Disable the Applications Menu") {
-			PortalSettings.disableGlobalAppsMenu();
+			PortalSettings.disableApplicationsMenu();
 		}
 
 		task ("Assert Choose a Site is shown in Product Menu panel") {
@@ -258,7 +258,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin via Product Menu panel") {
-			ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Site Builder",
 				panel = "Site Administration",
 				portlet = "Pages");
@@ -269,7 +269,7 @@ definition {
 		}
 
 		task ("Enable the Applications Menu") {
-			PortalSettings.enableGlobalAppsMenu();
+			PortalSettings.enableApplicationsMenu();
 		}
 	}
 
@@ -286,15 +286,15 @@ definition {
 		}
 
 		task ("Assert View All link shown in Applications Menu") {
-			GlobalMenuHelper.openGlobalMenu();
+			ApplicationsMenuHelper.openApplicationsMenu();
 
-			AssertVisible(locator1 = "GlobalMenu#VIEW_ALL_LINK");
+			AssertVisible(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
 		}
 
 		task ("Go to Site via View All link") {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			Click(locator1 = "GlobalMenu#VIEW_ALL_LINK");
+			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
 
 			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
 

@@ -286,7 +286,7 @@ definition {
 		property test.name.skip.portal.instance = "ToggleControls#ToggleControlsOnlyAffectCurrentInstance";
 
 		task ("Add a virtual instance") {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");

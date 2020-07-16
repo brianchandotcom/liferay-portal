@@ -295,7 +295,7 @@ definition {
 
 	macro checkWorkflowReports {
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
@@ -415,7 +415,7 @@ definition {
 	}
 
 	macro createUsersGroovy {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -433,7 +433,7 @@ definition {
 
 		var key_actionDescription = "${actionDescription}";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
@@ -474,7 +474,7 @@ definition {
 	macro executeWorkflowScript {
 		var key_scriptName = "${scriptName}";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -611,7 +611,7 @@ definition {
 	}
 
 	macro goToWorkflowAllItems {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
@@ -624,13 +624,13 @@ definition {
 	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = "${workflowProcessName}";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
 
 		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME") && (maxIterations = "10")) {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
 				panel = "Applications",
 				portlet = "Metrics");

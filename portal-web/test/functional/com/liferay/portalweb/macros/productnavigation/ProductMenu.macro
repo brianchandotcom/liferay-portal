@@ -3,7 +3,7 @@ definition {
 	@summary = "Navigate to the Live site"
 	macro gotoLiveSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${site}");
+			ApplicationsMenu.gotoSite(site = "${site}");
 		}
 
 		ProductMenuHelper.openProductMenu();
@@ -18,7 +18,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${siteName}");
+			ApplicationsMenu.gotoSite(site = "${siteName}");
 		}
 
 		ProductMenuHelper.openProductMenu();
@@ -47,7 +47,7 @@ definition {
 	@summary = "Navigate to Product Menu > ${category} > ${portlet}"
 	macro gotoPortlet {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${site}");
+			ApplicationsMenu.gotoSite(site = "${site}");
 		}
 
 		ProductMenuHelper.openProductMenu();
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
-	macro gotoPortletWhenDisableGlobalAppsMenu {
+	macro gotoPortletWhenDisableApplicationsMenu {
 		ProductMenuHelper.expandPanel(panel = "${panel}");
 
 		ProductMenuHelper.expandCategory(category = "${category}");
@@ -80,7 +80,7 @@ definition {
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${site}");
+			ApplicationsMenu.gotoSite(site = "${site}");
 		}
 
 		ProductMenuHelper.openProductMenu();
@@ -113,7 +113,7 @@ definition {
 	@summary = "Navigate to ${site} via the 'Home' link"
 	macro gotoSiteViaLink {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${site}");
+			ApplicationsMenu.gotoSite(site = "${site}");
 		}
 
 		ProductMenuHelper.openProductMenu();
@@ -126,7 +126,7 @@ definition {
 	@summary = "Navigate to the Staging site"
 	macro gotoStagingSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${site}");
+			ApplicationsMenu.gotoSite(site = "${site}");
 		}
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
@@ -145,7 +145,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "${siteName}");
+			ApplicationsMenu.gotoSite(site = "${siteName}");
 		}
 
 		ProductMenuHelper.openProductMenu();

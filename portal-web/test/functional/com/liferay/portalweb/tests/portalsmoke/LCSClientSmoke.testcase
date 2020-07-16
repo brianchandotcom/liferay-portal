@@ -34,7 +34,7 @@ definition {
 	test LCSClientSmoke {
 		Pause(locator1 = "60000");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Liferay Connected Services");

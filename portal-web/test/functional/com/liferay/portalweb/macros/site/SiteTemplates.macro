@@ -285,7 +285,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");

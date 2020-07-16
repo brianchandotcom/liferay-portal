@@ -555,7 +555,7 @@ definition {
 		}
 
 		task ("Navigate to the live site via Applications Menu") {
-			GlobalMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 		}
 
 		task ("Assert the Navigation Menu widget is display the navigation menu and not the site hierarchy - the navigation menu has the first page and the URL item but does not have the second page or third page") {

@@ -137,7 +137,7 @@ definition {
 
 	@priority = "3"
 	test EditInviteForUserCalendar {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -252,7 +252,7 @@ definition {
 
 	@priority = "3"
 	test EditReminderForUserCalendar {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

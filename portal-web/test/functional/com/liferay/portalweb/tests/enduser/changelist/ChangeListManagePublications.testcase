@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
@@ -25,7 +25,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
@@ -74,7 +74,7 @@ definition {
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Manage Publications");

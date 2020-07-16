@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>ApplicationsMenu</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ApplicationsMenu</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACTIVE_PANEL</td>
+	<td>//li[contains(@id,'ApplicationsMenuPortlet')]/button[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//ul[contains(@class,'list') and not(contains(@class,'rounded'))]//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_MENU</td>
+	<td>//div[contains(@class,'applications-menu-modal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL</td>
+	<td>//li[contains(@id,'ApplicationsMenuPortlet')]/button[contains(@class,'nav-link') and normalize-space()='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET</td>
+	<td>//li[contains(@class,'applications-menu-nav-header') and contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_LINK</td>
+	<td>//div[contains(@aria-labelledby,'ApplicationsMenuPortlet') and contains(@class,'active')]//a[span][normalize-space(text())='${key_site}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE</td>
+	<td>//button[@data-qa-id='applicationsMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ALL_LINK</td>
+	<td>//div[contains(@aria-labelledby,'ApplicationsMenuPortlet') and contains(@class,'active')]//button[contains(@class,'btn-link') and contains(.,'View All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

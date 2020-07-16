@@ -256,7 +256,7 @@ definition {
 			value1 = "${editor}");
 	}
 
-	macro disableGlobalAppsMenu {
+	macro disableApplicationsMenu {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Navigation",
 			configurationName = "Applications Menu",
@@ -264,9 +264,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
 
-		AssertElementPresent(locator1 = "GlobalMenu#TOGGLE");
+		AssertElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
 
-		FormFields.disableCheckbox(fieldName = "enableGlobalMenu");
+		FormFields.disableCheckbox(fieldName = "enableApplicationsMenu");
 
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			AssertClick(
@@ -283,7 +283,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
 
-		AssertElementNotPresent(locator1 = "GlobalMenu#TOGGLE");
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
 	macro editConfigurationAuthenticationCAS {
@@ -561,8 +561,8 @@ definition {
 			value1 = "${virtualHostName}");
 	}
 
-	macro enableGlobalAppsMenu {
-		ProductMenu.gotoPortletWhenDisableGlobalAppsMenu(
+	macro enableApplicationsMenu {
+		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -574,9 +574,9 @@ definition {
 
 		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
 
-		AssertElementNotPresent(locator1 = "GlobalMenu#TOGGLE");
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 
-		FormFields.enableCheckbox(fieldName = "enableGlobalMenu");
+		FormFields.enableCheckbox(fieldName = "enableApplicationsMenu");
 
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			AssertClick(
@@ -593,7 +593,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
 
-		AssertElementPresent(locator1 = "GlobalMenu#TOGGLE");
+		AssertElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
 	macro enableGoogleSSOCP {
@@ -679,7 +679,7 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -691,7 +691,7 @@ definition {
 	}
 
 	macro gotoPortalSettings {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");

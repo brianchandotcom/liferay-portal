@@ -14,7 +14,7 @@ definition {
 			Navigator.openSpecificURL(url = "${idpURL}");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -52,7 +52,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${spURL}");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -100,7 +100,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -132,7 +132,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");

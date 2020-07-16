@@ -18,7 +18,7 @@ definition {
 
 		Navigator.openURL();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -524,7 +524,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App");
 
 		AppBuilderAdmin.addEntry();
 
@@ -534,7 +534,7 @@ definition {
 
 		AppBuilderAdmin.save();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -788,7 +788,7 @@ definition {
 			formViewName = "My Form View 2",
 			tableViewName = "My Table View 2");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App 1");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App 1");
 
 		AppBuilderAdmin.addEntry();
 
@@ -800,7 +800,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "content of form 1");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App 2");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App 2");
 
 		AppBuilderAdmin.addEntry();
 
@@ -907,7 +907,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -930,7 +930,7 @@ definition {
 
 		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Upload");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -1511,9 +1511,9 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnApplicationsMenuApplications(portlet = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -1543,7 +1543,7 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -1605,13 +1605,13 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App B");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App B");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App B");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnApplicationsMenuApplications(portlet = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -1646,9 +1646,9 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnApplicationsMenuApplications(portlet = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App B");
+		AppBuilderAdmin.validateAppIsNotPresentOnApplicationsMenuApplications(portlet = "Test App B");
 	}
 
 	@description = "Publish apps in the product menu and reuse its views"
@@ -1731,7 +1731,7 @@ definition {
 			formViewName = "${myFormViewName_1}",
 			tableViewName = "${myTableViewName_2}");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_1}");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "${myAppName_1}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1743,7 +1743,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 1");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_2}");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "${myAppName_2}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1755,7 +1755,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_3}");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "${myAppName_3}");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
@@ -2185,7 +2185,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
@@ -2195,7 +2195,7 @@ definition {
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Applications",
 			portlet = "Users and Organizations");
@@ -2219,7 +2219,7 @@ definition {
 			resourceName = "com.liferay.app.builder",
 			roleTitle = "User");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2247,11 +2247,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Admin");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Admin");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "App Admin");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2330,7 +2330,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
@@ -2340,7 +2340,7 @@ definition {
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2349,7 +2349,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2418,7 +2418,7 @@ definition {
 					userLoginEmailAddress = "test@liferay.com",
 					userLoginFullName = "Test Test");
 
-				GlobalMenu.gotoPortlet(
+				ApplicationsMenu.gotoPortlet(
 					category = "App Builder",
 					panel = "Applications",
 					portlet = "Objects");
@@ -2598,7 +2598,7 @@ definition {
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
@@ -2621,7 +2621,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2638,7 +2638,7 @@ definition {
 
 		Navigator.closeWindow();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2649,9 +2649,9 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnApplicationsMenuApplications(portlet = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2662,11 +2662,11 @@ definition {
 
 		AppBuilderAdmin.deployApp(itemName = "Test App A");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App A");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2683,7 +2683,7 @@ definition {
 
 		AppBuilderAdmin.validateUndeployedApp();
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2700,7 +2700,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2773,7 +2773,7 @@ definition {
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App C");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Test App C");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App C");
 
@@ -2796,7 +2796,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App A");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2849,11 +2849,11 @@ definition {
 			pageName = "App Builder Test Page",
 			siteName = "App Builder Site Name");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Changed Name");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Changed Name");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Changed Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -2880,7 +2880,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Changed Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
 			portlet = "Objects");
@@ -3062,7 +3062,7 @@ definition {
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
 
-		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName}");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "${myAppName}");
 
 		AppBuilderAdmin.addEntry();
 

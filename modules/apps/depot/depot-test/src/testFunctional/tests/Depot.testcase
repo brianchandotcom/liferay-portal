@@ -158,7 +158,7 @@ definition {
 			depotDescription = "This depot will duplicate a site name",
 			depotName = "Site Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -483,7 +483,7 @@ definition {
 	test Smoke {
 		property portal.acceptance = "true";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Asset Libraries");

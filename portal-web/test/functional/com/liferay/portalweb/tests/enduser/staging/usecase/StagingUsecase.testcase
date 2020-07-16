@@ -834,7 +834,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

@@ -103,21 +103,21 @@ definition {
 		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#CompleteProcessAndViewEmailNotifications";
 		property test.smtp.server.enabled = "true";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
 		Role.add(roleTitle = "Reviewer Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
 		Role.add(roleTitle = "Updater Name");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -128,7 +128,7 @@ definition {
 			userLastName = "Creator",
 			userScreenName = "creator");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -137,7 +137,7 @@ definition {
 			userEmailAddress = "user1@liferay.com",
 			userScreenName = "creator");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -146,7 +146,7 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "creator");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -157,7 +157,7 @@ definition {
 			userLastName = "Reviewer",
 			userScreenName = "reviewer");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -166,7 +166,7 @@ definition {
 			userEmailAddress = "user2@liferay.com",
 			userScreenName = "reviewer");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -175,7 +175,7 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "reviewer");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -184,7 +184,7 @@ definition {
 			roleTitle = "Reviewer Name",
 			userScreenName = "reviewer");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -195,7 +195,7 @@ definition {
 			userLastName = "Updater",
 			userScreenName = "updater");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -204,7 +204,7 @@ definition {
 			userEmailAddress = "user3@liferay.com",
 			userScreenName = "updater");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -213,7 +213,7 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "updater");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");

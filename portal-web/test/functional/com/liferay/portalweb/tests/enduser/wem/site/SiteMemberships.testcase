@@ -116,7 +116,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 
 		if (IsElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
-			GlobalMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Search");
@@ -271,7 +271,7 @@ definition {
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

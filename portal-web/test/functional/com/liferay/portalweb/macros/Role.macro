@@ -422,7 +422,7 @@ definition {
 	}
 
 	macro removeAssignee {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -481,7 +481,7 @@ definition {
 	macro removeStagingAdminRole {
 		var roleTitle = "Staging Admin";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -498,7 +498,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");

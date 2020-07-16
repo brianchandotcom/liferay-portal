@@ -205,7 +205,7 @@ definition {
 	test ConfigureDisplayPageTheme {
 		property test.name.skip.portal.instance = "DisplayPagesWithWebContent#ConfigureDisplayPageTheme";
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");

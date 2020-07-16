@@ -13117,6 +13117,40 @@ url=${short.hostname}:8080</echo>
 		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
 	</target>
 
+	<target name="update-translation-file">
+		<var name="translation.file.type" value="xlf" />
+
+		<unzip
+			dest="${selenium.output.dir.name}"
+			src="${selenium.output.dir.name}/${translation.zip.file.name}"
+		>
+		</unzip>
+
+		<if>
+			<equals arg1="${translation.file.rename}" arg2="true" />
+			<then>
+				<move
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					tofile="${selenium.output.dir.name}/${translation.file.name}.xliff"
+				/>
+
+				<var name="translation.file.type" value="xliff" />
+			</then>
+		</if>
+
+		<replace
+			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+			token="${translation.title.target.original}"
+			value="${translation.title.target}"
+		/>
+
+		<replace
+			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+			token="${translation.content.target.original}"
+			value="${translation.content.target}"
+		/>
+	</target>
+
 	<target name="upgrade-legacy-database">
 		<prepare-database-upgrade-configuration />
 

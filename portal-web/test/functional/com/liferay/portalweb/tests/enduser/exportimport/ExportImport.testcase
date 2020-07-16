@@ -226,6 +226,10 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Edit",
 			pageName = "Test Template Content Page");

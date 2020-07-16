@@ -216,12 +216,7 @@ definition {
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");
 
-		for (var structureFieldName : list "Date,Image") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = "${structureFieldName}");
-		}
+		DataEngine.addFields(fieldTypeList = "Date,Image");
 
 		WebContentStructures.saveCP(structureName = "Basic Web Content Edit");
 
@@ -250,7 +245,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "Basic Web Content Edit");
 
 		for (var structureFieldName : list "Date,Image") {
-			DynamicDataMapping.viewField(
+			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = "${structureFieldName}");
 		}

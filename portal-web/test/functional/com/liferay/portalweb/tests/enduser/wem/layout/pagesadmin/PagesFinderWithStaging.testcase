@@ -1,0 +1,121 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is the test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel of Staging site."
+	@priority = "4"
+	test AddCollectionPageViaPageFinder {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Test Collection Page Name 1",
+				tabName = "Collections");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ControlMenu#PAGE_TYPE",
+				value1 = "Collection Page");
+
+			AssertVisible(
+				key_elementHeader = "//div[contains(.,'Dynamic Collection') and contains(@id,'fragment-')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1");
+		}
+
+		task ("Add a Collection Page based on Most Viewed Assets via Pages Tree Panel") {
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.addPublicCollectionPage(
+				collectionName = "Most Viewed Assets",
+				pageName = "Test Collection Page Name 2",
+				tabName = "Collection Providers");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ControlMenu#PAGE_TYPE",
+				value1 = "Collection Page");
+
+			AssertVisible(
+				key_elementHeader = "//div[contains(.,'Most Viewed Assets') and contains(@id,'fragment-')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2");
+		}
+	}
+
+}

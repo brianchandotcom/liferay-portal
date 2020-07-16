@@ -68,6 +68,9 @@ import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemStyle;
+import com.liferay.layout.util.structure.LayoutStructureItemStyleSet;
+import com.liferay.layout.util.structure.LayoutStructureItemStyleValue;
 import com.liferay.layout.util.structure.LayoutStructureItemStylesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -80,6 +83,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -248,6 +252,8 @@ public class ContentPageEditorDisplayContext {
 				"availableViewportSizes", _getAvailableViewportSizes()
 			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
+			).put(
+				"commonStyles", _getCommonStyles()
 			).put(
 				"containerItemFlexEnabled",
 				_ffLayoutContentPageEditorConfiguration.
@@ -754,6 +760,23 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return infoListSelectorURL.toString();
+	}
+
+	private JSONArray _getCommonStyles() {
+		List<LayoutStructureItemStyleSet> styleSets =
+			_layoutStructureItemStylesProvider.getCommonStyles();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (LayoutStructureItemStyleSet layoutStructureItemStyleSet :
+				styleSets) {
+
+			jsonArray.put(
+				_getLayoutStructureItemStyleSetJSONObject(
+					layoutStructureItemStyleSet));
+		}
+
+		return jsonArray;
 	}
 
 	private Map<String, Object> _getContributedFragmentEntry(
@@ -1490,6 +1513,82 @@ public class ContentPageEditorDisplayContext {
 			getSegmentsExperienceId());
 
 		return _layoutStructure;
+	}
+
+	private JSONObject _getLayoutStructureItemStyleJSONObject(
+		LayoutStructureItemStyle layoutStructureItemStyle) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"defaultValue", layoutStructureItemStyle.getDefaultValue()
+		).put(
+			"label", layoutStructureItemStyle.getLabel()
+		).put(
+			"name", layoutStructureItemStyle.getName()
+		).put(
+			"responsive", layoutStructureItemStyle.isResponsive()
+		);
+
+		JSONArray dependenciesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (LayoutStructureItemStyleValue layoutStructureItemStyleValue :
+				layoutStructureItemStyle.getDependencies()) {
+
+			dependenciesJSONArray.put(
+				_getLayoutStructureItemStyleValueJSONObject(
+					layoutStructureItemStyleValue));
+		}
+
+		JSONArray validValuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (LayoutStructureItemStyleValue layoutStructureItemStyleValue :
+				layoutStructureItemStyle.getValidValues()) {
+
+			validValuesJSONArray.put(
+				_getLayoutStructureItemStyleValueJSONObject(
+					layoutStructureItemStyleValue));
+		}
+
+		jsonObject.put(
+			"dependencies", dependenciesJSONArray
+		).put(
+			"validValues", validValuesJSONArray
+		);
+
+		return jsonObject;
+	}
+
+	private JSONObject _getLayoutStructureItemStyleSetJSONObject(
+		LayoutStructureItemStyleSet layoutStructureItemStyleSet) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("label", layoutStructureItemStyleSet.getLabel());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (LayoutStructureItemStyle layoutStructureItemStyle :
+				layoutStructureItemStyleSet.getStyles()) {
+
+			jsonArray.put(
+				_getLayoutStructureItemStyleJSONObject(
+					layoutStructureItemStyle));
+		}
+
+		jsonObject.put("styles", jsonArray);
+
+		return jsonObject;
+	}
+
+	private JSONObject _getLayoutStructureItemStyleValueJSONObject(
+		LayoutStructureItemStyleValue layoutStructureItemStyleValue) {
+
+		return JSONUtil.put(
+			"label", layoutStructureItemStyleValue.getLabel()
+		).put(
+			"styleName", layoutStructureItemStyleValue.getStyleName()
+		).put(
+			"value", layoutStructureItemStyleValue.getValue()
+		);
 	}
 
 	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {

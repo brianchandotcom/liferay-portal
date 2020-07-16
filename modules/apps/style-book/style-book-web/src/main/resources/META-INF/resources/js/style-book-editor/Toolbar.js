@@ -31,14 +31,6 @@ const STATUS_TO_LABEL = {
 export default function Toolbar() {
 	const {draftStatus} = useContext(StyleBookContext);
 
-	const onClick = () => {
-		const body = objectToFormData({
-			[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
-		});
-
-		fetch(config.publishURL, {body, method: 'POST'});
-	};
-
 	return (
 		<div className="p-3 style-book-editor__toolbar">
 			<div>
@@ -60,9 +52,23 @@ export default function Toolbar() {
 					{STATUS_TO_LABEL[draftStatus]}
 				</span>
 			</div>
-			<ClayButton displayType="primary" onClick={onClick} small>
-				{Liferay.Language.get('publish')}
-			</ClayButton>
+
+			<form action={config.publishURL} method="POST">
+				<input
+					name={`${config.namespace}redirect`}
+					type="hidden"
+					value={config.redirectURL}
+				/>
+
+				<ClayButton
+					disabled={config.pending}
+					displayType="primary"
+					small
+					type="submit"
+				>
+					{Liferay.Language.get('publish')}
+				</ClayButton>
+			</form>
 		</div>
 	);
 }

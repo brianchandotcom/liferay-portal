@@ -17,6 +17,7 @@ import React, {useCallback} from 'react';
 
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../app/config/constants/fragmentConfigurationRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {config} from '../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {
 	useDispatch,
@@ -24,11 +25,14 @@ import {
 	useSelectorCallback,
 } from '../../../../app/store/index';
 import updateFragmentConfiguration from '../../../../app/thunks/updateFragmentConfiguration';
+import updateItemConfig from '../../../../app/thunks/updateItemConfig';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 import {FieldSet} from './FieldSet';
 
 export const FragmentStylesPanel = ({item}) => {
 	const dispatch = useDispatch();
+
+	const {commonStyles} = config;
 
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
@@ -59,11 +63,32 @@ export const FragmentStylesPanel = ({item}) => {
 		[dispatch, fragmentEntryLink, segmentsExperienceId]
 	);
 
+	const onCommonStylesValueSelect = (name, value) =>
+		dispatch(
+			updateItemConfig({
+				itemConfig: {
+					styles: {
+						[name]: value,
+					},
+				},
+				itemId: item.itemId,
+				segmentsExperienceId,
+			})
+		);
+
 	return (
-		<CustomStyles
-			fragmentEntryLink={fragmentEntryLink}
-			onValueSelect={onCustomStyleValueSelect}
-		/>
+		<>
+			<CustomStyles
+				fragmentEntryLink={fragmentEntryLink}
+				onValueSelect={onCustomStyleValueSelect}
+			/>
+
+			<CommonStyles
+				commonStyles={commonStyles}
+				item={item}
+				onValueSelect={onCommonStylesValueSelect}
+			/>
+		</>
 	);
 };
 
@@ -76,13 +101,13 @@ FragmentStylesPanel.propTypes = {
 };
 
 const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
-	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
+	const fieldSets = fragmentEntryLink.configuration?.fieldSets?.filter(
 		(fieldSet) =>
 			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style
 	);
 
-	return (
-		<div className="page-editor__floating-toolbar__panel__custom-styles">
+	return fieldSets?.length ? (
+		<div className="page-editor__page-structure__section__custom-styles">
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
@@ -97,11 +122,33 @@ const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
 				);
 			})}
 		</div>
-	);
+	) : null;
 };
 
 CustomStyles.propTypes = {
 	fragmentEntryLink: PropTypes.object.isRequired,
+	onValueSelect: PropTypes.func.isRequired,
+};
+
+const CommonStyles = ({commonStyles, item, onValueSelect}) => (
+	<div className="page-editor__floating-toolbar__panel__common-styles">
+		{commonStyles.map((fieldSet, index) => {
+			return (
+				<FieldSet
+					configurationValues={item.config.styles}
+					fields={fieldSet.styles}
+					key={index}
+					label={fieldSet.label}
+					onValueSelect={onValueSelect}
+				/>
+			);
+		})}
+	</div>
+);
+
+CommonStyles.propTypes = {
+	commonStyles: PropTypes.array.isRequired,
+	item: PropTypes.object.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 };
 

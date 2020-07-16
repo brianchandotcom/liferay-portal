@@ -1,66 +1,66 @@
 {
 	"tokenCategories": [
 		{
-			"label": "general",
-			"name": "general"
+			"label": "Color System",
+			"name": "colorSystem"
 		},
 		{
-			"label": "colors",
-			"name": "colors"
+			"label": "Spacing",
+			"name": "spacing"
 		},
 		{
-			"label": "typography",
+			"label": "Global",
+			"name": "global"
+		},
+		{
+			"label": "Layout",
+			"name": "layout"
+		},
+		{
+			"label": "Typography",
 			"name": "typography"
-		},
-		{
-			"label": "spaces",
-			"name": "spaces"
 		}
 	],
 	"tokenSets": [
 		{
-			"label": "general",
-			"name": "general"
+			"label": "Grays",
+			"name": "grays"
 		},
 		{
-			"label": "utility",
-			"name": "utility"
+			"label": "Theme Colors",
+			"name": "themeColors"
 		},
 		{
-			"label": "layout",
-			"name": "layout"
+			"label": "Body",
+			"name": "body"
 		},
 		{
-			"label": "buttons",
-			"name": "buttons"
+			"label": "Borders",
+			"name": "borders"
 		},
 		{
-			"label": "alerts",
-			"name": "alerts"
+			"label": "Box Shadows",
+			"name": "boxShadows"
 		},
 		{
-			"label": "cards",
-			"name": "cards"
+			"label": "Grid Containers",
+			"name": "gridContainers"
 		},
 		{
-			"label": "forms",
-			"name": "forms"
+			"label": "Font Family",
+			"name": "fontFamily"
 		},
 		{
-			"label": "nav",
-			"name": "nav"
+			"label": "Font Size",
+			"name": "fontSize"
 		},
 		{
-			"label": "portlet",
-			"name": "portlet"
+			"label": "Font Weight",
+			"name": "fontWeight"
 		},
 		{
-			"label": "tables",
-			"name": "tables"
-		},
-		{
-			"label": "lists",
-			"name": "lists"
+			"label": "Headings",
+			"name": "headings"
 		}
 	],
 	"tokens": [
@@ -74,8 +74,8 @@
 				}
 			],
 			"name": "whiteColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -88,8 +88,8 @@
 				}
 			],
 			"name": "gray100Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -102,8 +102,8 @@
 				}
 			],
 			"name": "gray200Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -116,8 +116,8 @@
 				}
 			],
 			"name": "gray300Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -130,8 +130,8 @@
 				}
 			],
 			"name": "gray400Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -144,8 +144,8 @@
 				}
 			],
 			"name": "gray500Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -158,8 +158,8 @@
 				}
 			],
 			"name": "gray600Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -172,8 +172,8 @@
 				}
 			],
 			"name": "gray700Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -186,8 +186,8 @@
 				}
 			],
 			"name": "gray800Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -200,8 +200,8 @@
 				}
 			],
 			"name": "gray900Color",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -214,8 +214,8 @@
 				}
 			],
 			"name": "blackColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "general",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "grays",
 			"type": "String"
 		},
 		{
@@ -228,8 +228,8 @@
 				}
 			],
 			"name": "primaryColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -242,8 +242,8 @@
 				}
 			],
 			"name": "secondaryColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -256,8 +256,8 @@
 				}
 			],
 			"name": "successColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -270,8 +270,8 @@
 				}
 			],
 			"name": "infoColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -284,8 +284,8 @@
 				}
 			],
 			"name": "warningColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -298,8 +298,8 @@
 				}
 			],
 			"name": "dangerColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -312,8 +312,8 @@
 				}
 			],
 			"name": "darkColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -326,8 +326,8 @@
 				}
 			],
 			"name": "lightColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "colorSystem",
+			"tokenSetName": "themeColors",
 			"type": "String"
 		},
 		{
@@ -339,8 +339,8 @@
 				}
 			],
 			"name": "spacer",
-			"tokenCategoryName": "spaces",
-			"tokenSetName": "layout",
+			"tokenCategoryName": "spacing",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -352,8 +352,8 @@
 				}
 			],
 			"name": "containerMax",
-			"tokenCategoryName": "spaces",
-			"tokenSetName": "layout",
+			"tokenCategoryName": "layout",
+			"tokenSetName": "gridContainers",
 			"type": "Float"
 		},
 		{
@@ -365,8 +365,8 @@
 				}
 			],
 			"name": "borderRadius",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "borders",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -378,8 +378,8 @@
 				}
 			],
 			"name": "borderRadiusSm",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "borders",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -391,8 +391,8 @@
 				}
 			],
 			"name": "borderRadiusLg",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "borders",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -404,8 +404,8 @@
 				}
 			],
 			"name": "borderRadiusCircle",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "borders",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -417,8 +417,8 @@
 				}
 			],
 			"name": "roundedPill",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "borders",
+			"tokenSetName": "",
 			"type": "Float"
 		},
 		{
@@ -430,8 +430,8 @@
 				}
 			],
 			"name": "boxShadow",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "boxShadows",
+			"tokenSetName": "",
 			"type": "String"
 		},
 		{
@@ -443,8 +443,8 @@
 				}
 			],
 			"name": "boxShadowSm",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "boxShadows",
+			"tokenSetName": "",
 			"type": "String"
 		},
 		{
@@ -456,8 +456,8 @@
 				}
 			],
 			"name": "boxShadowLg",
-			"tokenCategoryName": "general",
-			"tokenSetName": "utility",
+			"tokenCategoryName": "boxShadows",
+			"tokenSetName": "",
 			"type": "String"
 		},
 		{
@@ -470,7 +470,7 @@
 			],
 			"name": "fontFamilySansSerif",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontFamily",
 			"type": "String"
 		},
 		{
@@ -483,7 +483,7 @@
 			],
 			"name": "fontFamilyMonospace",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontFamily",
 			"type": "String"
 		},
 		{
@@ -496,7 +496,7 @@
 			],
 			"name": "fontFamilyBase",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontFamily",
 			"type": "String"
 		},
 		{
@@ -509,7 +509,7 @@
 			],
 			"name": "fontSizeSm",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontSize",
 			"type": "Float"
 		},
 		{
@@ -522,7 +522,7 @@
 			],
 			"name": "fontSizeBase",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontSize",
 			"type": "Float"
 		},
 		{
@@ -535,7 +535,7 @@
 			],
 			"name": "fontSizeLg",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "general",
+			"tokenSetName": "fontSize",
 			"type": "Float"
 		},
 		{
@@ -548,7 +548,7 @@
 			],
 			"name": "fontWeightLighter",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "fontWeight",
 			"type": "String"
 		},
 		{
@@ -561,7 +561,7 @@
 			],
 			"name": "fontWeightLight",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "fontWeight",
 			"type": "String"
 		},
 		{
@@ -574,7 +574,7 @@
 			],
 			"name": "fontWeightNormal",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "fontWeight",
 			"type": "String"
 		},
 		{
@@ -587,7 +587,7 @@
 			],
 			"name": "fontWeightBold",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "fontWeight",
 			"type": "String"
 		},
 		{
@@ -600,7 +600,7 @@
 			],
 			"name": "fontWeightBolder",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "fontWeight",
 			"type": "String"
 		},
 		{
@@ -613,7 +613,7 @@
 			],
 			"name": "h1FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -626,7 +626,7 @@
 			],
 			"name": "h2FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -639,7 +639,7 @@
 			],
 			"name": "h3FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -652,7 +652,7 @@
 			],
 			"name": "h4FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -665,7 +665,7 @@
 			],
 			"name": "h5FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -678,7 +678,7 @@
 			],
 			"name": "h6FontSize",
 			"tokenCategoryName": "typography",
-			"tokenSetName": "utility",
+			"tokenSetName": "headings",
 			"type": "Float"
 		},
 		{
@@ -691,8 +691,8 @@
 				}
 			],
 			"name": "bodyBgColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "layout",
+			"tokenCategoryName": "global",
+			"tokenSetName": "body",
 			"type": "String"
 		},
 		{
@@ -705,8 +705,8 @@
 				}
 			],
 			"name": "bodyColor",
-			"tokenCategoryName": "colors",
-			"tokenSetName": "layout",
+			"tokenCategoryName": "global",
+			"tokenSetName": "body",
 			"type": "String"
 		}
 	]

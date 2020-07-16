@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,9 +53,11 @@ public class StyleBookScopedCSSVariablesProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				themeDisplay.getScopeGroupId());
+				layout.getGroupId());
 
 		if (styleBookEntry == null) {
 			return Collections.emptyList();

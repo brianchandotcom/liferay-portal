@@ -45,8 +45,9 @@ export const StoreAPIContextProvider = ({
 	children,
 	dispatch = DEFAULT_DISPATCH,
 	getState = DEFAULT_GET_STATE,
-	state,
 }) => {
+	const state = getState();
+
 	const subscribers = useRef([]);
 
 	const subscribe = useCallback((subscriber) => {
@@ -92,16 +93,10 @@ export const StoreContextProvider = ({children, initialState, reducer}) => {
 	const stateRef = useRef(state);
 	const getState = useCallback(() => stateRef.current, []);
 
-	useEffect(() => {
-		stateRef.current = state;
-	}, [state]);
+	stateRef.current = state;
 
 	return (
-		<StoreAPIContextProvider
-			dispatch={dispatch}
-			getState={getState}
-			state={state}
-		>
+		<StoreAPIContextProvider dispatch={dispatch} getState={getState}>
 			{children}
 		</StoreAPIContextProvider>
 	);

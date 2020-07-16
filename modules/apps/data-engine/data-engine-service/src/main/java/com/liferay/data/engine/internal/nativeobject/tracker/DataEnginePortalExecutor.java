@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.internal.nativeobject;
+package com.liferay.data.engine.internal.nativeobject.tracker;
 
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;

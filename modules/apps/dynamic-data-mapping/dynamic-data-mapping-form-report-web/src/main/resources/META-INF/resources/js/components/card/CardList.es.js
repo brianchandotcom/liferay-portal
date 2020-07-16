@@ -123,6 +123,7 @@ export default ({data, fields}) => {
 		return (
 			<Card
 				field={field}
+				index={index}
 				key={index}
 				summary={summary}
 				totalEntries={totalEntries}

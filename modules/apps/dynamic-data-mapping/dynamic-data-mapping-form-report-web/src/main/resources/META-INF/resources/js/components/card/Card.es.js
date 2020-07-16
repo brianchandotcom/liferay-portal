@@ -16,9 +16,10 @@ import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import EmptyState from '../empty-state/EmptyState.es';
+import {SidebarContext} from '../sidebar/SidebarContext.es';
 import Summary from '../summary/Summary.es';
 
 const TotalEntriesLabel = ({totalEntries}) => {
@@ -44,51 +45,58 @@ const TotalEntriesLabel = ({totalEntries}) => {
 export default ({
 	children,
 	field: {icon, label, title},
+	index,
 	summary,
 	totalEntries,
-}) => (
-	<div className="report-cards-area">
-		<ClayLayout.Sheet>
-			<ClayLayout.Col>
-				<ClayCard displayType="image">
-					<ClayCard.AspectRatio className="card-header card-item-first">
-						<ClayTooltipProvider>
-							<div
-								className="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
-								data-tooltip-align="bottom"
-								data-tooltip-delay={300}
-								title={title}
-							>
-								<ClayIcon symbol={icon} />
+}) => {
+	const {portletNamespace} = useContext(SidebarContext);
+
+	return (
+		<div className="card-item" id={`${portletNamespace}card_${index}`}>
+			<ClayLayout.Sheet>
+				<ClayLayout.Col>
+					<ClayCard displayType="image">
+						<ClayCard.AspectRatio className="card-header card-item-first">
+							<ClayTooltipProvider>
+								<div
+									className="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
+									data-tooltip-align="bottom"
+									data-tooltip-delay={300}
+									title={title}
+								>
+									<ClayIcon symbol={icon} />
+								</div>
+							</ClayTooltipProvider>
+
+							<div className="field-info">
+								<ClayCard.Description displayType="title">
+									{label}
+								</ClayCard.Description>
+
+								<TotalEntriesLabel
+									totalEntries={totalEntries}
+								/>
 							</div>
-						</ClayTooltipProvider>
 
-						<div className="field-info">
-							<ClayCard.Description displayType="title">
-								{label}
-							</ClayCard.Description>
+							{!!Object.entries(summary).length && (
+								<Summary summary={summary} />
+							)}
+						</ClayCard.AspectRatio>
 
-							<TotalEntriesLabel totalEntries={totalEntries} />
-						</div>
-
-						{!!Object.entries(summary).length && (
-							<Summary summary={summary} />
-						)}
-					</ClayCard.AspectRatio>
-
-					<ClayCard.Body>
-						{totalEntries > 0 ? (
-							children
-						) : (
-							<EmptyState
-								description={Liferay.Language.get(
-									'entries-submitted-with-this-field-filled-will-show-up-here'
-								)}
-							/>
-						)}
-					</ClayCard.Body>
-				</ClayCard>
-			</ClayLayout.Col>
-		</ClayLayout.Sheet>
-	</div>
-);
+						<ClayCard.Body>
+							{totalEntries > 0 ? (
+								children
+							) : (
+								<EmptyState
+									description={Liferay.Language.get(
+										'entries-submitted-with-this-field-filled-will-show-up-here'
+									)}
+								/>
+							)}
+						</ClayCard.Body>
+					</ClayCard>
+				</ClayLayout.Col>
+			</ClayLayout.Sheet>
+		</div>
+	);
+};

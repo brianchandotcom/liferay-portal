@@ -28,6 +28,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
+import {deepEqual} from '../utils/checkDeepEqual';
 import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
 import ShortcutManager from './ShortcutManager';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
@@ -152,9 +153,21 @@ Layout.propTypes = {
 	mainItemId: PropTypes.string.isRequired,
 };
 
-class LayoutDataItem extends React.PureComponent {
+class LayoutDataItem extends React.Component {
 	static getDerivedStateFromError(error) {
 		return {error};
+	}
+
+	static destructureItem(item, layoutData) {
+		return {
+			...item,
+			children: item.children.map((child) =>
+				LayoutDataItem.destructureItem(
+					layoutData.items[child],
+					layoutData
+				)
+			),
+		};
 	}
 
 	constructor(props) {
@@ -163,6 +176,23 @@ class LayoutDataItem extends React.PureComponent {
 		this.state = {
 			error: null,
 		};
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			nextState.error ||
+			!deepEqual(this.props.item, nextProps.item) ||
+			!deepEqual(
+				LayoutDataItem.destructureItem(
+					this.props.item,
+					this.props.layoutData
+				),
+				LayoutDataItem.destructureItem(
+					nextProps.item,
+					nextProps.layoutData
+				)
+			)
+		);
 	}
 
 	render() {

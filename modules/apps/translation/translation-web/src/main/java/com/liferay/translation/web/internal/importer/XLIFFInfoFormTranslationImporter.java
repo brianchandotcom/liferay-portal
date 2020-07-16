@@ -31,12 +31,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 
-import java.io.File;
 import java.io.CharConversionException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -92,25 +91,32 @@ public class XLIFFInfoFormTranslationImporter
 		try (AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
 			File tempFile = FileUtil.createTempFile(inputStream);
 
-			Document document = SAXReaderUtil.read(tempFile);
+			Document document = _saxReader.read(tempFile);
 
 			Element rootElement = document.getRootElement();
 
-			Optional<String> encodingOptional = _getAttributeValueOptional(
-				rootElement, "encoding", string -> string);
-
-			Element fileElement = rootElement.element("file");
-
 			Optional<LocaleId> sourceLocaleIdOptional =
 				_getAttributeValueOptional(
-					fileElement, "source-language", LocaleId::fromString);
+					rootElement, "srcLang", LocaleId::fromString);
 
 			Optional<LocaleId> targetLocaleIdOptional =
 				_getAttributeValueOptional(
+					rootElement, "trgLang", LocaleId::fromString);
+
+			if (!sourceLocaleIdOptional.isPresent() &&
+				!targetLocaleIdOptional.isPresent()) {
+
+				Element fileElement = rootElement.element("file");
+
+				sourceLocaleIdOptional = _getAttributeValueOptional(
+					fileElement, "source-language", LocaleId::fromString);
+
+				targetLocaleIdOptional = _getAttributeValueOptional(
 					fileElement, "target-language", LocaleId::fromString);
+			}
 
 			RawDocument rawDocument = new RawDocument(
-				tempFile.toURI(), encodingOptional.orElse(StringPool.UTF8),
+				tempFile.toURI(), document.getXMLEncoding(),
 				sourceLocaleIdOptional.orElse(_defaultLocaleId),
 				targetLocaleIdOptional.orElse(_defaultLocaleId));
 
@@ -128,13 +134,18 @@ public class XLIFFInfoFormTranslationImporter
 			return _getInfoItemFieldValuesXLIFFv12(
 				events, infoItemClassPKReference);
 		}
-		catch (DocumentException | OkapiIllegalFilterOperationException |
-			   XLIFFException exception) {
+		catch (OkapiIllegalFilterOperationException | XLIFFException
+					exception) {
+
 			if (exception.getCause() instanceof CharConversionException) {
-				throw new XLIFFFileException.MustHaveCorrectEncoding(
-					exception);
+				throw new XLIFFFileException.MustHaveCorrectEncoding(exception);
 			}
+
 			throw new XLIFFFileException.MustBeValid(exception);
+		}
+		catch (DocumentException documentException) {
+			throw new XLIFFFileException.MustHaveCorrectEncoding(
+				documentException);
 		}
 		catch (InvalidParameterException invalidParameterException) {
 			throw new XLIFFFileException.MustHaveValidParameter(

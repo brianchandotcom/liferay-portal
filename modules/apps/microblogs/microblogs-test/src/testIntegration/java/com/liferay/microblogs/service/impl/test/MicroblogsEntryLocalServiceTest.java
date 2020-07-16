@@ -161,7 +161,7 @@ public class MicroblogsEntryLocalServiceTest {
 		throws Exception {
 
 		int initialCount = _socialActivityLocalService.getActivitiesCount(
-			MicroblogsEntry.class.getName());
+			_group.getCompanyId(), MicroblogsEntry.class.getName());
 
 		MicroblogsEntry parentMicroblogsEntry = addMicroblogsEntry(
 			_user1.getUserId(), MicroblogsEntryConstants.TYPE_EVERYONE, 0);
@@ -189,7 +189,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount + 11,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 
 		_microblogsEntryLocalService.deleteMicroblogsEntry(
 			parentMicroblogsEntry);
@@ -197,7 +197,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 	}
 
 	@Test
@@ -265,7 +265,7 @@ public class MicroblogsEntryLocalServiceTest {
 		throws Exception {
 
 		int initialCount = _socialActivityLocalService.getActivitiesCount(
-			MicroblogsEntry.class.getName());
+			_group.getCompanyId(), MicroblogsEntry.class.getName());
 
 		MicroblogsEntry parentMicroblogsEntry = addMicroblogsEntry(
 			_user1.getUserId(), MicroblogsEntryConstants.TYPE_EVERYONE, 0);
@@ -277,7 +277,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount + 3,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 
 		_microblogsEntryLocalService.deleteMicroblogsEntry(
 			parentMicroblogsEntry);
@@ -285,7 +285,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 	}
 
 	@Test
@@ -353,7 +353,7 @@ public class MicroblogsEntryLocalServiceTest {
 		throws Exception {
 
 		int initialCount = _socialActivityLocalService.getActivitiesCount(
-			MicroblogsEntry.class.getName());
+			_group.getCompanyId(), MicroblogsEntry.class.getName());
 
 		MicroblogsEntry parentMicroblogsEntry = addMicroblogsEntry(
 			_user1.getUserId(), MicroblogsEntryConstants.TYPE_EVERYONE, 0);
@@ -365,7 +365,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount + 3,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 
 		_microblogsEntryLocalService.deleteMicroblogsEntry(
 			parentMicroblogsEntry);
@@ -373,7 +373,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 	}
 
 	@Test
@@ -447,7 +447,7 @@ public class MicroblogsEntryLocalServiceTest {
 		throws Exception {
 
 		int initialCount = _socialActivityLocalService.getActivitiesCount(
-			MicroblogsEntry.class.getName());
+			_group.getCompanyId(), MicroblogsEntry.class.getName());
 
 		MicroblogsEntry parentMicroblogsEntry = addMicroblogsEntry(
 			_user1.getUserId(), MicroblogsEntryConstants.TYPE_EVERYONE, 0);
@@ -459,7 +459,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount + 3,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 
 		_microblogsEntryLocalService.deleteMicroblogsEntry(
 			microblogsEntryReply);
@@ -467,7 +467,7 @@ public class MicroblogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			initialCount + 1,
 			_socialActivityLocalService.getActivitiesCount(
-				MicroblogsEntry.class.getName()));
+				_group.getCompanyId(), MicroblogsEntry.class.getName()));
 	}
 
 	protected MicroblogsEntry addMicroblogsEntry(

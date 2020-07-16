@@ -8,7 +8,7 @@
 		"@clayui/form": "3.9.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/layout": "3.1.1",
-		"@clayui/modal": "3.6.1",
+		"@clayui/modal": "3.5.1",
 		"@clayui/multi-select": "3.5.7",
 		"@clayui/sticker": "3.1.1",
 		"frontend-js-react-web": "*",

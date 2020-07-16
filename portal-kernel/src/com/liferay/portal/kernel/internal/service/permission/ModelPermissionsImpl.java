@@ -60,6 +60,9 @@ public class ModelPermissionsImpl implements ModelPermissions {
 		}
 	}
 
+	public ModelPermissionsImpl() {
+	}
+
 	public ModelPermissionsImpl(String resourceName) {
 		setResourceName(resourceName);
 	}

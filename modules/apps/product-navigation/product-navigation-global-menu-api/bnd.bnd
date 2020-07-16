@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Product Navigation Global Menu API
-Bundle-SymbolicName: com.liferay.product.navigation.global.menu.api
-Bundle-Version: 1.0.4
-Export-Package: com.liferay.product.navigation.global.menu.configuration

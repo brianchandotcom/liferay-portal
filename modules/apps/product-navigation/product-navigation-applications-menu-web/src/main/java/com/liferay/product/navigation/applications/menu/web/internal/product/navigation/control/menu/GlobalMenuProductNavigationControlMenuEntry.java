@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.internal;
+package com.liferay.product.navigation.applications.menu.web.internal.product.navigation.control.menu;
 
-import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.GlobalMenuInstanceConfiguration;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -43,18 +45,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.SITES,
-		"product.navigation.control.menu.entry.order:Integer=100"
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
+		"product.navigation.control.menu.entry.order:Integer=600"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class CompanyLogoProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+public class GlobalMenuProductNavigationControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/company_logo.jsp";
+		return "/global_menu/global_menu.jsp";
 	}
 
 	@Override
@@ -65,51 +66,14 @@ public class CompanyLogoProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_isEnableGlobalMenu(themeDisplay.getCompanyId())) {
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (portletDisplay == null) {
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (!panelCategoryHelper.isApplicationsMenuApp(
-				themeDisplay.getPpid())) {
-
-			return false;
-		}
-
-		return super.isShow(httpServletRequest);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	private boolean _isEnableGlobalMenu(long companyId) {
 		try {
 			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class, companyId);
+					GlobalMenuInstanceConfiguration.class,
+					themeDisplay.getCompanyId());
 
-			if (globalMenuInstanceConfiguration.enableGlobalMenu()) {
-				return true;
+			if (!globalMenuInstanceConfiguration.enableGlobalMenu()) {
+				return false;
 			}
 		}
 		catch (ConfigurationException configurationException) {
@@ -120,17 +84,54 @@ public class CompanyLogoProductNavigationControlMenuEntry
 			}
 		}
 
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			return false;
+		}
+
+		List<PanelCategory> applicationsMenuPanelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.APPLICATIONS_MENU,
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
+			List<PanelCategory> childPanelCategories =
+				_panelCategoryRegistry.getChildPanelCategories(
+					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup());
+
+			if (!childPanelCategories.isEmpty()) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
+	@Reference(
+		target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")",
+		unbind = "-"
+	)
+	public void setPanelCategory(PanelCategory panelCategory) {
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.applications.menu.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		CompanyLogoProductNavigationControlMenuEntry.class);
+		GlobalMenuProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;

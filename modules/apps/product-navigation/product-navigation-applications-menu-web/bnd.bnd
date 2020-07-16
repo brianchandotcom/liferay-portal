@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Navigation Applications Menu Web
+Bundle-SymbolicName: com.liferay.product.navigation.applications.menu.web
+Bundle-Version: 1.0.9
+Web-ContextPath: /product-navigation-applications-menu-web

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
-import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.transaction.TransactionExecutorThreadLocal;
@@ -48,19 +47,20 @@ public class CTTransactionAdvice extends ChainableMethodAdvice {
 			Transactional.class);
 
 		if ((transactional == null) || !transactional.enabled() ||
-			transactional.readOnly() ||
 			annotations.containsKey(CTAware.class)) {
 
 			return null;
 		}
 
-		if ((transactional.propagation() == Propagation.REQUIRES_NEW) ||
-			annotations.containsKey(MasterDataSource.class)) {
-
-			return Boolean.TRUE;
+		if (transactional.readOnly()) {
+			return CTMode.READ_ONLY;
 		}
 
-		return Boolean.FALSE;
+		if (transactional.propagation() == Propagation.REQUIRES_NEW) {
+			return CTMode.REQUIRES_NEW;
+		}
+
+		return CTMode.STRICT;
 	}
 
 	@Override
@@ -72,7 +72,9 @@ public class CTTransactionAdvice extends ChainableMethodAdvice {
 			return aopMethodInvocation.proceed(arguments);
 		}
 
-		if ((aopMethodInvocation.getAdviceMethodContext() == Boolean.TRUE) ||
+		CTMode ctMode = aopMethodInvocation.getAdviceMethodContext();
+
+		if ((ctMode == CTMode.REQUIRES_NEW) ||
 			(TransactionExecutorThreadLocal.getCurrentTransactionExecutor() ==
 				null)) {
 
@@ -83,11 +85,20 @@ public class CTTransactionAdvice extends ChainableMethodAdvice {
 				return aopMethodInvocation.proceed(arguments);
 			}
 		}
+		else if (ctMode == CTMode.READ_ONLY) {
+			return aopMethodInvocation.proceed(arguments);
+		}
 
 		throw new CTTransactionException(
 			"CT transaction validation failure. Nested operation using " +
 				aopMethodInvocation.getThis() +
 					" can only be performed in production mode.");
+	}
+
+	private enum CTMode {
+
+		READ_ONLY, REQUIRES_NEW, STRICT
+
 	}
 
 }

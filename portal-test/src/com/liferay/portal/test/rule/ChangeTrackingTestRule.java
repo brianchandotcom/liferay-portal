@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
-import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -98,19 +97,20 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 				Transactional.class);
 
 			if ((transactional == null) || !transactional.enabled() ||
-				transactional.readOnly() ||
 				annotations.containsKey(CTAware.class)) {
 
 				return null;
 			}
 
-			if ((transactional.propagation() == Propagation.REQUIRES_NEW) ||
-				annotations.containsKey(MasterDataSource.class)) {
-
-				return Boolean.TRUE;
+			if (transactional.readOnly()) {
+				return CTMode.READ_ONLY;
 			}
 
-			return Boolean.FALSE;
+			if (transactional.propagation() == Propagation.REQUIRES_NEW) {
+				return CTMode.REQUIRES_NEW;
+			}
+
+			return CTMode.STRICT;
 		}
 
 		@Override
@@ -122,8 +122,9 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 				return aopMethodInvocation.proceed(arguments);
 			}
 
-			if ((aopMethodInvocation.getAdviceMethodContext() ==
-					Boolean.TRUE) ||
+			CTMode ctMode = aopMethodInvocation.getAdviceMethodContext();
+
+			if ((ctMode == CTMode.REQUIRES_NEW) ||
 				!_hasCurrentTransactionExecutor()) {
 
 				try (SafeClosable safeClosable = _ctSafe.setWithSafeClosable(
@@ -131,6 +132,9 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 
 					return aopMethodInvocation.proceed(arguments);
 				}
+			}
+			else if (ctMode == CTMode.READ_ONLY) {
+				return aopMethodInvocation.proceed(arguments);
 			}
 
 			throw new CTTransactionException(
@@ -157,6 +161,12 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 
 		private final ThreadLocal<Deque<Object>>
 			_transactionExecutorsThreadLocal;
+
+		private enum CTMode {
+
+			READ_ONLY, REQUIRES_NEW, STRICT
+
+		}
 
 	}
 

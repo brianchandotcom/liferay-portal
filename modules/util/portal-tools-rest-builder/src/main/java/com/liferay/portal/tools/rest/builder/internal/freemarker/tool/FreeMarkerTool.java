@@ -62,6 +62,19 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
+	public boolean containsJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String text) {
+
+		Stream<JavaMethodSignature> stream = javaMethodSignatures.stream();
+
+		return stream.map(
+			JavaMethodSignature::getMethodName
+		).anyMatch(
+			javaMethodSignatureMethodName ->
+				javaMethodSignatureMethodName.contains(text)
+		);
+	}
+
 	public Map<String, Schema> getAllSchemas(
 		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
 

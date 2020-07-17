@@ -56,6 +56,18 @@ entities to prevent lost updates. The default value is false.
 >
 
 <!--
+The change-tracking-enabled value specifies whether or not to enable change
+tracking by default for entities. Change tracking is a publishing framework that
+intercepts changes to data in entities' generated PersistenceImpl classes and
+queries made through Hibernate. It is highly encouraged to enable change
+tracking in the service-builder element instead of per entity. MVCC must be
+enabled to enable change tracking. The default value is false.
+-->
+<!ATTLIST service-builder
+	change-tracking-enabled CDATA #IMPLIED
+>
+
+<!--
 The author element is the name of the user associated with the generated code.
 -->
 <!ELEMENT author (#PCDATA)>
@@ -248,6 +260,18 @@ attribute in the service-builder element.
 -->
 <!ATTLIST entity
 	mvcc-enabled CDATA #IMPLIED
+>
+
+<!--
+The change-tracking-enabled value specifies whether or not to enable change
+tracking for this entity. Change tracking is a publishing framework that
+intercepts changes to data in the entity's generated PersistenceImpl class and
+queries made through Hibernate. It is highly encouraged to enable change
+tracking in the service-builder element instead of per entity. MVCC must be
+enabled to enable change tracking.
+-->
+<!ATTLIST entity
+	change-tracking-enabled CDATA #IMPLIED
 >
 
 <!--
@@ -554,6 +578,19 @@ primary key of a parent container model.
 -->
 <!ATTLIST column
 	parent-container-model CDATA #IMPLIED
+>
+
+<!--
+The change-tracking-resolution-type value specifies how to resolve columns when
+a modification conflict is detected when publishing. This value is only used
+when change tracking is enabled for the entity. Some values are automatically
+determined by column. Otherwise, the default value is STRICT.
+
+See com.liferay.portal.kernel.change.tracking.CTColumnResolutionType for
+available options.
+-->
+<!ATTLIST column
+	change-tracking-resolution-type CDATA #IMPLIED
 >
 
 <!--

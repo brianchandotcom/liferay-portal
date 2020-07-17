@@ -19,7 +19,7 @@ import EmptyAuditBarChart from './components/EmptyAuditBarChart';
 
 export default function ({context, props}) {
 	const {languageDirection} = context;
-	const {vocabularies} = props;
+	const {learnHowURL, vocabularies} = props;
 
 	return vocabularies.length ? (
 		<AuditBarChart
@@ -27,6 +27,6 @@ export default function ({context, props}) {
 			vocabularies={vocabularies}
 		/>
 	) : (
-		<EmptyAuditBarChart />
+		<EmptyAuditBarChart learnHowURL={learnHowURL} />
 	);
 }

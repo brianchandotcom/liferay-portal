@@ -24,27 +24,26 @@ import {
 
 import {BAR_CHART} from '../utils/constants';
 
-const LEARN_HOW_URL =
-	'https://help.liferay.com/hc/en-us/articles/360028820492-Defining-Categories-for-Content';
+export default function EmptyAuditBarChart({learnHowURL}) {
+	const description = learnHowURL && (
+		<div
+			dangerouslySetInnerHTML={{
+				__html: Liferay.Util.sub(
+					Liferay.Language.get(
+						'learn-how-to-tailor-categories-to-your-needs'
+					),
+					`<a href=${learnHowURL} target="_blank">`,
+					'</a>'
+				),
+			}}
+		/>
+	);
 
-export default function EmptyAuditBarChart() {
 	return (
 		<>
 			<ClayEmptyState
 				className="empty-state text-center"
-				description={
-					<div
-						dangerouslySetInnerHTML={{
-							__html: Liferay.Util.sub(
-								Liferay.Language.get(
-									'learn-how-to-tailor-categories-to-your-needs'
-								),
-								`<a href=${LEARN_HOW_URL} target="_blank">`,
-								'</a>'
-							),
-						}}
-					/>
-				}
+				description={description}
 				title={Liferay.Language.get('there-is-no-data')}
 			/>
 

@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
+import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardConfiguration;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
@@ -30,16 +31,19 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
@@ -310,8 +314,24 @@ public class ContentDashboardAdminDisplayContext {
 	}
 
 	private Map<String, Object> _getProps() {
-		return Collections.singletonMap(
-			"vocabularies", _assetVocabularyMetric.toJSONArray());
+		return HashMapBuilder.<String, Object>put(
+			"learnHowURL",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				AssetCategoriesCompanyConfiguration
+					accountEntryEmailDomainsConfiguration =
+						ConfigurationProviderUtil.getCompanyConfiguration(
+							AssetCategoriesCompanyConfiguration.class,
+							themeDisplay.getCompanyId());
+
+				return accountEntryEmailDomainsConfiguration.linkURL();
+			}
+		).put(
+			"vocabularies", _assetVocabularyMetric.toJSONArray()
+		).build();
 	}
 
 	private final List<AssetVocabulary> _assetVocabularies;

@@ -10,9 +10,10 @@
  */
 
 import ClayBadge from '@clayui/badge';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
 
@@ -35,7 +36,57 @@ const Arrow = ({addStep, selected}) => {
 	);
 };
 
+const Card = ({
+	actions,
+	isInitialOrFinalSteps,
+	name,
+	onClick,
+	selected,
+	stepInfo,
+}) => {
+	const [active, setActive] = useState(false);
+
+	const handleOnClick = (event, onClick) => {
+		event.preventDefault();
+		setActive(false);
+		onClick();
+	};
+
+	return (
+		<div
+			className={classNames('step-card', selected && 'selected')}
+			onClick={onClick}
+		>
+			{name}
+
+			<ButtonInfo items={stepInfo} />
+
+			{!isInitialOrFinalSteps && (
+				<ClayDropDown
+					active={active}
+					onActiveChange={setActive}
+					trigger={<ClayIcon symbol="ellipsis-v" />}
+				>
+					<ClayDropDown.ItemList>
+						{actions.map(({label, onClick}, index) => (
+							<ClayDropDown.Item
+								key={index}
+								onClick={(event) =>
+									handleOnClick(event, onClick)
+								}
+							>
+								{label}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			)}
+		</div>
+	);
+};
+
 export default function WorkflowStep({
+	actions,
 	addStep,
 	badgeLabel,
 	initial,
@@ -60,17 +111,14 @@ export default function WorkflowStep({
 						label={badgeLabel}
 					/>
 
-					<div
-						className={classNames(
-							'step-card',
-							selected && 'selected'
-						)}
+					<Card
+						actions={actions}
+						isInitialOrFinalSteps={isInitialOrFinalSteps}
+						name={name}
 						onClick={onClick}
-					>
-						{name}
-
-						<ButtonInfo items={stepInfo} />
-					</div>
+						selected={selected}
+						stepInfo={stepInfo}
+					/>
 				</div>
 			</div>
 

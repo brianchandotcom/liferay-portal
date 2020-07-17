@@ -14,6 +14,7 @@ import {sub} from 'app-builder-web/js/utils/lang.es';
 export const ADD_STEP = 'ADD_STEP';
 export const ADD_STEP_ACTION = 'ADD_STEP_ACTION';
 export const ADD_STEP_FORM_VIEW = 'ADD_STEP_FORM_VIEW';
+export const REMOVE_STEP = 'REMOVE_STEP';
 export const REMOVE_STEP_ACTION = 'REMOVE_STEP_ACTION';
 export const REMOVE_STEP_FORM_VIEW = 'REMOVE_STEP_FORM_VIEW';
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
@@ -136,6 +137,43 @@ export default (state, action) => {
 			});
 
 			return {...state, steps: [...workflowSteps]};
+		}
+		case REMOVE_STEP: {
+			let currentStep;
+			const workflowSteps = [...state.steps];
+			const previousStep = workflowSteps[action.stepIndex - 1];
+			const nextStep = workflowSteps[action.stepIndex + 1];
+
+			previousStep.appWorkflowTransitions[0].transitionTo = nextStep.name;
+
+			if (nextStep.appWorkflowTransitions.length > 1) {
+				if (action.stepIndex > 1) {
+					nextStep.appWorkflowTransitions.forEach((action) => {
+						if (!action.primary) {
+							action.transitionTo = previousStep.name;
+						}
+					});
+				} else {
+					nextStep.appWorkflowTransitions.forEach((_, index) => {
+						if (!action.primary) {
+							nextStep.appWorkflowTransitions.splice(index, 1);
+						}
+					});
+				}
+			}
+
+			if (state.stepIndex === action.stepIndex) {
+				currentStep = previousStep;
+			}
+
+			workflowSteps.splice(action.stepIndex, 1);
+
+			return {
+				...state,
+				currentStep,
+				stepIndex: state.stepIndex - 1,
+				steps: [...workflowSteps],
+			};
 		}
 		case REMOVE_STEP_ACTION: {
 			state.steps[state.stepIndex].appWorkflowTransitions.pop();

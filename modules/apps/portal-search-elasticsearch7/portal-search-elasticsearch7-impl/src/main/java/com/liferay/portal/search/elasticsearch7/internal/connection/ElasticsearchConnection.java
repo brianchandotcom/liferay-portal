@@ -16,31 +16,11 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.security.KeyStore;
 
 import java.util.function.Consumer;
 
-import javax.net.ssl.SSLContext;
-
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.SSLContexts;
-
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 
 /**
@@ -156,71 +136,26 @@ public class ElasticsearchConnection {
 		_userName = userName;
 	}
 
-	protected void configureSecurity(RestClientBuilder restClientBuilder) {
-		restClientBuilder.setHttpClientConfigCallback(
-			httpClientBuilder -> {
-				if (_authenticationEnabled) {
-					httpClientBuilder.setDefaultCredentialsProvider(
-						createCredentialsProvider());
-				}
-
-				if (_httpSSLEnabled) {
-					httpClientBuilder.setSSLContext(createSSLContext());
-				}
-
-				return httpClientBuilder;
-			});
-	}
-
-	protected CredentialsProvider createCredentialsProvider() {
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		credentialsProvider.setCredentials(
-			AuthScope.ANY,
-			new UsernamePasswordCredentials(_userName, _password));
-
-		return credentialsProvider;
-	}
-
 	protected RestHighLevelClient createRestHighLevelClient() {
-		HttpHost[] httpHosts = new HttpHost[_networkHostAddresses.length];
-
-		for (int i = 0; i < _networkHostAddresses.length; i++) {
-			httpHosts[i] = HttpHost.create(_networkHostAddresses[i]);
-		}
-
-		RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
-
-		configureSecurity(restClientBuilder);
-
-		Class<? extends ElasticsearchConnection> clazz = getClass();
-
-		return ClassLoaderUtil.getWithContextClassLoader(
-			() -> new RestHighLevelClient(restClientBuilder), clazz);
-	}
-
-	protected SSLContext createSSLContext() {
-		try {
-			Path path = Paths.get(_truststorePath);
-
-			InputStream inputStream = Files.newInputStream(path);
-
-			KeyStore keyStore = KeyStore.getInstance(_truststoreType);
-
-			keyStore.load(inputStream, _truststorePassword.toCharArray());
-
-			SSLContextBuilder sslContextBuilder = SSLContexts.custom();
-
-			sslContextBuilder.loadKeyMaterial(
-				keyStore, _truststorePassword.toCharArray());
-			sslContextBuilder.loadTrustMaterial(keyStore, null);
-
-			return sslContextBuilder.build();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return RestHighLevelClientFactory.builder(
+		).authenticationEnabled(
+			_authenticationEnabled
+		).httpSSLEnabled(
+			_httpSSLEnabled
+		).networkHostAddresses(
+			_networkHostAddresses
+		).password(
+			_password
+		).truststorePassword(
+			_truststorePassword
+		).truststorePath(
+			_truststorePath
+		).truststoreType(
+			_truststoreType
+		).userName(
+			_userName
+		).build(
+		).newRestHighLevelClient();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

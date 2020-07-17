@@ -23,7 +23,6 @@ import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.ui.OrganizationScreenNavigationCategory;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -56,19 +55,20 @@ public class OrganizationScreenNavigationRegistrar {
 	}
 
 	protected void registerScreenNavigationCategories() {
-		_registerScreenNavigationCategory(
+		_registerService(
+			ScreenNavigationCategory.class, 10,
 			new OrganizationScreenNavigationCategory(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL),
-			10);
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL));
 
-		_registerScreenNavigationCategory(
+		_registerService(
+			ScreenNavigationCategory.class, 20,
 			new OrganizationScreenNavigationCategory(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT),
-			20);
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT));
 	}
 
 	protected void registerScreenNavigationEntries() {
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 10,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
@@ -80,10 +80,10 @@ public class OrganizationScreenNavigationRegistrar {
 				"/organization/information.jsp"
 			).setMvcActionCommandName(
 				"/users_admin/edit_organization"
-			).build(),
-			10);
+			).build());
 
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 20,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
@@ -95,10 +95,10 @@ public class OrganizationScreenNavigationRegistrar {
 				"/users_admin/update_organization_organization_site"
 			).setShowControls(
 				false
-			).build(),
-			20);
+			).build());
 
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 30,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
@@ -108,10 +108,10 @@ public class OrganizationScreenNavigationRegistrar {
 				"/organization/reminder_queries.jsp"
 			).setMvcActionCommandName(
 				"/users_admin/update_organization_reminder_queries"
-			).build(),
-			30);
+			).build());
 
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 10,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
@@ -125,10 +125,10 @@ public class OrganizationScreenNavigationRegistrar {
 				false
 			).setShowTitle(
 				false
-			).build(),
-			10);
+			).build());
 
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 20,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
@@ -140,10 +140,10 @@ public class OrganizationScreenNavigationRegistrar {
 				"/users_admin/update_contact_information"
 			).setShowControls(
 				false
-			).build(),
-			20);
+			).build());
 
-		_registerScreenNavigationEntry(
+		_registerService(
+			ScreenNavigationEntry.class, 30,
 			_getBuilder(
 			).setCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
@@ -157,8 +157,7 @@ public class OrganizationScreenNavigationRegistrar {
 				false
 			).setShowTitle(
 				false
-			).build(),
-			30);
+			).build());
 	}
 
 	private OrganizationScreenNavigationEntry.Builder _getBuilder() {
@@ -170,52 +169,18 @@ public class OrganizationScreenNavigationRegistrar {
 		);
 	}
 
-	private Dictionary<String, Object> _getProperties(Integer serviceRanking) {
-		return new HashMapDictionary<String, Object>() {
-			{
-				if (serviceRanking != null) {
-					put("screen.navigation.category.order", serviceRanking);
-					put("screen.navigation.entry.order", serviceRanking);
-				}
-			}
-		};
-	}
-
-	private void _registerScreenNavigationCategory(
-		ScreenNavigationCategory screenNavigationCategory,
-		Dictionary<String, Object> properties) {
+	private <T> void _registerService(
+		Class<T> clazz, int order, T serviceObject) {
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				ScreenNavigationCategory.class, screenNavigationCategory,
-				properties));
-	}
-
-	private void _registerScreenNavigationCategory(
-		ScreenNavigationCategory screenNavigationCategory,
-		Integer serviceRanking) {
-
-		_registerScreenNavigationCategory(
-			screenNavigationCategory, _getProperties(serviceRanking));
-	}
-
-	private void _registerScreenNavigationEntry(
-		ScreenNavigationEntry<?> screenNavigationEntry,
-		Dictionary<String, Object> properties) {
-
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				(Class<ScreenNavigationEntry<?>>)
-					(Class<?>)ScreenNavigationEntry.class,
-				screenNavigationEntry, properties));
-	}
-
-	private void _registerScreenNavigationEntry(
-		ScreenNavigationEntry<?> screenNavigationEntry,
-		Integer serviceRanking) {
-
-		_registerScreenNavigationEntry(
-			screenNavigationEntry, _getProperties(serviceRanking));
+				clazz, serviceObject,
+				new HashMapDictionary<String, Object>() {
+					{
+						put("screen.navigation.category.order", order);
+						put("screen.navigation.entry.order", order);
+					}
+				}));
 	}
 
 	private BundleContext _bundleContext;

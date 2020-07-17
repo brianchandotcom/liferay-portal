@@ -27,6 +27,10 @@ tasks.eclipse {
 	ext.gradleVersion = gradleVersion
 }
 
+cleanCopyLibs {
+	enabled = false
+}
+
 copyDistBundleZipPluginsSdk {
 	ext {
 		autoClean = false

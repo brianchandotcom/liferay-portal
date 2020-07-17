@@ -24,12 +24,14 @@ export default function PagePreview() {
 
 	useEffect(() => {
 		if (iframeRef.current) {
-			Object.entries(tokenValues).forEach(([key, value]) => {
-				iframeRef.current.contentDocument.documentElement.style.setProperty(
-					`--${key}`,
-					value
-				);
-			});
+			Object.values(tokenValues).forEach(
+				({cssVariableMapping, value}) => {
+					iframeRef.current.contentDocument.documentElement.style.setProperty(
+						`--${cssVariableMapping}`,
+						value
+					);
+				}
+			);
 		}
 	}, [tokenValues]);
 

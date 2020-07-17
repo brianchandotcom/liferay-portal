@@ -303,7 +303,7 @@ public class StyleBookEntryPersistenceTest {
 			"styleBookEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"defaultStyleBookEntry", true, "name", true, "previewFileEntryId",
-			true, "styleBookEntryKey", true, "tokensValues", true);
+			true, "styleBookEntryKey", true);
 	}
 
 	@Test

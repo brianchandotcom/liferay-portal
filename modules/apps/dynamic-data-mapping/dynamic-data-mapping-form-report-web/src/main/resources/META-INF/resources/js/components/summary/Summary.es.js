@@ -15,31 +15,14 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import ellipsize from './../../utils/ellipsize.es';
+import {formatNumber} from './../../utils/numeric.es';
 
 export default ({summary}) => {
-	const formatNumber = (number) => {
-		let formattedNumber = number.toString();
-
-		if (formattedNumber.length > 12) {
-			formattedNumber = ellipsize(number.toString(), 8);
-		}
-
-		return formattedNumber;
-	};
-
 	const getAttributes = (summaryItem) => {
-		const formatedNumber = formatNumber(summaryItem);
-
-		const attributes = {
+		return {
 			className: 'value',
+			title: formatNumber(summaryItem),
 		};
-
-		if (formatedNumber != summaryItem) {
-			attributes['title'] = summaryItem;
-		}
-
-		return attributes;
 	};
 
 	return (
@@ -51,7 +34,7 @@ export default ({summary}) => {
 						{...getAttributes(summary['sum'])}
 						data-tooltip-align="bottom"
 					>
-						{formatNumber(summary['sum'])}
+						{formatNumber(summary['sum'], true)}
 					</div>
 				</div>
 				<div className="summary-item">
@@ -62,7 +45,7 @@ export default ({summary}) => {
 						{...getAttributes(summary['average'])}
 						data-tooltip-align="bottom"
 					>
-						{formatNumber(summary['average'])}
+						{formatNumber(summary['average'], true)}
 					</div>
 				</div>
 				<div className="summary-item">
@@ -71,7 +54,7 @@ export default ({summary}) => {
 						{...getAttributes(summary['min'])}
 						data-tooltip-align="bottom"
 					>
-						{formatNumber(summary['min'])}
+						{formatNumber(summary['min'], true)}
 					</div>
 				</div>
 				<div className="summary-item">
@@ -80,7 +63,7 @@ export default ({summary}) => {
 						{...getAttributes(summary['max'])}
 						data-tooltip-align="bottom"
 					>
-						{formatNumber(summary['max'])}
+						{formatNumber(summary['max'], true)}
 					</div>
 				</div>
 			</div>

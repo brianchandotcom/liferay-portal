@@ -1973,7 +1973,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the maximum number of items on the left box. The default value is <![CDATA[<code>-1</code>]]> that represents unlimited items.</description>
+			<description>Sets the maximum number of items on the left box. The default value is <![CDATA[<code>Infinity</code>]]> that represents unlimited items.</description>
 			<name>leftBoxMaxItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2012,7 +2012,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the maximum number of items on the right box. The default value is <![CDATA[<code>-1</code>]]> that represents unlimited items.</description>
+			<description>Sets the maximum number of items on the right box. The default value is <![CDATA[<code>Infinity</code>]]> that represents unlimited items.</description>
 			<name>rightBoxMaxItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

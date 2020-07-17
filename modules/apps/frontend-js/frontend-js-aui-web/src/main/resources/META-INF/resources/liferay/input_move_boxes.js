@@ -25,11 +25,11 @@ AUI.add(
 
 		var InputMoveBoxes = A.Component.create({
 			ATTRS: {
-				leftBoxMaxItems: -1,
+				leftBoxMaxItems: Infinity,
 
 				leftReorder: {},
 
-				rightBoxMaxItems: -1,
+				rightBoxMaxItems: Infinity,
 
 				rightReorder: {},
 
@@ -137,7 +137,7 @@ AUI.add(
 					});
 				},
 
-				_onChange(event) {
+				_onSelectChange(event) {
 					var instance = this;
 
 					instance._toggleBtnMove(event);
@@ -282,52 +282,28 @@ AUI.add(
 				_toggleBtnMove(event) {
 					var instance = this;
 
-					var contentBox = instance.get('contentBox');
-					var leftBoxMaxItems = instance.get('leftBoxMaxItems');
-					var rightBoxMaxItems = instance.get('rightBoxMaxItems');
+					var sourceBox = event.target;
 
-					var moveBtnLeft = contentBox.one('.move-left');
-					var moveBtnRight = contentBox.one('.move-right');
-
-					var target = event.target;
-					var selectedOptions = target
+					var selectedOptions = sourceBox
 						.get('options')
 						.getDOMNodes()
-						.filter((option) => option.selected).length;
+						.filter((option) => option.selected);
 
-					if (moveBtnLeft && moveBtnRight && target) {
-						var btnDisabledLeft = true;
-						var btnDisabledRight = true;
+					var direction =
+						sourceBox === instance._rightBox ? 'left' : 'right';
 
-						if (target.get('length') > 0) {
-							if (target === instance._rightBox) {
-								if (
-									leftBoxMaxItems === -1 ||
-									instance._leftBox.get('length') +
-										selectedOptions <=
-										leftBoxMaxItems
-								) {
-									btnDisabledLeft = false;
-								}
-							}
-							else if (target === instance._leftBox) {
-								if (
-									rightBoxMaxItems === -1 ||
-									instance._rightBox.get('length') +
-										selectedOptions <=
-										rightBoxMaxItems
-								) {
-									btnDisabledRight = false;
-								}
-							}
-						}
+					var destinationBox = instance[`_${direction}Box`];
+					var destinationBoxMaxItems = instance.get(
+						`${direction}BoxMaxItems`
+					);
 
-						instance._toggleBtnState(moveBtnLeft, btnDisabledLeft);
-						instance._toggleBtnState(
-							moveBtnRight,
-							btnDisabledRight
-						);
-					}
+					var contentBox = instance.get('contentBox');
+
+					instance._toggleBtnState(
+						contentBox.one(`.move-${direction}`),
+						destinationBox.get('length') + selectedOptions.length >
+							destinationBoxMaxItems
+					);
 				},
 
 				_toggleBtnSort(event) {
@@ -439,7 +415,7 @@ AUI.add(
 
 					instance._leftBox.after(
 						'change',
-						A.bind('_onChange', instance)
+						A.bind('_onSelectChange', instance)
 					);
 
 					instance._leftBox.on(
@@ -449,7 +425,7 @@ AUI.add(
 
 					instance._rightBox.after(
 						'change',
-						A.bind('_onChange', instance)
+						A.bind('_onSelectChange', instance)
 					);
 
 					instance._rightBox.on(

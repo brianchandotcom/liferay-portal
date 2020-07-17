@@ -20,11 +20,11 @@ import {config} from './config';
 export default function PagePreview() {
 	const iframeRef = useRef();
 
-	const {tokenValues = {}} = useContext(StyleBookContext);
+	const {tokensValues = {}} = useContext(StyleBookContext);
 
 	useEffect(() => {
 		if (iframeRef.current) {
-			Object.values(tokenValues).forEach(
+			Object.values(tokensValues).forEach(
 				({cssVariableMapping, value}) => {
 					iframeRef.current.contentDocument.documentElement.style.setProperty(
 						`--${cssVariableMapping}`,
@@ -33,7 +33,7 @@ export default function PagePreview() {
 				}
 			);
 		}
-	}, [tokenValues]);
+	}, [tokensValues]);
 
 	return (
 		<div className="style-book-editor__page-preview">

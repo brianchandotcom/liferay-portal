@@ -24,9 +24,9 @@ import SelectToken from './tokens/SelectToken';
 import TextToken from './tokens/TextToken';
 
 export default function TokenSet({name, tokens}) {
-	const {tokenValues = {}, setTokenValues} = useContext(StyleBookContext);
+	const {tokensValues = {}, setTokensValues} = useContext(StyleBookContext);
 
-	const updateTokenValues = (token, value) => {
+	const updateTokensValues = (token, value) => {
 		const {mappings = [], name} = token;
 
 		const cssVariableMapping = mappings.find(
@@ -34,8 +34,8 @@ export default function TokenSet({name, tokens}) {
 		);
 
 		if (value) {
-			setTokenValues({
-				...tokenValues,
+			setTokensValues({
+				...tokensValues,
 				[name]: {
 					cssVariableMapping: cssVariableMapping.value,
 					value,
@@ -53,10 +53,10 @@ export default function TokenSet({name, tokens}) {
 					<TokenComponent
 						key={token.name}
 						onValueSelect={(value) =>
-							updateTokenValues(token, value)
+							updateTokensValues(token, value)
 						}
 						token={token}
-						value={tokenValues[token.name]?.value}
+						value={tokensValues[token.name]?.value}
 					/>
 				);
 			})}

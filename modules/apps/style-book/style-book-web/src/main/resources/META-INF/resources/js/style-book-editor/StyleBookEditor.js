@@ -22,20 +22,20 @@ import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
-const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
+const StyleBookEditor = ({tokensValues: initialTokensValues}) => {
 	useCloseProductMenu();
 
-	const [tokenValues, setTokenValues] = useState(initialTokenValues);
+	const [tokensValues, setTokensValues] = useState(initialTokensValues);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
 
 	useEffect(() => {
-		if (tokenValues === initialTokenValues) {
+		if (tokensValues === initialTokensValues) {
 			return;
 		}
 
 		setDraftStatus(DRAFT_STATUS.saving);
 
-		saveDraft(tokenValues, config.styleBookEntryId)
+		saveDraft(tokensValues, config.styleBookEntryId)
 			.then(() => {
 				setDraftStatus(DRAFT_STATUS.draftSaved);
 			})
@@ -52,14 +52,14 @@ const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
 					type: 'danger',
 				});
 			});
-	}, [initialTokenValues, tokenValues]);
+	}, [initialTokensValues, tokensValues]);
 
 	return (
 		<StyleBookContextProvider
 			value={{
 				draftStatus,
-				setTokenValues,
-				tokenValues,
+				setTokensValues,
+				tokensValues,
 			}}
 		>
 			<div className="style-book-editor">
@@ -78,7 +78,7 @@ export default function ({
 	saveDraftURL,
 	styleBookEntryId,
 	tokenCategories = [],
-	tokenValues = {},
+	tokensValues = {},
 } = {}) {
 	initializeConfig({
 		namespace,
@@ -90,12 +90,12 @@ export default function ({
 		tokenCategories,
 	});
 
-	return <StyleBookEditor tokenValues={tokenValues} />;
+	return <StyleBookEditor tokensValues={tokensValues} />;
 }
 
-function saveDraft(tokenValues, styleBookEntryId) {
+function saveDraft(tokensValues, styleBookEntryId) {
 	const body = objectToFormData({
-		[`${config.namespace}tokenValues`]: JSON.stringify(tokenValues),
+		[`${config.namespace}tokensValues`]: JSON.stringify(tokensValues),
 		[`${config.namespace}styleBookEntryId`]: styleBookEntryId,
 	});
 

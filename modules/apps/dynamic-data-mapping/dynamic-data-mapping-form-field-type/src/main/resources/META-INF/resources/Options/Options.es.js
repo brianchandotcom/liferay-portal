@@ -63,22 +63,28 @@ const Option = React.forwardRef(
 	)
 );
 
-const getDefaultOption = (generateOptionValueUsingOptionLabel) => {
-	const defaultOption = {label: '', value: ''};
-
-	return {
-		...defaultOption,
-		value: getDefaultOptionValue(
-			generateOptionValueUsingOptionLabel,
-			defaultOption
-		),
-	};
+const getInitialOption = (generateOptionValueUsingOptionLabel) => {
+	return generateOptionValueUsingOptionLabel
+		? {
+				id: random(),
+				label: '',
+				value: '',
+		  }
+		: {
+				id: random(),
+				label: '',
+				value: getDefaultOptionValue(
+					generateOptionValueUsingOptionLabel,
+					''
+				),
+		  };
 };
 
 const refreshFields = (
 	defaultLanguageId,
 	editingLanguageId,
 	generateOptionValueUsingOptionLabel,
+	initialOption,
 	options
 ) => {
 	const refreshedFields = [
@@ -101,8 +107,7 @@ const refreshFields = (
 		})),
 		{
 			generateKeyword: generateOptionValueUsingOptionLabel,
-			id: random(),
-			...getDefaultOption(generateOptionValueUsingOptionLabel),
+			...initialOption,
 		},
 	].filter((field) => field && Object.keys(field).length > 0);
 
@@ -121,6 +126,10 @@ const Options = ({
 	onChange,
 	value = {},
 }) => {
+	const initialOptionRef = useRef(
+		getInitialOption(generateOptionValueUsingOptionLabel)
+	);
+
 	const [normalizedValue, setNormalizedValue] = useState(() => {
 		const formattedValue = {...value};
 
@@ -163,6 +172,7 @@ const Options = ({
 			defaultLanguageId,
 			editingLanguageId,
 			generateOptionValueUsingOptionLabel,
+			initialOptionRef.current,
 			options
 		);
 	});
@@ -178,6 +188,7 @@ const Options = ({
 				defaultLanguageId,
 				editingLanguageId,
 				generateOptionValueUsingOptionLabel,
+				initialOptionRef.current,
 				options
 			)
 		);
@@ -273,11 +284,16 @@ const Options = ({
 	const add = (fields, index, property, value) => {
 		fields[index][property] = value;
 
+		const initialOption = getInitialOption(
+			generateOptionValueUsingOptionLabel
+		);
+
 		fields.push({
 			generateKeyword: generateOptionValueUsingOptionLabel,
-			id: random(),
-			...getDefaultOption(generateOptionValueUsingOptionLabel),
+			...initialOption,
 		});
+
+		initialOptionRef.current = initialOption;
 
 		return [fields, index, property, value];
 	};

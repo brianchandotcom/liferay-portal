@@ -43,15 +43,16 @@ public class DocumentFolderResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(testGroup.getCompanyId());
-		serviceContext.setUserId(TestPropsValues.getUserId());
-
 		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, serviceContext);
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 
 		testGroup = _depotEntry.getGroup();
 	}

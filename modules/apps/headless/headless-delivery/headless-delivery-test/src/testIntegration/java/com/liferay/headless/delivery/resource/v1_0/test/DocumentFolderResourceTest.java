@@ -15,18 +15,12 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,18 +37,7 @@ public class DocumentFolderResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
-
-		testGroup = _depotEntry.getGroup();
+		testGroup = depotEntry.getGroup();
 	}
 
 	@Override
@@ -69,7 +52,7 @@ public class DocumentFolderResourceTest
 
 	@Override
 	protected Long testGetAssetLibraryDocumentFoldersPage_getAssetLibraryId() {
-		return _depotEntry.getDepotEntryId();
+		return depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -110,7 +93,5 @@ public class DocumentFolderResourceTest
 
 		return documentFolder.getId();
 	}
-
-	private DepotEntry _depotEntry;
 
 }

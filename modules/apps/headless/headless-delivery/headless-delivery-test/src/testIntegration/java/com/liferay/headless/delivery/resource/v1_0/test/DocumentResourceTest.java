@@ -15,8 +15,6 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -28,16 +26,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestDataConstants;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -55,18 +49,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
-
-		testGroup = _depotEntry.getGroup();
+		testGroup = depotEntry.getGroup();
 	}
 
 	@Override
@@ -140,7 +123,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Override
 	protected Long testGetAssetLibraryDocumentsPage_getAssetLibraryId() {
-		return _depotEntry.getDepotEntryId();
+		return depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -176,7 +159,5 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		return httpResponse.getContent();
 	}
-
-	private DepotEntry _depotEntry;
 
 }

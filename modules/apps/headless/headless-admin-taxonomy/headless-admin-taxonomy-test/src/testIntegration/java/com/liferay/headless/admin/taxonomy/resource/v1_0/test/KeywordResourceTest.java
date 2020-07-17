@@ -18,16 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -42,17 +34,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
-
-		testGroup = _depotEntry.getGroup();
+		testGroup = depotEntry.getGroup();
 	}
 
 	@Override
@@ -71,7 +53,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	protected Long testGetAssetLibraryKeywordsPage_getAssetLibraryId() {
-		return _depotEntry.getDepotEntryId();
+		return depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -88,7 +70,5 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		return keyword;
 	}
-
-	private DepotEntry _depotEntry;
 
 }

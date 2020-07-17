@@ -613,9 +613,8 @@ definition {
 			structureName = "WC Structure1 Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure1 Name");
 

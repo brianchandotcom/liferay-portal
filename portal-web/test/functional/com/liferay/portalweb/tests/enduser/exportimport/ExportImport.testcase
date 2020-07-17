@@ -661,9 +661,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+			fieldType = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -970,9 +969,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		DynamicDataMapping.addFieldNested(
 			field = "Documents and Media",
@@ -1319,9 +1317,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent");
+			fieldType = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1431,9 +1428,8 @@ definition {
 			structureName = "Exported Structure");
 
 		DataEngine.addField(
-			field = "Separator",
 			fieldFieldLabel = "SeparatorField",
-			fieldName = "Separator");
+			fieldType = "Separator");
 
 		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "SeparatorField");
 
@@ -1826,9 +1822,8 @@ definition {
 			structureName = "Structure Name A");
 
 		DataEngine.addField(
-			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+			fieldType = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "Structure Name A");
 
@@ -1851,9 +1846,8 @@ definition {
 			structureName = "Structure Name B");
 
 		DataEngine.addField(
-			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent");
+			fieldType = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Structure Name B");
 

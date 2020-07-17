@@ -44,9 +44,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -100,9 +99,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Separator",
 			fieldFieldLabel = "Separator",
-			fieldName = "Separator");
+			fieldType = "Separator");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -146,9 +144,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		DynamicDataMapping.addFieldNested(
 			field = "Integer",
@@ -320,14 +317,12 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent");
+			fieldType = "Web Content");
 
 		DataEngine.addField(
-			field = "Geolocation",
 			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation");
+			fieldType = "Geolocation");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1252,9 +1247,8 @@ definition {
 			structureName = "Global WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1302,9 +1296,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Color",
 			fieldFieldLabel = "Color",
-			fieldName = "Color");
+			fieldType = "Color");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1359,9 +1352,8 @@ definition {
 			structureName = "Global Structure");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(
 			addRoleViewPermissions = "Power User",
@@ -1441,9 +1433,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			fieldType = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1506,9 +1497,8 @@ definition {
 				structureName = "WC Structure Name");
 
 			DataEngine.addField(
-				field = "Text",
 				fieldFieldLabel = "Text",
-				fieldName = "Text");
+				fieldType = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -1733,9 +1723,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1777,9 +1766,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1841,9 +1829,8 @@ definition {
 			structureName = "Global WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1955,9 +1942,8 @@ definition {
 			structureName = "Global WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -2024,9 +2010,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2100,9 +2085,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		DynamicDataMapping.editFieldPredefinedValue(
 			field = "Text",
@@ -2189,9 +2173,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "HTML",
 			fieldFieldLabel = "HTML",
-			fieldName = "HTML",
+			fieldType = "HTML",
 			structureFieldName = "HTML");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -2481,9 +2464,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2505,14 +2487,12 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		DataEngine.addField(
-			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "image");
+			fieldType = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

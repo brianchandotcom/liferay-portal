@@ -143,7 +143,6 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text",
 			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -655,9 +654,8 @@ definition {
 				structureName = "WC Structure Name ${n}");
 
 			DataEngine.addField(
-				field = "HTML",
 				fieldFieldLabel = "HTML",
-				fieldName = "HTML");
+				fieldType = "HTML");
 
 			WebContentStructures.saveCP(structureName = "${structureName}");
 

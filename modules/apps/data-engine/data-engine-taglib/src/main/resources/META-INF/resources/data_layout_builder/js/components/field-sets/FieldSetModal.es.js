@@ -15,18 +15,16 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import App from '../../App.es';
 import AppContext from '../../AppContext.es';
-import {UPDATE_EDITING_LANGUAGE_ID} from '../../actions.es';
 import {
 	containsField,
 	isDataLayoutEmpty,
 } from '../../utils/dataLayoutVisitor.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
-import TranslationManager from '../translation-manager/TranslationManager.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 import useSaveFieldSet from './actions/useSaveFieldSet.es';
@@ -131,16 +129,6 @@ const ModalContent = ({
 		};
 	}, [dataLayoutBuilder]);
 
-	/**
-	 * This functions is necessary to handle with ddm-container,
-	 * just a trick to simply show/hide container. Actually the z-index of container
-	 * is biggest than the Modal and DropDown, that's why is necessary to handle
-	 * with Javascript interaction
-	 * @param {Boolean} active DropDown Visible of TranslationManager
-	 */
-
-	const onActiveChange = (active) => changeZIndex(active ? null : '1050');
-
 	const createFieldSet = useCreateFieldSet({
 		availableLanguageIds,
 		childrenContext,
@@ -152,15 +140,6 @@ const ModalContent = ({
 		fieldSet,
 	});
 	const propagateFieldSet = usePropagateFieldSet();
-	const onEditingLanguageIdChange = useCallback(
-		(editingLanguageId) => {
-			childrenContext.dispatch({
-				payload: editingLanguageId,
-				type: UPDATE_EDITING_LANGUAGE_ID,
-			});
-		},
-		[childrenContext]
-	);
 
 	const isDataLayoutChanged = () => {
 		const fieldNames = fieldSet.dataDefinitionFields.map(({name}) => name);
@@ -212,13 +191,6 @@ const ModalContent = ({
 			</ClayModal.Header>
 			<ClayModal.Header withTitle={false}>
 				<ClayInput.Group className="pl-4 pr-4">
-					<TranslationManager
-						defaultLanguageId={defaultLanguageId}
-						editingLanguageId={editingLanguageId}
-						onActiveChange={onActiveChange}
-						onEditingLanguageIdChange={onEditingLanguageIdChange}
-						translatedLanguageIds={name}
-					/>
 					<ClayInput.GroupItem>
 						<ClayInput
 							aria-label={Liferay.Language.get(

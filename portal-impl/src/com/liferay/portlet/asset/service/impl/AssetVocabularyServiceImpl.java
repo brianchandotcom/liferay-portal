@@ -380,6 +380,19 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public AssetVocabulary updateVocabulary(
+			long vocabularyId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings, boolean system)
+		throws PortalException {
+
+		AssetVocabularyPermission.check(
+			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
+
+		return assetVocabularyLocalService.updateVocabulary(
+			vocabularyId, titleMap, descriptionMap, settings, system);
+	}
+
+	@Override
+	public AssetVocabulary updateVocabulary(
 			long vocabularyId, String title, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String settings,
 			ServiceContext serviceContext)

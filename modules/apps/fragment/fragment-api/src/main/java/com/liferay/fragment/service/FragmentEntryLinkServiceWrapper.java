@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -41,7 +42,7 @@ public class FragmentEntryLinkServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
+	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long segmentsExperienceId, long classNameId,
 			long classPK, String css, String html, String js,
@@ -58,7 +59,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
+	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long segmentsExperienceId, long plid,
 			String css, String html, String js, String configuration,
@@ -74,8 +75,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink deleteFragmentEntryLink(
-			long fragmentEntryLinkId)
+	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkService.deleteFragmentEntryLink(
@@ -93,7 +93,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -102,7 +102,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -75,11 +75,11 @@ public class FragmentEntryLinkModelImpl
 	public static final String TABLE_NAME = "FragmentEntryLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"fragmentEntryLinkId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"fragmentEntryLinkId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"originalFragmentEntryLinkId", Types.BIGINT},
 		{"fragmentEntryId", Types.BIGINT},
 		{"segmentsExperienceId", Types.BIGINT}, {"classNameId", Types.BIGINT},
@@ -96,6 +96,7 @@ public class FragmentEntryLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fragmentEntryLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -123,7 +124,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -187,6 +188,7 @@ public class FragmentEntryLinkModelImpl
 		FragmentEntryLink model = new FragmentEntryLinkImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setFragmentEntryLinkId(soapModel.getFragmentEntryLinkId());
 		model.setGroupId(soapModel.getGroupId());
@@ -372,6 +374,12 @@ public class FragmentEntryLinkModelImpl
 			"mvccVersion",
 			(BiConsumer<FragmentEntryLink, Long>)
 				FragmentEntryLink::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", FragmentEntryLink::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<FragmentEntryLink, Long>)
+				FragmentEntryLink::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", FragmentEntryLink::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -517,6 +525,17 @@ public class FragmentEntryLinkModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1023,6 +1042,7 @@ public class FragmentEntryLinkModelImpl
 			new FragmentEntryLinkImpl();
 
 		fragmentEntryLinkImpl.setMvccVersion(getMvccVersion());
+		fragmentEntryLinkImpl.setCtCollectionId(getCtCollectionId());
 		fragmentEntryLinkImpl.setUuid(getUuid());
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(getFragmentEntryLinkId());
 		fragmentEntryLinkImpl.setGroupId(getGroupId());
@@ -1205,6 +1225,8 @@ public class FragmentEntryLinkModelImpl
 			new FragmentEntryLinkCacheModel();
 
 		fragmentEntryLinkCacheModel.mvccVersion = getMvccVersion();
+
+		fragmentEntryLinkCacheModel.ctCollectionId = getCtCollectionId();
 
 		fragmentEntryLinkCacheModel.uuid = getUuid();
 
@@ -1415,6 +1437,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fragmentEntryLinkId;

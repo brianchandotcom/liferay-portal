@@ -78,10 +78,12 @@ public class FragmentCompositionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fragmentCompositionId=");
@@ -131,6 +133,7 @@ public class FragmentCompositionCacheModel
 			new FragmentCompositionImpl();
 
 		fragmentCompositionImpl.setMvccVersion(mvccVersion);
+		fragmentCompositionImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			fragmentCompositionImpl.setUuid("");
@@ -233,6 +236,8 @@ public class FragmentCompositionCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fragmentCompositionId = objectInput.readLong();
@@ -265,6 +270,8 @@ public class FragmentCompositionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -339,6 +346,7 @@ public class FragmentCompositionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long fragmentCompositionId;
 	public long groupId;

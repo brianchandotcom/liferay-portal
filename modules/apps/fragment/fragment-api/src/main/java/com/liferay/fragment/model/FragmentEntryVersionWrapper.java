@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,8 @@ public class FragmentEntryVersionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("fragmentEntryVersionId", getFragmentEntryVersionId());
 		attributes.put("version", getVersion());
 		attributes.put("uuid", getUuid());
@@ -76,6 +80,18 @@ public class FragmentEntryVersionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
+		}
+
 		Long fragmentEntryVersionId = (Long)attributes.get(
 			"fragmentEntryVersionId");
 
@@ -286,6 +302,16 @@ public class FragmentEntryVersionWrapper
 	}
 
 	/**
+	 * Returns the ct collection ID of this fragment entry version.
+	 *
+	 * @return the ct collection ID of this fragment entry version
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
+	}
+
+	/**
 	 * Returns the fragment collection ID of this fragment entry version.
 	 *
 	 * @return the fragment collection ID of this fragment entry version
@@ -373,6 +399,16 @@ public class FragmentEntryVersionWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this fragment entry version.
+	 *
+	 * @return the mvcc version of this fragment entry version
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -676,6 +712,16 @@ public class FragmentEntryVersionWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this fragment entry version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this fragment entry version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the fragment collection ID of this fragment entry version.
 	 *
 	 * @param fragmentCollectionId the fragment collection ID of this fragment entry version
@@ -763,6 +809,16 @@ public class FragmentEntryVersionWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this fragment entry version.
+	 *
+	 * @param mvccVersion the mvcc version of this fragment entry version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -913,6 +969,20 @@ public class FragmentEntryVersionWrapper
 	@Override
 	public void setVersion(int version) {
 		model.setVersion(version);
+	}
+
+	@Override
+	public Map<String, Function<FragmentEntryVersion, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<FragmentEntryVersion, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

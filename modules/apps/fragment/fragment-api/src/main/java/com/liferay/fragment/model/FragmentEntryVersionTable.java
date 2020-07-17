@@ -35,6 +35,12 @@ public class FragmentEntryVersionTable
 	public static final FragmentEntryVersionTable INSTANCE =
 		new FragmentEntryVersionTable();
 
+	public final Column<FragmentEntryVersionTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<FragmentEntryVersionTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FragmentEntryVersionTable, Long>
 		fragmentEntryVersionId = createColumn(
 			"fragmentEntryVersionId", Long.class, Types.BIGINT,

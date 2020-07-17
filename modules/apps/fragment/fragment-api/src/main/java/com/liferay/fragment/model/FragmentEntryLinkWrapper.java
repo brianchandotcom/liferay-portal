@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class FragmentEntryLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("fragmentEntryLinkId", getFragmentEntryLinkId());
 		attributes.put("groupId", getGroupId());
@@ -79,6 +82,12 @@ public class FragmentEntryLinkWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -296,6 +305,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public String getCss() {
 		return model.getCss();
+	}
+
+	/**
+	 * Returns the ct collection ID of this fragment entry link.
+	 *
+	 * @return the ct collection ID of this fragment entry link
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -598,6 +617,16 @@ public class FragmentEntryLinkWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this fragment entry link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this fragment entry link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the editable values of this fragment entry link.
 	 *
 	 * @param editableValues the editable values of this fragment entry link
@@ -807,6 +836,20 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<FragmentEntryLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<FragmentEntryLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

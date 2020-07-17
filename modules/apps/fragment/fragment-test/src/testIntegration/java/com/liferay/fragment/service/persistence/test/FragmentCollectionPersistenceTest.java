@@ -127,6 +127,8 @@ public class FragmentCollectionPersistenceTest {
 
 		newFragmentCollection.setMvccVersion(RandomTestUtil.nextLong());
 
+		newFragmentCollection.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newFragmentCollection.setUuid(RandomTestUtil.randomString());
 
 		newFragmentCollection.setGroupId(RandomTestUtil.nextLong());
@@ -159,6 +161,9 @@ public class FragmentCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentCollection.getMvccVersion(),
 			newFragmentCollection.getMvccVersion());
+		Assert.assertEquals(
+			existingFragmentCollection.getCtCollectionId(),
+			newFragmentCollection.getCtCollectionId());
 		Assert.assertEquals(
 			existingFragmentCollection.getUuid(),
 			newFragmentCollection.getUuid());
@@ -289,11 +294,11 @@ public class FragmentCollectionPersistenceTest {
 
 	protected OrderByComparator<FragmentCollection> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"FragmentCollection", "mvccVersion", true, "uuid", true,
-			"fragmentCollectionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fragmentCollectionKey", true, "name", true,
-			"description", true, "lastPublishDate", true);
+			"FragmentCollection", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "fragmentCollectionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "fragmentCollectionKey", true, "name",
+			true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -560,6 +565,8 @@ public class FragmentCollectionPersistenceTest {
 		FragmentCollection fragmentCollection = _persistence.create(pk);
 
 		fragmentCollection.setMvccVersion(RandomTestUtil.nextLong());
+
+		fragmentCollection.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentCollection.setUuid(RandomTestUtil.randomString());
 

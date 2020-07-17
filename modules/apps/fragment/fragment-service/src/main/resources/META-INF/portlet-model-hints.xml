@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.fragment.model.FragmentCollection">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="groupId" type="long" />
@@ -22,6 +23,7 @@
 	</model>
 	<model name="com.liferay.fragment.model.FragmentComposition">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentCompositionId" type="long" />
 		<field name="groupId" type="long" />
@@ -46,6 +48,7 @@
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="headId" type="long" />
 		<field name="fragmentEntryId" type="long" />
@@ -84,6 +87,7 @@
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentEntryLinkId" type="long" />
 		<field name="groupId" type="long" />
@@ -122,6 +126,8 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryVersion">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="fragmentEntryVersionId" type="long" />
 		<field name="version" type="int" />
 		<field name="uuid" type="String" />

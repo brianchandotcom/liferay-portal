@@ -124,6 +124,10 @@ public class FragmentEntryVersionPersistenceTest {
 
 		FragmentEntryVersion newFragmentEntryVersion = _persistence.create(pk);
 
+		newFragmentEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		newFragmentEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newFragmentEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		newFragmentEntryVersion.setUuid(RandomTestUtil.randomString());
@@ -185,6 +189,12 @@ public class FragmentEntryVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newFragmentEntryVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingFragmentEntryVersion.getMvccVersion(),
+			newFragmentEntryVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingFragmentEntryVersion.getCtCollectionId(),
+			newFragmentEntryVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getFragmentEntryVersionId(),
 			newFragmentEntryVersion.getFragmentEntryVersionId());
@@ -533,10 +543,11 @@ public class FragmentEntryVersionPersistenceTest {
 
 	protected OrderByComparator<FragmentEntryVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"FragmentEntryVersion", "fragmentEntryVersionId", true, "version",
-			true, "uuid", true, "fragmentEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "fragmentCollectionId", true,
+			"FragmentEntryVersion", "mvccVersion", true, "ctCollectionId", true,
+			"fragmentEntryVersionId", true, "version", true, "uuid", true,
+			"fragmentEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "cacheable", true,
 			"previewFileEntryId", true, "readOnly", true, "type", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
@@ -811,6 +822,10 @@ public class FragmentEntryVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		FragmentEntryVersion fragmentEntryVersion = _persistence.create(pk);
+
+		fragmentEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		fragmentEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentEntryVersion.setVersion(RandomTestUtil.nextInt());
 

@@ -421,7 +421,7 @@ definition {
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-			Click(locator1 = "Button#BACK");
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 		}
 	}
 
@@ -532,7 +532,7 @@ definition {
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-			Click(locator1 = "Button#BACK");
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 		}
 
 		AssertElementNotPresent(

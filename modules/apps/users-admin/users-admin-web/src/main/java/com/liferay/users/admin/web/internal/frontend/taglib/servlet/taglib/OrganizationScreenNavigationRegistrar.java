@@ -42,19 +42,6 @@ public class OrganizationScreenNavigationRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		registerScreenNavigationCategories();
-
-		registerScreenNavigationEntries();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistrations.forEach(ServiceRegistration::unregister);
-
-		_serviceRegistrations.clear();
-	}
-
-	protected void registerScreenNavigationCategories() {
 		_registerService(
 			ScreenNavigationCategory.class, 10,
 			new OrganizationScreenNavigationCategory(
@@ -64,9 +51,7 @@ public class OrganizationScreenNavigationRegistrar {
 			ScreenNavigationCategory.class, 20,
 			new OrganizationScreenNavigationCategory(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT));
-	}
 
-	protected void registerScreenNavigationEntries() {
 		_registerService(
 			ScreenNavigationEntry.class, 10,
 			_getBuilder(
@@ -158,6 +143,13 @@ public class OrganizationScreenNavigationRegistrar {
 			).setShowTitle(
 				false
 			).build());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+
+		_serviceRegistrations.clear();
 	}
 
 	private OrganizationScreenNavigationEntry.Builder _getBuilder() {

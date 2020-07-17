@@ -1605,6 +1605,18 @@ definition {
 				locator1 = "TextInput#DDM",
 				value1 = "${webContentDocumentsAndMedia}");
 		}
+
+		if (isSet(webContentDescription)) {
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Summary",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
+				value1 = "${webContentDescription}");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
 	}
 
 	macro viewCPWithoutContentField {
@@ -2053,6 +2065,29 @@ definition {
 				locator1 = "WC#ENTRY_LIST_TITLE",
 				value1 = "${webContentTitle}");
 		}
+	}
+
+	macro viewTranslationStatusWithWorkflowCP {
+		WebContentNavigator.gotoViewStatus(
+			translationStatus = "true",
+			webContentStatus = "PENDING",
+			webContentTitle = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "${webContentContent}");
+
+		SelectFrameTop();
 	}
 
 	macro viewUserEditCP {

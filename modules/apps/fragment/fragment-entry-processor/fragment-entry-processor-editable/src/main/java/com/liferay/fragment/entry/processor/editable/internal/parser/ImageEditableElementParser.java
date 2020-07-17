@@ -164,6 +164,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 			}
 		}
 
+		value = value.trim();
+
 		if (Validator.isNotNull(value)) {
 			replaceableElement.attr("src", _html.unescape(value));
 		}

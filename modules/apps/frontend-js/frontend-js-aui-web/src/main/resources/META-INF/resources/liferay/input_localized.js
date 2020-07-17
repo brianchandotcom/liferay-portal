@@ -106,7 +106,9 @@ AUI.add(
 
 						var itemsError = instance.get(STR_ITEMS_ERROR);
 
-						var itemIndex = instance.get('defaultLanguageId');
+						var itemIndex =
+							instance.get('selectedLanguageId') ||
+							instance.get('defaultLanguageId');
 
 						if (itemsError.length) {
 							itemIndex = itemsError[0];
@@ -114,6 +116,10 @@ AUI.add(
 
 						return instance.get(STR_ITEMS).indexOf(itemIndex);
 					},
+				},
+
+				selectedLanguageId: {
+					validator: Lang.isString,
 				},
 
 				translatedLanguages: {
@@ -472,7 +478,9 @@ AUI.add(
 					var items = instance.get(STR_ITEMS);
 					var selected = instance.get(STR_SELECTED);
 
-					return items[selected];
+					return (
+						items[selected] || instance.get('selectedLanguageId')
+					);
 				},
 
 				getValue(languageId) {

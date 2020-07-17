@@ -7125,7 +7125,13 @@ public class ServiceBuilder {
 		}
 
 		versionEntityElement.addAttribute("local-service", "false");
-		versionEntityElement.addAttribute("mvcc-enabled", "false");
+
+		if (entity.isChangeTrackingEnabled()) {
+			versionEntityElement.addAttribute("mvcc-enabled", "true");
+		}
+		else {
+			versionEntityElement.addAttribute("mvcc-enabled", "false");
+		}
 
 		versionEntityElement.addAttribute("name", entity.getName() + "Version");
 
@@ -7177,7 +7183,10 @@ public class ServiceBuilder {
 		for (Element columnElement : columnElements) {
 			String name = columnElement.attributeValue("name");
 
-			if (!name.equals("mvccVersion") && !name.equals("headId")) {
+			if (!name.equals("mvccVersion") && !name.equals("headId") &&
+				(!name.equals("ctCollectionId") ||
+				 !entity.isChangeTrackingEnabled())) {
+
 				versionEntityColumnElement = versionEntityElement.addElement(
 					"column");
 

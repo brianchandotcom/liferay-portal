@@ -20,8 +20,11 @@
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
-<aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="portlet-users-admin-edit-organization" method="post" name="fm">
+<portlet:actionURL name="<%= organizationScreenNavigationDisplayContext.getActionName() %>" var="editOrganizationActionURL" />
+
+<aui:form action="<%= editOrganizationActionURL %>" cssClass="portlet-users-admin-edit-organization" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="organizationId" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getOrganizationId() %>" />
 
 	<clay:sheet>
 		<c:if test="<%= organizationScreenNavigationDisplayContext.isShowTitle() %>">

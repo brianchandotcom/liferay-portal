@@ -19,10 +19,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.ui.OrganizationScreenNavigationCategory;
 
@@ -133,9 +131,8 @@ public class OrganizationScreenNavigationRegistrar {
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _organizationService, _portal, _portletURLFactory,
-			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
-			showTitle, isVisibleBiFunction);
+			_jspRenderer, _organizationService, entryKey, categoryKey, jspPath,
+			mvcActionCommandName, showControls, showTitle, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -226,12 +223,6 @@ public class OrganizationScreenNavigationRegistrar {
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
 
 	private final List<ServiceRegistration<ScreenNavigationCategory>>
 		_screenNavigationCategoryServiceRegistrations = new ArrayList<>();

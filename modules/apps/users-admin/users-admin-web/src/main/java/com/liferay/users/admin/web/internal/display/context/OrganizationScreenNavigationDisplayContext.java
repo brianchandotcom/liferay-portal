@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.Organization;
  */
 public class OrganizationScreenNavigationDisplayContext {
 
-	public String getBackURL() {
-		return _backURL;
+	public String getActionName() {
+		return _actionName;
 	}
 
-	public String getEditOrganizationActionURL() {
-		return _editOrganizationActionURL;
+	public String getBackURL() {
+		return _backURL;
 	}
 
 	public String getFormLabel() {
@@ -57,12 +57,12 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _showTitle;
 	}
 
-	public void setBackURL(String backURL) {
-		_backURL = backURL;
+	public void setActionName(String actionName) {
+		_actionName = actionName;
 	}
 
-	public void setEditOrganizationActionURL(String editOrganizationActionURL) {
-		_editOrganizationActionURL = editOrganizationActionURL;
+	public void setBackURL(String backURL) {
+		_backURL = backURL;
 	}
 
 	public void setFormLabel(String formLabel) {
@@ -89,8 +89,8 @@ public class OrganizationScreenNavigationDisplayContext {
 		_showTitle = showTitle;
 	}
 
+	private String _actionName;
 	private String _backURL;
-	private String _editOrganizationActionURL;
 	private String _formLabel;
 	private String _jspPath;
 	private Organization _organization;

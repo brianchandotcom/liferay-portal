@@ -46,14 +46,24 @@ AssetCategoriesSelectorTag.propTypes = {
 	id: PropTypes.string,
 	initialVocabularies: PropTypes.array,
 	inputName: PropTypes.string,
+	learnHowURL: PropTypes.string,
 	portletURL: PropTypes.string,
 };
 
 export default function (props) {
+	const description = Liferay.Util.sub(
+		Liferay.Language.get('learn-how-to-tailor-categories-to-your-needs'),
+		[props.learnHowURL]
+	);
+
 	return (
-		<AssetCategoriesSelectorTag
-			{...props}
-			initialVocabularies={props.vocabularies}
-		/>
+		<>
+			{props.learnHowURL && <p>{description}</p>}
+
+			<AssetCategoriesSelectorTag
+				{...props}
+				initialVocabularies={props.vocabularies}
+			/>
+		</>
 	);
 }

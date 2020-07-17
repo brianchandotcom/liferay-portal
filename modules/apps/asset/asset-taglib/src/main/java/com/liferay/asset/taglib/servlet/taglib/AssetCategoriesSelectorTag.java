@@ -14,6 +14,7 @@
 
 package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -25,6 +26,7 @@ import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -366,6 +368,23 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					"id", _getNamespace() + _getId() + "assetCategoriesSelector"
 				).put(
 					"inputName", _getInputName()
+				).put(
+					"learnHowURL",
+					() -> {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						AssetCategoriesCompanyConfiguration
+							accountEntryEmailDomainsConfiguration =
+								ConfigurationProviderUtil.
+									getCompanyConfiguration(
+										AssetCategoriesCompanyConfiguration.
+											class,
+										themeDisplay.getCompanyId());
+
+						return accountEntryEmailDomainsConfiguration.linkURL();
+					}
 				).put(
 					"portletURL", getPortletURL().toString()
 				).put(

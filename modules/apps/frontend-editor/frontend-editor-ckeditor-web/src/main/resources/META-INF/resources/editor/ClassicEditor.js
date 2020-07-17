@@ -32,7 +32,6 @@ const getToolbarSet = (toolbarSet) => {
 
 const ClassicEditor = ({
 	contents = '',
-	cssClass,
 	editorConfig,
 	initialToolbarSet,
 	name,
@@ -100,15 +99,13 @@ const ClassicEditor = ({
 	useEventListener('resize', onResize, true, window);
 
 	return (
-		<div className={cssClass} id={`${name}Container`}>
+		<div id={`${name}Container`}>
 			<label className="control-label" htmlFor={name}>
 				{title}
 			</label>
 			<Editor
 				className="lfr-editable"
 				config={getConfig()}
-				data={contents}
-				key={toolbarSet}
 				onBeforeLoad={(CKEDITOR) => {
 					CKEDITOR.disableAutoInline = true;
 					CKEDITOR.dtd.$removeEmpty.i = 0;
@@ -116,6 +113,10 @@ const ClassicEditor = ({
 
 					CKEDITOR.on('instanceCreated', ({editor}) => {
 						editor.name = name;
+
+						editor.on('instanceReady', () => {
+							editor.setData(contents);
+						});
 					});
 				}}
 				onChange={onChangeCallback}
@@ -127,7 +128,6 @@ const ClassicEditor = ({
 
 ClassicEditor.propTypes = {
 	contents: PropTypes.string,
-	cssClass: PropTypes.string,
 	editorConfig: PropTypes.object,
 	initialToolbarSet: PropTypes.string,
 	name: PropTypes.string,

@@ -30,10 +30,12 @@ import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormat
 import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailureMessageGenerator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import org.json.JSONObject;
@@ -96,6 +103,24 @@ public class AxisBuild extends BaseBuild {
 		sb.append(getBuildNumber());
 
 		return sb.toString();
+	}
+
+	@Override
+	public URL getArtifactURL() {
+		BatchBuild batchBuild = getParentBatchBuild();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(batchBuild.getArtifactURL());
+		sb.append("/");
+		sb.append(getAxisNumber());
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
 	}
 
 	public String getAxisNumber() {
@@ -445,6 +470,61 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		return upstreamFailureTestResults;
+	}
+
+	public List<String> getWarningMessages() {
+		List<String> warningMessages = new ArrayList<>();
+
+		URL poshiWarningsURL;
+
+		try {
+			poshiWarningsURL = new URL(
+				getArtifactURL() + "/poshi-warnings.xml.gz");
+		}
+		catch (IOException ioException) {
+			return warningMessages;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		try (InputStream inputStream = poshiWarningsURL.openStream();
+			GZIPInputStream gzipInputStream = new GZIPInputStream(
+				inputStream)) {
+
+			int i;
+
+			while ((i = gzipInputStream.read()) > 0) {
+				sb.append((char)i);
+			}
+		}
+		catch (IOException ioException) {
+			return warningMessages;
+		}
+
+		try {
+			Document document = Dom4JUtil.parse(sb.toString());
+
+			Element rootElement = document.getRootElement();
+
+			for (Element valueElement : rootElement.elements("value")) {
+				String liferayErrorText = "LIFERAY_ERROR: ";
+
+				String valueElementText = StringEscapeUtils.escapeHtml(
+					valueElement.getText());
+
+				if (valueElementText.startsWith(liferayErrorText)) {
+					valueElementText = valueElementText.substring(
+						liferayErrorText.length());
+				}
+
+				warningMessages.add(valueElementText);
+			}
+		}
+		catch (DocumentException documentException) {
+			throw new RuntimeException(documentException);
+		}
+
+		return warningMessages;
 	}
 
 	@Override

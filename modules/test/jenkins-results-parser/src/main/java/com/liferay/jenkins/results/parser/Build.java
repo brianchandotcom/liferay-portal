@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -34,6 +36,8 @@ public interface Build {
 	public String getAppServer();
 
 	public String getArchivePath();
+
+	public URL getArtifactURL();
 
 	public long getAverageDelayTime();
 

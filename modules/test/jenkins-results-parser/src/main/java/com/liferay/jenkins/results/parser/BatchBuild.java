@@ -16,6 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -49,6 +52,24 @@ public class BatchBuild extends BaseBuild {
 	@Override
 	public String getAppServer() {
 		return getSpiraPropertyValue("app.server");
+	}
+
+	@Override
+	public URL getArtifactURL() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(topLevelBuild.getArtifactURL());
+		sb.append("/");
+		sb.append(getParameterValue("JOB_VARIANT"));
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
 	}
 
 	public String getBatchName() {

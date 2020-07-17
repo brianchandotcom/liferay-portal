@@ -19,6 +19,8 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailu
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -46,6 +48,11 @@ public class SourceBuild extends BaseBuild {
 
 	@Override
 	public void findDownstreamBuilds() {
+	}
+
+	@Override
+	public URL getArtifactURL() {
+		return null;
 	}
 
 	@Override

@@ -20,6 +20,8 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFa
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +42,11 @@ public class ValidationBuild extends BaseBuild {
 	@Override
 	public void addTimelineData(BaseBuild.TimelineData timelineData) {
 		timelineData.addTimelineData(this);
+	}
+
+	@Override
+	public URL getArtifactURL() {
+		return null;
 	}
 
 	@Override

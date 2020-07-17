@@ -33,6 +33,9 @@ import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailur
 import java.io.IOException;
 import java.io.StringWriter;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -149,6 +152,43 @@ public abstract class TopLevelBuild extends BaseBuild {
 			}
 
 			return acceptanceUpstreamJobURL;
+		}
+
+		return null;
+	}
+
+	@Override
+	public URL getArtifactURL() {
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			URL buildBaseArtifactURL = new URL(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.base.artifact.url"));
+
+			sb.append(buildBaseArtifactURL);
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append("/");
+		sb.append(jenkinsMaster.getName());
+		sb.append("/");
+		sb.append(topLevelBuild.getStartTime());
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
 		}
 
 		return null;

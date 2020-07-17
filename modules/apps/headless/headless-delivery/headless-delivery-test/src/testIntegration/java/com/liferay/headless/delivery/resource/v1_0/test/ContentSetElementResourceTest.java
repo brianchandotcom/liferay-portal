@@ -20,21 +20,14 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentSetElement;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
-
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -52,26 +45,17 @@ public class ContentSetElementResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_serviceContext = _getServiceContext(testGroup.getGroupId());
+		_serviceContext = _getServiceContext();
 
 		_assetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			nameMap, nameMap, _serviceContext);
-
-		ServiceContext depotServiceContext = _getServiceContext(
-			_depotEntry.getGroupId());
-
 		_depotAssetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
+			TestPropsValues.getUserId(), depotEntry.getGroupId(),
 			RandomTestUtil.randomString(),
-			AssetListEntryTypeConstants.TYPE_DYNAMIC, depotServiceContext);
+			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 	}
 
 	@Rule
@@ -92,7 +76,7 @@ public class ContentSetElementResourceTest
 	protected Long
 		testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId() {
 
-		return _depotEntry.getDepotEntryId();
+		return depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -117,7 +101,7 @@ public class ContentSetElementResourceTest
 	protected Long
 		testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId() {
 
-		return _depotEntry.getDepotEntryId();
+		return depotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -177,13 +161,13 @@ public class ContentSetElementResourceTest
 			RandomTestUtil.randomString(), _serviceContext);
 	}
 
-	private ServiceContext _getServiceContext(long groupId) throws Exception {
+	private ServiceContext _getServiceContext() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAttribute(
 			WorkflowConstants.CONTEXT_USER_ID, TestPropsValues.getUserId());
 		serviceContext.setCompanyId(testGroup.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setScopeGroupId(testGroup.getGroupId());
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		return serviceContext;
@@ -211,7 +195,6 @@ public class ContentSetElementResourceTest
 
 	private AssetListEntry _assetListEntry;
 	private AssetListEntry _depotAssetListEntry;
-	private DepotEntry _depotEntry;
 	private ServiceContext _serviceContext;
 
 }

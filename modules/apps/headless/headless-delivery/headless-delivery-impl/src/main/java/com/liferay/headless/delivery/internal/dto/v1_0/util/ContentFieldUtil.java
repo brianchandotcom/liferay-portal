@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -141,60 +140,62 @@ public class ContentFieldUtil {
 			String valueString)
 		throws Exception {
 
-		if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
-			return new ContentFieldValue() {
-				{
-					data = _toDateString(locale, valueString);
+		try {
+			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+				return new ContentFieldValue() {
+					{
+						data = _toDateString(locale, valueString);
+					}
+				};
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.DOCUMENT_LIBRARY,
+						ddmFormField.getType())) {
+
+				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
+
+				if (fileEntry == null) {
+					return new ContentFieldValue();
 				}
-			};
-		}
-		else if (Objects.equals(
-					DDMFormFieldType.DOCUMENT_LIBRARY,
-					ddmFormField.getType())) {
 
-			FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
-
-			if (fileEntry == null) {
-				return new ContentFieldValue();
+				return new ContentFieldValue() {
+					{
+						document = ContentDocumentUtil.toContentDocument(
+							dlURLHelper, fileEntry);
+					}
+				};
 			}
 
-			return new ContentFieldValue() {
-				{
-					document = ContentDocumentUtil.toContentDocument(
-						dlURLHelper, fileEntry);
-				}
-			};
-		}
+			if (Objects.equals(
+					DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
-		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			return new ContentFieldValue() {
-				{
-					geo = new Geo() {
-						{
-							latitude = jsonObject.getDouble("latitude");
-							longitude = jsonObject.getDouble("longitude");
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(DDMFormFieldType.IMAGE, ddmFormField.getType())) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long fileEntryId = jsonObject.getLong("fileEntryId");
-
-			if (fileEntryId == 0) {
-				return new ContentFieldValue();
+				return new ContentFieldValue() {
+					{
+						geo = new Geo() {
+							{
+								latitude = jsonObject.getDouble("latitude");
+								longitude = jsonObject.getDouble("longitude");
+							}
+						};
+					}
+				};
 			}
 
-			try {
+			if (Objects.equals(
+					DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long fileEntryId = jsonObject.getLong("fileEntryId");
+
+				if (fileEntryId == 0) {
+					return new ContentFieldValue();
+				}
+
 				return new ContentFieldValue() {
 					{
 						image = ContentDocumentUtil.toContentDocument(
@@ -205,74 +206,73 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-			catch (NoSuchFileEntryException noSuchFileEntryException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						noSuchFileEntryException, noSuchFileEntryException);
+
+			if (Objects.equals(
+					DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long classPK = jsonObject.getLong("classPK");
+
+				if (classPK == 0) {
+					return new ContentFieldValue();
 				}
 
-				return new ContentFieldValue();
+				JournalArticle journalArticle =
+					journalArticleService.getLatestArticle(classPK);
+
+				return new ContentFieldValue() {
+					{
+						structuredContentLink = new StructuredContentLink() {
+							{
+								contentType = "StructuredContent";
+								id = journalArticle.getResourcePrimKey();
+								title = journalArticle.getTitle();
+							}
+						};
+					}
+				};
 			}
-		}
 
-		if (Objects.equals(
-				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
+			if (Objects.equals(
+					DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
 
-			long classPK = jsonObject.getLong("classPK");
+				long layoutId = jsonObject.getLong("layoutId");
 
-			if (classPK == 0) {
-				return new ContentFieldValue();
+				if (layoutId == 0) {
+					return new ContentFieldValue();
+				}
+
+				long groupId = jsonObject.getLong("groupId");
+				boolean privateLayout = jsonObject.getBoolean("privateLayout");
+
+				Layout layoutByUuidAndGroupId = layoutLocalService.getLayout(
+					groupId, privateLayout, layoutId);
+
+				return new ContentFieldValue() {
+					{
+						link = layoutByUuidAndGroupId.getFriendlyURL();
+					}
+				};
 			}
-
-			JournalArticle journalArticle =
-				journalArticleService.getLatestArticle(classPK);
 
 			return new ContentFieldValue() {
 				{
-					structuredContentLink = new StructuredContentLink() {
-						{
-							contentType = "StructuredContent";
-							id = journalArticle.getResourcePrimKey();
-							title = journalArticle.getTitle();
-						}
-					};
+					data = valueString;
 				}
 			};
 		}
-
-		if (Objects.equals(
-				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			if (layoutId == 0) {
-				return new ContentFieldValue();
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
 			}
 
-			long groupId = jsonObject.getLong("groupId");
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			Layout layoutByUuidAndGroupId = layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-
-			return new ContentFieldValue() {
-				{
-					link = layoutByUuidAndGroupId.getFriendlyURL();
-				}
-			};
+			return new ContentFieldValue();
 		}
-
-		return new ContentFieldValue() {
-			{
-				data = valueString;
-			}
-		};
 	}
 
 	private static FileEntry _getFileEntry(

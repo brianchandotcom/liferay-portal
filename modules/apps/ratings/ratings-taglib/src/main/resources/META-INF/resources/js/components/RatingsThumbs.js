@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
@@ -165,61 +166,66 @@ const RatingsThumbs = ({
 	);
 
 	return (
-		<div className="ratings-thumbs">
-			<ClayButton
-				aria-pressed={pressed === PRESSED_UP}
-				borderless
-				className={classNames('btn-thumbs-up', {
-					'btn-animated': animatedButtonUp,
-				})}
-				disabled={disabled}
-				displayType="secondary"
-				onClick={voteUp}
-				small
-				title={getTitleThumbsUp()}
-				value={positiveVotes}
-			>
-				<span className="inline-item inline-item-before">
-					<span className="off">
-						<ClayIcon symbol="thumbs-up" />
+		<ClayTooltipProvider>
+			<div className="ratings-thumbs">
+				<ClayButton
+					aria-pressed={pressed === PRESSED_UP}
+					borderless
+					className={classNames('btn-thumbs-up', {
+						'btn-animated': animatedButtonUp,
+					})}
+					disabled={disabled}
+					displayType="secondary"
+					onClick={voteUp}
+					small
+					title={getTitleThumbsUp()}
+					value={positiveVotes}
+				>
+					<span className="inline-item inline-item-before">
+						<span className="off">
+							<ClayIcon symbol="thumbs-up" />
+						</span>
+						<span
+							className="on"
+							onAnimationEnd={handleAnimationEndUp}
+						>
+							<ClayIcon symbol="thumbs-up-full" />
+						</span>
 					</span>
-					<span className="on" onAnimationEnd={handleAnimationEndUp}>
-						<ClayIcon symbol="thumbs-up-full" />
+					<span className="inline-item">
+						<AnimatedCounter counter={positiveVotes} />
 					</span>
-				</span>
-				<span className="inline-item">
-					<AnimatedCounter counter={positiveVotes} />
-				</span>
-			</ClayButton>
-			<ClayButton
-				aria-pressed={pressed === PRESSED_DOWN}
-				borderless
-				className={classNames('btn-thumbs-down', {
-					'btn-animated': animatedButtonDown,
-				})}
-				disabled={disabled}
-				displayType="secondary"
-				onClick={voteDown}
-				small
-				title={getTitleThumbsDown()}
-				value={negativeVotes}
-			>
-				<span className="inline-item inline-item-before">
-					<span className="off">
-						<ClayIcon symbol="thumbs-down" />
+				</ClayButton>
+				<ClayButton
+					aria-pressed={pressed === PRESSED_DOWN}
+					borderless
+					className={classNames('btn-thumbs-down', {
+						'btn-animated': animatedButtonDown,
+					})}
+					disabled={disabled}
+					displayType="secondary"
+					onClick={voteDown}
+					small
+					title={getTitleThumbsDown()}
+					value={negativeVotes}
+				>
+					<span className="inline-item inline-item-before">
+						<span className="off">
+							<ClayIcon symbol="thumbs-down" />
+						</span>
+						<span
+							className="on"
+							onAnimationEnd={handleAnimationEndDown}
+						>
+							<ClayIcon symbol="thumbs-down-full" />
+						</span>
 					</span>
-					<span
-						className="on"
-						onAnimationEnd={handleAnimationEndDown}
-					>
-						<ClayIcon symbol="thumbs-down-full" />
+					<span className="inline-item">
+						<AnimatedCounter counter={negativeVotes} />
 					</span>
-				</span>
-				<span className="inline-item">
-					<AnimatedCounter counter={negativeVotes} />
-				</span>
-			</ClayButton>
-		</div>
+				</ClayButton>
+			</div>
+		</ClayTooltipProvider>
 	);
 };
 

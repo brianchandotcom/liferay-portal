@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
@@ -72,33 +73,38 @@ const RatingsLike = ({
 	};
 
 	return (
-		<div className="ratings-like">
-			<ClayButton
-				aria-pressed={liked}
-				borderless
-				className={classNames({
-					'btn-animated': animatedButton,
-				})}
-				disabled={disabled}
-				displayType="secondary"
-				onClick={toggleLiked}
-				small
-				title={getTitle()}
-				value={totalLikes}
-			>
-				<span className="inline-item inline-item-before">
-					<span className="off">
-						<ClayIcon symbol="heart" />
+		<ClayTooltipProvider>
+			<div className="ratings-like">
+				<ClayButton
+					aria-pressed={liked}
+					borderless
+					className={classNames({
+						'btn-animated': animatedButton,
+					})}
+					disabled={disabled}
+					displayType="secondary"
+					onClick={toggleLiked}
+					small
+					title={getTitle()}
+					value={totalLikes}
+				>
+					<span className="inline-item inline-item-before">
+						<span className="off">
+							<ClayIcon symbol="heart" />
+						</span>
+						<span
+							className="on"
+							onAnimationEnd={HandleAnimationEnd}
+						>
+							<ClayIcon symbol="heart-full" />
+						</span>
 					</span>
-					<span className="on" onAnimationEnd={HandleAnimationEnd}>
-						<ClayIcon symbol="heart-full" />
+					<span className="inline-item likes">
+						<AnimatedCounter counter={totalLikes} />
 					</span>
-				</span>
-				<span className="inline-item likes">
-					<AnimatedCounter counter={totalLikes} />
-				</span>
-			</ClayButton>
-		</div>
+				</ClayButton>
+			</div>
+		</ClayTooltipProvider>
 	);
 };
 

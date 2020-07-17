@@ -120,7 +120,15 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 			"2.6.0", "2.7.0",
 			new UpgradeCTModel(
 				"FragmentCollection", "FragmentComposition", "FragmentEntry",
-				"FragmentEntryLink", "FragmentEntryVersion"));
+				"FragmentEntryLink", "FragmentEntryVersion"),
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"FragmentEntryVersion"};
+				}
+
+			});
 	}
 
 	@Reference

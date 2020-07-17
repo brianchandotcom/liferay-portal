@@ -1,5 +1,12 @@
 definition {
 
+	macro configureLookAndFeelCustomCSS {
+		Type(
+			key_text = "regularCss",
+			locator1 = "TextArea#ANY",
+			value1 = "${cssText}");
+	}
+
 	macro configureLookAndFeelShowFooter {
 		if ("${showFooter}" == "true") {
 			Check.checkToggleSwitch(

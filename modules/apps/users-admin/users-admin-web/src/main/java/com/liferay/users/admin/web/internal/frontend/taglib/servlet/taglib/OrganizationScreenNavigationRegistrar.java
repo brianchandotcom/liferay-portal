@@ -50,15 +50,9 @@ public class OrganizationScreenNavigationRegistrar {
 
 	@Deactivate
 	protected void deactivate() {
-		_screenNavigationEntryServiceRegistrations.forEach(
-			ServiceRegistration::unregister);
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 
-		_screenNavigationEntryServiceRegistrations.clear();
-
-		_screenNavigationCategoryServiceRegistrations.forEach(
-			ServiceRegistration::unregister);
-
-		_screenNavigationCategoryServiceRegistrations.clear();
+		_serviceRegistrations.clear();
 	}
 
 	protected void registerScreenNavigationCategories() {
@@ -191,7 +185,7 @@ public class OrganizationScreenNavigationRegistrar {
 		ScreenNavigationCategory screenNavigationCategory,
 		Dictionary<String, Object> properties) {
 
-		_screenNavigationCategoryServiceRegistrations.add(
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				ScreenNavigationCategory.class, screenNavigationCategory,
 				properties));
@@ -209,7 +203,7 @@ public class OrganizationScreenNavigationRegistrar {
 		ScreenNavigationEntry<?> screenNavigationEntry,
 		Dictionary<String, Object> properties) {
 
-		_screenNavigationEntryServiceRegistrations.add(
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				(Class<ScreenNavigationEntry<?>>)
 					(Class<?>)ScreenNavigationEntry.class,
@@ -232,9 +226,7 @@ public class OrganizationScreenNavigationRegistrar {
 	@Reference
 	private OrganizationService _organizationService;
 
-	private final List<ServiceRegistration<ScreenNavigationCategory>>
-		_screenNavigationCategoryServiceRegistrations = new ArrayList<>();
-	private final List<ServiceRegistration<ScreenNavigationEntry<?>>>
-		_screenNavigationEntryServiceRegistrations = new ArrayList<>();
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

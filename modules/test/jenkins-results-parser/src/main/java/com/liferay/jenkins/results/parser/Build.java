@@ -37,7 +37,7 @@ public interface Build {
 
 	public String getArchivePath();
 
-	public URL getArtifactURL();
+	public URL getArtifactsBaseURL();
 
 	public long getAverageDelayTime();
 

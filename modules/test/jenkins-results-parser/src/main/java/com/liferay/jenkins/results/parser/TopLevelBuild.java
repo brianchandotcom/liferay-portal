@@ -158,7 +158,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public URL getArtifactURL() {
+	public URL getArtifactsBaseURL() {
 		StringBuilder sb = new StringBuilder();
 
 		try {

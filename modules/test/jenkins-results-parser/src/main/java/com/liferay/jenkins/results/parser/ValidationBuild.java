@@ -45,7 +45,7 @@ public class ValidationBuild extends BaseBuild {
 	}
 
 	@Override
-	public URL getArtifactURL() {
+	public URL getArtifactsBaseURL() {
 		return null;
 	}
 

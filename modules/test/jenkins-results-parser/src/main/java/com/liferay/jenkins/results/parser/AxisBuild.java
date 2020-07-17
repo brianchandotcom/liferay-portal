@@ -106,12 +106,12 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public URL getArtifactURL() {
+	public URL getArtifactsBaseURL() {
 		BatchBuild batchBuild = getParentBatchBuild();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(batchBuild.getArtifactURL());
+		sb.append(batchBuild.getArtifactsBaseURL());
 		sb.append("/");
 		sb.append(getAxisNumber());
 
@@ -479,7 +479,7 @@ public class AxisBuild extends BaseBuild {
 
 		try {
 			poshiWarningsURL = new URL(
-				getArtifactURL() + "/poshi-warnings.xml.gz");
+				getArtifactsBaseURL() + "/poshi-warnings.xml.gz");
 		}
 		catch (IOException ioException) {
 			return warningMessages;

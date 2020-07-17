@@ -55,12 +55,12 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public URL getArtifactURL() {
+	public URL getArtifactsBaseURL() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(topLevelBuild.getArtifactURL());
+		sb.append(topLevelBuild.getArtifactsBaseURL());
 		sb.append("/");
 		sb.append(getParameterValue("JOB_VARIANT"));
 

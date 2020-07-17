@@ -51,7 +51,7 @@ public class SourceBuild extends BaseBuild {
 	}
 
 	@Override
-	public URL getArtifactURL() {
+	public URL getArtifactsBaseURL() {
 		return null;
 	}
 

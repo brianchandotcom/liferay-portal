@@ -25,14 +25,14 @@ definition {
 	test MetricsUnavailableForCECustomers {
 		property portal.acceptance = "true";
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		GlobalMenu.gotoPanel(panel = "Applications");
+		ApplicationsMenu.gotoPanel(panel = "Applications");
 
 		AssertElementNotPresent(
 			key_category = "Workflow",
 			key_portlet = "Metics",
-			locator1 = "GlobalMenu#PORTLET");
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 }

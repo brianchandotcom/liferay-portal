@@ -1181,14 +1181,14 @@ definition {
 	test MetricsAvailableForDXP {
 		property portal.acceptance = "true";
 
-		GlobalMenuHelper.openGlobalMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		GlobalMenu.gotoPanel(panel = "Applications");
+		ApplicationsMenu.gotoPanel(panel = "Applications");
 
 		AssertElementPresent(
 			key_category = "Workflow",
 			key_portlet = "Metics",
-			locator1 = "GlobalMenu#PORTLET");
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"

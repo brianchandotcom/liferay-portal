@@ -48,7 +48,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = TokenDefinitionRegistry.class)
+@Component(service = TokenDefinitionRegistry.class)
 public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 
 	@Override

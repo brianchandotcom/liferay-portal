@@ -14,17 +14,15 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
@@ -33,11 +31,12 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -132,27 +131,46 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return _layoutPageTemplateEntry;
 	}
 
-	private String _getMappingSubtypeLabel() throws PortalException {
+	private String _getMappingSubtypeLabel() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
 				layoutPageTemplateEntry.getClassName());
 
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
+		if (infoItemFormVariationsProvider != null) {
+			Collection<InfoItemFormVariation> infoItemFormVariations =
+				infoItemFormVariationsProvider.getInfoItemFormVariations(
+					layoutPageTemplateEntry.getGroupId());
+
+			for (InfoItemFormVariation infoItemFormVariation :
+					infoItemFormVariations) {
+
+				String key = infoItemFormVariation.getKey();
+
+				if (key.equals(
+						String.valueOf(
+							layoutPageTemplateEntry.getClassTypeId()))) {
+
+					return infoItemFormVariation.getLabel(
+						themeDisplay.getLocale());
+				}
+			}
 
 			return null;
 		}
 
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
+		StringBuilder sb = new StringBuilder(4);
 
-		ClassType classType = classTypeReader.getClassType(
-			layoutPageTemplateEntry.getClassTypeId(), themeDisplay.getLocale());
+		sb.append(
+			LanguageUtil.get(themeDisplay.getLocale(), "unknown-variation"));
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(layoutPageTemplateEntry.getClassTypeId());
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return classType.getName();
+		return sb.toString();
 	}
 
 	private String _getMappingTypeLabel() {

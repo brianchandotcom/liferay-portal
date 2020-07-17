@@ -22,6 +22,8 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 
+const BASIC_COMPONENT_COLLECTION = 'BASIC_COMPONENT';
+
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
@@ -36,8 +38,11 @@ export default function FragmentsSidebar() {
 		() => [
 			{
 				collections: fragments.map((collection) => ({
-					children: collection.fragmentEntries.map(
-						normalizeFragmentEntry
+					children: collection.fragmentEntries.map((fragmentEntry) =>
+						normalizeFragmentEntry(
+							fragmentEntry,
+							collection.fragmentCollectionId
+						)
 					),
 					collectionId: collection.fragmentCollectionId,
 					label: collection.name,
@@ -130,7 +135,7 @@ const normalizeCollections = (collection) => {
 	return normalizedElement;
 };
 
-const normalizeFragmentEntry = (fragmentEntry) => {
+const normalizeFragmentEntry = (fragmentEntry, collectionId) => {
 	if (!fragmentEntry.fragmentEntryKey) {
 		return fragmentEntry;
 	}
@@ -144,7 +149,10 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 		icon: fragmentEntry.icon,
 		itemId: fragmentEntry.fragmentEntryKey,
 		label: fragmentEntry.name,
-		preview: fragmentEntry.type ? null : fragmentEntry.imagePreviewURL,
+		preview:
+			collectionId !== BASIC_COMPONENT_COLLECTION
+				? fragmentEntry.imagePreviewURL
+				: null,
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
 };

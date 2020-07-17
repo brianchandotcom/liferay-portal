@@ -17,7 +17,6 @@ package com.liferay.app.builder.web.internal.portlet;
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
-import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTabContext;
 import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -143,13 +142,11 @@ public class AppPortlet extends MVCPortlet {
 				"viewEntryPoint", appBuilderAppPortletTab.getViewEntryPoint()
 			).build());
 
-		AppBuilderAppPortletTabContext appBuilderAppPortletTabContext =
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.APP_TAB_CONTEXT,
 			appBuilderAppPortletTab.getAppBuilderAppPortletTabContext(
 				_appBuilderApp,
-				ParamUtil.getLong(renderRequest, "dataRecordId"));
-
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.APP_TAB_CONTEXT, appBuilderAppPortletTabContext);
+				ParamUtil.getLong(renderRequest, "dataRecordId")));
 
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);

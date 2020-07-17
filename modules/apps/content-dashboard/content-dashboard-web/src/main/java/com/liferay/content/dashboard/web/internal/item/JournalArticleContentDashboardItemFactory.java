@@ -66,6 +66,10 @@ public class JournalArticleContentDashboardItemFactory
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
+		JournalArticle latestApprovedJournalArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				classPK, WorkflowConstants.STATUS_APPROVED);
+
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), _assetDisplayPageFriendlyURLProvider,
 			contentDashboardItemTypeFactory.create(
@@ -73,7 +77,8 @@ public class JournalArticleContentDashboardItemFactory
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			_infoEditURLProviderTracker.getInfoEditURLProvider(
 				JournalArticle.class.getName()),
-			journalArticle, _language, _modelResourcePermission);
+			journalArticle, _language, latestApprovedJournalArticle,
+			_modelResourcePermission);
 	}
 
 	@Reference

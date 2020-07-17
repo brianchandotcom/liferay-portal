@@ -46,7 +46,7 @@ public class CKEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getJspPath() {
-		return "/ckeditor.jsp";
+		return "/ckeditor_classic.jsp";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CKEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getResourcesJspPath() {
-		return "/resources.jsp";
+		return null;
 	}
 
 	@Override

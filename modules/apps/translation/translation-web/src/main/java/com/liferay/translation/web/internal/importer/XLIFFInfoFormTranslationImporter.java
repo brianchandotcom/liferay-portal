@@ -95,32 +95,32 @@ public class XLIFFInfoFormTranslationImporter
 
 			Element rootElement = document.getRootElement();
 
-			Optional<LocaleId> sourceLocaleIdOptional =
-				_getAttributeValueOptional(
-					rootElement, "srcLang", LocaleId::fromString);
+			LocaleId sourceLocaleId = _getAttributeValueOptional(
+				rootElement, "srcLang", LocaleId::fromString
+			).orElseGet(
+				() -> _getAttributeValueOptional(
+					rootElement.element("file"), "source-language",
+					LocaleId::fromString
+				).orElse(
+					_defaultLocaleId
+				)
+			);
 
-			Optional<LocaleId> targetLocaleIdOptional =
-				_getAttributeValueOptional(
-					rootElement, "trgLang", LocaleId::fromString);
+			LocaleId targetLocaleId = _getAttributeValueOptional(
+				rootElement, "trgLang", LocaleId::fromString
+			).orElseGet(
+				() -> _getAttributeValueOptional(
+					rootElement.element("file"), "target-language",
+					LocaleId::fromString
+				).orElse(
+					_defaultLocaleId
+				)
+			);
 
-			if (!sourceLocaleIdOptional.isPresent() &&
-				!targetLocaleIdOptional.isPresent()) {
-
-				Element fileElement = rootElement.element("file");
-
-				sourceLocaleIdOptional = _getAttributeValueOptional(
-					fileElement, "source-language", LocaleId::fromString);
-
-				targetLocaleIdOptional = _getAttributeValueOptional(
-					fileElement, "target-language", LocaleId::fromString);
-			}
-
-			RawDocument rawDocument = new RawDocument(
-				tempFile.toURI(), document.getXMLEncoding(),
-				sourceLocaleIdOptional.orElse(_defaultLocaleId),
-				targetLocaleIdOptional.orElse(_defaultLocaleId));
-
-			filter.open(rawDocument);
+			filter.open(
+				new RawDocument(
+					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
+					targetLocaleId));
 
 			Stream<Event> stream = filter.stream();
 
@@ -264,19 +264,19 @@ public class XLIFFInfoFormTranslationImporter
 							"There is no translation target");
 					}
 
-						InfoField infoField = InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).name(
-							unit.getId()
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.<String>builder(
-							).value(
-								targetLocale, unit.getId()
-							).build()
-						).localizable(
-							true
-						).build();
+					InfoField infoField = InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						unit.getId()
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.<String>builder(
+						).value(
+							targetLocale, unit.getId()
+						).build()
+					).localizable(
+						true
+					).build();
 
 					consumer.accept(
 						new InfoFieldValue<>(

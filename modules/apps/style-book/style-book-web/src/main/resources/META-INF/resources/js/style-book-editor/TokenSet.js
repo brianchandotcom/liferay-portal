@@ -13,19 +13,71 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import Collapse from './Collapse';
-import Token from './Token';
+import {StyleBookContext} from './StyleBookContext';
+import {TOKEN_TYPES} from './constants/tokenTypes';
+import BooleanToken from './tokens/BooleanToken';
+import ColorToken from './tokens/ColorToken';
+import SelectToken from './tokens/SelectToken';
+import TextToken from './tokens/TextToken';
 
 export default function TokenSet({name, tokens}) {
+	const {tokenValues = {}, setTokenValues} = useContext(StyleBookContext);
+
+	const updateTokenValues = (token, value) => {
+		const {mappings = [], name} = token;
+
+		const cssVariableMapping = mappings.find(
+			(mapping) => mapping.type === 'cssVariable'
+		);
+
+		if (value) {
+			setTokenValues({
+				...tokenValues,
+				[name]: {
+					cssVariableMapping: cssVariableMapping.value,
+					value,
+				},
+			});
+		}
+	};
+
 	return (
 		<Collapse label={name}>
-			{tokens.map(({name}) => (
-				<Token key={name} name={name} />
-			))}
+			{tokens.map((token) => {
+				const TokenComponent = getTokenComponent(token);
+
+				return (
+					<TokenComponent
+						key={token.name}
+						onValueSelect={(value) =>
+							updateTokenValues(token, value)
+						}
+						token={token}
+						value={tokenValues[token.name]?.value}
+					/>
+				);
+			})}
 		</Collapse>
 	);
+}
+
+function getTokenComponent(token) {
+	if (token.editorType === 'ColorPicker') {
+		return ColorToken;
+	}
+
+	if (token.validValues) {
+		return SelectToken;
+	}
+
+	if (token.type === TOKEN_TYPES.boolean) {
+		return BooleanToken;
+	}
+
+	return TextToken;
 }
 
 TokenSet.propTypes = {

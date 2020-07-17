@@ -218,6 +218,10 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 				JSONObject valueJSONObject = jsonObject.getJSONObject("value");
 
+				if (valueJSONObject == null) {
+					continue;
+				}
+
 				for (String languageId : valueJSONObject.keySet()) {
 					value.addString(
 						LocaleUtil.fromLanguageId(languageId),

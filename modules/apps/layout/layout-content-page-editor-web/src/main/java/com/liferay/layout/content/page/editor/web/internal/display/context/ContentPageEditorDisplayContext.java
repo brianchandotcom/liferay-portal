@@ -1560,9 +1560,8 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getLayoutStructureItemStyleSetJSONObject(
 		LayoutStructureItemStyleSet layoutStructureItemStyleSet) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("label", layoutStructureItemStyleSet.getLabel());
+		JSONObject jsonObject = JSONUtil.put(
+			"label", layoutStructureItemStyleSet.getLabel());
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

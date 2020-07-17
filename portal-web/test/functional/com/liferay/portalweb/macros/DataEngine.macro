@@ -13,6 +13,9 @@ definition {
 			locator1 = "TextInput#SEARCH",
 			value1 = "${fieldType}");
 
+		var key_fieldType = "${fieldType}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
 		if (isSet(rowNum)) {
 			DragAndDrop.javaScriptDragAndDropToBottom(
 				key_rowNum = "${rowNum}",
@@ -27,9 +30,21 @@ definition {
 				value1 = "${fieldType}");
 		}
 
-		Click(locator1 = "Sidebar#BACK");
+		AssertElementPresent(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldType}");
 
-		var rowNum = ${rowNum} + 1;
+		if ("${fieldFieldLabel}" != "${fieldType}") {
+			Type.sendKeys(
+				locator1 = "Sidebar#DDM_LABEL",
+				value1 = "${fieldFieldLabel}");
+		}
+
+		AssertTextEquals.assertValue(
+			locator1 = "Sidebar#DDM_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFields {

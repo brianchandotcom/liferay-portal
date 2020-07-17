@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useThunk} from 'frontend-js-react-web';
 import React, {
 	useCallback,
 	useContext,
@@ -21,7 +22,6 @@ import React, {
 	useRef,
 } from 'react';
 
-import useThunk from '../../core/hooks/useThunk';
 import useUndo from '../components/undo/useUndo';
 
 const StoreDispatchContext = React.createContext(() => {});

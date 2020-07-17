@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -96,6 +97,22 @@ public class EditStyleBookEntryDisplayContext {
 			}
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
+		).put(
+			"tokensValues",
+			() -> {
+				StyleBookEntry styleBookEntry = _getStyleBookEntry();
+
+				String tokensValues = styleBookEntry.getTokensValues();
+
+				if (styleBookEntry.isHead()) {
+					StyleBookEntry draftStyleBookEntry =
+						StyleBookEntryLocalServiceUtil.getDraft(styleBookEntry);
+
+					tokensValues = draftStyleBookEntry.getTokensValues();
+				}
+
+				return JSONFactoryUtil.createJSONObject(tokensValues);
+			}
 		).build();
 	}
 

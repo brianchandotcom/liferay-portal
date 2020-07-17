@@ -17,8 +17,6 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
@@ -27,7 +25,6 @@ import com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.ui.Or
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -74,92 +71,105 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
-			_createScreenNavigationEntry(
-				"information", _CATEGORY_GENERAL,
-				"/organization/information.jsp",
-				"/users_admin/edit_organization"),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_GENERAL
+			).setEntryKey(
+				"information"
+			).setIsVisibleBiFunction(
+				(user, organization) -> true
+			).setJspPath(
+				"/organization/information.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/edit_organization"
+			).build(),
 			10);
 
 		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"organization-site", _CATEGORY_GENERAL,
-				"/organization/organization_site.jsp",
-				"/users_admin/update_organization_organization_site", false,
-				true),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_GENERAL
+			).setEntryKey(
+				"organization-site"
+			).setJspPath(
+				"/organization/organization_site.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/update_organization_organization_site"
+			).setShowControls(
+				false
+			).build(),
 			20);
 
 		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"security-questions", _CATEGORY_GENERAL,
-				"/organization/reminder_queries.jsp",
-				"/users_admin/update_organization_reminder_queries"),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_GENERAL
+			).setEntryKey(
+				"security-questions"
+			).setJspPath(
+				"/organization/reminder_queries.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/update_organization_reminder_queries"
+			).build(),
 			30);
 
 		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"addresses", _CATEGORY_CONTACT, "/organization/addresses.jsp",
-				"/users_admin/update_contact_information", false, false),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_CONTACT
+			).setEntryKey(
+				"addresses"
+			).setJspPath(
+				"/organization/addresses.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/update_contact_information"
+			).setShowControls(
+				false
+			).setShowTitle(
+				false
+			).build(),
 			10);
 
 		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"contact-information", _CATEGORY_CONTACT,
-				"/organization/contact_information.jsp",
-				"/users_admin/update_contact_information", false, true),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_CONTACT
+			).setEntryKey(
+				"contact-information"
+			).setJspPath(
+				"/organization/contact_information.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/update_contact_information"
+			).setShowControls(
+				false
+			).build(),
 			20);
 
 		_registerScreenNavigationEntry(
-			_createUpdateOnlyScreenNavigationEntry(
-				"opening-hours", _CATEGORY_CONTACT,
-				"/organization/opening_hours.jsp",
-				"/users_admin/update_contact_information", false, false),
+			_getBuilder(
+			).setCategoryKey(
+				_CATEGORY_CONTACT
+			).setEntryKey(
+				"opening-hours"
+			).setJspPath(
+				"/organization/opening_hours.jsp"
+			).setMvcActionCommandName(
+				"/users_admin/update_contact_information"
+			).setShowControls(
+				false
+			).setShowTitle(
+				false
+			).build(),
 			30);
 	}
 
-	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName) {
-
-		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName, true, true,
-			(user, organization) -> true);
-	}
-
-	private ScreenNavigationEntry<Organization> _createScreenNavigationEntry(
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName, boolean showControls, boolean showTitle,
-		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
-
-		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _organizationService, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, showControls, showTitle, isVisibleBiFunction);
-	}
-
-	private ScreenNavigationEntry<Organization>
-		_createUpdateOnlyScreenNavigationEntry(
-			String entryKey, String categoryKey, String jspPath,
-			String mvcActionCommandName) {
-
-		return _createUpdateOnlyScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName, true, true);
-	}
-
-	private ScreenNavigationEntry<Organization>
-		_createUpdateOnlyScreenNavigationEntry(
-			String entryKey, String categoryKey, String jspPath,
-			String mvcActionCommandName, boolean showControls,
-			boolean showTitle) {
-
-		return _createScreenNavigationEntry(
-			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
-			showTitle,
-			(user, organization) -> {
-				if (organization == null) {
-					return false;
-				}
-
-				return true;
-			});
+	private OrganizationScreenNavigationEntry.Builder _getBuilder() {
+		return OrganizationScreenNavigationEntry.builder(
+		).setJspRenderer(
+			_jspRenderer
+		).setOrganizationService(
+			_organizationService
+		);
 	}
 
 	private Dictionary<String, Object> _getProperties(Integer serviceRanking) {

@@ -43,21 +43,8 @@ import javax.servlet.http.HttpServletResponse;
 public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
 
-	public OrganizationScreenNavigationEntry(
-		JSPRenderer jspRenderer, OrganizationService organizationService,
-		String entryKey, String categoryKey, String jspPath,
-		String mvcActionCommandName, boolean showControls, boolean showTitle,
-		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
-
-		_jspRenderer = jspRenderer;
-		_organizationService = organizationService;
-		_entryKey = entryKey;
-		_categoryKey = categoryKey;
-		_jspPath = jspPath;
-		_mvcActionCommandName = mvcActionCommandName;
-		_showControls = showControls;
-		_showTitle = showTitle;
-		_isVisibleBiFunction = isVisibleBiFunction;
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	@Override
@@ -143,6 +130,114 @@ public class OrganizationScreenNavigationEntry
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/edit_organization_navigation.jsp");
+	}
+
+	public static class Builder {
+
+		public OrganizationScreenNavigationEntry build() {
+			return new OrganizationScreenNavigationEntry(
+				_jspRenderer, _organizationService, _entryKey, _categoryKey,
+				_jspPath, _mvcActionCommandName, _showControls, _showTitle,
+				_isVisibleBiFunction);
+		}
+
+		public Builder setCategoryKey(String categoryKey) {
+			_categoryKey = categoryKey;
+
+			return this;
+		}
+
+		public Builder setEntryKey(String entryKey) {
+			_entryKey = entryKey;
+
+			return this;
+		}
+
+		public Builder setIsVisibleBiFunction(
+			BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
+
+			_isVisibleBiFunction = isVisibleBiFunction;
+
+			return this;
+		}
+
+		public Builder setJspPath(String jspPath) {
+			_jspPath = jspPath;
+
+			return this;
+		}
+
+		public Builder setJspRenderer(JSPRenderer jspRenderer) {
+			_jspRenderer = jspRenderer;
+
+			return this;
+		}
+
+		public Builder setMvcActionCommandName(String mvcActionCommandName) {
+			_mvcActionCommandName = mvcActionCommandName;
+
+			return this;
+		}
+
+		public Builder setOrganizationService(
+			OrganizationService organizationService) {
+
+			_organizationService = organizationService;
+
+			return this;
+		}
+
+		public Builder setShowControls(boolean showControls) {
+			_showControls = showControls;
+
+			return this;
+		}
+
+		public Builder setShowTitle(boolean showTitle) {
+			_showTitle = showTitle;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _categoryKey;
+		private String _entryKey;
+
+		private BiFunction<User, Organization, Boolean> _isVisibleBiFunction =
+			(user, organization) -> {
+				if (organization == null) {
+					return false;
+				}
+
+				return true;
+			};
+
+		private String _jspPath;
+		private JSPRenderer _jspRenderer;
+		private String _mvcActionCommandName;
+		private OrganizationService _organizationService;
+		private boolean _showControls = true;
+		private boolean _showTitle = true;
+
+	}
+
+	private OrganizationScreenNavigationEntry(
+		JSPRenderer jspRenderer, OrganizationService organizationService,
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName, boolean showControls, boolean showTitle,
+		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
+
+		_jspRenderer = jspRenderer;
+		_organizationService = organizationService;
+		_entryKey = entryKey;
+		_categoryKey = categoryKey;
+		_jspPath = jspPath;
+		_mvcActionCommandName = mvcActionCommandName;
+		_showControls = showControls;
+		_showTitle = showTitle;
+		_isVisibleBiFunction = isVisibleBiFunction;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

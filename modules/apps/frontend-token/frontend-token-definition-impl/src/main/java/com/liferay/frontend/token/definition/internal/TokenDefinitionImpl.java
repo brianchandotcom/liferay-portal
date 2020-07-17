@@ -21,8 +21,9 @@ import com.liferay.frontend.token.definition.TokenDefinition;
  */
 public class TokenDefinitionImpl implements TokenDefinition {
 
-	public TokenDefinitionImpl(String rawTokenDefinition) {
+	public TokenDefinitionImpl(String rawTokenDefinition, String themeId) {
 		_rawTokenDefinition = rawTokenDefinition;
+		_themeId = themeId;
 	}
 
 	@Override
@@ -30,6 +31,11 @@ public class TokenDefinitionImpl implements TokenDefinition {
 		return _rawTokenDefinition;
 	}
 
+	public String getThemeId() {
+		return _themeId;
+	}
+
 	private final String _rawTokenDefinition;
+	private final String _themeId;
 
 }

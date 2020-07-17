@@ -16,7 +16,9 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.TokenDefinition;
 import com.liferay.frontend.token.definition.TokenDefinitionRegistry;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,10 +30,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -39,87 +41,97 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera
  */
-@Component(service = TokenDefinitionRegistry.class)
+@Component(immediate = true, service = TokenDefinitionRegistry.class)
 public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 
 	@Override
+	public TokenDefinition getThemeTokenDefinition(String themeId) {
+		return themeIdTokenDefinitionImplsMap.get(themeId);
+	}
+
+	@Override
 	public Collection<TokenDefinition> getTokenDefinitions() {
-		Map<Bundle, AtomicReference<TokenDefinition>> map =
-			bundleTracker.getTracked();
-
-		Collection<AtomicReference<TokenDefinition>> atomicReferences =
-			map.values();
-
-		Stream<AtomicReference<TokenDefinition>> stream =
-			atomicReferences.stream();
-
-		return stream.reduce(
-			new ArrayList<>(),
-			(tokenDefinitions, atomicReference) -> {
-				TokenDefinition tokenDefinition = atomicReference.get();
-
-				if (tokenDefinition != null) {
-					tokenDefinitions.add(tokenDefinition);
-				}
-
-				return tokenDefinitions;
-			},
-			(tokenDefinitions, tokenDefinitions2) -> {
-				ArrayList<TokenDefinition> combinedTokenDefinitions =
-					new ArrayList<>();
-
-				combinedTokenDefinitions.addAll(tokenDefinitions);
-
-				combinedTokenDefinitions.addAll(tokenDefinitions2);
-
-				return combinedTokenDefinitions;
-			});
+		return new ArrayList<>(bundleTokenDefinitionImplsMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,
-			new BundleTrackerCustomizer<AtomicReference<TokenDefinition>>() {
+			new BundleTrackerCustomizer<Bundle>() {
 
 				@Override
-				public AtomicReference<TokenDefinition> addingBundle(
+				public Bundle addingBundle(
 					Bundle bundle, BundleEvent bundleEvent) {
 
-					return new AtomicReference<>(getTokenDefinition(bundle));
+					TokenDefinitionImpl tokenDefinitionImpl =
+						getTokenDefinitionImpl(bundle);
+
+					if (tokenDefinitionImpl == null) {
+						return null;
+					}
+
+					synchronized (TokenDefinitionRegistryImpl.this) {
+						bundleTokenDefinitionImplsMap.put(
+							bundle, tokenDefinitionImpl);
+
+						if (tokenDefinitionImpl.getThemeId() != null) {
+							themeIdTokenDefinitionImplsMap.put(
+								tokenDefinitionImpl.getThemeId(),
+								tokenDefinitionImpl);
+						}
+					}
+
+					return bundle;
 				}
 
 				@Override
 				public void modifiedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					AtomicReference<TokenDefinition> atomicReference) {
+					Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
 
-					atomicReference.set(getTokenDefinition(bundle));
+					removedBundle(bundle, bundleEvent, null);
+
+					addingBundle(bundle, bundleEvent);
 				}
 
 				@Override
 				public void removedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					AtomicReference<TokenDefinition> atomicReference) {
+					Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
 
-					atomicReference.set(null);
+					synchronized (TokenDefinitionRegistryImpl.this) {
+						TokenDefinitionImpl tokenDefinitionImpl =
+							bundleTokenDefinitionImplsMap.remove(bundle);
+
+						if (tokenDefinitionImpl.getThemeId() != null) {
+							themeIdTokenDefinitionImplsMap.remove(
+								tokenDefinitionImpl.getThemeId());
+						}
+					}
 				}
 
 			});
+
+		bundleTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		bundleTracker.close();
+
+		synchronized (this) {
+			bundleTokenDefinitionImplsMap.clear();
+			themeIdTokenDefinitionImplsMap.clear();
+		}
 	}
 
-	protected TokenDefinition getTokenDefinition(Bundle bundle) {
+	protected String getRawTokenDefinition(Bundle bundle) {
 		String tokenDefinitionPath = getTokenDefinitionPath(bundle);
 
 		URL url = bundle.getEntry(tokenDefinitionPath);
@@ -129,7 +141,7 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		}
 
 		try (InputStream is = url.openStream()) {
-			return new TokenDefinitionImpl(StringUtil.read(is));
+			return StringUtil.read(is);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -137,11 +149,73 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		}
 	}
 
-	protected String getTokenDefinitionPath(Bundle bundle) {
-		Locale defaultLocale = LocaleUtil.getDefault();
-
+	protected String getServletContextName(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
-			defaultLocale.toString());
+			StringPool.BLANK);
+
+		String webContextPath = headers.get("Web-ContextPath");
+
+		if (webContextPath == null) {
+			return null;
+		}
+
+		if (webContextPath.startsWith(StringPool.SLASH)) {
+			webContextPath = webContextPath.substring(1);
+		}
+
+		return webContextPath;
+	}
+
+	protected String getThemeId(Bundle bundle) {
+		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
+
+		if (url == null) {
+			return null;
+		}
+
+		try (InputStream is = url.openStream()) {
+			String xml = StringUtil.read(is);
+
+			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
+
+			Matcher matcher = _themeIdPattern.matcher(xml);
+
+			if (!matcher.matches()) {
+				return null;
+			}
+
+			String themeId = matcher.group(1);
+
+			String servletContextName = getServletContextName(bundle);
+
+			if (servletContextName != null) {
+				themeId =
+					themeId + PortletConstants.WAR_SEPARATOR +
+						servletContextName;
+			}
+
+			return portal.getJsSafePortletId(themeId);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read: WEB-INF/liferay-look-and-feel.xml",
+				ioException);
+		}
+	}
+
+	protected TokenDefinitionImpl getTokenDefinitionImpl(Bundle bundle) {
+		String rawTokenDefinition = getRawTokenDefinition(bundle);
+
+		if (rawTokenDefinition == null) {
+			return null;
+		}
+
+		return new TokenDefinitionImpl(rawTokenDefinition, getThemeId(bundle));
+	}
+
+	protected String getTokenDefinitionPath(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String tokenDefinitionPath = headers.get("Token-Definition-Path");
 
@@ -156,6 +230,17 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		return tokenDefinitionPath;
 	}
 
-	protected BundleTracker<AtomicReference<TokenDefinition>> bundleTracker;
+	protected Map<Bundle, TokenDefinitionImpl> bundleTokenDefinitionImplsMap =
+		new ConcurrentHashMap<>();
+	protected BundleTracker<Bundle> bundleTracker;
+
+	@Reference
+	protected Portal portal;
+
+	protected Map<String, TokenDefinitionImpl> themeIdTokenDefinitionImplsMap =
+		new ConcurrentHashMap<>();
+
+	private static final Pattern _themeIdPattern = Pattern.compile(
+		".*<theme id=\"([^\"]*)\"[^>]*>.*");
 
 }

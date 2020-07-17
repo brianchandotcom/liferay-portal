@@ -27,6 +27,7 @@ export default function ColorToken({onValueSelect, token, value}) {
 			<div className="style-book-editor__color-token">
 				<ClayColorPicker
 					label={label}
+					onColorsChange={() => {}}
 					onValueChange={(color) => {
 						setColor(color);
 						onValueSelect(`#${color}`);

@@ -14,7 +14,10 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -27,7 +30,10 @@ import com.liferay.site.util.GroupURLProvider;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -98,6 +104,8 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
+			"tokenCategories", _getTokenCategories()
+		).put(
 			"tokensValues",
 			() -> {
 				StyleBookEntry styleBookEntry = _getStyleBookEntry();
@@ -156,6 +164,133 @@ public class EditStyleBookEntryDisplayContext {
 		StyleBookEntry styleBookEntry = _getStyleBookEntry();
 
 		return styleBookEntry.getName();
+	}
+
+	private JSONArray _getTokenCategories() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject tokenDefinitionJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		JSONArray tokenCategoriesJSONArray =
+			tokenDefinitionJSONObject.getJSONArray("tokenCategories");
+
+		tokenCategoriesJSONArray.forEach(
+			object -> {
+				JSONObject tokenCategoryJSONObject = (JSONObject)object;
+
+				jsonArray.put(
+					JSONUtil.put(
+						"label", tokenCategoryJSONObject.getString("label")
+					).put(
+						"name", tokenCategoryJSONObject.getString("name")
+					).put(
+						"tokenSets",
+						_getTokenSetsJSONArray(
+							tokenCategoryJSONObject.getString("name"),
+							tokenDefinitionJSONObject)
+					));
+			});
+
+		return jsonArray;
+	}
+
+	private JSONObject _getTokenSetJSONObject(
+		String tokenSetName, JSONArray tokenSetsJSONArray) {
+
+		for (int i = 0; i < tokenSetsJSONArray.length(); i++) {
+			JSONObject tokenSetJSONObject = tokenSetsJSONArray.getJSONObject(i);
+
+			if (Objects.equals(
+					tokenSetJSONObject.getString("name"), tokenSetName)) {
+
+				return tokenSetJSONObject;
+			}
+		}
+
+		return null;
+	}
+
+	private JSONArray _getTokenSetsJSONArray(
+		String tokenCategoryName, JSONObject tokenDefinitionJSONObject) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		JSONArray tokensJSONArray = tokenDefinitionJSONObject.getJSONArray(
+			"tokens");
+
+		JSONArray tokenSetsJSONArray = tokenDefinitionJSONObject.getJSONArray(
+			"tokenSets");
+
+		for (String tokenSetName :
+				_getTokenSetsName(tokenCategoryName, tokensJSONArray)) {
+
+			JSONObject tokenSet = _getTokenSetJSONObject(
+				tokenSetName, tokenSetsJSONArray);
+
+			if (tokenSet == null) {
+				continue;
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"label", tokenSet.getString("label")
+				).put(
+					"name", tokenSet.getString("name")
+				).put(
+					"tokens",
+					_getTokensJSONArray(
+						tokenCategoryName, tokenSet.getString("name"),
+						tokensJSONArray)
+				));
+		}
+
+		return jsonArray;
+	}
+
+	private Set<String> _getTokenSetsName(
+		String tokenCategoryName, JSONArray tokensJSONArray) {
+
+		Set<String> tokenSetsNames = new HashSet<>();
+
+		tokensJSONArray.forEach(
+			object -> {
+				JSONObject tokenJSONObject = (JSONObject)object;
+
+				if (Objects.equals(
+						tokenJSONObject.getString("tokenCategoryName"),
+						tokenCategoryName)) {
+
+					tokenSetsNames.add(
+						tokenJSONObject.getString("tokenSetName"));
+				}
+			});
+
+		return tokenSetsNames;
+	}
+
+	private JSONArray _getTokensJSONArray(
+		String tokenCategoryName, String tokenSetName,
+		JSONArray tokensJSONArray) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		tokensJSONArray.forEach(
+			object -> {
+				JSONObject tokenJSONObject = (JSONObject)object;
+
+				if (Objects.equals(
+						tokenJSONObject.getString("tokenCategoryName"),
+						tokenCategoryName) &&
+					Objects.equals(
+						tokenJSONObject.getString("tokenSetName"),
+						tokenSetName)) {
+
+					jsonArray.put(tokenJSONObject);
+				}
+			});
+
+		return jsonArray;
 	}
 
 	private void _setViewAttributes() {

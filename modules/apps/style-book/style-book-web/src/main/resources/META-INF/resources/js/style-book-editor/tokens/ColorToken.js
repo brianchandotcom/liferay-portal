@@ -24,16 +24,18 @@ export default function ColorToken({onValueSelect, token, value}) {
 
 	return (
 		<ClayForm.Group small>
-			<ClayColorPicker
-				label={label}
-				onValueChange={(color) => {
-					setColor(color);
-					onValueSelect(`#${color}`);
-				}}
-				showHex={true}
-				title={label}
-				value={color}
-			/>
+			<div className="style-book-editor__color-token">
+				<ClayColorPicker
+					label={label}
+					onValueChange={(color) => {
+						setColor(color);
+						onValueSelect(`#${color}`);
+					}}
+					showHex={true}
+					title={label}
+					value={color}
+				/>
+			</div>
 		</ClayForm.Group>
 	);
 }

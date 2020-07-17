@@ -21,6 +21,8 @@ import java.util.Collection;
  */
 public interface TokenDefinitionRegistry {
 
+	public TokenDefinition getThemeTokenDefinition(String themeId);
+
 	public Collection<TokenDefinition> getTokenDefinitions();
 
 }

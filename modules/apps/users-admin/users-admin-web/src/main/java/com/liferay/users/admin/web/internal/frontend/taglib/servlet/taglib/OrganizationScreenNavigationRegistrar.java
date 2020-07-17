@@ -63,17 +63,21 @@ public class OrganizationScreenNavigationRegistrar {
 
 	protected void registerScreenNavigationCategories() {
 		_registerScreenNavigationCategory(
-			new OrganizationScreenNavigationCategory(_CATEGORY_GENERAL), 10);
+			new OrganizationScreenNavigationCategory(
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL),
+			10);
 
 		_registerScreenNavigationCategory(
-			new OrganizationScreenNavigationCategory(_CATEGORY_CONTACT), 20);
+			new OrganizationScreenNavigationCategory(
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT),
+			20);
 	}
 
 	protected void registerScreenNavigationEntries() {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_GENERAL
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
 			).setEntryKey(
 				"information"
 			).setIsVisibleBiFunction(
@@ -88,7 +92,7 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_GENERAL
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
 			).setEntryKey(
 				"organization-site"
 			).setJspPath(
@@ -103,7 +107,7 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_GENERAL
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
 			).setEntryKey(
 				"security-questions"
 			).setJspPath(
@@ -116,7 +120,7 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_CONTACT
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
 			).setEntryKey(
 				"addresses"
 			).setJspPath(
@@ -133,7 +137,7 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_CONTACT
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
 			).setEntryKey(
 				"contact-information"
 			).setJspPath(
@@ -148,7 +152,7 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_getBuilder(
 			).setCategoryKey(
-				_CATEGORY_CONTACT
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
 			).setEntryKey(
 				"opening-hours"
 			).setJspPath(
@@ -219,12 +223,6 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			screenNavigationEntry, _getProperties(serviceRanking));
 	}
-
-	private static final String _CATEGORY_CONTACT =
-		UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
-
-	private static final String _CATEGORY_GENERAL =
-		UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL;
 
 	private BundleContext _bundleContext;
 

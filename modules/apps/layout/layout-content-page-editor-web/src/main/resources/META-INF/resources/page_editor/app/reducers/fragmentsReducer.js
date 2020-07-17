@@ -79,7 +79,7 @@ export default function fragmentsReducer(fragments = [], action) {
 						data: {
 							itemType: LAYOUT_DATA_ITEM_TYPES.container,
 						},
-						icon: 'table',
+						icon: 'container',
 						itemId: 'container',
 						label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
 						type: 'container',

@@ -1,6 +1,7 @@
 {
 	"cacheable": true,
 	"fragmentEntryKey": "slider",
+	"icon": "slideshow",
 	"name": "slider",
 	"thumbnail": "slider.png",
 	"type": "component"

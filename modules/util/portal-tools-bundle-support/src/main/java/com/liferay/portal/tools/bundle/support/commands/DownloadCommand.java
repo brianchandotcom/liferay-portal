@@ -59,16 +59,21 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 			tokenContent = tokenContent.trim();
 
 			_downloadPath = HttpUtil.downloadFile(
-				uri, tokenContent, cacheDirPath, this);
+				uri, tokenContent, cacheDirPath, this, _connectionTimeout);
 		}
 		else {
 			_downloadPath = HttpUtil.downloadFile(
-				uri, _userName, _password, cacheDirPath, this);
+				uri, _userName, _password, cacheDirPath, this,
+				_connectionTimeout);
 		}
 	}
 
 	public File getCacheDir() {
 		return _cacheDir;
+	}
+
+	public int getConnectionTimeout() {
+		return _connectionTimeout;
 	}
 
 	public Path getDownloadPath() {
@@ -141,6 +146,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 		_cacheDir = cacheDir;
 	}
 
+	public void setConnectionTimeout(int connectionTimeout) {
+		_connectionTimeout = connectionTimeout;
+	}
+
 	public void setPassword(String password) {
 		_password = password;
 	}
@@ -196,6 +205,12 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 	private File _cacheDir = new File(
 		System.getProperty("user.home"),
 		BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME);
+
+	@Parameter(
+		description = "The connection timeout for connection.",
+		names = {"--timeout", "--connection-timeout"}
+	)
+	private int _connectionTimeout = -1;
 
 	private Path _downloadPath;
 

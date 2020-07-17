@@ -96,6 +96,7 @@
 
 	.ratings-stacked-stars-delete {
 		color: $secondary-l1;
+		overflow: initial;
 
 		&:hover {
 			color: $dark;

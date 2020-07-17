@@ -78,62 +78,63 @@ export default function RatingsStackedStars({
 						'ratings-stacked-stars-vote'
 					)}
 				>
-					<fieldset
-						className="ratings-stacked-stars-vote-stars"
-						title={getTitle()}
-					>
-						{starScores.reverse().map(({label, value}, index) => {
-							const id = `${randomNamespace}star${label}`;
-							const srMessage =
-								index === 0
-									? Liferay.Language.get(
-											'rate-this-x-star-out-of-x'
-									  )
-									: Liferay.Language.get(
-											'rate-this-x-stars-out-of-x'
-									  );
-							const full = label <= score;
+					<fieldset title={getTitle()}>
+						<div className="ratings-stacked-stars-vote-stars">
+							{starScores
+								.reverse()
+								.map(({label, value}, index) => {
+									const id = `${randomNamespace}star${label}`;
+									const srMessage =
+										index === 0
+											? Liferay.Language.get(
+													'rate-this-x-star-out-of-x'
+											  )
+											: Liferay.Language.get(
+													'rate-this-x-stars-out-of-x'
+											  );
+									const full = label <= score;
 
-							return (
-								<Fragment key={value}>
-									<input
-										checked={label === score}
-										className="sr-only"
-										disabled={disabled}
-										id={id}
-										name={`${randomNamespace}rating`}
-										onChange={() => {
-											onVote(index);
-										}}
-										type="radio"
-										value={value}
-									/>
-									<label
-										className={
-											full
-												? 'ratings-stars-star-full'
-												: ''
-										}
-										htmlFor={id}
-									>
-										<ClayIcon
-											className="ratings-stars-icon-full"
-											symbol={'star'}
-										/>
-										<ClayIcon
-											className="ratings-stars-icon-empty"
-											symbol={'star-o'}
-										/>
-										<span className="sr-only">
-											{Lang.sub(srMessage, [
-												label,
-												numberOfStars,
-											])}
-										</span>
-									</label>
-								</Fragment>
-							);
-						})}
+									return (
+										<Fragment key={value}>
+											<input
+												checked={label === score}
+												className="sr-only"
+												disabled={disabled}
+												id={id}
+												name={`${randomNamespace}rating`}
+												onChange={() => {
+													onVote(index);
+												}}
+												type="radio"
+												value={value}
+											/>
+											<label
+												className={
+													full
+														? 'ratings-stars-star-full'
+														: ''
+												}
+												htmlFor={id}
+											>
+												<ClayIcon
+													className="ratings-stars-icon-full"
+													symbol={'star'}
+												/>
+												<ClayIcon
+													className="ratings-stars-icon-empty"
+													symbol={'star-o'}
+												/>
+												<span className="sr-only">
+													{Lang.sub(srMessage, [
+														label,
+														numberOfStars,
+													])}
+												</span>
+											</label>
+										</Fragment>
+									);
+								})}
+						</div>
 					</fieldset>
 
 					{score !== 0 && (

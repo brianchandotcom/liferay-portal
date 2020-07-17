@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import PagePreview from './PagePreview';
@@ -35,18 +35,9 @@ const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
 
 		setDraftStatus(DRAFT_STATUS.saving);
 
-		const body = objectToFormData({
-			[`${config.namespace}tokenValues`]: JSON.stringify(tokenValues),
-			[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
-		});
-
-		fetch(config.saveDraftURL, {body, method: 'post'})
-			.then((response) => {
-				setDraftStatus(
-					response.ok
-						? DRAFT_STATUS.draftSaved
-						: DRAFT_STATUS.notSaved
-				);
+		saveDraft(tokenValues, config.styleBookEntryId)
+			.then(() => {
+				setDraftStatus(DRAFT_STATUS.draftSaved);
 			})
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
@@ -54,6 +45,12 @@ const StyleBookEditor = ({tokenValues: initialTokenValues}) => {
 				}
 
 				setDraftStatus(DRAFT_STATUS.notSaved);
+
+				openToast({
+					message: error.message,
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
 			});
 	}, [initialTokenValues, tokenValues]);
 
@@ -94,4 +91,33 @@ export default function ({
 	});
 
 	return <StyleBookEditor tokenValues={tokenValues} />;
+}
+
+function saveDraft(tokenValues, styleBookEntryId) {
+	const body = objectToFormData({
+		[`${config.namespace}tokenValues`]: JSON.stringify(tokenValues),
+		[`${config.namespace}styleBookEntryId`]: styleBookEntryId,
+	});
+
+	return fetch(config.saveDraftURL, {body, method: 'post'})
+		.then((response) => {
+			return response
+				.clone()
+				.json()
+				.catch(() => response.text())
+				.then((body) => [response, body]);
+		})
+		.then(([response, body]) => {
+			if (response.status >= 400 || typeof body !== 'object') {
+				throw new Error(
+					Liferay.Language.get('an-unexpected-error-occurred')
+				);
+			}
+
+			if (body.error) {
+				throw new Error(body.error);
+			}
+
+			return body;
+		});
 }

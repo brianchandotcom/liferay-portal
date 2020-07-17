@@ -78,12 +78,9 @@ definition {
 			groupName = "Guest",
 			title = "Topic");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Category.addCP(
-			categoryName = "category",
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "category",
 			vocabularyName = "Topic");
 
 		JSONDocument.addFileWithUploadedFile(

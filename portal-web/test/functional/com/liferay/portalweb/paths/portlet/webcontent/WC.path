@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

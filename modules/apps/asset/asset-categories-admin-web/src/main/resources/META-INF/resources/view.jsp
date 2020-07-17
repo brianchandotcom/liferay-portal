@@ -200,8 +200,17 @@
 					%>
 
 					<c:if test="<%= Validator.isNotNull(linkURL) %>">
+
+						<%
+						StringBundler sb = new StringBundler(3);
+
+						sb.append("<a href=\"");
+						sb.append(linkURL);
+						sb.append("\" target=\"_blank\">");
+						%>
+
 						<p>
-							<liferay-ui:message arguments="<%= linkURL %>" key="learn-how-to-tailor-categories-to-your-needs" />
+							<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="learn-how-to-tailor-categories-to-your-needs" />
 						</p>
 					</c:if>
 

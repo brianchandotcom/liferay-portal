@@ -57,6 +57,7 @@ page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
+page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

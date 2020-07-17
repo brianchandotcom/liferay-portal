@@ -135,14 +135,14 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							>
 
 								<%
-								List<ContentDashboardItem.Status> statuses = contentDashboardItem.getStatuses(locale);
+								List<ContentDashboardItem.Version> versions = contentDashboardItem.getVersions(locale);
 
-								for (ContentDashboardItem.Status status : statuses) {
+								for (ContentDashboardItem.Version version : versions) {
 								%>
 
 									<clay:label
-										label="<%= StringUtil.toUpperCase(status.getLabel()) %>"
-										style="<%= status.getStyle() %>"
+										label="<%= StringUtil.toUpperCase(version.getLabel()) %>"
+										style="<%= version.getStyle() %>"
 									/>
 
 								<%

@@ -1070,21 +1070,21 @@ public class ContentDashboardAdminPortletTest {
 
 		List<Object> results = searchContainer.getResults();
 
-		List<Object> statuses = ReflectionTestUtil.invoke(
-			results.get(0), "getStatuses", new Class<?>[] {Locale.class},
+		List<Object> versions = ReflectionTestUtil.invoke(
+			results.get(0), "getVersions", new Class<?>[] {Locale.class},
 			LocaleUtil.US);
 
-		Assert.assertEquals(statuses.toString(), 2, statuses.size());
+		Assert.assertEquals(versions.toString(), 2, versions.size());
 
 		Assert.assertEquals(
 			"Approved",
 			ReflectionTestUtil.invoke(
-				statuses.get(0), "getLabel", new Class<?>[0]));
+				versions.get(0), "getLabel", new Class<?>[0]));
 
 		Assert.assertEquals(
 			"Draft",
 			ReflectionTestUtil.invoke(
-				statuses.get(1), "getLabel", new Class<?>[0]));
+				versions.get(1), "getLabel", new Class<?>[0]));
 	}
 
 	@Test

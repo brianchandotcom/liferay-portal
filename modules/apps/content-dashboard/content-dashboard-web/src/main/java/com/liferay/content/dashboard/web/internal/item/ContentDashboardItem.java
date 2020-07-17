@@ -16,6 +16,8 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -42,13 +44,13 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public List<Status> getStatuses(Locale locale);
-
 	public String getTitle(Locale locale);
 
 	public long getUserId();
 
 	public String getUserName();
+
+	public List<Version> getVersions(Locale locale);
 
 	public String getViewURL(HttpServletRequest httpServletRequest);
 
@@ -56,11 +58,12 @@ public interface ContentDashboardItem<T> {
 
 	public boolean isViewURLEnabled(HttpServletRequest httpServletRequest);
 
-	public static class Status {
+	public static class Version {
 
-		public Status(String label, String style) {
+		public Version(String label, String style, double version) {
 			_label = label;
 			_style = style;
+			_version = version;
 		}
 
 		public String getLabel() {
@@ -71,8 +74,23 @@ public interface ContentDashboardItem<T> {
 			return _style;
 		}
 
+		public double getVersion() {
+			return _version;
+		}
+
+		public JSONObject toJSONObject() {
+			return JSONUtil.put(
+				"statusLabel", getLabel()
+			).put(
+				"statusStyle", getStyle()
+			).put(
+				"version", getVersion()
+			);
+		}
+
 		private final String _label;
 		private final String _style;
+		private final double _version;
 
 	}
 

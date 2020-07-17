@@ -1991,7 +1991,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.viewCP(roleKey = "User Permission");
+		Role.viewCP(roleTitle = "User Permission");
 
 		Navigator.gotoNavItem(navItem = "Define Permissions");
 

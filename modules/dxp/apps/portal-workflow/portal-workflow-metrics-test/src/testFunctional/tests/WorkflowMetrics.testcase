@@ -1181,18 +1181,14 @@ definition {
 	test MetricsAvailableForDXP {
 		property portal.acceptance = "true";
 
-		var key_workflowProcessName = "Single Approver";
+		GlobalMenuHelper.openGlobalMenu();
 
-		Navigator.openURL();
-
-		GlobalMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		GlobalMenu.gotoPanel(panel = "Applications");
 
 		AssertElementPresent(
-			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME",
-			value1 = "Single Approver");
+			key_category = "Workflow",
+			key_portlet = "Metics",
+			locator1 = "GlobalMenu#PORTLET");
 	}
 
 	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"

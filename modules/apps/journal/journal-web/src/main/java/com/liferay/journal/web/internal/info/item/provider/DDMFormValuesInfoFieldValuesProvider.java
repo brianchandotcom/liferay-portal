@@ -191,6 +191,10 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 			if (Objects.equals(ddmFormFieldValue.getType(), "date") ||
 				Objects.equals(ddmFormFieldValue.getType(), "ddm-date")) {
 
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
 				DateFormat dateFormat = DateFormat.getDateInstance(
 					DateFormat.SHORT, locale);
 
@@ -202,6 +206,10 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 			else if (Objects.equals(
 						ddmFormFieldValue.getType(), "ddm-decimal") ||
 					 Objects.equals(ddmFormFieldValue.getType(), "numeric")) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
 
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(
 					locale);

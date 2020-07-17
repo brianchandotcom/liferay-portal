@@ -25,7 +25,7 @@ String leftTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute
 String rightTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
 
 Integer leftBoxMaxItems = (Integer)request.getAttribute("liferay-ui:input-move-boxes:leftBoxMaxItems");
-Integer rightBoxMaxItems =(Integer)request.getAttribute("liferay-ui:input-move-boxes:rightBoxMaxItems");
+Integer rightBoxMaxItems = (Integer)request.getAttribute("liferay-ui:input-move-boxes:rightBoxMaxItems");
 
 String leftBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:leftBoxName");
 String rightBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:rightBoxName");

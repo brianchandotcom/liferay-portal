@@ -763,13 +763,13 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private JSONArray _getCommonStyles() {
-		List<LayoutStructureItemStyleSet> styleSets =
+		List<LayoutStructureItemStyleSet> layoutStructureItemStyleSets =
 			_layoutStructureItemStylesProvider.getCommonStyles();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (LayoutStructureItemStyleSet layoutStructureItemStyleSet :
-				styleSets) {
+				layoutStructureItemStyleSets) {
 
 			jsonArray.put(
 				_getLayoutStructureItemStyleSetJSONObject(

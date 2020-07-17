@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//div[contains(@class,'form-builder-drop-container')]</td>
+	<td>//div[contains(@class,'form-builder-layout')]</td>
 	<td></td>
 </tr>
 <tr>

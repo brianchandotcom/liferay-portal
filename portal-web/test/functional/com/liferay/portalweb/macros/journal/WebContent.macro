@@ -2410,7 +2410,7 @@ definition {
 		if (isSet(webContentText)) {
 			AssertTextEquals(
 				key_fieldName = "Text",
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${webContentText}");
 		}
 

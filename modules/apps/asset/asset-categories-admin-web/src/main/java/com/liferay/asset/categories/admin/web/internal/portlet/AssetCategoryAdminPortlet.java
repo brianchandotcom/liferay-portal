@@ -249,6 +249,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetVocabulary.class.getName(), actionRequest);
 
+		boolean system = ParamUtil.getBoolean(actionRequest, "system");
+
 		AssetVocabulary vocabulary = null;
 
 		if (vocabularyId <= 0) {
@@ -265,7 +267,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			vocabulary = _assetVocabularyService.updateVocabulary(
 				vocabularyId, titleMap, descriptionMap,
-				getSettings(actionRequest));
+				getSettings(actionRequest), system);
 		}
 
 		actionRequest.setAttribute(

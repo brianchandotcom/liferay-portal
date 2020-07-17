@@ -89,13 +89,17 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			infoFieldValues.add(
 				new InfoFieldValue<>(
-					new InfoField<>(
-						TextInfoFieldType.INSTANCE,
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						assetVocabulary.getName()
+					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
 						).values(
 							assetVocabulary.getTitleMap()
-						).build(),
-						assetVocabulary.getName()),
+						).build()
+					).build(),
 					() -> _getAssetCategoryNames(
 						_filterByVocabularyId(
 							assetEntry.getCategories(),
@@ -214,13 +218,17 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		).infoFieldSetEntry(
 			consumer -> assetVocabularies.forEach(
 				assetVocabulary -> consumer.accept(
-					new InfoField<TextInfoFieldType>(
-						TextInfoFieldType.INSTANCE,
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						assetVocabulary.getName()
+					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
 						).values(
 							assetVocabulary.getTitleMap()
-						).build(),
-						assetVocabulary.getName())))
+						).build()
+					).build()))
 		).infoFieldSetEntry(
 			_categoriesInfoField
 		).infoFieldSetEntry(
@@ -239,10 +247,14 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private final InfoField<TextInfoFieldType> _categoriesInfoField =
-		new InfoField<>(
-			TextInfoFieldType.INSTANCE,
-			InfoLocalizedValue.localize(getClass(), "all-categories"),
-			"categories");
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"categories"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "all-categories")
+		).build();
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
@@ -251,8 +263,14 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	@Reference
 	private Portal _portal;
 
-	private final InfoField<TextInfoFieldType> _tagsInfoField = new InfoField<>(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "tags"), "tagNames");
+	private final InfoField<TextInfoFieldType> _tagsInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"tagNames"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "tags")
+		).build();
 
 }

@@ -62,13 +62,17 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 					Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 					stream.map(
-						ddmTemplate -> new InfoField(
-							TextInfoFieldType.INSTANCE,
+						ddmTemplate -> InfoField.builder(
+						).infoFieldType(
+							TextInfoFieldType.INSTANCE
+						).name(
+							_getTemplateFieldName(ddmTemplate)
+						).labelInfoLocalizedValue(
 							InfoLocalizedValue.localize(
 								getClass(),
 								ddmTemplate.getName(locale) + StringPool.SPACE +
-									StringPool.STAR),
-							_getTemplateFieldName(ddmTemplate))
+									StringPool.STAR)
+						).build()
 					).forEach(
 						consumer::accept
 					);

@@ -95,13 +95,19 @@ public class XLIFFInfoFormTranslationImporter
 								"There is no translation target");
 						}
 
-						InfoField infoField = new InfoField(
-							TextInfoFieldType.INSTANCE,
+						InfoField infoField = InfoField.builder(
+						).infoFieldType(
+							TextInfoFieldType.INSTANCE
+						).name(
+							unit.getId()
+						).labelInfoLocalizedValue(
 							InfoLocalizedValue.<String>builder(
 							).value(
 								targetLocale, unit.getId()
-							).build(),
-							true, unit.getId());
+							).build()
+						).localizable(
+							true
+						).build();
 
 						consumer.accept(
 							new InfoFieldValue<>(

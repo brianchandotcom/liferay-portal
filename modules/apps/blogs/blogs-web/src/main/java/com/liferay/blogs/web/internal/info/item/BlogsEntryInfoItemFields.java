@@ -25,57 +25,114 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public interface BlogsEntryInfoItemFields {
 
-	public static final InfoField authorNameInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "author-name"),
-		"authorName");
-	public static final InfoField authorProfileImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "author-profile-image"),
-		"authorProfileImage");
-	public static final InfoField contentInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(BlogsEntryInfoItemFields.class, "content"),
-		"content");
-	public static final InfoField coverImageCaptionInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "cover-image-caption"),
-		"coverImageCaption");
-	public static final InfoField coverImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "cover-image"),
-		"coverImage");
-	public static final InfoField descriptionInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "description"),
-		"description");
-	public static final InfoField displayPageUrlInfoField = new InfoField(
-		URLInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.asset.info.display.impl", "display-page-url"),
-		"displayPageURL");
-	public static final InfoField publishDateInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "publish-date"),
-		"publishDate");
-	public static final InfoField smallImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			BlogsEntryInfoItemFields.class, "small-image"),
-		"smallImage");
-	public static final InfoField subtitleInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(BlogsEntryInfoItemFields.class, "subtitle"),
-		"subtitle");
-	public static final InfoField titleInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(BlogsEntryInfoItemFields.class, "title"),
-		"title");
+	public static final InfoField<TextInfoFieldType> authorNameInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"authorName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "author-name")
+		).build();
+	public static final InfoField<ImageInfoFieldType>
+		authorProfileImageInfoField = InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"authorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "author-profile-image")
+		).build();
+	public static final InfoField<TextInfoFieldType> contentInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"content"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "content")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		coverImageCaptionInfoField = InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"coverImageCaption"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "cover-image-caption")
+		).build();
+	public static final InfoField<ImageInfoFieldType> coverImageInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"coverImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "cover-image")
+		).build();
+	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"description"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "description")
+		).build();
+	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			URLInfoFieldType.INSTANCE
+		).name(
+			"displayPageURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.asset.info.display.impl", "display-page-url")
+		).build();
+	public static final InfoField<TextInfoFieldType> publishDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"publishDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "publish-date")
+		).build();
+	public static final InfoField<ImageInfoFieldType> smallImageInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"smallImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "small-image")
+		).build();
+	public static final InfoField<TextInfoFieldType> subtitleInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"subtitle"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "subtitle")
+		).build();
+	public static final InfoField<TextInfoFieldType> titleInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"title"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(BlogsEntryInfoItemFields.class, "title")
+		).build();
 
 }

@@ -157,10 +157,14 @@ public class JournalArticleInfoItemFieldValuesProvider
 			ddmTemplate -> {
 				String fieldName = _getTemplateKey(ddmTemplate);
 
-				InfoField infoField = new InfoField(
-					TextInfoFieldType.INSTANCE,
-					InfoLocalizedValue.localize(getClass(), fieldName),
-					fieldName);
+				InfoField infoField = InfoField.builder(
+				).infoFieldType(
+					TextInfoFieldType.INSTANCE
+				).name(
+					fieldName
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.localize(getClass(), fieldName)
+				).build();
 
 				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
 					infoField,

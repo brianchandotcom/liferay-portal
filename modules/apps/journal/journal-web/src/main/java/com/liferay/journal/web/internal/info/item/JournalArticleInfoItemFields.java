@@ -25,16 +25,26 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public interface JournalArticleInfoItemFields {
 
-	public static final InfoField authorNameInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			JournalArticleInfoItemFields.class, "author-name"),
-		"authorName");
-	public static final InfoField authorProfileImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.journal.lang", "author-profile-image"),
-		"authorProfileImage");
+	public static final InfoField<TextInfoFieldType> authorNameInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"authorName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "author-name")
+		).build();
+	public static final InfoField<ImageInfoFieldType>
+		authorProfileImageInfoField = InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"authorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.journal.lang", "author-profile-image")
+		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -49,36 +59,67 @@ public interface JournalArticleInfoItemFields {
 		).localizable(
 			true
 		).build();
-	public static final InfoField displayPageUrlInfoField = new InfoField(
-		URLInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.asset.info.display.impl", "display-page-url"),
-		"displayPageURL");
-	public static final InfoField lastEditorNameInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.journal.lang", "last-editor-name"),
-		"lastEditorName");
-	public static final InfoField lastEditorProfileImageInfoField =
-		new InfoField(
-			ImageInfoFieldType.INSTANCE,
+	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			URLInfoFieldType.INSTANCE
+		).name(
+			"displayPageURL"
+		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				JournalArticleInfoItemFields.class,
-				"last-editor-profile-image"),
-			"lastEditorProfileImage");
-	public static final InfoField publishDateInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			JournalArticleInfoItemFields.class, "publish-date"),
-		"publishDate");
-	public static final InfoField smallImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize("com.liferay.journal.lang", "small-image"),
-		"smallImage");
-	public static final InfoField titleInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			JournalArticleInfoItemFields.class, "title"),
-		true, "title");
+				"com.liferay.asset.info.display.impl", "display-page-url")
+		).build();
+	public static final InfoField<TextInfoFieldType> lastEditorNameInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"lastEditorName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.journal.lang", "last-editor-name")
+		).build();
+	public static final InfoField<ImageInfoFieldType>
+		lastEditorProfileImageInfoField = InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"lastEditorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "last-editor-profile-image")
+		).build();
+	public static final InfoField<TextInfoFieldType> publishDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"publishDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "publish-date")
+		).build();
+	public static final InfoField<ImageInfoFieldType> smallImageInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"smallImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.journal.lang", "small-image")
+		).build();
+	public static final InfoField<TextInfoFieldType> titleInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"title"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "title")
+		).localizable(
+			true
+		).build();
 
 }

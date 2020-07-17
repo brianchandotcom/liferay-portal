@@ -188,13 +188,17 @@ public class InfoDisplayContributorWrapper
 			consumer -> {
 				for (InfoDisplayField infoDisplayField : infoDisplayFields) {
 					consumer.accept(
-						new InfoField(
-							_getInfoFieldTypeType(infoDisplayField.getType()),
+						InfoField.builder(
+						).infoFieldType(
+							_getInfoFieldTypeType(infoDisplayField.getType())
+						).name(
+							infoDisplayField.getKey()
+						).labelInfoLocalizedValue(
 							InfoLocalizedValue.<String>builder(
 							).value(
 								_getLocale(), infoDisplayField.getLabel()
-							).build(),
-							infoDisplayField.getKey()));
+							).build()
+						).build());
 				}
 			}
 		).name(
@@ -220,9 +224,14 @@ public class InfoDisplayContributorWrapper
 							_getLocale(), fieldName
 						).build();
 
-					InfoField infoField = new InfoField(
-						TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
-						fieldName);
+					InfoField infoField = InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						fieldName
+					).labelInfoLocalizedValue(
+						fieldLabelLocalizedValue
+					).build();
 
 					consumer.accept(
 						new InfoFieldValue<>(infoField, entry.getValue()));

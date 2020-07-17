@@ -24,52 +24,102 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public interface AssetEntryInfoItemFields {
 
-	public static final InfoField createDateInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
+	public static final InfoField<TextInfoFieldType> createDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"createDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "create-date")
+		).build();
+	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"description"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "description")
+		).build();
+	public static final InfoField<TextInfoFieldType> expirationDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"expirationDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "expiration-date")
+		).build();
+	public static final InfoField<TextInfoFieldType> modifiedDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"modifiedDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "modified-date")
+		).build();
+	public static final InfoField<TextInfoFieldType> summaryInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"summary"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "summary")
+		).build();
+	public static final InfoField<TextInfoFieldType> titleInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"title"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(AssetEntryInfoItemFields.class, "title")
+		).build();
+	public static final InfoField<TextInfoFieldType> urlInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"url"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(AssetEntryInfoItemFields.class, "url")
+		).build();
+	public static final InfoField<TextInfoFieldType> userNameInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"userName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "user-name")
+		).build();
+	public static final InfoField userProfileImage = InfoField.builder(
+	).infoFieldType(
+		ImageInfoFieldType.INSTANCE
+	).name(
+		"userProfileImage"
+	).labelInfoLocalizedValue(
 		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "create-date"),
-		"createDate");
-	public static final InfoField descriptionInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "description"),
-		"description");
-	public static final InfoField expirationDateInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "expiration-date"),
-		"expirationDate");
-	public static final InfoField modifiedDateInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "modified-date"),
-		"modifiedDate");
-	public static final InfoField summaryInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(AssetEntryInfoItemFields.class, "summary"),
-		"summary");
-	public static final InfoField titleInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(AssetEntryInfoItemFields.class, "title"),
-		"title");
-	public static final InfoField urlInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(AssetEntryInfoItemFields.class, "url"),
-		"url");
-	public static final InfoField userNameInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "user-name"),
-		"userName");
-	public static final InfoField userProfileImage = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "user-profile-image"),
-		"userProfileImage");
-	public static final InfoField viewCountInfoField = new InfoField(
-		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			AssetEntryInfoItemFields.class, "view-count"),
-		"viewName");
+			AssetEntryInfoItemFields.class, "user-profile-image")
+	).build();
+	public static final InfoField<TextInfoFieldType> viewCountInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"viewName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "view-count")
+		).build();
 
 }

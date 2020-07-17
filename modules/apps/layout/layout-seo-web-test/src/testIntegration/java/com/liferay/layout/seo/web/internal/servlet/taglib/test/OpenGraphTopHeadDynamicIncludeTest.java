@@ -1175,42 +1175,66 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			return InfoItemFieldValues.builder(
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null, "description"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"description"
+					).build(),
 					"<p>defaultMappedDescription</p>")
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(TextInfoFieldType.INSTANCE, null, "title"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"title"
+					).build(),
 					"defaultMappedTitle")
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedDescriptionFieldName"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"mappedDescriptionFieldName"
+					).build(),
 					"<p>mappedDescription</p>")
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedTitleFieldName"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"mappedTitleFieldName"
+					).build(),
 					"mappedTitle")
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedTitleFieldName"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"mappedTitleFieldName"
+					).build(),
 					"mappedTitle")
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						ImageInfoFieldType.INSTANCE, null,
-						"mappedImageFieldName"),
+					InfoField.builder(
+					).infoFieldType(
+						ImageInfoFieldType.INSTANCE
+					).name(
+						"mappedImageFieldName"
+					).build(),
 					new WebImage("/imageURL"))
 			).infoFieldValue(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedImageAltFieldName"),
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).name(
+						"mappedImageAltFieldName"
+					).build(),
 					"mappedImageAlt")
 			).build();
 		}

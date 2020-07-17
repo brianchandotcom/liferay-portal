@@ -80,6 +80,10 @@
 		}
 
 		.table {
+			button:hover {
+				cursor: pointer;
+			}
+
 			.change-row-button {
 				background-color: inherit;
 				border: none;
@@ -101,6 +105,12 @@
 
 	.navigation-bar {
 		a:hover {
+			cursor: pointer;
+		}
+	}
+
+	.pagination-bar {
+		button:hover {
 			cursor: pointer;
 		}
 	}

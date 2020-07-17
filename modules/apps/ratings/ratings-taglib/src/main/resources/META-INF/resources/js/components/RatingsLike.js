@@ -88,19 +88,21 @@ const RatingsLike = ({
 					title={getTitle()}
 					value={totalLikes}
 				>
-					<span className="inline-item inline-item-before">
-						<span className="off">
-							<ClayIcon symbol="heart" />
+					<span className="c-inner" tabIndex="-1">
+						<span className="inline-item inline-item-before">
+							<span className="off">
+								<ClayIcon symbol="heart" />
+							</span>
+							<span
+								className="on"
+								onAnimationEnd={HandleAnimationEnd}
+							>
+								<ClayIcon symbol="heart-full" />
+							</span>
 						</span>
-						<span
-							className="on"
-							onAnimationEnd={HandleAnimationEnd}
-						>
-							<ClayIcon symbol="heart-full" />
+						<span className="inline-item likes">
+							<AnimatedCounter counter={totalLikes} />
 						</span>
-					</span>
-					<span className="inline-item likes">
-						<AnimatedCounter counter={totalLikes} />
 					</span>
 				</ClayButton>
 			</div>

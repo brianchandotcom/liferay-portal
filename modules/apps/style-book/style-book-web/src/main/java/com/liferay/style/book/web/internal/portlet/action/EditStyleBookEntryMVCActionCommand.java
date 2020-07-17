@@ -15,6 +15,8 @@
 package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -75,6 +77,10 @@ public class EditStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_styleBookEntryService.updateTokensValues(
 				draftStyleBookEntryId, tokenValues);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONFactoryUtil.createJSONObject());
 		}
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);

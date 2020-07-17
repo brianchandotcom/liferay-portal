@@ -108,7 +108,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
 			fieldName = "LinkToPage");
@@ -1201,7 +1201,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
 			fieldName = "WebContent");

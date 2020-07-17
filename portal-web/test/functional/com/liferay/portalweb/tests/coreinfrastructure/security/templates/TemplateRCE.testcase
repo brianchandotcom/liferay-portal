@@ -54,7 +54,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -194,7 +194,7 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -246,7 +246,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

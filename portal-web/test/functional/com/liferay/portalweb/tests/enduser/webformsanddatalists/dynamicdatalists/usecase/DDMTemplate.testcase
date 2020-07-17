@@ -39,7 +39,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

@@ -660,7 +660,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
 			fieldName = "LinkToPage");
@@ -969,7 +969,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -1318,7 +1318,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
 			fieldName = "WebContent");
@@ -1430,7 +1430,7 @@ definition {
 			structureDescription = "Exported Structure Description",
 			structureName = "Exported Structure");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Separator",
 			fieldFieldLabel = "SeparatorField",
 			fieldName = "Separator");
@@ -1619,12 +1619,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		for (var structureFieldName : list "Documents and Media,Link to Page,Image") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldTypeList = "Documents and Media,Link to Page,Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1830,7 +1825,7 @@ definition {
 			structureDescription = "Structure Description A",
 			structureName = "Structure Name A");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Link to Page",
 			fieldFieldLabel = "Link to Page",
 			fieldName = "LinkToPage");
@@ -1855,7 +1850,7 @@ definition {
 			structureDescription = "Structure Description B",
 			structureName = "Structure Name B");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
 			fieldName = "WebContent");

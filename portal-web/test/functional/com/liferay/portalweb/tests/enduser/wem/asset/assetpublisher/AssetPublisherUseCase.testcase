@@ -612,7 +612,7 @@ definition {
 			structureDescription = "WC Structure1 Description",
 			structureName = "WC Structure1 Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

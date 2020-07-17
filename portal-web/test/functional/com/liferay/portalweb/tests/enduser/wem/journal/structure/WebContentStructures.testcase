@@ -37,12 +37,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 1");
 
-		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldTypeList = "Boolean,Date,Decimal,Documents and Media");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
 
@@ -54,12 +49,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 2");
 
-		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldTypeList = "HTML,Image,Integer,Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
 
@@ -71,12 +61,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 3");
 
-		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldTypeList = "Number,Radio,Select,Separator,Text,Text Box");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
 
@@ -91,7 +76,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 1");
 
 		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
-			DynamicDataMapping.viewField(
+			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
@@ -107,7 +92,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 2");
 
 		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
-			DynamicDataMapping.viewField(
+			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
@@ -123,7 +108,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 3");
 
 		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
-			DynamicDataMapping.viewField(
+			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
@@ -182,12 +167,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name1");
 
-		for (var structureFieldName : list "Text,Text Box,Image,Documents and Media") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldTypeList = "Text,Text Box,Image,Documents and Media");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
@@ -672,7 +652,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name ${n}");
 
-			DynamicDataMapping.addField(
+			DataEngine.addField(
 				field = "HTML",
 				fieldFieldLabel = "HTML",
 				fieldName = "HTML");

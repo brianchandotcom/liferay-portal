@@ -371,7 +371,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
@@ -458,7 +458,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
@@ -780,7 +780,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text Box",
 			fieldFieldLabel = "Content",
 			fieldName = "Content");

@@ -473,12 +473,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			field = "Text Box",
 			fieldFieldLabel = "Text Box",
 			fieldName = "TextBox");

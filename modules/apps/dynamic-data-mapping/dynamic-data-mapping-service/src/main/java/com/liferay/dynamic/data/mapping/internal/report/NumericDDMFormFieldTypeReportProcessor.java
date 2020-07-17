@@ -113,6 +113,15 @@ public class NumericDDMFormFieldTypeReportProcessor
 							currentDDMFormInstanceRecord.
 								getFormInstanceRecordId());
 			};
+
+			Stream<DDMFormInstanceRecord> stream = streamSupplier.get();
+
+			if (stream.count() == 0) {
+				jsonObject.remove("summary");
+
+				return jsonObject;
+			}
+
 			Comparator<Number> comparator =
 				(number1, number2) -> Double.compare(
 					number1.doubleValue(), number2.doubleValue());

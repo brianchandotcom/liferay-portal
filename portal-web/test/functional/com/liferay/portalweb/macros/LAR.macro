@@ -245,8 +245,6 @@ definition {
 				Check.checkToggleSwitch(locator1 = "Checkbox#PERMISSIONS");
 			}
 
-			Pause(locator1 = "5000");
-
 			AssertVisible(locator1 = "Link#BACK");
 
 			AssertClickNoError(

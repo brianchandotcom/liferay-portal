@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -25,6 +26,11 @@ const TOKEN_TYPE_TO_PROPS = {
 	[TOKEN_TYPES.string]: {type: 'text'},
 };
 
+const debouncedOnValueSelect = debounce(
+	(onValueSelect, value) => onValueSelect(value),
+	300
+);
+
 export default function TextToken({onValueSelect, token, value}) {
 	const {label, name} = token;
 
@@ -36,7 +42,9 @@ export default function TextToken({onValueSelect, token, value}) {
 			<ClayInput
 				defaultValue={value}
 				id={id}
-				onChange={(event) => onValueSelect(event.target.value)}
+				onChange={(event) =>
+					debouncedOnValueSelect(onValueSelect, event.target.value)
+				}
 				{...TOKEN_TYPE_TO_PROPS[token.type]}
 			/>
 		</ClayForm.Group>

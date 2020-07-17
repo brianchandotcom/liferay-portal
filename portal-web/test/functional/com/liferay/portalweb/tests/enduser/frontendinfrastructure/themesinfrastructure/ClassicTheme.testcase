@@ -46,6 +46,8 @@ definition {
 
 		Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
+		Theme.configureLookAndFeelCustomCSS(cssText = '''body { background-color: #42F4C5; }''');
+
 		PortletEntry.save();
 
 		ProductMenu.gotoPortlet(
@@ -61,6 +63,12 @@ definition {
 		Navigator.gotoPage(pageName = "Classic Theme Page");
 
 		SearchPortlets.viewSearchHidden();
+
+		var htmlSourceText = '''body { background-color: #42F4C5; }''';
+
+		AssertHTMLSourceTextPresent(value1 = "${htmlSourceText}");
+
+		takeScreenshot();
 
 		Portlet.addPG(portletName = "Hello World");
 

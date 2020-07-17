@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,20 +100,31 @@ public class NumericDDMFormFieldTypeReportProcessor
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
 
+			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
+				ddmFormInstance.getFormInstanceRecords();
+
+			Supplier<Stream<DDMFormInstanceRecord>> streamSupplier = () -> {
+				Stream<DDMFormInstanceRecord> stream =
+					ddmFormInstanceRecords.stream();
+
+				return stream.filter(
+					currentDDMFormInstanceRecord ->
+						formInstanceRecordId !=
+							currentDDMFormInstanceRecord.
+								getFormInstanceRecordId());
+			};
 			Comparator<Number> comparator =
 				(number1, number2) -> Double.compare(
 					number1.doubleValue(), number2.doubleValue());
 
 			Number maxValue = _getNumberValuesStream(
-				ddmFormFieldValue.getName(), ddmFormInstance,
-				formInstanceRecordId
+				ddmFormFieldValue.getName(), streamSupplier.get()
 			).max(
 				comparator
 			).get();
 
 			Number minValue = _getNumberValuesStream(
-				ddmFormFieldValue.getName(), ddmFormInstance,
-				formInstanceRecordId
+				ddmFormFieldValue.getName(), streamSupplier.get()
 			).min(
 				comparator
 			).get();
@@ -154,19 +166,10 @@ public class NumericDDMFormFieldTypeReportProcessor
 	}
 
 	private Stream<Number> _getNumberValuesStream(
-		String ddmFormFieldValueName, DDMFormInstance ddmFormInstance,
-		long formInstanceRecordId) {
+		String ddmFormFieldValueName,
+		Stream<DDMFormInstanceRecord> ddmFormInstanceRecordsStream) {
 
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-			ddmFormInstance.getFormInstanceRecords();
-
-		Stream<DDMFormInstanceRecord> stream = ddmFormInstanceRecords.stream();
-
-		return stream.filter(
-			ddmFormInstanceRecord ->
-				ddmFormInstanceRecord.getFormInstanceRecordId() !=
-					formInstanceRecordId
-		).map(
+		return ddmFormInstanceRecordsStream.map(
 			ddmFormInstanceRecord -> {
 				try {
 					DDMFormValues ddmFormValues =

@@ -97,8 +97,8 @@ const refreshFields = (
 				? option.value
 				: getDefaultOptionValue(
 						generateOptionValueUsingOptionLabel,
-						option
-					),
+						option.label
+				  ),
 		})),
 		{
 			generateKeyword: generateOptionValueUsingOptionLabel,

@@ -122,10 +122,10 @@ export const dedupValue = (
 
 export const getDefaultOptionValue = (
 	generateOptionValueUsingOptionLabel,
-	option
+	optionLabel
 ) => {
 	const defaultValue = generateOptionValueUsingOptionLabel
-		? option.label
+		? optionLabel
 		: getDefaultFieldName(true);
 
 	return defaultValue;
@@ -146,13 +146,10 @@ export const normalizeValue = (
 	currentField,
 	generateOptionValueUsingOptionLabel
 ) => {
-	const {value: prevValue} = currentField;
+	const {label, value: prevValue} = currentField;
 	let value = prevValue
 		? prevValue
-		: getDefaultOptionValue(
-				generateOptionValueUsingOptionLabel,
-				currentField
-		  );
+		: getDefaultOptionValue(generateOptionValueUsingOptionLabel, label);
 
 	if (!value) {
 		value = Liferay.Language.get('option');

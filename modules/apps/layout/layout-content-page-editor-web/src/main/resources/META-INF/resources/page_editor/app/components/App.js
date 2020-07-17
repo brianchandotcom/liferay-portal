@@ -14,7 +14,6 @@
 
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {createPortal} from 'react-dom';
 
 import useAutoExtendSession from '../../core/hooks/useAutoExtendSession';
 import {INIT} from '../actions/types';

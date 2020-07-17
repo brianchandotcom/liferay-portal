@@ -48,10 +48,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	exportSelectedStyleBookEntries() {
-		submitForm(
-			this.one('#fm'),
-			this.exportStyleBookEntriesURL
-		);
+		submitForm(this.one('#fm'), this.exportStyleBookEntriesURL);
 	}
 }
 

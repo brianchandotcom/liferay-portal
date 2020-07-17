@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';

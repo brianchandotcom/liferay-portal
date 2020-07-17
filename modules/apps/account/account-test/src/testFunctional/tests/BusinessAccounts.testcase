@@ -23,6 +23,44 @@ definition {
 	}
 
 	@priority = "4"
+	test AccountFilterByType {
+		for (var accountType : list "Business,Person") {
+			GlobalMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "This is a ${accountType} Account.",
+				accountName = "${accountType} Account",
+				accountType = "${accountType}");
+		}
+
+		GlobalMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Business");
+
+		LexiconEntry.viewEntryName(rowEntry = "Business Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Person Account");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Person");
+
+		LexiconEntry.viewEntryName(rowEntry = "Person Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
+
+		ManagementBar.setFilterAndOrder(filterBy = "All");
+
+		LexiconEntry.viewEntryName(rowEntry = "Business Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "Person Account");
+	}
+
+	@priority = "4"
 	test AddAccountUser {
 		property portal.acceptance = "true";
 

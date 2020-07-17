@@ -19,6 +19,7 @@ import com.liferay.asset.categories.admin.web.internal.configuration.AssetCatego
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminDisplayStyleKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.categories.admin.web.internal.util.AssetCategoryTreePathComparator;
+import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -451,6 +453,16 @@ public class AssetCategoriesDisplayContext {
 
 	public String getItemSelectorEventName() {
 		return ParamUtil.getString(_renderRequest, "itemSelectorEventName");
+	}
+
+	public String getLinkURL() throws Exception {
+		AssetCategoriesCompanyConfiguration
+			accountEntryEmailDomainsConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					AssetCategoriesCompanyConfiguration.class,
+					_themeDisplay.getCompanyId());
+
+		return accountEntryEmailDomainsConfiguration.linkURL();
 	}
 
 	public String getNavigation() {

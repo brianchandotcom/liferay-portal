@@ -195,6 +195,16 @@
 						</clay:content-row>
 					</h2>
 
+					<%
+					String linkURL = assetCategoriesDisplayContext.getLinkURL();
+					%>
+
+					<c:if test="<%= Validator.isNotNull(linkURL) %>">
+						<p>
+							<liferay-ui:message arguments="<%= linkURL %>" key="learn-how-to-tailor-categories-to-your-needs" />
+						</p>
+					</c:if>
+
 					<clay:sheet-section>
 						<liferay-util:include page="/view_categories.jsp" servletContext="<%= application %>" />
 					</clay:sheet-section>

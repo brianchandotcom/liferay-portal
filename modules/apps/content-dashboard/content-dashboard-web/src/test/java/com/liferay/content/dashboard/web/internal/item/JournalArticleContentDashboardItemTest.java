@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -140,6 +141,22 @@ public class JournalArticleContentDashboardItemTest {
 			Collections.emptyList(),
 			journalArticleContentDashboardItem.getAssetCategories(
 				RandomTestUtil.randomLong()));
+	}
+
+	@Test
+	public void testGetAssetTags() {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		AssetTag assetTag = Mockito.mock(AssetTag.class);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, Collections.singletonList(assetTag), null, null, null,
+				null, journalArticle, null, null, null);
+
+		Assert.assertEquals(
+			Collections.singletonList(assetTag),
+			journalArticleContentDashboardItem.getAssetTags());
 	}
 
 	@Test

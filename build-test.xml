@@ -13149,6 +13149,12 @@ url=${short.hostname}:8080</echo>
 			token="${translation.content.target.original}"
 			value="${translation.content.target}"
 		/>
+
+		<replace
+			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+			token="${translation.description.target.original}"
+			value="${translation.description.target}"
+		/>
 	</target>
 
 	<target name="upgrade-legacy-database">

@@ -78,7 +78,7 @@ definition {
 	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-translation-file -Dtranslation.content.target.original=<target><![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<target><![CDATA[${contentTranslateion}]]></target> -Dtranslation.title.target.original=<target><![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<target><![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+			value1 = "update-translation-file -Dtranslation.content.target.original=<target><![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<target><![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<target><![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<target><![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.title.target.original=<target><![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<target><![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
 }

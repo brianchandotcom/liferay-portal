@@ -1187,7 +1187,7 @@ definition {
 
 		AssertElementPresent(
 			key_category = "Workflow",
-			key_portlet = "Metics",
+			key_portlet = "Metrics",
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 

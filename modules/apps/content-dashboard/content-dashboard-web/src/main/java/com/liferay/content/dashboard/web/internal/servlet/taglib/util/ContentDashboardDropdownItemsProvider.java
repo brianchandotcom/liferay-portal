@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
+
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,6 +47,7 @@ public class ContentDashboardDropdownItemsProvider {
 		_http = http;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_portal = portal;
 
 		_currentURL = String.valueOf(
@@ -95,7 +99,30 @@ public class ContentDashboardDropdownItemsProvider {
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.putData("action", "showInfo");
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "showInfo"
+					).put(
+						"className", contentDashboardItem.getClassName()
+					).put(
+						"classPK", contentDashboardItem.getClassPK()
+					).build());
+
+				ResourceURL resourceURL =
+					_liferayPortletResponse.createResourceURL();
+
+				resourceURL.setResourceID(
+					"/content_dashboard/get_content_dashboard_item_info");
+
+				resourceURL.setParameter(
+					"className", contentDashboardItem.getClassName());
+
+				resourceURL.setParameter(
+					"classPK",
+					String.valueOf(contentDashboardItem.getClassPK()));
+
+				dropdownItem.setHref(String.valueOf(resourceURL));
+
 				dropdownItem.setLabel(_language.get(locale, "info"));
 
 				return dropdownItem;
@@ -130,6 +157,7 @@ public class ContentDashboardDropdownItemsProvider {
 	private final Http _http;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Portal _portal;
 
 }

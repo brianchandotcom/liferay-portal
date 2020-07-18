@@ -24,6 +24,92 @@ definition {
 		}
 	}
 
+	@description = "This ensures that an imported translation can be approved through the workflow."
+	@priority = "5"
+	test ApproveImportToWebContent {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslateion = "Contenidoweb",
+			descriptionTranslateion = "Descripcion",
+			titleTranslation = "Titulodelcontenidoweb",
+			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationZipFileName = "WebContentTitle-en_US.zip",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-es_ES.xlf",
+			webContentTitle = "WebContentTitle",
+			workflow = "true");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewTranslationStatusWithWorkflowCP(
+			webContentContent = "WebContent",
+			webContentTitle = "WebContentTitle",
+			workflowTask = "Review");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
+			webContentTitle = "Titulodelcontenidoweb");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+	}
+
 	@description = "This ensures that a translated zip file with all available language can be exported."
 	@priority = "5"
 	test ExportWCWithAllLanguages {
@@ -143,6 +229,127 @@ definition {
 			webContentContent = "Internetinhalt",
 			webContentDescription = "Beschreibung",
 			webContentTitle = "TiteldesWebinhalts");
+	}
+
+	@description = "This ensures that an imported translation can be Rejected and Resubmited through the workflow."
+	@priority = "5"
+	test RejectandResubmitImportToDraftWebContent {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "French (France)");
+
+		Translations.translateFile(
+			contentTranslateion = "ContenuWeb",
+			descriptionTranslateion = "Ladescription",
+			titleTranslation = "TitreducontenuWeb",
+			translationFileName = "WebContentTitle-en_US-fr_FR",
+			translationZipFileName = "WebContentTitle-en_US.zip",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-fr_FR.xlf",
+			webContentTitle = "WebContentTitle",
+			workflow = "true");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewTranslationStatusWithWorkflowCP(
+			webContentContent = "WebContent",
+			webContentTitle = "WebContentTitle",
+			workflowTask = "Review");
+
+		PortletEntry.changeLocale(locale = "fr-FR");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewTranslationStatusWithWorkflowCP(
+			webContentContent = "WebContent",
+			webContentTitle = "WebContentTitle",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-fr_FR.xlf",
+			webContentTitle = "WebContentTitle",
+			workflowResubmit = "true");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.resubmitTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Update");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WebContentTitle",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+
+		PortletEntry.changeLocale(locale = "fr-FR");
+
+		WebContent.viewCP(
+			webContentContent = "ContenuWeb",
+			webContentDescription = "Ladescription",
+			webContentTitle = "TitreducontenuWeb");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
 	}
 
 }

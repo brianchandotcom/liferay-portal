@@ -61,7 +61,7 @@ export const renameFieldInsideAutofill = (
 	oldFieldName,
 	newFieldName
 ) => {
-	Object.keys(object).map(key => {
+	Object.keys(object).map((key) => {
 		if (object[key] === oldFieldName) {
 			object[key] = newFieldName;
 		}
@@ -105,7 +105,7 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 					action.outputs,
 					oldFieldName,
 					newFieldName
-				)
+				),
 			};
 		}
 

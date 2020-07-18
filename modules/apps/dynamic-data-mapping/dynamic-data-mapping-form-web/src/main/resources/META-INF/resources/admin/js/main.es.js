@@ -863,6 +863,7 @@ class Form extends Component {
 
 	_setContext(context) {
 		let {successPageSettings} = context;
+		const {defaultLanguageId} = this.props;
 		const {successPage} = context;
 
 		if (!successPageSettings && this.isFormBuilderView()) {
@@ -872,12 +873,12 @@ class Form extends Component {
 
 		if (successPageSettings && core.isString(successPageSettings.title)) {
 			successPageSettings.title = {};
-			successPageSettings.title[themeDisplay.getLanguageId()] = '';
+			successPageSettings.title[defaultLanguageId] = '';
 		}
 
 		if (successPageSettings && core.isString(successPageSettings.body)) {
 			successPageSettings.body = {};
-			successPageSettings.body[themeDisplay.getLanguageId()] = '';
+			successPageSettings.body[defaultLanguageId] = '';
 		}
 
 		const emptyLocalizableValue = {

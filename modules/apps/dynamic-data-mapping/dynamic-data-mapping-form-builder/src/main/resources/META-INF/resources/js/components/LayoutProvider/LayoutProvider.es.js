@@ -679,7 +679,7 @@ class LayoutProvider extends Component {
 	}
 
 	_successPageSettingsValueFn() {
-		const {editingLanguageId, initialSuccessPageSettings} = this.props;
+		const {defaultLanguageId, initialSuccessPageSettings} = this.props;
 
 		if (
 			!initialSuccessPageSettings ||
@@ -694,21 +694,19 @@ class LayoutProvider extends Component {
 			...otherProps,
 			body: {
 				...body,
-				[editingLanguageId]:
-					body[editingLanguageId] === undefined ||
-					body[editingLanguageId] === ''
+				[defaultLanguageId]:
+					body[defaultLanguageId] === ''
 						? Liferay.Language.get(
 								'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
 						  )
-						: body[editingLanguageId],
+						: body[defaultLanguageId],
 			},
 			title: {
 				...title,
-				[editingLanguageId]:
-					title[editingLanguageId] === undefined ||
-					title[editingLanguageId] === ''
+				[defaultLanguageId]:
+					title[defaultLanguageId] === ''
 						? Liferay.Language.get('thank-you')
-						: title[editingLanguageId],
+						: title[defaultLanguageId],
 			},
 		};
 	}

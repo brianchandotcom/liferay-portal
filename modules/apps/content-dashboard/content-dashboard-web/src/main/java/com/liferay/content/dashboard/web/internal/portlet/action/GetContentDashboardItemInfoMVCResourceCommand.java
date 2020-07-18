@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -47,12 +48,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,6 +127,11 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"versions",
 					_getVersionsJSONArray(contentDashboardItem, locale)
+				).put(
+					"viewURLs",
+					_getViewURLsJSONArray(
+						contentDashboardItem,
+						_portal.getHttpServletRequest(resourceRequest))
 				)
 			).orElseGet(
 				JSONFactoryUtil::createJSONObject
@@ -196,6 +207,31 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			).toArray());
 	}
 
+	private JSONArray _getViewURLsJSONArray(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		Map<Locale, String> viewURLs = contentDashboardItem.getViewURLs(
+			httpServletRequest);
+
+		Set<Map.Entry<Locale, String>> entries = viewURLs.entrySet();
+
+		Stream<Map.Entry<Locale, String>> stream = entries.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				entry -> JSONUtil.put(
+					"default",
+					Objects.equals(
+						entry.getKey(), contentDashboardItem.getDefaultLocale())
+				).put(
+					"languageId", _language.getBCP47LanguageId(entry.getKey())
+				).put(
+					"viewURL", entry.getValue()
+				)
+			).toArray());
+	}
+
 	private String _toString(Date date) {
 		Instant instant = date.toInstant();
 
@@ -216,6 +252,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

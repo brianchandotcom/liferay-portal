@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
@@ -110,6 +111,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)
 				).put(
+					"tags", _getAssetTagsJSONArray(contentDashboardItem)
+				).put(
 					"title", contentDashboardItem.getTitle(locale)
 				).put(
 					"userId", contentDashboardItem.getUserId()
@@ -154,6 +157,19 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return JSONUtil.putAll(
 			stream.map(
 				assetCategory -> assetCategory.getTitle(locale)
+			).toArray());
+	}
+
+	private JSONArray _getAssetTagsJSONArray(
+		ContentDashboardItem contentDashboardItem) {
+
+		List<AssetTag> assetTags = contentDashboardItem.getAssetTags();
+
+		Stream<AssetTag> stream = assetTags.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				AssetTag::getName
 			).toArray());
 	}
 

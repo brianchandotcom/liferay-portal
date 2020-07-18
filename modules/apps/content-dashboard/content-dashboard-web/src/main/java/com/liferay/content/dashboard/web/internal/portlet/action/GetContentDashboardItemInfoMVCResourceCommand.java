@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
@@ -102,6 +103,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				}
 			).map(
 				contentDashboardItem -> JSONUtil.put(
+					"categories",
+					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
+				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
@@ -138,6 +142,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					ResourceBundleUtil.getString(
 						resourceBundle, "an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONArray _getAssetCategoriesJSONArray(
+		ContentDashboardItem contentDashboardItem, Locale locale) {
+
+		List<AssetCategory> assetCategories =
+			contentDashboardItem.getAssetCategories();
+
+		Stream<AssetCategory> stream = assetCategories.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				assetCategory -> assetCategory.getTitle(locale)
+			).toArray());
 	}
 
 	private String _getSubtype(

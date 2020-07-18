@@ -158,8 +158,7 @@ public class EditStyleBookEntryDisplayContext {
 	private JSONArray _getTokenCategories() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject tokenDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		JSONObject tokenDefinitionJSONObject = _getTokenDefinitionJSONObject();
 
 		JSONArray tokenCategoriesJSONArray =
 			tokenDefinitionJSONObject.getJSONArray("tokenCategories");
@@ -182,6 +181,79 @@ public class EditStyleBookEntryDisplayContext {
 			});
 
 		return jsonArray;
+	}
+
+	private JSONObject _getTokenDefinitionJSONObject() {
+		return JSONUtil.put(
+			"tokenCategories",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", "general"
+				).put(
+					"name", "general"
+				),
+				JSONUtil.put(
+					"label", "colors"
+				).put(
+					"name", "colors"
+				))
+		).put(
+			"tokens",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"editorType", "ColorPicker"
+				).put(
+					"label", "body-bg"
+				).put(
+					"mappings",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"type", "cssVariable"
+						).put(
+							"value", "body-bg"
+						))
+				).put(
+					"name", "bodyBgColor"
+				).put(
+					"tokenCategoryName", "colors"
+				).put(
+					"tokenSetName", "layout"
+				).put(
+					"type", "String"
+				),
+				JSONUtil.put(
+					"label", "box-shadow-lg"
+				).put(
+					"mappings",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"type", "cssVariable"
+						).put(
+							"value", "box-shadow-lg"
+						))
+				).put(
+					"name", "boxShadowLg"
+				).put(
+					"tokenCategoryName", "general"
+				).put(
+					"tokenSetName", "utility"
+				).put(
+					"type", "String"
+				))
+		).put(
+			"tokenSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", "layout"
+				).put(
+					"name", "layout"
+				),
+				JSONUtil.put(
+					"label", "utility"
+				).put(
+					"name", "utility"
+				))
+		);
 	}
 
 	private JSONObject _getTokenSetJSONObject(

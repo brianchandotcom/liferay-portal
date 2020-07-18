@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ContentDashboardItem<T> {
 
+	public List<AssetCategory> getAssetCategories();
+
 	public List<AssetCategory> getAssetCategories(long vocabularyId);
 
 	public ContentDashboardItemType getContentDashboardItemType();

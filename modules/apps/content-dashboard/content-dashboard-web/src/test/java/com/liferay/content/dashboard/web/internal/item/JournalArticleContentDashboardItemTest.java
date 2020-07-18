@@ -78,12 +78,34 @@ public class JournalArticleContentDashboardItemTest {
 
 		Assert.assertEquals(
 			Collections.singletonList(assetCategory),
+			journalArticleContentDashboardItem.getAssetCategories());
+	}
+
+	@Test
+	public void testGetAssetCategoriesByVocabulary() {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory.getVocabularyId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				Collections.singletonList(assetCategory), null, null, null,
+				null, journalArticle, null, null, null);
+
+		Assert.assertEquals(
+			Collections.singletonList(assetCategory),
 			journalArticleContentDashboardItem.getAssetCategories(
 				assetCategory.getVocabularyId()));
 	}
 
 	@Test
-	public void testGetAssetCategoriesWithEmptyAssetCategories() {
+	public void testGetAssetCategoriesByVocabularyWithEmptyAssetCategories() {
 		JournalArticle journalArticle = _getJournalArticle();
 
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =

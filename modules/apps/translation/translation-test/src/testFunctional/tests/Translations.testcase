@@ -67,6 +67,7 @@ definition {
 	test ImportWebContent {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
+			description = "Description",
 			groupName = "Guest",
 			title = "WebContentTitle");
 
@@ -80,10 +81,12 @@ definition {
 
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
+			descriptionTranslateion = "Descripcion",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
 			webContentContent = "WebContent",
+			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
 		Translations.importTranslation(
@@ -96,6 +99,7 @@ definition {
 
 		WebContent.viewCP(
 			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
 	}
 
@@ -104,6 +108,7 @@ definition {
 	test ImportWebContentWithXliffFile {
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
+			description = "Description",
 			groupName = "Guest",
 			title = "WebContentTitle");
 
@@ -117,11 +122,13 @@ definition {
 
 		Translations.translateFile(
 			contentTranslateion = "Internetinhalt",
+			descriptionTranslateion = "Beschreibung",
 			titleTranslation = "TiteldesWebinhalts",
-			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationFileName = "WebContentTitle-en_US-de_DE",
 			translationFileRename = "true",
 			translationZipFileName = "WebContentTitle-en_US.zip",
 			webContentContent = "WebContent",
+			webContentDescription = "Description",
 			webContentTitle = "WebContentTitle");
 
 		Translations.importTranslation(
@@ -134,6 +141,7 @@ definition {
 
 		WebContent.viewCP(
 			webContentContent = "Internetinhalt",
+			webContentDescription = "Beschreibung",
 			webContentTitle = "TiteldesWebinhalts");
 	}
 

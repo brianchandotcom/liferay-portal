@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
@@ -77,8 +78,23 @@ public class ActionUtil {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, object, ownerId,
+				actionName, clazz, id, methodName, null, object, ownerId,
 				permissionName, siteId, uriInfo);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		Object object, ModelResourcePermission<?> modelResourcePermission,
+		UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, modelResourcePermission,
+				object, null, null, null, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -117,8 +133,8 @@ public class ActionUtil {
 
 	private static Map<String, String> _addAction(
 			String actionName, Class<?> clazz, Long id, String methodName,
-			Object object, Long ownerId, String permissionName, Long siteId,
-			UriInfo uriInfo)
+			ModelResourcePermission<?> modelResourcePermission, Object object,
+			Long ownerId, String permissionName, Long siteId, UriInfo uriInfo)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -138,14 +154,23 @@ public class ActionUtil {
 			}
 		}
 
-		List<String> modelResourceActions =
-			ResourceActionsUtil.getModelResourceActions(permissionName);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (!modelResourceActions.contains(actionName) ||
-			!_hasPermission(
-				actionName, id, ownerId,
-				PermissionThreadLocal.getPermissionChecker(), permissionName,
-				siteId)) {
+		if (modelResourcePermission == null) {
+			List<String> modelResourceActions =
+				ResourceActionsUtil.getModelResourceActions(permissionName);
+
+			if (!modelResourceActions.contains(actionName) ||
+				!_hasPermission(
+					actionName, id, ownerId, permissionChecker, permissionName,
+					siteId)) {
+
+				return null;
+			}
+		}
+		else if (!modelResourcePermission.contains(
+					permissionChecker, id, actionName)) {
 
 			return null;
 		}

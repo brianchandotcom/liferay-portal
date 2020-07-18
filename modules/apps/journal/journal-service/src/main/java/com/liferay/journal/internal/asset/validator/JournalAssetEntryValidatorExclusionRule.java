@@ -15,8 +15,14 @@
 package com.liferay.journal.internal.asset.validator;
 
 import com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Lee
@@ -33,7 +39,28 @@ public class JournalAssetEntryValidatorExclusionRule
 		long groupId, String className, long classPK, long classTypePK,
 		long[] categoryIds, String[] tagNames) {
 
+		JournalArticleResource journalArticleResource =
+			_journalArticleResourceLocalService.fetchJournalArticleResource(
+				classPK);
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchArticle(
+				groupId, journalArticleResource.getArticleId());
+
+		if (journalArticle.getClassNameId() >
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+
+			return true;
+		}
+
 		return false;
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

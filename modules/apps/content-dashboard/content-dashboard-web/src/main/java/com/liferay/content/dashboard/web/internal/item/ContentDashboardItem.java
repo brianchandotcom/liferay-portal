@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,6 +39,8 @@ public interface ContentDashboardItem<T> {
 	public List<AssetTag> getAssetTags();
 
 	public ContentDashboardItemType getContentDashboardItemType();
+
+	public Locale getDefaultLocale();
 
 	public String getEditURL(HttpServletRequest httpServletRequest);
 
@@ -58,6 +61,9 @@ public interface ContentDashboardItem<T> {
 	public List<Version> getVersions(Locale locale);
 
 	public String getViewURL(HttpServletRequest httpServletRequest);
+
+	public Map<Locale, String> getViewURLs(
+		HttpServletRequest httpServletRequest);
 
 	public boolean isEditURLEnabled(HttpServletRequest httpServletRequest);
 

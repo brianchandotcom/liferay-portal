@@ -30,15 +30,18 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -117,6 +120,12 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public ContentDashboardItemType getContentDashboardItemType() {
 		return _contentDashboardItemType;
+	}
+
+	@Override
+	public Locale getDefaultLocale() {
+		return LocaleUtil.fromLanguageId(
+			_journalArticle.getDefaultLanguageId());
 	}
 
 	@Override
@@ -203,34 +212,31 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getViewURL(HttpServletRequest httpServletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			ThemeDisplay clonedThemeDisplay =
-				(ThemeDisplay)themeDisplay.clone();
+		return _getViewURL(themeDisplay);
+	}
 
-			clonedThemeDisplay.setScopeGroupId(_journalArticle.getGroupId());
+	@Override
+	public Map<Locale, String> getViewURLs(
+		HttpServletRequest httpServletRequest) {
 
-			return Optional.ofNullable(
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					JournalArticle.class.getName(),
-					_journalArticle.getResourcePrimKey(), clonedThemeDisplay)
-			).orElse(
-				StringPool.BLANK
-			);
-		}
-		catch (CloneNotSupportedException cloneNotSupportedException) {
-			_log.error(cloneNotSupportedException, cloneNotSupportedException);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			return StringPool.BLANK;
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return StringPool.BLANK;
-		}
+		return Stream.of(
+			_journalArticle.getAvailableLanguageIds()
+		).map(
+			LocaleUtil::fromLanguageId
+		).map(
+			locale -> new AbstractMap.SimpleEntry<>(
+				locale, _getViewURL(themeDisplay))
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
 	}
 
 	@Override
@@ -262,6 +268,39 @@ public class JournalArticleContentDashboardItem
 		}
 
 		return true;
+	}
+
+	private String _getViewURL(ThemeDisplay themeDisplay) {
+		try {
+			Locale locale = themeDisplay.getLocale();
+
+			ThemeDisplay clonedThemeDisplay =
+				(ThemeDisplay)themeDisplay.clone();
+
+			clonedThemeDisplay.setI18nPath(
+				StringPool.SLASH + locale.toLanguageTag());
+
+			String languageId = _language.getLanguageId(locale);
+
+			clonedThemeDisplay.setI18nLanguageId(languageId);
+			clonedThemeDisplay.setLanguageId(languageId);
+
+			clonedThemeDisplay.setLocale(locale);
+			clonedThemeDisplay.setScopeGroupId(_journalArticle.getGroupId());
+
+			return Optional.ofNullable(
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					JournalArticle.class.getName(),
+					_journalArticle.getResourcePrimKey(), clonedThemeDisplay)
+			).orElse(
+				StringPool.BLANK
+			);
+		}
+		catch (CloneNotSupportedException | PortalException exception) {
+			_log.error(exception, exception);
+
+			return StringPool.BLANK;
+		}
 	}
 
 	private Optional<Version> _toVersionOptional(

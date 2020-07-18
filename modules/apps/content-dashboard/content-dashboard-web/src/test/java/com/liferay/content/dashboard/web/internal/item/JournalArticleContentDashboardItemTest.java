@@ -440,7 +440,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, null, null, null);
+				null, journalArticle, _getLanguage(), null, null);
 
 		Assert.assertEquals(
 			"validURL",
@@ -459,7 +459,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, null, null, null);
+				null, journalArticle, _getLanguage(), null, null);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -488,7 +488,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, null, null, modelResourcePermission);
+				journalArticle, _getLanguage(), null, modelResourcePermission);
 
 		Assert.assertTrue(
 			journalArticleContentDashboardItem.isEditURLEnabled(
@@ -508,7 +508,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, null, null, null, infoEditURLProvider,
-				journalArticle, null, null, modelResourcePermission);
+				journalArticle, _getLanguage(), null, modelResourcePermission);
 
 		Assert.assertFalse(
 			journalArticleContentDashboardItem.isEditURLEnabled(
@@ -533,7 +533,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, null, null, null);
+				null, journalArticle, _getLanguage(), null, null);
 
 		Assert.assertTrue(
 			journalArticleContentDashboardItem.isViewURLEnabled(
@@ -574,7 +574,7 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null, assetDisplayPageFriendlyURLProvider, null, null,
-				null, journalArticle, null, null, null);
+				null, journalArticle, _getLanguage(), null, null);
 
 		Assert.assertFalse(
 			journalArticleContentDashboardItem.isViewURLEnabled(
@@ -591,6 +591,12 @@ public class JournalArticleContentDashboardItemTest {
 			themeDisplay.clone()
 		).thenReturn(
 			themeDisplay
+		);
+
+		Mockito.when(
+			themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.US
 		);
 
 		mockHttpServletRequest.setAttribute(

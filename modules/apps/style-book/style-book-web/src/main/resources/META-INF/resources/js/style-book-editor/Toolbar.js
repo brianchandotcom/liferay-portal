@@ -70,6 +70,11 @@ export default function Toolbar() {
 					type="hidden"
 					value={config.redirectURL}
 				/>
+				<input
+					name={`${config.namespace}styleBookEntryId`}
+					type="hidden"
+					value={config.styleBookEntryId}
+				/>
 
 				<ClayButton
 					disabled={config.pending}

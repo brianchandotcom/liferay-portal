@@ -83,8 +83,6 @@ public class EditStyleBookEntryDisplayContext {
 				actionURL.setParameter(
 					ActionRequest.ACTION_NAME,
 					"/style_book/publish_style_book_entry");
-				actionURL.setParameter(
-					"styleBookEntryId", String.valueOf(_getStyleBookEntryId()));
 
 				return actionURL.toString();
 			}

@@ -112,6 +112,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(
+					"data", _getDataJSONObject(contentDashboardItem, locale)
+				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
@@ -184,6 +186,29 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			).toArray());
 	}
 
+	private JSONObject _getDataJSONObject(
+		ContentDashboardItem contentDashboardItem, Locale locale) {
+
+		Map<String, Object> data = contentDashboardItem.getData(locale);
+
+		Set<Map.Entry<String, Object>> entries = data.entrySet();
+
+		Stream<Map.Entry<String, Object>> stream = entries.stream();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		stream.forEach(
+			entry -> jsonObject.put(
+				entry.getKey(),
+				JSONUtil.put(
+					"title", _language.get(locale, entry.getKey())
+				).put(
+					"value", _toString(entry.getValue())
+				)));
+
+		return jsonObject;
+	}
+
 	private String _getSubtype(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
@@ -240,6 +265,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
 
 		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+	}
+
+	private String _toString(Object object) {
+		if (object == null) {
+			return null;
+		}
+
+		if (object instanceof Date) {
+			return _toString((Date)object);
+		}
+
+		return String.valueOf(object);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

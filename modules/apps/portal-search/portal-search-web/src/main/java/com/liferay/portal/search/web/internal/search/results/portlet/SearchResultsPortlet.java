@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -54,6 +55,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.portlet.Portlet;
@@ -160,8 +162,11 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		searchResultsPortletDisplayContext.setKeywords(
+		Optional<String> keywords = Optional.ofNullable(
 			searchRequest.getQueryString());
+
+		searchResultsPortletDisplayContext.setKeywords(
+			keywords.orElse(StringPool.BLANK));
 
 		searchResultsPortletDisplayContext.setRenderNothing(
 			isRenderNothing(searchRequest));

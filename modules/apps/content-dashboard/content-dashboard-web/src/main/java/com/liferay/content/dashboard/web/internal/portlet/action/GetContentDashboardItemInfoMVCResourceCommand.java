@@ -112,6 +112,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(
+					"className", contentDashboardItem.getClassName()
+				).put(
+					"classPK", contentDashboardItem.getClassPK()
+				).put(
 					"data", _getDataJSONObject(contentDashboardItem, locale)
 				).put(
 					"modifiedDate",

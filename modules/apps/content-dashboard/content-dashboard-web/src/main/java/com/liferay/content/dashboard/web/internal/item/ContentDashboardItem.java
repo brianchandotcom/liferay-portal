@@ -40,6 +40,8 @@ public interface ContentDashboardItem<T> {
 
 	public ContentDashboardItemType getContentDashboardItemType();
 
+	public Map<String, Object> getData(Locale locale);
+
 	public Locale getDefaultLocale();
 
 	public String getEditURL(HttpServletRequest httpServletRequest);

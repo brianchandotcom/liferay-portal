@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -120,6 +121,17 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public ContentDashboardItemType getContentDashboardItemType() {
 		return _contentDashboardItemType;
+	}
+
+	@Override
+	public Map<String, Object> getData(Locale locale) {
+		return HashMapBuilder.<String, Object>put(
+			"display-date", _journalArticle.getDisplayDate()
+		).put(
+			"expiration-date", _journalArticle.getExpirationDate()
+		).put(
+			"review-date", _journalArticle.getReviewDate()
+		).build();
 	}
 
 	@Override

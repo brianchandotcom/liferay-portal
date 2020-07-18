@@ -919,21 +919,17 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 
 	liferayRenderRequest.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
-	String portletContentJSP = StringPool.BLANK;
-
 	if (!portlet.isReady()) {
-		portletContentJSP = "/portal/portlet_not_ready.jsp";
+		request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_not_ready.jsp");
 	}
 
 	if (portletException) {
-		portletContentJSP = "/portal/portlet_error.jsp";
+		request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_error.jsp");
 	}
 
 	if (addNotAjaxablePortlet) {
-		portletContentJSP = "/portal/portlet_not_ajaxable.jsp";
+		request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_not_ajaxable.jsp");
 	}
-
-	request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, portletContentJSP);
 	%>
 
 	<c:choose>

@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -51,7 +52,7 @@ public class JournalArticleContentDashboardItem
 	implements ContentDashboardItem<JournalArticle> {
 
 	public JournalArticleContentDashboardItem(
-		List<AssetCategory> assetCategories,
+		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		ContentDashboardItemType contentDashboardItemType, Group group,
 		InfoEditURLProvider<JournalArticle> infoEditURLProvider,
@@ -64,6 +65,13 @@ public class JournalArticleContentDashboardItem
 		}
 		else {
 			_assetCategories = Collections.unmodifiableList(assetCategories);
+		}
+
+		if (ListUtil.isEmpty(assetTags)) {
+			_assetTags = Collections.emptyList();
+		}
+		else {
+			_assetTags = Collections.unmodifiableList(assetTags);
 		}
 
 		_assetDisplayPageFriendlyURLProvider =
@@ -99,6 +107,11 @@ public class JournalArticleContentDashboardItem
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Override
+	public List<AssetTag> getAssetTags() {
+		return _assetTags;
 	}
 
 	@Override
@@ -273,6 +286,7 @@ public class JournalArticleContentDashboardItem
 	private final List<AssetCategory> _assetCategories;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final List<AssetTag> _assetTags;
 	private final ContentDashboardItemType _contentDashboardItemType;
 	private final Group _group;
 	private final InfoEditURLProvider<JournalArticle> _infoEditURLProvider;

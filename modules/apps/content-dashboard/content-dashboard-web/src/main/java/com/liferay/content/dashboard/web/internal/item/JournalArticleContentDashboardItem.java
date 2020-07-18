@@ -119,6 +119,16 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getClassName() {
+		return JournalArticle.class.getName();
+	}
+
+	@Override
+	public Long getClassPK() {
+		return _journalArticle.getResourcePrimKey();
+	}
+
+	@Override
 	public ContentDashboardItemType getContentDashboardItemType() {
 		return _contentDashboardItemType;
 	}

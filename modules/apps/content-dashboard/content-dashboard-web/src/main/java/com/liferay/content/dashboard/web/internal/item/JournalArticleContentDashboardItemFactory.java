@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Optional;
@@ -79,7 +80,8 @@ public class JournalArticleContentDashboardItemFactory
 			_infoEditURLProviderTracker.getInfoEditURLProvider(
 				JournalArticle.class.getName()),
 			journalArticle, _language, latestApprovedJournalArticle,
-			_modelResourcePermission);
+			_modelResourcePermission,
+			_userLocalService.fetchUser(journalArticle.getUserId()));
 	}
 
 	@Reference
@@ -109,5 +111,8 @@ public class JournalArticleContentDashboardItemFactory
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelResourcePermission<JournalArticle> _modelResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

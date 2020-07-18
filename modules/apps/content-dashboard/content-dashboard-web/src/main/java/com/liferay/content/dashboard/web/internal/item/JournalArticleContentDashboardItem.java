@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,7 +63,8 @@ public class JournalArticleContentDashboardItem
 		InfoEditURLProvider<JournalArticle> infoEditURLProvider,
 		JournalArticle journalArticle, Language language,
 		JournalArticle latestApprovedJournalArticle,
-		ModelResourcePermission<JournalArticle> modelResourcePermission) {
+		ModelResourcePermission<JournalArticle> modelResourcePermission,
+		User user) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -94,6 +96,7 @@ public class JournalArticleContentDashboardItem
 		}
 
 		_modelResourcePermission = modelResourcePermission;
+		_user = user;
 	}
 
 	@Override
@@ -208,12 +211,28 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public long getUserId() {
-		return _journalArticle.getUserId();
+		return _user.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _journalArticle.getUserName();
+		return _user.getFullName();
+	}
+
+	@Override
+	public String getUserPortraitURL(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return _user.getPortraitURL(themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -356,5 +375,6 @@ public class JournalArticleContentDashboardItem
 	private final JournalArticle _latestApprovedJournalArticle;
 	private final ModelResourcePermission<JournalArticle>
 		_modelResourcePermission;
+	private final User _user;
 
 }

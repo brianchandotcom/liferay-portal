@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -42,9 +43,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -109,6 +112,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"userId", contentDashboardItem.getUserId()
 				).put(
 					"userName", contentDashboardItem.getUserName()
+				).put(
+					"versions",
+					_getVersionsJSONArray(contentDashboardItem, locale)
 				)
 			).orElseGet(
 				JSONFactoryUtil::createJSONObject
@@ -141,6 +147,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemType();
 
 		return contentDashboardItemType.getLabel(locale);
+	}
+
+	private JSONArray _getVersionsJSONArray(
+		ContentDashboardItem contentDashboardItem, Locale locale) {
+
+		List<ContentDashboardItem.Version> versions =
+			contentDashboardItem.getVersions(locale);
+
+		Stream<ContentDashboardItem.Version> stream = versions.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				ContentDashboardItem.Version::toJSONObject
+			).toArray());
 	}
 
 	private String _toString(Date date) {

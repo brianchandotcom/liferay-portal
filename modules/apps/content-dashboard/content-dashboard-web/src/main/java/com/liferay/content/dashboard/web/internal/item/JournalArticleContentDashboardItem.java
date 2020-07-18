@@ -85,6 +85,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public List<AssetCategory> getAssetCategories() {
+		return _assetCategories;
+	}
+
+	@Override
 	public List<AssetCategory> getAssetCategories(long assetVocabularyId) {
 		Stream<AssetCategory> stream = _assetCategories.stream();
 

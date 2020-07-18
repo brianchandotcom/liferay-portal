@@ -76,29 +76,12 @@ public class EditStyleBookEntryDisplayContext {
 					layoutURL, "p_l_mode", Constants.PREVIEW);
 			}
 		).put(
-			"publishURL",
-			() -> {
-				PortletURL actionURL = _renderResponse.createActionURL();
-
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/style_book/publish_style_book_entry");
-
-				return actionURL.toString();
-			}
+			"publishURL", _getActionURL("/style_book/publish_style_book_entry")
 		).put(
 			"redirectURL", _getRedirect()
 		).put(
 			"saveDraftURL",
-			() -> {
-				PortletURL actionURL = _renderResponse.createActionURL();
-
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/style_book/save_draft_style_book_entry");
-
-				return actionURL.toString();
-			}
+			_getActionURL("/style_book/save_draft_style_book_entry")
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
@@ -120,6 +103,14 @@ public class EditStyleBookEntryDisplayContext {
 				return JSONFactoryUtil.createJSONObject(tokensValues);
 			}
 		).build();
+	}
+
+	private String _getActionURL(String actionName) {
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(ActionRequest.ACTION_NAME, actionName);
+
+		return actionURL.toString();
 	}
 
 	private String _getRedirect() {

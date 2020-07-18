@@ -16,6 +16,7 @@ package com.liferay.style.book.internal.frontend.css.variables;
 
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +24,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -50,21 +54,7 @@ public class StyleBookScopedCSSVariablesProvider
 	public Collection<ScopedCSSVariables> getScopedCSSVariablesCollection(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				layout.getGroupId());
-
-		if (styleBookEntry == null) {
-			return Collections.emptyList();
-		}
-
-		String tokensValues = styleBookEntry.getTokensValues();
+		String tokensValues = _getTokensValues(httpServletRequest);
 
 		if (Validator.isNull(tokensValues)) {
 			return Collections.emptyList();
@@ -111,8 +101,46 @@ public class StyleBookScopedCSSVariablesProvider
 			});
 	}
 
+	private String _getTokensValues(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+				layout.getGroupId());
+
+		if (styleBookEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		String layoutMode = ParamUtil.getString(
+			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (!layoutMode.equals(Constants.PREVIEW)) {
+			return styleBookEntry.getTokensValues();
+		}
+
+		StyleBookEntry draftStyleBookEntry =
+			_styleBookEntryLocalService.fetchDraft(styleBookEntry);
+
+		if (draftStyleBookEntry != null) {
+			return draftStyleBookEntry.getTokensValues();
+		}
+
+		return styleBookEntry.getTokensValues();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookScopedCSSVariablesProvider.class);
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

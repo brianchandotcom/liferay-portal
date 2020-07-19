@@ -145,6 +145,8 @@ public class DBUpgrader {
 	}
 
 	public static void upgrade() throws Exception {
+		StartupHelperUtil.setUpgrading(true);
+
 		_upgradePortal();
 
 		DependencyManagerSyncUtil.sync();

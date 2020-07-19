@@ -26,6 +26,7 @@ import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
 import com.liferay.portal.deploy.hot.CustomJspBagRegistryUtil;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -374,6 +375,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+
+		StartupHelperUtil.setUpgrading(false);
 
 		CustomJspBagRegistryUtil.getCustomJspBags();
 

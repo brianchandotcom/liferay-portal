@@ -20,7 +20,6 @@ import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -103,14 +102,9 @@ public class StartupAction extends SimpleAction {
 
 		// Check required schema version
 
-		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-			DependencyManagerSyncUtil.sync();
-		}
-		else {
-			StartupHelperUtil.verifyRequiredSchemaVersion();
+		StartupHelperUtil.verifyRequiredSchemaVersion();
 
-			DBUpgrader.checkReleaseState();
-		}
+		DBUpgrader.checkReleaseState();
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -157,9 +151,7 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Check resource actions");
 		}
 
-		if (StartupHelperUtil.isDBNew() ||
-			PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-
+		if (StartupHelperUtil.isDBNew()) {
 			StartupHelperUtil.initResourceActions();
 
 			ResourceActionLocalServiceUtil.checkResourceActions();

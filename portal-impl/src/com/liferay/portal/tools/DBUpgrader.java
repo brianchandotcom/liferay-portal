@@ -194,25 +194,6 @@ public class DBUpgrader {
 		ResourceActionLocalServiceUtil.checkResourceActions();
 	}
 
-	private static void _checkPermissionAlgorithm() throws Exception {
-		long count = _getResourceCodesCount();
-
-		if (count == 0) {
-			return;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("Permission conversion to algorithm 6 has not been ");
-		sb.append("completed. Please complete the conversion prior to ");
-		sb.append("starting the portal. The conversion process is available ");
-		sb.append("in portal versions starting with 5203 and prior to ");
-		sb.append(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
-		sb.append(".");
-
-		throw new IllegalStateException(sb.toString());
-	}
-
 	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)
 		throws Exception {
 
@@ -246,23 +227,6 @@ public class DBUpgrader {
 			throw new IllegalArgumentException(
 				"No Release exists with the primary key " +
 					ReleaseConstants.DEFAULT_ID);
-		}
-	}
-
-	private static long _getResourceCodesCount() throws Exception {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"select count(*) from ResourceCode");
-			ResultSet rs = ps.executeQuery()) {
-
-			if (rs.next()) {
-				return rs.getInt(1);
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			return 0;
 		}
 	}
 
@@ -389,7 +353,6 @@ public class DBUpgrader {
 			_log.debug("Update build " + buildNumber);
 		}
 
-		_checkPermissionAlgorithm();
 		checkReleaseState();
 
 		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {

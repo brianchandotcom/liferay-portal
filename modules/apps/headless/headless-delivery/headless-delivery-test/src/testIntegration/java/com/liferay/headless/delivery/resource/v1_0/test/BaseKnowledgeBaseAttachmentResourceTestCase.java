@@ -191,6 +191,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			randomKnowledgeBaseAttachment();
 
 		knowledgeBaseAttachment.setContentUrl(regex);
+		knowledgeBaseAttachment.setContentValue(regex);
 		knowledgeBaseAttachment.setEncodingFormat(regex);
 		knowledgeBaseAttachment.setFileExtension(regex);
 		knowledgeBaseAttachment.setTitle(regex);
@@ -203,6 +204,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		knowledgeBaseAttachment = KnowledgeBaseAttachmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, knowledgeBaseAttachment.getContentUrl());
+		Assert.assertEquals(regex, knowledgeBaseAttachment.getContentValue());
 		Assert.assertEquals(regex, knowledgeBaseAttachment.getEncodingFormat());
 		Assert.assertEquals(regex, knowledgeBaseAttachment.getFileExtension());
 		Assert.assertEquals(regex, knowledgeBaseAttachment.getTitle());
@@ -566,6 +568,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (knowledgeBaseAttachment.getContentValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (knowledgeBaseAttachment.getEncodingFormat() == null) {
 					valid = false;
@@ -705,6 +715,17 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						knowledgeBaseAttachment1.getContentUrl(),
 						knowledgeBaseAttachment2.getContentUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseAttachment1.getContentValue(),
+						knowledgeBaseAttachment2.getContentValue())) {
 
 					return false;
 				}
@@ -860,6 +881,15 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("contentValue")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(knowledgeBaseAttachment.getContentValue()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(
@@ -948,6 +978,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		return new KnowledgeBaseAttachment() {
 			{
 				contentUrl = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				contentValue = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

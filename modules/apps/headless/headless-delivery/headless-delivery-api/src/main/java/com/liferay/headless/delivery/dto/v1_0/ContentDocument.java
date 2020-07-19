@@ -137,6 +137,34 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@Schema
+	public String getContentValue() {
+		return contentValue;
+	}
+
+	public void setContentValue(String contentValue) {
+		this.contentValue = contentValue;
+	}
+
+	@JsonIgnore
+	public void setContentValue(
+		UnsafeSupplier<String, Exception> contentValueUnsafeSupplier) {
+
+		try {
+			contentValue = contentValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String contentValue;
+
 	@Schema(description = "The document's description.")
 	public String getDescription() {
 		return description;
@@ -368,6 +396,20 @@ public class ContentDocument {
 			sb.append("\"");
 
 			sb.append(_escape(contentUrl));
+
+			sb.append("\"");
+		}
+
+		if (contentValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentValue));
 
 			sb.append("\"");
 		}

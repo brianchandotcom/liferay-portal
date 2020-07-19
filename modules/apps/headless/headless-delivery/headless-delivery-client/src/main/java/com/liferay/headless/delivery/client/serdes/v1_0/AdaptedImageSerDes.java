@@ -69,6 +69,20 @@ public class AdaptedImageSerDes {
 			sb.append("\"");
 		}
 
+		if (adaptedImage.getContentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(adaptedImage.getContentValue()));
+
+			sb.append("\"");
+		}
+
 		if (adaptedImage.getHeight() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -139,6 +153,14 @@ public class AdaptedImageSerDes {
 			map.put("contentUrl", String.valueOf(adaptedImage.getContentUrl()));
 		}
 
+		if (adaptedImage.getContentValue() == null) {
+			map.put("contentValue", null);
+		}
+		else {
+			map.put(
+				"contentValue", String.valueOf(adaptedImage.getContentValue()));
+		}
+
 		if (adaptedImage.getHeight() == null) {
 			map.put("height", null);
 		}
@@ -194,6 +216,11 @@ public class AdaptedImageSerDes {
 			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
 				if (jsonParserFieldValue != null) {
 					adaptedImage.setContentUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentValue")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setContentValue((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "height")) {

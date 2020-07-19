@@ -69,6 +69,20 @@ public class WikiPageAttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (wikiPageAttachment.getContentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(wikiPageAttachment.getContentValue()));
+
+			sb.append("\"");
+		}
+
 		if (wikiPageAttachment.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -161,6 +175,15 @@ public class WikiPageAttachmentSerDes {
 				String.valueOf(wikiPageAttachment.getContentUrl()));
 		}
 
+		if (wikiPageAttachment.getContentValue() == null) {
+			map.put("contentValue", null);
+		}
+		else {
+			map.put(
+				"contentValue",
+				String.valueOf(wikiPageAttachment.getContentValue()));
+		}
+
 		if (wikiPageAttachment.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);
 		}
@@ -226,6 +249,12 @@ public class WikiPageAttachmentSerDes {
 			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
 				if (jsonParserFieldValue != null) {
 					wikiPageAttachment.setContentUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentValue")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setContentValue(
 						(String)jsonParserFieldValue);
 				}
 			}

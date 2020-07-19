@@ -118,6 +118,20 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getContentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getContentValue()));
+
+			sb.append("\"");
+		}
+
 		if (document.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -437,6 +451,13 @@ public class DocumentSerDes {
 			map.put("contentUrl", String.valueOf(document.getContentUrl()));
 		}
 
+		if (document.getContentValue() == null) {
+			map.put("contentValue", null);
+		}
+		else {
+			map.put("contentValue", String.valueOf(document.getContentValue()));
+		}
+
 		if (document.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -628,6 +649,11 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {
 				if (jsonParserFieldValue != null) {
 					document.setContentUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentValue")) {
+				if (jsonParserFieldValue != null) {
+					document.setContentValue((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {

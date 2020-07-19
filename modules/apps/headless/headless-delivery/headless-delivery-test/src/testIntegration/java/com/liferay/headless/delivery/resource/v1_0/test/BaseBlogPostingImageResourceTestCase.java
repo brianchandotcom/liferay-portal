@@ -194,6 +194,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage = randomBlogPostingImage();
 
 		blogPostingImage.setContentUrl(regex);
+		blogPostingImage.setContentValue(regex);
 		blogPostingImage.setEncodingFormat(regex);
 		blogPostingImage.setFileExtension(regex);
 		blogPostingImage.setTitle(regex);
@@ -205,6 +206,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		blogPostingImage = BlogPostingImageSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, blogPostingImage.getContentUrl());
+		Assert.assertEquals(regex, blogPostingImage.getContentValue());
 		Assert.assertEquals(regex, blogPostingImage.getEncodingFormat());
 		Assert.assertEquals(regex, blogPostingImage.getFileExtension());
 		Assert.assertEquals(regex, blogPostingImage.getTitle());
@@ -919,6 +921,14 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (blogPostingImage.getContentValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (blogPostingImage.getEncodingFormat() == null) {
 					valid = false;
@@ -1065,6 +1075,17 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				if (!Objects.deepEquals(
 						blogPostingImage1.getContentUrl(),
 						blogPostingImage2.getContentUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						blogPostingImage1.getContentValue(),
+						blogPostingImage2.getContentValue())) {
 
 					return false;
 				}
@@ -1228,6 +1249,14 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("contentValue")) {
+			sb.append("'");
+			sb.append(String.valueOf(blogPostingImage.getContentValue()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(String.valueOf(blogPostingImage.getEncodingFormat()));
@@ -1317,6 +1346,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return new BlogPostingImage() {
 			{
 				contentUrl = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				contentValue = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

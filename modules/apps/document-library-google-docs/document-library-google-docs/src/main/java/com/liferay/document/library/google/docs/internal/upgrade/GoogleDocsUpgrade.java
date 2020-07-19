@@ -18,6 +18,7 @@ import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.UpgradeF
 import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -49,5 +50,8 @@ public class GoogleDocsUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

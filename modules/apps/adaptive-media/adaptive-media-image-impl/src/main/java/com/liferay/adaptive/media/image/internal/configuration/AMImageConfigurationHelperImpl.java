@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -617,5 +618,8 @@ public class AMImageConfigurationHelperImpl
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

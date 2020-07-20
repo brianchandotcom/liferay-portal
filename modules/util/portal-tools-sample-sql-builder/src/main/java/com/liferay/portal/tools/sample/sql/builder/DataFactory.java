@@ -340,6 +340,8 @@ public class DataFactory {
 		_accountId = _counter.get();
 		_commerceCatalogGroupId = _counter.get();
 		_commerceChannelGroupId = _counter.get();
+		_commerceCatalogId = _counter.get();
+		_commerceChannelId = _counter.get();
 		_companyId = _counter.get();
 		_defaultDDLDDMStructureVersionId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
@@ -383,8 +385,7 @@ public class DataFactory {
 
 	public ResourcePermissionModel commerceCatalogResourcePermission() {
 		return newResourcePermissionModel(
-			CommerceCatalog.class.getName(),
-			String.valueOf(_commerceCatalogModel.getCommerceCatalogId()),
+			CommerceCatalog.class.getName(), String.valueOf(_commerceCatalogId),
 			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
@@ -1232,13 +1233,10 @@ public class DataFactory {
 		return blogsStatsUserModel;
 	}
 
-	public GroupModel newCommerceCatalogGroupModel(
-		CommerceCatalogModel commerceCatalogModel) {
-
+	public GroupModel newCommerceCatalogGroupModel() {
 		return newGroupModel(
 			_commerceCatalogGroupId, getClassNameId(CommerceCatalog.class),
-			commerceCatalogModel.getCommerceCatalogId(),
-			commerceCatalogModel.getName(), false);
+			_commerceCatalogId, _COMMERCE_CATALOG_NAME, false);
 	}
 
 	public CommerceCatalogModel newCommerceCatalogModel(
@@ -1247,12 +1245,12 @@ public class DataFactory {
 		CommerceCatalogModel commerceCatalogModel =
 			new CommerceCatalogModelImpl();
 
-		commerceCatalogModel.setCommerceCatalogId(_counter.get());
+		commerceCatalogModel.setCommerceCatalogId(_commerceCatalogId);
 		commerceCatalogModel.setCompanyId(_companyId);
 		commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
 		commerceCatalogModel.setCreateDate(new Date());
 		commerceCatalogModel.setModifiedDate(new Date());
-		commerceCatalogModel.setName("Master");
+		commerceCatalogModel.setName(_COMMERCE_CATALOG_NAME);
 		commerceCatalogModel.setCommerceCurrencyCode(
 			commerceCurrencyModel.getCode());
 		commerceCatalogModel.setCatalogDefaultLanguageId("en_US");
@@ -1261,13 +1259,10 @@ public class DataFactory {
 		return commerceCatalogModel;
 	}
 
-	public GroupModel newCommerceChannelGroupModel(
-		CommerceChannelModel commerceChannelModel) {
-
+	public GroupModel newCommerceChannelGroupModel() {
 		return newGroupModel(
 			_commerceChannelGroupId, getClassNameId(CommerceChannel.class),
-			commerceChannelModel.getCommerceChannelId(),
-			commerceChannelModel.getName(), false);
+			_commerceChannelId, _COMMERCE_CHANNEL_NAME, false);
 	}
 
 	public CommerceChannelModel newCommerceChannelModel(
@@ -1276,14 +1271,14 @@ public class DataFactory {
 		CommerceChannelModel commerceChannelModel =
 			new CommerceChannelModelImpl();
 
-		commerceChannelModel.setCommerceChannelId(_counter.get());
+		commerceChannelModel.setCommerceChannelId(_commerceChannelId);
 		commerceChannelModel.setCompanyId(_companyId);
 		commerceChannelModel.setUserId(_sampleUserId);
 		commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
 		commerceChannelModel.setCreateDate(new Date());
 		commerceChannelModel.setModifiedDate(new Date());
 		commerceChannelModel.setSiteGroupId(1);
-		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
+		commerceChannelModel.setName(_COMMERCE_CHANNEL_NAME);
 		commerceChannelModel.setType("site");
 		commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
 		commerceChannelModel.setCommerceCurrencyCode(
@@ -4392,6 +4387,11 @@ public class DataFactory {
 		return StringUtil.merge(lines, StringPool.SPACE);
 	}
 
+	private static final String _COMMERCE_CATALOG_NAME = "Master";
+
+	private static final String _COMMERCE_CHANNEL_NAME =
+		DataFactory._SAMPLE_USER_NAME + " Channel";
+
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final String _DEPENDENCIES_DIR =
@@ -4425,8 +4425,10 @@ public class DataFactory {
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private final long _commerceCatalogGroupId;
+	private final long _commerceCatalogId;
 	private final CommerceCatalogModel _commerceCatalogModel;
 	private final long _commerceChannelGroupId;
+	private final long _commerceChannelId;
 	private final CommerceChannelModel _commerceChannelModel;
 	private final CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;

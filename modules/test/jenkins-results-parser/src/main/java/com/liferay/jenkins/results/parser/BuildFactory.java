@@ -43,6 +43,10 @@ public class BuildFactory {
 			return new BatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
+		if (url.contains("-controller")) {
+			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (url.contains("-source-format")) {
 			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}
@@ -57,10 +61,6 @@ public class BuildFactory {
 
 		if (url.contains("root-cause-analysis-tool-batch")) {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
-		}
-
-		if (url.contains("test-portal-environment-controller")) {
-			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		for (String batchToken : _TOKENS_BATCH) {

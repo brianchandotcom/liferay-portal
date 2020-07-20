@@ -10,7 +10,7 @@
 					"enum": [
 						"ColorPicker"
 					],
-					"title": "The Editor Type used to edit the Token",
+					"title": "The Editor Type Used to Edit the Token",
 					"type": "string"
 				},
 				"label": {
@@ -47,11 +47,11 @@
 					"type": "string"
 				},
 				"tokenCategoryName": {
-					"title": "Name of the TokenCategory associated to the Token",
+					"title": "Name of the Token Category Associated to the Token",
 					"type": "string"
 				},
 				"tokenSetName": {
-					"title": "Name of the TokenSet associated to the Token",
+					"title": "Name of the Token Set Associated to the Token",
 					"type": "string"
 				},
 				"type": {
@@ -102,7 +102,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"label": {
-					"title": "The Language Key to obtain the label of the Token Category",
+					"title": "The Language Key to Obtain the Label of the Token Category",
 					"type": "string"
 				},
 				"name": {
@@ -119,7 +119,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"label": {
-					"title": "The Language Key to obtain the label of the Token Set",
+					"title": "The Language Key to Obtain the Label of the Token Set",
 					"type": "string"
 				},
 				"name": {

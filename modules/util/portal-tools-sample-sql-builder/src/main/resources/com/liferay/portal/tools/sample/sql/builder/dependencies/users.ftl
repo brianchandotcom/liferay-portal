@@ -6,13 +6,9 @@
 />
 
 <#list userModels as userModel>
-	<#assign
-		userGroupModel = dataFactory.newGroupModel(userModel)
+	<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
 
-		layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
-	/>
-
-	<@insertLayout _layoutModel=layoutModel />
+	<@insertLayout _layoutModel=dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
 
 	<@insertGroup _groupModel=userGroupModel />
 

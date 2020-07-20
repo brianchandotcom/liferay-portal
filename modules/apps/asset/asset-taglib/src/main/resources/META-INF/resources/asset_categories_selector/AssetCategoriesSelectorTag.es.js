@@ -51,17 +51,21 @@ AssetCategoriesSelectorTag.propTypes = {
 };
 
 export default function (props) {
-	const description = Liferay.Util.sub(
-		Liferay.Language.get(
-			'x-learn-how-x-to-tailor-categories-to-your-needs'
-		),
-		`<a href=${props.learnHowURL} target="_blank">`,
-		'</a>'
-	);
-
 	return (
 		<>
-			{props.learnHowURL && <p>{description}</p>}
+			{props.learnHowURL && (
+				<div
+					dangerouslySetInnerHTML={{
+						__html: Liferay.Util.sub(
+							Liferay.Language.get(
+								'x-learn-how-x-to-tailor-categories-to-your-needs'
+							),
+							`<a href=${props.learnHowURL} target="_blank">`,
+							'</a>'
+						),
+					}}
+				/>
+			)}
 
 			<AssetCategoriesSelectorTag
 				{...props}

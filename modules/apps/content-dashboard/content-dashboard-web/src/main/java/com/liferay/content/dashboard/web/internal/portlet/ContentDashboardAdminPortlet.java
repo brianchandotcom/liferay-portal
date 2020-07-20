@@ -155,8 +155,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			ContentDashboardWebKeys.
 				CONTENT_DASHBOARD_ADMIN_INFO_PANEL_DISPLAY_CONTEXT,
 			new ContentDashboardAdminInfoPanelDisplayContext(
-				searchContainer.getTotal(),
-				_portal.getHttpServletRequest(renderRequest)));
+				searchContainer.getTotal()));
 
 		ContentDashboardAdminManagementToolbarDisplayContext
 			contentDashboardAdminManagementToolbarDisplayContext =

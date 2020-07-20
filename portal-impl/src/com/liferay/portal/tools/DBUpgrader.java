@@ -390,24 +390,14 @@ public class DBUpgrader {
 
 		// Update company key
 
-		if (StartupHelperUtil.isUpgraded()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Update company key");
-			}
-
-			_updateCompanyKey();
-		}
-
-		// Clear the caches only if the upgrade process was run
-
 		if (_log.isDebugEnabled()) {
-			_log.debug("Clear cache if upgrade process was run");
+			_log.debug("Update company key");
 		}
 
-		if (StartupHelperUtil.isUpgraded()) {
-			PortalCacheHelperUtil.clearPortalCaches(
-				PortalCacheManagerNames.MULTI_VM);
-		}
+		_updateCompanyKey();
+
+		PortalCacheHelperUtil.clearPortalCaches(
+			PortalCacheManagerNames.MULTI_VM);
 
 		// Enable database caching after upgrade
 

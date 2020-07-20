@@ -78,6 +78,10 @@ public class StartupHelperUtil {
 		return _startupFinished;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isUpgraded() {
 		return _upgraded;
 	}

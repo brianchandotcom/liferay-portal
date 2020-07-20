@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
-import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -147,11 +145,6 @@ public class UpgradeProcessUtil {
 		}
 		finally {
 			IndexWriterHelperUtil.setIndexReadOnly(tempIndexReadOnly);
-
-			if (ranUpgradeProcess) {
-				PortalCacheHelperUtil.clearPortalCaches(
-					PortalCacheManagerNames.MULTI_VM);
-			}
 		}
 
 		return ranUpgradeProcess;

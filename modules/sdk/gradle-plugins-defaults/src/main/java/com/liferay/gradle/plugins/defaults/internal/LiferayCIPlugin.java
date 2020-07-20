@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
-import com.liferay.gradle.plugins.LiferayYarnPlugin;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
@@ -271,13 +270,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(YarnInstallTask yarnInstallTask) {
-					String taskName = yarnInstallTask.getName();
-
-					if (taskName.startsWith(
-							LiferayYarnPlugin.YARN_INSTALL_TASK_NAME)) {
-
-						_configureTaskYarnInstall(yarnInstallTask);
-					}
+					_configureTaskYarnInstall(yarnInstallTask);
 				}
 
 			});

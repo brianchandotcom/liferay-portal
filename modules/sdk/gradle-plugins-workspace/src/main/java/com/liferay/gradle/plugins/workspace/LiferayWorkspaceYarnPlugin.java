@@ -14,8 +14,9 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import com.liferay.gradle.plugins.LiferayYarnPlugin;
+import com.liferay.gradle.plugins.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.node.NodeExtension;
+import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -35,7 +36,7 @@ import org.gradle.api.tasks.TaskProvider;
 /**
  * @author David Truong
  */
-public class LiferayWorkspaceYarnPlugin extends LiferayYarnPlugin {
+public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 
 	public static final String SET_UP_YARN_TASK_NAME = "setUpYarn";
 
@@ -44,6 +45,8 @@ public class LiferayWorkspaceYarnPlugin extends LiferayYarnPlugin {
 	@Override
 	public void apply(Project project) {
 		super.apply(project);
+
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		TaskProvider<SetUpYarnTask> setUpYarnTaskProvider =
 			GradleUtil.addTaskProvider(

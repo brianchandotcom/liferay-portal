@@ -63,6 +63,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.util.VersionNumber;
@@ -640,6 +641,21 @@ public class NodePlugin implements Plugin<Project> {
 
 		npmInstallTask.setNodeVersion(nodeExtension.getNodeVersion());
 		npmInstallTask.setNpmVersion(nodeExtension.getNpmVersion());
+
+		if (!npmInstallTask.isUseNpm()) {
+			Project curProject = npmInstallTask.getProject();
+
+			do {
+				TaskProvider<Task> yarnInstallTaskProvider =
+					GradleUtil.fetchTaskProvider(
+						curProject, YarnPlugin.YARN_INSTALL_TASK_NAME);
+
+				if (yarnInstallTaskProvider != null) {
+					npmInstallTask.finalizedBy(yarnInstallTaskProvider);
+				}
+			}
+			while ((curProject = curProject.getParent()) != null);
+		}
 	}
 
 	@SuppressWarnings("serial")

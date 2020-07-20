@@ -77,7 +77,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<clay:sheet cssClass="import-body-form">
+		<clay:sheet
+			cssClass="import-body-form"
+		>
 
 			<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(

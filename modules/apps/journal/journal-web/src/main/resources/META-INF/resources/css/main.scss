@@ -314,7 +314,8 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.import-body-form, .translate-body-form {
+		.import-body-form,
+		.translate-body-form {
 			margin-top: $toolbarHeight;
 
 			@include media-breakpoint-up(lg) {

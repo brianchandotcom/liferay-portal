@@ -25,6 +25,7 @@ definition {
 	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
 	@priority = "5"
 	test ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInDefaultInstance {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ApplicationsMenu#ApplicationsAndControlPanelAreMovedToProductMenuWhenDisableApplicationsMenuInDefaultInstance";
 
 		task ("Assert Applications Menu icon is shown in Control Menu by default") {

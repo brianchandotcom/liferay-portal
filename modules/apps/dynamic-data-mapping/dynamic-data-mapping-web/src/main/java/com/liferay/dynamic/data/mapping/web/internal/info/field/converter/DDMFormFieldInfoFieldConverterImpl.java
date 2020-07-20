@@ -20,11 +20,16 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.GridInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.RadioInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
 
@@ -65,16 +70,35 @@ public class DDMFormFieldInfoFieldConverterImpl
 		DDMFormField ddmFormField, InfoField.FinalStep finalStep) {
 
 		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.CHECKBOX_MULTIPLE)) {
+
+			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
+		}
+
+		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.DECIMAL)) {
+			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
+		}
+
+		if (Objects.equals(ddmFormField.getType(), "rich_text") ||
+			Objects.equals(
 				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
 
 			finalStep.attribute(TextInfoFieldType.HTML, true);
-			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
 		}
 
-		if (Objects.equals(
+		if (Objects.equals(ddmFormField.getType(), "rich_text") ||
+			Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML) ||
+			Objects.equals(
 				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
 
 			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
+		}
+
+		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.SELECT) &&
+			GetterUtil.getBoolean(ddmFormField.getProperty("multiple"))) {
+
+			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
 		}
 
 		return finalStep;
@@ -86,16 +110,34 @@ public class DDMFormFieldInfoFieldConverterImpl
 		if (Objects.equals(ddmFormFieldType, DDMFormFieldType.CHECKBOX)) {
 			return BooleanInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
-				 Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
-				 Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER)) {
+		else if (Objects.equals(
+					ddmFormFieldType, DDMFormFieldType.CHECKBOX_MULTIPLE) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.SELECT)) {
 
-			return NumberInfoFieldType.INSTANCE;
+			return SelectInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DATE) ||
+				 Objects.equals(ddmFormFieldType, "date")) {
+
+			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(ddmFormFieldType, "ddm-image") ||
 				 Objects.equals(ddmFormFieldType, "image")) {
 
 			return ImageInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMERIC) ||
+				 Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER)) {
+
+			return NumberInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.GRID)) {
+			return GridInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.RADIO)) {
+			return RadioInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

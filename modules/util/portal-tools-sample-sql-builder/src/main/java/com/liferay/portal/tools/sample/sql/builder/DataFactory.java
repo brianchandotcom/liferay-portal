@@ -1061,27 +1061,7 @@ public class DataFactory {
 	}
 
 	public void initDLFileEntryTypeModel() {
-		_defaultDLFileEntryTypeModel = new DLFileEntryTypeModelImpl();
-
-		_defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
-		_defaultDLFileEntryTypeModel.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
-		_defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
-		_defaultDLFileEntryTypeModel.setFileEntryTypeKey(
-			StringUtil.toUpperCase(
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
-		sb.append("</name></root>");
-
-		_defaultDLFileEntryTypeModel.setName(sb.toString());
-
-		_defaultDLFileEntryTypeModel.setLastPublishDate(nextFutureDate());
+		_defaultDLFileEntryTypeModel = newDLFileEntryTypeModel();
 
 		_defaultDLDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
@@ -1944,6 +1924,33 @@ public class DataFactory {
 		}
 
 		return dlFileEntryModels;
+	}
+
+	public DLFileEntryTypeModel newDLFileEntryTypeModel() {
+		DLFileEntryTypeModel defaultDLFileEntryTypeModel =
+			new DLFileEntryTypeModelImpl();
+
+		defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
+		defaultDLFileEntryTypeModel.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
+		defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
+		defaultDLFileEntryTypeModel.setFileEntryTypeKey(
+			StringUtil.toUpperCase(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		sb.append("</name></root>");
+
+		defaultDLFileEntryTypeModel.setName(sb.toString());
+
+		defaultDLFileEntryTypeModel.setLastPublishDate(nextFutureDate());
+
+		return defaultDLFileEntryTypeModel;
 	}
 
 	public DLFileVersionModel newDLFileVersionModel(

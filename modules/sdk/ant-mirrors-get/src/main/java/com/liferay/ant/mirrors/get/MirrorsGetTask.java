@@ -226,11 +226,13 @@ public class MirrorsGetTask extends Task {
 		if (!localCacheFile.exists()) {
 			URL sourceURL = null;
 
-			if (_tryLocalNetwork) {
+			String mirrorsHostname = getMirrorsHostname();
+
+			if (_tryLocalNetwork && (mirrorsHostname.length() > 0)) {
 				sb = new StringBuilder();
 
 				sb.append("http://");
-				sb.append(getMirrorsHostname());
+				sb.append(mirrorsHostname);
 				sb.append("/");
 				sb.append(_path);
 				sb.append("/");

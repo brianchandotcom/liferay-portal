@@ -200,9 +200,9 @@ public class TokenDefinitionRegistryImplTest {
 
 	private static final URL _liferayLookAndFeelXmlURL =
 		TokenDefinitionRegistryImplTest.class.getResource(
-			"liferay-look-and-feel.xml");
+			"dependencies/liferay-look-and-feel.xml");
 	private static final URL _tokenDefinitionJsonURL =
 		TokenDefinitionRegistryImplTest.class.getResource(
-			"token-definition.json");
+			"dependencies/token-definition.json");
 
 }

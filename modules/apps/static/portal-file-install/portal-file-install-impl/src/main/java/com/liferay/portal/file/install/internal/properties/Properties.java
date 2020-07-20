@@ -19,9 +19,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.io.BufferedReader;
 import java.io.FilterWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -268,7 +268,7 @@ public class Properties extends AbstractMap<String, String> {
 			new InterpolationUtil.BundleContextSubstitutionCallback(null));
 	}
 
-	public static class PropertiesReader extends LineNumberReader {
+	public static class PropertiesReader extends BufferedReader {
 
 		public PropertiesReader(Reader reader, boolean maybeTyped) {
 			super(reader);

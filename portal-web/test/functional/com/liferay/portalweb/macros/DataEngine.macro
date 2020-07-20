@@ -125,4 +125,11 @@ definition {
 			value1 = "${fieldFieldLabel}");
 	}
 
+	macro viewNestedField {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			key_nestedFieldName = "${nestedField}",
+			locator1 = "DDMField#NESTED_DE",
+			value1 = "${nestedFieldData}");
+	}
 }

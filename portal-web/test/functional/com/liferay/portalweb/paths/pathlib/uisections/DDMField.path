@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NESTED_DE</td>
+	<td>//div[contains(@class,'nested')]//div[@data-field-name='${key_fieldName}']/../../../..//div[@data-field-name='${key_nestedFieldName}']//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NESTED</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/div[@data-fieldname='${key_nestedFieldName}']//input</td>
 	<td></td>

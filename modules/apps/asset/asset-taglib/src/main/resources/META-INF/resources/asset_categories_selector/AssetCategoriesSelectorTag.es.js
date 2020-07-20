@@ -51,10 +51,17 @@ AssetCategoriesSelectorTag.propTypes = {
 };
 
 export default function (props) {
+	const initialPublicVocabularies = props.vocabularies.filter(
+		(vocabulary) => !vocabulary.system
+	);
+	const initialSystemVocabularies = props.vocabularies.filter(
+		(vocabulary) => vocabulary.system
+	);
+
 	return (
 		<>
 			{props.learnHowURL && (
-				<div
+				<p
 					className="text-secondary"
 					dangerouslySetInnerHTML={{
 						__html: Liferay.Util.sub(
@@ -68,10 +75,43 @@ export default function (props) {
 				/>
 			)}
 
-			<AssetCategoriesSelectorTag
-				{...props}
-				initialVocabularies={props.vocabularies}
-			/>
+			{initialPublicVocabularies && initialPublicVocabularies.length > 0 && (
+				<>
+					<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+						{Liferay.Language.get('public-categories')}
+					</div>
+
+					<p className="text-secondary">
+						{Liferay.Language.get(
+							'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
+						)}
+					</p>
+
+					<AssetCategoriesSelectorTag
+						{...props}
+						initialVocabularies={initialPublicVocabularies}
+					/>
+				</>
+			)}
+
+			{initialSystemVocabularies && initialSystemVocabularies.length > 0 && (
+				<>
+					<div className="border-0 mb-0 sheet-subtitle text-uppercase">
+						{Liferay.Language.get('internal-categories')}
+					</div>
+
+					<p className="text-secondary">
+						{Liferay.Language.get(
+							'they-are-displayed-inside-the-administration-only'
+						)}
+					</p>
+
+					<AssetCategoriesSelectorTag
+						{...props}
+						initialVocabularies={initialSystemVocabularies}
+					/>
+				</>
+			)}
 		</>
 	);
 }

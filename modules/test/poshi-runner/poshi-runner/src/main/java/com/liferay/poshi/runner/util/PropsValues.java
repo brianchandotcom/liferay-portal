@@ -96,6 +96,9 @@ public class PropsValues {
 	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
 		PropsUtil.get("selenium.desired.capabilities.platform");
 
+	public static final String SELENIUM_EDGE_DRIVER_EXECUTABLE = PropsUtil.get(
+		"selenium.edge.driver.executable");
+
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME = PropsUtil.get(
 		"selenium.executable.dir.name");
 

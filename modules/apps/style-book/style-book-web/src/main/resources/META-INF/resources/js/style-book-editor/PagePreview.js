@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
 import {StyleBookContext} from './StyleBookContext';
 import {config} from './config';
@@ -22,29 +22,54 @@ export default function PagePreview() {
 
 	const {tokensValues = {}} = useContext(StyleBookContext);
 
+	const loadTokenValues = useCallback(() => {
+		if (iframeRef.current) {
+			Object.values(tokensValues).forEach(
+				({cssVariableMapping, value}) => {
+					iframeRef.current.contentDocument.documentElement.style.setProperty(
+						`--${cssVariableMapping}`,
+						value
+					);
+				}
+			);
+		}
+	}, [tokensValues]);
+
 	useEffect(() => {
 		loadTokenValues(iframeRef.current, tokensValues);
-	}, [tokensValues]);
+
+		const iframeLiferay = iframeRef.current?.contentWindow?.Liferay;
+
+		if (iframeLiferay) {
+			iframeRef.current.contentWindow.Liferay.on(
+				'endNavigate',
+				loadTokenValues
+			);
+		}
+
+		return () => {
+			if (iframeLiferay) {
+				iframeLiferay.detach('endNavigate', loadTokenValues);
+			}
+		};
+	}, [loadTokenValues, tokensValues]);
 
 	return (
 		<div className="style-book-editor__page-preview">
 			<iframe
 				className="style-book-editor__page-preview-frame"
-				onLoad={() => loadTokenValues(iframeRef.current, tokensValues)}
+				onLoad={() => {
+					if (iframeRef.current?.contentWindow?.Liferay) {
+						iframeRef.current.contentWindow.Liferay.on(
+							'endNavigate',
+							loadTokenValues
+						);
+					}
+					loadTokenValues(iframeRef.current, tokensValues);
+				}}
 				ref={iframeRef}
 				src={config.previewURL}
 			/>
 		</div>
 	);
-}
-
-function loadTokenValues(iframe, tokensValues) {
-	if (iframe) {
-		Object.values(tokensValues).forEach(({cssVariableMapping, value}) => {
-			iframe.contentDocument.documentElement.style.setProperty(
-				`--${cssVariableMapping}`,
-				value
-			);
-		});
-	}
 }

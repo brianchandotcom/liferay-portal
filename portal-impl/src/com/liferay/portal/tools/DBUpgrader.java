@@ -309,12 +309,6 @@ public class DBUpgrader {
 
 	private static void _upgradePortalCore() throws Exception {
 
-		// Disable database caching before upgrade
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Disable cache registry");
-		}
-
 		// Check required build number
 
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
@@ -323,6 +317,12 @@ public class DBUpgrader {
 			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
 				return;
 			}
+		}
+
+		// Disable database caching before upgrade
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Disable cache registry");
 		}
 
 		CacheRegistryUtil.setActive(false);

@@ -147,10 +147,10 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldType = "Text");
 
-		DynamicDataMapping.addFieldNested(
-			field = "Integer",
-			fieldFieldLabel = "Integer",
-			fieldName = "Integer");
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Text",
+			fieldType = "Numeric");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -170,7 +170,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentInteger = "123",
+			webContentNumber = "123",
 			webContentText = "Text",
 			webContentTitle = "WC WebContent Title");
 
@@ -182,9 +182,9 @@ definition {
 			webContentText = "Text",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.viewNestedField(
+		DataEngine.viewNestedField(
 			fieldName = "Text",
-			nestedField = "Integer",
+			nestedField = "Numeric",
 			nestedFieldData = "123");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -197,8 +197,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
-		for (var structureFieldName : list "Text,Integer") {
-			DynamicDataMapping.viewField(
+		for (var structureFieldName : list "Text,Numeric") {
+			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
 				fieldName = "${structureFieldName}");
 		}

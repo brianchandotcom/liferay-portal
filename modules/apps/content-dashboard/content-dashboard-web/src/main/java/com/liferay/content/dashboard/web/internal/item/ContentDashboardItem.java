@@ -44,6 +44,8 @@ public interface ContentDashboardItem<T> {
 
 	public ContentDashboardItemType getContentDashboardItemType();
 
+	public Date getCreateDate();
+
 	public Map<String, Object> getData(Locale locale);
 
 	public Locale getDefaultLocale();

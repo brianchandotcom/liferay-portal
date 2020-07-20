@@ -137,6 +137,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public Date getCreateDate() {
+		return _journalArticle.getCreateDate();
+	}
+
+	@Override
 	public Map<String, Object> getData(Locale locale) {
 		return HashMapBuilder.<String, Object>put(
 			"display-date", _journalArticle.getDisplayDate()

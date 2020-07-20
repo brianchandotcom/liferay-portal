@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
@@ -79,7 +80,9 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 			_version, CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
-	protected String doExport(Definition definition) {
+	protected String doExport(Definition definition)
+		throws KaleoDefinitionValidationException {
+
 		try {
 			Document document = SAXReaderUtil.createDocument();
 

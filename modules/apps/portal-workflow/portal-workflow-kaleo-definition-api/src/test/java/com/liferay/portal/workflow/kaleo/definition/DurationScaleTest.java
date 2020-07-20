@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Arrays;
 
@@ -31,16 +31,17 @@ public class DurationScaleTest {
 		"year"
 	};
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(
+		expected = KaleoDefinitionValidationException.InvalidDurationScale.class
+	)
 	public void testParseInvalidScale() throws Exception {
-		DurationScale.valueOf("random text");
+		DurationScale.parse("random text");
 	}
 
 	@Test
 	public void testParseValidScales() throws Exception {
 		for (String scale : SCALES) {
-			DurationScale durationScale = DurationScale.valueOf(
-				StringUtil.toUpperCase(scale));
+			DurationScale durationScale = DurationScale.parse(scale);
 
 			Assert.assertEquals(scale, durationScale.getValue());
 		}

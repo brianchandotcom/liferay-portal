@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
@@ -72,8 +73,9 @@ public class MultiLanguageNotificationRecipientEvaluator
 		target = "(scripting.language=*)"
 	)
 	protected void addNotificationRecipientEvaluator(
-		NotificationRecipientEvaluator notificationRecipientEvaluator,
-		Map<String, Object> properties) {
+			NotificationRecipientEvaluator notificationRecipientEvaluator,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = _getScriptingLanguages(
 			notificationRecipientEvaluator, properties);
@@ -91,7 +93,8 @@ public class MultiLanguageNotificationRecipientEvaluator
 	}
 
 	protected String getNotificationRecipientEvaluatorKey(
-		String language, String notificationRecipientEvaluatorClassName) {
+			String language, String notificationRecipientEvaluatorClassName)
+		throws KaleoDefinitionValidationException {
 
 		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
 
@@ -104,8 +107,9 @@ public class MultiLanguageNotificationRecipientEvaluator
 	}
 
 	protected void removeNotificationRecipientEvaluator(
-		NotificationRecipientEvaluator notificationRecipientEvaluator,
-		Map<String, Object> properties) {
+			NotificationRecipientEvaluator notificationRecipientEvaluator,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = _getScriptingLanguages(
 			notificationRecipientEvaluator, properties);

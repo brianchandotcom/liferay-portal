@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
@@ -68,7 +69,9 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		target = "(scripting.language=*)"
 	)
 	protected void addConditionEvaluator(
-		ConditionEvaluator conditionEvaluator, Map<String, Object> properties) {
+			ConditionEvaluator conditionEvaluator,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			conditionEvaluator, properties);
@@ -82,7 +85,8 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 	}
 
 	protected String getConditionEvaluatorKey(
-		String language, String conditionEvaluatorClassName) {
+			String language, String conditionEvaluatorClassName)
+		throws KaleoDefinitionValidationException {
 
 		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
 
@@ -111,7 +115,9 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 	}
 
 	protected void removeConditionEvaluator(
-		ConditionEvaluator conditionEvaluator, Map<String, Object> properties) {
+			ConditionEvaluator conditionEvaluator,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			conditionEvaluator, properties);

@@ -16,11 +16,11 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -60,7 +60,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class TaskNodeExecutor extends BaseNodeExecutor {
 
-	protected Date calculateDueDate(KaleoTask kaleoTask) {
+	protected Date calculateDueDate(KaleoTask kaleoTask)
+		throws KaleoDefinitionValidationException {
+
 		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId());
 
@@ -73,8 +75,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		for (KaleoTimer kaleoTimer : kaleoTimers) {
 			DelayDuration delayDuration = new DelayDuration(
 				kaleoTimer.getDuration(),
-				DurationScale.valueOf(
-					StringUtil.toUpperCase(kaleoTimer.getScale())));
+				DurationScale.parse(kaleoTimer.getScale()));
 
 			Date dueDate = _dueDateCalculator.getDueDate(
 				new Date(), delayDuration);

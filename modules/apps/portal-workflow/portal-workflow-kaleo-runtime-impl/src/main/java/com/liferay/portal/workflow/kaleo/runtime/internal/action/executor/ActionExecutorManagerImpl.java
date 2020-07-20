@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
@@ -60,7 +61,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	}
 
 	protected String getActionExecutorKey(
-		String language, String actionExecutorClassName) {
+			String language, String actionExecutorClassName)
+		throws KaleoDefinitionValidationException {
 
 		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
 
@@ -77,7 +79,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerActionExecutor(
-		ActionExecutor actionExecutor, Map<String, Object> properties) {
+			ActionExecutor actionExecutor, Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		Object value = properties.get(
 			"com.liferay.portal.workflow.kaleo.runtime.action.executor." +
@@ -95,7 +98,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	}
 
 	protected synchronized void unregisterActionExecutor(
-		ActionExecutor actionExecutor, Map<String, Object> properties) {
+			ActionExecutor actionExecutor, Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		Object value = properties.get(
 			"com.liferay.portal.workflow.kaleo.runtime.action.executor." +

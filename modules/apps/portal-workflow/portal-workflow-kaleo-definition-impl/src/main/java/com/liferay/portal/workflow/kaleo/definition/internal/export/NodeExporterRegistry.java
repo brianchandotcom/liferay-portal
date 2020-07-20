@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 
 import java.util.Map;
@@ -32,7 +33,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = NodeExporterRegistry.class)
 public class NodeExporterRegistry {
 
-	public NodeExporter getNodeExporter(NodeType nodeType) {
+	public NodeExporter getNodeExporter(NodeType nodeType)
+		throws KaleoDefinitionValidationException {
+
 		return _nodeExporters.getNodeTypeDependentObjects(nodeType);
 	}
 

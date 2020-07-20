@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
 import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 
 import java.util.Map;
@@ -31,7 +32,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = NodeExecutorFactory.class)
 public class NodeExecutorFactory {
 
-	public NodeExecutor getNodeExecutor(String nodeTypeString) {
+	public NodeExecutor getNodeExecutor(String nodeTypeString)
+		throws KaleoDefinitionValidationException {
+
 		return _nodeExecutors.getNodeTypeDependentObjects(nodeTypeString);
 	}
 

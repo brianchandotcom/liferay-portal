@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.Map;
@@ -33,7 +34,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = NodeValidatorRegistry.class)
 public class NodeValidatorRegistry {
 
-	public NodeValidator<Node> getNodeValidator(NodeType nodeType) {
+	public NodeValidator<Node> getNodeValidator(NodeType nodeType)
+		throws KaleoDefinitionValidationException {
+
 		return _nodeValidators.getNodeTypeDependentObjects(nodeType);
 	}
 

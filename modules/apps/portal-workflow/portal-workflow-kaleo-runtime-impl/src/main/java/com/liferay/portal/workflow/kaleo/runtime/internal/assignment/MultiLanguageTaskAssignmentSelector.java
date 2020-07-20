@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -100,8 +101,9 @@ public class MultiLanguageTaskAssignmentSelector
 		target = "(scripting.language=*)"
 	)
 	protected void addTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector,
-		Map<String, Object> properties) {
+			TaskAssignmentSelector taskAssignmentSelector,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			taskAssignmentSelector, properties);
@@ -135,7 +137,8 @@ public class MultiLanguageTaskAssignmentSelector
 	}
 
 	protected String getTaskAssignmentSelectKey(
-		String language, String taskAssignmentSelectorClassName) {
+			String language, String taskAssignmentSelectorClassName)
+		throws KaleoDefinitionValidationException {
 
 		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
 
@@ -148,8 +151,9 @@ public class MultiLanguageTaskAssignmentSelector
 	}
 
 	protected void removeTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector,
-		Map<String, Object> properties) {
+			TaskAssignmentSelector taskAssignmentSelector,
+			Map<String, Object> properties)
+		throws KaleoDefinitionValidationException {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			taskAssignmentSelector, properties);

@@ -18,12 +18,7 @@ import React from 'react';
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../app/components/fragment-configuration-fields/index';
 import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
-export const FieldSet = ({
-	configurationValues,
-	fields,
-	label,
-	onValueSelect,
-}) => {
+export const FieldSet = ({fields, label, onValueSelect, values}) => {
 	return (
 		<>
 			{label && (
@@ -36,14 +31,13 @@ export const FieldSet = ({
 				const FieldComponent =
 					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-				const fieldValue = configurationValues[field.name];
+				const fieldValue = values[field.name];
 
 				const visible =
 					!field.dependencies ||
 					field.dependencies.every(
 						(dependency) =>
-							configurationValues[dependency.styleName] ===
-							dependency.value
+							values[dependency.styleName] === dependency.value
 					);
 
 				return (
@@ -62,8 +56,8 @@ export const FieldSet = ({
 };
 
 FieldSet.propTypes = {
-	configurationValues: PropTypes.object,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	label: PropTypes.string,
 	onValueSelect: PropTypes.func.isRequired,
+	values: PropTypes.object,
 };

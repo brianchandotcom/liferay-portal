@@ -111,13 +111,11 @@ const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
-						configurationValues={getConfigurationValues(
-							fragmentEntryLink
-						)}
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}
 						onValueSelect={onValueSelect}
+						values={getConfigurationValues(fragmentEntryLink)}
 					/>
 				);
 			})}
@@ -135,11 +133,11 @@ const CommonStyles = ({commonStyles, item, onValueSelect}) => (
 		{commonStyles.map((fieldSet, index) => {
 			return (
 				<FieldSet
-					configurationValues={item.config.styles}
 					fields={fieldSet.styles}
 					key={index}
 					label={fieldSet.label}
 					onValueSelect={onValueSelect}
+					values={item.config.styles}
 				/>
 			);
 		})}

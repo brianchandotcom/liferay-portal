@@ -78,14 +78,14 @@ export const FragmentConfigurationPanel = ({item}) => {
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
-						configurationValues={getConfigurationValues(
-							defaultConfigurationValues,
-							fragmentEntryLink
-						)}
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}
 						onValueSelect={onValueSelect}
+						values={getConfigurationValues(
+							defaultConfigurationValues,
+							fragmentEntryLink
+						)}
 					/>
 				);
 			})}

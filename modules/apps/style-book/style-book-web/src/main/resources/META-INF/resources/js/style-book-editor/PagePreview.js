@@ -23,25 +23,28 @@ export default function PagePreview() {
 	const {tokensValues = {}} = useContext(StyleBookContext);
 
 	useEffect(() => {
-		if (iframeRef.current) {
-			Object.values(tokensValues).forEach(
-				({cssVariableMapping, value}) => {
-					iframeRef.current.contentDocument.documentElement.style.setProperty(
-						`--${cssVariableMapping}`,
-						value
-					);
-				}
-			);
-		}
+		loadTokenValues(iframeRef.current, tokensValues);
 	}, [tokensValues]);
 
 	return (
 		<div className="style-book-editor__page-preview">
 			<iframe
 				className="style-book-editor__page-preview-frame"
+				onLoad={() => loadTokenValues(iframeRef.current, tokensValues)}
 				ref={iframeRef}
 				src={config.previewURL}
 			/>
 		</div>
 	);
+}
+
+function loadTokenValues(iframe, tokensValues) {
+	if (iframe) {
+		Object.values(tokensValues).forEach(({cssVariableMapping, value}) => {
+			iframe.contentDocument.documentElement.style.setProperty(
+				`--${cssVariableMapping}`,
+				value
+			);
+		});
+	}
 }

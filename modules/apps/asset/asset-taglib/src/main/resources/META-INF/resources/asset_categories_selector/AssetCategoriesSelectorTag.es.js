@@ -55,6 +55,7 @@ export default function (props) {
 		<>
 			{props.learnHowURL && (
 				<div
+					className="text-secondary"
 					dangerouslySetInnerHTML={{
 						__html: Liferay.Util.sub(
 							Liferay.Language.get(

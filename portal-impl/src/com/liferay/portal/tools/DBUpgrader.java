@@ -127,20 +127,6 @@ public class DBUpgrader {
 
 			upgrade();
 
-			_checkClassNamesAndResourceActions();
-
-			verify();
-
-			DependencyManagerSyncUtil.sync();
-
-			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
-
-			_registerModuleServiceLifecycle("database.initialized");
-
-			InitUtil.registerContext();
-
-			_registerModuleServiceLifecycle("portal.initialized");
-
 			_registerModuleServiceLifecycle("portlets.initialized");
 
 			System.out.println(
@@ -253,6 +239,20 @@ public class DBUpgrader {
 		// Register release service
 
 		_registerReleaseService();
+
+		_checkClassNamesAndResourceActions();
+
+		verify();
+
+		DependencyManagerSyncUtil.sync();
+
+		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
+
+		_registerModuleServiceLifecycle("database.initialized");
+
+		InitUtil.registerContext();
+
+		_registerModuleServiceLifecycle("portal.initialized");
 	}
 
 	public static void verify() throws VerifyException {

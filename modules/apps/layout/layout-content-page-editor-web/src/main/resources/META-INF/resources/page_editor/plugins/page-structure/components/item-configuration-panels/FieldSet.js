@@ -26,7 +26,11 @@ export const FieldSet = ({
 }) => {
 	return (
 		<>
-			{label && <p className="mb-3 sheet-subtitle">{label}</p>}
+			{label && (
+				<div className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset-label pt-3">
+					<p className="mb-3 text-uppercase">{label}</p>
+				</div>
+			)}
 
 			{fields.map((field, index) => {
 				const FieldComponent =

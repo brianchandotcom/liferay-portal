@@ -86,6 +86,10 @@
 		<finder name="ToGroupId" return-type="Collection">
 			<finder-column name="toGroupId" />
 		</finder>
+		<finder name="DSA_TGI" return-type="Collection">
+			<finder-column name="ddmStructuresAvailable" />
+			<finder-column name="toGroupId" />
+		</finder>
 		<finder name="D_TGI" return-type="DepotEntryGroupRel" unique="true">
 			<finder-column name="depotEntryId" />
 			<finder-column name="toGroupId" />

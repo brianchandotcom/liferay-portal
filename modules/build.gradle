@@ -95,11 +95,11 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 	}
 
 	portalYarnCheckFormat {
-		dependsOn ":private:yarnCheckFormat"
+		dependsOn ":private:packageRunCheckFormat"
 	}
 
 	portalYarnFormat {
-		dependsOn ":private:yarnFormat"
+		dependsOn ":private:packageRunFormat"
 	}
 
 	portalYarnInstall {
@@ -145,11 +145,11 @@ for (String gradleVersion in ["5.6.4"]) {
 }
 
 portalYarnCheckFormat {
-	dependsOn ":yarnCheckFormat"
+	dependsOn ":packageRunCheckFormat"
 }
 
 portalYarnFormat {
-	dependsOn ":yarnFormat"
+	dependsOn ":packageRunFormat"
 }
 
 portalYarnInstall {

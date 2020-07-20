@@ -761,7 +761,7 @@ ant format-source-all
 					<fileset
 						dir="${project.dir}/modules"
 						excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
-						includes="**/yarn-*.js"
+						includes="**/yarn.lock"
 					/>
 				</resourcecount>
 			</and>

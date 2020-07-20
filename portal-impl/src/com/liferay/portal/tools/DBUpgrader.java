@@ -145,114 +145,13 @@ public class DBUpgrader {
 	}
 
 	public static void upgrade() throws Exception {
-
-		// Disable database caching before upgrade
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Disable cache registry");
-		}
-
-		// Check required build number
-
-		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
-
-		try (Connection connection = DataAccess.getConnection()) {
-			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
-				return;
-			}
-		}
-
-		CacheRegistryUtil.setActive(false);
-
-		// Upgrade
-
-		Release release = ReleaseLocalServiceUtil.getRelease(
-			ReleaseConstants.DEFAULT_ID);
-
-		int buildNumber = release.getBuildNumber();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Update build " + buildNumber);
-		}
-
-		_checkPermissionAlgorithm();
-		checkReleaseState();
-
-		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
-			TransactionsUtil.disableTransactions();
-		}
-
-		try {
-			buildNumber = _getBuildNumberForMissedUpgradeProcesses(buildNumber);
-
-			StartupHelperUtil.upgradeProcess(buildNumber);
-		}
-		catch (Exception exception) {
-			_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);
-
-			throw exception;
-		}
-		finally {
-			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
-				TransactionsUtil.enableTransactions();
-			}
-		}
-
-		// Update indexes
-
-		StartupHelperUtil.updateIndexes(true);
-
-		// Update Release
-
-		_updateReleaseBuildInfo();
-
-		// Reload SQL
-
-		CustomSQLUtil.reloadCustomSQL();
-		SQLTransformer.reloadSQLTransformer();
-
-		// Update company key
-
-		if (StartupHelperUtil.isUpgraded()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Update company key");
-			}
-
-			_updateCompanyKey();
-		}
-
-		// Clear the caches only if the upgrade process was run
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Clear cache if upgrade process was run");
-		}
-
-		if (StartupHelperUtil.isUpgraded()) {
-			PortalCacheHelperUtil.clearPortalCaches(
-				PortalCacheManagerNames.MULTI_VM);
-		}
-
-		// Enable database caching after upgrade
-
-		CacheRegistryUtil.setActive(true);
-
-		// Register release service
-
-		_registerReleaseService();
-
-		_checkClassNamesAndResourceActions();
-
-		verify();
+		_upgradePortal();
 
 		DependencyManagerSyncUtil.sync();
 
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
-		_registerModuleServiceLifecycle("database.initialized");
-
-		InitUtil.registerContext();
-
-		_registerModuleServiceLifecycle("portal.initialized");
+		_upgradeModules();
 	}
 
 	public static void verify() throws VerifyException {
@@ -432,6 +331,115 @@ public class DBUpgrader {
 
 			ps.executeUpdate();
 		}
+	}
+
+	private static void _upgradeModules() {
+		_registerModuleServiceLifecycle("database.initialized");
+
+		InitUtil.registerContext();
+
+		_registerModuleServiceLifecycle("portal.initialized");
+	}
+
+	private static void _upgradePortal() throws Exception {
+
+		// Disable database caching before upgrade
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Disable cache registry");
+		}
+
+		// Check required build number
+
+		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+				return;
+			}
+		}
+
+		CacheRegistryUtil.setActive(false);
+
+		// Upgrade
+
+		Release release = ReleaseLocalServiceUtil.getRelease(
+			ReleaseConstants.DEFAULT_ID);
+
+		int buildNumber = release.getBuildNumber();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Update build " + buildNumber);
+		}
+
+		_checkPermissionAlgorithm();
+		checkReleaseState();
+
+		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+			TransactionsUtil.disableTransactions();
+		}
+
+		try {
+			buildNumber = _getBuildNumberForMissedUpgradeProcesses(buildNumber);
+
+			StartupHelperUtil.upgradeProcess(buildNumber);
+		}
+		catch (Exception exception) {
+			_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);
+
+			throw exception;
+		}
+		finally {
+			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+				TransactionsUtil.enableTransactions();
+			}
+		}
+
+		// Update indexes
+
+		StartupHelperUtil.updateIndexes(true);
+
+		// Update Release
+
+		_updateReleaseBuildInfo();
+
+		// Reload SQL
+
+		CustomSQLUtil.reloadCustomSQL();
+		SQLTransformer.reloadSQLTransformer();
+
+		// Update company key
+
+		if (StartupHelperUtil.isUpgraded()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Update company key");
+			}
+
+			_updateCompanyKey();
+		}
+
+		// Clear the caches only if the upgrade process was run
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Clear cache if upgrade process was run");
+		}
+
+		if (StartupHelperUtil.isUpgraded()) {
+			PortalCacheHelperUtil.clearPortalCaches(
+				PortalCacheManagerNames.MULTI_VM);
+		}
+
+		// Enable database caching after upgrade
+
+		CacheRegistryUtil.setActive(true);
+
+		// Register release service
+
+		_registerReleaseService();
+
+		_checkClassNamesAndResourceActions();
+
+		verify();
 	}
 
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);

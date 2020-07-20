@@ -50,7 +50,7 @@ definition {
 		task ("Navigate to Asset Libraries admin via Product Menu panel") {
 			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Content",
-				panel = "Global Menu-Applications",
+				panel = "Applications Menu-Applications",
 				portlet = "Asset Libraries");
 
 			AssertTextEquals(
@@ -121,7 +121,7 @@ definition {
 		task ("Navigate to Asset Libraries admin via Product Menu panel") {
 			ProductMenu.gotoPortletWhenDisableApplicationsMenu(
 				category = "Content",
-				panel = "Global Menu-Applications",
+				panel = "Applications Menu-Applications",
 				portlet = "Asset Libraries");
 
 			AssertTextEquals(

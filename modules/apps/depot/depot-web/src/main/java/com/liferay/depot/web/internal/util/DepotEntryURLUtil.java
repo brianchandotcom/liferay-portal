@@ -108,6 +108,26 @@ public class DepotEntryURLUtil {
 		return editDepotEntryURL;
 	}
 
+	public static ActionURL getUpdateDDMStructuresAvailableActionURL(
+		long depotEntryGroupRelId, boolean ddmStructuresAvailable,
+		String redirect, LiferayPortletResponse liferayPortletResponse) {
+
+		ActionURL updateDDMStructuresAvailableActionURL =
+			liferayPortletResponse.createActionURL();
+
+		updateDDMStructuresAvailableActionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/depot/update_depot_entry_group_rel_ddm_structures_available");
+		updateDDMStructuresAvailableActionURL.setParameter(
+			"redirect", redirect);
+		updateDDMStructuresAvailableActionURL.setParameter(
+			"depotEntryGroupRelId", String.valueOf(depotEntryGroupRelId));
+		updateDDMStructuresAvailableActionURL.setParameter(
+			"ddmStructuresAvailable", String.valueOf(ddmStructuresAvailable));
+
+		return updateDDMStructuresAvailableActionURL;
+	}
+
 	public static ActionURL getUpdateSearchableActionURL(
 		long depotEntryGroupRelId, boolean searchable, String redirect,
 		LiferayPortletResponse liferayPortletResponse) {

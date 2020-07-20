@@ -80,6 +80,24 @@ public class DepotAdminSitesDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
+				ActionURL updateDDMStructuresAvailableActionURL =
+					DepotEntryURLUtil.getUpdateDDMStructuresAvailableActionURL(
+						depotEntryGroupRel.getDepotEntryGroupRelId(),
+						!depotEntryGroupRel.isDdmStructuresAvailable(),
+						_currentURL.toString(), _liferayPortletResponse);
+
+				dropdownItem.setHref(
+					updateDDMStructuresAvailableActionURL.toString());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(
+							_liferayPortletRequest),
+						_getUpdateDDMStructuresAvailableKey(
+							depotEntryGroupRel)));
+			}
+		).add(
+			dropdownItem -> {
 				ActionURL disconnectSiteActionURL =
 					DepotEntryURLUtil.getDisconnectSiteActionURL(
 						depotEntryGroupRel.getDepotEntryGroupRelId(),
@@ -137,6 +155,16 @@ public class DepotAdminSitesDisplayContext {
 			depotEntryGroupRel.getToGroupId());
 
 		return group.getDescriptiveName(locale);
+	}
+
+	private String _getUpdateDDMStructuresAvailableKey(
+		DepotEntryGroupRel depotEntryGroupRel) {
+
+		if (depotEntryGroupRel.isSearchable()) {
+			return "make-ddm-structures-available";
+		}
+
+		return "make-ddm-structures-unavailable";
 	}
 
 	private String _getUpdateSearchableKey(

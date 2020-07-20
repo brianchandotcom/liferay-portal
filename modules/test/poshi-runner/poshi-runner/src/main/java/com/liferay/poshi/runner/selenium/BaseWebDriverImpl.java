@@ -29,7 +29,6 @@ import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.ResourceUtil;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
@@ -1858,35 +1857,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void javaScriptDoubleClick(String locator) {
 		executeJavaScriptEvent(locator, "MouseEvent", "dblclick");
-	}
-
-	@Override
-	public void javaScriptDragAndDropToObject(
-			String sourceLocator, String targetLocator)
-		throws Exception {
-
-		WebElement sourceElement = getWebElement(sourceLocator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)sourceElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		StringBuilder sb = new StringBuilder();
-
-		String simulateJSContent = ResourceUtil.read(
-			"com/liferay/poshi/runner/dependencies/simulate_drag_and_drop.js");
-
-		sb.append(simulateJSContent);
-
-		sb.append("\nSimulate.dragAndDrop(arguments[0], arguments[1]);");
-
-		WebElement targetElement = getWebElement(targetLocator);
-
-		javascriptExecutor.executeScript(
-			sb.toString(), sourceElement, targetElement);
 	}
 
 	public String javaScriptGetText(String locator, String timeout)

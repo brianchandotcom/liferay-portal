@@ -321,10 +321,6 @@ public interface LiferaySelenium {
 
 	public void javaScriptDoubleClick(String locator);
 
-	public void javaScriptDragAndDropToObject(
-			String sourceLocator, String targetLocator)
-		throws Exception;
-
 	public void javaScriptMouseDown(String locator);
 
 	public void javaScriptMouseUp(String locator);

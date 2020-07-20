@@ -107,7 +107,7 @@ public class ProgressBarTag extends BaseContainerTag {
 		jspWriter.write("\" class=\"progress-bar\" role=\"progressbar\" ");
 		jspWriter.write("style=\"width: ");
 		jspWriter.write(String.valueOf(_value));
-		jspWriter.write("%\"></div>");
+		jspWriter.write("%\"></div></div>");
 
 		jspWriter.write("<div class=\"progress-group-addon\">");
 
@@ -127,7 +127,7 @@ public class ProgressBarTag extends BaseContainerTag {
 			jspWriter.write("%");
 		}
 
-		jspWriter.write("</div></div>");
+		jspWriter.write("</div>");
 
 		return SKIP_BODY;
 	}

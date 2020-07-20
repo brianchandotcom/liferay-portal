@@ -369,11 +369,6 @@ public class DataFactory {
 
 		initAssetCategoryModels();
 		initAssetTagModels();
-		_commerceCurrencyModel = newCommerceCurrencyModel();
-
-		_commerceCatalogModel = newCommerceCatalogModel();
-
-		_commerceChannelModel = newCommerceChannelModel();
 
 		initCommerceProductModels();
 
@@ -542,18 +537,6 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
-	}
-
-	public CommerceCatalogModel getCommerceCatalogModel() {
-		return _commerceCatalogModel;
-	}
-
-	public CommerceChannelModel getCommerceChannelModel() {
-		return _commerceChannelModel;
-	}
-
-	public CommerceCurrencyModel getCommerceCurrencyModel() {
-		return _commerceCurrencyModel;
 	}
 
 	public long getCounterNext() {
@@ -4422,11 +4405,8 @@ public class DataFactory {
 		new HashMap<>();
 	private final long _commerceCatalogGroupId;
 	private final long _commerceCatalogId;
-	private final CommerceCatalogModel _commerceCatalogModel;
 	private final long _commerceChannelGroupId;
 	private final long _commerceChannelId;
-	private final CommerceChannelModel _commerceChannelModel;
-	private final CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;
 	private final SimpleCounter _counter;
 	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;

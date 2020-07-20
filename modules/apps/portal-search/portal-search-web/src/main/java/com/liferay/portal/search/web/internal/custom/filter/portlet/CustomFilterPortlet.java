@@ -29,8 +29,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -110,6 +108,11 @@ public class CustomFilterPortlet extends MVCPortlet {
 		String parameterName = CustomFilterPortletUtil.getParameterName(
 			customFilterPortletPreferences);
 
+		SearchResponse searchResponse = getSearchResponse(
+			portletSharedSearchResponse, customFilterPortletPreferences);
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
 		return CustomFilterDisplayBuilder.builder(
 		).customHeadingOptional(
 			customFilterPortletPreferences.getCustomHeadingOptional()
@@ -131,7 +134,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 		).queryNameOptional(
 			customFilterPortletPreferences.getQueryNameOptional()
 		).renderNothing(
-			isRenderNothing(portletSharedSearchResponse)
+			isRenderNothing(searchRequest)
 		).themeDisplay(
 			portletSharedSearchResponse.getThemeDisplay(renderRequest)
 		).build();
@@ -156,22 +159,22 @@ public class CustomFilterPortlet extends MVCPortlet {
 		return portal.getPortletId(renderRequest);
 	}
 
-	protected boolean isRenderNothing(
-		PortletSharedSearchResponse portletSharedSearchResponse) {
+	protected SearchResponse getSearchResponse(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		Optional<String> keywordsOptional =
-			portletSharedSearchResponse.getKeywordsOptional();
+		return portletSharedSearchResponse.getFederatedSearchResponse(
+			customFilterPortletPreferences.getFederatedSearchKeyOptional());
+	}
 
-		if (keywordsOptional.isPresent()) {
-			return false;
+	protected boolean isRenderNothing(SearchRequest searchRequest) {
+		if ((searchRequest.getQueryString() == null) &&
+			!searchRequest.isEmptySearchEnabled()) {
+
+			return true;
 		}
 
-		SearchResponse searchResponse =
-			portletSharedSearchResponse.getSearchResponse();
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		return !searchRequest.isEmptySearchEnabled();
+		return false;
 	}
 
 	@Reference

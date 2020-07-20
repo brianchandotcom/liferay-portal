@@ -14,13 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException.InvalidScriptType;
+
 /**
  * @author Michael C. Han
  */
 public class ScriptAssignment extends Assignment {
 
 	public ScriptAssignment(
-		String script, String scriptLanguage, String scriptRequiredContexts) {
+			String script, String scriptLanguage, String scriptRequiredContexts)
+		throws InvalidScriptType {
 
 		super(AssignmentType.SCRIPT);
 

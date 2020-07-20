@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException.InvalidNotificationType;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,8 +30,9 @@ import java.util.Set;
 public class Notification {
 
 	public Notification(
-		String name, String description, String executionType, String template,
-		String templateLanguage) {
+			String name, String description, String executionType,
+			String template, String templateLanguage)
+		throws KaleoDefinitionValidationException {
 
 		_name = name;
 		_description = description;
@@ -45,7 +48,9 @@ public class Notification {
 		_templateLanguage = TemplateLanguage.parse(templateLanguage);
 	}
 
-	public void addNotificationType(String notificationType) {
+	public void addNotificationType(String notificationType)
+		throws InvalidNotificationType {
+
 		_notificationTypes.add(NotificationType.parse(notificationType));
 	}
 

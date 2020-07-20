@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException.DuplicateNode;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,10 +37,9 @@ public class Definition {
 		_version = version;
 	}
 
-	public void addNode(Node node) {
+	public void addNode(Node node) throws DuplicateNode {
 		if (_nodesMap.containsKey(node.getName())) {
-			throw new IllegalArgumentException(
-				"Duplicate node " + node.getName());
+			throw new DuplicateNode(node.getName());
 		}
 
 		_nodesMap.put(node.getName(), node);

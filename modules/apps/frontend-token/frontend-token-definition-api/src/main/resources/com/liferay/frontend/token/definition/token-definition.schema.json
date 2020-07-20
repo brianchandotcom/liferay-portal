@@ -46,14 +46,6 @@
 					"title": "Name of the Token",
 					"type": "string"
 				},
-				"tokenCategoryName": {
-					"title": "Name of the Token Category Associated to the Token",
-					"type": "string"
-				},
-				"tokenSetName": {
-					"title": "Name of the Token Set Associated to the Token",
-					"type": "string"
-				},
 				"type": {
 					"enum": [
 						"Boolean",
@@ -108,10 +100,18 @@
 				"name": {
 					"title": "Name of the Token Category",
 					"type": "string"
+				},
+				"tokenSets": {
+					"items": {
+						"$ref": "#/definitions/TokenSet"
+					},
+					"title": "The Token Sets of the Token Category",
+					"type": "array"
 				}
 			},
 			"required": [
-				"name"
+				"name",
+				"tokenSets"
 			],
 			"type": "object"
 		},
@@ -125,10 +125,18 @@
 				"name": {
 					"title": "Name of the Token Set",
 					"type": "string"
+				},
+				"tokens": {
+					"items": {
+						"$ref": "#/definitions/Token"
+					},
+					"title": "The Tokens of the Token Set",
+					"type": "array"
 				}
 			},
 			"required": [
-				"name"
+				"name",
+				"tokens"
 			],
 			"type": "object"
 		}
@@ -140,24 +148,10 @@
 			},
 			"title": "Tokens",
 			"type": "array"
-		},
-		"tokenSets": {
-			"items": {
-				"$ref": "#/definitions/TokenSet"
-			},
-			"title": "Tokens",
-			"type": "array"
-		},
-		"tokens": {
-			"items": {
-				"$ref": "#/definitions/Token"
-			},
-			"title": "Tokens",
-			"type": "array"
 		}
 	},
 	"required": [
-		"tokens"
+		"tokenCategories"
 	],
 	"title": "The Design Tokens Definition Schema",
 	"type": "object"

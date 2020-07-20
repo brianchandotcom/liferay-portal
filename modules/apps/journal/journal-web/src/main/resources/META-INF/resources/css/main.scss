@@ -313,6 +313,14 @@ $productMenuWidth: 320px;
 				}
 			}
 		}
+
+		.import-body-form, .translate-body-form {
+			margin-top: $toolbarHeight;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: $toolbarDesktopHeight;
+			}
+		}
 	}
 
 	.translate-article {
@@ -322,12 +330,7 @@ $productMenuWidth: 320px;
 
 		.translate-body-form {
 			background-color: #fff;
-			margin-top: $toolbarHeight;
 			padding: 1.5rem;
-
-			@include media-breakpoint-up(lg) {
-				margin-top: $toolbarDesktopHeight;
-			}
 
 			div[contenteditable='false'] {
 				border: 1px solid $gray-300;

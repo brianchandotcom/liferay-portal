@@ -43,12 +43,17 @@ public class JournalAssetEntryValidatorExclusionRule
 			_journalArticleResourceLocalService.fetchJournalArticleResource(
 				classPK);
 
+		if (journalArticleResource == null) {
+			return false;
+		}
+
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchArticle(
 				groupId, journalArticleResource.getArticleId());
 
-		if (journalArticle.getClassNameId() >
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+		if ((journalArticle != null) &&
+			(journalArticle.getClassNameId() >
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
 			return true;
 		}

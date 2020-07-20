@@ -154,7 +154,6 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "webContent",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentSelectWCFile = "Basic WebContent Title",

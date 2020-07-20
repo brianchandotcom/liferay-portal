@@ -176,6 +176,12 @@
 	<td>//div[contains(@id, JournalPortlet_Image)]//div[contains(@class, 'button-holder')]//span[contains(text(), 'Select')]</td>
 	<td></td>
 </tr>
+<!--WC_FIELD-->
+<tr>
+	<td>WC_FIELD_SELECT</td>
+	<td>//div[@data-field-name='WebContent']//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

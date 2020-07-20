@@ -596,18 +596,6 @@ public class DataFactory {
 		return _defaultDLDDMStructureId;
 	}
 
-	public DDMStructureLayoutModel getDefaultDLDDMStructureLayoutModel() {
-		return _defaultDLDDMStructureLayoutModel;
-	}
-
-	public DDMStructureModel getDefaultDLDDMStructureModel() {
-		return _defaultDLDDMStructureModel;
-	}
-
-	public DDMStructureVersionModel getDefaultDLDDMStructureVersionModel() {
-		return _defaultDLDDMStructureVersionModel;
-	}
-
 	public DDMStructureLayoutModel getDefaultJournalDDMStructureLayoutModel() {
 		return _defaultJournalDDMStructureLayoutModel;
 	}
@@ -1063,19 +1051,6 @@ public class DataFactory {
 	}
 
 	public void initDLFileEntryTypeModel() {
-		_defaultDLDDMStructureModel = newDDMStructureModel(
-			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
-			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
-			_defaultDLDDMStructureId);
-
-		_defaultDLDDMStructureVersionModel = newDDMStructureVersionModel(
-			_defaultDLDDMStructureModel, _defaultDLDDMStructureVersionId);
-
-		_defaultDLDDMStructureLayoutModel = newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId, _defaultDLDDMStructureVersionId,
-			_defaultDLDDMStructureVersionModel.getStructureVersionId(),
-			_dlDDMStructureLayoutContent);
-
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId,
 			getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT",
@@ -1893,6 +1868,26 @@ public class DataFactory {
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
+	}
+
+	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {
+		return newDDMStructureLayoutModel(
+			_globalGroupId, _defaultUserId, _defaultDLDDMStructureVersionId,
+			_dlDDMStructureLayoutContent);
+	}
+
+	public DDMStructureModel newDefaultDLDDMStructureModel() {
+		return newDDMStructureModel(
+			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
+			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
+			_defaultDLDDMStructureId);
+	}
+
+	public DDMStructureVersionModel newDefaultDLDDMStructureVersionModel(
+		DDMStructureModel ddmStructureModel) {
+
+		return newDDMStructureVersionModel(
+			ddmStructureModel, _defaultDLDDMStructureVersionId);
 	}
 
 	public UserModel newDefaultUserModel() {
@@ -4457,10 +4452,7 @@ public class DataFactory {
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
 	private final long _defaultDDLDDMStructureVersionId;
 	private final long _defaultDLDDMStructureId;
-	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
-	private DDMStructureModel _defaultDLDDMStructureModel;
 	private final long _defaultDLDDMStructureVersionId;
-	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;

@@ -1,7 +1,9 @@
 ${dataFactory.toInsertSQL(dataFactory.newDLFileEntryTypeModel())}
 
+<#assign defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel() />
+
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.defaultDLDDMStructureLayoutModel
-	_ddmStructureModel=dataFactory.defaultDLDDMStructureModel
-	_ddmStructureVersionModel=dataFactory.defaultDLDDMStructureVersionModel
+	_ddmStructureLayoutModel=dataFactory.newDefaultDLDDMStructureLayoutModel()
+	_ddmStructureModel=defaultDLDDMStructureModel
+	_ddmStructureVersionModel=dataFactory.newDefaultDLDDMStructureVersionModel(defaultDLDDMStructureModel)
 />

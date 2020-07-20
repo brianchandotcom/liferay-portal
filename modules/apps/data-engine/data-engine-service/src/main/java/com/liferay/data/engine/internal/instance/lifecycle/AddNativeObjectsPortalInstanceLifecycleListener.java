@@ -14,14 +14,12 @@
 
 package com.liferay.data.engine.internal.instance.lifecycle;
 
-import com.liferay.data.engine.internal.nativeobject.DataEngineNativeObjectObserver;
 import com.liferay.data.engine.internal.petra.executor.DataEngineNativeObjectPortalExecutor;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
 
@@ -43,15 +41,8 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 		dataEngineNativeObjects.forEach(
 			dataEngineNativeObject ->
 				_dataEngineNativeObjectPortalExecutor.execute(
-					() ->
-						_dataEngineNativeObjectObserver.
-							createDataEngineNativeObject(
-								company.getCompanyId(),
-								dataEngineNativeObject)));
+					company.getCompanyId(), dataEngineNativeObject));
 	}
-
-	@Reference
-	private DataEngineNativeObjectObserver _dataEngineNativeObjectObserver;
 
 	@Reference
 	private DataEngineNativeObjectPortalExecutor
@@ -59,8 +50,5 @@ public class AddNativeObjectsPortalInstanceLifecycleListener
 
 	@Reference
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
-
-	@Reference
-	private Portal _portal;
 
 }

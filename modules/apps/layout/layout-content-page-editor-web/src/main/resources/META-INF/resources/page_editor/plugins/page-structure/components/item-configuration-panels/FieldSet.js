@@ -34,13 +34,23 @@ export const FieldSet = ({
 
 				const fieldValue = configurationValues[field.name];
 
+				const visible =
+					!field.dependencies ||
+					field.dependencies.every(
+						(dependency) =>
+							configurationValues[dependency.styleName] ===
+							dependency.value
+					);
+
 				return (
-					<FieldComponent
-						field={field}
-						key={index}
-						onValueSelect={onValueSelect}
-						value={fieldValue}
-					/>
+					visible && (
+						<FieldComponent
+							field={field}
+							key={index}
+							onValueSelect={onValueSelect}
+							value={fieldValue}
+						/>
+					)
 				);
 			})}
 		</>

@@ -261,6 +261,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_BODY_FLOATING_TOOLBAR_PANEL</td>
+	<td>//div[contains(@class,'page-editor__floating-toolbar__panel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON</td>
 	<td>//div[contains(@class,'floating-toolbar')]//div[contains(@class,'form-group')]//button[*[name()='svg'][contains(@class,'plus')]]</td>
 	<td></td>
@@ -527,6 +532,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_BORDER_COLOR</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'border-${key_paletteItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_BORDER_RADIUS</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'rounded-${key_borderRadius}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_BORDER_WIDTH</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@style,'border-width: ${key_borderWidth}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_CONTENT_DISPLAY</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'d-${key_contentDisplay}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_DROP_SHADOW</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'shadow-${key_dropShadow}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_HORIZONTAL_ALIGN</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'justify-content-${key_horizontalAlign}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_MARGIN_BOTTOM</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>
@@ -547,6 +582,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_OPACITY</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@style,'opacity: ${key_opacity}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_PADDING_BOTTOM</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pb-${key_paddingBottom}')]</td>
 	<td></td>
@@ -564,6 +604,11 @@
 <tr>
 	<td>CONTAINER_CONFIGURATION_PADDING_TOP</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pt-${key_paddingTop}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_VERTICAL_ALIGN</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'align-items-${key_verticalAlign}')]</td>
 	<td></td>
 </tr>
 <tr>

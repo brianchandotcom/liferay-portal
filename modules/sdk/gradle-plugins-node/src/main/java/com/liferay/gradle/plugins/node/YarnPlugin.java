@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.node;
 
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
@@ -38,7 +37,7 @@ import org.gradle.api.tasks.TaskProvider;
  * @author Peter Shin
  * @author David Truong
  */
-public class LiferayYarnPlugin implements Plugin<Project> {
+public class YarnPlugin implements Plugin<Project> {
 
 	public static final String YARN_CHECK_FORMAT_TASK_NAME = "yarnCheckFormat";
 
@@ -52,8 +51,6 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		// Plugins
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
-
-		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		// Tasks
 

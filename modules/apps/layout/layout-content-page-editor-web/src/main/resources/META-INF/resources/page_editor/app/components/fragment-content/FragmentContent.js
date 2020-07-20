@@ -27,7 +27,7 @@ import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
 import {
-	useEditableProcessorUniqueId,
+	useIsProcessorEnabled,
 	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
@@ -39,7 +39,7 @@ import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	const isMounted = useIsMounted();
-	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const isProcessorEnabled = useIsProcessorEnabled();
 	const globalContext = useGlobalContext();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
@@ -105,7 +105,7 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 	useEffect(() => {
 		let fragmentElement = document.createElement('div');
 
-		if (!editableProcessorUniqueId) {
+		if (!isProcessorEnabled()) {
 			fragmentElement.innerHTML = defaultContent;
 
 			Promise.all(
@@ -138,10 +138,10 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 		};
 	}, [
 		defaultContent,
-		editableProcessorUniqueId,
 		editableValues,
 		getFieldValue,
 		isMounted,
+		isProcessorEnabled,
 		languageId,
 	]);
 

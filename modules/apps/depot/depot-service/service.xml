@@ -73,6 +73,7 @@
 
 		<!-- Other fields -->
 
+		<column name="ddmStructuresAvailable" type="boolean" />
 		<column name="depotEntryId" type="long" />
 		<column name="searchable" type="boolean" />
 		<column name="toGroupId" type="long" />

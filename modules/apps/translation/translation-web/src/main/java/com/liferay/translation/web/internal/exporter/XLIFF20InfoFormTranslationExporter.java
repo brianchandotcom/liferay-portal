@@ -83,8 +83,6 @@ public class XLIFF20InfoFormTranslationExporter
 				continue;
 			}
 
-			Object sourceValue = infoFieldValue.getValue(sourceLocale);
-
 			Element unitElement = fileElement.addElement("unit");
 
 			unitElement.addAttribute("id", infoField.getName());
@@ -93,7 +91,8 @@ public class XLIFF20InfoFormTranslationExporter
 
 			Element sourceElement = segmentElement.addElement("source");
 
-			sourceElement.addCDATA(_getStringValue(sourceValue));
+			sourceElement.addCDATA(
+				_getStringValue(infoFieldValue.getValue(sourceLocale)));
 
 			Element targetElement = segmentElement.addElement("target");
 

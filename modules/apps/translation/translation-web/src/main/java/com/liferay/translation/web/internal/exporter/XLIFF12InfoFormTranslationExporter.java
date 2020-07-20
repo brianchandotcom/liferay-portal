@@ -89,8 +89,6 @@ public class XLIFF12InfoFormTranslationExporter
 				continue;
 			}
 
-			Object sourceValue = infoFieldValue.getValue(sourceLocale);
-
 			Element transUnitElement = bodyElement.addElement("trans-unit");
 
 			transUnitElement.addAttribute("id", infoField.getName());
@@ -99,7 +97,8 @@ public class XLIFF12InfoFormTranslationExporter
 
 			sourceElement.addAttribute(
 				"xml:lang", fileElement.attributeValue("source-language"));
-			sourceElement.addCDATA(_getStringValue(sourceValue));
+			sourceElement.addCDATA(
+				_getStringValue(infoFieldValue.getValue(sourceLocale)));
 
 			Element targetElement = transUnitElement.addElement("target");
 

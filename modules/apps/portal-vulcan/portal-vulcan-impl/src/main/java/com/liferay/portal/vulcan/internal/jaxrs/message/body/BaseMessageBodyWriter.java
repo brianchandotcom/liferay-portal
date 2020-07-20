@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.internal.jaxrs.serializer.ExtendedEntitySerializerModifier;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.PageJsonSerializer;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -90,6 +91,9 @@ public abstract class BaseMessageBodyWriter
 				(Class<Page<Object>>)(Class<?>)Page.class,
 				new PageJsonSerializer());
 		}
+
+		simpleModule.setSerializerModifier(
+			new ExtendedEntitySerializerModifier());
 
 		objectMapper.registerModule(simpleModule);
 

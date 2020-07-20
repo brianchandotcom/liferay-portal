@@ -81,7 +81,8 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 
 		List<ExtendedEntity> extendedEntities = stream.map(
 			entity -> ExtendedEntity.extend(
-				entity, extensionContext.getExtendedProperties(entity))
+				entity, extensionContext.getExtendedProperties(entity),
+				extensionContext.getFilteredProperties(entity))
 		).collect(
 			Collectors.toList()
 		);

@@ -126,7 +126,7 @@ definition {
 
 		Alert.viewRequestFailedToComplete();
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
@@ -245,7 +245,7 @@ definition {
 	}
 
 	macro addPriority {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		Type(
 			locator1 = "WC#PRIORITY",
@@ -287,7 +287,7 @@ definition {
 	}
 
 	macro addTagPGViaWCD {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		Type(
 			locator1 = "AssetCategorization#TAGS_FIELD",
@@ -439,7 +439,7 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addMultipleCategories(
 			categoryNameList = "${categoryNameList}",
@@ -459,7 +459,7 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		Type(
 			locator1 = "TextInput#ASSET_PRIORITY",
@@ -731,7 +731,7 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "${tagNameList}") {
 			AssetCategorization.addTag(tagName = "${tagName}");
@@ -1338,7 +1338,7 @@ definition {
 	}
 
 	macro selectCategory {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		if (isSet(userSegmentDetailTitle)) {
 			AssertTextEquals(
@@ -1513,7 +1513,7 @@ definition {
 	}
 
 	macro viewCategorizationCategoryCP {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list "${categoryNameList}") {
 			AssertTextEquals(
@@ -1524,7 +1524,7 @@ definition {
 	}
 
 	macro viewCategorizationCategoryNotVisibleCP {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list "${categoryNameList}") {
 			AssertElementNotPresent(
@@ -1534,7 +1534,7 @@ definition {
 	}
 
 	macro viewCategorizationVocabularyCP {
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		for (var vocabularyName : list "${vocabularyNameList}") {
 			AssertTextEquals(

@@ -573,7 +573,7 @@ definition {
 
 		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "Web Content Title");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssertElementNotPresent(locator1 = "AssetCategorization#VOCABULARY");
 	}

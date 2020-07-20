@@ -363,7 +363,7 @@ definition {
 
 		WebContent.addCP(webContentTitle = "WC Title");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addCategory(
 			categoryName = "Category Name",
@@ -373,7 +373,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		Panel.expandPanel(panel = "Metadata");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextNotPresent(value1 = "Vocabulary Name");
 	}

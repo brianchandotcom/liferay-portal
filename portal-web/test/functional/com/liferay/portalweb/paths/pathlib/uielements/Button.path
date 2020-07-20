@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BORDER_BOTTOM_PALETTE_ITEM</td>
+	<td>//label[normalize-space(text())='${key_borderBottom}']/following-sibling::div[1]//li[contains(@class,'palette-item')]//button[contains(@class,'bg-${key_paletteItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BROWSE_IMAGE</td>
 	<td>//button[contains(@class,'browse-image')]</td>
 	<td></td>

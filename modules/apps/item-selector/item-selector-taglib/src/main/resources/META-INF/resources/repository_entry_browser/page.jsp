@@ -459,6 +459,17 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										</h5>
 
 										<h6 class="text-default">
+											<liferay-ui:message key="location" />:
+											<span class="text-secondary">
+												<clay:icon
+													symbol="sites"
+												/>
+
+												<small>Liferay</small>
+											</span>
+										</h6>
+
+										<h6 class="text-default">
 											<liferay-ui:message key="created" />:
 
 											<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - folder.getCreateDate().getTime(), true), HtmlUtil.escape(folder.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
@@ -502,6 +513,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											<h5>
 												<strong><%= title %></strong>
 											</h5>
+
+											<h6 class="text-default">
+												<liferay-ui:message key="location" />:
+												<span class="text-secondary">
+													<clay:icon
+														symbol="books"
+													/>
+
+													<small>Company Assets</small>
+												</span>
+											</h6>
+
 
 											<h6 class="text-default">
 												<liferay-ui:message key="version" />:

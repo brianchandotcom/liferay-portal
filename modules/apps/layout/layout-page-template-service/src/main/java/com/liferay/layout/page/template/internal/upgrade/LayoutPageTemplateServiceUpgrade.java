@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
@@ -130,6 +131,13 @@ public class LayoutPageTemplateServiceUpgrade
 			"3.3.0", "3.3.1",
 			new com.liferay.layout.page.template.internal.upgrade.v3_3_1.
 				UpgradeLayoutPageTemplateEntry(_layoutPrototypeLocalService));
+
+		registry.register(
+			"3.3.1", "3.4.0",
+			new UpgradeCTModel(
+				"LayoutPageTemplateCollection", "LayoutPageTemplateEntry",
+				"LayoutPageTemplateStructure",
+				"LayoutPageTemplateStructureRel"));
 	}
 
 	@Reference

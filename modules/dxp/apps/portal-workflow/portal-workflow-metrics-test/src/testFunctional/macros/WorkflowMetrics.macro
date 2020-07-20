@@ -143,6 +143,21 @@ definition {
 		}
 	}
 
+	macro assertCheckbox {
+
+		for (var itemName : list "${taskList}") {
+			var key_itemName = "${itemName}";
+			AssertElementPresent(locator1 = "WorkflowReassignModal#ITEM_CHECKBOX_CHECKED");
+		}
+	}
+
+	macro assertCheckboxUnchecked {
+		for (var itemName : list "${taskListUnchecked}") {
+			var key_itemName = "${itemName}";
+			AssertElementNotPresent(locator1 = "WorkflowReassignModal#ITEM_CHECKBOX_CHECKED");
+		}
+	}
+
 	macro assertDefaultChartRangesAndUnits {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
@@ -697,6 +712,19 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro selectAllReassignTasks {
+		var key_taskList = "${taskList}";
+		var key_taskListUnchecked = "${taskListUnchecked}";
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Click(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
+		WorkflowMetrics.assertCheckboxUnchecked(taskListUnchecked = "${taskListUnchecked}");
+		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
+		WorkflowMetrics.assertCheckbox(taskList = "${taskList}");
+		AssertElementPresent(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
+		Click(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+	}
+
 	macro selectDateRange {
 		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
 		var key_endDateRange = "${endDateRange}";
@@ -786,6 +814,36 @@ definition {
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+	}
+
+	macro selectNewAssigneePagination {
+
+		for (var itemName : list "${taskList}") {
+			var key_itemName = "${itemName}";
+
+			while (!(IsElementPresent(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC"))) {
+				Click(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
+			}
+
+			Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC");
+
+			Click(
+				key_nameOfAssignee = "Test Test",
+				locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+		}
+		AssertTextEquals(
+			locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC",
+			value1 = "Test Test");
+
+		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
+		var key_itemName = "Blogs Entry: Blogs Entry Title 1";
+
+		AssertTextEquals(
+			button = "Reassign",
+			locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC",
+			value1 = "Test Test");
+
+		Button.click(button = "Reassign");
 	}
 
 	macro selectReassignTasks {

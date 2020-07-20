@@ -75,6 +75,7 @@ public class ContentDashboardItemSearchContainerFactory {
 				null, "there-is-no-content");
 
 		searchContainer.setOrderByCol(_getOrderByCol());
+
 		searchContainer.setOrderByType(_getOrderByType());
 
 		SearchResponse searchResponse = _getSearchResponse(
@@ -85,6 +86,7 @@ public class ContentDashboardItemSearchContainerFactory {
 
 		searchContainer.setRowChecker(
 			new ContentDashboardItemChecker(_renderResponse));
+
 		searchContainer.setTotal(searchResponse.getTotalHits());
 
 		return searchContainer;

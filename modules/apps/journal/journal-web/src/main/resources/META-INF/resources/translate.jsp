@@ -38,8 +38,8 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				<li class="tbar-item tbar-item-expand">
 					<div class="tbar-section text-left">
 						<react:component
-							data="<%= journalTranslateDisplayContext.getTranslateLanguagesSelectorData() %>"
 							module="js/translate/TranslateLanguagesSelector"
+							props="<%= journalTranslateDisplayContext.getTranslateLanguagesSelectorData() %>"
 						/>
 					</div>
 				</li>

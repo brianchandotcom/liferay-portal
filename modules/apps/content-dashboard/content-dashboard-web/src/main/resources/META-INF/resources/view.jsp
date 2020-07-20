@@ -38,8 +38,8 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					</div>
 
 					<react:component
-						data="<%= contentDashboardAdminDisplayContext.getData() %>"
 						module="js/AuditGraphApp"
+						props="<%= contentDashboardAdminDisplayContext.getData() %>"
 					/>
 				</div>
 			</div>

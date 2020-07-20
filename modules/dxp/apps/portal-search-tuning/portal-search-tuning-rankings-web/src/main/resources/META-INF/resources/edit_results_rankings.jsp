@@ -56,8 +56,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 		</div>
 
 		<react:component
-			data="<%= editRankingDisplayContext.getData() %>"
 			module="js/ResultRankingsApp.es"
+			props="<%= editRankingDisplayContext.getData() %>"
 		/>
 	</div>
 </aui:form>

@@ -34,7 +34,7 @@ if (editorData != null) {
 	editorConfigJSONObject = (JSONObject)editorData.get("editorConfig");
 }
 
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
+Map<String, Object> props = HashMapBuilder.<String, Object>put(
 	"contents", contents
 ).put(
 	"editorConfig", editorConfigJSONObject
@@ -51,7 +51,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 
 <div>
 	<react:component
-		data="<%= data %>"
 		module="editor/ClassicEditor"
+		props="<%= props %>"
 	/>
 </div>

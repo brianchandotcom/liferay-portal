@@ -88,8 +88,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						</div>
 
 						<react:component
-							data="<%= layoutsSEODisplayContext.getOpenGraphMappingData() %>"
 							module="js/seo/display_page_templates/OpenGraphMapping"
+							props="<%= layoutsSEODisplayContext.getOpenGraphMappingData() %>"
 							servletContext="<%= application %>"
 						/>
 					</div>
@@ -134,7 +134,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<div>
 
 							<%
-							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							Map<String, Object> props = HashMapBuilder.<String, Object>put(
 								"displayType", "og"
 							).put(
 								"targets",
@@ -171,8 +171,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 							%>
 
 							<react:component
-								data="<%= data %>"
 								module="js/seo/PreviewSeo.es"
+								props="<%= props %>"
 								servletContext="<%= application %>"
 							/>
 						</div>

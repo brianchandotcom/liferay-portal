@@ -82,8 +82,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						</div>
 
 						<react:component
-							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
 							module="js/seo/display_page_templates/SeoMapping"
+							props="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
 							servletContext="<%= application %>"
 						/>
 					</div>
@@ -145,7 +145,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						<div>
 
 							<%
-							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							Map<String, Object> props = HashMapBuilder.<String, Object>put(
 								"targets",
 								HashMapBuilder.<String, Object>put(
 									"description",
@@ -175,8 +175,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							%>
 
 							<react:component
-								data="<%= data %>"
 								module="js/seo/PreviewSeo.es"
+								props="<%= props %>"
 								servletContext="<%= application %>"
 							/>
 						</div>

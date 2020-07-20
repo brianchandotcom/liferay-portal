@@ -19,7 +19,7 @@
 <%
 ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
 
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
+Map<String, Object> props = HashMapBuilder.<String, Object>put(
 	"eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName()
 ).build();
 %>
@@ -28,8 +28,8 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 	<clay:sheet>
 		<div class="panel-group panel-group-flush">
 			<react:component
-				data="<%= data %>"
 				module="js/ItemSelectorUrl.es"
+				props="<%= props %>"
 			/>
 		</div>
 	</clay:sheet>

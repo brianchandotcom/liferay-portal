@@ -22,7 +22,7 @@ EditFragmentEntryDisplayContext editFragmentEntryDisplayContext = new EditFragme
 
 <div>
 	<react:component
-		data="<%= editFragmentEntryDisplayContext.getFragmentEditorData() %>"
 		module="js/fragment-editor/FragmentEditor"
+		props="<%= editFragmentEntryDisplayContext.getFragmentEditorData() %>"
 	/>
 </div>

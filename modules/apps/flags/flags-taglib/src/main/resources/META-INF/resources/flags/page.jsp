@@ -50,7 +50,7 @@ boolean onlyIcon = GetterUtil.getBoolean(request.getAttribute("liferay-flags:fla
 	</c:choose>
 
 	<react:component
-		data="<%= data %>"
 		module="flags/js/index.es"
+		props="<%= data %>"
 	/>
 </div>

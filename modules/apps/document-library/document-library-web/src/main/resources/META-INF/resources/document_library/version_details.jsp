@@ -19,7 +19,7 @@
 <div>
 
 	<%
-	Map<String, Object> data =
+	Map<String, Object> props =
 		HashMapBuilder.<String, Object>put(
 			"dlVersionNumberIncreaseValues",
 			HashMapBuilder.<String, Object>put(
@@ -35,7 +35,7 @@
 	%>
 
 	<react:component
-		data="<%= data %>"
 		module="document_library/js/checkin/Checkin.es"
+		props="<%= props %>"
 	/>
 </div>

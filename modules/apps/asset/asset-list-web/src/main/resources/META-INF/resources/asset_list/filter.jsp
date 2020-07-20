@@ -51,7 +51,7 @@
 		<div>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			Map<String, Object> props = HashMapBuilder.<String, Object>put(
 				"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
 			).put(
 				"groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds())
@@ -67,8 +67,8 @@
 			%>
 
 			<react:component
-				data="<%= data %>"
 				module="auto_field/index"
+				props="<%= props %>"
 			/>
 		</div>
 	</liferay-frontend:fieldset>

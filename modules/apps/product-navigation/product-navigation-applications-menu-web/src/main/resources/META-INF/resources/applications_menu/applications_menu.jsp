@@ -30,7 +30,7 @@ ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new Applications
 	/>
 
 	<react:component
-		data="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
 		module="js/ApplicationsMenu"
+		props="<%= applicationsMenuDisplayContext.getApplicationsMenuComponentData() %>"
 	/>
 </li>

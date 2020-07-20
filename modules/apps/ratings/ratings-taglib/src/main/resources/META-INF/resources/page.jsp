@@ -165,7 +165,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	</c:choose>
 
 	<react:component
-		data="<%= data %>"
 		module="js/Ratings"
+		props="<%= data %>"
 	/>
 </div>

@@ -19,7 +19,7 @@
 <%
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
 
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
+Map<String, Object> props = HashMapBuilder.<String, Object>put(
 	"itemSelectorSaveEvent", eventName
 ).put(
 	"namespace", liferayPortletResponse.getNamespace()
@@ -31,6 +31,6 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 %>
 
 <react:component
-	data="<%= data %>"
 	module="js/SelectFolder.es"
+	props="<%= props %>"
 />

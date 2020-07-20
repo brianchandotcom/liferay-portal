@@ -57,7 +57,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 <div class="site-languages">
 
 	<%
-	HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
+	HashMap<String, Object> props = HashMapBuilder.<String, Object>put(
 		"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)
 	).put(
 		"defaultLocaleId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
@@ -73,7 +73,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	%>
 
 	<react:component
-		data="<%= data %>"
 		module="js/Languages.es"
+		props="<%= props %>"
 	/>
 </div>

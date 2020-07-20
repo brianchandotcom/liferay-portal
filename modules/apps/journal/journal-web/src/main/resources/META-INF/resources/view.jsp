@@ -149,8 +149,8 @@ if (Validator.isNotNull(title)) {
 
 	<div>
 		<react:component
-			data="<%= journalDisplayContext.getExportTranslationData() %>"
 			module="js/export_translation/ExportTranslation.es"
+			props="<%= journalDisplayContext.getExportTranslationData() %>"
 		/>
 	</div>
 </clay:container-fluid>

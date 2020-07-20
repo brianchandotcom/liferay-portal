@@ -27,7 +27,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 	<%
 	QuestionsConfiguration questionsConfiguration = (QuestionsConfiguration)request.getAttribute(QuestionsConfiguration.class.getName());
 
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	Map<String, Object> props = HashMapBuilder.<String, Object>put(
 		"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 	).put(
 		"imageBrowseURL", renderRequest.getAttribute(QuestionsWebKeys.IMAGE_BROWSE_URL)
@@ -47,7 +47,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 	%>
 
 	<react:component
-		data="<%= data %>"
 		module="js/index.es"
+		props="<%= props %>"
 	/>
 </div>

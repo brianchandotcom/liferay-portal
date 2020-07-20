@@ -84,8 +84,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<div>
 			<react:component
-				data="<%= context %>"
 				module="document_library/js/bulk/BulkStatus.es"
+				props="<%= context %>"
 			/>
 		</div>
 
@@ -333,8 +333,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<div>
 			<react:component
-				data="<%= editTagsData %>"
 				module="document_library/js/categorization/tags/EditTags.es"
+				props="<%= editTagsData %>"
 			/>
 		</div>
 
@@ -358,8 +358,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<div>
 			<react:component
-				data="<%= editCategoriesData %>"
 				module="document_library/js/categorization/categories/EditCategories.es"
+				props="<%= editCategoriesData %>"
 			/>
 		</div>
 

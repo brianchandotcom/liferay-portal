@@ -24,7 +24,8 @@
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 	<react:component
-		data='<%=
+		module="js/pages/apps/index.es"
+		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"appsTabs", request.getAttribute(AppBuilderWebKeys.APPS_TABS)
 			).put(
@@ -41,6 +42,5 @@
 				"userId", themeDisplay.getUserId()
 			).build()
 		%>'
-		module="js/pages/apps/index.es"
 	/>
 </div>

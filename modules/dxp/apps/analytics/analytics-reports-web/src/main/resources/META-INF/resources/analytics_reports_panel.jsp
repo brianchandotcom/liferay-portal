@@ -28,8 +28,8 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 			</div>
 
 			<react:component
-				data="<%= analyticsReportsDisplayContext.getData() %>"
 				module="js/AnalyticsReportsApp"
+				props="<%= analyticsReportsDisplayContext.getData() %>"
 			/>
 		</div>
 	</c:when>

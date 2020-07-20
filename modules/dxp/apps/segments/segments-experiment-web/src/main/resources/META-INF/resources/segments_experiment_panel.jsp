@@ -28,8 +28,8 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 			</div>
 
 			<react:component
-				data="<%= segmentsExperimentDisplayContext.getData() %>"
 				module="js/SegmentsExperimentApp.es"
+				props="<%= segmentsExperimentDisplayContext.getData() %>"
 			/>
 		</div>
 	</c:when>

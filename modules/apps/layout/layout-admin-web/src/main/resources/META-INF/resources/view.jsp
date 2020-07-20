@@ -60,8 +60,8 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 					<div>
 						<react:component
-							data="<%= millerColumnsDisplayContext.getLayoutData() %>"
 							module="js/layout/Layout"
+							props="<%= millerColumnsDisplayContext.getLayoutData() %>"
 						/>
 					</div>
 				</c:otherwise>

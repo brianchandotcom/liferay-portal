@@ -103,7 +103,8 @@ String friendlyURLBase = StringPool.BLANK;
 
 				<div class="btn-url-history-wrapper">
 					<react:component
-						data='<%=
+						module="js/friendly_url_history/FriendlyURLHistory"
+						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"defaultLanguageId",
 								LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
@@ -118,7 +119,6 @@ String friendlyURLBase = StringPool.BLANK;
 								restoreFriendlyURLEntryLocalizationURL
 							).build()
 						%>'
-						module="js/friendly_url_history/FriendlyURLHistory"
 					/>
 				</div>
 

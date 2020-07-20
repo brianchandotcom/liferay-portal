@@ -22,7 +22,8 @@
 
 <div id="<portlet:namespace />-app-builder-root">
 	<react:component
-		data='<%=
+		module="js/index.es"
+		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 			).put(
@@ -35,6 +36,5 @@
 				"showNativeObjectsTab", request.getAttribute(AppBuilderWebKeys.SHOW_NATIVE_OBJECTS_TAB)
 			).build()
 		%>'
-		module="js/index.es"
 	/>
 </div>

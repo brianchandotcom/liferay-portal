@@ -24,7 +24,7 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 	<c:when test="<%= siteNavigationMenuItemItemSelectorViewDisplayContext.isShowSelectSiteNavigationMenuItem() %>">
 
 		<%
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		Map<String, Object> props = HashMapBuilder.<String, Object>put(
 			"itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
@@ -37,8 +37,8 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 
 		<div class="select-site-navigation-menu-item">
 			<react:component
-				data="<%= data %>"
 				module="js/SelectSiteNavigationMenuItem.es"
+				props="<%= props %>"
 			/>
 		</div>
 	</c:when>

@@ -52,15 +52,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 							/>
 						</button>
 
-						<%
-						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems()
-						).build();
-						%>
-
 						<react:component
-							data="<%= data %>"
 							module="js/add_menu/index"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems()
+								).build()
+							%>'
 						/>
 					</div>
 				</li>
@@ -128,7 +126,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		</portlet:renderURL>
 
 		<%
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		Map<String, Object> props = HashMapBuilder.<String, Object>put(
 			"editSiteNavigationMenuItemParentURL", editSiteNavigationMenuItemParentURL.toString()
 		).put(
 			"editSiteNavigationMenuItemURL", editSiteNavigationMenuItemURL.toString()
@@ -147,8 +145,8 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 		<react:component
 			componentId="contextualSidebar"
-			data="<%= data %>"
 			module="js/ContextualSidebar"
+			props="<%= props %>"
 		/>
 	</div>
 </c:if>

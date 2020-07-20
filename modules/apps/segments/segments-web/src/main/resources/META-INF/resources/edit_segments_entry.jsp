@@ -49,8 +49,8 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 		</div>
 
 		<react:component
-			data="<%= editSegmentsEntryDisplayContext.getData() %>"
 			module="js/SegmentsApp.es"
+			props="<%= editSegmentsEntryDisplayContext.getData() %>"
 		/>
 	</div>
 </aui:form>

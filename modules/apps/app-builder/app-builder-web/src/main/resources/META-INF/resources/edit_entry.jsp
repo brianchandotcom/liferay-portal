@@ -69,7 +69,7 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 							<%
-							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							Map<String, Object> props = HashMapBuilder.<String, Object>put(
 								"appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE)
 							).put(
 								"appId", appBuilderApp.getAppBuilderAppId()
@@ -103,8 +103,8 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 							%>
 
 							<react:component
-								data="<%= data %>"
 								module="js/pages/entry/EditEntryApp.es"
+								props="<%= props %>"
 							/>
 						</div>
 					</div>

@@ -37,7 +37,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		<div class="app-builder-form-view-app" id="<%= editFormViewRootElementId %>">
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			Map<String, Object> props = HashMapBuilder.<String, Object>put(
 				"basePortletURL", basePortletURL.toString()
 			).put(
 				"customObjectSidebarElementId", customObjectSidebarElementId
@@ -57,8 +57,8 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			%>
 
 			<react:component
-				data="<%= data %>"
 				module="js/pages/form-view/EditFormViewApp.es"
+				props="<%= props %>"
 			/>
 		</div>
 

@@ -115,7 +115,7 @@ else {
 		<%
 		boolean autoFocusDestination = Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL);
 
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		Map<String, Object> props = HashMapBuilder.<String, Object>put(
 			"autofocus", autoFocusDestination
 		).put(
 			"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : ParamUtil.getString(request, "destinationURL")
@@ -128,8 +128,8 @@ else {
 			<aui:input name="destinationURL" value="<%= destinationURL %>" />
 
 			<react:component
-				data="<%= data %>"
 				module="js/DestinationUrlInput"
+				props="<%= props %>"
 			/>
 		</div>
 
@@ -163,12 +163,12 @@ else {
 
 <div>
 	<react:component
-		data='<%=
+		module="js/ChainedRedirections"
+		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"saveButtonLabel", LanguageUtil.get(request, (redirectEntry == null) ? "create" : "save")
 			).build()
 		%>'
-		module="js/ChainedRedirections"
 	/>
 </div>
 

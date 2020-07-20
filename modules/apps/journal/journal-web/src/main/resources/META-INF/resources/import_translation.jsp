@@ -82,7 +82,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 		>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			Map<String, Object> props = HashMapBuilder.<String, Object>put(
 				"articleResourcePrimKey", articleResourcePrimKey
 			).put(
 				"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
@@ -94,8 +94,8 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			%>
 
 			<react:component
-				data="<%= data %>"
 				module="js/ImportTranslation.es"
+				props="<%= props %>"
 			/>
 		</clay:sheet>
 	</clay:container-fluid>

@@ -22,7 +22,7 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-la
 
 <div>
 	<react:component
-		data="<%= data %>"
 		module="select_layout/js/SelectLayout.es"
+		props="<%= data %>"
 	/>
 </div>

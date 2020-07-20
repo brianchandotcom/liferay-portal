@@ -148,7 +148,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							</portlet:resourceURL>
 
 							<%
-							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							Map<String, Object> props = HashMapBuilder.<String, Object>put(
 								"adaptedImages", Math.min(adaptedImages, totalImages)
 							).put(
 								"adaptiveMediaProgressComponentId", liferayPortletResponse.getNamespace() + "AdaptRemaining" + uuid
@@ -168,8 +168,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							%>
 
 							<react:component
-								data="<%= data %>"
 								module="adaptive_media/js/AdaptiveMediaProgress.es"
+								props="<%= props %>"
 							/>
 						</div>
 					</liferay-ui:search-container-column-text>

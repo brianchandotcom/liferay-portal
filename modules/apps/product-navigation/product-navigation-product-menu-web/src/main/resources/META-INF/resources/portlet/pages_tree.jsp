@@ -22,8 +22,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 <div id="<%= liferayPortletResponse.getNamespace() + "-layout-finder" %>">
 	<react:component
-		data="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
 		module="js/LayoutFinder.es"
+		props="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
 		servletContext="<%= application %>"
 	/>
 </div>
@@ -31,8 +31,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <div id="<%= liferayPortletResponse.getNamespace() + "layoutsTree" %>">
 	<div id="<%= liferayPortletResponse.getNamespace() + "-page-type" %>">
 		<react:component
-			data="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"
 			module="js/PageTypeSelector.es"
+			props="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"
 			servletContext="<%= application %>"
 		/>
 	</div>

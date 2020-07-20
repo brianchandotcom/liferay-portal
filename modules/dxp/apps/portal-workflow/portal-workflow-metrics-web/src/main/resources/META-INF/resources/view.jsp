@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
+Map<String, Object> props = HashMapBuilder.<String, Object>put(
 	"defaultDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
 ).put(
 	"deltaValues", PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES
@@ -36,7 +36,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		data="<%= data %>"
 		module="js/index.es"
+		props="<%= props %>"
 	/>
 </div>

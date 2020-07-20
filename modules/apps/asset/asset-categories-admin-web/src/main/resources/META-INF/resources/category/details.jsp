@@ -128,7 +128,7 @@ renderResponse.setTitle(title);
 										).build());
 								}
 
-								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								Map<String, Object> props = HashMapBuilder.<String, Object>put(
 									"categoryIds", Collections.singletonList(parentCategoryId)
 								).put(
 									"groupIds", Collections.singletonList(scopeGroupId)
@@ -144,8 +144,8 @@ renderResponse.setTitle(title);
 								%>
 
 								<react:component
-									data="<%= data %>"
 									module="js/AssetCategoriesSelectorTag.es"
+									props="<%= props %>"
 								/>
 							</div>
 						</aui:field-wrapper>

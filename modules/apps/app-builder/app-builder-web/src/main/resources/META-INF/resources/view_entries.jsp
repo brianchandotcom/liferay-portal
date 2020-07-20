@@ -21,7 +21,7 @@
 	<%
 	AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebKeys.APP);
 
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	Map<String, Object> props = HashMapBuilder.<String, Object>put(
 		"appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE)
 	).put(
 		"appId", appBuilderApp.getAppBuilderAppId()
@@ -47,7 +47,7 @@
 	%>
 
 	<react:component
-		data="<%= data %>"
 		module="js/pages/entry/ViewEntriesApp.es"
+		props="<%= props %>"
 	/>
 </div>

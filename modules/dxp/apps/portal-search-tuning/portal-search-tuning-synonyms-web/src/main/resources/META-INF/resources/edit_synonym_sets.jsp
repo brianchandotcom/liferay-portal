@@ -51,8 +51,8 @@ portletDisplay.setURLBack(editSynonymSetsDisplayContext.getBackURL());
 		<span aria-hidden="true" class="loading-animation"></span>
 
 		<react:component
-			data="<%= editSynonymSetsDisplayContext.getData() %>"
 			module="js/SynonymSetsApp.es"
+			props="<%= editSynonymSetsDisplayContext.getData() %>"
 		/>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

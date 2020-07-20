@@ -88,7 +88,7 @@ if (size != null) {
 	resourceURL.setParameter("portletId", themeDisplay.getPpid());
 	resourceURL.setResourceID("/get_personal_menu_items");
 
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	Map<String, Object> props = HashMapBuilder.<String, Object>put(
 		"color", color
 	).put(
 		"isImpersonated", themeDisplay.isImpersonated()
@@ -101,12 +101,12 @@ if (size != null) {
 	).build();
 
 	if (user2.getPortraitId() > 0) {
-		data.put("userPortraitURL", user2.getPortraitURL(themeDisplay));
+		props.put("userPortraitURL", user2.getPortraitURL(themeDisplay));
 	}
 	%>
 
 	<react:component
-		data="<%= data %>"
 		module="personal_menu/js/PersonalMenu.es"
+		props="<%= props %>"
 	/>
 </div>

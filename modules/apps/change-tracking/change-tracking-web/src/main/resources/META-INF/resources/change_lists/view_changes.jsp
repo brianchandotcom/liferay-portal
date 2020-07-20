@@ -144,8 +144,8 @@ portletDisplay.setShowBackIcon(true);
 	<c:choose>
 		<c:when test="<%= viewChangesDisplayContext.hasChanges() %>">
 			<react:component
-				data="<%= viewChangesDisplayContext.getReactData() %>"
 				module="change_lists/js/ChangeTrackingChangesView"
+				props="<%= viewChangesDisplayContext.getReactData() %>"
 			/>
 		</c:when>
 		<c:otherwise>

@@ -108,7 +108,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setProps(Map<String, Object>)}
+	 *             #setProps(Map)}
 	 */
 	@Deprecated
 	public void setData(Map<String, Object> data) {
@@ -141,6 +141,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getProps()}
 	 */
+	@Deprecated
 	protected Map<String, Object> getData() {
 		return getProps();
 	}
@@ -182,8 +183,9 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #prepareData(Map<String, Object>)}
+	 *             #prepareData(Map)}
 	 */
+	@Deprecated
 	protected void prepareData(Map<String, Object> data) {
 		prepareProps(data);
 	}

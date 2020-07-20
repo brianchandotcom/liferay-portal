@@ -68,8 +68,7 @@
 								"type": "string"
 							},
 							"value": {
-								"title": "Value",
-								"type": "string"
+								"$ref": "#/definitions/TokenValue"
 							}
 						},
 						"required": [
@@ -138,6 +137,14 @@
 				"tokens"
 			],
 			"type": "object"
+		},
+		"TokenValue": {
+			"type": [
+				"boolean",
+				"integer",
+				"number",
+				"string"
+			]
 		}
 	},
 	"properties": {

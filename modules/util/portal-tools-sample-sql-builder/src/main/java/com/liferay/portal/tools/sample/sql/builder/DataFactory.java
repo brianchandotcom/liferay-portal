@@ -1819,7 +1819,7 @@ public class DataFactory {
 	public DDMStructureModel newDefaultJournalDDMStructureModel() {
 		return newDDMStructureModel(
 			_globalGroupId, _defaultUserId,
-			getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT",
+			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
 			_journalDDMStructureContent, _defaultJournalDDMStructureId);
 	}
 
@@ -1856,7 +1856,7 @@ public class DataFactory {
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append("BASIC-WEB-CONTENT");
+		sb.append(_JOURNAL_STRUCTURE_KEY);
 		sb.append("</name></root>");
 
 		ddmTemplateVersionModelImpl.setName(sb.toString());
@@ -2211,8 +2211,8 @@ public class DataFactory {
 
 		journalArticleModel.setContent(_journalArticleContent);
 		journalArticleModel.setDefaultLanguageId("en_US");
-		journalArticleModel.setDDMStructureKey("BASIC-WEB-CONTENT");
-		journalArticleModel.setDDMTemplateKey("BASIC-WEB-CONTENT");
+		journalArticleModel.setDDMStructureKey(_JOURNAL_STRUCTURE_KEY);
+		journalArticleModel.setDDMTemplateKey(_JOURNAL_STRUCTURE_KEY);
 		journalArticleModel.setDisplayDate(new Date());
 		journalArticleModel.setExpirationDate(nextFutureDate());
 		journalArticleModel.setReviewDate(new Date());
@@ -3823,7 +3823,7 @@ public class DataFactory {
 		ddmTemplateModel.setClassNameId(getClassNameId(DDMStructure.class));
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
-		ddmTemplateModel.setTemplateKey("BASIC-WEB-CONTENT");
+		ddmTemplateModel.setTemplateKey(_JOURNAL_STRUCTURE_KEY);
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 		ddmTemplateModel.setVersionUserId(userId);
 		ddmTemplateModel.setVersionUserName(_SAMPLE_USER_NAME);
@@ -4387,6 +4387,8 @@ public class DataFactory {
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
+
+	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
 

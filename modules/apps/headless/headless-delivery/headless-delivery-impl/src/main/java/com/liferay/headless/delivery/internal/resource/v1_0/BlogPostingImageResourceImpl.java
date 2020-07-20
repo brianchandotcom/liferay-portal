@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -163,6 +164,9 @@ public class BlogPostingImageResourceImpl
 			{
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "");
+				contentValue = ContentValueUtil.toContentValue(
+					"contentValue", fileEntry.getContentStream(),
+					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();

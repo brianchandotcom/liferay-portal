@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 
@@ -150,6 +153,9 @@ public class MessageBoardAttachmentResourceImpl
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
+				contentValue = ContentValueUtil.toContentValue(
+					"contentValue", fileEntry.getContentStream(),
+					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();

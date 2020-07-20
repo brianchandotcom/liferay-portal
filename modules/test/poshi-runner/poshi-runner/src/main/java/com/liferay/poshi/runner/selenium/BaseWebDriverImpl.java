@@ -1303,8 +1303,29 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
 
+		Object object1 = null;
+		Object object2 = null;
+
+		try {
+			object1 = getWebElement(argument1);
+		}
+		catch (ElementNotFoundPoshiRunnerException
+					elementNotFoundPoshiRunnerException) {
+
+			object1 = argument1;
+		}
+
+		try {
+			object2 = getWebElement(argument2);
+		}
+		catch (ElementNotFoundPoshiRunnerException
+					elementNotFoundPoshiRunnerException) {
+
+			object2 = argument2;
+		}
+
 		return (String)javascriptExecutor.executeScript(
-			javaScript, argument1, argument2);
+			javaScript, object1, object2);
 	}
 
 	@Override
@@ -3883,9 +3904,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				JavascriptExecutor javascriptExecutor =
 					(JavascriptExecutor)wrappedWebDriver;
 
+				Object object = null;
+
+				try {
+					object = getWebElement(argument);
+				}
+				catch (ElementNotFoundPoshiRunnerException
+							elementNotFoundPoshiRunnerException) {
+
+					object = argument;
+				}
+
 				Boolean javaScriptResult =
 					(Boolean)javascriptExecutor.executeScript(
-						javaScript, argument);
+						javaScript, object);
 
 				if (javaScriptResult == null) {
 					return false;

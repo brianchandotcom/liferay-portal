@@ -260,9 +260,8 @@ definition {
 			entryTitle = "Document_1.jpg",
 			fieldName = "File URL",
 			navItem = "Documents and Media",
-			padding = "true",
-			panel = "Styles",
-			top = "2");
+			paddingTop = "2",
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 

@@ -491,11 +491,10 @@ definition {
 
 		task ("Edit the Container's properties") {
 			PageEditor.editLayoutContainer(
-				bottom = "4",
 				containerWidth = "Fixed Width",
-				padding = "true",
-				panel = "Styles",
-				top = "2");
+				paddingBottom = "4",
+				paddingTop = "2",
+				panel = "Styles");
 		}
 
 		task ("Assert the Row has exactly 3 columns and no space between columns") {

@@ -115,9 +115,8 @@ definition {
 			backgroundImage = "Manual Selection",
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg",
-			padding = "true",
-			panel = "Styles",
-			top = "2");
+			paddingTop = "2",
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 

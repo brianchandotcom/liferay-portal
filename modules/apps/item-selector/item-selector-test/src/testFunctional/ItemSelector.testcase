@@ -96,9 +96,8 @@ definition {
 			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.svg",
 			navItem = "Documents and Media",
-			padding = "true",
-			panel = "Styles",
-			top = "2");
+			paddingTop = "2",
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 
@@ -160,9 +159,8 @@ definition {
 			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media",
-			padding = "true",
-			panel = "Styles",
-			top = "2");
+			paddingTop = "2",
+			panel = "Styles");
 
 		PageEditor.clickPublish();
 

@@ -34,5 +34,6 @@ dependencies {
 	compileOnly project(":apps:wiki:wiki-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

@@ -147,7 +147,7 @@ public class DBUpgrader {
 	public static void upgrade() throws Exception {
 		StartupHelperUtil.setUpgrading(true);
 
-		_upgradePortal();
+		_upgradePortalCore();
 
 		DependencyManagerSyncUtil.sync();
 
@@ -307,7 +307,7 @@ public class DBUpgrader {
 		_registerModuleServiceLifecycle("portal.initialized");
 	}
 
-	private static void _upgradePortal() throws Exception {
+	private static void _upgradePortalCore() throws Exception {
 
 		// Disable database caching before upgrade
 
@@ -345,6 +345,8 @@ public class DBUpgrader {
 		}
 
 		try {
+			StartupHelperUtil.setPortalCoreUpgrading(true);
+
 			buildNumber = _getBuildNumberForMissedUpgradeProcesses(buildNumber);
 
 			StartupHelperUtil.upgradeProcess(buildNumber);
@@ -355,6 +357,8 @@ public class DBUpgrader {
 			throw exception;
 		}
 		finally {
+			StartupHelperUtil.setPortalCoreUpgrading(false);
+
 			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
 				TransactionsUtil.enableTransactions();
 			}

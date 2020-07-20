@@ -1632,7 +1632,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public long getClassNameId(String value) {
-		if (!StartupHelperUtil.isUpgrading()) {
+		if (!StartupHelperUtil.isPortalCoreUpgrading()) {
 			return ClassNameLocalServiceUtil.getClassNameId(value);
 		}
 

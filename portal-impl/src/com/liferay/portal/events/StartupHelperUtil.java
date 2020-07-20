@@ -74,6 +74,10 @@ public class StartupHelperUtil {
 		return _dbNew;
 	}
 
+	public static boolean isPortalCoreUpgrading() {
+		return _portalCoreUpgrading;
+	}
+
 	public static boolean isStartupFinished() {
 		return _startupFinished;
 	}
@@ -119,6 +123,10 @@ public class StartupHelperUtil {
 
 	public static void setDropIndexes(boolean dropIndexes) {
 		_dropIndexes = dropIndexes;
+	}
+
+	public static void setPortalCoreUpgrading(boolean portalCoreUpgrading) {
+		_portalCoreUpgrading = portalCoreUpgrading;
 	}
 
 	public static void setStartupFinished(boolean startupFinished) {
@@ -247,6 +255,7 @@ public class StartupHelperUtil {
 
 	private static boolean _dbNew;
 	private static boolean _dropIndexes;
+	private static boolean _portalCoreUpgrading;
 	private static boolean _startupFinished;
 	private static boolean _upgraded;
 	private static boolean _upgrading;

@@ -37,7 +37,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 1");
 
-		DataEngine.addFields(fieldTypeList = "Boolean,Date,Decimal,Documents and Media");
+		DataEngine.addFields(fieldTypeList = "Date,Image,Upload");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
 
@@ -49,7 +49,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 2");
 
-		DataEngine.addFields(fieldTypeList = "HTML,Image,Integer,Link to Page");
+		DataEngine.addFields(fieldTypeList = "Grid,Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
 
@@ -61,7 +61,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 3");
 
-		DataEngine.addFields(fieldTypeList = "Number,Radio,Select,Separator,Text,Text Box");
+		DataEngine.addFields(fieldTypeList = "Numeric,Single Selection,Select from List,Separator,Text,Rich Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
 
@@ -75,10 +75,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 1");
 
-		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
+		for (var structureFieldName : list "Date,Image,Upload") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
+				fieldName = "${structureFieldName}");
 		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -91,10 +91,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 2");
 
-		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
+		for (var structureFieldName : list "Grid,Link to Page") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
+				fieldName = "${structureFieldName}");
 		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -107,10 +107,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 3");
 
-		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
+		for (var structureFieldName : list "Numeric,Single Selection,Select from List,Separator,Text,Rich Text") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
+				fieldName = "${structureFieldName}");
 		}
 	}
 

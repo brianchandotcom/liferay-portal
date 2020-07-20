@@ -94,7 +94,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(assembleTask);
 
-			_configureTaskGulpBuild(project);
+			_configureTaskGulpBuild(project, workspaceExtension);
 
 			Callable<ConfigurableFileCollection> warSourcePath =
 				new Callable<ConfigurableFileCollection>() {
@@ -231,7 +231,12 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void _configureTaskGulpBuild(Project project) {
+	private void _configureTaskGulpBuild(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		ExecuteGulpTask executeGulpTask = (ExecuteGulpTask)GradleUtil.getTask(
+			project, "gulpBuild");
+
 		File packageJsonFile = project.file("package.json");
 
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
@@ -244,10 +249,18 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			String buildScript = scriptsMap.get("build");
 
 			if ((buildScript != null) && !buildScript.equals("")) {
-				ExecuteGulpTask executeGulpTask =
-					(ExecuteGulpTask)GradleUtil.getTask(project, "gulpBuild");
-
 				executeGulpTask.setEnabled(false);
+			}
+		}
+		else {
+			String nodePackageManager =
+				workspaceExtension.getNodePackageManager();
+
+			if (nodePackageManager.equals("yarn")) {
+				Project rootProject = project.getRootProject();
+
+				executeGulpTask.setScriptFile(
+					rootProject.file("node_modules/gulp/bin/gulp.js"));
 			}
 		}
 	}

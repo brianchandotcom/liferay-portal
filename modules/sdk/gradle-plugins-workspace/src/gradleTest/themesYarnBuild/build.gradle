@@ -1,0 +1,35 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":distBundle", ":themes:baz-theme:dockerDeploy"
+
+	doLast {
+		File yarnNodeModulesDir = file("node_modules")
+
+		assert yarnNodeModulesDir.exists()
+
+		File warFile = file("build/dist/osgi/war/baz-theme.war")
+
+		assert warFile.exists()
+
+		File themeDir = file("themes/baz-theme")
+
+		assert themeDir.exists()
+
+		File themeNodeModulesDir = new File(themeDir, "node_modules")
+
+		assert themeNodeModulesDir.exists()
+
+		String[] files = themeNodeModulesDir.list()
+
+		assert files.length == 1
+
+		warFile = file("build/dist/osgi/modules/baz-theme.war")
+
+		assert !warFile.exists()
+
+		File dockerWarFile = file("build/docker/deploy/baz-theme.war")
+
+		assert dockerWarFile.exists()
+	}
+}

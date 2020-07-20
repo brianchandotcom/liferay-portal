@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=60",
 	service = FormNavigatorEntry.class
 )
-public class JournalMetadataFormNavigatorEntry
+public class JournalCategorizationFormNavigatorEntry
 	extends BaseJournalFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "metadata";
+		return "categorization";
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class JournalMetadataFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/article/metadata.jsp";
+		return "/article/categorization.jsp";
 	}
 
 }

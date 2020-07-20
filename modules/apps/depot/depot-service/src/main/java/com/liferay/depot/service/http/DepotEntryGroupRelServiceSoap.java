@@ -156,6 +156,26 @@ public class DepotEntryGroupRelServiceSoap {
 	}
 
 	public static com.liferay.depot.model.DepotEntryGroupRelSoap
+			updateDDMStructuresAvailable(
+				long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws RemoteException {
+
+		try {
+			com.liferay.depot.model.DepotEntryGroupRel returnValue =
+				DepotEntryGroupRelServiceUtil.updateDDMStructuresAvailable(
+					depotEntryGroupRelId, ddmStructuresAvailable);
+
+			return com.liferay.depot.model.DepotEntryGroupRelSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntryGroupRelSoap
 			updateSearchable(long depotEntryGroupRelId, boolean searchable)
 		throws RemoteException {
 

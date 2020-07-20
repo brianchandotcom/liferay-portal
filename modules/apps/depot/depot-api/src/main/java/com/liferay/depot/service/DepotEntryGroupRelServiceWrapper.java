@@ -87,6 +87,16 @@ public class DepotEntryGroupRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.depot.model.DepotEntryGroupRel
+			updateDDMStructuresAvailable(
+				long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelService.updateDDMStructuresAvailable(
+			depotEntryGroupRelId, ddmStructuresAvailable);
+	}
+
+	@Override
 	public com.liferay.depot.model.DepotEntryGroupRel updateSearchable(
 			long depotEntryGroupRelId, boolean searchable)
 		throws com.liferay.portal.kernel.exception.PortalException {

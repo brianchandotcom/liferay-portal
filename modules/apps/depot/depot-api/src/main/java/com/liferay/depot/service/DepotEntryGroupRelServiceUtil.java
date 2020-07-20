@@ -80,6 +80,15 @@ public class DepotEntryGroupRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.depot.model.DepotEntryGroupRel
+			updateDDMStructuresAvailable(
+				long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDDMStructuresAvailable(
+			depotEntryGroupRelId, ddmStructuresAvailable);
+	}
+
 	public static com.liferay.depot.model.DepotEntryGroupRel updateSearchable(
 			long depotEntryGroupRelId, boolean searchable)
 		throws com.liferay.portal.kernel.exception.PortalException {

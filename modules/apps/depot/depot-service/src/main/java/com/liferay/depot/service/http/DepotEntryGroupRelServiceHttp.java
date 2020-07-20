@@ -257,6 +257,49 @@ public class DepotEntryGroupRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.depot.model.DepotEntryGroupRel
+			updateDDMStructuresAvailable(
+				HttpPrincipal httpPrincipal, long depotEntryGroupRelId,
+				boolean ddmStructuresAvailable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryGroupRelServiceUtil.class,
+				"updateDDMStructuresAvailable",
+				_updateDDMStructuresAvailableParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntryGroupRelId, ddmStructuresAvailable);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.depot.model.DepotEntryGroupRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.depot.model.DepotEntryGroupRel updateSearchable(
 			HttpPrincipal httpPrincipal, long depotEntryGroupRelId,
 			boolean searchable)
@@ -265,7 +308,7 @@ public class DepotEntryGroupRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class, "updateSearchable",
-				_updateSearchableParameterTypes5);
+				_updateSearchableParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryGroupRelId, searchable);
@@ -313,7 +356,11 @@ public class DepotEntryGroupRelServiceHttp {
 		};
 	private static final Class<?>[]
 		_getDepotEntryGroupRelsCountParameterTypes4 = new Class[] {long.class};
-	private static final Class<?>[] _updateSearchableParameterTypes5 =
+	private static final Class<?>[]
+		_updateDDMStructuresAvailableParameterTypes5 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateSearchableParameterTypes6 =
 		new Class[] {long.class, boolean.class};
 
 }

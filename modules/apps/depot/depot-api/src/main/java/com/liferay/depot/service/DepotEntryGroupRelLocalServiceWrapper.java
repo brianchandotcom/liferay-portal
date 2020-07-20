@@ -378,6 +378,16 @@ public class DepotEntryGroupRelLocalServiceWrapper
 			getSearchableDepotEntryGroupRelsCount(groupId);
 	}
 
+	@Override
+	public com.liferay.depot.model.DepotEntryGroupRel
+			updateDDMStructuresAvailable(
+				long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelLocalService.updateDDMStructuresAvailable(
+			depotEntryGroupRelId, ddmStructuresAvailable);
+	}
+
 	/**
 	 * Updates the depot entry group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

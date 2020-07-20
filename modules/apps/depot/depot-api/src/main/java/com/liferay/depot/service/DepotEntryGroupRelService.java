@@ -79,6 +79,10 @@ public interface DepotEntryGroupRelService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public DepotEntryGroupRel updateDDMStructuresAvailable(
+			long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws PortalException;
+
 	public DepotEntryGroupRel updateSearchable(
 			long depotEntryGroupRelId, boolean searchable)
 		throws PortalException;

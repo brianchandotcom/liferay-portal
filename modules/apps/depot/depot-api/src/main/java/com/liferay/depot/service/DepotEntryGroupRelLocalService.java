@@ -286,6 +286,10 @@ public interface DepotEntryGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSearchableDepotEntryGroupRelsCount(long groupId);
 
+	public DepotEntryGroupRel updateDDMStructuresAvailable(
+			long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws PortalException;
+
 	/**
 	 * Updates the depot entry group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

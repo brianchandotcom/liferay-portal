@@ -68,7 +68,7 @@ if (Validator.isNotNull(backURL)) {
 					expand="<%= true %>"
 				>
 					<span class="heading-text">
-						<liferay-ui:message key="asset-entries" />
+						<liferay-ui:message key="collection-items" />
 					</span>
 				</clay:content-col>
 
@@ -108,7 +108,7 @@ if (Validator.isNotNull(backURL)) {
 
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"
-			emptyResultsMessage="no-assets-are-selected"
+			emptyResultsMessage="no-collection-items-are-selected"
 			id="assetEntriesSearchContainer"
 			searchContainer="<%= editAssetListDisplayContext.getSearchContainer() %>"
 		>

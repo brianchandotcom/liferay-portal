@@ -437,12 +437,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 									viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
-
-									String folderImage = "folder_empty_document";
-
-									if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
-										folderImage = "folder_full_document";
-									}
 								%>
 
 									<liferay-ui:search-container-column-icon
@@ -524,7 +518,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													<small>Company Assets</small>
 												</span>
 											</h6>
-
 
 											<h6 class="text-default">
 												<liferay-ui:message key="version" />:

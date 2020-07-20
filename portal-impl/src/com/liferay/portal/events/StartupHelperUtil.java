@@ -90,6 +90,12 @@ public class StartupHelperUtil {
 		return _upgraded;
 	}
 
+	/**
+	 * Returns <code>true</code> if the portal core or modules are upgrading.
+	 *
+	 * @return <code>true</code> if the portal core or modules are upgrading;
+	 * <code>false</code> otherwise
+	 */
 	public static boolean isUpgrading() {
 		return _upgrading;
 	}

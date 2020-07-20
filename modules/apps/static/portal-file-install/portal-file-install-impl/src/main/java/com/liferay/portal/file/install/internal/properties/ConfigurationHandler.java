@@ -482,7 +482,7 @@ public class ConfigurationHandler {
 	private static void _writeType(Writer writer, Class<?> valueType)
 		throws IOException {
 
-		Integer code = (Integer)_typeToCode.get(valueType);
+		Integer code = _typeToCode.get(valueType);
 
 		if (code != null) {
 			writer.write((char)code.intValue());
@@ -532,9 +532,9 @@ public class ConfigurationHandler {
 
 	private static final int _TOKEN_VAL_OPEN = '"'; // '{';
 
-	private static final Map<Object, Class<?>> _codeToType = new HashMap<>();
-	private static final Map<Class<?>, Object> _typeToCode =
-		HashMapBuilder.<Class<?>, Object>put(
+	private static final Map<Integer, Class<?>> _codeToType = new HashMap<>();
+	private static final Map<Class<?>, Integer> _typeToCode =
+		HashMapBuilder.<Class<?>, Integer>put(
 			Boolean.class, _TOKEN_SIMPLE_BOOLEAN
 		).put(
 			Byte.class, _TOKEN_SIMPLE_BYTE
@@ -553,7 +553,7 @@ public class ConfigurationHandler {
 		).build();
 
 	static {
-		for (Map.Entry<Class<?>, Object> entry : _typeToCode.entrySet()) {
+		for (Map.Entry<Class<?>, Integer> entry : _typeToCode.entrySet()) {
 			_codeToType.put(entry.getValue(), entry.getKey());
 		}
 

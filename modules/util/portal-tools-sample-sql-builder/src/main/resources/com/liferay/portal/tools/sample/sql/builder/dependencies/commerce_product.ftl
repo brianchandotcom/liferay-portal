@@ -4,7 +4,7 @@
 
 ${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogModel())}
 
-${dataFactory.toInsertSQL(dataFactory.commerceCatalogResourcePermission())}
+${dataFactory.toInsertSQL(dataFactory.newResourcePermission())}
 
 ${dataFactory.toInsertSQL(dataFactory.newCommerceChannelModel())}
 

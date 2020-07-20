@@ -383,12 +383,6 @@ public class DataFactory {
 		initUserNames();
 	}
 
-	public ResourcePermissionModel commerceCatalogResourcePermission() {
-		return newResourcePermissionModel(
-			CommerceCatalog.class.getName(), String.valueOf(_commerceCatalogId),
-			_guestRoleModel.getRoleId(), _sampleUserId);
-	}
-
 	public RoleModel getAdministratorRoleModel() {
 		return _administratorRoleModel;
 	}
@@ -2922,6 +2916,12 @@ public class DataFactory {
 		}
 
 		return releases;
+	}
+
+	public ResourcePermissionModel newResourcePermission() {
+		return newResourcePermissionModel(
+			CommerceCatalog.class.getName(), String.valueOf(_commerceCatalogId),
+			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

@@ -147,7 +147,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 
 		long[] groupIds =
 			SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getScopeGroupId(), true);
 
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,

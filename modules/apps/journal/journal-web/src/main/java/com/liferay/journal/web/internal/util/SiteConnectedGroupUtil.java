@@ -34,7 +34,20 @@ public class SiteConnectedGroupUtil {
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
 			ListUtil.toLongArray(
 				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
+	}
+
+	public static long[] getCurrentAndAncestorSiteAndDepotGroupIds(
+			long groupId, boolean ddmStructuresAvailable)
+		throws PortalException {
+
+		return ArrayUtil.append(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+			ListUtil.toLongArray(
+				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+					groupId, ddmStructuresAvailable, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
 				DepotEntry::getGroupId));
 	}
 

@@ -471,7 +471,7 @@ public class JournalDisplayContext {
 
 		_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
 			SiteConnectedGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
-				_themeDisplay.getScopeGroupId()),
+				_themeDisplay.getScopeGroupId(), true),
 			getFolderId(), restrictionType);
 
 		Locale locale = _themeDisplay.getLocale();

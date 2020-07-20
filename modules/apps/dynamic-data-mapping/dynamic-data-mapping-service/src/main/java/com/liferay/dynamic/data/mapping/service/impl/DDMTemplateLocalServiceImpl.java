@@ -1824,7 +1824,7 @@ public class DDMTemplateLocalServiceImpl
 				_portal.getAncestorSiteGroupIds(groupId),
 				ListUtil.toLongArray(
 					_depotEntryLocalService.getGroupConnectedDepotEntries(
-						groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+						groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					DepotEntry::getGroupId));
 		}
 		catch (PortalException portalException) {

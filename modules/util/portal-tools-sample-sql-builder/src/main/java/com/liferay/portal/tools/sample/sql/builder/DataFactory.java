@@ -1926,7 +1926,7 @@ public class DataFactory {
 
 		defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
 		defaultDLFileEntryTypeModel.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+			_defaultDLFileEntryTypeId);
 		defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
 		defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
 		defaultDLFileEntryTypeModel.setFileEntryTypeKey(
@@ -1977,16 +1977,13 @@ public class DataFactory {
 	}
 
 	public List<DLFolderModel> newDLFolderModels(
-		long groupId, long parentFolderId,
-		DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
+		long groupId, long parentFolderId) {
 
 		List<DLFolderModel> dlFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
-			dlFolderModels.add(
-				newDLFolderModel(
-					groupId, parentFolderId, i, defaultDLFileEntryTypeModel));
+			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
 		}
 
 		return dlFolderModels;
@@ -3894,8 +3891,7 @@ public class DataFactory {
 	}
 
 	protected DLFolderModel newDLFolderModel(
-		long groupId, long parentFolderId, int index,
-		DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
+		long groupId, long parentFolderId, int index) {
 
 		DLFolderModel dlFolderModel = new DLFolderModelImpl();
 
@@ -3911,8 +3907,7 @@ public class DataFactory {
 		dlFolderModel.setParentFolderId(parentFolderId);
 		dlFolderModel.setName("Test Folder " + index);
 		dlFolderModel.setLastPostDate(nextFutureDate());
-		dlFolderModel.setDefaultFileEntryTypeId(
-			defaultDLFileEntryTypeModel.getFileEntryTypeId());
+		dlFolderModel.setDefaultFileEntryTypeId(_defaultDLFileEntryTypeId);
 		dlFolderModel.setLastPublishDate(nextFutureDate());
 		dlFolderModel.setStatusDate(nextFutureDate());
 
@@ -4450,6 +4445,8 @@ public class DataFactory {
 	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
+	private long _defaultDLFileEntryTypeId =
+		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;
 	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMStructureModel _defaultJournalDDMStructureModel;

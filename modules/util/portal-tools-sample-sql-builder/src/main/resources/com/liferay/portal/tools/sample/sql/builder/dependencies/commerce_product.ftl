@@ -14,7 +14,7 @@ ${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
 	${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 </#list>
 
-<#list dataFactory.CPDefinitionModels as cpDefinitionModel>
+<#list dataFactory.newCPDefinitionModels() as cpDefinitionModel>
 	${dataFactory.toInsertSQL(cpDefinitionModel)}
 </#list>
 

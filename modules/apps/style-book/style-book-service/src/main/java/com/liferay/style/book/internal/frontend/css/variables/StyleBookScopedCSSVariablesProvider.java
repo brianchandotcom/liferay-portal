@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -105,6 +106,12 @@ public class StyleBookScopedCSSVariablesProvider
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isControlPanel()) {
+			return StringPool.BLANK;
+		}
 
 		Layout layout = themeDisplay.getLayout();
 

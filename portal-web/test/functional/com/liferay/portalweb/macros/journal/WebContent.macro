@@ -430,7 +430,7 @@ definition {
 
 		Type(
 			key_fieldName = "${fieldName}",
-			locator1 = "TextInput#DDM",
+			locator1 = "TextInput#DE_DDM",
 			value1 = "${webContentContent}");
 
 		if (isSet(templateName)) {
@@ -1662,7 +1662,7 @@ definition {
 		if (isSet(webContentText)) {
 			AssertTextEquals(
 				key_fieldName = "Text",
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${webContentText}");
 		}
 		else {

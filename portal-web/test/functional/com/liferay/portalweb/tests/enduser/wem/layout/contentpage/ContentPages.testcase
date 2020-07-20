@@ -285,24 +285,12 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Grid");
 
-		Click(
-			key_position = "3",
-			locator1 = "PageEditor#GRID_COLUMN_RESIZER");
-
-		Pause(locator1 = "1000");
-
 		DragAndDrop.DragAndDropObject(
 			key_position = "3",
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER",
 			position = "530,0");
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
-
 		PageEditor.waitForAutoSave();
-
-		Click.clickNoWaitForVisible(
-			key_fragmentName = "Grid",
-			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		AssertVisible(locator1 = "PageEditor#GRID_COLUMN_FIRST_RESIZER");
 

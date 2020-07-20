@@ -32,7 +32,7 @@ ${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
 	${dataFactory.toInsertSQL(cProductModel)}
 </#list>
 
-${dataFactory.toInsertSQL(dataFactory.CPTaxCategoryModel)}
+${dataFactory.toInsertSQL(dataFactory.newCPTaxCategoryModel())}
 
 <@insertGroup _groupModel=dataFactory.newCommerceCatalogGroupModel() />
 

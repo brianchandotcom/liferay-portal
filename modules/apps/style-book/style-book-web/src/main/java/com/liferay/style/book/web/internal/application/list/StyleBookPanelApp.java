@@ -17,7 +17,11 @@ package com.liferay.style.book.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +46,19 @@ public class StyleBookPanelApp extends BasePanelApp {
 	}
 
 	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (_stagingGroupHelper.isLocalLiveGroup(group) ||
+			_stagingGroupHelper.isRemoteLiveGroup(group)) {
+
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
+	}
+
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK + ")",
 		unbind = "-"
@@ -49,5 +66,8 @@ public class StyleBookPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

@@ -108,6 +108,23 @@ public class DepotEntryGroupRelServiceImpl
 	}
 
 	@Override
+	public DepotEntryGroupRel updateDDMStructuresAvailable(
+			long depotEntryGroupRelId, boolean ddmStructuresAvailable)
+		throws PortalException {
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+				depotEntryGroupRelId);
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryGroupRel.getDepotEntryId(),
+			ActionKeys.UPDATE);
+
+		return depotEntryGroupRelLocalService.updateDDMStructuresAvailable(
+			depotEntryGroupRelId, ddmStructuresAvailable);
+	}
+
+	@Override
 	public DepotEntryGroupRel updateSearchable(
 			long depotEntryGroupRelId, boolean searchable)
 		throws PortalException {

@@ -1883,7 +1883,7 @@ public class DataFactory {
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append(ddmTemplateModel.getTemplateKey());
+		sb.append("BASIC-WEB-CONTENT");
 		sb.append("</name></root>");
 
 		ddmTemplateVersionModelImpl.setName(sb.toString());
@@ -2240,8 +2240,7 @@ public class DataFactory {
 		journalArticleModel.setContent(_journalArticleContent);
 		journalArticleModel.setDefaultLanguageId("en_US");
 		journalArticleModel.setDDMStructureKey("BASIC-WEB-CONTENT");
-		journalArticleModel.setDDMTemplateKey(
-			_defaultJournalDDMTemplateModel.getTemplateKey());
+		journalArticleModel.setDDMTemplateKey("BASIC-WEB-CONTENT");
 		journalArticleModel.setDisplayDate(new Date());
 		journalArticleModel.setExpirationDate(nextFutureDate());
 		journalArticleModel.setReviewDate(new Date());

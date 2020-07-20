@@ -356,6 +356,10 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
 
+		_cpDefinitionCount =
+			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT *
+				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
+
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
 			"ddm_structure_layout_basic_document.json");
@@ -872,16 +876,12 @@ public class DataFactory {
 	}
 
 	public void initCommerceProductModels() {
-		int cpDefinitionCount =
-			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-
-		_assetEntryModels = new ArrayList<>(cpDefinitionCount);
-		_cpDefinitionLocalizationModels = new ArrayList<>(cpDefinitionCount);
-		_cpDefinitionModels = new ArrayList<>(cpDefinitionCount);
-		_cpFriendlyURLEntryModels = new ArrayList<>(cpDefinitionCount);
+		_assetEntryModels = new ArrayList<>(_cpDefinitionCount);
+		_cpDefinitionLocalizationModels = new ArrayList<>(_cpDefinitionCount);
+		_cpDefinitionModels = new ArrayList<>(_cpDefinitionCount);
+		_cpFriendlyURLEntryModels = new ArrayList<>(_cpDefinitionCount);
 		_cpInstanceModels = new ArrayList<>(
-			cpDefinitionCount *
+			_cpDefinitionCount *
 				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT);
 
 		for (int productIndex = 0;
@@ -4422,6 +4422,7 @@ public class DataFactory {
 	private final long _commerceChannelId;
 	private final long _companyId;
 	private final SimpleCounter _counter;
+	private final int _cpDefinitionCount;
 	private List<long[]> _cpDefinitionIdList;
 	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;
 	private final Map<Long, String> _cpDefinitionLocalizationNames =

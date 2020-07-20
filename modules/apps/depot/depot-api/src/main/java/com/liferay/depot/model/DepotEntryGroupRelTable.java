@@ -41,6 +41,10 @@ public class DepotEntryGroupRelTable
 			Column.FLAG_PRIMARY);
 	public final Column<DepotEntryGroupRelTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Boolean>
+		ddmStructuresAvailable = createColumn(
+			"ddmStructuresAvailable", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Long> depotEntryId =
 		createColumn(
 			"depotEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

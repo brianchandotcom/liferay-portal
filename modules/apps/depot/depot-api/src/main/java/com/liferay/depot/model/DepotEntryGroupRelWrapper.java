@@ -44,6 +44,7 @@ public class DepotEntryGroupRelWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("depotEntryGroupRelId", getDepotEntryGroupRelId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("ddmStructuresAvailable", isDdmStructuresAvailable());
 		attributes.put("depotEntryId", getDepotEntryId());
 		attributes.put("searchable", isSearchable());
 		attributes.put("toGroupId", getToGroupId());
@@ -70,6 +71,13 @@ public class DepotEntryGroupRelWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Boolean ddmStructuresAvailable = (Boolean)attributes.get(
+			"ddmStructuresAvailable");
+
+		if (ddmStructuresAvailable != null) {
+			setDdmStructuresAvailable(ddmStructuresAvailable);
 		}
 
 		Long depotEntryId = (Long)attributes.get("depotEntryId");
@@ -99,6 +107,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ddm structures available of this depot entry group rel.
+	 *
+	 * @return the ddm structures available of this depot entry group rel
+	 */
+	@Override
+	public boolean getDdmStructuresAvailable() {
+		return model.getDdmStructuresAvailable();
 	}
 
 	/**
@@ -162,6 +180,16 @@ public class DepotEntryGroupRelWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this depot entry group rel is ddm structures available.
+	 *
+	 * @return <code>true</code> if this depot entry group rel is ddm structures available; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDdmStructuresAvailable() {
+		return model.isDdmStructuresAvailable();
+	}
+
+	/**
 	 * Returns <code>true</code> if this depot entry group rel is searchable.
 	 *
 	 * @return <code>true</code> if this depot entry group rel is searchable; <code>false</code> otherwise
@@ -184,6 +212,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets whether this depot entry group rel is ddm structures available.
+	 *
+	 * @param ddmStructuresAvailable the ddm structures available of this depot entry group rel
+	 */
+	@Override
+	public void setDdmStructuresAvailable(boolean ddmStructuresAvailable) {
+		model.setDdmStructuresAvailable(ddmStructuresAvailable);
 	}
 
 	/**

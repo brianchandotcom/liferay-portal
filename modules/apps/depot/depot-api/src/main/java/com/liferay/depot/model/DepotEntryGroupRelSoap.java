@@ -33,6 +33,7 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setDepotEntryGroupRelId(model.getDepotEntryGroupRelId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setDdmStructuresAvailable(model.isDdmStructuresAvailable());
 		soapModel.setDepotEntryId(model.getDepotEntryId());
 		soapModel.setSearchable(model.isSearchable());
 		soapModel.setToGroupId(model.getToGroupId());
@@ -122,6 +123,18 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public boolean getDdmStructuresAvailable() {
+		return _ddmStructuresAvailable;
+	}
+
+	public boolean isDdmStructuresAvailable() {
+		return _ddmStructuresAvailable;
+	}
+
+	public void setDdmStructuresAvailable(boolean ddmStructuresAvailable) {
+		_ddmStructuresAvailable = ddmStructuresAvailable;
+	}
+
 	public long getDepotEntryId() {
 		return _depotEntryId;
 	}
@@ -153,6 +166,7 @@ public class DepotEntryGroupRelSoap implements Serializable {
 	private long _mvccVersion;
 	private long _depotEntryGroupRelId;
 	private long _companyId;
+	private boolean _ddmStructuresAvailable;
 	private long _depotEntryId;
 	private boolean _searchable;
 	private long _toGroupId;

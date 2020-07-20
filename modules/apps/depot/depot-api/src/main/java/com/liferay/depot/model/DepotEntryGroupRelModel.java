@@ -102,6 +102,27 @@ public interface DepotEntryGroupRelModel
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the ddm structures available of this depot entry group rel.
+	 *
+	 * @return the ddm structures available of this depot entry group rel
+	 */
+	public boolean getDdmStructuresAvailable();
+
+	/**
+	 * Returns <code>true</code> if this depot entry group rel is ddm structures available.
+	 *
+	 * @return <code>true</code> if this depot entry group rel is ddm structures available; <code>false</code> otherwise
+	 */
+	public boolean isDdmStructuresAvailable();
+
+	/**
+	 * Sets whether this depot entry group rel is ddm structures available.
+	 *
+	 * @param ddmStructuresAvailable the ddm structures available of this depot entry group rel
+	 */
+	public void setDdmStructuresAvailable(boolean ddmStructuresAvailable);
+
+	/**
 	 * Returns the depot entry ID of this depot entry group rel.
 	 *
 	 * @return the depot entry ID of this depot entry group rel

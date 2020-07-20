@@ -24,6 +24,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="depotEntryGroupRelId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="ddmStructuresAvailable" type="boolean" />
 		<field name="depotEntryId" type="long" />
 		<field name="searchable" type="boolean" />
 		<field name="toGroupId" type="long" />

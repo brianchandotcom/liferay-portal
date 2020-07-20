@@ -23,6 +23,7 @@ create table DepotEntryGroupRel (
 	mvccVersion LONG default 0 not null,
 	depotEntryGroupRelId LONG not null primary key,
 	companyId LONG,
+	ddmStructuresAvailable BOOLEAN,
 	depotEntryId LONG,
 	searchable BOOLEAN,
 	toGroupId LONG

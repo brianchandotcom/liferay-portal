@@ -76,7 +76,7 @@ public class DepotEntryGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -84,6 +84,8 @@ public class DepotEntryGroupRelCacheModel
 		sb.append(depotEntryGroupRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", ddmStructuresAvailable=");
+		sb.append(ddmStructuresAvailable);
 		sb.append(", depotEntryId=");
 		sb.append(depotEntryId);
 		sb.append(", searchable=");
@@ -103,6 +105,8 @@ public class DepotEntryGroupRelCacheModel
 		depotEntryGroupRelImpl.setMvccVersion(mvccVersion);
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(depotEntryGroupRelId);
 		depotEntryGroupRelImpl.setCompanyId(companyId);
+		depotEntryGroupRelImpl.setDdmStructuresAvailable(
+			ddmStructuresAvailable);
 		depotEntryGroupRelImpl.setDepotEntryId(depotEntryId);
 		depotEntryGroupRelImpl.setSearchable(searchable);
 		depotEntryGroupRelImpl.setToGroupId(toGroupId);
@@ -120,6 +124,8 @@ public class DepotEntryGroupRelCacheModel
 
 		companyId = objectInput.readLong();
 
+		ddmStructuresAvailable = objectInput.readBoolean();
+
 		depotEntryId = objectInput.readLong();
 
 		searchable = objectInput.readBoolean();
@@ -135,6 +141,8 @@ public class DepotEntryGroupRelCacheModel
 
 		objectOutput.writeLong(companyId);
 
+		objectOutput.writeBoolean(ddmStructuresAvailable);
+
 		objectOutput.writeLong(depotEntryId);
 
 		objectOutput.writeBoolean(searchable);
@@ -145,6 +153,7 @@ public class DepotEntryGroupRelCacheModel
 	public long mvccVersion;
 	public long depotEntryGroupRelId;
 	public long companyId;
+	public boolean ddmStructuresAvailable;
 	public long depotEntryId;
 	public boolean searchable;
 	public long toGroupId;

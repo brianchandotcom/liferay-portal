@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -57,44 +60,57 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "card-interactive card-interactive-secondary";
+	public Map<String, String> getData() {
+		Map<String, String> data = new HashMap<>();
+
+		try {
+			PortletURL selectLayoutMasterLayoutURL =
+				_renderResponse.createRenderURL();
+
+			selectLayoutMasterLayoutURL.setParameter(
+				"mvcPath", "/select_layout_master_layout.jsp");
+
+			String redirect = ParamUtil.getString(
+				_httpServletRequest, "redirect");
+
+			selectLayoutMasterLayoutURL.setParameter("redirect", redirect);
+
+			selectLayoutMasterLayoutURL.setParameter(
+				"backURL", themeDisplay.getURLCurrent());
+			selectLayoutMasterLayoutURL.setParameter(
+				"groupId", String.valueOf(_groupId));
+
+			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
+
+			selectLayoutMasterLayoutURL.setParameter(
+				"selPlid", String.valueOf(selPlid));
+
+			boolean privateLayout = ParamUtil.getBoolean(
+				_httpServletRequest, "privateLayout");
+
+			selectLayoutMasterLayoutURL.setParameter(
+				"privateLayout", String.valueOf(privateLayout));
+
+			selectLayoutMasterLayoutURL.setParameter(
+				"collectionPK", String.valueOf(_infoListProvider.getKey()));
+			selectLayoutMasterLayoutURL.setParameter(
+				"collectionType",
+				InfoListProviderItemSelectorReturnType.class.getName());
+
+			data.put(
+				"select-layout-master-layout-url",
+				selectLayoutMasterLayoutURL.toString());
+		}
+		catch (Exception exception) {
+		}
+
+		return data;
 	}
 
-	public String getHref() {
-		PortletURL selectLayoutMasterLayoutURL =
-			_renderResponse.createRenderURL();
-
-		selectLayoutMasterLayoutURL.setParameter(
-			"mvcPath", "/select_layout_master_layout.jsp");
-
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		selectLayoutMasterLayoutURL.setParameter("redirect", redirect);
-
-		selectLayoutMasterLayoutURL.setParameter(
-			"backURL", themeDisplay.getURLCurrent());
-		selectLayoutMasterLayoutURL.setParameter(
-			"groupId", String.valueOf(_groupId));
-
-		long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-
-		selectLayoutMasterLayoutURL.setParameter(
-			"selPlid", String.valueOf(selPlid));
-
-		boolean privateLayout = ParamUtil.getBoolean(
-			_httpServletRequest, "privateLayout");
-
-		selectLayoutMasterLayoutURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
-
-		selectLayoutMasterLayoutURL.setParameter(
-			"collectionPK", String.valueOf(_infoListProvider.getKey()));
-		selectLayoutMasterLayoutURL.setParameter(
-			"collectionType",
-			InfoListProviderItemSelectorReturnType.class.getName());
-
-		return selectLayoutMasterLayoutURL.toString();
+	@Override
+	public String getElementClasses() {
+		return "select-collection-action-option card-interactive " +
+			"card-interactive-secondary";
 	}
 
 	@Override

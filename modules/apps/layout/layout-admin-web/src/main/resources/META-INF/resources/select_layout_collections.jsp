@@ -58,3 +58,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 		module="js/SelectCollectionManagementToolbarDefaultEventHandler.es"
 	/>
 </c:if>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var collections = document.getElementById('<portlet:namespace />collections');
+
+	var selectLayoutMasterLayoutActionOptionQueryClickHandler = dom.delegate(
+		collections,
+		'click',
+		'.select-collection-action-option',
+		function (event) {
+			Liferay.Util.navigate(
+				event.delegateTarget.dataset.selectLayoutMasterLayoutUrl
+			);
+		}
+	);
+
+	function handleDestroyPortlet() {
+		selectLayoutMasterLayoutActionOptionQueryClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>

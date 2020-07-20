@@ -74,7 +74,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 			authenticatedHttpProxyHit);
 
 		URL url = BundleSupportCommandsTest.class.getResource(
-			"dependencies" + _CONTEXT_PATH_ZIP);
+			"dependencies" + CONTEXT_PATH_ZIP);
 
 		_bundleZipFile = new File(url.toURI());
 
@@ -255,7 +255,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 		downloadCommand.setCacheDir(temporaryFolder.newFolder("cacheDir"));
 		downloadCommand.setPassword(HTTP_SERVER_PASSWORD);
 		downloadCommand.setQuiet(true);
-		downloadCommand.setUrl(getHttpServerUrl(_CONTEXT_PATH_ZIP));
+		downloadCommand.setUrl(getHttpServerUrl(CONTEXT_PATH_ZIP));
 		downloadCommand.setUserName(HTTP_SERVER_USER_NAME);
 
 		PrintStream printStream = System.out;
@@ -344,7 +344,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 	@Test
 	public void testInitBundleZip() throws Exception {
 		_testInitBundle(
-			getHttpServerUrl(_CONTEXT_PATH_ZIP), HTTP_SERVER_PASSWORD,
+			getHttpServerUrl(CONTEXT_PATH_ZIP), HTTP_SERVER_PASSWORD,
 			HTTP_SERVER_USER_NAME);
 	}
 
@@ -359,7 +359,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 	public void testInitBundleZipUnauthorized() throws Exception {
 		expectedException.expectMessage("Unauthorized");
 
-		_testInitBundle(getHttpServerUrl(_CONTEXT_PATH_ZIP), null, null);
+		_testInitBundle(getHttpServerUrl(CONTEXT_PATH_ZIP), null, null);
 	}
 
 	@Rule
@@ -500,7 +500,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 			httpServer, _CONTEXT_PATH_TOKEN_UNFORMATTED, "application/json",
 			authenticator);
 		_createHttpContext(
-			httpServer, _CONTEXT_PATH_ZIP, "application/zip", authenticator);
+			httpServer, CONTEXT_PATH_ZIP, "application/zip", authenticator);
 
 		httpServer.setExecutor(null);
 
@@ -666,8 +666,6 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 
 	private static final String _CONTEXT_PATH_TOKEN_UNFORMATTED =
 		"/token_unformatted";
-
-	private static final String _CONTEXT_PATH_ZIP = "/test.zip";
 
 	private static final String _INIT_BUNDLE_ENVIRONMENT = "local";
 

@@ -83,7 +83,7 @@ public class DownloadCommandTest extends HttpProxyMockServerSupport {
 
 	@Test
 	public void testDownloadAttachmentFile() throws Exception {
-		String fileName = "liferay-blade-samples-7.3.zip";
+		String fileName = "test.zip";
 
 		File temp = temporaryFolder.newFolder("cacheDir");
 
@@ -98,7 +98,7 @@ public class DownloadCommandTest extends HttpProxyMockServerSupport {
 
 		downloadCommand.execute();
 
-		_assertExists(temp, "liferay-blade-samples-7.3.zip");
+		_assertExists(temp, fileName);
 	}
 
 	private static File _assertExists(File dir, String fileName) {
@@ -122,8 +122,7 @@ public class DownloadCommandTest extends HttpProxyMockServerSupport {
 				headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
 				headers.add(
-					"Content-Disposition",
-					"attachment; filename=liferay-blade-samples-7.3.zip");
+					"Content-Disposition", "attachment; filename=test.zip");
 
 				URL url = BundleSupportCommandsTest.class.getResource(
 					"dependencies" + contextPath);
@@ -188,7 +187,7 @@ public class DownloadCommandTest extends HttpProxyMockServerSupport {
 		};
 
 		_createHttpContext(
-			httpServer, _CONTEXT_PATH_ZIP, "application/zip", authenticator);
+			httpServer, CONTEXT_PATH_ZIP, "application/zip", authenticator);
 
 		httpServer.setExecutor(null);
 
@@ -196,8 +195,5 @@ public class DownloadCommandTest extends HttpProxyMockServerSupport {
 
 		return httpServer;
 	}
-
-	private static final String _CONTEXT_PATH_ZIP =
-		"/liferay-blade-samples-7.3.zip";
 
 }

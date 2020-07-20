@@ -201,6 +201,8 @@ public class HttpProxyMockServerSupport {
 
 	protected static final int AUTHENTICATED_HTTP_PROXY_SERVER_PORT;
 
+	protected static final String CONTEXT_PATH_ZIP = "/test.zip";
+
 	protected static final String HTTP_PROXY_SERVER_PASSWORD = "proxyTest";
 
 	protected static final int HTTP_PROXY_SERVER_PORT;

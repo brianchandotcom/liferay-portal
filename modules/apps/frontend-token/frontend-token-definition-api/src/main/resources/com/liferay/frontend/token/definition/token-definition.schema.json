@@ -6,6 +6,10 @@
 		"Token": {
 			"additionalProperties": false,
 			"properties": {
+				"defaultValue": {
+					"$ref": "#/definitions/TokenValue",
+					"title": "The Default Value of the Token"
+				},
 				"editorType": {
 					"enum": [
 						"ColorPicker"

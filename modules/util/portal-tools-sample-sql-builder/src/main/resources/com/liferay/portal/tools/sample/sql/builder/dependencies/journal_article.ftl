@@ -1,16 +1,16 @@
-<#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
+<#assign ddmStructureModel = dataFactory.newDefaultJournalDDMStructureModel() />
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.defaultJournalDDMStructureLayoutModel
+	_ddmStructureLayoutModel=dataFactory.newDefaultJournalDDMStructureLayoutModel()
 	_ddmStructureModel=ddmStructureModel
-	_ddmStructureVersionModel=dataFactory.defaultJournalDDMStructureVersionModel
+	_ddmStructureVersionModel=dataFactory.newDefaultJournalDDMStructureVersionModel(ddmStructureModel)
 />
 
-<#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
+<#assign ddmTemplateModel = dataFactory.newDefaultJournalDDMTemplateModel() />
 
 ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
-${dataFactory.toInsertSQL(dataFactory.defaultJournalDDMTemplateVersionModel)}
+${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel())}
 
 <#assign
 	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)

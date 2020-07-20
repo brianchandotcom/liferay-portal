@@ -818,26 +818,26 @@ public class JenkinsResultsParserUtil {
 
 		Properties properties = new Properties();
 
-		if (checkCache && (_buildProperties != null) &&
-			!_buildProperties.isEmpty()) {
+		synchronized (_buildProperties) {
+			if (checkCache && !_buildProperties.isEmpty()) {
+				properties.putAll(_buildProperties);
 
-			properties.putAll(_buildProperties);
+				return properties;
+			}
 
-			return properties;
+			if (_buildPropertiesURLs == null) {
+				_buildPropertiesURLs = URLS_BUILD_PROPERTIES_DEFAULT;
+			}
+
+			for (String url : _buildPropertiesURLs) {
+				properties.load(
+					new StringReader(toString(getLocalURL(url), false)));
+			}
+
+			_buildProperties.clear();
+
+			_buildProperties.putAll(properties);
 		}
-
-		if (_buildPropertiesURLs == null) {
-			_buildPropertiesURLs = URLS_BUILD_PROPERTIES_DEFAULT;
-		}
-
-		for (String url : _buildPropertiesURLs) {
-			properties.load(
-				new StringReader(toString(getLocalURL(url), false)));
-		}
-
-		_buildProperties = new Hashtable<>();
-
-		_buildProperties.putAll(properties);
 
 		return properties;
 	}
@@ -3667,7 +3667,7 @@ public class JenkinsResultsParserUtil {
 	private static final String _URL_LOAD_BALANCER =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";
 
-	private static Hashtable<Object, Object> _buildProperties;
+	private static final Hashtable<Object, Object> _buildProperties = new Hashtable<>();
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");

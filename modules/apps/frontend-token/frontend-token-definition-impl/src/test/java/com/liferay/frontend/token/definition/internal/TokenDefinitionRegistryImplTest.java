@@ -86,7 +86,7 @@ public class TokenDefinitionRegistryImplTest {
 		Mockito.when(
 			bundle.getEntry("WEB-INF/liferay-look-and-feel.xml")
 		).thenReturn(
-			_liferayLookAndFeelXmlURL
+			_liferayLookAndFeelXMLURL
 		);
 
 		tokenDefinitionRegistryImpl.portal = new PortalImpl();
@@ -115,7 +115,7 @@ public class TokenDefinitionRegistryImplTest {
 		Mockito.when(
 			bundle.getEntry("WEB-INF/liferay-look-and-feel.xml")
 		).thenReturn(
-			_liferayLookAndFeelXmlURL
+			_liferayLookAndFeelXMLURL
 		);
 
 		tokenDefinitionRegistryImpl.portal = new PortalImpl();
@@ -126,7 +126,7 @@ public class TokenDefinitionRegistryImplTest {
 	}
 
 	@Test
-	public void testGetTokenDefinition() throws IOException {
+	public void testGetTokenDefinitionJSON() throws IOException {
 		TokenDefinitionRegistryImpl tokenDefinitionRegistryImpl =
 			new TokenDefinitionRegistryImpl();
 
@@ -141,16 +141,16 @@ public class TokenDefinitionRegistryImplTest {
 		Mockito.when(
 			bundle.getEntry("META-INF/token-definition.json")
 		).thenReturn(
-			_tokenDefinitionJsonURL
+			_tokenDefinitionJSONURL
 		);
 
 		TokenDefinition tokenDefinition =
 			tokenDefinitionRegistryImpl.getTokenDefinitionImpl(bundle);
 
-		try (InputStream inputStream = _tokenDefinitionJsonURL.openStream()) {
+		try (InputStream inputStream = _tokenDefinitionJSONURL.openStream()) {
 			Assert.assertEquals(
 				StringUtil.read(inputStream),
-				tokenDefinition.getRawTokenDefinition());
+				tokenDefinition.getTokenDefinitionJSON());
 		}
 	}
 
@@ -198,10 +198,10 @@ public class TokenDefinitionRegistryImplTest {
 			"META-INF/token-definition.json", tokenDefinitionPath);
 	}
 
-	private static final URL _liferayLookAndFeelXmlURL =
+	private static final URL _liferayLookAndFeelXMLURL =
 		TokenDefinitionRegistryImplTest.class.getResource(
 			"dependencies/liferay-look-and-feel.xml");
-	private static final URL _tokenDefinitionJsonURL =
+	private static final URL _tokenDefinitionJSONURL =
 		TokenDefinitionRegistryImplTest.class.getResource(
 			"dependencies/token-definition.json");
 

@@ -28,7 +28,7 @@ ${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
 	${dataFactory.toInsertSQL(cpInstanceModel)}
 </#list>
 
-<#list dataFactory.CProductModels as cProductModel>
+<#list dataFactory.newCProductModels() as cProductModel>
 	${dataFactory.toInsertSQL(cProductModel)}
 </#list>
 

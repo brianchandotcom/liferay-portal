@@ -71,23 +71,23 @@ const StyleBookEditor = ({tokensValues: initialTokensValues}) => {
 };
 
 export default function ({
+	frontendTokenDefinition = [],
 	namespace,
 	previewURL,
 	publishURL,
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
-	tokenCategories = [],
 	tokensValues = {},
 } = {}) {
 	initializeConfig({
+		frontendTokenDefinition,
 		namespace,
 		previewURL,
 		publishURL,
 		redirectURL,
 		saveDraftURL,
 		styleBookEntryId,
-		tokenCategories,
 	});
 
 	return <StyleBookEditor tokensValues={tokensValues} />;

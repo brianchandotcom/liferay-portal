@@ -14,10 +14,12 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -31,10 +33,7 @@ import com.liferay.style.book.constants.StyleBookWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -57,6 +56,9 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_frontendTokenDefinitionRegistry =
+			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
+				FrontendTokenDefinitionRegistry.class.getName());
 		_groupURLProvider = (GroupURLProvider)_renderRequest.getAttribute(
 			GroupURLProvider.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -65,8 +67,10 @@ public class EditStyleBookEntryDisplayContext {
 		_setViewAttributes();
 	}
 
-	public Map<String, Object> getStyleBookEditorData() {
+	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
+		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"previewURL",
@@ -93,8 +97,6 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
-			"tokenCategories", _getTokenCategories()
-		).put(
 			"tokensValues",
 			() -> {
 				StyleBookEntry styleBookEntry = _getStyleBookEntry();
@@ -111,6 +113,20 @@ public class EditStyleBookEntryDisplayContext {
 		actionURL.setParameter(ActionRequest.ACTION_NAME, actionName);
 
 		return actionURL.toString();
+	}
+
+	private JSONObject _getFrontendTokenDefinitionJSONObject()
+		throws Exception {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			_themeDisplay.getSiteGroupId(), false);
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				layoutSet.getThemeId());
+
+		return JSONFactoryUtil.createJSONObject(
+			frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
 	}
 
 	private String _getRedirect() {
@@ -164,205 +180,6 @@ public class EditStyleBookEntryDisplayContext {
 		return styleBookEntry.getName();
 	}
 
-	private JSONArray _getTokenCategories() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject tokenDefinitionJSONObject = _getTokenDefinitionJSONObject();
-
-		JSONArray tokenCategoriesJSONArray =
-			tokenDefinitionJSONObject.getJSONArray("tokenCategories");
-
-		tokenCategoriesJSONArray.forEach(
-			object -> {
-				JSONObject tokenCategoryJSONObject = (JSONObject)object;
-
-				jsonArray.put(
-					JSONUtil.put(
-						"label", tokenCategoryJSONObject.getString("label")
-					).put(
-						"name", tokenCategoryJSONObject.getString("name")
-					).put(
-						"tokenSets",
-						_getTokenSetsJSONArray(
-							tokenCategoryJSONObject.getString("name"),
-							tokenDefinitionJSONObject)
-					));
-			});
-
-		return jsonArray;
-	}
-
-	private JSONObject _getTokenDefinitionJSONObject() {
-		return JSONUtil.put(
-			"tokenCategories",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"label", "general"
-				).put(
-					"name", "general"
-				),
-				JSONUtil.put(
-					"label", "colors"
-				).put(
-					"name", "colors"
-				))
-		).put(
-			"tokens",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"editorType", "ColorPicker"
-				).put(
-					"label", "body-bg"
-				).put(
-					"mappings",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"type", "cssVariable"
-						).put(
-							"value", "body-bg"
-						))
-				).put(
-					"name", "bodyBgColor"
-				).put(
-					"tokenCategoryName", "colors"
-				).put(
-					"tokenSetName", "layout"
-				).put(
-					"type", "String"
-				),
-				JSONUtil.put(
-					"label", "box-shadow-lg"
-				).put(
-					"mappings",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"type", "cssVariable"
-						).put(
-							"value", "box-shadow-lg"
-						))
-				).put(
-					"name", "boxShadowLg"
-				).put(
-					"tokenCategoryName", "general"
-				).put(
-					"tokenSetName", "utility"
-				).put(
-					"type", "String"
-				))
-		).put(
-			"tokenSets",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"label", "layout"
-				).put(
-					"name", "layout"
-				),
-				JSONUtil.put(
-					"label", "utility"
-				).put(
-					"name", "utility"
-				))
-		);
-	}
-
-	private JSONObject _getTokenSetJSONObject(
-		String tokenSetName, JSONArray tokenSetsJSONArray) {
-
-		for (int i = 0; i < tokenSetsJSONArray.length(); i++) {
-			JSONObject tokenSetJSONObject = tokenSetsJSONArray.getJSONObject(i);
-
-			if (Objects.equals(
-					tokenSetJSONObject.getString("name"), tokenSetName)) {
-
-				return tokenSetJSONObject;
-			}
-		}
-
-		return null;
-	}
-
-	private JSONArray _getTokenSetsJSONArray(
-		String tokenCategoryName, JSONObject tokenDefinitionJSONObject) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		JSONArray tokensJSONArray = tokenDefinitionJSONObject.getJSONArray(
-			"tokens");
-
-		JSONArray tokenSetsJSONArray = tokenDefinitionJSONObject.getJSONArray(
-			"tokenSets");
-
-		for (String tokenSetName :
-				_getTokenSetsName(tokenCategoryName, tokensJSONArray)) {
-
-			JSONObject tokenSetJSONObject = _getTokenSetJSONObject(
-				tokenSetName, tokenSetsJSONArray);
-
-			if (tokenSetJSONObject == null) {
-				continue;
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"label", tokenSetJSONObject.getString("label")
-				).put(
-					"name", tokenSetJSONObject.getString("name")
-				).put(
-					"tokens",
-					_getTokensJSONArray(
-						tokenCategoryName, tokenSetJSONObject.getString("name"),
-						tokensJSONArray)
-				));
-		}
-
-		return jsonArray;
-	}
-
-	private Set<String> _getTokenSetsName(
-		String tokenCategoryName, JSONArray tokensJSONArray) {
-
-		Set<String> tokenSetsNames = new HashSet<>();
-
-		tokensJSONArray.forEach(
-			object -> {
-				JSONObject tokenJSONObject = (JSONObject)object;
-
-				if (Objects.equals(
-						tokenJSONObject.getString("tokenCategoryName"),
-						tokenCategoryName)) {
-
-					tokenSetsNames.add(
-						tokenJSONObject.getString("tokenSetName"));
-				}
-			});
-
-		return tokenSetsNames;
-	}
-
-	private JSONArray _getTokensJSONArray(
-		String tokenCategoryName, String tokenSetName,
-		JSONArray tokensJSONArray) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		tokensJSONArray.forEach(
-			object -> {
-				JSONObject tokenJSONObject = (JSONObject)object;
-
-				if (Objects.equals(
-						tokenJSONObject.getString("tokenCategoryName"),
-						tokenCategoryName) &&
-					Objects.equals(
-						tokenJSONObject.getString("tokenSetName"),
-						tokenSetName)) {
-
-					jsonArray.put(tokenJSONObject);
-				}
-			});
-
-		return jsonArray;
-	}
-
 	private void _setViewAttributes() throws Exception {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -372,6 +189,8 @@ public class EditStyleBookEntryDisplayContext {
 		_renderResponse.setTitle(_getStyleBookEntryTitle());
 	}
 
+	private final FrontendTokenDefinitionRegistry
+		_frontendTokenDefinitionRegistry;
 	private final GroupURLProvider _groupURLProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;

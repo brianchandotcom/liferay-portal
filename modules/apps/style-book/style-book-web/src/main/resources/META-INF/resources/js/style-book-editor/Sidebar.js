@@ -30,10 +30,11 @@ export default function Sidebar() {
 }
 
 function SidebarContent() {
-	const tokenCategories = config.tokenCategories;
+	const frontendTokenCategories =
+		config.frontendTokenDefinition.frontendTokenCategories;
 	const [active, setActive] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(
-		tokenCategories[0]
+		frontendTokenCategories[0]
 	);
 
 	return (
@@ -55,17 +56,21 @@ function SidebarContent() {
 					}
 				>
 					<ClayDropDown.ItemList>
-						{tokenCategories.map((tokenCategories, index) => (
-							<ClayDropDown.Item
-								key={index}
-								onClick={() => {
-									setSelectedCategory(tokenCategories);
-									setActive(false);
-								}}
-							>
-								{tokenCategories.name}
-							</ClayDropDown.Item>
-						))}
+						{frontendTokenCategories.map(
+							(frontendTokenCategory, index) => (
+								<ClayDropDown.Item
+									key={index}
+									onClick={() => {
+										setSelectedCategory(
+											frontendTokenCategory
+										);
+										setActive(false);
+									}}
+								>
+									{frontendTokenCategory.name}
+								</ClayDropDown.Item>
+							)
+						)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			)}

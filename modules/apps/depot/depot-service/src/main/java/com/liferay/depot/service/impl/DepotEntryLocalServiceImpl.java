@@ -126,6 +126,27 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<DepotEntry> getGroupConnectedDepotEntries(
+			long groupId, boolean ddmStructuresAvailable, int start, int end)
+		throws PortalException {
+
+		List<DepotEntry> depotEntries = new ArrayList<>();
+
+		List<DepotEntryGroupRel> depotEntryGroupRels =
+			_depotEntryGroupRelPersistence.findByDSA_TGI(
+				ddmStructuresAvailable, groupId, start, end);
+
+		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+			DepotEntry depotEntry = depotEntryLocalService.getDepotEntry(
+				depotEntryGroupRel.getDepotEntryId());
+
+			depotEntries.add(depotEntry);
+		}
+
+		return depotEntries;
+	}
+
+	@Override
+	public List<DepotEntry> getGroupConnectedDepotEntries(
 			long groupId, int start, int end)
 		throws PortalException {
 

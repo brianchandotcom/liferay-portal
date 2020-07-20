@@ -153,6 +153,11 @@
 	<td>//button[@data-testid='clearAll']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL</td>
+	<td>xpath=(//li[@class='nav-item ml-2']//label)[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

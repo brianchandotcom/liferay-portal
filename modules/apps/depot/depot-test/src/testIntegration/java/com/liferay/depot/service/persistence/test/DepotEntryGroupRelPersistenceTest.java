@@ -180,6 +180,14 @@ public class DepotEntryGroupRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByDSA_TGI() throws Exception {
+		_persistence.countByDSA_TGI(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+
+		_persistence.countByDSA_TGI(RandomTestUtil.randomBoolean(), 0L);
+	}
+
+	@Test
 	public void testCountByD_TGI() throws Exception {
 		_persistence.countByD_TGI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

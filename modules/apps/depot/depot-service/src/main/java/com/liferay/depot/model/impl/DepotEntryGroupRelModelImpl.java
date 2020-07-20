@@ -104,13 +104,15 @@ public class DepotEntryGroupRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long DEPOTENTRYID_COLUMN_BITMASK = 1L;
+	public static final long DDMSTRUCTURESAVAILABLE_COLUMN_BITMASK = 1L;
 
-	public static final long SEARCHABLE_COLUMN_BITMASK = 2L;
+	public static final long DEPOTENTRYID_COLUMN_BITMASK = 2L;
 
-	public static final long TOGROUPID_COLUMN_BITMASK = 4L;
+	public static final long SEARCHABLE_COLUMN_BITMASK = 4L;
 
-	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 8L;
+	public static final long TOGROUPID_COLUMN_BITMASK = 8L;
+
+	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -398,7 +400,19 @@ public class DepotEntryGroupRelModelImpl
 
 	@Override
 	public void setDdmStructuresAvailable(boolean ddmStructuresAvailable) {
+		_columnBitmask |= DDMSTRUCTURESAVAILABLE_COLUMN_BITMASK;
+
+		if (!_setOriginalDdmStructuresAvailable) {
+			_setOriginalDdmStructuresAvailable = true;
+
+			_originalDdmStructuresAvailable = _ddmStructuresAvailable;
+		}
+
 		_ddmStructuresAvailable = ddmStructuresAvailable;
+	}
+
+	public boolean getOriginalDdmStructuresAvailable() {
+		return _originalDdmStructuresAvailable;
 	}
 
 	@JSON
@@ -593,6 +607,11 @@ public class DepotEntryGroupRelModelImpl
 	public void resetOriginalValues() {
 		DepotEntryGroupRelModelImpl depotEntryGroupRelModelImpl = this;
 
+		depotEntryGroupRelModelImpl._originalDdmStructuresAvailable =
+			depotEntryGroupRelModelImpl._ddmStructuresAvailable;
+
+		depotEntryGroupRelModelImpl._setOriginalDdmStructuresAvailable = false;
+
 		depotEntryGroupRelModelImpl._originalDepotEntryId =
 			depotEntryGroupRelModelImpl._depotEntryId;
 
@@ -709,6 +728,8 @@ public class DepotEntryGroupRelModelImpl
 	private long _depotEntryGroupRelId;
 	private long _companyId;
 	private boolean _ddmStructuresAvailable;
+	private boolean _originalDdmStructuresAvailable;
+	private boolean _setOriginalDdmStructuresAvailable;
 	private long _depotEntryId;
 	private long _originalDepotEntryId;
 	private boolean _setOriginalDepotEntryId;

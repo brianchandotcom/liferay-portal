@@ -121,10 +121,10 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldType = "Text");
 
-		DynamicDataMapping.addFieldNested(
-			field = "Web Content",
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Web Content",
-			fieldName = "webContent");
+			fieldName = "Text",
+			fieldType = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

@@ -14,6 +14,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>ADD_FIELD_NESTED_TARGET</td>
+    <td>//div[contains(@class,'ddm-drag')]//div[@data-field-name='${key_fieldName}']</td>
+    <td></td>
+</tr>
+<tr>
     <td>ADD_FIELD_TYPE</td>
     <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldType}']</td>
     <td></td>

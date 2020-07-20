@@ -47,6 +47,45 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldNested {
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+			Navigator.gotoNavTab(navTab = "Fields");
+		}
+
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${fieldType}");
+
+		var key_fieldName = "${fieldName}";
+		var key_fieldType = "${fieldType}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
+		DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+			locator1 = "Sidebar#ADD_FIELD_TYPE",
+			locator2 = "Sidebar#ADD_FIELD_NESTED_TARGET",
+			value1 = "${fieldType}");
+
+		AssertElementPresent(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldType}");
+
+		if ("${fieldFieldLabel}" != "${fieldType}") {
+			Type.sendKeys(
+				locator1 = "Sidebar#DDM_LABEL",
+				value1 = "${fieldFieldLabel}");
+		}
+
+		AssertTextEquals.assertValue(
+			locator1 = "Sidebar#DDM_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addFields {
 		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

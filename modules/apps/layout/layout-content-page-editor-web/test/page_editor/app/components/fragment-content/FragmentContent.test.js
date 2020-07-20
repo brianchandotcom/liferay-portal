@@ -244,7 +244,7 @@ describe('FragmentContent', () => {
 		).toBe(null);
 	});
 
-	it('hides FloatingToolbar is viewport size is not desktop', async () => {
+	it('hides FloatingToolbar if viewport size is not desktop', async () => {
 		const fragmentEntryLink = getFragmentEntryLink();
 
 		await act(async () => {

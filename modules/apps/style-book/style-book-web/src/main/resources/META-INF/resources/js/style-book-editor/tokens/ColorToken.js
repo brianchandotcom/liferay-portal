@@ -14,9 +14,14 @@
 
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm from '@clayui/form';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const debouncedOnValueSelect = debounce(
+	(onValueSelect, value) => onValueSelect(value),
+	300
+);
 export default function ColorToken({onValueSelect, token, value}) {
 	const {label} = token;
 
@@ -30,7 +35,7 @@ export default function ColorToken({onValueSelect, token, value}) {
 					onColorsChange={() => {}}
 					onValueChange={(color) => {
 						setColor(color);
-						onValueSelect(`#${color}`);
+						debouncedOnValueSelect(onValueSelect, `#${color}`);
 					}}
 					showHex={true}
 					title={label}

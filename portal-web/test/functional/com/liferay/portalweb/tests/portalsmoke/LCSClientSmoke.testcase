@@ -8,7 +8,7 @@ definition {
 	property portal.fixpack.release = "true";
 	property portal.release = "true";
 	property portal.smoke = "false";
-	property portal.upstream = "false";
+	property portal.upstream = "quarantine";
 	property test.assert.javascript.errors = "false";
 	property test.run.environment = "EE";
 	property test.skip.tear.down= "false";

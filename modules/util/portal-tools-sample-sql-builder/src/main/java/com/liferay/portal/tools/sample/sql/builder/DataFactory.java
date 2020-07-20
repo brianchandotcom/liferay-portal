@@ -364,6 +364,7 @@ public class DataFactory {
 		_defaultDDLDDMStructureVersionId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureVersionId = _counter.get();
+		_defaultJournalDDMTemplateId = _counter.get();
 
 		initAssetCategoryModels();
 		initAssetTagModels();
@@ -1068,10 +1069,9 @@ public class DataFactory {
 		_defaultJournalDDMTemplateModel = newDDMTemplateModel(
 			_globalGroupId, _defaultUserId, _defaultJournalDDMStructureId,
 			_defaultJournalDDMStructureModel.getStructureId(),
-			getClassNameId(JournalArticle.class));
+			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId);
 
-		_defaultJournalDDMTemplateVersionModel = newDDMTemplateVersionModel(
-			_defaultJournalDDMTemplateModel);
+		_defaultJournalDDMTemplateVersionModel = newDDMTemplateVersionModel();
 	}
 
 	public void initGroupModels() {
@@ -1835,22 +1835,19 @@ public class DataFactory {
 		return ddmTemplateLinkModel;
 	}
 
-	public DDMTemplateVersionModel newDDMTemplateVersionModel(
-		DDMTemplateModel ddmTemplateModel) {
-
+	public DDMTemplateVersionModel newDDMTemplateVersionModel() {
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
 
 		ddmTemplateVersionModelImpl.setTemplateVersionId(_counter.get());
-		ddmTemplateVersionModelImpl.setGroupId(ddmTemplateModel.getGroupId());
+		ddmTemplateVersionModelImpl.setGroupId(_globalGroupId);
 		ddmTemplateVersionModelImpl.setCompanyId(_companyId);
-		ddmTemplateVersionModelImpl.setUserId(ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setUserId(_defaultUserId);
 		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
-		ddmTemplateVersionModelImpl.setTemplateId(
-			ddmTemplateModel.getTemplateId());
-		ddmTemplateVersionModelImpl.setClassPK(ddmTemplateModel.getClassPK());
+		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
+		ddmTemplateVersionModelImpl.setClassPK(_defaultJournalDDMStructureId);
 		ddmTemplateVersionModelImpl.setClassNameId(
-			ddmTemplateModel.getClassNameId());
+			getClassNameId(DDMStructure.class));
 		ddmTemplateVersionModelImpl.setVersion(
 			DDMTemplateConstants.VERSION_DEFAULT);
 
@@ -1863,8 +1860,7 @@ public class DataFactory {
 
 		ddmTemplateVersionModelImpl.setName(sb.toString());
 
-		ddmTemplateVersionModelImpl.setStatusByUserId(
-			ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setStatusByUserId(_defaultUserId);
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
@@ -3831,12 +3827,13 @@ public class DataFactory {
 	}
 
 	protected DDMTemplateModel newDDMTemplateModel(
-		long groupId, long userId, long structureId, long sourceClassNameId) {
+		long groupId, long userId, long structureId, long sourceClassNameId,
+		long templateId) {
 
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
 
 		ddmTemplateModel.setUuid(SequentialUUID.generate());
-		ddmTemplateModel.setTemplateId(_counter.get());
+		ddmTemplateModel.setTemplateId(templateId);
 		ddmTemplateModel.setGroupId(groupId);
 		ddmTemplateModel.setCompanyId(_companyId);
 		ddmTemplateModel.setUserId(userId);
@@ -4461,6 +4458,7 @@ public class DataFactory {
 	private DDMStructureModel _defaultJournalDDMStructureModel;
 	private final long _defaultJournalDDMStructureVersionId;
 	private DDMStructureVersionModel _defaultJournalDDMStructureVersionModel;
+	private final long _defaultJournalDDMTemplateId;
 	private DDMTemplateModel _defaultJournalDDMTemplateModel;
 	private DDMTemplateVersionModel _defaultJournalDDMTemplateVersionModel;
 	private final long _defaultUserId;

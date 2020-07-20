@@ -104,7 +104,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -145,7 +145,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -172,7 +172,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title 3");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Applications",
 			portlet = "Result Rankings");
@@ -211,7 +211,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -230,7 +230,7 @@ definition {
 				title = "${title}");
 		}
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Applications",
 			portlet = "Synonyms");
@@ -280,7 +280,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -292,7 +292,7 @@ definition {
 
 		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -321,7 +321,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -358,7 +358,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch-local-cluster");
 
-		GlobalMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

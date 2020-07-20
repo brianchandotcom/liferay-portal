@@ -94,20 +94,20 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 
 				@Override
 				public void modifiedBundle(
-					Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
+					Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
 
-					removedBundle(bundle, bundleEvent, null);
+					removedBundle(bundle1, bundleEvent, null);
 
-					addingBundle(bundle, bundleEvent);
+					addingBundle(bundle1, bundleEvent);
 				}
 
 				@Override
 				public void removedBundle(
-					Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
+					Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
 
 					synchronized (TokenDefinitionRegistryImpl.this) {
 						TokenDefinitionImpl tokenDefinitionImpl =
-							bundleTokenDefinitionImplsMap.remove(bundle);
+							bundleTokenDefinitionImplsMap.remove(bundle1);
 
 						if (tokenDefinitionImpl.getThemeId() != null) {
 							themeIdTokenDefinitionImplsMap.remove(

@@ -26,13 +26,13 @@ public class TokenDefinitionImpl implements TokenDefinition {
 		_themeId = themeId;
 	}
 
-	@Override
-	public String getRawTokenDefinition() {
-		return _rawTokenDefinition;
-	}
-
 	public String getThemeId() {
 		return _themeId;
+	}
+
+	@Override
+	public String getTokenDefinitionJSON() {
+		return _rawTokenDefinition;
 	}
 
 	private final String _rawTokenDefinition;

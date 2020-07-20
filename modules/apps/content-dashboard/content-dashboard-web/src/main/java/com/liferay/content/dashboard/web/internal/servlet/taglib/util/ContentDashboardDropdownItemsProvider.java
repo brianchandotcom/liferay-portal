@@ -95,7 +95,7 @@ public class ContentDashboardDropdownItemsProvider {
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.setHref("#");
+				dropdownItem.putData("action", "showInfo");
 				dropdownItem.setLabel(_language.get(locale, "info"));
 
 				return dropdownItem;
@@ -109,7 +109,7 @@ public class ContentDashboardDropdownItemsProvider {
 
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.setHref("#");
+				dropdownItem.putData("action", "showMetrics");
 				dropdownItem.setLabel(_language.get(locale, "metrics"));
 
 				return dropdownItem;

@@ -41,10 +41,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	public int doEndTag() throws JspException {
 		JspWriter jspWriter = pageContext.getOut();
 
-		Map<String, Object> data = getData();
+		Map<String, Object> props = getProps();
 
 		try {
-			prepareData(data);
+			prepareProps(props);
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
 				getModule(), getComponentId(), null, isPositionInLine());
@@ -53,7 +53,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 				ReactRendererProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
-				componentDescriptor, data, request, jspWriter);
+				componentDescriptor, props, request, jspWriter);
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -106,12 +106,21 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		_componentId = componentId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setProps(Map<String, Object>)}
+	 */
+	@Deprecated
 	public void setData(Map<String, Object> data) {
-		_data = data;
+		setProps(data);
 	}
 
 	public void setModule(String module) {
 		_module = module;
+	}
+
+	public void setProps(Map<String, Object> props) {
+		_props = props;
 	}
 
 	@Override
@@ -123,13 +132,21 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected void cleanUp() {
 		_componentId = null;
-		_data = Collections.emptyMap();
 		_module = null;
+		_props = Collections.emptyMap();
 		_setServletContext = false;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getProps()}
+	 */
 	protected Map<String, Object> getData() {
-		return _data;
+		return getProps();
+	}
+
+	protected Map<String, Object> getProps() {
+		return _props;
 	}
 
 	protected boolean isPositionInLine() {
@@ -163,12 +180,20 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #prepareData(Map<String, Object>)}
+	 */
 	protected void prepareData(Map<String, Object> data) {
+		prepareProps(data);
+	}
+
+	protected void prepareProps(Map<String, Object> props) {
 	}
 
 	private String _componentId;
-	private Map<String, Object> _data = Collections.emptyMap();
 	private String _module;
+	private Map<String, Object> _props = Collections.emptyMap();
 	private boolean _setServletContext;
 
 }

@@ -20,7 +20,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The chosen template's context map.</description>
+			<description>Deprecated as of 7.3.0, replaced by the attribute <![CDATA[<code>props</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -29,6 +29,12 @@
 			<description>The AMD module that contains the component's JavaScript.</description>
 			<name>module</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The chosen template's props.</description>
+			<name>props</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

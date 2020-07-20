@@ -108,6 +108,7 @@ const renderFragmentContent = ({
 	fragmentEntryLink,
 	hasUpdatePermissions = true,
 	lockedExperience = false,
+	viewportSize = VIEWPORT_SIZES.desktop,
 }) => {
 	const state = {
 		fragmentEntryLinks: {
@@ -119,7 +120,7 @@ const renderFragmentContent = ({
 			UPDATE: hasUpdatePermissions,
 		},
 		segmentsExperienceId: '0',
-		selectedViewportSize: VIEWPORT_SIZES.desktop,
+		selectedViewportSize: viewportSize,
 	};
 
 	const ref = React.createRef();
@@ -235,6 +236,25 @@ describe('FragmentContent', () => {
 				),
 				fragmentEntryLink,
 				hasUpdatePermissions: false,
+			});
+		});
+
+		expect(
+			document.body.querySelector('.page-editor__floating-toolbar')
+		).toBe(null);
+	});
+
+	it('hides FloatingToolbar is viewport size is not desktop', async () => {
+		const fragmentEntryLink = getFragmentEntryLink();
+
+		await act(async () => {
+			renderFragmentContent({
+				activeItemId: getEditableUniqueId(
+					FRAGMENT_ENTRY_LINK_ID,
+					'editable-id'
+				),
+				fragmentEntryLink,
+				viewportSize: VIEWPORT_SIZES.tablet,
 			});
 		});
 

@@ -36,6 +36,7 @@ const renderComponent = ({
 	lockedExperience = false,
 	masterRootItemChildren = ['11-container'],
 	rootItemChildren = ['01-container'],
+	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, ...args].join('-')
@@ -161,7 +162,7 @@ const renderComponent = ({
 						UPDATE: hasUpdatePermissions,
 					},
 
-					selectedViewportSize: VIEWPORT_SIZES.desktop,
+					selectedViewportSize: viewportSize,
 				})}
 			>
 				<PageStructureSidebar />
@@ -289,10 +290,22 @@ describe('PageStructureSidebar', () => {
 		expect(button.parentElement).toHaveAttribute('aria-selected', 'false');
 	});
 
-	it('Does not allow removing items if user has no permissions', () => {
+	it('does not allow removing items if user has no permissions', () => {
 		const {queryByLabelText} = renderComponent({
 			hasUpdatePermissions: false,
 			rootItemChildren: ['01-container', '02-row', '04-fragment'],
+		});
+
+		expect(queryByLabelText('remove-x-container')).toBe(null);
+		expect(queryByLabelText('remove-x-grid')).toBe(null);
+		expect(queryByLabelText('remove-x-Fragment 1')).toBe(null);
+	});
+
+	it('does not allow removing items if viewport is not desktop', () => {
+		const {queryByLabelText} = renderComponent({
+			activeItemId: '11-container',
+			rootItemChildren: ['01-container', '02-row', '04-fragment'],
+			viewportSize: VIEWPORT_SIZES.portraitMobile,
 		});
 
 		expect(queryByLabelText('remove-x-container')).toBe(null);

@@ -13,7 +13,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, queryByText, render} from '@testing-library/react';
+import {
+	cleanup,
+	queryByText,
+	queryByTitle,
+	render,
+} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -31,6 +36,7 @@ const renderRow = ({
 	activeItemId = 'row',
 	hasUpdatePermissions = true,
 	lockedExperience = false,
+	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
 	const row = {
 		children: [],
@@ -60,7 +66,7 @@ const renderRow = ({
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
 							UPDATE: hasUpdatePermissions,
 						},
-						selectedViewportSize: VIEWPORT_SIZES.desktop,
+						selectedViewportSize: viewportSize,
 					})}
 				>
 					<AutoSelect />
@@ -93,5 +99,16 @@ describe('RowWithControls', () => {
 
 		expect(queryByText(baseElement, 'delete')).not.toBeInTheDocument();
 		expect(queryByText(baseElement, 'duplicate')).not.toBeInTheDocument();
+	});
+
+	it('does not allow changing configuration if viewport is not desktop', () => {
+		const {baseElement} = renderRow({
+			viewportSize: VIEWPORT_SIZES.landscapeMobile,
+		});
+
+		expect(queryByTitle(baseElement, 'grid-styles')).toBeInTheDocument();
+		expect(
+			queryByTitle(baseElement, 'grid-configuration')
+		).not.toBeInTheDocument();
 	});
 });

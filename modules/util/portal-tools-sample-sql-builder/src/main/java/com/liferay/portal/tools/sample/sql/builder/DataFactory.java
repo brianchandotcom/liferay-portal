@@ -602,10 +602,6 @@ public class DataFactory {
 		return _defaultDLDDMStructureVersionModel;
 	}
 
-	public DLFileEntryTypeModel getDefaultDLFileEntryTypeModel() {
-		return _defaultDLFileEntryTypeModel;
-	}
-
 	public DDMStructureLayoutModel getDefaultJournalDDMStructureLayoutModel() {
 		return _defaultJournalDDMStructureLayoutModel;
 	}
@@ -1061,8 +1057,6 @@ public class DataFactory {
 	}
 
 	public void initDLFileEntryTypeModel() {
-		_defaultDLFileEntryTypeModel = newDLFileEntryTypeModel();
-
 		_defaultDLDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent);
@@ -1983,13 +1977,16 @@ public class DataFactory {
 	}
 
 	public List<DLFolderModel> newDLFolderModels(
-		long groupId, long parentFolderId) {
+		long groupId, long parentFolderId,
+		DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
 
 		List<DLFolderModel> dlFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
-			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
+			dlFolderModels.add(
+				newDLFolderModel(
+					groupId, parentFolderId, i, defaultDLFileEntryTypeModel));
 		}
 
 		return dlFolderModels;
@@ -3897,7 +3894,8 @@ public class DataFactory {
 	}
 
 	protected DLFolderModel newDLFolderModel(
-		long groupId, long parentFolderId, int index) {
+		long groupId, long parentFolderId, int index,
+		DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
 
 		DLFolderModel dlFolderModel = new DLFolderModelImpl();
 
@@ -3914,7 +3912,7 @@ public class DataFactory {
 		dlFolderModel.setName("Test Folder " + index);
 		dlFolderModel.setLastPostDate(nextFutureDate());
 		dlFolderModel.setDefaultFileEntryTypeId(
-			_defaultDLFileEntryTypeModel.getFileEntryTypeId());
+			defaultDLFileEntryTypeModel.getFileEntryTypeId());
 		dlFolderModel.setLastPublishDate(nextFutureDate());
 		dlFolderModel.setStatusDate(nextFutureDate());
 
@@ -4452,7 +4450,6 @@ public class DataFactory {
 	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
-	private DLFileEntryTypeModel _defaultDLFileEntryTypeModel;
 	private String _defaultJournalArticleId;
 	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMStructureModel _defaultJournalDDMStructureModel;

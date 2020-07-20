@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Optional;
 
@@ -65,16 +66,15 @@ public abstract class BaseAppBuilderAppMVCResourceCommand<T>
 					return null;
 				});
 		}
-		catch (DuplicateAppBuilderWorkflowTaskLinkException
-					duplicateAppBuilderWorkflowTaskLinkException) {
+		catch (DuplicateAppBuilderWorkflowTaskLinkException |
+			   KaleoDefinitionValidationException.DuplicateNode exception) {
 
 			_handleException(
 				language.get(
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
 						portal.getLocale(resourceRequest), getClass()),
 					"step-names-must-be-unique"),
-				resourceRequest, resourceResponse,
-				duplicateAppBuilderWorkflowTaskLinkException);
+				resourceRequest, resourceResponse, exception);
 		}
 		catch (PortalException portalException) {
 			_handleException(

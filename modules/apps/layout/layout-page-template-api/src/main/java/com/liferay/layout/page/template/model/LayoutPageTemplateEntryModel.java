@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -39,7 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutPageTemplateEntryModel
-	extends BaseModel<LayoutPageTemplateEntry>, MVCCModel, ShardedModel,
+	extends BaseModel<LayoutPageTemplateEntry>,
+			CTModel<LayoutPageTemplateEntry>, MVCCModel, ShardedModel,
 			StagedGroupedModel, TypedModel, WorkflowedModel {
 
 	/*
@@ -53,6 +55,7 @@ public interface LayoutPageTemplateEntryModel
 	 *
 	 * @return the primary key of this layout page template entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -60,6 +63,7 @@ public interface LayoutPageTemplateEntryModel
 	 *
 	 * @param primaryKey the primary key of this layout page template entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -77,6 +81,22 @@ public interface LayoutPageTemplateEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this layout page template entry.
+	 *
+	 * @return the ct collection ID of this layout page template entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this layout page template entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this layout page template entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this layout page template entry.

@@ -38,6 +38,9 @@ public class LayoutPageTemplateStructureRelTable
 	public final Column<LayoutPageTemplateStructureRelTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutPageTemplateStructureRelTable, Long>
+		ctCollectionId = createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutPageTemplateStructureRelTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutPageTemplateStructureRelTable, Long>

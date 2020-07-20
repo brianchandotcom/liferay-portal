@@ -133,6 +133,9 @@ public class LayoutPageTemplateStructurePersistenceTest {
 		newLayoutPageTemplateStructure.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newLayoutPageTemplateStructure.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateStructure.setUuid(RandomTestUtil.randomString());
 
 		newLayoutPageTemplateStructure.setGroupId(RandomTestUtil.nextLong());
@@ -164,6 +167,9 @@ public class LayoutPageTemplateStructurePersistenceTest {
 		Assert.assertEquals(
 			existingLayoutPageTemplateStructure.getMvccVersion(),
 			newLayoutPageTemplateStructure.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutPageTemplateStructure.getCtCollectionId(),
+			newLayoutPageTemplateStructure.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutPageTemplateStructure.getUuid(),
 			newLayoutPageTemplateStructure.getUuid());
@@ -275,7 +281,8 @@ public class LayoutPageTemplateStructurePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutPageTemplateStructure", "mvccVersion", true, "uuid", true,
+			"LayoutPageTemplateStructure", "mvccVersion", true,
+			"ctCollectionId", true, "uuid", true,
 			"layoutPageTemplateStructureId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true);
@@ -577,6 +584,9 @@ public class LayoutPageTemplateStructurePersistenceTest {
 			_persistence.create(pk);
 
 		layoutPageTemplateStructure.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutPageTemplateStructure.setCtCollectionId(
+			RandomTestUtil.nextLong());
 
 		layoutPageTemplateStructure.setUuid(RandomTestUtil.randomString());
 

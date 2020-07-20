@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateCollection">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateCollectionId" type="long" />
 		<field name="groupId" type="long" />
@@ -22,6 +23,7 @@
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -48,6 +50,7 @@
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructure">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateStructureId" type="long" />
 		<field name="groupId" type="long" />
@@ -61,6 +64,7 @@
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateStructureRelId" type="long" />
 		<field name="groupId" type="long" />

@@ -1,7 +1,8 @@
 create table LayoutPageTemplateCollection (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutPageTemplateCollectionId LONG not null primary key,
+	layoutPageTemplateCollectionId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -11,13 +12,15 @@ create table LayoutPageTemplateCollection (
 	lptCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (layoutPageTemplateCollectionId, ctCollectionId)
 );
 
 create table LayoutPageTemplateEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutPageTemplateEntryId LONG not null primary key,
+	layoutPageTemplateEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -38,13 +41,15 @@ create table LayoutPageTemplateEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (layoutPageTemplateEntryId, ctCollectionId)
 );
 
 create table LayoutPageTemplateStructure (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutPageTemplateStructureId LONG not null primary key,
+	layoutPageTemplateStructureId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -52,13 +57,15 @@ create table LayoutPageTemplateStructure (
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	primary key (layoutPageTemplateStructureId, ctCollectionId)
 );
 
 create table LayoutPageTemplateStructureRel (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	lPageTemplateStructureRelId LONG not null primary key,
+	lPageTemplateStructureRelId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -67,5 +74,6 @@ create table LayoutPageTemplateStructureRel (
 	modifiedDate DATE null,
 	layoutPageTemplateStructureId LONG,
 	segmentsExperienceId LONG,
-	data_ TEXT null
+	data_ TEXT null,
+	primary key (lPageTemplateStructureRelId, ctCollectionId)
 );

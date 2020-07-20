@@ -70,8 +70,8 @@ public class LayoutPageTemplateStructureRelModelImpl
 	public static final String TABLE_NAME = "LayoutPageTemplateStructureRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"lPageTemplateStructureRelId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"lPageTemplateStructureRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -84,6 +84,7 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lPageTemplateStructureRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -98,7 +99,7 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null)";
+		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null,primary key (lPageTemplateStructureRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateStructureRel";
@@ -282,6 +283,13 @@ public class LayoutPageTemplateStructureRelModelImpl
 			(BiConsumer<LayoutPageTemplateStructureRel, Long>)
 				LayoutPageTemplateStructureRel::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId",
+			LayoutPageTemplateStructureRel::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<LayoutPageTemplateStructureRel, Long>)
+				LayoutPageTemplateStructureRel::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"uuid", LayoutPageTemplateStructureRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -368,6 +376,16 @@ public class LayoutPageTemplateStructureRelModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -626,6 +644,8 @@ public class LayoutPageTemplateStructureRelModelImpl
 			new LayoutPageTemplateStructureRelImpl();
 
 		layoutPageTemplateStructureRelImpl.setMvccVersion(getMvccVersion());
+		layoutPageTemplateStructureRelImpl.setCtCollectionId(
+			getCtCollectionId());
 		layoutPageTemplateStructureRelImpl.setUuid(getUuid());
 		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureRelId(
 			getLayoutPageTemplateStructureRelId());
@@ -753,6 +773,9 @@ public class LayoutPageTemplateStructureRelModelImpl
 				new LayoutPageTemplateStructureRelCacheModel();
 
 		layoutPageTemplateStructureRelCacheModel.mvccVersion = getMvccVersion();
+
+		layoutPageTemplateStructureRelCacheModel.ctCollectionId =
+			getCtCollectionId();
 
 		layoutPageTemplateStructureRelCacheModel.uuid = getUuid();
 
@@ -896,6 +919,7 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _layoutPageTemplateStructureRelId;

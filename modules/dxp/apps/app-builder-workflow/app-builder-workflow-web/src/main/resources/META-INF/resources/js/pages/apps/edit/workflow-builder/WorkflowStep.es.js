@@ -13,6 +13,7 @@ import ClayBadge from '@clayui/badge';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
@@ -39,6 +40,7 @@ const Arrow = ({addStep, selected}) => {
 
 const Card = ({
 	actions,
+	errors,
 	isInitialOrFinalSteps,
 	name,
 	onClick,
@@ -46,6 +48,8 @@ const Card = ({
 	stepInfo,
 }) => {
 	const [active, setActive] = useState(false);
+
+	const duplicatedFields = errors?.formViews?.duplicatedFields || [];
 
 	const handleOnClick = (event, onClick) => {
 		event.preventDefault();
@@ -63,6 +67,23 @@ const Card = ({
 
 				<ButtonInfo items={stepInfo} />
 			</div>
+
+			{duplicatedFields.length > 0 && (
+				<ClayTooltipProvider>
+					<ClayIcon
+						className="tooltip-icon-error"
+						data-tooltip-align="bottom"
+						data-tooltip-delay="0"
+						fontSize="26px"
+						symbol="exclamation-full"
+						title={`${Liferay.Language.get(
+							'error'
+						)}: ${Liferay.Language.get(
+							'there-are-form-views-with-duplicated-fields'
+						)}`}
+					/>
+				</ClayTooltipProvider>
+			)}
 
 			<div className="d-flex">
 				{!isInitialOrFinalSteps && (
@@ -100,6 +121,7 @@ export default function WorkflowStep({
 	actions,
 	addStep,
 	badgeLabel,
+	errors,
 	initial,
 	name,
 	onClick,
@@ -124,6 +146,7 @@ export default function WorkflowStep({
 
 					<Card
 						actions={actions}
+						errors={errors}
 						isInitialOrFinalSteps={isInitialOrFinalSteps}
 						name={name}
 						onClick={onClick}

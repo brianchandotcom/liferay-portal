@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -91,10 +90,6 @@ public class XLIFF12InfoFormTranslationExporter
 			}
 
 			Object sourceValue = infoFieldValue.getValue(sourceLocale);
-
-			if (Validator.isNull(sourceValue)) {
-				continue;
-			}
 
 			Element transUnitElement = bodyElement.addElement("trans-unit");
 

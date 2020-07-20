@@ -168,7 +168,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name1");
 
-		DataEngine.addFields(fieldTypeList = "Text,Text Box,Image,Documents and Media");
+		DataEngine.addFields(fieldTypeList = "Text,Rich Text,Image,Upload");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
@@ -180,6 +180,8 @@ definition {
 
 		WebContentStructures.addName(structureName = "2");
 
+		Navigator.gotoSidebarTab(tabName = "Properties");
+
 		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
 
 		WebContentStructures.addSubstructure(
@@ -187,9 +189,8 @@ definition {
 			structureName = "2");
 
 		DynamicDataMapping.addField(
-			field = "Integer",
-			fieldFieldLabel = "Integer",
-			fieldName = "Integer");
+			fieldFieldLabel = "Numeric",
+			fieldType = "Numeric");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 

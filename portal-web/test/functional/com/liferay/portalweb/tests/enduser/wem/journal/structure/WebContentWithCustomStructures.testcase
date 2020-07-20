@@ -216,7 +216,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldTypeList = "Text,Text Box");
+		DataEngine.addFields(fieldTypeList = "Text,Rich Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -226,7 +226,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		for (var structureFieldName : list "Text Box") {
+		for (var structureFieldName : list "Text,Rich Text") {
 			DynamicDataMapping.editFieldLocalizable(fieldFieldLabel = "${structureFieldName}");
 		}
 
@@ -239,7 +239,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Text,Text Box",
+			templateFieldNames = "Text,Rich Text",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -267,9 +267,9 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Text");
 
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "Text Box");
+		FormFields.viewRichTextValue(
+			fieldName = "Rich Text",
+			fieldValue = "Rich Text");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
@@ -281,19 +281,19 @@ definition {
 
 		Type(
 			key_fieldName = "Text",
-			locator1 = "TextInput#DDM",
+			locator1 = "TextInput#DE_DDM",
 			value1 = "Text Spanish");
 
 		FormFields.viewTextValue(
 			fieldName = "Text",
 			fieldValue = "Text Spanish");
 
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "Text Box");
+		FormFields.viewRichTextValue(
+			fieldName = "Rich Text",
+			fieldValue = "Rich Text");
 
-		AssertNotEditable(
-			key_fieldName = "TextBox",
+		AssertEditable(
+			key_fieldName = "Rich Text",
 			locator1 = "DDMField#RICH_TEXT");
 	}
 

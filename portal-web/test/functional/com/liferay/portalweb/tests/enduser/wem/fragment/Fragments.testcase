@@ -1051,6 +1051,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111657. Can save Container and nested elements as a new composition when the Container is inside a column of Row."
+	@priority = "5"
+	test SaveContainerAsCompositionInModuleOfGrid {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add a Grid to page") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a Container to the first module of grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "1",
+				fragmentName = "Container",
+				navTab = "Fragments");
+		}
+
+		task ("Add an Image to the Container") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Image",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
+				value1 = "Image");
+
+			AssertElementPresent(
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Image')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Add an Asset Publisher below Image inside the Container") {
+			PageEditor.gotoTab(tabName = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "Asset Publisher");
+
+			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+				key_portletName = "Asset Publisher",
+				key_position = "1",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Image')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				value1 = "Asset Publisher");
+
+			Pause(locator1 = "5000");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.gotoTab(tabName = "Contents");
+
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		}
+
+		task ("Assert save Container and nested elements as composition") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+		}
+
+		task ("Add new composition to below Grid to page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				composition = "true",
+				fragmentName = "New Fragment Name",
+				targetFragmentName = "Grid");
+
+			for (var elementName : list "Image,Asset Publisher") {
+				AssertElementPresent(
+					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${elementName}')]",
+					key_position = "2",
+					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-101258. Can save a composition containing a fragment that has a Drop Zone area as fragment."
 	@priority = "4"
 	test SaveFragmentCompositionWithDropZoneInFrgament {

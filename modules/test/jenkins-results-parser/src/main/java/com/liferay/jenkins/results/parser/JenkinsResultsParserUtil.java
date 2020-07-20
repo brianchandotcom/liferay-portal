@@ -2415,7 +2415,9 @@ public class JenkinsResultsParserUtil {
 		synchronized (_buildProperties) {
 			_buildProperties.clear();
 
-			_buildProperties.putAll(buildProperties);
+			if (buildProperties != null) {
+				_buildProperties.putAll(buildProperties);
+			}
 		}
 	}
 

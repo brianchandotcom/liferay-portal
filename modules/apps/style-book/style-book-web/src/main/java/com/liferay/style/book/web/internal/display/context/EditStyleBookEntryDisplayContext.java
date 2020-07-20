@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
+import com.liferay.style.book.constants.StyleBookWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -48,8 +49,9 @@ import javax.servlet.http.HttpServletRequest;
 public class EditStyleBookEntryDisplayContext {
 
 	public EditStyleBookEntryDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
@@ -72,6 +74,12 @@ public class EditStyleBookEntryDisplayContext {
 				String layoutURL = _groupURLProvider.getGroupLayoutsURL(
 					_themeDisplay.getScopeGroup(), false, _renderRequest);
 
+				StyleBookEntry styleBookEntry = _getStyleBookEntry();
+
+				layoutURL = HttpUtil.addParameter(
+					layoutURL, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY,
+					styleBookEntry.getStyleBookEntryKey());
+
 				return HttpUtil.addParameter(
 					layoutURL, "p_l_mode", Constants.PREVIEW);
 			}
@@ -91,16 +99,8 @@ public class EditStyleBookEntryDisplayContext {
 			() -> {
 				StyleBookEntry styleBookEntry = _getStyleBookEntry();
 
-				String tokensValues = styleBookEntry.getTokensValues();
-
-				if (styleBookEntry.isHead()) {
-					StyleBookEntry draftStyleBookEntry =
-						StyleBookEntryLocalServiceUtil.getDraft(styleBookEntry);
-
-					tokensValues = draftStyleBookEntry.getTokensValues();
-				}
-
-				return JSONFactoryUtil.createJSONObject(tokensValues);
+				return JSONFactoryUtil.createJSONObject(
+					styleBookEntry.getTokensValues());
 			}
 		).build();
 	}
@@ -127,13 +127,18 @@ public class EditStyleBookEntryDisplayContext {
 		return portletURL.toString();
 	}
 
-	private StyleBookEntry _getStyleBookEntry() {
+	private StyleBookEntry _getStyleBookEntry() throws Exception {
 		if (_styleBookEntry != null) {
 			return _styleBookEntry;
 		}
 
 		_styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
 			_getStyleBookEntryId());
+
+		if (_styleBookEntry.isHead()) {
+			_styleBookEntry = StyleBookEntryLocalServiceUtil.getDraft(
+				_styleBookEntry);
+		}
 
 		return _styleBookEntry;
 	}
@@ -149,7 +154,7 @@ public class EditStyleBookEntryDisplayContext {
 		return _styleBookEntryId;
 	}
 
-	private String _getStyleBookEntryTitle() {
+	private String _getStyleBookEntryTitle() throws Exception {
 		StyleBookEntry styleBookEntry = _getStyleBookEntry();
 
 		return styleBookEntry.getName();
@@ -354,7 +359,7 @@ public class EditStyleBookEntryDisplayContext {
 		return jsonArray;
 	}
 
-	private void _setViewAttributes() {
+	private void _setViewAttributes() throws Exception {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);

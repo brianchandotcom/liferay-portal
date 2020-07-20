@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -113,11 +114,23 @@ public class StyleBookScopedCSSVariablesProvider
 			return StringPool.BLANK;
 		}
 
+		StyleBookEntry styleBookEntry = null;
+
 		Layout layout = themeDisplay.getLayout();
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				layout.getGroupId());
+		String styleBookEntryKey = ParamUtil.getString(
+			httpServletRequest, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY);
+
+		if (Validator.isNotNull(styleBookEntryKey)) {
+			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
+				layout.getGroupId(), styleBookEntryKey);
+		}
+
+		if (styleBookEntry == null) {
+			styleBookEntry =
+				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+					layout.getGroupId());
+		}
 
 		if (styleBookEntry == null) {
 			return StringPool.BLANK;

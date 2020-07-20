@@ -81,4 +81,27 @@ definition {
 			value1 = "update-translation-file -Dtranslation.content.target.original=<target><![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<target><![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<target><![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<target><![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.title.target.original=<target><![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<target><![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
+	macro viewTranslationOptions {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click.waitForMenuToggleJSClick(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		if (isSet(noOptions)) {
+			MenuItem.viewNotPresent(menuItem = "Translate");
+
+			MenuItem.viewNotPresent(menuItem = "Export for Translation");
+
+			MenuItem.viewNotPresent(menuItem = "Import Translation");
+		}
+		else {
+			MenuItem.viewPresent(menuItem = "Translate");
+
+			MenuItem.viewPresent(menuItem = "Export for Translation");
+
+			MenuItem.viewPresent(menuItem = "Import Translation");
+		}
+	}
+
 }

@@ -386,10 +386,10 @@ renderResponse.setTitle(headerTitle);
 												%>
 
 												<liferay-data-engine:data-layout-renderer
-													containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
+													containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 													dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 													dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
-													namespace="<%= liferayPortletResponse.getNamespace() %>"
+													namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
 												/>
 
 												<liferay-frontend:component

@@ -1108,6 +1108,25 @@
 
 			event.win.focus();
 
+			var iframeWindow = event.win;
+
+			if (iframeWindow.Liferay.SPA) {
+				var beforeScreenFlipHandler = iframeWindow.Liferay.on(
+					'beforeScreenFlip',
+					() => {
+						iframeWindow.document.body.classList.add(
+							'dialog-iframe-popup'
+						);
+					}
+				);
+
+				iframeWindow.onunload = () => {
+					if (beforeScreenFlipHandler) {
+						iframeWindow.Liferay.detach(beforeScreenFlipHandler);
+					}
+				};
+			}
+
 			var detachEventHandles = function () {
 				AArray.invoke(eventHandles, 'detach');
 

@@ -376,7 +376,6 @@ public class DataFactory {
 		initAssetTagModels();
 
 		initCommerceIds();
-		initCommerceProductModels();
 
 		initJournalArticleContent();
 
@@ -543,10 +542,6 @@ public class DataFactory {
 
 	public long getCounterNext() {
 		return _counter.get();
-	}
-
-	public List<CPInstanceModel> getCPInstanceModels() {
-		return new ArrayList<>(_cpInstanceModels);
 	}
 
 	public long getDefaultDLDDMStructureId() {
@@ -854,38 +849,6 @@ public class DataFactory {
 						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT - 1]);
 
 			_cpDefinitionIdList.add(cpDefinitionIds);
-		}
-	}
-
-	public void initCommerceProductModels() {
-		_cpInstanceModels = new ArrayList<>(
-			_cpDefinitionCount *
-				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT);
-
-		for (int productIndex = 0;
-			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
-			 productIndex++) {
-
-			long[] cpDefinitionIds = _cpDefinitionIdList.get(productIndex);
-
-			for (int definitionIndex = 0;
-				 definitionIndex <
-					 BenchmarksPropsValues.
-						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
-				 definitionIndex++) {
-
-				long cpDefinitionId = cpDefinitionIds[definitionIndex];
-
-				for (int instanceIndex = 0;
-					 instanceIndex <
-						 BenchmarksPropsValues.
-							 MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
-					 instanceIndex++) {
-
-					_cpInstanceModels.add(
-						newCPInstanceModel(cpDefinitionId, instanceIndex));
-				}
-			}
 		}
 	}
 
@@ -1506,6 +1469,40 @@ public class DataFactory {
 		}
 
 		return cpFriendlyURLEntryModels;
+	}
+
+	public List<CPInstanceModel> newCPInstanceModels() {
+		List<CPInstanceModel> cpInstanceModels = new ArrayList<>(
+			_cpDefinitionCount *
+				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT);
+
+		for (int productIndex = 0;
+			 productIndex < BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
+			 productIndex++) {
+
+			long[] cpDefinitionIds = _cpDefinitionIdList.get(productIndex);
+
+			for (int definitionIndex = 0;
+				 definitionIndex <
+					 BenchmarksPropsValues.
+						 MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
+				 definitionIndex++) {
+
+				long cpDefinitionId = cpDefinitionIds[definitionIndex];
+
+				for (int instanceIndex = 0;
+					 instanceIndex <
+						 BenchmarksPropsValues.
+							 MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
+					 instanceIndex++) {
+
+					cpInstanceModels.add(
+						newCPInstanceModel(cpDefinitionId, instanceIndex));
+				}
+			}
+		}
+
+		return cpInstanceModels;
 	}
 
 	public List<CProductModel> newCProductModels() {
@@ -4493,7 +4490,6 @@ public class DataFactory {
 	private List<long[]> _cpDefinitionIdList;
 	private final Map<Long, String> _cpDefinitionLocalizationNames =
 		new HashMap<>();
-	private List<CPInstanceModel> _cpInstanceModels;
 	private final List<Long> _cProductIds = new ArrayList<>();
 	private final long _cPTaxCategoryId;
 	private final PortletPreferencesImpl

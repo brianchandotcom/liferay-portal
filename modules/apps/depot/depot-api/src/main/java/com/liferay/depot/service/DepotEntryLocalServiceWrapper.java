@@ -369,6 +369,17 @@ public class DepotEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.depot.model.DepotEntry>
+			getGroupConnectedDepotEntries(
+				long groupId, boolean ddmStructuresAvailable, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryLocalService.getGroupConnectedDepotEntries(
+			groupId, ddmStructuresAvailable, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.depot.model.DepotEntry>
 			getGroupConnectedDepotEntries(long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

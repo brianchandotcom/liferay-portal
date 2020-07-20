@@ -268,16 +268,19 @@ public class ConfigurationHandler {
 		if (code == -1) {
 			return null;
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_STRING) {
+
+		code = Character.toUpperCase(code);
+
+		if (code == _TOKEN_SIMPLE_STRING) {
 			return _readQuoted(pushbackReader);
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_INTEGER) {
+		else if (code == _TOKEN_SIMPLE_INTEGER) {
 			return Integer.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_LONG) {
+		else if (code == _TOKEN_SIMPLE_LONG) {
 			return Long.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_FLOAT) {
+		else if (code == _TOKEN_SIMPLE_FLOAT) {
 			String floatString = _readQuoted(pushbackReader);
 
 			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
@@ -287,7 +290,7 @@ public class ConfigurationHandler {
 			return Float.intBitsToFloat(
 				GetterUtil.getIntegerStrict(floatString));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_DOUBLE) {
+		else if (code == _TOKEN_SIMPLE_DOUBLE) {
 			String doubleString = _readQuoted(pushbackReader);
 
 			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
@@ -297,13 +300,13 @@ public class ConfigurationHandler {
 			return Double.longBitsToDouble(
 				GetterUtil.getLongStrict(doubleString));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_BYTE) {
+		else if (code == _TOKEN_SIMPLE_BYTE) {
 			return Byte.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_SHORT) {
+		else if (code == _TOKEN_SIMPLE_SHORT) {
 			return Short.valueOf(_readQuoted(pushbackReader));
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_CHARACTER) {
+		else if (code == _TOKEN_SIMPLE_CHARACTER) {
 			String charString = _readQuoted(pushbackReader);
 
 			if ((charString != null) && (charString.length() > 0)) {
@@ -312,7 +315,7 @@ public class ConfigurationHandler {
 
 			return null;
 		}
-		else if (Character.toUpperCase(code) == _TOKEN_SIMPLE_BOOLEAN) {
+		else if (code == _TOKEN_SIMPLE_BOOLEAN) {
 			return Boolean.valueOf(_readQuoted(pushbackReader));
 		}
 		else {

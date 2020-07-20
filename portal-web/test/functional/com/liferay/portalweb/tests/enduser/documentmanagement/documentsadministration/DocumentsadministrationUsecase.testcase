@@ -1351,6 +1351,8 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Topic");
 
+		Navigator.openSiteURL(siteName = "Guest");
+
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			portlet = "Tags");

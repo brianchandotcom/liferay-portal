@@ -208,6 +208,7 @@ import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.StrutsUtil;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.webserver.WebServerServlet;
@@ -1636,15 +1637,20 @@ public class PortalImpl implements Portal {
 			return ClassNameLocalServiceUtil.getClassNameId(value);
 		}
 
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"select classNameId from ClassName_ where value = ?")) {
+		try (Connection con = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.isInLatestSchemaVersion(con)) {
+				return ClassNameLocalServiceUtil.getClassNameId(value);
+			}
 
-			ps.setString(1, value);
+			try (PreparedStatement ps = con.prepareStatement(
+					"select classNameId from ClassName_ where value = ?")) {
 
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return rs.getLong("classNameId");
+				ps.setString(1, value);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					if (rs.next()) {
+						return rs.getLong("classNameId");
+					}
 				}
 			}
 		}

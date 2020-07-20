@@ -324,7 +324,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			return string;
 		}
 
-		return "ISO-8859-1";
+		return "UTF-8";
 	}
 
 	private String _escapeFilterValue(String string) {

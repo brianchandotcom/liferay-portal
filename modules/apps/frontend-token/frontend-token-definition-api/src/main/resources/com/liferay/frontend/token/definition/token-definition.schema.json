@@ -135,7 +135,6 @@
 				}
 			},
 			"required": [
-				"name",
 				"tokens"
 			],
 			"type": "object"

@@ -74,7 +74,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 			DirectoryWatcher.CONFIG_ENCODING);
 
 		if (encoding == null) {
-			encoding = "UTF-8";
+			encoding = StringPool.UTF8;
 		}
 
 		_encoding = encoding;

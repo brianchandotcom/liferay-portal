@@ -388,6 +388,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertJavaScript(
+			String javaScript, String message, String argument)
+		throws Exception {
+
+		Condition javaScriptCondition = getJavaScriptCondition(
+			javaScript, message, argument);
+
+		javaScriptCondition.assertTrue();
+	}
+
+	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
 
@@ -3257,6 +3268,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void verifyJavaScript(
+			String javaScript, String message, String argument)
+		throws Exception {
+
+		Condition javaScriptCondition = getJavaScriptCondition(
+			javaScript, message, argument);
+
+		javaScriptCondition.verify();
+	}
+
+	@Override
 	public void verifyNotVisible(String locator) throws Exception {
 		Condition notVisibleCondition = getNotVisibleCondition(locator);
 
@@ -3328,6 +3350,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			javaScript, message, argument);
 
 		javaScriptCondition.waitFor();
+	}
+
+	@Override
+	public void waitForJavaScriptNoError(
+			String javaScript, String message, String argument)
+		throws Exception {
+
+		Condition javaScriptCondition = getJavaScriptCondition(
+			javaScript, message, argument);
+
+		javaScriptCondition.waitFor("false");
 	}
 
 	@Override

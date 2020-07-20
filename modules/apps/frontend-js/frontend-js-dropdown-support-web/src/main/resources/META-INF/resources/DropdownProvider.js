@@ -15,6 +15,8 @@
 import domAlign from 'dom-align';
 import dom from 'metal-dom';
 
+import isClickOutside from './isClickOutside';
+
 const CssClass = {
 	SHOW: 'show',
 };
@@ -69,6 +71,13 @@ class DropdownProvider {
 			return;
 		}
 
+		document.removeEventListener('mousedown', (event) =>
+			this._maybeClickOutside(event, {menu, trigger})
+		);
+		document.removeEventListener('touchstart', (event) =>
+			this._maybeClickOutside(event, {menu, trigger})
+		);
+
 		Liferay.fire(this.EVENT_HIDE, {menu, trigger});
 
 		trigger.parentElement.classList.remove(CssClass.SHOW);
@@ -96,6 +105,13 @@ class DropdownProvider {
 
 		trigger.parentElement.classList.add(CssClass.SHOW);
 		trigger.setAttribute('aria-expanded', true);
+
+		document.addEventListener('mousedown', (event) =>
+			this._maybeClickOutside(event, {menu, trigger})
+		);
+		document.addEventListener('touchstart', (event) =>
+			this._maybeClickOutside(event, {menu, trigger})
+		);
 
 		menu.classList.add(CssClass.SHOW);
 
@@ -143,6 +159,12 @@ class DropdownProvider {
 			else {
 				this.show({menu, trigger});
 			}
+		}
+	};
+
+	_maybeClickOutside = (event, {menu, trigger}) => {
+		if (isClickOutside(event.target) && event.target !== trigger) {
+			this.hide({menu, trigger});
 		}
 	};
 }

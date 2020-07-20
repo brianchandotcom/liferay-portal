@@ -2412,11 +2412,17 @@ public class JenkinsResultsParserUtil {
 
 		_buildPropertiesURLs = null;
 
-		_buildProperties = buildProperties;
+		synchronized (_buildProperties) {
+			_buildProperties.clear();
+
+			_buildProperties.putAll(buildProperties);
+		}
 	}
 
 	public static void setBuildProperties(String... urls) {
-		_buildProperties = null;
+		synchronized (_buildProperties) {
+			_buildProperties.clear();
+		}
 
 		_buildPropertiesURLs = urls;
 	}
@@ -3667,7 +3673,8 @@ public class JenkinsResultsParserUtil {
 	private static final String _URL_LOAD_BALANCER =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";
 
-	private static final Hashtable<Object, Object> _buildProperties = new Hashtable<>();
+	private static final Hashtable<Object, Object> _buildProperties =
+		new Hashtable<>();
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");

@@ -47,6 +47,7 @@ import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
+ * @author Carlos Sierra Andrés
  * @author Matthew Tambara
  */
 public class BundleUtil {

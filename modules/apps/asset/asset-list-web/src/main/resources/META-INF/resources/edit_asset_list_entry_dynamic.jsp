@@ -18,11 +18,18 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
-if (Validator.isNull(redirect)) {
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setURLBack(backURL);
+}
+else if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	redirect = portletURL.toString();
+	backURL = portletURL.toString();
+}
+else {
+	backURL = redirect;
 }
 
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
@@ -40,6 +47,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= assetListDisplayContext.getSegmentsEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
@@ -73,7 +81,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	<liferay-frontend:edit-form-footer>
 		<aui:button disabled="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" id="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

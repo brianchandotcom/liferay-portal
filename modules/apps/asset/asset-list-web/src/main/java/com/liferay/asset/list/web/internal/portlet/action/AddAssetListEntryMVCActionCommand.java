@@ -93,7 +93,8 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			JSONObject jsonObject = JSONUtil.put(
-				"redirectURL", getRedirectURL(actionResponse, assetListEntry));
+				"redirectURL",
+				getRedirectURL(actionRequest, actionResponse, assetListEntry));
 
 			if (SessionErrors.contains(
 					actionRequest, "assetListEntryNameInvalid")) {
@@ -115,7 +116,8 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse, AssetListEntry assetListEntry) {
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		AssetListEntry assetListEntry) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
@@ -123,6 +125,13 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		if (backURL != null) {
+			portletURL.setParameter("backURL", backURL);
+		}
+
 		portletURL.setParameter(
 			"assetListEntryId",
 			String.valueOf(assetListEntry.getAssetListEntryId()));

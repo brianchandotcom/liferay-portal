@@ -18,7 +18,7 @@ import TrafficSources from '../../../src/main/resources/META-INF/resources/js/co
 describe('TrafficSources', () => {
 	afterEach(cleanup);
 
-	it('displays the sources according to API', () => {
+	it('displays the traffic sources with buttons to view keywords', () => {
 		const mockTrafficSources = [
 			{
 				countryKeywords: [
@@ -68,11 +68,147 @@ describe('TrafficSources', () => {
 			/>
 		);
 
-		expect(getByText('Testing')).toBeInTheDocument();
+		const button1 = getByText('Testing');
+
+		expect(button1).toBeInTheDocument();
+		expect(button1).not.toBeDisabled();
+		expect(button1).toHaveAttribute('type', 'button');
 		expect(getByText('32,178')).toBeInTheDocument();
 
-		expect(getByText('Second Testing')).toBeInTheDocument();
+		const button2 = getByText('Second Testing');
+
+		expect(button2).toBeInTheDocument();
+		expect(button2).not.toBeDisabled();
+		expect(button2).toHaveAttribute('type', 'button');
 		expect(getByText('278,256')).toBeInTheDocument();
+	});
+
+	it('displays the traffic sources without buttons to view keywords when the value is 0', () => {
+		const mockTrafficSources = [
+			{
+				countryKeywords: [
+					{
+						countryCode: 'us',
+						countryName: 'United States',
+						keywords: [],
+					},
+					{
+						countryCode: 'es',
+						countryName: 'Spain',
+						keywords: [],
+					},
+				],
+				helpMessage: 'Testing Help Message',
+				name: 'testing',
+				share: 0,
+				title: 'Testing',
+				value: 0,
+			},
+			{
+				countryKeywords: [
+					{
+						countryCode: 'us',
+						countryName: 'United States',
+						keywords: [],
+					},
+					{
+						countryCode: 'es',
+						countryName: 'Spain',
+						keywords: [],
+					},
+				],
+				helpMessage: 'Second Testing Help Message',
+				name: 'second-testing',
+				share: 0,
+				title: 'Second Testing',
+				value: 0,
+			},
+		];
+
+		const {getAllByText, getByText} = render(
+			<TrafficSources
+				languageTag="en-US"
+				onTrafficSourceClick={() => {}}
+				trafficSources={mockTrafficSources}
+			/>
+		);
+
+		const text1 = getByText('Testing');
+
+		expect(text1).toBeInTheDocument();
+		expect(text1).not.toHaveAttribute('type', 'button');
+
+		const text2 = getByText('Second Testing');
+
+		expect(text2).toBeInTheDocument();
+		expect(text2).not.toHaveAttribute('type', 'button');
+
+		const zeroValues = getAllByText('0');
+
+		expect(zeroValues.length).toBe(2);
+	});
+
+	it('displays the traffic sources without buttons to view keywords when the value is missing', () => {
+		const mockTrafficSources = [
+			{
+				countryKeywords: [
+					{
+						countryCode: 'us',
+						countryName: 'United States',
+						keywords: [],
+					},
+					{
+						countryCode: 'es',
+						countryName: 'Spain',
+						keywords: [],
+					},
+				],
+				helpMessage: 'Testing Help Message',
+				name: 'testing',
+				share: 0,
+				title: 'Testing',
+			},
+			{
+				countryKeywords: [
+					{
+						countryCode: 'us',
+						countryName: 'United States',
+						keywords: [],
+					},
+					{
+						countryCode: 'es',
+						countryName: 'Spain',
+						keywords: [],
+					},
+				],
+				helpMessage: 'Second Testing Help Message',
+				name: 'second-testing',
+				share: 0,
+				title: 'Second Testing',
+			},
+		];
+
+		const {getAllByText, getByText} = render(
+			<TrafficSources
+				languageTag="en-US"
+				onTrafficSourceClick={() => {}}
+				trafficSources={mockTrafficSources}
+			/>
+		);
+
+		const text1 = getByText('Testing');
+
+		expect(text1).toBeInTheDocument();
+		expect(text1).not.toHaveAttribute('type', 'button');
+
+		const text2 = getByText('Second Testing');
+
+		expect(text2).toBeInTheDocument();
+		expect(text2).not.toHaveAttribute('type', 'button');
+
+		const dashValues = getAllByText('-');
+
+		expect(dashValues.length).toBe(2);
 	});
 
 	it('displays a dash instead of value when the value is missing', () => {

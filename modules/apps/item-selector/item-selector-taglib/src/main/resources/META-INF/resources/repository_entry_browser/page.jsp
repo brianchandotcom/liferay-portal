@@ -382,7 +382,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													icon="documents-and-media"
 													title="<%= title %>"
 												>
-
 													<c:if test="<%= isSearchEveryWhere %>">
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">

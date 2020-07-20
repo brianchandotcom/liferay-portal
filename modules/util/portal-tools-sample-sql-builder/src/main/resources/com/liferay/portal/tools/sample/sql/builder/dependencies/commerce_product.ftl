@@ -10,7 +10,7 @@ ${dataFactory.toInsertSQL(dataFactory.newCommerceChannelModel())}
 
 ${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
 
-<#list dataFactory.CPDefinitionLocalizationModels as cpDefinitionLocalizationModel>
+<#list dataFactory.newCPDefinitionLocalizationModels() as cpDefinitionLocalizationModel>
 	${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 </#list>
 

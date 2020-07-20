@@ -16,6 +16,7 @@ import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
 	addParams,
+	getPortletId,
 } from 'frontend-js-web';
 import dom from 'metal-dom';
 
@@ -90,7 +91,10 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				Liferay.Language.get('assign-users-to-this-x'),
 				itemData.groupTypeLabel
 			),
-			url: itemData.selectUsersURL,
+			url: addParams(
+				`p_p_id=${getPortletId(this.namespace)}`,
+				itemData.selectUsersURL
+			),
 		});
 
 		itemSelectorDialog.on('selectedItemChange', (event) => {

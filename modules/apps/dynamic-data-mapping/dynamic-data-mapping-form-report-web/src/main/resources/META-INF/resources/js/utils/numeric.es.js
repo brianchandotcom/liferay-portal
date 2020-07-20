@@ -57,11 +57,11 @@ export function formatNumber(number, delimit) {
 
 	const splittedFormattedNumber = formattedNumber.split('.');
 
-	let formattedInteger = splittedFormattedNumber[0];
-
 	const formattedDecimal = splittedFormattedNumber[1];
 
-	formattedInteger = numeral(parseInt(formattedInteger, 10)).format('0[,]0');
+	const formattedInteger = numeral(
+		parseInt(splittedFormattedNumber[0], 10)
+	).format('0[,]0');
 
 	formattedNumber =
 		formattedInteger +

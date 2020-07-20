@@ -49,6 +49,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 				<li class="tbar-item">
 					<clay:button
 						borderless="<%= true %>"
+						data-qa-id="infoButton"
 						displayType="secondary"
 						icon="info-circle-open"
 						id='<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>'

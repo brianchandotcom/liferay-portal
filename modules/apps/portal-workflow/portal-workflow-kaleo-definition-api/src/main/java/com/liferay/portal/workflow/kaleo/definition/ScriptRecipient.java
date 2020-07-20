@@ -14,13 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 /**
  * @author Val Nagy
  */
 public class ScriptRecipient extends Recipient {
 
 	public ScriptRecipient(
-		String script, String scriptLanguage, String scriptRequiredContexts) {
+			String script, String scriptLanguage, String scriptRequiredContexts)
+		throws KaleoDefinitionValidationException {
 
 		super(RecipientType.SCRIPT);
 

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Objects;
 
@@ -27,7 +28,9 @@ public enum RecipientType {
 	ADDRESS("address"), ASSIGNEES("assignees"), ROLE(Role.class.getName()),
 	SCRIPT("script"), USER(User.class.getName());
 
-	public static RecipientType parse(String value) {
+	public static RecipientType parse(String value)
+		throws KaleoDefinitionValidationException {
+
 		if (Objects.equals(ADDRESS.getValue(), value)) {
 			return ADDRESS;
 		}
@@ -44,7 +47,8 @@ public enum RecipientType {
 			return USER;
 		}
 		else {
-			throw new IllegalArgumentException("Invalid value " + value);
+			throw new KaleoDefinitionValidationException.InvalidRecipientType(
+				value);
 		}
 	}
 

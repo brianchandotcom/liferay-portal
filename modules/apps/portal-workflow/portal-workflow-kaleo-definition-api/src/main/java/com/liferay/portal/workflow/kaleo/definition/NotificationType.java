@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 import java.util.Objects;
 
 /**
@@ -25,7 +27,9 @@ public enum NotificationType {
 	PUSH_NOTIFICATION("push-notification"),
 	USER_NOTIFICATION("user-notification");
 
-	public static NotificationType parse(String value) {
+	public static NotificationType parse(String value)
+		throws KaleoDefinitionValidationException {
+
 		if (Objects.equals(EMAIL.getValue(), value)) {
 			return EMAIL;
 		}
@@ -42,7 +46,8 @@ public enum NotificationType {
 			return USER_NOTIFICATION;
 		}
 
-		throw new IllegalArgumentException("Invalid value " + value);
+		throw new KaleoDefinitionValidationException.InvalidNotificationType(
+			value);
 	}
 
 	public String getValue() {

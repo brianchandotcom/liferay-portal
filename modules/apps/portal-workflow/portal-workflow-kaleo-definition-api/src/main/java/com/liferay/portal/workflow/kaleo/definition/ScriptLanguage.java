@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 import java.util.Objects;
 
 /**
@@ -24,7 +26,9 @@ public enum ScriptLanguage {
 	BEANSHELL("beanshell"), DRL("drl"), GROOVY("groovy"), JAVA("java"),
 	JAVASCRIPT("javascript"), PYTHON("python"), RUBY("ruby");
 
-	public static ScriptLanguage parse(String value) {
+	public static ScriptLanguage parse(String value)
+		throws KaleoDefinitionValidationException {
+
 		if (Objects.equals(BEANSHELL.getValue(), value)) {
 			return BEANSHELL;
 		}
@@ -47,7 +51,8 @@ public enum ScriptLanguage {
 			return RUBY;
 		}
 
-		throw new IllegalArgumentException("Invalid value " + value);
+		throw new KaleoDefinitionValidationException.InvalidScriptLanguage(
+			value);
 	}
 
 	public String getValue() {

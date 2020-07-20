@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 import java.util.Objects;
 
 /**
@@ -23,7 +25,9 @@ public enum TemplateLanguage {
 
 	FREEMARKER("freemarker"), TEXT("text"), VELOCITY("velocity");
 
-	public static TemplateLanguage parse(String value) {
+	public static TemplateLanguage parse(String value)
+		throws KaleoDefinitionValidationException {
+
 		if (Objects.equals(FREEMARKER.getValue(), value)) {
 			return FREEMARKER;
 		}
@@ -34,7 +38,8 @@ public enum TemplateLanguage {
 			return VELOCITY;
 		}
 
-		throw new IllegalArgumentException("Invalid value " + value);
+		throw new KaleoDefinitionValidationException.InvalidTemplateLanguage(
+			value);
 	}
 
 	public String getValue() {

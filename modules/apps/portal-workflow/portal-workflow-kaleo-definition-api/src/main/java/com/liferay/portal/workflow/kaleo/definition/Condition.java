@@ -14,14 +14,17 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 /**
  * @author Michael C. Han
  */
 public class Condition extends Node {
 
 	public Condition(
-		String name, String description, String script, String scriptLanguage,
-		String scriptRequiredContexts) {
+			String name, String description, String script,
+			String scriptLanguage, String scriptRequiredContexts)
+		throws KaleoDefinitionValidationException {
 
 		super(NodeType.CONDITION, name, description);
 

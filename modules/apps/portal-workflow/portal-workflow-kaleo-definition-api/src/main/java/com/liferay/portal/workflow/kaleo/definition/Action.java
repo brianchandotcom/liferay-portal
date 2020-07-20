@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Objects;
 
@@ -24,8 +25,10 @@ import java.util.Objects;
 public class Action {
 
 	public Action(
-		String name, String description, String executionType, String script,
-		String scriptLanguage, String scriptRequiredContexts, int priority) {
+			String name, String description, String executionType,
+			String script, String scriptLanguage, String scriptRequiredContexts,
+			int priority)
+		throws KaleoDefinitionValidationException {
 
 		_name = name;
 		_description = description;

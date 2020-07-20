@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 import java.util.Objects;
 
 /**
@@ -24,7 +26,9 @@ public enum ExecutionType {
 	ON_ASSIGNMENT("onAssignment"), ON_ENTRY("onEntry"), ON_EXIT("onExit"),
 	ON_TIMER("onTimer");
 
-	public static ExecutionType parse(String value) {
+	public static ExecutionType parse(String value)
+		throws KaleoDefinitionValidationException {
+
 		if (Objects.equals(ON_ASSIGNMENT.getValue(), value)) {
 			return ON_ASSIGNMENT;
 		}
@@ -38,7 +42,8 @@ public enum ExecutionType {
 			return ON_TIMER;
 		}
 		else {
-			throw new IllegalArgumentException("Invalid value " + value);
+			throw new KaleoDefinitionValidationException.InvalidExecutionType(
+				value);
 		}
 	}
 

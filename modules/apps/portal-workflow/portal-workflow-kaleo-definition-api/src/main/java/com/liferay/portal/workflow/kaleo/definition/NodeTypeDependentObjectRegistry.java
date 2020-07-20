@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,17 +32,22 @@ public class NodeTypeDependentObjectRegistry<T> {
 		_nodeTypeDependentObjects.put(nodeType, nodeTypeDependentObject);
 	}
 
-	public T getNodeTypeDependentObjects(NodeType nodeType) {
+	public T getNodeTypeDependentObjects(NodeType nodeType)
+		throws KaleoDefinitionValidationException {
+
 		T nodeTypeDependentObject = _nodeTypeDependentObjects.get(nodeType);
 
 		if (nodeTypeDependentObject == null) {
-			throw new IllegalArgumentException("Invalid node type " + nodeType);
+			throw new KaleoDefinitionValidationException.InvalidNodeType(
+				nodeType.name());
 		}
 
 		return nodeTypeDependentObject;
 	}
 
-	public T getNodeTypeDependentObjects(String nodeTypeString) {
+	public T getNodeTypeDependentObjects(String nodeTypeString)
+		throws KaleoDefinitionValidationException {
+
 		NodeType nodeType = NodeType.valueOf(nodeTypeString);
 
 		return getNodeTypeDependentObjects(nodeType);

@@ -36,6 +36,23 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 		super(cause);
 	}
 
+	public static class DuplicateNode
+		extends KaleoDefinitionValidationException {
+
+		public DuplicateNode(String node) {
+			super(String.format("Duplicate node %s", node));
+
+			_node = node;
+		}
+
+		public String getNode() {
+			return _node;
+		}
+
+		private final String _node;
+
+	}
+
 	public static class EmptyNotificationTemplate
 		extends KaleoDefinitionValidationException {
 
@@ -52,6 +69,129 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 		}
 
 		private final String _node;
+
+	}
+
+	public static class InvalidDurationScale
+		extends KaleoDefinitionValidationException {
+
+		public InvalidDurationScale(String durationScale) {
+			super(String.format("Invalid duration scale %s", durationScale));
+
+			_durationScale = durationScale;
+		}
+
+		public String getDurationScale() {
+			return _durationScale;
+		}
+
+		private final String _durationScale;
+
+	}
+
+	public static class InvalidExecutionType
+		extends KaleoDefinitionValidationException {
+
+		public InvalidExecutionType(String executionType) {
+			super(String.format("Invalid execution type %s", executionType));
+
+			_executionType = executionType;
+		}
+
+		public String getExecutionType() {
+			return _executionType;
+		}
+
+		private final String _executionType;
+
+	}
+
+	public static class InvalidNodeType
+		extends KaleoDefinitionValidationException {
+
+		public InvalidNodeType(String nodeType) {
+			super(String.format("Invalid node type %s", nodeType));
+
+			_nodeType = nodeType;
+		}
+
+		public String getNodeType() {
+			return _nodeType;
+		}
+
+		private final String _nodeType;
+
+	}
+
+	public static class InvalidNotificationType
+		extends KaleoDefinitionValidationException {
+
+		public InvalidNotificationType(String notificationType) {
+			super(
+				String.format(
+					"Invalid notification type %s", notificationType));
+
+			_notificationType = notificationType;
+		}
+
+		public String getNotificationType() {
+			return _notificationType;
+		}
+
+		private final String _notificationType;
+
+	}
+
+	public static class InvalidRecipientType
+		extends KaleoDefinitionValidationException {
+
+		public InvalidRecipientType(String recipientType) {
+			super(String.format("Invalid recipient type %s", recipientType));
+
+			_recipientType = recipientType;
+		}
+
+		public String getRecipientType() {
+			return _recipientType;
+		}
+
+		private final String _recipientType;
+
+	}
+
+	public static class InvalidScriptLanguage
+		extends KaleoDefinitionValidationException {
+
+		public InvalidScriptLanguage(String scriptLanguage) {
+			super(String.format("Invalid script language %s", scriptLanguage));
+
+			_scriptLanguage = scriptLanguage;
+		}
+
+		public String getScriptLanguage() {
+			return _scriptLanguage;
+		}
+
+		private final String _scriptLanguage;
+
+	}
+
+	public static class InvalidTemplateLanguage
+		extends KaleoDefinitionValidationException {
+
+		public InvalidTemplateLanguage(String templateLanguage) {
+			super(
+				String.format(
+					"Invalid template language %s", templateLanguage));
+
+			_templateLanguage = templateLanguage;
+		}
+
+		public String getTemplateLanguage() {
+			return _templateLanguage;
+		}
+
+		private final String _templateLanguage;
 
 	}
 

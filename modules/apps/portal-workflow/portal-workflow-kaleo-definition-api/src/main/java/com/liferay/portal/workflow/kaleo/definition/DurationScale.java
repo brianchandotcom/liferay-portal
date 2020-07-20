@@ -14,6 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  * @author Péter Borkuti
@@ -22,6 +26,39 @@ public enum DurationScale {
 
 	DAY("day"), HOUR("hour"), MILLISECOND("millisecond"), MINUTE("minute"),
 	MONTH("month"), SECOND("second"), WEEK("week"), YEAR("year");
+
+	public static DurationScale parse(String value)
+		throws KaleoDefinitionValidationException {
+
+		if (Objects.equals(DAY.getValue(), value)) {
+			return DAY;
+		}
+		else if (Objects.equals(HOUR.getValue(), value)) {
+			return HOUR;
+		}
+		else if (Objects.equals(MILLISECOND.getValue(), value)) {
+			return MILLISECOND;
+		}
+		else if (Objects.equals(MINUTE.getValue(), value)) {
+			return MINUTE;
+		}
+		else if (Objects.equals(MONTH.getValue(), value)) {
+			return MONTH;
+		}
+		else if (Objects.equals(SECOND.getValue(), value)) {
+			return SECOND;
+		}
+		else if (Objects.equals(WEEK.getValue(), value)) {
+			return WEEK;
+		}
+		else if (Objects.equals(YEAR.getValue(), value)) {
+			return YEAR;
+		}
+		else {
+			throw new KaleoDefinitionValidationException.InvalidDurationScale(
+				value);
+		}
+	}
 
 	public String getValue() {
 		return _value;

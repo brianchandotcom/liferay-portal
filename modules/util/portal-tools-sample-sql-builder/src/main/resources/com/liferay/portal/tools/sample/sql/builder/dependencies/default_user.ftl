@@ -24,8 +24,6 @@
 <#assign
 	sampleUserModel = dataFactory.newSampleUserModel()
 
-	sampleUserId = sampleUserModel.userId
-
 	userGroupModel = dataFactory.newGroupModel(sampleUserModel)
 
 	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")

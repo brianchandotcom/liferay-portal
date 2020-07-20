@@ -58,148 +58,134 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 			elementClasses="content-dashboard-management-toolbar"
 		/>
 
-		<clay:container-fluid
-			cssClass="closed sidenav-container sidenav-right"
-			id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-		>
-			<liferay-frontend:sidebar-panel
-				resourceURL="<%= String.valueOf(contentDashboardAdminDisplayContext.getInfoPanelURL()) %>"
-				searchContainerId="content"
+		<div class="sheet-section">
+			<liferay-ui:search-container
+				id="content"
+				searchContainer="<%= contentDashboardAdminDisplayContext.getSearchContainer() %>"
 			>
-				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-			</liferay-frontend:sidebar-panel>
-
-			<div class="sheet-section sidenav-content">
-				<aui:form action="<%= String.valueOf(contentDashboardAdminDisplayContext.getInfoPanelURL()) %>" name="fm">
-					<liferay-ui:search-container
-						id="content"
-						searchContainer="<%= contentDashboardAdminDisplayContext.getSearchContainer() %>"
+				<liferay-ui:search-container-row
+					className="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem"
+					keyProperty="id"
+					modelVar="contentDashboardItem"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-title"
+						name="title"
 					>
-						<liferay-ui:search-container-row
-							className="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem"
-							keyProperty="id"
-							modelVar="contentDashboardItem"
+						<span class="lfr-portal-tooltip text-truncate-inline" title="<%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %>">
+							<span class="text-truncate"><%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %></span>
+						</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="text-center"
+						name=""
+					>
+						<c:if test="<%= contentDashboardItem.isViewURLEnabled(request) %>">
+							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-content-has-a-display-page") %>">
+								<clay:icon
+									cssClass="text-secondary"
+									symbol="page"
+								/>
+							</span>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="text-center"
+						name="author"
+					>
+						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(contentDashboardItem.getUserName()) %>">
+							<liferay-ui:user-portrait
+								userId="<%= contentDashboardItem.getUserId() %>"
+							/>
+						</span>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					ContentDashboardItemType contentDashboardItemType = contentDashboardItem.getContentDashboardItemType();
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
+						name="subtype"
+						value="<%= HtmlUtil.escape(contentDashboardItemType.getLabel(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="site-or-asset-library"
+						value="<%= HtmlUtil.escape(contentDashboardItem.getScopeName(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="text-nowrap"
+						name="status"
+					>
+
+						<%
+						List<ContentDashboardItem.Status> statuses = contentDashboardItem.getStatuses(locale);
+
+						for (ContentDashboardItem.Status status : statuses) {
+						%>
+
+							<clay:label
+								label="<%= StringUtil.toUpperCase(status.getLabel()) %>"
+								style="<%= status.getStyle() %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</liferay-ui:search-container-column-text>
+
+					<%
+					for (AssetVocabulary assetVocabulary : contentDashboardAdminDisplayContext.getAssetVocabularies()) {
+					%>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smaller"
+							name="<%= assetVocabulary.getTitle(locale) %>"
 						>
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand table-title"
-								name="title"
-							>
-								<span class="lfr-portal-tooltip text-truncate-inline" title="<%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %>">
-									<span class="text-truncate"><%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %></span>
-								</span>
-							</liferay-ui:search-container-column-text>
-
-							<liferay-ui:search-container-column-text
-								cssClass="text-center"
-								name=""
-							>
-								<c:if test="<%= contentDashboardItem.isViewURLEnabled(request) %>">
-									<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-content-has-a-display-page") %>">
-										<clay:icon
-											cssClass="text-secondary"
-											symbol="page"
-										/>
-									</span>
-								</c:if>
-							</liferay-ui:search-container-column-text>
-
-							<liferay-ui:search-container-column-text
-								cssClass="text-center"
-								name="author"
-							>
-								<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(contentDashboardItem.getUserName()) %>">
-									<liferay-ui:user-portrait
-										userId="<%= contentDashboardItem.getUserId() %>"
-									/>
-								</span>
-							</liferay-ui:search-container-column-text>
 
 							<%
-							ContentDashboardItemType contentDashboardItemType = contentDashboardItem.getContentDashboardItemType();
+							for (AssetCategory assetCategory : (List<AssetCategory>)contentDashboardItem.getAssetCategories(assetVocabulary.getVocabularyId())) {
 							%>
 
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand-smaller"
-								name="subtype"
-								value="<%= HtmlUtil.escape(contentDashboardItemType.getLabel(locale)) %>"
-							/>
-
-							<liferay-ui:search-container-column-text
-								name="site-or-asset-library"
-								value="<%= HtmlUtil.escape(contentDashboardItem.getScopeName(locale)) %>"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="text-nowrap"
-								name="status"
-							>
-
-								<%
-								List<ContentDashboardItem.Status> statuses = contentDashboardItem.getStatuses(locale);
-
-								for (ContentDashboardItem.Status status : statuses) {
-								%>
-
-									<clay:label
-										label="<%= StringUtil.toUpperCase(status.getLabel()) %>"
-										style="<%= status.getStyle() %>"
-									/>
-
-								<%
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
-
-							<%
-							for (AssetVocabulary assetVocabulary : contentDashboardAdminDisplayContext.getAssetVocabularies()) {
-							%>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smaller"
-									name="<%= assetVocabulary.getTitle(locale) %>"
+								<clay:label
+									displayType="secondary"
+									large="<%= true %>"
 								>
-
-									<%
-									for (AssetCategory assetCategory : (List<AssetCategory>)contentDashboardItem.getAssetCategories(assetVocabulary.getVocabularyId())) {
-									%>
-
-										<clay:label
-											displayType="secondary"
-											large="<%= true %>"
-										>
-											<clay:label-item-expand><%= assetCategory.getTitle(locale) %></clay:label-item-expand>
-										</clay:label>
-
-									<%
-									}
-									%>
-
-								</liferay-ui:search-container-column-text>
+									<clay:label-item-expand><%= assetCategory.getTitle(locale) %></clay:label-item-expand>
+								</clay:label>
 
 							<%
 							}
 							%>
 
-							<liferay-ui:search-container-column-date
-								name="modified-date"
-								value="<%= contentDashboardItem.getModifiedDate() %>"
-							/>
+						</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text>
-								<clay:dropdown-actions
-									dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
-								/>
-							</liferay-ui:search-container-column-text>
-						</liferay-ui:search-container-row>
+					<%
+					}
+					%>
 
-						<liferay-ui:search-iterator
-							markupView="lexicon"
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= contentDashboardItem.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
 						/>
-					</liferay-ui:search-container>
-				</aui:form>
-			</div>
-		</clay:container-fluid>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
+		</div>
 	</div>
 </clay:container>
 

@@ -15,21 +15,13 @@
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminInfoPanelDisplayContext;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
-import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.searcher.Searcher;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -49,34 +41,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		SearchResponse searchResponse = _searcher.search(
-			_contentDashboardSearchRequestBuilderFactory.builder(
-				new ContentDashboardSearchContextBuilder(
-					_portal.getHttpServletRequest(resourceRequest)
-				).withEnd(
-					1
-				).withStart(
-					0
-				).build()
-			).build());
-
-		resourceRequest.setAttribute(
-			ContentDashboardWebKeys.
-				CONTENT_DASHBOARD_ADMIN_INFO_PANEL_DISPLAY_CONTEXT,
-			new ContentDashboardAdminInfoPanelDisplayContext(
-				searchResponse.getCount()));
-
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
-
-	@Reference
-	private ContentDashboardSearchRequestBuilderFactory
-		_contentDashboardSearchRequestBuilderFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private Searcher _searcher;
 
 }

@@ -21,7 +21,6 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebK
 import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
 import com.liferay.content.dashboard.web.internal.data.provider.ContentDashboardDataProvider;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext;
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminInfoPanelDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
@@ -150,12 +149,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ContentDashboardWebKeys.CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT,
 			contentDashboardAdminDisplayContext);
-
-		renderRequest.setAttribute(
-			ContentDashboardWebKeys.
-				CONTENT_DASHBOARD_ADMIN_INFO_PANEL_DISPLAY_CONTEXT,
-			new ContentDashboardAdminInfoPanelDisplayContext(
-				searchContainer.getTotal()));
 
 		ContentDashboardAdminManagementToolbarDisplayContext
 			contentDashboardAdminManagementToolbarDisplayContext =

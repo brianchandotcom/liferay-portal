@@ -15,22 +15,42 @@
 package com.liferay.portal.vulcan.internal.jaxrs.extension;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Javier de Arcos
  */
+@JsonFilter("ExtendedEntityPropertyFilter")
 public class ExtendedEntity {
 
 	public static ExtendedEntity extend(
-		Object entity, Map<String, Object> extendedProperties) {
+		Object entity, Map<String, Object> extendedProperties,
+		Set<String> filteredPropertyKeys) {
 
-		return new ExtendedEntity(entity, extendedProperties);
+		return new ExtendedEntity(
+			entity,
+			Optional.ofNullable(
+				extendedProperties
+			).orElse(
+				Collections.emptyMap()
+			),
+			Optional.ofNullable(
+				filteredPropertyKeys
+			).orElse(
+				Collections.emptySet()
+			));
 	}
 
+	@JsonUnwrapped
 	public Object getEntity() {
 		return _entity;
 	}
@@ -40,16 +60,22 @@ public class ExtendedEntity {
 		return _extendedProperties;
 	}
 
+	@JsonIgnore
+	public Set<String> getFilteredPropertyKeys() {
+		return _filteredPropertyKeys;
+	}
+
 	private ExtendedEntity(
-		Object entity, Map<String, Object> extendedProperties) {
+		Object entity, Map<String, Object> extendedProperties,
+		Set<String> filteredPropertyKeys) {
 
 		_entity = entity;
 		_extendedProperties = new HashMap<>(extendedProperties);
+		_filteredPropertyKeys = new HashSet<>(filteredPropertyKeys);
 	}
 
-	@JsonUnwrapped
 	private final Object _entity;
-
 	private final Map<String, Object> _extendedProperties;
+	private final Set<String> _filteredPropertyKeys;
 
 }

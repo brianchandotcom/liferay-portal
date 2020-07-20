@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.jaxrs.context;
+package com.liferay.portal.vulcan.internal.jackson.databind.ser;
 
-import java.util.Map;
+import com.fasterxml.jackson.databind.ser.PropertyFilter;
+
 import java.util.Set;
 
 /**
  * @author Javier de Arcos
  */
-public interface ExtensionContext {
+public interface DynamicPropertyFilter extends PropertyFilter {
 
-	public Map<String, Object> getExtendedProperties(Object object);
+	public void addPropertyFilters(Set<String> propertyFilters);
 
-	public Set<String> getFilteredPropertyKeys(Object object);
+	public void clearPropertyFilters();
 
 }

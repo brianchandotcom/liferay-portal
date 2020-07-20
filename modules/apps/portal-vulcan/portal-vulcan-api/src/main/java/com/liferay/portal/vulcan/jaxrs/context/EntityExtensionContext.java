@@ -24,7 +24,7 @@ public abstract class EntityExtensionContext<T> implements ExtensionContext {
 
 	public abstract Map<String, Object> getEntityExtendedProperties(T entity);
 
-	public abstract Set<String> getEntityFilteredProperties(T entity);
+	public abstract Set<String> getEntityFilteredPropertyKeys(T entity);
 
 	@Override
 	public Map<String, Object> getExtendedProperties(Object object) {
@@ -34,10 +34,10 @@ public abstract class EntityExtensionContext<T> implements ExtensionContext {
 	}
 
 	@Override
-	public Set<String> getFilteredProperties(Object object) {
+	public Set<String> getFilteredPropertyKeys(Object object) {
 		T entity = _parseObjectToEntity(object);
 
-		return getEntityFilteredProperties(entity);
+		return getEntityFilteredPropertyKeys(entity);
 	}
 
 	private T _parseObjectToEntity(Object object) {

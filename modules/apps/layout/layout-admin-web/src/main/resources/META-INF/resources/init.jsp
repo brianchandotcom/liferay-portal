@@ -42,6 +42,7 @@ page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminM
 page import="com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.SelectCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutPageTemplateEntryDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDisplayContext" %><%@

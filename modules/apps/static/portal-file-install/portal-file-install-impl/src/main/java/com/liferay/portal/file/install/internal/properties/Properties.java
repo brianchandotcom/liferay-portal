@@ -93,11 +93,8 @@ public class Properties extends AbstractMap<String, String> {
 		return _typed;
 	}
 
-	public void loadLayout(Reader reader, boolean maybeTyped)
-		throws IOException {
-
-		PropertiesReader propertiesReader = new PropertiesReader(
-			reader, maybeTyped);
+	public void loadLayout(Reader reader) throws IOException {
+		PropertiesReader propertiesReader = new PropertiesReader(reader);
 
 		boolean hasProperty = false;
 
@@ -130,7 +127,7 @@ public class Properties extends AbstractMap<String, String> {
 
 		Boolean typed = propertiesReader.isTyped();
 
-		if (!maybeTyped || (typed == null) || !typed) {
+		if ((typed == null) || !typed) {
 			_typed = false;
 
 			for (Entry<String, String> entry : _storage.entrySet()) {
@@ -270,10 +267,8 @@ public class Properties extends AbstractMap<String, String> {
 
 	public static class PropertiesReader extends BufferedReader {
 
-		public PropertiesReader(Reader reader, boolean maybeTyped) {
+		public PropertiesReader(Reader reader) {
 			super(reader);
-
-			_maybeTyped = maybeTyped;
 		}
 
 		public List<String> getCommentLines() {
@@ -309,7 +304,7 @@ public class Properties extends AbstractMap<String, String> {
 
 			boolean typed = false;
 
-			if (_maybeTyped && (property[1].length() >= 2)) {
+			if (property[1].length() >= 2) {
 				Matcher matcher = _pattern.matcher(property[1]);
 
 				typed = matcher.matches();
@@ -509,7 +504,6 @@ public class Properties extends AbstractMap<String, String> {
 		}
 
 		private final List<String> _commentLines = new ArrayList<>();
-		private final boolean _maybeTyped;
 		private Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
 				"\"[\\S\\s]*\")\\s*");

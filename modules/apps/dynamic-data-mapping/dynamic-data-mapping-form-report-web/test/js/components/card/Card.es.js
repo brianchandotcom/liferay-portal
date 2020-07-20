@@ -55,7 +55,7 @@ describe('Card', () => {
 		expect(getByText('max')).toBeTruthy();
 		expect(getByText('min')).toBeTruthy();
 		expect(getByText('sum')).toBeTruthy();
-		expect(getByText('1.350775...')).toBeTruthy();
-		expect(getByText('99978663...')).toBeTruthy();
+		expect(getByText('1.35077506...')).toBeTruthy();
+		expect(getByText('99,978,663...')).toBeTruthy();
 	});
 });

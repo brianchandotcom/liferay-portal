@@ -6506,15 +6506,13 @@ public class ServiceBuilder {
 				String finderColumnName = finderColumnElement.attributeValue(
 					"name");
 
-				if (finderColumnName.endsWith("Id") ||
-					finderColumnName.endsWith("PK")) {
+				if (finderColumnName.equals("classNameId")) {
+					hasClassNameId = true;
+				}
+				else if (finderColumnName.endsWith("Id") ||
+						 finderColumnName.endsWith("PK")) {
 
-					if (finderColumnName.equals("classNameId")) {
-						hasClassNameId = true;
-					}
-					else {
-						hasOtherIds = true;
-					}
+					hasOtherIds = true;
 				}
 
 				boolean finderColCaseSensitive = GetterUtil.getBoolean(

@@ -1,4 +1,4 @@
-<#list dataFactory.assetEntryModels as assetEntryModel>
+<#list dataFactory.newAssetEntryModels() as assetEntryModel>
 	${dataFactory.toInsertSQL(assetEntryModel)}
 </#list>
 

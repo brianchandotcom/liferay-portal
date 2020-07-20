@@ -15,10 +15,12 @@
 package com.liferay.exportimport.web.internal.upgrade;
 
 import com.liferay.exportimport.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -31,6 +33,18 @@ public class ExportImportWebUpgrade implements UpgradeStepRegistrator {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			new com.liferay.exportimport.web.internal.upgrade.v1_0_1.
+				UpgradeStagingConfigurationClassNames(_groupLocalService));
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
 
 }

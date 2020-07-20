@@ -69,6 +69,15 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		_bundleContext = bundleContext;
 		_configurationAdmin = configurationAdmin;
 		_fileInstall = fileInstall;
+
+		String encoding = _bundleContext.getProperty(
+			DirectoryWatcher.CONFIG_ENCODING);
+
+		if (encoding == null) {
+			encoding = "UTF-8";
+		}
+
+		_encoding = encoding;
 	}
 
 	@Override
@@ -119,7 +128,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 					try (InputStream inputStream = new FileInputStream(file);
 						Reader reader = new InputStreamReader(
-							inputStream, _encoding())) {
+							inputStream, _encoding)) {
 
 						typedProperties.load(reader);
 					}
@@ -159,7 +168,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 					try (OutputStream outputStream = new FileOutputStream(file);
 						Writer writer = new OutputStreamWriter(
-							outputStream, _encoding())) {
+							outputStream, _encoding)) {
 
 						typedProperties.save(writer);
 					}
@@ -316,17 +325,6 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 		};
 	}
 
-	private String _encoding() {
-		String string = _bundleContext.getProperty(
-			DirectoryWatcher.CONFIG_ENCODING);
-
-		if (string != null) {
-			return string;
-		}
-
-		return "UTF-8";
-	}
-
 	private String _escapeFilterValue(String string) {
 		string = StringUtil.replace(string, "[(]", "\\\\(");
 		string = StringUtil.replace(string, "[)]", "\\\\)");
@@ -434,7 +432,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 					_bundleSubstitutionCallback());
 
 				try (Reader reader = new InputStreamReader(
-						inputStream, _encoding())) {
+						inputStream, _encoding)) {
 
 					typedProperties.load(reader);
 				}
@@ -535,6 +533,7 @@ public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;
+	private final String _encoding;
 	private final FileInstallImplBundleActivator _fileInstall;
 	private final Map<String, String> _pidToFile = new HashMap<>();
 	private ServiceRegistration<?> _serviceRegistration;

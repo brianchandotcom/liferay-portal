@@ -30,7 +30,7 @@ export default function EmptyAuditBarChart({learnHowURL}) {
 			dangerouslySetInnerHTML={{
 				__html: Liferay.Util.sub(
 					Liferay.Language.get(
-						'learn-how-to-tailor-categories-to-your-needs'
+						'x-learn-how-x-to-tailor-categories-to-your-needs'
 					),
 					`<a href=${learnHowURL} target="_blank">`,
 					'</a>'

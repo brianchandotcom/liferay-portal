@@ -34,7 +34,7 @@ describe('EmptyAuditBarChart', () => {
 
 		expect(getByText('there-is-no-data')).toBeInTheDocument();
 		expect(
-			getByText('learn-how-to-tailor-categories-to-your-needs')
+			getByText('x-learn-how-x-to-tailor-categories-to-your-needs')
 		).toBeInTheDocument();
 	});
 });

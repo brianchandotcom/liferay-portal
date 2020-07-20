@@ -210,7 +210,7 @@
 						%>
 
 						<p>
-							<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="learn-how-to-tailor-categories-to-your-needs" />
+							<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="x-learn-how-x-to-tailor-categories-to-your-needs" />
 						</p>
 					</c:if>
 

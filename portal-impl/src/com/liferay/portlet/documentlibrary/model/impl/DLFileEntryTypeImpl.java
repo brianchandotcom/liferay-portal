@@ -59,7 +59,7 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 				getDataDefinitionId());
 
 			if (ddmStructure != null) {
-				ddmStructures.add(ddmStructure);
+				ddmStructures.add(0, ddmStructure);
 			}
 		}
 

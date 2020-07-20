@@ -302,8 +302,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 		DelayDuration delayDuration = new DelayDuration(
 			kaleoTimer.getDuration(),
-			DurationScale.valueOf(
-				StringUtil.toUpperCase(kaleoTimer.getScale())));
+			DurationScale.parse(kaleoTimer.getScale()));
 
 		Date dueDate = _dueDateCalculator.getDueDate(new Date(), delayDuration);
 
@@ -313,8 +312,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 		if (kaleoTimer.isRecurring()) {
 			DelayDuration recurrenceDelayDuration = new DelayDuration(
 				kaleoTimer.getRecurrenceDuration(),
-				DurationScale.valueOf(
-					StringUtil.toUpperCase(kaleoTimer.getRecurrenceScale())));
+				DurationScale.parse(kaleoTimer.getRecurrenceScale()));
 
 			interval = (int)recurrenceDelayDuration.getDuration();
 

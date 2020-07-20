@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
@@ -156,7 +157,8 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 	}
 
 	protected Set<Action> buildActions(
-		long companyId, String kaleoClassName, long kaleoClassPK) {
+			long companyId, String kaleoClassName, long kaleoClassPK)
+		throws KaleoDefinitionValidationException {
 
 		List<KaleoAction> kaleoActions =
 			kaleoActionLocalService.getKaleoActions(
@@ -280,8 +282,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 
 			DelayDuration delayDuration = new DelayDuration(
 				kaleoTimer.getDuration(),
-				DurationScale.valueOf(
-					StringUtil.toUpperCase(kaleoTimer.getScale())));
+				DurationScale.parse(kaleoTimer.getScale()));
 
 			timer.setDelayDuration(delayDuration);
 
@@ -290,8 +291,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 			if (Validator.isNotNull(recurrenceScale)) {
 				DelayDuration recurrenceDelayDuration = new DelayDuration(
 					kaleoTimer.getRecurrenceDuration(),
-					DurationScale.valueOf(
-						StringUtil.toUpperCase(recurrenceScale)));
+					DurationScale.parse(recurrenceScale));
 
 				timer.setRecurrence(recurrenceDelayDuration);
 			}

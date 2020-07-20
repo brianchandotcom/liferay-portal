@@ -47,6 +47,7 @@ import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TemplateLanguage;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 
@@ -103,7 +104,8 @@ public class AppWorkflowResourceHelper {
 	}
 
 	public Definition toDefinition(
-		AppBuilderApp appBuilderApp, AppWorkflow appWorkflow, Locale locale) {
+			AppBuilderApp appBuilderApp, AppWorkflow appWorkflow, Locale locale)
+		throws KaleoDefinitionValidationException {
 
 		Definition definition = new Definition(
 			appBuilderApp.getUuid(), StringPool.BLANK, StringPool.BLANK, 0);
@@ -206,7 +208,9 @@ public class AppWorkflowResourceHelper {
 		}
 	}
 
-	private Action _createApproveAction() {
+	private Action _createApproveAction()
+		throws KaleoDefinitionValidationException {
+
 		return new Action(
 			"approve", StringPool.BLANK, ExecutionType.ON_ENTRY.getValue(),
 			StringUtil.read(getClass(), "dependencies/approve-script.groovy"),
@@ -214,7 +218,8 @@ public class AppWorkflowResourceHelper {
 	}
 
 	private Notification _createAssigneesNotification(
-		AppBuilderApp appBuilderApp, Locale locale) {
+			AppBuilderApp appBuilderApp, Locale locale)
+		throws KaleoDefinitionValidationException {
 
 		AssigneesRecipient assigneesRecipient = new AssigneesRecipient();
 
@@ -236,8 +241,9 @@ public class AppWorkflowResourceHelper {
 	}
 
 	private Notification _createNotification(
-		String description, ExecutionType executionType, String name,
-		Recipient recipient, String template) {
+			String description, ExecutionType executionType, String name,
+			Recipient recipient, String template)
+		throws KaleoDefinitionValidationException {
 
 		Notification notification = new Notification(
 			name, description, executionType.getValue(), template,
@@ -252,8 +258,9 @@ public class AppWorkflowResourceHelper {
 	}
 
 	private Notification _createUserNotification(
-		AppBuilderApp appBuilderApp, AppWorkflowTask appWorkflowTask,
-		Locale locale) {
+			AppBuilderApp appBuilderApp, AppWorkflowTask appWorkflowTask,
+			Locale locale)
+		throws KaleoDefinitionValidationException {
 
 		UserRecipient userRecipient = new UserRecipient();
 

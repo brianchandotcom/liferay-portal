@@ -71,6 +71,12 @@ public class ActionUtil {
 			uriInfo);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAction(String, Class, Long, String, Object,
+	 *             ModelResourcePermission, UriInfo)}
+	 */
+	@Deprecated
 	public static Map<String, String> addAction(
 		String actionName, Class<?> clazz, Long id, String methodName,
 		Object object, Long ownerId, String permissionName, Long siteId,

@@ -125,9 +125,7 @@ export default function TrafficSources({
 												)
 											}
 										>
-											{!entry.countryKeywords.length ? (
-												<span>{entry.title}</span>
-											) : (
+											{entry.value > 0 ? (
 												<ClayButton
 													className="font-weight-semi-bold px-0 py-1 text-primary"
 													displayType="link"
@@ -140,6 +138,8 @@ export default function TrafficSources({
 												>
 													{entry.title}
 												</ClayButton>
+											) : (
+												<span>{entry.title}</span>
 											)}
 										</td>
 										<td className="text-secondary">

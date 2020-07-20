@@ -44,6 +44,8 @@ boolean showSearchInfo = false;
 if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
 }
+
+boolean isSearchEveryWhere = true;
 %>
 
 <liferay-util:html-top>
@@ -186,17 +188,19 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								name="location"
-							>
-								<span class="text-secondary">
-									<clay:icon
-										symbol="books"
-									/>
+							<c:if test="<%= isSearchEveryWhere %>">
+								<liferay-ui:search-container-column-text
+									name="location"
+								>
+									<span class="text-secondary">
+										<clay:icon
+											symbol="books"
+										/>
 
-									<small>Company Assets</small>
-								</span>
-							</liferay-ui:search-container-column-text>
+										<small>Company Assets</small>
+									</span>
+								</liferay-ui:search-container-column-text>
+							</c:if>
 
 							<liferay-ui:search-container-column-text
 								name="size"
@@ -247,17 +251,19 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								name="location"
-							>
-								<span class="text-secondary">
-									<clay:icon
-										symbol="books"
-									/>
+							<c:if test="<%= isSearchEveryWhere %>">
+								<liferay-ui:search-container-column-text
+									name="location"
+								>
+									<span class="text-secondary">
+										<clay:icon
+											symbol="books"
+										/>
 
-									<small>Company Assets</small>
-								</span>
-							</liferay-ui:search-container-column-text>
+										<small>Company Assets</small>
+									</span>
+								</liferay-ui:search-container-column-text>
+							</c:if>
 
 							<liferay-ui:search-container-column-text
 								name="size"
@@ -376,15 +382,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													icon="documents-and-media"
 													title="<%= title %>"
 												>
-													<liferay-frontend:vertical-card-footer>
-														<span class="text-secondary">
-															<clay:icon
-																symbol="books"
-															/>
 
-															<small>Company Assets</small>
-														</span>
-													</liferay-frontend:vertical-card-footer>
+													<c:if test="<%= isSearchEveryWhere %>">
+														<liferay-frontend:vertical-card-footer>
+															<span class="text-secondary">
+																<clay:icon
+																	symbol="books"
+																/>
+
+																<small>Company Assets</small>
+															</span>
+														</liferay-frontend:vertical-card-footer>
+													</c:if>
 
 													<liferay-frontend:vertical-card-sticker-bottom>
 														<liferay-document-library:mime-type-sticker
@@ -404,15 +413,17 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
 												>
-													<liferay-frontend:vertical-card-footer>
-														<span class="text-secondary">
-															<clay:icon
-																symbol="books"
-															/>
+													<c:if test="<%= isSearchEveryWhere %>">
+														<liferay-frontend:vertical-card-footer>
+															<span class="text-secondary">
+																<clay:icon
+																	symbol="books"
+																/>
 
-															<small>Company Assets</small>
-														</span>
-													</liferay-frontend:vertical-card-footer>
+																<small>Company Assets</small>
+															</span>
+														</liferay-frontend:vertical-card-footer>
+													</c:if>
 
 													<liferay-frontend:vertical-card-sticker-bottom>
 														<liferay-document-library:mime-type-sticker
@@ -452,16 +463,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</a>
 										</h5>
 
-										<h6 class="text-default">
-											<liferay-ui:message key="location" />:
-											<span class="text-secondary">
-												<clay:icon
-													symbol="sites"
-												/>
+										<c:if test="<%= isSearchEveryWhere %>">
+											<h6 class="text-default">
+												<liferay-ui:message key="location" />:
+												<span class="text-secondary">
+													<clay:icon
+														symbol="sites"
+													/>
 
-												<small>Liferay</small>
-											</span>
-										</h6>
+													<small>Liferay</small>
+												</span>
+											</h6>
+										</c:if>
 
 										<h6 class="text-default">
 											<liferay-ui:message key="created" />:
@@ -508,16 +521,18 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												<strong><%= title %></strong>
 											</h5>
 
-											<h6 class="text-default">
-												<liferay-ui:message key="location" />:
-												<span class="text-secondary">
-													<clay:icon
-														symbol="books"
-													/>
+											<c:if test="<%= isSearchEveryWhere %>">
+												<h6 class="text-default">
+													<liferay-ui:message key="location" />:
+													<span class="text-secondary">
+														<clay:icon
+															symbol="books"
+														/>
 
-													<small>Company Assets</small>
-												</span>
-											</h6>
+														<small>Company Assets</small>
+													</span>
+												</h6>
+											</c:if>
 
 											<h6 class="text-default">
 												<liferay-ui:message key="version" />:

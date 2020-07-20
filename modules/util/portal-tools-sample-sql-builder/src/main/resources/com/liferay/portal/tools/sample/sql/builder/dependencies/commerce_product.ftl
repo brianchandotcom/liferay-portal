@@ -18,7 +18,7 @@ ${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
 	${dataFactory.toInsertSQL(cpDefinitionModel)}
 </#list>
 
-<#list dataFactory.CPFriendlyURLEntryModels as cpFriendlyURLEntryModel>
+<#list dataFactory.newCPFriendlyURLEntryModels() as cpFriendlyURLEntryModel>
 	${dataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
 
 	${csvFileWriter.write("cpFriendlyURLEntry", cpFriendlyURLEntryModel.urlTitle + "\n")}

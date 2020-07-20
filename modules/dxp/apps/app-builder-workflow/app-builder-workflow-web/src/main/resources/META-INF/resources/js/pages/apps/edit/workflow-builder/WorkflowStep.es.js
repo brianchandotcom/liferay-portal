@@ -11,6 +11,7 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -38,6 +39,7 @@ const Arrow = ({addStep, selected}) => {
 export default function WorkflowStep({
 	addStep,
 	badgeLabel,
+	errors,
 	initial,
 	name,
 	onClick,
@@ -46,6 +48,7 @@ export default function WorkflowStep({
 }) {
 	const isInitialOrFinalSteps = initial !== undefined;
 	const isFinalStep = isInitialOrFinalSteps && !initial;
+	const duplicatedFields = errors?.formViews?.duplicatedFields || [];
 
 	return (
 		<>
@@ -67,9 +70,28 @@ export default function WorkflowStep({
 						)}
 						onClick={onClick}
 					>
-						{name}
+						<div>
+							{name}
 
-						<ButtonInfo items={stepInfo} />
+							<ButtonInfo items={stepInfo} />
+						</div>
+
+						{duplicatedFields.length > 0 && (
+							<ClayTooltipProvider>
+								<ClayIcon
+									className="tooltip-icon-error"
+									data-tooltip-align="bottom"
+									data-tooltip-delay="0"
+									fontSize="26px"
+									symbol="exclamation-full"
+									title={`${Liferay.Language.get(
+										'error'
+									)}: ${Liferay.Language.get(
+										'there-are-form-views-with-duplicated-fields'
+									)}`}
+								/>
+							</ClayTooltipProvider>
+						)}
 					</div>
 				</div>
 			</div>

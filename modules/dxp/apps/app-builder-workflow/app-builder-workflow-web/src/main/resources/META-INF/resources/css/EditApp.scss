@@ -1,14 +1,6 @@
 $sidebarWidth: 366px;
 $navbarHeight: 120px;
 
-.dropdown-button-asset {
-	margin-top: 0.25rem;
-}
-
-.tooltip-icon:hover {
-	fill: #6b6c7e;
-}
-
 .app-builder-workflow-app {
 	display: flex;
 	margin-top: 64px;
@@ -101,13 +93,14 @@ $navbarHeight: 120px;
 		}
 
 		.step-card {
+			align-items: center;
 			background-clip: border-box;
 			background-color: #fff;
 			border: 2px solid #e7e7ed;
 			border-radius: 0.25rem;
 			cursor: pointer;
-			display: block;
-			flex-direction: column;
+			display: flex;
+			justify-content: space-between;
 			margin-bottom: unset;
 			margin-left: 16px;
 			min-width: 0;
@@ -162,6 +155,10 @@ $navbarHeight: 120px;
 	}
 }
 
+.border-error {
+	border-color: #da1414 !important;
+}
+
 .data-layout-builder-sidebar {
 	@media (max-width: 576px) {
 		top: 112px;
@@ -212,6 +209,10 @@ $navbarHeight: 120px;
 	}
 }
 
+.dropdown-button-asset {
+	margin-top: 0.25rem;
+}
+
 .outline-text {
 	background-color: white;
 	font-size: 12px;
@@ -231,4 +232,15 @@ $navbarHeight: 120px;
 	&:first-of-type {
 		margin-top: 1rem;
 	}
+}
+
+.tooltip-icon:hover {
+	fill: #6b6c7e;
+}
+
+.tooltip-icon-error {
+	align-self: center;
+	border: 5px solid #fde7e8;
+	border-radius: 50%;
+	fill: #da1414;
 }

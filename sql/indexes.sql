@@ -420,7 +420,6 @@ create unique index IX_4F0315B8 on ServiceComponent (buildNamespace[$COLUMN_LENG
 create index IX_9E7AC81A on SocialActivity (activitySetId, ctCollectionId);
 create index IX_AD0B0FB5 on SocialActivity (classNameId, classPK, ctCollectionId);
 create index IX_90E6DCFC on SocialActivity (classNameId, classPK, type_, ctCollectionId);
-create index IX_B4979906 on SocialActivity (companyId, classNameId, ctCollectionId);
 create index IX_5AD306C4 on SocialActivity (companyId, ctCollectionId);
 create index IX_A9CF2AC6 on SocialActivity (groupId, ctCollectionId);
 create index IX_9C9CB625 on SocialActivity (groupId, userId, classNameId, classPK, type_, receiverUserId, ctCollectionId);

@@ -140,7 +140,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		long scopeId = _contentDashboardAdminDisplayContext.getScopeId();
-		int status = _contentDashboardAdminDisplayContext.getStatus();
 
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
 			LabelItemListBuilder.add(
@@ -159,25 +158,47 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setLabel(
 						LanguageUtil.get(request, "site-or-asset-library") +
 							": " + _getScopeLabel(scopeId));
-				}
-			).add(
-				() -> status != WorkflowConstants.STATUS_ANY,
+				});
+
+		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
+			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
+
+		for (ContentDashboardItemType contentDashboardItemType :
+				contentDashboardItemTypes) {
+
+			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL removeLabelURL = PortletURLUtil.clone(
+					PortletURL portletURL = PortletURLUtil.clone(
 						currentURLObj, liferayPortletResponse);
 
-					removeLabelURL.setParameter("status", (String)null);
+					Stream<? extends ContentDashboardItemType> stream =
+						contentDashboardItemTypes.stream();
+
+					portletURL.setParameter(
+						"contentDashboardItemTypePayload",
+						stream.filter(
+							curContentDashboardItemType -> !Objects.equals(
+								curContentDashboardItemType.getClassPK(),
+								contentDashboardItemType.getClassPK())
+						).map(
+							curContentDashboardItemType ->
+								curContentDashboardItemType.toJSONString(
+									_locale)
+						).toArray(
+							String[]::new
+						));
 
 					labelItem.putData(
-						"removeLabelURL", removeLabelURL.toString());
+						"removeLabelURL",
+						String.valueOf(portletURL.toString()));
 
 					labelItem.setCloseable(true);
-
 					labelItem.setLabel(
-						LanguageUtil.get(request, "status") + ": " +
-							_getStatusLabel(status));
-				}
-			);
+						StringBundler.concat(
+							LanguageUtil.get(request, "subtype"), ": ",
+							contentDashboardItemType.getFullLabel(_locale)));
+				});
+		}
 
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
@@ -221,45 +242,24 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				});
 		}
 
-		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
-			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
+		int status = _contentDashboardAdminDisplayContext.getStatus();
 
-		for (ContentDashboardItemType contentDashboardItemType :
-				contentDashboardItemTypes) {
+		labelItemListWrapper.add(
+			() -> status != WorkflowConstants.STATUS_ANY,
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					currentURLObj, liferayPortletResponse);
 
-			labelItemListWrapper.add(
-				labelItem -> {
-					PortletURL portletURL = PortletURLUtil.clone(
-						currentURLObj, liferayPortletResponse);
+				removeLabelURL.setParameter("status", (String)null);
 
-					Stream<? extends ContentDashboardItemType> stream =
-						contentDashboardItemTypes.stream();
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
-					portletURL.setParameter(
-						"contentDashboardItemTypePayload",
-						stream.filter(
-							curContentDashboardItemType -> !Objects.equals(
-								curContentDashboardItemType.getClassPK(),
-								contentDashboardItemType.getClassPK())
-						).map(
-							curContentDashboardItemType ->
-								curContentDashboardItemType.toJSONString(
-									_locale)
-						).toArray(
-							String[]::new
-						));
+				labelItem.setCloseable(true);
 
-					labelItem.putData(
-						"removeLabelURL",
-						String.valueOf(portletURL.toString()));
-
-					labelItem.setCloseable(true);
-					labelItem.setLabel(
-						StringBundler.concat(
-							LanguageUtil.get(request, "subtype"), ": ",
-							contentDashboardItemType.getFullLabel(_locale)));
-				});
-		}
+				labelItem.setLabel(
+					LanguageUtil.get(request, "status") + ": " +
+						_getStatusLabel(status));
+			});
 
 		return labelItemListWrapper.build();
 	}

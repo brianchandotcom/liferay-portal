@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -25,7 +26,11 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -33,7 +38,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -80,7 +87,11 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			liferayPortletRequest, "accountRoleId");
 
 		String navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "valid-domain-users");
+			liferayPortletRequest, "navigation");
+
+		if (Validator.isNull(navigation)) {
+			navigation = _getDefaultNavigation(liferayPortletRequest);
+		}
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
@@ -159,6 +170,31 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
+	private static String _getDefaultNavigation(
+		LiferayPortletRequest liferayPortletRequest) {
+
+		try {
+			AccountEntryEmailDomainsConfiguration
+				accountEntryEmailDomainsConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						AccountEntryEmailDomainsConfiguration.class,
+						PortalUtil.getCompanyId(liferayPortletRequest));
+
+			if (accountEntryEmailDomainsConfiguration.
+					enableEmailDomainValidation()) {
+
+				return "valid-domain-users";
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException, configurationException);
+			}
+		}
+
+		return "all-users";
+	}
+
 	private static String[] _getEmailAddressDomains(
 		long accountEntryId, String navigation) {
 
@@ -179,6 +215,9 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssignableAccountUserDisplaySearchContainerFactory.class);
 
 	private static AccountEntryLocalService _accountEntryLocalService;
 	private static AccountEntryUserRelLocalService

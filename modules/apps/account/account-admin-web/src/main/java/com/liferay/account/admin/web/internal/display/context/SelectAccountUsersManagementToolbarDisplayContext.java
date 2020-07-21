@@ -15,15 +15,22 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletURL;
 
@@ -78,7 +85,9 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public String getNavigation() {
 		return ParamUtil.getString(
-			liferayPortletRequest, getNavigationParam(), "valid-domain-users");
+			liferayPortletRequest, getNavigationParam(),
+			ArrayUtil.isEmpty(getNavigationKeys()) ? "all-users" :
+				getNavigationKeys()[0]);
 	}
 
 	@Override
@@ -120,7 +129,26 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			return new String[0];
 		}
 
-		return new String[] {"valid-domain-users", "all-users"};
+		try {
+			AccountEntryEmailDomainsConfiguration
+				accountEntryEmailDomainsConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						AccountEntryEmailDomainsConfiguration.class,
+						PortalUtil.getCompanyId(liferayPortletRequest));
+
+			if (accountEntryEmailDomainsConfiguration.
+					enableEmailDomainValidation()) {
+
+				return new String[] {"valid-domain-users", "all-users"};
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException, configurationException);
+			}
+		}
+
+		return new String[] {"all-users"};
 	}
 
 	@Override
@@ -133,5 +161,8 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "last-name", "email-address"};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectAccountUsersManagementToolbarDisplayContext.class);
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.constants;
+package com.liferay.data.engine.constants;
 
 /**
  * @author Jeyvison Nascimento

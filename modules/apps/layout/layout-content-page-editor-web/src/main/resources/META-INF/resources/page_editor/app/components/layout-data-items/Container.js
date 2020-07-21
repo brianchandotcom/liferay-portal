@@ -20,6 +20,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
+import loadBackgroundImage from '../../utils/loadBackgroundImage';
 
 const Container = React.forwardRef(
 	({children, className, data, item, withinTopper = false}, ref) => {
@@ -151,31 +152,6 @@ Container.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({}),
 	}).isRequired,
-};
-
-const loadBackgroundImage = (backgroundImage) => {
-	if (!backgroundImage) {
-		return Promise.resolve('');
-	}
-	else if (typeof backgroundImage.url === 'string') {
-		return Promise.resolve(backgroundImage.url);
-	}
-	else if (backgroundImage.fieldId) {
-		return InfoItemService.getInfoItemFieldValue({
-			classNameId: backgroundImage.classNameId,
-			classPK: backgroundImage.classPK,
-			fieldId: backgroundImage.fieldId,
-			onNetworkStatus: () => {},
-		}).then((response) => {
-			if (response.fieldValue && response.fieldValue.url) {
-				return response.fieldValue.url;
-			}
-
-			return '';
-		});
-	}
-
-	return Promise.resolve('');
 };
 
 export default Container;

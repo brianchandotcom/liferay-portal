@@ -221,6 +221,24 @@ definition {
 			value1 = "_explanation");
 	}
 
+	test AssertSidecarAutoInstall {
+		property delete.sidecar.bundle = "true";
+		property test.assert.warning.exceptions = "true";
+
+		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay is at 127.0.0.1:9201");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "apple");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
+	}
+
 	@ignore = "true"
 	@priority = "3"
 	test AssertSystemSettingsPropogateToModule {

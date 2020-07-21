@@ -12416,6 +12416,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="delete.sidecar.bundle" />
+
+		<if>
+			<equals arg1="${delete.sidecar.bundle}" arg2="true" />
+			<then>
+				<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="socks.proxy.enabled" />
 
 		<if>

@@ -44,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -60,6 +61,22 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseAppWorkflowResourceImpl
 	implements AppWorkflowResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
+	@Path("/apps/{appId}/app-workflows")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AppWorkflow")})
+	public void deleteAppWorkflow(
+			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
+		throws Exception {
+	}
 
 	/**
 	 * Invoke this method with the command line:

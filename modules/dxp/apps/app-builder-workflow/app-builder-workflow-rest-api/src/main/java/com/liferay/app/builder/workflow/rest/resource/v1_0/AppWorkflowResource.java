@@ -44,6 +44,8 @@ public interface AppWorkflowResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void deleteAppWorkflow(Long appId) throws Exception;
+
 	public AppWorkflow getAppWorkflow(Long appId) throws Exception;
 
 	public AppWorkflow postAppWorkflow(Long appId, AppWorkflow appWorkflow)

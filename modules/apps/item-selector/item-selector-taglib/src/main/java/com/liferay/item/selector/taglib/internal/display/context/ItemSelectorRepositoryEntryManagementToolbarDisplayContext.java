@@ -140,7 +140,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public ViewTypeItemList getViewTypes() throws PortletException {
 		PortletURL displayStyleURL = PortletURLUtil.clone(
-			_getPortletURL(), _liferayPortletResponse);
+			_getCurrentSortingURL(), _liferayPortletResponse);
 
 		return new ViewTypeItemList(displayStyleURL, _getDisplayStyle()) {
 			{
@@ -193,6 +193,10 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		currentSortingURL.setParameter("orderByType", getOrderByType());
 		currentSortingURL.setParameter("orderByCol", _getOrderByCol());
+
+		if (_repositoryEntryBrowserDisplayContext.isSearchEverywhere()) {
+			currentSortingURL.setParameter("scope", "everywhere");
+		}
 
 		return currentSortingURL;
 	}

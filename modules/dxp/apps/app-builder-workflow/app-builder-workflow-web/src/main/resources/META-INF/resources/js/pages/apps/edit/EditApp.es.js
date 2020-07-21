@@ -77,7 +77,7 @@ export default ({
 	};
 
 	useEffect(() => {
-		if (!appId && app.dataDefinitionId) {
+		if (app.dataDefinitionId) {
 			dispatchConfig({
 				listItems: {fetching: true},
 				type: UPDATE_LIST_ITEMS,
@@ -104,7 +104,7 @@ export default ({
 					});
 				});
 		}
-	}, [appId, app.dataDefinitionId]);
+	}, [app.dataDefinitionId]);
 
 	useEffect(() => {
 		const promises = [getAssigneeRoles(), getDataObjects()];

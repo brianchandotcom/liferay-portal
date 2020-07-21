@@ -3,7 +3,7 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
-		"Token": {
+		"FrontendToken": {
 			"additionalProperties": false,
 			"properties": {
 				"defaultValue": {
@@ -131,7 +131,7 @@
 				},
 				"tokens": {
 					"items": {
-						"$ref": "#/definitions/Token"
+						"$ref": "#/definitions/FrontendToken"
 					},
 					"title": "The Tokens of the Token Set",
 					"type": "array"

@@ -79,12 +79,12 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 		sb1.append("DDMContent.contentId = ");
 		sb1.append("DDMFormInstanceRecordVersion.storageId inner join ");
 		sb1.append("DDMFormInstanceRecord on ");
-		sb1.append("DDMFormInstanceRecordVersion.formInstanceRecordId = ");
-		sb1.append("DDMFormInstanceRecord.formInstanceRecordId where ");
+		sb1.append("DDMFormInstanceRecord.formInstanceRecordId = ");
+		sb1.append("DDMFormInstanceRecordVersion.formInstanceRecordId where ");
 		sb1.append("DDMFormInstanceRecord.version = ");
 		sb1.append("DDMFormInstanceRecordVersion.version and ");
-		sb1.append("DDMFormInstanceRecordVersion.status = ? and ");
-		sb1.append("DDMFormInstanceRecord.formInstanceId = ?");
+		sb1.append("DDMFormInstanceRecord.formInstanceId = ? and ");
+		sb1.append("DDMFormInstanceRecordVersion.status = ?");
 
 		StringBundler sb2 = new StringBundler(3);
 
@@ -93,7 +93,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 		sb2.append("formInstanceId, data_) values (?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select formInstanceId, companyid, createDate, groupId, " +
+				"select formInstanceId, groupId, companyid, createDate, " +
 					"structureId from DDMFormInstance")) {
 
 			ResultSet rs1 = ps1.executeQuery();
@@ -110,8 +110,8 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 				try (PreparedStatement ps2 = connection.prepareStatement(
 						sb1.toString())) {
 
-					ps2.setInt(1, WorkflowConstants.STATUS_APPROVED);
-					ps2.setLong(2, formInstanceId);
+					ps2.setLong(1, formInstanceId);
+					ps2.setInt(2, WorkflowConstants.STATUS_APPROVED);
 
 					ResultSet rs2 = ps2.executeQuery();
 

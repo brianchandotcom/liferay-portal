@@ -52,11 +52,24 @@ public class LayoutPageTemplateTestUtil {
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			layoutPageTemplateCollectionId, RandomTestUtil.randomString());
+			layoutPageTemplateCollectionId, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			WorkflowConstants.STATUS_DRAFT);
 	}
 
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long layoutPageTemplateCollectionId, String name)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			layoutPageTemplateCollectionId, name,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			WorkflowConstants.STATUS_DRAFT);
+	}
+
+	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long layoutPageTemplateCollectionId, String name, int type,
+			int status)
 		throws PortalException {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -72,9 +85,8 @@ public class LayoutPageTemplateTestUtil {
 			addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
-				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				layoutPageTemplateCollectionId, name, type, 0, status,
+				serviceContext);
 	}
 
 	public static LayoutPageTemplateEntry addWidgetLayoutPageTemplateEntry(

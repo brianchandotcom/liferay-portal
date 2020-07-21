@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
@@ -64,6 +65,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ContentDashboardAdminManagementToolbarDisplayContext(
+		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
 		GroupLocalService groupLocalService,
@@ -76,6 +78,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			contentDashboardAdminDisplayContext.getSearchContainer());
 
+		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_contentDashboardAdminDisplayContext =
 			contentDashboardAdminDisplayContext;
@@ -139,26 +142,71 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		long scopeId = _contentDashboardAdminDisplayContext.getScopeId();
+		List<Long> assetCategoryIds =
+			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
 
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
-			LabelItemListBuilder.add(
-				() -> scopeId > 0,
+			new LabelItemListBuilder.LabelItemListWrapper();
+
+		for (Long assetCategoryId : assetCategoryIds) {
+			labelItemListWrapper.add(
 				labelItem -> {
-					PortletURL removeLabelURL = PortletURLUtil.clone(
+					PortletURL portletURL = PortletURLUtil.clone(
 						currentURLObj, liferayPortletResponse);
 
-					removeLabelURL.setParameter("scopeId", (String)null);
+					Stream<Long> stream = assetCategoryIds.stream();
+
+					portletURL.setParameter(
+						"categoryId",
+						stream.filter(
+							id -> id != assetCategoryId
+						).map(
+							String::valueOf
+						).toArray(
+							String[]::new
+						));
 
 					labelItem.putData(
-						"removeLabelURL", removeLabelURL.toString());
+						"removeLabelURL",
+						String.valueOf(portletURL.toString()));
 
 					labelItem.setCloseable(true);
-
 					labelItem.setLabel(
-						LanguageUtil.get(request, "site-or-asset-library") +
-							": " + _getScopeLabel(scopeId));
+						StringBundler.concat(
+							LanguageUtil.get(request, "category"),
+							StringPool.COLON,
+							LanguageUtil.get(
+								request,
+								Optional.ofNullable(
+									_assetCategoryLocalService.
+										fetchAssetCategory(assetCategoryId)
+								).map(
+									assetCategory -> assetCategory.getTitle(
+										_locale)
+								).orElse(
+									StringPool.BLANK
+								))));
 				});
+		}
+
+		long scopeId = _contentDashboardAdminDisplayContext.getScopeId();
+
+		labelItemListWrapper.add(
+			() -> scopeId > 0,
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					currentURLObj, liferayPortletResponse);
+
+				removeLabelURL.setParameter("scopeId", (String)null);
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+
+				labelItem.setCloseable(true);
+
+				labelItem.setLabel(
+					LanguageUtil.get(request, "site-or-asset-library") + ": " +
+						_getScopeLabel(scopeId));
+			});
 
 		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
 			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
@@ -588,6 +636,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardAdminManagementToolbarDisplayContext.class);
 
+	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final ContentDashboardAdminDisplayContext
 		_contentDashboardAdminDisplayContext;

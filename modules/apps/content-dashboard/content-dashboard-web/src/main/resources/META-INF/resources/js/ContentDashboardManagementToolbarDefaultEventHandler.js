@@ -61,11 +61,15 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
+				const categories = Object.keys(selectedItem);
+
 				var redirectURL = itemData.redirectURL;
 
-				selectedItem.forEach((item) => {
+				categories.forEach((category) => {
 					redirectURL = addParams(
-						this.namespace + 'categoryId=' + item.id,
+						this.namespace +
+							'categoryId=' +
+							selectedItem[category].categoryId,
 						redirectURL
 					);
 				});

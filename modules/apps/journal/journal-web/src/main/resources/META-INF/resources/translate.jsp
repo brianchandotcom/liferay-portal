@@ -177,12 +177,13 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 										contents="<%= targetContent %>"
 										contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
 										name="<%= id %>"
+										onChangeMethod="onInputChange"
 										placeholder="<%= label %>"
 										toolbarSet="simple"
 									/>
 								</c:when>
 								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 								</c:otherwise>
 							</c:choose>
 						</clay:col>
@@ -207,4 +208,12 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 	});
+
+	function <portlet:namespace />onInputChange(value) {
+		var translateLanguageComponent = Liferay.component(
+			'<portlet:namespace />TranslateLanguagesSelector'
+		);
+
+		translateLanguageComponent.onFormChange();
+	}
 </script>

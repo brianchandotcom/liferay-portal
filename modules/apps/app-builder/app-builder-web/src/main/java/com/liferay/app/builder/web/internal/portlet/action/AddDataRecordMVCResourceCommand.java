@@ -113,7 +113,7 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 			dataRecord.getId());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			themeDisplay.getCompanyId(), appBuilderApp.getGroupId(),
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			themeDisplay.getUserId(),
 			ResourceActionsUtil.getCompositeModelName(
 				AppBuilderApp.class.getName(), DDLRecord.class.getName()),

@@ -24,14 +24,14 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {useDispatch, useSelector} from '../../../app/store/index';
-import Button from '../../../common/components/Button';
-import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
-import {openImageSelector} from '../../../core/openImageSelector';
-import {config} from '../../config/index';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import addFragmentComposition from '../../thunks/addFragmentComposition';
-import {useActiveItemId} from '../Controls';
+import Button from '../../common/components/Button';
+import InvisibleFieldset from '../../common/components/InvisibleFieldset';
+import {openImageSelector} from '../../core/openImageSelector';
+import {config} from '../config/index';
+import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector} from '../store/index';
+import addFragmentComposition from '../thunks/addFragmentComposition';
+import {useActiveItemId} from './Controls';
 
 const SaveFragmentCompositionModal = ({onCloseModal, open}) => {
 	const dispatch = useDispatch();

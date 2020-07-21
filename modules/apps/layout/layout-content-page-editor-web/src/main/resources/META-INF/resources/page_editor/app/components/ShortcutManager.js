@@ -34,7 +34,7 @@ import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
 import {useActiveItemId, useSelectItem} from './Controls';
-import SaveFragmentCompositionModal from './floating-toolbar/SaveFragmentCompositionModal';
+import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 
 const ctrlOrMeta = (event) =>
 	(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);

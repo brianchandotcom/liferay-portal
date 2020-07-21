@@ -26,7 +26,7 @@ import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
 import {useSelectItem} from './Controls';
-import SaveFragmentCompositionModal from './floating-toolbar/SaveFragmentCompositionModal';
+import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 
 export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);

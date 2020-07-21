@@ -322,7 +322,8 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Geolocation",
-			fieldType = "Geolocation");
+			fieldType = "Geolocation",
+			rowNum = "1");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -360,7 +361,6 @@ definition {
 		WebContent.viewCPWithoutContentField(
 			field = "Geolocation",
 			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation",
 			webContentTitle = "WC WebContent 2 Title");
 	}
 

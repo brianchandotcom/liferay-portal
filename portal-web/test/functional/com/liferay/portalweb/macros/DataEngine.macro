@@ -9,7 +9,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		Type.sendKeys(
+		Type(
 			locator1 = "TextInput#SEARCH",
 			value1 = "${fieldType}");
 
@@ -132,4 +132,5 @@ definition {
 			locator1 = "DDMField#NESTED_DE",
 			value1 = "${nestedFieldData}");
 	}
+
 }

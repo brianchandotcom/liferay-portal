@@ -1758,31 +1758,25 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
+		var key_fieldData = "${fieldData}";	
+		var key_fieldName = "${fieldName}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+
 		if ("${field}" == "Web Content") {
-			var key_fieldData = "${fieldData}";
-			var key_fieldFieldLabel = "${fieldFieldLabel}";
-			var key_fieldName = "${fieldName}";
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-			AssertTextEquals(
-				locator1 = "DDMField#WEB_CONTENT",
-				value1 = "${fieldFieldLabel}");
-
-			AssertTextEquals(
-				locator1 = "DDMField#WEB_CONTENT_TITLE_SELECTED",
+			AssertTextEquals。assertPartialText(
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${fieldData}");
 		}
 
 		if ("${field}" == "Geolocation") {
-			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldName = "${fieldName}",
-				locator1 = "DDMField#GEOLOCATION",
-				value1 = "${fieldFieldLabel}");
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		if ("${field}" == "Image") {
 			AssertTextEquals(
-				locator1 = "WCEditWebContent#SELECTED_IMAGE",
+				locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT",
 				value1 = "${webContentImage}");
 		}
 	}

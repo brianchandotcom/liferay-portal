@@ -225,10 +225,6 @@ $navbarHeight: 120px;
 	border: 1px solid #cdced9;
 	border-radius: 6px;
 	box-sizing: border-box;
-	margin-bottom: 1rem;
+	margin-top: 1rem;
 	padding: 1rem 1rem 0;
-
-	&:first-of-type {
-		margin-top: 1rem;
-	}
 }

@@ -511,6 +511,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 			return false;
 		}
 
+		if (layoutMode.equals(Constants.PREVIEW)) {
+			return false;
+		}
+
 		return true;
 	}
 

@@ -14,6 +14,9 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -30,10 +33,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
@@ -41,9 +49,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,6 +64,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ContentDashboardAdminManagementToolbarDisplayContext(
+		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest,
@@ -65,9 +76,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			contentDashboardAdminDisplayContext.getSearchContainer());
 
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_contentDashboardAdminDisplayContext =
 			contentDashboardAdminDisplayContext;
 		_groupLocalService = groupLocalService;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_locale = locale;
 		_userLocalService = userLocalService;
 	}
@@ -317,6 +331,43 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		return new String[] {"title", "modified-date"};
 	}
 
+	private PortletURL _getAssetCategorySelectorURL()
+		throws PortalException, WindowStateException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_liferayPortletRequest, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		portletURL.setParameter(
+			"eventName",
+			_liferayPortletResponse.getNamespace() + "selectedCategory");
+		portletURL.setParameter("singleSelect", Boolean.FALSE.toString());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<AssetVocabulary> assetVocabularies =
+			_assetVocabularyLocalService.getCompanyVocabularies(
+				themeDisplay.getCompanyId());
+
+		Stream<AssetVocabulary> stream = assetVocabularies.stream();
+
+		portletURL.setParameter(
+			"vocabularyIds",
+			stream.map(
+				AssetVocabulary::getVocabularyId
+			).map(
+				String::valueOf
+			).collect(
+				Collectors.joining(StringPool.COMMA)
+			));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL;
+	}
+
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
@@ -390,6 +441,29 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterDropdownItems() {
 		return DropdownItemList.of(
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "selectCategory");
+				dropdownItem.putData(
+					"dialogTitle",
+					LanguageUtil.get(request, "select-categories"));
+
+				PortletURL portletURL = getPortletURL();
+
+				portletURL.setParameter("assetCategoryIds", (String)null);
+
+				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
+
+				dropdownItem.putData(
+					"selectCategoryURL",
+					String.valueOf(_getAssetCategorySelectorURL()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "categories") +
+						StringPool.TRIPLE_PERIOD);
+
+				return dropdownItem;
+			},
 			() -> {
 				long scopeId =
 					_contentDashboardAdminDisplayContext.getScopeId();
@@ -514,9 +588,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardAdminManagementToolbarDisplayContext.class);
 
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final ContentDashboardAdminDisplayContext
 		_contentDashboardAdminDisplayContext;
 	private final GroupLocalService _groupLocalService;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Locale _locale;
 	private final UserLocalService _userLocalService;
 

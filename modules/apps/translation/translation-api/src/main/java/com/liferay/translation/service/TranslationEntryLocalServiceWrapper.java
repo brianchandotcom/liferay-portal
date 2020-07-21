@@ -239,6 +239,15 @@ public class TranslationEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
+		com.liferay.info.item.InfoItemClassPKReference infoItemClassPKReference,
+		java.util.Locale locale) {
+
+		return _translationEntryLocalService.fetchTranslationEntry(
+			infoItemClassPKReference, locale);
+	}
+
+	@Override
+	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
 		long translationEntryId) {
 
 		return _translationEntryLocalService.fetchTranslationEntry(

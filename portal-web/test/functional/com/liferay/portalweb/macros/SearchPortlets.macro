@@ -166,6 +166,23 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro configureSearchBarWidget {
+		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(federatedSearchKey)) {
+			Type(
+				key_fieldLabel = "Federated Search Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${federatedSearchKey}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureSearchOptions {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",

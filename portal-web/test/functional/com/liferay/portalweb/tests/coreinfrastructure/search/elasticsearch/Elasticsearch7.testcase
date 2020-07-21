@@ -478,6 +478,8 @@ definition {
 			federatedSearchKey = "s1",
 			fieldsToDisplay = "case_title,closure_reason,case_enquiry_id");
 
+		SearchPortlets.configureSearchBarWidget(federatedSearchKey = "s1");
+
 		SearchPortlets.searchWidget(searchTerm = "bicycle");
 
 		AssertTextEquals.assertPartialText(

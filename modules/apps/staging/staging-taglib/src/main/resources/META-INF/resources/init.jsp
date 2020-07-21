@@ -85,6 +85,7 @@ page import="com.liferay.portal.kernel.module.configuration.ConfigurationProvide
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletBag" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletBagPool" %><%@
+page import="com.liferay.portal.kernel.scheduler.SchedulerException" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthException" %><%@
 page import="com.liferay.portal.kernel.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

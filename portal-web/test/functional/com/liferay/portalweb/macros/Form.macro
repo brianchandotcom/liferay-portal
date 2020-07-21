@@ -208,27 +208,6 @@ definition {
 
 		var key_fieldName = "${fieldValue}";
 
-		if (!(isSet(fieldName))) {
-			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
-		}
-
-		// TODO: adding it to test, remove this line after this bug (LPS-87612) is fixed
-
-		//Type(locator1 = "FormFields#FIELD_NAME_EDIT", value1 = "${fieldName}");
-
-		if ((isSet(localeAdvanced)) && (isSet(localeBasic))) {
-			var key_localeAdvanced = "${localeAdvanced}";
-			var key_localeBasic = "${localeBasic}";
-
-			FormFields.viewFieldName(
-				fieldName = "${fieldName}",
-				localeAdvanced = "${key_localeAdvanced}",
-				localeBasic = "${key_localeBasic}");
-		}
-		else {
-			FormFields.viewFieldName(fieldName = "${fieldName}");
-		}
-
 		AssertTextEquals(
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldValue}");

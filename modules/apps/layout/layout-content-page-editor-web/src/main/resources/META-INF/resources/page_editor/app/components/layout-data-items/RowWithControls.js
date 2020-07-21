@@ -42,6 +42,10 @@ const RowWithControls = React.forwardRef(
 		const [customRow, setCustomRow] = useState(false);
 		const isActive = useIsActive();
 
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
+		);
+
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
@@ -60,7 +64,7 @@ const RowWithControls = React.forwardRef(
 
 		const buttons = [];
 
-		if (selectCanUpdateItemConfiguration) {
+		if (canUpdateItemConfiguration) {
 			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowStyles);
 
 			if (selectedViewportSize === VIEWPORT_SIZES.desktop) {

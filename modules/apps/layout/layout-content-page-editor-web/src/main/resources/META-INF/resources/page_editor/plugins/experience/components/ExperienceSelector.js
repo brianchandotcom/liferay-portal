@@ -280,7 +280,7 @@ const ExperienceSelector = ({
 	return (
 		<>
 			<ClayButton
-				className="align-items-end d-inline-flex form-control-select justify-content-between mr-2 text-left text-truncate"
+				className="form-control-select pr-4 text-left text-truncate"
 				displayType="secondary"
 				id={selectId}
 				onBlur={handleDropdownButtonBlur}
@@ -289,11 +289,18 @@ const ExperienceSelector = ({
 				small
 				type="button"
 			>
-				<span className="text-truncate">{selectedExperience.name}</span>
-
-				{selectedExperience.hasLockedSegmentsExperiment && (
-					<ClayIcon className="mr-3" symbol="lock" />
-				)}
+				<ClayLayout.ContentRow verticalAlign="center">
+					<ClayLayout.ContentCol expand>
+						<span className="text-truncate">
+							{selectedExperience.name}
+						</span>
+					</ClayLayout.ContentCol>
+					<ClayLayout.ContentCol>
+						{selectedExperience.hasLockedSegmentsExperiment && (
+							<ClayIcon symbol="lock" />
+						)}
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
 			</ClayButton>
 
 			{open &&

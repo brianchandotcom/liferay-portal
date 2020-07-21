@@ -9,7 +9,7 @@
 		"@clayui/layout": "3.1.1",
 		"@clayui/link": "3.2.0",
 		"@clayui/list": "3.2.8",
-		"@clayui/modal": "3.5.1",
+		"@clayui/modal": "3.6.3",
 		"classnames": "2.2.6",
 		"clay-badge": "2.21.3",
 		"clay-checkbox": "2.21.3",

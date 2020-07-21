@@ -1273,14 +1273,14 @@
     "@clayui/layout" "^3.1.1"
     classnames "^2.2.6"
 
-"@clayui/modal@3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.5.1.tgz#06a6388b73b113e547b7c503a123740778e3edcf"
-  integrity sha512-rYSoZ7xhQqOmxi9CSYd0I4q/YqUcxAM+KbbjPMY839XaP+g7+tDpgShbOOcPo0OBpQpcKeOKitBt1LetMzzmeA==
+"@clayui/modal@3.6.3":
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.6.3.tgz#c64d367536ea74cbb64a2b3de6be9c3a962023bd"
+  integrity sha512-YqPZRbg5Z1Koml8kBHBoAAXRbg3Uozsw2bDwiBRNJAKtcS2WNYUt7sYAjiRszALKWRQGFaVsGgZnnjvmamSGDQ==
   dependencies:
     "@clayui/button" "^3.3.1"
     "@clayui/icon" "^3.0.5"
-    "@clayui/shared" "^3.1.2"
+    "@clayui/shared" "^3.2.0"
     classnames "^2.2.6"
     warning "^4.0.3"
 
@@ -1379,10 +1379,10 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/shared@3.1.3", "@clayui/shared@^3.1.2", "@clayui/shared@^3.1.3":
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.1.3.tgz#562587b38c3a72291be1c64ea8dff11cd3a5f10e"
-  integrity sha512-Qu5ADYEdR+pej0G6ocl3DRAn+MTM4DS9FxBEumrqcyb/Zndsy4AGHdVeZsppiXarIW9tqw+YPlZOeUd6ZKPMuA==
+"@clayui/shared@3.2.0", "@clayui/shared@^3.1.3", "@clayui/shared@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.2.0.tgz#56a6ff3527747d455b3b1c729e57c7b2c7a3d223"
+  integrity sha512-34+Kqi+bRgKhYG5hvBl60c3GN6vnBfBM60crv1gO1OzJpfBa8g6ougFKyaF/fb5dYo4/bNur1jCW3HGnnUBjpg==
   dependencies:
     "@clayui/button" "^3.3.1"
     "@clayui/link" "^3.2.0"

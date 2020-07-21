@@ -6,7 +6,7 @@
 		"@clayui/form": "3.9.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/loading-indicator": "3.1.0",
-		"@clayui/modal": "3.5.1",
+		"@clayui/modal": "3.6.3",
 		"asset-taglib": "*",
 		"clay-button": "2.21.3",
 		"clay-multi-select": "2.21.3",

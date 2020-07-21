@@ -25,14 +25,16 @@ const debouncedOnValueSelect = debounce(
 export default function ColorToken({onValueSelect, token, value}) {
 	const {label} = token;
 
+	const [customColors, setCustomColors] = useState([]);
 	const [color, setColor] = useState(() => value?.replace('#', '') ?? '');
 
 	return (
 		<ClayForm.Group small>
 			<div className="style-book-editor__color-token">
 				<ClayColorPicker
+					colors={customColors}
 					label={label}
-					onColorsChange={() => {}}
+					onColorsChange={setCustomColors}
 					onValueChange={(color) => {
 						setColor(color);
 						debouncedOnValueSelect(onValueSelect, `#${color}`);

@@ -13,6 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -233,6 +234,25 @@ export default withRouter(
 									changePage(page, pageSize)
 								}
 								data={questions}
+								emptyState={
+									<ClayEmptyState
+										description="There are no questions inside this topic, be the first to ask something!"
+										imgSrc={
+											context.includeContextPath +
+											'/assets/empty_questions_list.png'
+										}
+										title="This topic is empty."
+									>
+										<ClayButton
+											displayType="primary"
+											onClick={navigateToNewQuestion}
+										>
+											{Liferay.Language.get(
+												'ask-question'
+											)}
+										</ClayButton>
+									</ClayEmptyState>
+								}
 								loading={loading}
 							>
 								{(question) => (
@@ -343,34 +363,38 @@ export default withRouter(
 								</ClayInput.GroupInsetItem>
 							</ClayInput.GroupItem>
 
-							{(context.redirectToLogin ||
-								(section &&
-									section.actions &&
-									section.actions['add-thread'])) && (
-								<ClayInput.GroupItem shrink>
-									<ClayButton
-										className="c-ml-3 d-none d-sm-block text-nowrap"
-										displayType="primary"
-										onClick={navigateToNewQuestion}
-									>
-										{Liferay.Language.get('ask-question')}
-									</ClayButton>
-
-									<ClayButton
-										className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-										displayType="primary"
-										onClick={navigateToNewQuestion}
-									>
-										<ClayIcon symbol="pencil" />
-
-										<span className="sr-only">
+							{questions &&
+								questions.totalCount > 0 &&
+								(context.redirectToLogin ||
+									(section &&
+										section.actions &&
+										section.actions['add-thread'])) && (
+									<ClayInput.GroupItem shrink>
+										<ClayButton
+											className="c-ml-3 d-none d-sm-block text-nowrap"
+											displayType="primary"
+											onClick={navigateToNewQuestion}
+										>
 											{Liferay.Language.get(
 												'ask-question'
 											)}
-										</span>
-									</ClayButton>
-								</ClayInput.GroupItem>
-							)}
+										</ClayButton>
+
+										<ClayButton
+											className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+											displayType="primary"
+											onClick={navigateToNewQuestion}
+										>
+											<ClayIcon symbol="pencil" />
+
+											<span className="sr-only">
+												{Liferay.Language.get(
+													'ask-question'
+												)}
+											</span>
+										</ClayButton>
+									</ClayInput.GroupItem>
+								)}
 						</ClayInput.Group>
 					</div>
 				</div>

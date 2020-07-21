@@ -26,26 +26,24 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 	cssClass="no-gutters"
 >
 	<clay:container-fluid>
-		<c:if test="<%= contentDashboardAdminDisplayContext.isAuditGraphEnabled() %>">
-			<div class="main-content-body">
-				<div class="dashboard-content sheet">
-					<h2 class="sheet-title">
-						<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
-					</h2>
+		<div class="main-content-body">
+			<div class="dashboard-content sheet">
+				<h2 class="sheet-title">
+					<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
+				</h2>
 
-					<div id="audit-graph">
-						<div class="inline-item my-5 p-5 w-100">
-							<span aria-hidden="true" class="loading-animation"></span>
-						</div>
-
-						<react:component
-							data="<%= contentDashboardAdminDisplayContext.getData() %>"
-							module="js/AuditGraphApp"
-						/>
+				<div id="audit-graph">
+					<div class="inline-item my-5 p-5 w-100">
+						<span aria-hidden="true" class="loading-animation"></span>
 					</div>
+
+					<react:component
+						data="<%= contentDashboardAdminDisplayContext.getData() %>"
+						module="js/AuditGraphApp"
+					/>
 				</div>
 			</div>
-		</c:if>
+		</div>
 
 		<div class="main-content-body">
 			<div class="dashboard-content sheet">

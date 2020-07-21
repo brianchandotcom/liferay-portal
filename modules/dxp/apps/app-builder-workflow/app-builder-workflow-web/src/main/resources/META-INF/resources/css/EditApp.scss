@@ -167,6 +167,18 @@ $navbarHeight: 120px;
 	border-color: #da1414 !important;
 }
 
+.circle-icon {
+	align-self: center;
+	border: 5px solid;
+	border-radius: 50%;
+	font-size: 1.625rem;
+
+	&.info {
+		border-color: #e7e7ed;
+		color: #6b6c7e;
+	}
+}
+
 .data-layout-builder-sidebar {
 	@media (max-width: 576px) {
 		top: 112px;
@@ -228,6 +240,19 @@ $navbarHeight: 120px;
 	padding-right: 8px;
 	position: absolute;
 	z-index: 50;
+}
+.save-app-modal {
+	.modal-dialog {
+		width: 416px;
+
+		.modal-body {
+			font-size: 1rem;
+		}
+
+		.modal-title {
+			font-size: 1.125rem;
+		}
+	}
 }
 
 .step-form-view {

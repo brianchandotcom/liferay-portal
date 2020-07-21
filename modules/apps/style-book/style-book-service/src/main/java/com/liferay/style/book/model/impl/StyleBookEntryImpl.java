@@ -63,7 +63,7 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 		JSONObject jsonObject = JSONUtil.put(
 			"name", getName()
 		).put(
-			"tokensValues", "tokensValues.json"
+			"tokensValuesPath", "tokensValues.json"
 		);
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();

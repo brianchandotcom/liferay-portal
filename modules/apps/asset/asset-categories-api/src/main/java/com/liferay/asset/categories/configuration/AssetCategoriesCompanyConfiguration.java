@@ -32,8 +32,8 @@ public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
 		deflt = "https://help.liferay.com/hc/en-us/articles/360028820492-Defining-Categories-for-Content",
-		description = "link-url-description", name = "link-url",
-		required = false
+		description = "link-to-documentation-url-description",
+		name = "link-to-documentation-url", required = false
 	)
 	public String linkURL();
 

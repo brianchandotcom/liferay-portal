@@ -162,7 +162,7 @@ public class DepotAdminSitesDisplayContext {
 	private String _getUpdateDDMStructuresAvailableKey(
 		DepotEntryGroupRel depotEntryGroupRel) {
 
-		if (depotEntryGroupRel.isSearchable()) {
+		if (!depotEntryGroupRel.isDdmStructuresAvailable()) {
 			return "make-ddm-structures-available";
 		}
 

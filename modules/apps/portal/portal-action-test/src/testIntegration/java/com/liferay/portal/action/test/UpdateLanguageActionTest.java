@@ -185,12 +185,12 @@ public class UpdateLanguageActionTest {
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		String defaultURL =
+		String targetURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() +
-					_layout.getFriendlyURL(_defaultLocale);
+					_layout.getFriendlyURL(_targetLocale);
 
-		defaultURL += path + "?queryString";
+		targetURL += path + "?queryString";
 
 		String sourceURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -198,9 +198,9 @@ public class UpdateLanguageActionTest {
 
 		sourceURL += path + "?queryString";
 
-		_assertRedirect(themeDisplay, defaultURL, sourceURL);
+		_assertRedirect(themeDisplay, targetURL, sourceURL);
 		_assertRedirect(
-			themeDisplay, defaultURL,
+			themeDisplay, targetURL,
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
 
@@ -208,6 +208,6 @@ public class UpdateLanguageActionTest {
 	private Group _group;
 	private Layout _layout;
 	private final Locale _sourceLocale = LocaleUtil.FRANCE;
-	private final Locale _targetLocale = LocaleUtil.GERMAN;
+	private final Locale _targetLocale = LocaleUtil.GERMANY;
 
 }

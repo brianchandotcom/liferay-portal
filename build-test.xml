@@ -4332,15 +4332,39 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							Runtime runtime = Runtime.getRuntime();
 
-							Process process = runtime.exec(sb.toString(), new String[] {"JAVA_HOME=" + project.getProperty("java.jdk.home")}, new File(project.getProperty("test.app.server.bin.dir")));
+							String javaHome = project.getProperty("java.jdk.home");
+
+							List arguments = new ArrayList();
+
+							arguments.add("JAVA_HOME=" + javaHome);
+
+							String path = project.getProperty("env.PATH");
+
+							if (JenkinsResultsParserUtil.isWindows()) {
+								path = path.replaceAll("[^;]+\\\\jdk[^\\\\]*\\\\[^;]*bin", javaHome.replaceAll("\\\\", "\\\\") + "\\\\bin");
+							}
+							else {
+								path = path.replaceAll("[^:]+/jdk[^/]*/[^:]*bin", javaHome + "/bin");
+							}
+
+							arguments.add("PATH=" + path);
+
+							String javaOpts = project.getProperty("env.JAVA_OPTS");
+
+							if ((javaOpts != null) && !javaOpts.isEmpty()) {
+								arguments.add("JAVA_OPTS=" + javaOpts);
+							}
+
+							String[] argumentsArray = new String[arguments.size()];
+
+							Process process = runtime.exec(sb.toString(), arguments.toArray(argumentsArray), new File(project.getProperty("test.app.server.bin.dir")));
 
 							InputStream inputStream = process.getInputStream();
 
 							int appServerLogByte;
+							int appServerLogSize = 0;
 
-							long appServerLogSize = 0;
-
-							Integer appServerLogMaxSize = Integer.valueOf(project.getProperty("app.server.log.max.size.in.mb")) * 1024 * 1024;
+							int appServerLogMaxSize = Integer.valueOf(project.getProperty("app.server.log.max.size.in.mb")) * 1024 * 1024;
 
 							try {
 								while ((appServerLogByte = inputStream.read()) != -1) {

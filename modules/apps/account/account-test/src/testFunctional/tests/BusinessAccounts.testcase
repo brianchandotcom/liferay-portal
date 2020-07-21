@@ -96,6 +96,18 @@ definition {
 	@priority = "4"
 	test AddPersonAccount {
 		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+
+		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
 			portlet = "Accounts");

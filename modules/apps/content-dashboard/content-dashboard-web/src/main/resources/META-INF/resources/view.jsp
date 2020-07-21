@@ -178,6 +178,8 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 
 								<%
 								Map<String, Object> additionalProps = HashMapBuilder.<String, Object>put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).put(
 									"sidebarContainerSelector", ".sidebar-container"
 								).build();
 								%>

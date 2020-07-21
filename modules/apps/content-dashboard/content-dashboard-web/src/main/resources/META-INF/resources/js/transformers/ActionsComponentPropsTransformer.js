@@ -13,17 +13,15 @@
  */
 
 import {render} from 'frontend-js-react-web';
-import React from 'react';
 
 import SidebarPanel from '../SidebarPanel';
 
 export default function propsTransformer({
 	items,
+	namespace,
 	sidebarContainerSelector,
 	...otherProps
 }) {
-	const sidebarRefPanel = React.createRef();
-
 	const actions = {
 		showInfo() {
 			showSidebar();
@@ -33,23 +31,29 @@ export default function propsTransformer({
 		},
 	};
 
-	const setSidebarPanelRef = (element) => {
-		sidebarRefPanel.current = element;
-	};
-
 	const showSidebar = () => {
-		if (!sidebarRefPanel.current) {
+		const sidebarPanel = _getSidebarPanel();
+
+		if (!sidebarPanel) {
 			render(
 				SidebarPanel,
 				{
-					ref: setSidebarPanelRef,
+					ref: _setSidebarPanel,
 				},
 				document.querySelector(sidebarContainerSelector)
 			);
 		}
 		else {
-			sidebarRefPanel.current.open();
+			sidebarPanel.open();
 		}
+	};
+
+	const _getSidebarPanel = () => {
+		return Liferay.component(`${namespace}sidebar`);
+	};
+
+	const _setSidebarPanel = (element) => {
+		Liferay.component(`${namespace}sidebar`, element);
 	};
 
 	return {

@@ -1237,7 +1237,7 @@ definition {
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldName = "DateField");
+			fieldName = "${fieldDateField}");
 
 		FormFields.editDate(
 			fieldName = "DateField",
@@ -1350,6 +1350,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var fieldName = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3") {
@@ -1393,7 +1395,7 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
-			fieldName = "Select",
+			fieldName = "${fieldName}",
 			selectOption = "Select 2");
 
 		ProductMenu.gotoPortlet(
@@ -1426,7 +1428,7 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
-			fieldName = "Select",
+			fieldName = "${fieldName}",
 			selectOption = "Select 2");
 	}
 

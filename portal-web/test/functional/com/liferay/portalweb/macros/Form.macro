@@ -183,24 +183,6 @@ definition {
 			selectOption = "${dataProviderOutput}");
 	}
 
-	macro editFieldLabel {
-		FormFields.editText(
-			fieldName = "label",
-			fieldValue = "${fieldValue}");
-
-		if (!(isSet(fieldName))) {
-			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
-		}
-
-		FormFields.viewFieldName(fieldName = "${fieldName}");
-
-		var key_fieldName = "${fieldName}";
-
-		AssertTextEquals(
-			locator1 = "Form#FIELD_LABEL",
-			value1 = "${fieldValue}");
-	}
-
 	macro editFieldLabelMetal {
 		FormFields.editText(
 			fieldName = "label",

@@ -83,6 +83,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
+		var fieldNameTextFieldAuto = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
 
 		Form.gotoAutocompleteTab();
@@ -107,7 +109,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Created Form Name");
 
-		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
 
 		Form.gotoAutocompleteTab();
 
@@ -142,7 +144,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editTextWithDataProvider(
-			fieldName = "TextFieldWithAutocomplete",
+			fieldName = "${fieldNameTextFieldAuto}",
 			fieldValue = "Bra");
 
 		FormFields.selectAutoCompleteOption(autocompleteOption = "Brazil");
@@ -169,7 +171,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
 
 		Form.gotoAutocompleteTab();
 
@@ -194,7 +196,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
-			fieldName = "TextFieldWithAutocomplete",
+			fieldName = "${fieldNameTextFieldAuto}",
 			fieldValue = "Br");
 
 		AssertElementNotPresent(
@@ -246,6 +248,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var fieldNameDataProvider = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
 
 		Form.editFieldDataProvider(
@@ -280,10 +284,10 @@ definition {
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Data Provider Select Field",
-			fieldName = "DataProviderSelectField");
+			fieldName = "${fieldNameDataProvider}");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select Field",
+			fieldName = "${fieldNameDataProvider}",
 			selectOption = "United States");
 
 		FormPortlet.submitSuccessfully();
@@ -348,6 +352,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var fieldNameCountries = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Countries");
 
 		Form.editFieldDataProvider(
@@ -377,7 +383,7 @@ definition {
 		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewSelectOptionsList(
-			fieldName = "Countries",
+			fieldName = "${fieldNameCountries}",
 			selectOption = "Afghanistan");
 
 		User.logoutPG();
@@ -385,7 +391,7 @@ definition {
 		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
 		FormFields.viewSelectOptionsList(
-			fieldName = "Countries",
+			fieldName = "${fieldNameCountries}",
 			selectOption = "Afghanistan");
 
 		User.loginUserPG();

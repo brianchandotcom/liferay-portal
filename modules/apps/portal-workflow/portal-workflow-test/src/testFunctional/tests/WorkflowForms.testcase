@@ -164,7 +164,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date");
+		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
 

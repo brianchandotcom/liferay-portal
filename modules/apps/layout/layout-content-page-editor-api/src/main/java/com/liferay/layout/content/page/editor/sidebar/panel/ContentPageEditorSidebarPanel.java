@@ -43,10 +43,18 @@ public interface ContentPageEditorSidebarPanel {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public default boolean isVisible(boolean pageIsDisplayPage) {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public default boolean isVisible(
 		PermissionChecker permissionChecker, long plid,
 		boolean pageIsDisplayPage) {
@@ -59,4 +67,5 @@ public interface ContentPageEditorSidebarPanel {
 
 		return true;
 	}
+
 }

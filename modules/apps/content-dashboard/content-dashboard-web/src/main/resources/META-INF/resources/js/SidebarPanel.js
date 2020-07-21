@@ -17,18 +17,12 @@ import React, {useImperativeHandle, useState} from 'react';
 
 import Sidebar from './components/Sidebar';
 
-const noop = () => {};
-
-const SidebarPanel = React.forwardRef(({onClose = noop}, ref) => {
+const SidebarPanel = React.forwardRef(({onClose}, ref) => {
 	const [isOpen, setIsOpen] = useState(true);
 
 	useImperativeHandle(ref, () => ({
-		close: () => {
-			setIsOpen(false);
-		},
-		open: () => {
-			setIsOpen(true);
-		},
+		close: () => setIsOpen(false),
+		open: () => setIsOpen(true),
 	}));
 
 	const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));

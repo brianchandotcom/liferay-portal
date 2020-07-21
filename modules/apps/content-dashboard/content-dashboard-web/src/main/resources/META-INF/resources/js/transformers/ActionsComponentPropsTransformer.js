@@ -33,10 +33,6 @@ export default function propsTransformer({
 		},
 	};
 
-	const hideSidebar = () => {
-		sidebarRefPanel.current.close();
-	};
-
 	const setSidebarPanelRef = (element) => {
 		sidebarRefPanel.current = element;
 	};
@@ -46,7 +42,6 @@ export default function propsTransformer({
 			render(
 				SidebarPanel,
 				{
-					onClose: hideSidebar,
 					ref: setSidebarPanelRef,
 				},
 				document.querySelector(sidebarContainerSelector)

@@ -110,7 +110,13 @@ definition {
 
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${siteName}?");
 
-			Pause(locator1 = "5000");
+			while (IsElementNotPresent(locator1 = "Message#SUCCESS")) {
+				Pause(locator1 = "1000");
+			}
+
+			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
+				Click(locator1 = "Button#CLOSE_MESSAGE");
+			}
 		}
 
 		else {

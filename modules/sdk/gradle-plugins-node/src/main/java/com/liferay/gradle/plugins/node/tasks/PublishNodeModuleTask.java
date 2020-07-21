@@ -300,9 +300,20 @@ public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 			return new File(getTemporaryDir(), "npmrc");
 		}
 
-		File scriptFile = getScriptFile();
+		Project curProject = getProject();
 
-		return new File(scriptFile.getParentFile(), ".npmrc");
+		do {
+			File file = curProject.file("yarn.lock");
+
+			if (file.exists()) {
+				return curProject.file(".npmrc");
+			}
+		}
+		while ((curProject = curProject.getParent()) != null);
+
+		Project project = getProject();
+
+		return project.file(".npmrc");
 	}
 
 	private void _updatePackageJsonFile(Path packageJsonPath)

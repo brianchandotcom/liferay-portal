@@ -18,6 +18,6 @@ describe('ellipsize', () => {
 	it('add an ellipsis in the end of the text', () => {
 		const ellipsized = ellipsize('Very long text', 5);
 
-		expect(ellipsized).toBe('Very...');
+		expect(ellipsized).toBe('Very ...');
 	});
 });

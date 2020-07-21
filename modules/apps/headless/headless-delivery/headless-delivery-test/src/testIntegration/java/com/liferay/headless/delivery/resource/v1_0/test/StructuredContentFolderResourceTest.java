@@ -33,7 +33,7 @@ public class StructuredContentFolderResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = depotEntry.getGroup();
+		testGroup = testDepotEntry.getGroup();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class StructuredContentFolderResourceTest
 	protected Long
 		testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId() {
 
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

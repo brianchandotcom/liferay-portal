@@ -57,14 +57,14 @@ public class ContentStructureResourceTest
 
 		return _toContentStructure(
 			_addDDMStructure(
-				depotEntry.getGroup(), contentStructure.getName()));
+				testDepotEntry.getGroup(), contentStructure.getName()));
 	}
 
 	@Override
 	protected Long
 		testGetAssetLibraryContentStructuresPage_getAssetLibraryId() {
 
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

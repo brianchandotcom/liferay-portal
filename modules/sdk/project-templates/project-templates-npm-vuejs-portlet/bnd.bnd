@@ -3,7 +3,6 @@ Bundle-Name: Liferay Project Templates NPM Vue.js Portlet
 Bundle-SymbolicName: com.liferay.project.templates.npm.vuejs.portlet
 Bundle-Version: 1.0.92
 Liferay-Versions: [7,7.4)
--includeresource: ../project-templates-npm-angular-portlet/src/main/resources/definitions.vm
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

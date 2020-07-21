@@ -54,4 +54,9 @@ public interface ContentPageEditorSidebarPanel {
 		return true;
 	}
 
+	public default boolean isVisible(
+		PermissionChecker permissionChecker, long plid, int pageType) {
+
+		return true;
+	}
 }

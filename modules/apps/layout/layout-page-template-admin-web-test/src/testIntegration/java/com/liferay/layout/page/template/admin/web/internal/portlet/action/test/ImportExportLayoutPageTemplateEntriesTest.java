@@ -206,6 +206,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerLink()
+		throws Exception {
+
+		File expectedFile = _generateZipFile("container/link/expected", null);
+
+		File inputFile = _generateZipFile("container/link/input", null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFragmentTextFieldFragmentAvailableMappedContentAvailable()
 		throws Exception {
 

@@ -410,8 +410,12 @@ public class KaleoInstanceLocalServiceImpl
 			long kaleoInstanceId = GetterUtil.getLong(
 				document.get(KaleoInstanceTokenField.KALEO_INSTANCE_ID));
 
-			kaleoInstances.add(
-				kaleoInstancePersistence.findByPrimaryKey(kaleoInstanceId));
+			KaleoInstance kaleoInstance =
+				kaleoInstancePersistence.fetchByPrimaryKey(kaleoInstanceId);
+
+			if (kaleoInstance != null) {
+				kaleoInstances.add(kaleoInstance);
+			}
 		}
 
 		return new BaseModelSearchResult<>(kaleoInstances, hits.getLength());

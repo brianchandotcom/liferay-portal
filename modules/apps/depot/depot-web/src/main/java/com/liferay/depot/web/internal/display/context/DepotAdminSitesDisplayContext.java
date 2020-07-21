@@ -111,6 +111,8 @@ public class DepotAdminSitesDisplayContext {
 						disconnectSiteActionURL.toString()
 					).build());
 
+				dropdownItem.setDisabled(
+					depotEntryGroupRel.isDdmStructuresAvailable());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						PortalUtil.getHttpServletRequest(

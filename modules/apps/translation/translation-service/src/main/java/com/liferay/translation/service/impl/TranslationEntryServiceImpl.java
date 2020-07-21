@@ -42,9 +42,10 @@ import org.osgi.service.component.annotations.Component;
 public class TranslationEntryServiceImpl
 	extends TranslationEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.translation.service.TranslationEntryServiceUtil</code> to access the translation entry remote service.
 	 */
+
 }

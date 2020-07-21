@@ -35,6 +35,6 @@ public interface AssetCategoriesCompanyConfiguration {
 		description = "link-to-documentation-url-description",
 		name = "link-to-documentation-url", required = false
 	)
-	public String linkURL();
+	public String linkToDocumentationURL();
 
 }

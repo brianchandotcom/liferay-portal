@@ -383,7 +383,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 											class,
 										themeDisplay.getCompanyId());
 
-						return assetCategoriesCompanyConfiguration.linkURL();
+						return assetCategoriesCompanyConfiguration.
+							linkToDocumentationURL();
 					}
 				).put(
 					"portletURL", getPortletURL().toString()

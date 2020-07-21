@@ -462,7 +462,7 @@ public class AssetCategoriesDisplayContext {
 					AssetCategoriesCompanyConfiguration.class,
 					_themeDisplay.getCompanyId());
 
-		return assetCategoriesCompanyConfiguration.linkURL();
+		return assetCategoriesCompanyConfiguration.linkToDocumentationURL();
 	}
 
 	public String getNavigation() {

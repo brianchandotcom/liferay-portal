@@ -318,7 +318,8 @@ public class ContentDashboardAdminDisplayContext {
 							AssetCategoriesCompanyConfiguration.class,
 							themeDisplay.getCompanyId());
 
-				return assetCategoriesCompanyConfiguration.linkURL();
+				return assetCategoriesCompanyConfiguration.
+					linkToDocumentationURL();
 			}
 		).put(
 			"vocabularies", _assetVocabularyMetric.toJSONArray()

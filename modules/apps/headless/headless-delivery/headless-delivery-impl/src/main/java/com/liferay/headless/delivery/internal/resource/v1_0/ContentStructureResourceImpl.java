@@ -57,7 +57,7 @@ public class ContentStructureResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentStructurePage(
+		return _getContentStructuresPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -80,11 +80,11 @@ public class ContentStructureResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getContentStructurePage(
+		return _getContentStructuresPage(
 			siteId, search, filter, pagination, sorts);
 	}
 
-	private Page<ContentStructure> _getContentStructurePage(
+	private Page<ContentStructure> _getContentStructuresPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

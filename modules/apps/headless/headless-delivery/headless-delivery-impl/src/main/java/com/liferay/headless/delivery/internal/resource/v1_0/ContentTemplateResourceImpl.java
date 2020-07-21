@@ -61,7 +61,7 @@ public class ContentTemplateResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatePage(
+		return _getContentTemplatesPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -90,11 +90,11 @@ public class ContentTemplateResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatePage(
+		return _getContentTemplatesPage(
 			siteId, search, filter, pagination, sorts);
 	}
 
-	private Page<ContentTemplate> _getContentTemplatePage(
+	private Page<ContentTemplate> _getContentTemplatesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

@@ -75,7 +75,7 @@ public class DocumentFolderResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getDocumentFolderPage(
+		return _getDocumentFoldersPage(
 			assetLibraryId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -129,7 +129,7 @@ public class DocumentFolderResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getDocumentFolderPage(
+		return _getDocumentFoldersPage(
 			siteId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -230,7 +230,7 @@ public class DocumentFolderResourceImpl
 					siteId, documentFolder.getViewableByAsString())));
 	}
 
-	private Page<DocumentFolder> _getDocumentFolderPage(
+	private Page<DocumentFolder> _getDocumentFoldersPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {

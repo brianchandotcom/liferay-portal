@@ -156,7 +156,7 @@
 			"items": {
 				"$ref": "#/definitions/TokenCategory"
 			},
-			"title": "Tokens",
+			"title": "The Token Categories",
 			"type": "array"
 		}
 	},

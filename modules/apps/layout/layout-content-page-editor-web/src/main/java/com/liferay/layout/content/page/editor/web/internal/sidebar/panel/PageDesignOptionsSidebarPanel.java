@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,6 +60,12 @@ public class PageDesignOptionsSidebarPanel
 	@Override
 	public boolean isVisible(
 		PermissionChecker permissionChecker, long plid, int pageType) {
+
+		if (pageType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+
+			return false;
+		}
 
 		try {
 			if (LayoutPermissionUtil.contains(

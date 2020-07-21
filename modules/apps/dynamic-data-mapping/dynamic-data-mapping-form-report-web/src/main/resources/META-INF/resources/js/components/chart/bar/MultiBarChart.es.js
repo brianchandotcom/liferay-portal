@@ -44,8 +44,19 @@ export default ({data, field, height, structure, width}) => {
 
 	const processStructure = ({columns, rows}) => {
 		return {
-			columns: columns.filter((column) => getColumnLabel(column)),
-			rows: rows.filter((row) => getRowLabel(row)),
+			columns: columns
+				.filter((column) => getColumnLabel(column))
+				.sort(
+					(column1, column2) =>
+						field.columns[column1].index -
+						field.columns[column2].index
+				),
+			rows: rows
+				.filter((row) => getRowLabel(row))
+				.sort(
+					(row1, row2) =>
+						field.rows[row1].index - field.rows[row2].index
+				),
 		};
 	};
 

@@ -22,6 +22,7 @@ import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.AssigneesRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
@@ -99,8 +101,19 @@ public class AppWorkflowResourceHelper {
 	public WorkflowDefinition getWorkflowDefinition(AppBuilderApp appBuilderApp)
 		throws PortalException {
 
-		return _workflowDefinitionManager.getLatestWorkflowDefinition(
-			appBuilderApp.getCompanyId(), appBuilderApp.getUuid());
+		try {
+			return _workflowDefinitionManager.getLatestWorkflowDefinition(
+				appBuilderApp.getCompanyId(), appBuilderApp.getUuid());
+		}
+		catch (WorkflowException workflowException) {
+			Throwable cause = workflowException.getCause();
+
+			if (cause instanceof NoSuchModelException) {
+				throw (NoSuchModelException)cause;
+			}
+
+			throw workflowException;
+		}
 	}
 
 	public Definition toDefinition(

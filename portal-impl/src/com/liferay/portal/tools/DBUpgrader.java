@@ -353,6 +353,9 @@ public class DBUpgrader {
 		}
 
 		_registerModuleServiceLifecycle("portal.initialized");
+
+		PortalCacheHelperUtil.clearPortalCaches(
+			PortalCacheManagerNames.MULTI_VM);
 	}
 
 	private static void _upgradePortal() throws Exception {

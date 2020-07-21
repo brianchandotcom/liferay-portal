@@ -26,7 +26,7 @@ export default function PagePreview() {
 		if (iframeRef.current) {
 			Object.values(tokensValues).forEach(
 				({cssVariableMapping, value}) => {
-					iframeRef.current.contentDocument.documentElement.style.setProperty(
+					iframeRef.current.contentDocument.body.style.setProperty(
 						`--${cssVariableMapping}`,
 						value
 					);

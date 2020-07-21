@@ -177,6 +177,23 @@ public class AppWorkflowResourceHelper {
 		return definition;
 	}
 
+	public void undeployWorkflowDefinition(
+			AppBuilderApp appBuilderApp, long userId)
+		throws PortalException {
+
+		WorkflowDefinition workflowDefinition = getWorkflowDefinition(
+			appBuilderApp);
+
+		_workflowDefinitionManager.updateActive(
+			workflowDefinition.getCompanyId(), userId,
+			workflowDefinition.getName(), workflowDefinition.getVersion(),
+			false);
+
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			workflowDefinition.getCompanyId(), userId,
+			workflowDefinition.getName(), workflowDefinition.getVersion());
+	}
+
 	private void _addTransition(
 		boolean defaultTransition, String name, Node sourceNode,
 		Node targetNode) {

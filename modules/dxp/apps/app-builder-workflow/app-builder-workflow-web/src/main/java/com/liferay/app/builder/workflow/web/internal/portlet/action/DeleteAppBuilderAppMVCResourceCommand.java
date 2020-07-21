@@ -17,7 +17,7 @@ package com.liferay.app.builder.workflow.web.internal.portlet.action;
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
-import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
+import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,7 +28,6 @@ import java.util.Optional;
 import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -51,6 +50,14 @@ public class DeleteAppBuilderAppMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
+		).user(
+			themeDisplay.getUser()
+		).build();
+
+		appWorkflowResource.deleteAppWorkflow(
+			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
+
 		AppResource appResource = AppResource.builder(
 		).user(
 			themeDisplay.getUser()
@@ -59,15 +66,7 @@ public class DeleteAppBuilderAppMVCResourceCommand
 		appResource.deleteApp(
 			ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
 
-		_appBuilderWorkflowTaskLinkLocalService.
-			deleteAppBuilderWorkflowTaskLinks(
-				ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
-
 		return Optional.empty();
 	}
-
-	@Reference
-	private AppBuilderWorkflowTaskLinkLocalService
-		_appBuilderWorkflowTaskLinkLocalService;
 
 }

@@ -105,11 +105,16 @@ const ModalContent = ({
 	useEffect(() => {
 		if (dataLayoutBuilder) {
 			const provider = dataLayoutBuilder.getLayoutProvider();
-			provider.props.fieldNameGenerator = (desiredName) =>
-				generateDataDefinitionFieldName(
-					{dataDefinitionFields: mergedDataDefinitionFields},
-					desiredName
-				);
+
+			provider.props = {
+				...provider.props,
+				fieldNameGenerator: (desiredName) =>
+					generateDataDefinitionFieldName(
+						{dataDefinitionFields: mergedDataDefinitionFields},
+						desiredName
+					),
+				shouldAutoGenerateName: () => false,
+			};
 		}
 	}, [dataLayoutBuilder, mergedDataDefinitionFields]);
 

@@ -37,6 +37,17 @@ public class TranslationEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				java.util.Locale targetLocale,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.io.IOException {
+
+		return getService().addOrUpdateTranslationEntry(
+			groupId, infoItemFieldValues, targetLocale, serviceContext);
+	}
 
 	/**
 	 * Adds the translation entry to the database. Also notifies the appropriate model listeners.

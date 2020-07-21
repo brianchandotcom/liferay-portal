@@ -33,6 +33,19 @@ public class TranslationEntryLocalServiceWrapper
 		_translationEntryLocalService = translationEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+				java.util.Locale targetLocale,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.io.IOException {
+
+		return _translationEntryLocalService.addOrUpdateTranslationEntry(
+			groupId, infoItemFieldValues, targetLocale, serviceContext);
+	}
+
 	/**
 	 * Adds the translation entry to the database. Also notifies the appropriate model listeners.
 	 *

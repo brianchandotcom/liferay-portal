@@ -15,6 +15,7 @@
 package com.liferay.translation.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -28,15 +29,18 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.translation.model.TranslationEntry;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +67,10 @@ public interface TranslationEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TranslationEntryLocalServiceUtil} to access the translation entry local service. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemFieldValues infoItemFieldValues,
+			Locale targetLocale, ServiceContext serviceContext)
+		throws IOException;
 
 	/**
 	 * Adds the translation entry to the database. Also notifies the appropriate model listeners.

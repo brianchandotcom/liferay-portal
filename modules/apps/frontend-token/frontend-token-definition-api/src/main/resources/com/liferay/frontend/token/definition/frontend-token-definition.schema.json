@@ -121,6 +121,13 @@
 		"TokenSet": {
 			"additionalProperties": false,
 			"properties": {
+				"frontendTokens": {
+					"items": {
+						"$ref": "#/definitions/FrontendToken"
+					},
+					"title": "The Tokens of the Token Set",
+					"type": "array"
+				},
 				"label": {
 					"title": "The Language Key to Obtain the Label of the Token Set",
 					"type": "string"
@@ -128,13 +135,6 @@
 				"name": {
 					"title": "Name of the Token Set",
 					"type": "string"
-				},
-				"frontendTokens": {
-					"items": {
-						"$ref": "#/definitions/FrontendToken"
-					},
-					"title": "The Tokens of the Token Set",
-					"type": "array"
 				}
 			},
 			"required": [

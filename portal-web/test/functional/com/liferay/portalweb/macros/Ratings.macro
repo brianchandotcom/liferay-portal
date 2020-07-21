@@ -95,6 +95,14 @@ definition {
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
 
+		else if (isSet(blogRating)) {
+			Pause(locator1 = "2000");
+
+			Click.javaScriptClick(
+				key_ratingResult = "${ratingResult}",
+				locator1 = "Ratings#THUMB");
+		}
+
 		else if (isSet(commentRating)) {
 			Click.clickNoMouseOver(
 				key_ratingResult = "${ratingResult}",

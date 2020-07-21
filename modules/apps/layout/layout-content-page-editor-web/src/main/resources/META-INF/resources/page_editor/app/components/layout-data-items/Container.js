@@ -25,14 +25,12 @@ import loadBackgroundImage from '../../utils/loadBackgroundImage';
 const Container = React.forwardRef(
 	({children, className, data, item, withinTopper = false}, ref) => {
 		const {
-			align,
 			backgroundColorCssClass,
 			backgroundImage,
 			borderColor,
 			borderRadius,
 			borderWidth,
 			contentDisplay,
-			justify,
 			marginBottom,
 			marginLeft,
 			marginRight,
@@ -108,15 +106,12 @@ const Container = React.forwardRef(
 					`pr-${paddingRight || 0}`,
 					`pt-${paddingTop || 0}`,
 					{
-						[align]: !!align,
 						[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 						[`border-${borderColor}`]: !!borderColor,
 						[borderRadius]: !!borderRadius,
 						container: widthType === 'fixed',
 						'd-block': contentDisplay === 'block',
-						'd-flex': contentDisplay === 'flex',
 						empty: item.children.length === 0,
-						[justify]: !!justify,
 						[`ml-${marginLeft || 0}`]:
 							widthType !== 'fixed' && !withinTopper,
 						[`mr-${marginRight || 0}`]:

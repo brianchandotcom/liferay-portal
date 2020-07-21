@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.SimpleFacet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -39,6 +42,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.FacetUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -128,8 +133,12 @@ public class SearchUtil {
 			}
 		}
 
+		Map<String, Facet> facets = searchContext.getFacets();
+
 		return Page.of(
-			actions, items, pagination, indexer.searchCount(searchContext));
+			actions,
+			TransformUtil.transform(facets.values(), FacetUtil::toFacet), items,
+			pagination, indexer.searchCount(searchContext));
 	}
 
 	/**
@@ -194,6 +203,27 @@ public class SearchUtil {
 
 	public static class SearchContext
 		extends com.liferay.portal.kernel.search.SearchContext {
+
+		public void addSimpleFacets(Aggregation aggregation) {
+			if ((aggregation == null) || (aggregation.getTerms() == null)) {
+				return;
+			}
+
+			Map<String, String> terms = aggregation.getTerms();
+
+			for (Map.Entry<String, String> entry : terms.entrySet()) {
+				Facet facet = new SimpleFacet(this);
+
+				facet.setFieldName(entry.getValue());
+
+				FacetConfiguration facetConfiguration =
+					facet.getFacetConfiguration();
+
+				facetConfiguration.setLabel(entry.getKey());
+
+				addFacet(facet);
+			}
+		}
 
 		public boolean isVulcanCheckPermissions() {
 			return _vulcanCheckPermissions;

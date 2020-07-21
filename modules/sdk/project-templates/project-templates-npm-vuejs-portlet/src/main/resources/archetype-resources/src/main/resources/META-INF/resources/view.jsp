@@ -1,4 +1,3 @@
-#parse ("definitions.vm")
 <%@ include file="/init.jsp" %>
 
 <div id="<portlet:namespace />-1">

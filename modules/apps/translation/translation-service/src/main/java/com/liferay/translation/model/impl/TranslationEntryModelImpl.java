@@ -80,7 +80,7 @@ public class TranslationEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"content", Types.VARCHAR},
+		{"classPK", Types.BIGINT}, {"content", Types.CLOB},
 		{"contentType", Types.VARCHAR}, {"languageId", Types.VARCHAR}
 	};
 
@@ -99,13 +99,13 @@ public class TranslationEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TranslationEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,translationEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content VARCHAR(75) null,contentType VARCHAR(75) null,languageId VARCHAR(75) null)";
+		"create table TranslationEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,translationEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content TEXT null,contentType VARCHAR(75) null,languageId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table TranslationEntry";
 

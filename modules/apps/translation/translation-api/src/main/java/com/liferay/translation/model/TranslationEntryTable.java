@@ -17,6 +17,7 @@ package com.liferay.translation.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -58,8 +59,8 @@ public class TranslationEntryTable extends BaseTable<TranslationEntryTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<TranslationEntryTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<TranslationEntryTable, String> content = createColumn(
-		"content", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<TranslationEntryTable, Clob> content = createColumn(
+		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<TranslationEntryTable, String> contentType =
 		createColumn(
 			"contentType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

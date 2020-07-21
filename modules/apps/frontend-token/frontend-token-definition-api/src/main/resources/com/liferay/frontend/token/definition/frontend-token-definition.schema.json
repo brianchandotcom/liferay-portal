@@ -7,18 +7,18 @@
 			"additionalProperties": false,
 			"properties": {
 				"defaultValue": {
-					"$ref": "#/definitions/TokenValue",
-					"title": "The Default Value of the Token"
+					"$ref": "#/definitions/FrontendTokenValue",
+					"title": "The Default Value of the Frontend Token"
 				},
 				"editorType": {
 					"enum": [
 						"ColorPicker"
 					],
-					"title": "The Editor Type Used to Edit the Token",
+					"title": "The Editor Type Used to Edit the Frontend Token",
 					"type": "string"
 				},
 				"label": {
-					"title": "The Language Key of the Token Label",
+					"title": "The Language Key of the Frontend Token Label",
 					"type": "string"
 				},
 				"mappings": {
@@ -33,7 +33,7 @@
 								"type": "string"
 							},
 							"value": {
-								"title": "The Value of the Mapping for the Token",
+								"title": "The Value of the Mapping for the Frontend Token",
 								"type": "string"
 							}
 						},
@@ -43,11 +43,11 @@
 						],
 						"type": "object"
 					},
-					"title": "The Mappings of the Token",
+					"title": "The Mappings of the Frontend Token",
 					"type": "array"
 				},
 				"name": {
-					"title": "Name of the Token",
+					"title": "Name of the Frontend Token",
 					"type": "string"
 				},
 				"type": {
@@ -57,7 +57,7 @@
 						"Number",
 						"String"
 					],
-					"title": "Type of the Token",
+					"title": "Type of the Frontend Token",
 					"type": "string"
 				},
 				"validValues": {
@@ -72,7 +72,7 @@
 								"type": "string"
 							},
 							"value": {
-								"$ref": "#/definitions/TokenValue"
+								"$ref": "#/definitions/FrontendTokenValue"
 							}
 						},
 						"required": [
@@ -93,22 +93,22 @@
 			],
 			"type": "object"
 		},
-		"TokenCategory": {
+		"FrontendTokenCategory": {
 			"additionalProperties": false,
 			"properties": {
 				"label": {
-					"title": "The Language Key to Obtain the Label of the Token Category",
+					"title": "The Language Key to Obtain the Label of the Frontend Token Category",
 					"type": "string"
 				},
 				"name": {
-					"title": "Name of the Token Category",
+					"title": "Name of the Frontend Token Category",
 					"type": "string"
 				},
 				"tokenSets": {
 					"items": {
-						"$ref": "#/definitions/TokenSet"
+						"$ref": "#/definitions/FrontendTokenSet"
 					},
-					"title": "The Token Sets of the Token Category",
+					"title": "The Frontend Token Sets of the Frontend Token Category",
 					"type": "array"
 				}
 			},
@@ -118,22 +118,22 @@
 			],
 			"type": "object"
 		},
-		"TokenSet": {
+		"FrontendTokenSet": {
 			"additionalProperties": false,
 			"properties": {
 				"frontendTokens": {
 					"items": {
 						"$ref": "#/definitions/FrontendToken"
 					},
-					"title": "The Tokens of the Token Set",
+					"title": "The Tokens of the Frontend Token Set",
 					"type": "array"
 				},
 				"label": {
-					"title": "The Language Key to Obtain the Label of the Token Set",
+					"title": "The Language Key to Obtain the Label of the Frontend Token Set",
 					"type": "string"
 				},
 				"name": {
-					"title": "Name of the Token Set",
+					"title": "Name of the Frontend Token Set",
 					"type": "string"
 				}
 			},
@@ -142,7 +142,7 @@
 			],
 			"type": "object"
 		},
-		"TokenValue": {
+		"FrontendTokenValue": {
 			"type": [
 				"boolean",
 				"integer",
@@ -152,17 +152,17 @@
 		}
 	},
 	"properties": {
-		"tokenCategories": {
+		"frontendTokenCategories": {
 			"items": {
-				"$ref": "#/definitions/TokenCategory"
+				"$ref": "#/definitions/FrontendTokenCategory"
 			},
-			"title": "The Token Categories",
+			"title": "The Frontend Token Categories",
 			"type": "array"
 		}
 	},
 	"required": [
-		"tokenCategories"
+		"frontendTokenCategories"
 	],
-	"title": "The Design Tokens Definition Schema",
+	"title": "The Design Frontend Tokens Definition Schema",
 	"type": "object"
 }

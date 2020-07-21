@@ -16,6 +16,7 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -73,20 +74,7 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"previewURL",
-			() -> {
-				String layoutURL = _groupURLProvider.getGroupLayoutsURL(
-					_themeDisplay.getScopeGroup(), false, _renderRequest);
-
-				StyleBookEntry styleBookEntry = _getStyleBookEntry();
-
-				layoutURL = HttpUtil.addParameter(
-					layoutURL, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY,
-					styleBookEntry.getStyleBookEntryKey());
-
-				return HttpUtil.addParameter(
-					layoutURL, "p_l_mode", Constants.PREVIEW);
-			}
+			"previewURL", _getPreviewURL()
 		).put(
 			"publishURL", _getActionURL("/style_book/publish_style_book_entry")
 		).put(
@@ -127,6 +115,28 @@ public class EditStyleBookEntryDisplayContext {
 
 		return JSONFactoryUtil.createJSONObject(
 			frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
+	}
+
+	private String _getPreviewURL() {
+		String layoutURL = _groupURLProvider.getGroupLayoutsURL(
+			_themeDisplay.getScopeGroup(), false, _renderRequest);
+
+		if (Validator.isNull(layoutURL)) {
+			layoutURL = _groupURLProvider.getGroupLayoutsURL(
+				_themeDisplay.getScopeGroup(), true, _renderRequest);
+
+			if (Validator.isNull(layoutURL)) {
+				return StringPool.BLANK;
+			}
+		}
+
+		StyleBookEntry styleBookEntry = _getStyleBookEntry();
+
+		layoutURL = HttpUtil.addParameter(
+			layoutURL, StyleBookWebKeys.STYLE_BOOK_ENTRY_KEY,
+			styleBookEntry.getStyleBookEntryKey());
+
+		return HttpUtil.addParameter(layoutURL, "p_l_mode", Constants.PREVIEW);
 	}
 
 	private String _getRedirect() {

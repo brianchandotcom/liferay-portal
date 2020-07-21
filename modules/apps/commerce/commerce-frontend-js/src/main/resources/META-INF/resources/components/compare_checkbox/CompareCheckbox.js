@@ -80,14 +80,12 @@ function CompareCheckbox(props) {
 	}, [disableCompare, enableCompare, removeFromCompare]);
 
 	return (
-		<label className={'compare-checkbox-label-wrapper'} disabled={disabled}>
+		<label className="compare-checkbox" disabled={disabled}>
 			<ClayCheckbox
-				aria-label="Option 1"
+				aria-label={props.label || null}
 				checked={inCompare}
 				disabled={disabled && !inCompare}
-				label={
-					props.label || null
-				}
+				label={props.label || null}
 				onChange={handleCheckboxClick}
 			/>
 		</label>
@@ -102,10 +100,6 @@ CompareCheckbox.propTypes = {
 	label: PropTypes.string,
 	onUpdate: PropTypes.func,
 	pictureUrl: PropTypes.string
-};
-
-CompareCheckbox.defaultProps = {
-	onUpdate: () => {}
 };
 
 export default CompareCheckbox;

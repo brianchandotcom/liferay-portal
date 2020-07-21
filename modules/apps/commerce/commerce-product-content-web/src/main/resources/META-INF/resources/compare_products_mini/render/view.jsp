@@ -27,8 +27,8 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 
 <div id="mini-compare-root"></div>
 
-<aui:script require="commerce-frontend-js/components/mini_compare/entry as miniCompare">
-	miniCompare.default('mini-compare', 'mini-compare-root', {
+<aui:script require="commerce-frontend-js/components/mini_compare/entry as MiniCompare">
+	MiniCompare.default('mini-compare', 'mini-compare-root', {
 		compareProductsURL: '<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
 		editCompareProductActionURL: '<portlet:actionURL name="editCompareProduct" />',
 		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>,

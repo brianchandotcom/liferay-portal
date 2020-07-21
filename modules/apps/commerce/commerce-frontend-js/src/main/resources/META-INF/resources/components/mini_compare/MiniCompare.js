@@ -17,7 +17,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
 	COMPARE_IS_AVAILABLE,
@@ -26,13 +26,30 @@ import {
 	REMOVE_ITEM_FROM_COMPARE,
 	ITEM_REMOVED_FROM_COMPARE
 } from '../../utilities/eventsDefinitions';
-import {fetchParams} from '../../utilities/index';
+
+function toggleRemoteStatus(id, toggle, actionUrl, nameSpace) {
+	const formData = new FormData();
+
+	formData.append(nameSpace + 'cpDefinitionId', id);
+	formData.append(nameSpace + id + 'Compare', toggle);
+	formData.append('p_auth', Liferay.authToken);
+
+	return fetch(actionUrl, {
+		body: formData,
+		credentials: 'include',
+		headers: new Headers({'x-csrf-token': Liferay.authToken}),
+		method: 'post'
+	});
+}
 
 function Item(props) {
 	return (
 		<div className={classnames('mini-compare-item', props.id && 'active')}>
 			<ClaySticker className="mini-compare-thumbnail-container" size="lg">
-				<div className="mini-compare-thumbnail" style={{backgroundImage: `url('${props.thumbnail}')`}} />
+				<div
+					className="mini-compare-thumbnail"
+					style={{backgroundImage: `url('${props.thumbnail}')`}}
+				/>
 			</ClaySticker>
 			<ClayButtonWithIcon
 				className="mini-compare-delete"
@@ -48,23 +65,6 @@ function Item(props) {
 function MiniCompare(props) {
 	const [items, updateItems] = useState(props.items);
 
-	const toggleRemoteStatus = useCallback(
-		(id, toggle) => {
-			const formData = new FormData();
-
-			formData.append(props.portletNamespace + 'cpDefinitionId', id);
-			formData.append(props.portletNamespace + id + 'Compare', toggle);
-			formData.append('p_auth', Liferay.authToken);
-
-			return fetch(props.editCompareProductActionURL, {
-				body: formData,
-				method: 'post',
-				...fetchParams
-			});
-		},
-		[props.editCompareProductActionURL, props.portletNamespace]
-	);
-
 	useEffect(() => {
 		function toggleItem({id, thumbnail}) {
 			const newItem = {
@@ -74,7 +74,12 @@ function MiniCompare(props) {
 
 			return updateItems(items => {
 				const included = items.find(el => el.id === id);
-				toggleRemoteStatus(id, Boolean(included));
+				toggleRemoteStatus(
+					id,
+					Boolean(included),
+					props.editCompareProductActionURL,
+					props.portletNamespace
+				);
 				return included
 					? items.filter(i => i.id !== id)
 					: items.concat(newItem);
@@ -88,7 +93,11 @@ function MiniCompare(props) {
 			Liferay.detach(ADD_ITEM_TO_COMPARE, toggleItem);
 			Liferay.detach(REMOVE_ITEM_FROM_COMPARE, toggleItem);
 		};
-	}, [props.itemsLimit, toggleRemoteStatus]);
+	}, [
+		props.editCompareProductActionURL,
+		props.itemsLimit,
+		props.portletNamespace
+	]);
 
 	useEffect(() => {
 		if (items.length < props.itemsLimit) {
@@ -118,7 +127,12 @@ function MiniCompare(props) {
 											v => v.id !== currentItem.id
 										)
 									);
-									toggleRemoteStatus(currentItem.id, false);
+									toggleRemoteStatus(
+										currentItem.id,
+										false,
+										props.editCompareProductActionURL,
+										props.portletNamespace
+									);
 									Liferay.fire(
 										ITEM_REMOVED_FROM_COMPARE,
 										currentItem

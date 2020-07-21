@@ -79,19 +79,8 @@ public class DDMFormFieldInfoFieldConverterImpl
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
 
-		if (Objects.equals(ddmFormField.getType(), "rich_text") ||
-			Objects.equals(
-				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
-
+		if (Objects.equals(ddmFormField.getType(), "rich_text")) {
 			finalStep.attribute(TextInfoFieldType.HTML, true);
-		}
-
-		if (Objects.equals(ddmFormField.getType(), "rich_text") ||
-			Objects.equals(
-				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML) ||
-			Objects.equals(
-				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
-
 			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
 		}
 
@@ -99,6 +88,19 @@ public class DDMFormFieldInfoFieldConverterImpl
 			GetterUtil.getBoolean(ddmFormField.getProperty("multiple"))) {
 
 			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
+		}
+
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
+
+			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
+		}
+
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
+
+			finalStep.attribute(TextInfoFieldType.HTML, true);
+			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
 		}
 
 		return finalStep;

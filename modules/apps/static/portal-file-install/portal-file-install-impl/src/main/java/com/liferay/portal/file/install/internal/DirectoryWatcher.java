@@ -33,6 +33,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -162,10 +164,17 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_watchedDirectory = _getFile(properties, DIR, new File("./load"));
 
 		if (!_watchedDirectory.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					_watchedDirectory +
-						" does not exist and needs to be created");
+			if (_log.isInfoEnabled()) {
+				_log.info("Creating watched directory " + _watchedDirectory);
+			}
+
+			try {
+				Files.createDirectory(_watchedDirectory.toPath());
+			}
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to create watched directory " + _watchedDirectory,
+					ioException);
 			}
 		}
 		else if (!_watchedDirectory.isDirectory()) {

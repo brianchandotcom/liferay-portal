@@ -25,7 +25,7 @@ package com.liferay.translation.model.impl;
  */
 public class TranslationEntryImpl extends TranslationEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a translation entry model instance should use the {@link com.liferay.translation.model.TranslationEntry} interface instead.

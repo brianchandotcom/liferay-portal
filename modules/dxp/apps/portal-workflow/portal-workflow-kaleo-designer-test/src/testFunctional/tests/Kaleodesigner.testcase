@@ -1266,6 +1266,7 @@ definition {
 	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
 
 		ApplicationsMenu.gotoPortlet(

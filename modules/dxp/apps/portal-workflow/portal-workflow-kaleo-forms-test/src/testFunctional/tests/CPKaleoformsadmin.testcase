@@ -97,6 +97,7 @@ definition {
 
 	@priority = "3"
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#AddProcessWithNewFieldSetAndWorkflowViaSourceTab";
 
 		Navigator.openURL();
@@ -165,6 +166,7 @@ definition {
 
 	@priority = "3"
 	test DeactivateAndActivateWorkflowDefinition {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndActivateWorkflowDefinition";
 
 		Navigator.openURL();
@@ -223,6 +225,7 @@ definition {
 
 	@priority = "4"
 	test DeactivateAndDeleteWorkflowDefinition {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndDeleteWorkflowDefinition";
 
 		Navigator.openURL();
@@ -1425,6 +1428,7 @@ definition {
 
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
 		Navigator.openURL();
@@ -2821,6 +2825,7 @@ definition {
 
 	@priority = "2"
 	test ViewUnpublishedWorkflowDefinitionsMenulist {
+		property portal.upstream = "quarantine";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

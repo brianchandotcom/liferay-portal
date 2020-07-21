@@ -35,11 +35,11 @@ export default ({data, field, height, structure, width}) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
 	const getColumnLabel = (column) => {
-		return field.columns[column];
+		return field.columns[column].value;
 	};
 
 	const getRowLabel = (row) => {
-		return field.rows[row];
+		return field.rows[row].value;
 	};
 
 	const processStructure = ({columns, rows}) => {

@@ -162,12 +162,20 @@ public class DDMFormReportDisplayContext {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		int index = 0;
+
 		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
 
-		optionsValues.forEach(
-			optionValue -> jsonObject.put(
+		for (String optionValue : optionsValues) {
+			jsonObject.put(
 				optionValue,
-				_getValue(ddmFormFieldOptions.getOptionLabels(optionValue))));
+				JSONUtil.put(
+					"index", index++
+				).put(
+					"value",
+					_getValue(ddmFormFieldOptions.getOptionLabels(optionValue))
+				));
+		}
 
 		return jsonObject;
 	}

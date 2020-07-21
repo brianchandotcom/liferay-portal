@@ -313,12 +313,12 @@ public class ContentDashboardAdminDisplayContext {
 						WebKeys.THEME_DISPLAY);
 
 				AssetCategoriesCompanyConfiguration
-					accountEntryEmailDomainsConfiguration =
+					assetCategoriesCompanyConfiguration =
 						ConfigurationProviderUtil.getCompanyConfiguration(
 							AssetCategoriesCompanyConfiguration.class,
 							themeDisplay.getCompanyId());
 
-				return accountEntryEmailDomainsConfiguration.linkURL();
+				return assetCategoriesCompanyConfiguration.linkURL();
 			}
 		).put(
 			"vocabularies", _assetVocabularyMetric.toJSONArray()

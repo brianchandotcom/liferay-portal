@@ -376,14 +376,14 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 								WebKeys.THEME_DISPLAY);
 
 						AssetCategoriesCompanyConfiguration
-							accountEntryEmailDomainsConfiguration =
+							assetCategoriesCompanyConfiguration =
 								ConfigurationProviderUtil.
 									getCompanyConfiguration(
 										AssetCategoriesCompanyConfiguration.
 											class,
 										themeDisplay.getCompanyId());
 
-						return accountEntryEmailDomainsConfiguration.linkURL();
+						return assetCategoriesCompanyConfiguration.linkURL();
 					}
 				).put(
 					"portletURL", getPortletURL().toString()

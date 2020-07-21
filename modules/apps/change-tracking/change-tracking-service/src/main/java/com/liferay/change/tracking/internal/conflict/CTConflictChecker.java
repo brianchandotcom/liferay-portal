@@ -275,6 +275,36 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_updateModelMvccVersion(
 			connection, primaryKeyName, ctPersistence.getTableName(),
 			unresolvedPrimaryKeys);
+
+		_modificationCTEntries.forEach((pk, ctEntry) -> {
+			long modelClassPK = ctEntry.getModelClassPK();
+
+			StringBundler sb = new StringBundler();
+			sb.append("SELECT * from ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" where ");
+			sb.append(primaryKeyName);
+			sb.append(" = ");
+			sb.append(modelClassPK);
+			sb.append((" AND ctCollectionId = "));
+			sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+			String sql = sb.toString();
+
+			try {
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+				ResultSet rs = preparedStatement.executeQuery();
+
+				if(rs.next() == false) {
+					conflictInfos.add(
+						new ModificationConflictInfo(
+							modelClassPK, false));
+				}
+			}
+			catch (SQLException sqlException) {
+				throw new ORMException(sqlException);
+			}
+		});
 	}
 
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(

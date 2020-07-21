@@ -84,6 +84,23 @@ info:
 openapi: 3.0.1
 paths:
     "/apps/{appId}/app-workflows":
+        delete:
+            operationId: deleteAppWorkflow
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AppWorkflow"]
         get:
             operationId: getAppWorkflow
             parameters:

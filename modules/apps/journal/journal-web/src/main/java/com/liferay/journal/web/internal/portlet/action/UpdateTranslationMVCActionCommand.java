@@ -24,16 +24,23 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
+import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,17 +72,53 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			JournalArticle article = ActionUtil.getArticle(actionRequest);
 
-			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(
-					article,
-					InfoItemFieldValues.builder(
-					).infoItemClassPKReference(
-						new InfoItemClassPKReference(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey())
-					).infoFieldValues(
-						_getInfoFieldValues(actionRequest, article)
-					).build());
+			InfoItemClassPKReference infoItemClassPKReference =
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey());
+
+			InfoItemFieldValues infoItemFieldValues =
+				InfoItemFieldValues.builder(
+				).infoItemClassPKReference(
+					infoItemClassPKReference
+				).infoFieldValues(
+					_getInfoFieldValues(actionRequest, article)
+				).build();
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			if (serviceContext.getWorkflowAction() ==
+					WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+				_translationEntryLocalService.addOrUpdateTranslationEntry(
+					article.getGroupId(),
+					infoItemClassPKReference.getClassName(),
+					infoItemClassPKReference.getClassPK(),
+					_getTargetLanguageId(actionRequest),
+					StreamUtil.toString(
+						_xliffTranslationInfoItemFieldValuesExporter.
+							exportInfoItemFieldValues(
+								infoItemFieldValues, LocaleUtil.getDefault(),
+								_getTargetLocale(actionRequest))),
+					_xliffTranslationInfoItemFieldValuesExporter.getMimeType(),
+					serviceContext);
+			}
+			else {
+				_journalArticleInfoItemFieldValuesUpdater.
+					updateFromInfoItemFieldValues(article, infoItemFieldValues);
+
+				TranslationEntry translationEntry =
+					_translationEntryLocalService.fetchTranslationEntry(
+						infoItemClassPKReference.getClassName(),
+						infoItemClassPKReference.getClassPK(),
+						_getTargetLanguageId(actionRequest));
+
+				if (translationEntry != null) {
+					_translationEntryLocalService.deleteTranslationEntry(
+						translationEntry);
+				}
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -122,11 +165,12 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return infoFieldValues;
 	}
 
-	private Locale _getTargetLocale(ActionRequest actionRequest) {
-		String targetLanguageId = ParamUtil.getString(
-			actionRequest, "targetLanguageId");
+	private String _getTargetLanguageId(ActionRequest actionRequest) {
+		return ParamUtil.getString(actionRequest, "targetLanguageId");
+	}
 
-		return LocaleUtil.fromLanguageId(targetLanguageId);
+	private Locale _getTargetLocale(ActionRequest actionRequest) {
+		return LocaleUtil.fromLanguageId(_getTargetLanguageId(actionRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -140,5 +184,12 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	)
 	private InfoItemFieldValuesUpdater<JournalArticle>
 		_journalArticleInfoItemFieldValuesUpdater;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
+
+	@Reference(target = "(content.type=application/xliff+xml)")
+	private TranslationInfoItemFieldValuesExporter
+		_xliffTranslationInfoItemFieldValuesExporter;
 
 }

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.transaction.TransactionsUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.InitUtil;
@@ -58,6 +59,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.apache.commons.lang.time.StopWatch;
+
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Michael C. Han
@@ -145,13 +148,19 @@ public class DBUpgrader {
 	}
 
 	public static void upgrade() throws Exception {
+		upgrade(null);
+	}
+
+	public static void upgrade(ApplicationContext applicationContext)
+		throws Exception {
+
 		_upgradePortal();
 
 		DependencyManagerSyncUtil.sync();
 
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
-		_upgradeModules();
+		_upgradeModules(applicationContext);
 	}
 
 	public static void verify() throws VerifyException {
@@ -333,10 +342,15 @@ public class DBUpgrader {
 		}
 	}
 
-	private static void _upgradeModules() {
+	private static void _upgradeModules(ApplicationContext applicationContext) {
 		_registerModuleServiceLifecycle("database.initialized");
 
-		InitUtil.registerContext();
+		if (applicationContext == null) {
+			InitUtil.registerContext();
+		}
+		else {
+			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+		}
 
 		_registerModuleServiceLifecycle("portal.initialized");
 	}

@@ -340,18 +340,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		PortalBeanLocatorUtil.setBeanLocator(beanLocatorImpl);
 
-		try {
-
-			// Upgrade
-
-			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-				DBUpgrader.upgrade();
-			}
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
 		ClassLoader classLoader = portalClassLoader;
 
 		while (classLoader != null) {
@@ -369,7 +357,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		dynamicProxyCreator.clear();
 
 		try {
-			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+				DBUpgrader.upgrade(applicationContext);
+			}
+			else {
+				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+			}
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

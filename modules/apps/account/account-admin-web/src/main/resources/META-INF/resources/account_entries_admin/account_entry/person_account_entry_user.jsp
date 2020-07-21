@@ -140,28 +140,25 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 	<portlet:param name="singleSelect" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>
 
-<%
-Map<String, Object> context = HashMapBuilder.<String, Object>put(
-	"container", "#personAccountUserContainer"
-).put(
-	"removeUserIconMarkup", removeUserIcon
-).put(
-	"removeUserLinkSelector", ".remove-user-link"
-).put(
-	"searchContainer", "personAccountEntryUserSearchContainer"
-).put(
-	"selectUserButton", "#selectUserButton"
-).put(
-	"selectUserEventName", "selectPersonAccountEntryUser"
-).put(
-	"selectUserURL", selectUserURL.toString()
-).put(
-	"userIdInput", "#personAccountEntryUserId"
-).build();
-%>
-
 <liferay-frontend:component
 	componentId="PersonAccountEntryEventHandler"
-	context="<%= context %>"
+	context='<%= HashMapBuilder.<String, Object>put(
+	"container", "#personAccountUserContainer"
+	).put(
+	"removeUserIconMarkup", removeUserIcon
+	).put(
+	"removeUserLinkSelector", ".remove-user-link"
+	).put(
+	"searchContainer", "personAccountEntryUserSearchContainer"
+	).put(
+	"selectUserButton", "#selectUserButton"
+	).put(
+	"selectUserEventName", "selectPersonAccountEntryUser"
+	).put(
+	"selectUserURL", selectUserURL.toString()
+	).put(
+	"userIdInput", "#personAccountEntryUserId"
+	).build()
+	%>'
 	module="account_entries_admin/js/PersonAccountEntryEventHandler.es"
 />

@@ -133,17 +133,14 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
 	</liferay-portlet:renderURL>
 
-	<%
-	Map<String, Object> context = HashMapBuilder.<String, Object>put(
-		"addAccountEntryUserURL", addAccountEntryUserURL.toString()
-	).put(
-		"openModalOnRedirect", selectAccountUsersManagementToolbarDisplayContext.isOpenModalOnRedirect()
-	).build();
-	%>
-
 	<liferay-frontend:component
 		componentId="<%= selectAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-		context="<%= context %>"
+		context='<%= HashMapBuilder.<String, Object>put(
+		"addAccountEntryUserURL", addAccountEntryUserURL.toString()
+		).put(
+		"openModalOnRedirect", selectAccountUsersManagementToolbarDisplayContext.isOpenModalOnRedirect()
+		).build()
+		%>'
 		module="account_entries_admin/js/SelectAccountUsersManagementToolbarDefaultEventHandler.es"
 	/>
 </c:if>

@@ -96,18 +96,15 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>
 
-<%
-Map<String, Object> context = HashMapBuilder.<String, Object>put(
-	"accountEntryName", accountEntryDisplay.getName()
-).put(
-	"assignAccountUsersURL", assignAccountUsersURL
-).put(
-	"selectAccountUsersURL", selectAccountUsersURL
-).build();
-%>
-
 <liferay-frontend:component
 	componentId="<%= viewAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= context %>"
+	context='<%= HashMapBuilder.<String, Object>put(
+	"accountEntryName", accountEntryDisplay.getName()
+	).put(
+	"assignAccountUsersURL", assignAccountUsersURL
+	).put(
+	"selectAccountUsersURL", selectAccountUsersURL
+	).build()
+	%>'
 	module="account_entries_admin/js/AccountUsersManagementToolbarDefaultEventHandler.es"
 />

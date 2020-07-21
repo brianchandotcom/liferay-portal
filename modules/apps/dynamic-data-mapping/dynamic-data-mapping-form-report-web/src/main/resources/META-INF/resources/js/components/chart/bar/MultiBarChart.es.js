@@ -34,7 +34,24 @@ const {blueDark, gray} = NAMED_COLORS;
 export default ({data, field, height, structure, width}) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
-	const {columns} = structure;
+	const getColumnLabel = (column) => {
+		return field.columns[column];
+	};
+
+	const getRowLabel = (row) => {
+		return field.rows[row];
+	};
+
+	const processStructure = ({columns, rows}) => {
+		return {
+			columns: columns.filter((column) => getColumnLabel(column)),
+			rows: rows.filter((row) => getRowLabel(row)),
+		};
+	};
+
+	const processedStructure = processStructure(structure);
+
+	const {columns} = processedStructure;
 
 	const handleOnMouseOut = () => {
 		setActiveIndex(null);
@@ -42,14 +59,6 @@ export default ({data, field, height, structure, width}) => {
 
 	const handleOnMouseOver = (activeIndex) => {
 		setActiveIndex(activeIndex);
-	};
-
-	const getColumnLabel = (column) => {
-		return field.columns[column];
-	};
-
-	const getRowLabel = (row) => {
-		return field.rows[row];
 	};
 
 	const processData = ({columns, rows}) => {
@@ -69,7 +78,7 @@ export default ({data, field, height, structure, width}) => {
 		return processedData;
 	};
 
-	data = structure ? processData(structure) : data;
+	data = processedStructure ? processData(processedStructure) : data;
 
 	const renderLegend = (props) => {
 		const {payload} = props;

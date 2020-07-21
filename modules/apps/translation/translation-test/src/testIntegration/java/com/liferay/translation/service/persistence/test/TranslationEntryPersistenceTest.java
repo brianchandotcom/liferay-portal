@@ -264,7 +264,7 @@ public class TranslationEntryPersistenceTest {
 			"translationEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"content", true, "contentType", true, "languageId", true);
+			"contentType", true, "languageId", true);
 	}
 
 	@Test

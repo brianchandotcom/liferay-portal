@@ -10,7 +10,7 @@ create table TranslationEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	content VARCHAR(75) null,
+	content TEXT null,
 	contentType VARCHAR(75) null,
 	languageId VARCHAR(75) null
 );

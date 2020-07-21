@@ -182,7 +182,9 @@ public class TranslationEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -200,7 +202,7 @@ public class TranslationEntryCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		contentType = objectInput.readUTF();
 		languageId = objectInput.readUTF();
 	}
@@ -239,10 +241,10 @@ public class TranslationEntryCacheModel
 		objectOutput.writeLong(classPK);
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		if (contentType == null) {

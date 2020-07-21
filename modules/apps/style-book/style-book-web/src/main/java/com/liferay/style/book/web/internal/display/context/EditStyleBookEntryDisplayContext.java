@@ -127,7 +127,7 @@ public class EditStyleBookEntryDisplayContext {
 		return portletURL.toString();
 	}
 
-	private StyleBookEntry _getStyleBookEntry() throws Exception {
+	private StyleBookEntry _getStyleBookEntry() {
 		if (_styleBookEntry != null) {
 			return _styleBookEntry;
 		}
@@ -136,8 +136,12 @@ public class EditStyleBookEntryDisplayContext {
 			_getStyleBookEntryId());
 
 		if (_styleBookEntry.isHead()) {
-			_styleBookEntry = StyleBookEntryLocalServiceUtil.getDraft(
-				_styleBookEntry);
+			StyleBookEntry draftStyleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
+
+			if (draftStyleBookEntry != null) {
+				_styleBookEntry = draftStyleBookEntry;
+			}
 		}
 
 		return _styleBookEntry;
@@ -154,7 +158,7 @@ public class EditStyleBookEntryDisplayContext {
 		return _styleBookEntryId;
 	}
 
-	private String _getStyleBookEntryTitle() throws Exception {
+	private String _getStyleBookEntryTitle() {
 		StyleBookEntry styleBookEntry = _getStyleBookEntry();
 
 		return styleBookEntry.getName();

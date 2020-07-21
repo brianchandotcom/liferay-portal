@@ -127,9 +127,9 @@ definition {
 			portlet = "Search");
 
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "7.3.0",
+			clientVersion = "7.9.0",
 			engineVendor = "Elasticsearch",
-			serverVersion = "7.3.0");
+			serverVersion = "7.9.0");
 
 		Navigator.gotoNavItem(navItem = "Field Mappings");
 

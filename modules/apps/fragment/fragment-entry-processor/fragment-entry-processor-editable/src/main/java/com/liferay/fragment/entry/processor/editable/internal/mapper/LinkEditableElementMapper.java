@@ -53,29 +53,28 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			_fragmentEntryProcessorHelper.isAssetDisplayPage(
 				fragmentEntryProcessorContext.getMode());
 
-		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
-			configJSONObject);
-
 		boolean collectionMapped =
 			_fragmentEntryProcessorHelper.isMappedCollection(configJSONObject);
 
-		if (Validator.isNull(href) && !assetDisplayPage && !mapped &&
-			!collectionMapped) {
+		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
+			configJSONObject);
+
+		if (Validator.isNull(href) && !assetDisplayPage && !collectionMapped &&
+			!mapped) {
 
 			return;
-		}
-
-		if (mapped) {
-			href = GetterUtil.getString(
-				_fragmentEntryProcessorHelper.getMappedValue(
-					configJSONObject, new HashMap<>(),
-					fragmentEntryProcessorContext));
 		}
 
 		if (collectionMapped) {
 			href = GetterUtil.getString(
 				_fragmentEntryProcessorHelper.getMappedCollectionValue(
 					configJSONObject, fragmentEntryProcessorContext));
+		}
+		else if (mapped) {
+			href = GetterUtil.getString(
+				_fragmentEntryProcessorHelper.getMappedValue(
+					configJSONObject, new HashMap<>(),
+					fragmentEntryProcessorContext));
 		}
 
 		Element linkElement = new Element("a");

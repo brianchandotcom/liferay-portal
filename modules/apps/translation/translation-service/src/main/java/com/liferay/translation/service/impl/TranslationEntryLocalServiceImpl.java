@@ -14,8 +14,15 @@
 
 package com.liferay.translation.service.impl;
 
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.base.TranslationEntryLocalServiceBaseImpl;
+
+import java.io.IOException;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,9 +46,12 @@ import org.osgi.service.component.annotations.Component;
 public class TranslationEntryLocalServiceImpl
 	extends TranslationEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.translation.service.TranslationEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.translation.service.TranslationEntryLocalServiceUtil</code>.
-	 */
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, InfoItemFieldValues infoItemFieldValues,
+			Locale targetLocale, ServiceContext serviceContext)
+		throws IOException {
+
+		return null;
+	}
+
 }

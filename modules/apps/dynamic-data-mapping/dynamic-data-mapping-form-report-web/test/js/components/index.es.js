@@ -29,6 +29,8 @@ const props = {
 		{label: 'Field 2', name: 'field2', type: 'radio'},
 		{label: 'Field 3', name: 'field3', type: 'radio'},
 	],
+	portletNamespace:
+		'_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_',
 };
 
 describe('index', () => {

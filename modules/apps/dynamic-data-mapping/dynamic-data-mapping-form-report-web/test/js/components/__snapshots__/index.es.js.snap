@@ -9,79 +9,254 @@ exports[`index renders 1`] = `
       class="report-cards-area"
     >
       <div
-        class="sheet"
+        class="card-item"
+        id="_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_0"
       >
         <div
-          class="col"
+          class="sheet"
         >
           <div
-            class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+            class="col"
           >
             <div
-              class="card-header card-item-first aspect-ratio"
+              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
             >
               <div
-                class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
-                data-tooltip-align="bottom"
-                data-tooltip-delay="300"
-                title="radio-field-type-label"
+                class="card-header card-item-first aspect-ratio"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-radio-button"
-                  role="presentation"
+                <div
+                  class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
+                  data-tooltip-align="bottom"
+                  data-tooltip-delay="300"
+                  title="radio-field-type-label"
                 >
-                  <use
-                    xlink:href="#radio-button"
-                  />
-                </svg>
-              </div>
-              <div
-                class="field-info"
-              >
-                <p
-                  class="card-title"
-                  title="Field 1"
+                  <svg
+                    class="lexicon-icon lexicon-icon-radio-button"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#radio-button"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="field-info"
                 >
-                  <span
-                    class="text-truncate-inline"
+                  <p
+                    class="card-title"
+                    title="Field 1"
                   >
                     <span
-                      class="text-truncate"
+                      class="text-truncate-inline"
                     >
-                      Field 1
+                      <span
+                        class="text-truncate"
+                      >
+                        Field 1
+                      </span>
                     </span>
-                  </span>
-                </p>
-                <p
-                  class="card-text"
-                  title="there-are-no-entries"
-                >
-                  there-are-no-entries
-                </p>
-              </div>
-            </div>
-            <div
-              class="card-body"
-            >
-              <div
-                class="empty-message taglib-empty-result-message"
-              >
-                <div
-                  class="taglib-empty-result-message-header"
-                />
-                <div
-                  class="sheet-text text-center text-muted"
-                >
-                  <h1
-                    class="text-default"
+                  </p>
+                  <p
+                    class="card-text"
+                    title="there-are-no-entries"
                   >
                     there-are-no-entries
-                  </h1>
-                  <p
-                    class="text-default"
-                  >
-                    entries-submitted-with-this-field-filled-will-show-up-here
                   </p>
+                </div>
+              </div>
+              <div
+                class="card-body"
+              >
+                <div
+                  class="empty-message taglib-empty-result-message"
+                >
+                  <div
+                    class="taglib-empty-result-message-header"
+                  />
+                  <div
+                    class="sheet-text text-center text-muted"
+                  >
+                    <h1
+                      class="text-default"
+                    >
+                      there-are-no-entries
+                    </h1>
+                    <p
+                      class="text-default"
+                    >
+                      entries-submitted-with-this-field-filled-will-show-up-here
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-item"
+        id="_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_1"
+      >
+        <div
+          class="sheet"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+            >
+              <div
+                class="card-header card-item-first aspect-ratio"
+              >
+                <div
+                  class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
+                  data-tooltip-align="bottom"
+                  data-tooltip-delay="300"
+                  title="radio-field-type-label"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-radio-button"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#radio-button"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="field-info"
+                >
+                  <p
+                    class="card-title"
+                    title="Field 2"
+                  >
+                    <span
+                      class="text-truncate-inline"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Field 2
+                      </span>
+                    </span>
+                  </p>
+                  <p
+                    class="card-text"
+                    title="there-are-no-entries"
+                  >
+                    there-are-no-entries
+                  </p>
+                </div>
+              </div>
+              <div
+                class="card-body"
+              >
+                <div
+                  class="empty-message taglib-empty-result-message"
+                >
+                  <div
+                    class="taglib-empty-result-message-header"
+                  />
+                  <div
+                    class="sheet-text text-center text-muted"
+                  >
+                    <h1
+                      class="text-default"
+                    >
+                      there-are-no-entries
+                    </h1>
+                    <p
+                      class="text-default"
+                    >
+                      entries-submitted-with-this-field-filled-will-show-up-here
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-item"
+        id="_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_2"
+      >
+        <div
+          class="sheet"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+            >
+              <div
+                class="card-header card-item-first aspect-ratio"
+              >
+                <div
+                  class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
+                  data-tooltip-align="bottom"
+                  data-tooltip-delay="300"
+                  title="radio-field-type-label"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-radio-button"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#radio-button"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="field-info"
+                >
+                  <p
+                    class="card-title"
+                    title="Field 3"
+                  >
+                    <span
+                      class="text-truncate-inline"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Field 3
+                      </span>
+                    </span>
+                  </p>
+                  <p
+                    class="card-text"
+                    title="there-are-no-entries"
+                  >
+                    there-are-no-entries
+                  </p>
+                </div>
+              </div>
+              <div
+                class="card-body"
+              >
+                <div
+                  class="empty-message taglib-empty-result-message"
+                >
+                  <div
+                    class="taglib-empty-result-message-header"
+                  />
+                  <div
+                    class="sheet-text text-center text-muted"
+                  >
+                    <h1
+                      class="text-default"
+                    >
+                      there-are-no-entries
+                    </h1>
+                    <p
+                      class="text-default"
+                    >
+                      entries-submitted-with-this-field-filled-will-show-up-here
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,176 +265,62 @@ exports[`index renders 1`] = `
       </div>
     </div>
     <div
-      class="report-cards-area"
+      class="report-cards-shortcut"
     >
-      <div
-        class="sheet"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+      <ul>
+        <li>
+          <a
+            class=""
+            data-senna-off="true"
+            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_0"
           >
             <div
-              class="card-header card-item-first aspect-ratio"
-            >
-              <div
-                class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
-                data-tooltip-align="bottom"
-                data-tooltip-delay="300"
-                title="radio-field-type-label"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-radio-button"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#radio-button"
-                  />
-                </svg>
-              </div>
-              <div
-                class="field-info"
-              >
-                <p
-                  class="card-title"
-                  title="Field 2"
-                >
-                  <span
-                    class="text-truncate-inline"
-                  >
-                    <span
-                      class="text-truncate"
-                    >
-                      Field 2
-                    </span>
-                  </span>
-                </p>
-                <p
-                  class="card-text"
-                  title="there-are-no-entries"
-                >
-                  there-are-no-entries
-                </p>
-              </div>
-            </div>
+              class="indicator"
+            />
             <div
-              class="card-body"
+              class="field-label"
             >
-              <div
-                class="empty-message taglib-empty-result-message"
-              >
-                <div
-                  class="taglib-empty-result-message-header"
-                />
-                <div
-                  class="sheet-text text-center text-muted"
-                >
-                  <h1
-                    class="text-default"
-                  >
-                    there-are-no-entries
-                  </h1>
-                  <p
-                    class="text-default"
-                  >
-                    entries-submitted-with-this-field-filled-will-show-up-here
-                  </p>
-                </div>
-              </div>
+              Field 1
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="report-cards-area"
-    >
-      <div
-        class="sheet"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+          </a>
+        </li>
+        <li>
+          <a
+            class=""
+            data-senna-off="true"
+            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_1"
           >
             <div
-              class="card-header card-item-first aspect-ratio"
-            >
-              <div
-                class="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
-                data-tooltip-align="bottom"
-                data-tooltip-delay="300"
-                title="radio-field-type-label"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-radio-button"
-                  role="presentation"
-                >
-                  <use
-                    xlink:href="#radio-button"
-                  />
-                </svg>
-              </div>
-              <div
-                class="field-info"
-              >
-                <p
-                  class="card-title"
-                  title="Field 3"
-                >
-                  <span
-                    class="text-truncate-inline"
-                  >
-                    <span
-                      class="text-truncate"
-                    >
-                      Field 3
-                    </span>
-                  </span>
-                </p>
-                <p
-                  class="card-text"
-                  title="there-are-no-entries"
-                >
-                  there-are-no-entries
-                </p>
-              </div>
-            </div>
+              class="indicator"
+            />
             <div
-              class="card-body"
+              class="field-label"
             >
-              <div
-                class="empty-message taglib-empty-result-message"
-              >
-                <div
-                  class="taglib-empty-result-message-header"
-                />
-                <div
-                  class="sheet-text text-center text-muted"
-                >
-                  <h1
-                    class="text-default"
-                  >
-                    there-are-no-entries
-                  </h1>
-                  <p
-                    class="text-default"
-                  >
-                    entries-submitted-with-this-field-filled-will-show-up-here
-                  </p>
-                </div>
-              </div>
+              Field 2
             </div>
-          </div>
-        </div>
-      </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class=""
+            data-senna-off="true"
+            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_2"
+          >
+            <div
+              class="indicator"
+            />
+            <div
+              class="field-label"
+            >
+              Field 3
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
     <div
       class="sidebar-container sidebar-reports"
-      id="undefined-sidebar-reports"
+      id="_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_-sidebar-reports"
     >
       <div
         class="sidebar sidebar-light"

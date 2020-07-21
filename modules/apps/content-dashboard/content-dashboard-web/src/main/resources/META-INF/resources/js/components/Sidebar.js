@@ -31,8 +31,8 @@ const SidebarHeader = ({children, subtitle, title}) => {
 		<div className="sidebar-header">
 			<div className="autofit-row sidebar-section">
 				<div className="autofit-col autofit-col-expand">
-					<div className="component-title">
-						<span className="text-truncate-inline">{title}</span>
+					<div className="component-title text-truncate-inline">
+						<span className="text-truncate">{title}</span>
 					</div>
 
 					<p className="component-subtitle">{subtitle}</p>
@@ -45,7 +45,7 @@ const SidebarHeader = ({children, subtitle, title}) => {
 						displayType="unstyled"
 						onClick={onClose}
 						small={true}
-						symbol="times"
+						symbol="times-small"
 					/>
 				</div>
 			</div>

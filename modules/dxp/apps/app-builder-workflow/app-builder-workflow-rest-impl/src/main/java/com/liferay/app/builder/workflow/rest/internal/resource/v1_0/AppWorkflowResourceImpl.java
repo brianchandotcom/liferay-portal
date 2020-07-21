@@ -64,6 +64,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 
 	@Override
+	public void deleteAppWorkflow(Long appId) throws Exception {
+	}
+
+	@Override
 	public AppWorkflow getAppWorkflow(Long appId) throws Exception {
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);

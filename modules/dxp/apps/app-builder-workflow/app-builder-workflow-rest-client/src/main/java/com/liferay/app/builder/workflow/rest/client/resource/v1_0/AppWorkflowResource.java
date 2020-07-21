@@ -37,6 +37,11 @@ public interface AppWorkflowResource {
 		return new Builder();
 	}
 
+	public void deleteAppWorkflow(Long appId) throws Exception;
+
+	public HttpInvoker.HttpResponse deleteAppWorkflowHttpResponse(Long appId)
+		throws Exception;
+
 	public AppWorkflow getAppWorkflow(Long appId) throws Exception;
 
 	public HttpInvoker.HttpResponse getAppWorkflowHttpResponse(Long appId)
@@ -110,6 +115,67 @@ public interface AppWorkflowResource {
 	}
 
 	public static class AppWorkflowResourceImpl implements AppWorkflowResource {
+
+		public void deleteAppWorkflow(Long appId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAppWorkflowHttpResponse(appId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteAppWorkflowHttpResponse(
+				Long appId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows",
+				appId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public AppWorkflow getAppWorkflow(Long appId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getAppWorkflowHttpResponse(

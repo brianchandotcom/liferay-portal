@@ -49,6 +49,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						leftBoxName="availableAssetVocabularyNames"
 						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
 						leftTitle="available"
+						rightBoxMaxItems="<%= 2 %>"
 						rightBoxName="currentAssetVocabularyNames"
 						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
 						rightReorder="<%= Boolean.TRUE.toString() %>"

@@ -95,6 +95,15 @@ public class TranslationEntryLocalServiceImpl
 		return translationEntryPersistence.update(translationEntry);
 	}
 
+	public TranslationEntry fetchTranslationEntry(
+		InfoItemClassPKReference infoItemClassPKReference, Locale locale) {
+
+		return translationEntryPersistence.fetchByG_S(
+			_portal.getClassNameId(infoItemClassPKReference.getClassName()),
+			infoItemClassPKReference.getClassPK(),
+			LocaleUtil.toLanguageId(locale));
+	}
+
 	@Reference
 	private Portal _portal;
 

@@ -12,14 +12,18 @@
 import ClayPopover from '@clayui/popover';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import Button from 'app-builder-web/js/components/button/Button.es';
-import ListApps from 'app-builder-web/js/pages/apps/ListApps.es';
+import ListApps, {Actions} from 'app-builder-web/js/pages/apps/ListApps.es';
 import {COLUMNS, FILTERS} from 'app-builder-web/js/pages/apps/constants.es';
+import {parseResponse} from 'app-builder-web/js/utils/client.es';
+import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
+import {createResourceURL, fetch} from 'frontend-js-web';
 import {compile} from 'path-to-regexp';
 import React, {useContext, useState} from 'react';
 
 export default ({scope, ...props}) => {
 	const {userId} = useContext(AppContext);
 	const [showTooltip, setShowTooltip] = useState(false);
+	const {baseResourceURL, namespace} = useContext(AppContext);
 
 	const [firstColumn, ...otherColumns] = COLUMNS;
 	const lastColumn = otherColumns.pop();
@@ -67,9 +71,61 @@ export default ({scope, ...props}) => {
 		},
 	];
 
+	const confirmDelete = ({id}) => {
+		return new Promise((resolve, reject) => {
+			const confirmed = confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			);
+
+			if (confirmed) {
+				fetch(
+					createResourceURL(baseResourceURL, {
+						p_p_resource_id: '/app_builder/delete_workflow_app',
+					}),
+					{
+						body: new URLSearchParams(
+							Liferay.Util.ns(namespace, {
+								appBuilderAppId: id,
+							})
+						),
+						method: 'POST',
+					}
+				)
+					.then(parseResponse)
+					.then(() => resolve(true))
+					.then(() =>
+						successToast(
+							Liferay.Language.get(
+								'the-item-was-deleted-successfully'
+							)
+						)
+					)
+					.catch(() => {
+						errorToast(
+							Liferay.Language.get(
+								'the-item-could-not-be-deleted'
+							)
+						);
+						reject(true);
+					});
+			}
+			else {
+				resolve(false);
+			}
+		});
+	};
+
+	const actions = [...Actions()];
+
+	actions.splice(-1, 1, {
+		action: confirmDelete,
+		name: Liferay.Language.get('delete'),
+	});
+
 	return (
 		<ListApps
 			listViewProps={{
+				actions,
 				addButton: () => (
 					<ClayPopover
 						alignPosition="bottom-right"

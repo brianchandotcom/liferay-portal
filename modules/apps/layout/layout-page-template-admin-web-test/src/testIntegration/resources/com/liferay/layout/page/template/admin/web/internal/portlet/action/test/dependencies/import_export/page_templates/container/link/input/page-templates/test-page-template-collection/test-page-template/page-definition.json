@@ -3,52 +3,13 @@
 		"pageElements": [
 			{
 				"definition": {
-					"backgroundFragmentImage": {
-					},
 					"fragmentLink": {
 						"href": {
 							"value": "https://www.liferay.com/"
 						},
 						"target": "Parent"
-					},
-					"layout": {
-						"borderWidth": 0,
-						"contentDisplay": "Block",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
 					}
 				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-heading"
-							},
-							"fragmentConfig": {
-								"headingLevel": "h1",
-								"marginBottom": "3",
-								"textAlign": "left",
-								"textColor": ""
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-									}
-								}
-							]
-						},
-						"type": "Fragment"
-					}
-				],
 				"type": "Section"
 			}
 		],

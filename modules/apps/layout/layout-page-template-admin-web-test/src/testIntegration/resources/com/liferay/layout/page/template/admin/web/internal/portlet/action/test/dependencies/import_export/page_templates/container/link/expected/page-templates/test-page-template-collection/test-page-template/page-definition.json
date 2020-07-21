@@ -26,29 +26,6 @@
 						"widthType": "Fluid"
 					}
 				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-heading"
-							},
-							"fragmentConfig": {
-								"headingLevel": "h1",
-								"marginBottom": "3",
-								"textAlign": "left",
-								"textColor": ""
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-									}
-								}
-							]
-						},
-						"type": "Fragment"
-					}
-				],
 				"type": "Section"
 			}
 		],

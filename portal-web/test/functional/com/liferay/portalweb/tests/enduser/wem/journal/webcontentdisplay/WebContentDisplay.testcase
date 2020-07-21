@@ -479,7 +479,8 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Rich Text",
-			fieldType = "Rich Text");
+			fieldType = "Rich Text",
+			rowNum = "1");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

@@ -655,8 +655,8 @@ definition {
 				structureName = "WC Structure Name ${n}");
 
 			DataEngine.addField(
-				fieldFieldLabel = "HTML",
-				fieldType = "HTML");
+				fieldFieldLabel = "Text",
+				fieldType = "Text");
 
 			WebContentStructures.saveCP(structureName = "${structureName}");
 

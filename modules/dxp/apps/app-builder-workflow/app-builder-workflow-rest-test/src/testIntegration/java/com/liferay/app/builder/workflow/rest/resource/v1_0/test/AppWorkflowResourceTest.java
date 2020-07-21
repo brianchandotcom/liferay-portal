@@ -41,6 +41,9 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,10 +63,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,6 +109,31 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 			deDataListView.getDeDataListViewId(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString());
+	}
+
+	@Override
+	@Test
+	public void testDeleteAppWorkflow() throws Exception {
+		AppWorkflow appWorkflow = testPostAppWorkflow_addAppWorkflow(
+			randomAppWorkflow());
+
+		assertHttpResponseStatusCode(
+			204,
+			appWorkflowResource.deleteAppWorkflowHttpResponse(
+				appWorkflow.getAppId()));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					ProxyMessageListener.class.getName(), Level.OFF)) {
+
+			assertHttpResponseStatusCode(
+				404,
+				appWorkflowResource.getAppWorkflowHttpResponse(
+					appWorkflow.getAppId()));
+
+			assertHttpResponseStatusCode(
+				404, appWorkflowResource.getAppWorkflowHttpResponse(0L));
+		}
 	}
 
 	@Override
@@ -169,6 +202,44 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 				ResourceActionsUtil.getCompositeModelName(
 					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
 				ddlRecord.getRecordId()));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLDeleteAppWorkflow() throws Exception {
+		AppWorkflow appWorkflow = testPostAppWorkflow_addAppWorkflow(
+			randomAppWorkflow());
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAppWorkflow",
+						HashMapBuilder.<String, Object>put(
+							"appId", appWorkflow.getAppId()
+						).build())),
+				"JSONObject/data", "Object/deleteAppWorkflow"));
+
+		try (CaptureAppender captureAppender1 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN);
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					ProxyMessageListener.class.getName(), Level.OFF)) {
+
+			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"appWorkflow",
+						HashMapBuilder.<String, Object>put(
+							"appId", appWorkflow.getAppId()
+						).build(),
+						new GraphQLField("appId"))),
+				"JSONArray/errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
 	}
 
 	@Override

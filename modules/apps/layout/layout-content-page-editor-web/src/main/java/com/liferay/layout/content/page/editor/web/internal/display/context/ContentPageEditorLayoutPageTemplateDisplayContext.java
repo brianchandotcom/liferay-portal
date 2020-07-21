@@ -108,11 +108,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	}
 
 	@Override
-	public List<Map<String, Object>> getSidebarPanels() {
-		return getSidebarPanels(_pageIsDisplayPage);
-	}
-
-	@Override
 	public boolean isWorkflowEnabled() {
 		return false;
 	}

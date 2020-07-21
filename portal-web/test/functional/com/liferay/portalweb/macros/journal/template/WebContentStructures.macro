@@ -275,6 +275,14 @@ definition {
 			value1 = "Add to Favorites (0)");
 	}
 
+	macro viewScopesViaMoreIFrame {
+		AssertTextEquals(
+			key_tableEntry = "${structureName}",
+			key_tableEntryText = "${scopeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+			value1 = "${scopeName}");
+	}
+
 	macro viewStructuresViaMoreIFrame {
 		AssertTextEquals(
 			key_rowEntry = "${structureName}",

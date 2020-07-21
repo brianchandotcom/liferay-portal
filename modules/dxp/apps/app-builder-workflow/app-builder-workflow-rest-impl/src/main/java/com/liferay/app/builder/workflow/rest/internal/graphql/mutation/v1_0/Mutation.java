@@ -50,6 +50,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteAppWorkflow(@GraphQLName("appId") Long appId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_appWorkflowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			appWorkflowResource -> appWorkflowResource.deleteAppWorkflow(
+				appId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public AppWorkflow createAppWorkflow(
 			@GraphQLName("appId") Long appId,
 			@GraphQLName("appWorkflow") AppWorkflow appWorkflow)

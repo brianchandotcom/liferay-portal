@@ -184,6 +184,16 @@ public abstract class BaseAppWorkflowResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAppWorkflow() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLDeleteAppWorkflow() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetAppWorkflow() throws Exception {
 		Assert.assertTrue(false);
 	}

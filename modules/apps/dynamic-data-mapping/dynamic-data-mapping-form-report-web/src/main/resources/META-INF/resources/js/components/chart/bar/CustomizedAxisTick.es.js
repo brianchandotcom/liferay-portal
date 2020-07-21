@@ -17,10 +17,20 @@ import {Text} from 'recharts';
 
 import ellipsize from '../../../utils/ellipsize.es';
 
-export default ({payload, x, y}) => (
-	<Text textAnchor="middle" verticalAnchor="start" width={180} x={x} y={y}>
-		{payload.value.length > 34
-			? ellipsize(payload.value, 34)
+const MAX_SIZE = 34;
+
+const minimize = (size) => (size > 5 ? MAX_SIZE / 2 : MAX_SIZE);
+
+export default ({payload, size, x, y}) => (
+	<Text
+		textAnchor="middle"
+		verticalAnchor="start"
+		width={220 - size * 17}
+		x={x}
+		y={y}
+	>
+		{payload.value.length > MAX_SIZE
+			? ellipsize(payload.value, minimize(size))
 			: payload.value}
 	</Text>
 );

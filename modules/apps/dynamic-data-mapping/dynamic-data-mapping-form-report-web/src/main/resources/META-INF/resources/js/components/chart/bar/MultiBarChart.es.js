@@ -117,7 +117,7 @@ export default ({data, field, height, structure, width}) => {
 					axisLine={{stroke: blueDark}}
 					dataKey="name"
 					interval={0}
-					tick={<CustomizedAxisTick />}
+					tick={<CustomizedAxisTick size={structure.rows.length} />}
 					tickLine={false}
 				/>
 

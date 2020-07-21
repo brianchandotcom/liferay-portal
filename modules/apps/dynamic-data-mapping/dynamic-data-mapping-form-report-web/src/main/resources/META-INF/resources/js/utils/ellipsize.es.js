@@ -12,5 +12,4 @@
  * details.
  */
 
-export default (value, lenght) =>
-	(value.substring(0, lenght) + '...').split(' ').join('');
+export default (value, lenght) => value.substring(0, lenght) + '...';

@@ -174,9 +174,17 @@ export default (state, action) => {
 			};
 		}
 		case UPDATE_DATA_OBJECT: {
+			state.steps.forEach((step) => {
+				if (step.appWorkflowDataLayoutLinks) {
+					step.appWorkflowDataLayoutLinks = [];
+				}
+			});
+
 			return {
 				...state,
 				dataObject: action.dataObject,
+				formView: {},
+				tableView: {},
 			};
 		}
 		case UPDATE_FORM_VIEW: {

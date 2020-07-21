@@ -100,7 +100,6 @@ export default function DataAndViewsTab() {
 		},
 		dispatch,
 		dispatchConfig,
-		state: {app},
 	} = useContext(EditAppContext);
 
 	const {appWorkflowDataLayoutLinks: stepFormViews = []} = currentStep;
@@ -126,16 +125,18 @@ export default function DataAndViewsTab() {
 		});
 	};
 
-	const updateDataObject = (dataObject) => {
-		dispatchConfig({
-			dataObject,
-			type: UPDATE_DATA_OBJECT,
-		});
+	const updateDataObject = (newDataObject) => {
+		if (newDataObject.id !== dataObject.id) {
+			dispatchConfig({
+				dataObject: newDataObject,
+				type: UPDATE_DATA_OBJECT,
+			});
 
-		dispatch({
-			...dataObject,
-			type: UPDATE_DATA_DEFINITION_ID,
-		});
+			dispatch({
+				...newDataObject,
+				type: UPDATE_DATA_DEFINITION_ID,
+			});
+		}
 	};
 
 	const updateFormView = (formView) => {
@@ -251,7 +252,7 @@ export default function DataAndViewsTab() {
 					)}
 
 					<ClayButton
-						className="w-100"
+						className="mt-3 w-100"
 						displayType="secondary"
 						onClick={addStepFormView}
 					>
@@ -280,7 +281,6 @@ export default function DataAndViewsTab() {
 						</ClayTooltipProvider>
 
 						<SelectObjects
-							defaultValue={app.dataDefinitionId}
 							label={Liferay.Language.get('select-object')}
 							onSelect={updateDataObject}
 							selectedValue={dataObject}

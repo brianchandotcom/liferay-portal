@@ -44,6 +44,7 @@ export const getFilteredSettingsContext = ({
 						...field,
 						defaultLanguageId,
 						editingLanguageId,
+						readOnly: field.fieldName === 'name'
 					};
 
 					if (unsupportedProperties.includes(fieldName)) {

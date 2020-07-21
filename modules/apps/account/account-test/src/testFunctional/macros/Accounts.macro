@@ -56,10 +56,6 @@ definition {
 				AssertElementPresent(
 					key_hidedSection = "${hidedSection}",
 					locator1 = "Account#HIDED_DOMAIN_SECTION");
-
-				AssertElementPresent(
-					key_hidedSection = "${hidedSection}",
-					locator1 = "Account#HIDED_PARENT_ACCOUNT_SECTION");
 			}
 		}
 

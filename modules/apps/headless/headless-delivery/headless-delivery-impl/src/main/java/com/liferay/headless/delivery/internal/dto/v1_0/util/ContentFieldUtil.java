@@ -163,7 +163,9 @@ public class ContentFieldUtil {
 				return new ContentFieldValue() {
 					{
 						document = ContentDocumentUtil.toContentDocument(
-							dlURLHelper, fileEntry, uriInfoOptional);
+							dlURLHelper,
+							"contentFields.contentFieldValue.document",
+							fileEntry, uriInfoOptional);
 					}
 				};
 			}
@@ -201,7 +203,9 @@ public class ContentFieldUtil {
 				return new ContentFieldValue() {
 					{
 						image = ContentDocumentUtil.toContentDocument(
-							dlURLHelper, dlAppService.getFileEntry(fileEntryId),
+							dlURLHelper,
+							"contentFields.contentFieldValue.image",
+							dlAppService.getFileEntry(fileEntryId),
 							uriInfoOptional);
 
 						image.setDescription(jsonObject.getString("alt"));

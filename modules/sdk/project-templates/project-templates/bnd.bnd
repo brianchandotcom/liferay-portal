@@ -20,7 +20,6 @@ Private-Package:\
 	org.apache.maven.archetype.metadata.io.xpp3,\
 	org.apache.maven.archetype.old,\
 	org.apache.maven.archetype.source,\
-	org.apache.maven.model,\
 	org.apache.maven.model.io.xpp3,\
 	org.apache.velocity.*,\
 	\
@@ -31,12 +30,6 @@ Private-Package:\
 	org.codehaus.plexus.util.xml,\
 	org.codehaus.plexus.util.xml.pull,\
 	org.codehaus.plexus.velocity,\
-	\
-	org.dom4j,\
-	org.dom4j.io,\
-	org.dom4j.rule,\
-	org.dom4j.tree,\
-	org.dom4j.util,\
 	\
 	org.jdom,\
 	org.jdom.filter,\

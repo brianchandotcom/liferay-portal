@@ -15,6 +15,7 @@
 package com.liferay.translation.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -205,6 +206,10 @@ public interface TranslationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TranslationEntry fetchTranslationEntry(
+		InfoItemClassPKReference infoItemClassPKReference, Locale locale);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TranslationEntry fetchTranslationEntry(long translationEntryId);

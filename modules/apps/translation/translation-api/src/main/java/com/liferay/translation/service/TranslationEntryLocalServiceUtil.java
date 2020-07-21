@@ -226,6 +226,16 @@ public class TranslationEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.translation.model.TranslationEntry
+		fetchTranslationEntry(
+			com.liferay.info.item.InfoItemClassPKReference
+				infoItemClassPKReference,
+			java.util.Locale locale) {
+
+		return getService().fetchTranslationEntry(
+			infoItemClassPKReference, locale);
+	}
+
+	public static com.liferay.translation.model.TranslationEntry
 		fetchTranslationEntry(long translationEntryId) {
 
 		return getService().fetchTranslationEntry(translationEntryId);

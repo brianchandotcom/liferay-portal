@@ -623,7 +623,7 @@
 </tr>
 <tr>
 	<td>GRID_CONFIGURATION_LAYOUT</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'col-xs-${key_layout}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Grid')][${key_position}]//div[contains(@class,'col-${key_layout}')]</td>
 	<td></td>
 </tr>
 <tr>

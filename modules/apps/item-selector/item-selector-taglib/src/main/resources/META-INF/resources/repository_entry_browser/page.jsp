@@ -194,10 +194,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								>
 									<span class="text-secondary">
 										<clay:icon
-											symbol="books"
+											symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
 										/>
 
-										<small>Company Assets</small>
+										<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
 									</span>
 								</liferay-ui:search-container-column-text>
 							</c:if>
@@ -257,10 +257,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								>
 									<span class="text-secondary">
 										<clay:icon
-											symbol="books"
+											symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(folder.getGroupId()) %>"
 										/>
 
-										<small>Company Assets</small>
+										<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(folder.getGroupId(), locale) %></small>
 									</span>
 								</liferay-ui:search-container-column-text>
 							</c:if>
@@ -386,10 +386,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
-																	symbol="books"
+																	symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
 																/>
 
-																<small>Company Assets</small>
+																<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
 															</span>
 														</liferay-frontend:vertical-card-footer>
 													</c:if>
@@ -416,10 +416,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
-																	symbol="books"
+																	symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
 																/>
 
-																<small>Company Assets</small>
+																<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
 															</span>
 														</liferay-frontend:vertical-card-footer>
 													</c:if>
@@ -467,10 +467,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												<liferay-ui:message key="location" />:
 												<span class="text-secondary">
 													<clay:icon
-														symbol="sites"
+														symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(folder.getGroupId()) %>"
 													/>
 
-													<small>Liferay</small>
+													<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(folder.getGroupId(), locale) %></small>
 												</span>
 											</h6>
 										</c:if>
@@ -525,10 +525,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													<liferay-ui:message key="location" />:
 													<span class="text-secondary">
 														<clay:icon
-															symbol="books"
+															symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
 														/>
 
-														<small>Company Assets</small>
+														<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
 													</span>
 												</h6>
 											</c:if>

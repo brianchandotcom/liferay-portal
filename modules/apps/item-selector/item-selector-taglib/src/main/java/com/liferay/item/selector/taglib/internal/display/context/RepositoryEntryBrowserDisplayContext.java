@@ -14,10 +14,15 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
@@ -28,6 +33,24 @@ public class RepositoryEntryBrowserDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
+	}
+
+	public String getGroupCssIcon(long groupId) throws PortalException {
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		if (group.isSite()) {
+			return "sites";
+		}
+
+		return "books";
+	}
+
+	public String getGroupLabel(long groupId, Locale locale)
+		throws PortalException {
+
+		Group group = GroupServiceUtil.getGroup(groupId);
+
+		return group.getName(locale);
 	}
 
 	public boolean isSearchEverywhere() {
@@ -48,7 +71,7 @@ public class RepositoryEntryBrowserDisplayContext {
 		return _searchEverywhere;
 	}
 
-	private Boolean _searchEverywhere;
 	private final HttpServletRequest _httpServletRequest;
+	private Boolean _searchEverywhere;
 
 }

@@ -45,7 +45,11 @@ if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
 }
 
-boolean isSearchEveryWhere = true;
+boolean searchEverywhere = false;
+
+if (Objects.equals(ParamUtil.getString(request, "scope"), "everywhere")) {
+	searchEverywhere = true;
+}
 %>
 
 <liferay-util:html-top>
@@ -188,7 +192,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<c:if test="<%= isSearchEveryWhere %>">
+							<c:if test="<%= searchEverywhere %>">
 								<liferay-ui:search-container-column-text
 									name="location"
 								>
@@ -251,7 +255,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<c:if test="<%= isSearchEveryWhere %>">
+							<c:if test="<%= searchEverywhere %>">
 								<liferay-ui:search-container-column-text
 									name="location"
 								>
@@ -382,7 +386,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													icon="documents-and-media"
 													title="<%= title %>"
 												>
-													<c:if test="<%= isSearchEveryWhere %>">
+													<c:if test="<%= searchEverywhere %>">
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
@@ -412,7 +416,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
 												>
-													<c:if test="<%= isSearchEveryWhere %>">
+													<c:if test="<%= searchEverywhere %>">
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
@@ -462,7 +466,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</a>
 										</h5>
 
-										<c:if test="<%= isSearchEveryWhere %>">
+										<c:if test="<%= searchEverywhere %>">
 											<h6 class="text-default">
 												<liferay-ui:message key="location" />:
 												<span class="text-secondary">
@@ -520,7 +524,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												<strong><%= title %></strong>
 											</h5>
 
-											<c:if test="<%= isSearchEveryWhere %>">
+											<c:if test="<%= searchEverywhere %>">
 												<h6 class="text-default">
 													<liferay-ui:message key="location" />:
 													<span class="text-secondary">

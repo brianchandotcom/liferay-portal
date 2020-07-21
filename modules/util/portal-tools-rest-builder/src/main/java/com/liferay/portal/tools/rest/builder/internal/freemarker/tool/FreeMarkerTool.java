@@ -313,15 +313,12 @@ public class FreeMarkerTool {
 			parameters,
 			"@GraphQLName(\"assetLibraryId\") java.lang.Long assetLibraryId",
 			"@GraphQLName(\"assetLibraryId\") @NotEmpty String assetLibraryId");
-
 		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.filter.Filter filter",
 			"String filterString");
-
 		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.Sort[] sorts",
 			"String sortsString");
-
 		parameters = StringUtil.replace(
 			parameters, "@GraphQLName(\"siteId\") java.lang.Long siteId",
 			"@GraphQLName(\"siteKey\") @NotEmpty String siteKey");

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import LanguageSelector from './LanguageSelector';
 
@@ -25,6 +25,25 @@ const TranslateLanguagesSelector = ({
 	targetLanguageId,
 }) => {
 	const namespace = `${portletNamespace}`;
+	const [formHaschanges, setFormHasChanges] = useState(false);
+
+	const bridgeComponentId = `${namespace}TranslateLanguagesSelector`;
+
+	if (!Liferay.component(bridgeComponentId)) {
+		Liferay.component(
+			bridgeComponentId,
+			{
+				onFormChange: () => {
+					if (!formHaschanges) {
+						setFormHasChanges(true);
+					}
+				},
+			},
+			{
+				destroyOnNavigate: true,
+			}
+		);
+	}
 
 	const refreshPage = (sourceId, targetId) => {
 		if (

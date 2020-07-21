@@ -8,6 +8,12 @@
 				<target><![CDATA[Test Article]]></target>
 			</segment>
 		</unit>
+		<unit id="description">
+			<segment>
+				<source><![CDATA[]]></source>
+				<target><![CDATA[]]></target>
+			</segment>
+		</unit>
 		<unit id="HTML4acl">
 			<segment>
 				<source><![CDATA[<p>Some HTML</p>]]></source>

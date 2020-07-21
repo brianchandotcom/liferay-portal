@@ -7,6 +7,10 @@
 				<source xml:lang="en-US"><![CDATA[Test Article]]></source>
 				<target xml:lang="es-ES"><![CDATA[Test Article]]></target>
 			</trans-unit>
+			<trans-unit id="description">
+				<source xml:lang="en-US"><![CDATA[]]></source>
+				<target xml:lang="es-ES"><![CDATA[]]></target>
+			</trans-unit>
 			<trans-unit id="HTML4acl">
 				<source xml:lang="en-US"><![CDATA[<p>Some HTML</p>]]></source>
 				<target xml:lang="es-ES"><![CDATA[<p>Un poco de HTML</p>]]></target>

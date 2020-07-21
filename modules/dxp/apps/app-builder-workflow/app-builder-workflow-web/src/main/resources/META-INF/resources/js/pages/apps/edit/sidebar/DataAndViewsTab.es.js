@@ -220,7 +220,7 @@ export default function DataAndViewsTab() {
 								duplicatedFieldsValues,
 							])} `}
 
-							{duplicatedFields.length >= 5 && (
+							{duplicatedFields.length > 5 && (
 								<ClayTooltipProvider delay="0">
 									<a
 										className="text-primary"

@@ -13,7 +13,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="content" type="String" />
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="contentType" type="String" />
 		<field name="languageId" type="String" />
 	</model>

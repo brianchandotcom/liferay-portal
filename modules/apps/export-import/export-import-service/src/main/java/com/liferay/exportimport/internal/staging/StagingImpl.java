@@ -3603,8 +3603,8 @@ public class StagingImpl implements Staging {
 	}
 
 	protected ScheduleInformation getScheduleInformation(
-		PortletRequest portletRequest, long targetGroupId, boolean remote) 
-			throws SchedulerException{
+			PortletRequest portletRequest, long targetGroupId, boolean remote)
+		throws SchedulerException {
 
 		ScheduleInformation scheduleInformation = new ScheduleInformation();
 
@@ -3614,12 +3614,15 @@ public class StagingImpl implements Staging {
 		Calendar startCalendar = ExportImportDateUtil.getCalendar(
 			portletRequest, "schedulerStartDate", true);
 
-		Calendar currentCalendar = Calendar.getInstance(startCalendar.getTimeZone());
+		Calendar currentCalendar = Calendar.getInstance(
+			startCalendar.getTimeZone());
 
-		if (startCalendar.before(currentCalendar)){
-			SchedulerException exception =  new SchedulerException();
-			exception.setType(SchedulerException.INVALID_START_DATE);
-			throw exception;
+		if (startCalendar.before(currentCalendar)) {
+			SchedulerException schedulerException = new SchedulerException();
+
+			schedulerException.setType(SchedulerException.INVALID_START_DATE);
+
+			throw schedulerException;
 		}
 
 		String cronText = SchedulerEngineHelperUtil.getCronText(

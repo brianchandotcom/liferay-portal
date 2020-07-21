@@ -48,4 +48,5 @@ public class SchedulerException extends PortalException {
 	}
 
 	private int _type;
+
 }

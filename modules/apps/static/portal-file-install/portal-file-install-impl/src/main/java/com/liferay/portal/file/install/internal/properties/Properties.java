@@ -533,7 +533,14 @@ public class Properties extends AbstractMap<String, String> {
 		public void writeProperty(String key, String value) throws IOException {
 			write(_escapeKey(key));
 			write(" = ");
-			write(_typed ? value : _escapeJava(value));
+
+			if (_typed) {
+				write(value);
+			}
+			else {
+				write(_escapeJava(value));
+			}
+
 			writeln(null);
 		}
 

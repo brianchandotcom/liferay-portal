@@ -33,7 +33,7 @@ public class TaxonomyVocabularyResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = depotEntry.getGroup();
+		testGroup = testDepotEntry.getGroup();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class TaxonomyVocabularyResourceTest
 	protected Long
 		testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId() {
 
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 }

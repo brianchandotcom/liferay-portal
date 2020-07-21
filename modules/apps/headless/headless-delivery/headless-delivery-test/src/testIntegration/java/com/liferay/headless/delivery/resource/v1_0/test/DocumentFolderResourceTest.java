@@ -37,7 +37,7 @@ public class DocumentFolderResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = depotEntry.getGroup();
+		testGroup = testDepotEntry.getGroup();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class DocumentFolderResourceTest
 
 	@Override
 	protected Long testGetAssetLibraryDocumentFoldersPage_getAssetLibraryId() {
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

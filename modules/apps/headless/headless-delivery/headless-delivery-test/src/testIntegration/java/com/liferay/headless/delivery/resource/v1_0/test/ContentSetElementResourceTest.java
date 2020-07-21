@@ -53,7 +53,7 @@ public class ContentSetElementResourceTest
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
 		_depotAssetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			TestPropsValues.getUserId(), testDepotEntry.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 	}
@@ -76,7 +76,7 @@ public class ContentSetElementResourceTest
 	protected Long
 		testGetAssetLibraryContentSetByKeyContentSetElementsPage_getAssetLibraryId() {
 
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ContentSetElementResourceTest
 	protected Long
 		testGetAssetLibraryContentSetByUuidContentSetElementsPage_getAssetLibraryId() {
 
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

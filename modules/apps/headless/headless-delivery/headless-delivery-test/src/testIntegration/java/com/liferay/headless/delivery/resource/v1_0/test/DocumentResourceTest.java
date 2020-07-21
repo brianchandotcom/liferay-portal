@@ -49,7 +49,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = depotEntry.getGroup();
+		testGroup = testDepotEntry.getGroup();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Override
 	protected Long testGetAssetLibraryDocumentsPage_getAssetLibraryId() {
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

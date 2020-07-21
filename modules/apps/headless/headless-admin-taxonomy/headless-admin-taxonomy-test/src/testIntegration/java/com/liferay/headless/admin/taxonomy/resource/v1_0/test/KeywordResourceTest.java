@@ -34,7 +34,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testGroup = depotEntry.getGroup();
+		testGroup = testDepotEntry.getGroup();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	protected Long testGetAssetLibraryKeywordsPage_getAssetLibraryId() {
-		return depotEntry.getDepotEntryId();
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override

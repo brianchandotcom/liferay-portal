@@ -163,9 +163,9 @@ public class SiteParamConverterProvider
 			String annotationString = annotation.toString();
 
 			if (annotationString.equals(
-					"@javax.ws.rs.PathParam(value=siteId)") ||
+					"@javax.ws.rs.PathParam(value=assetLibraryId)") ||
 				annotationString.equals(
-					"@javax.ws.rs.PathParam(value=assetLibraryId)")) {
+					"@javax.ws.rs.PathParam(value=siteId)")) {
 
 				return true;
 			}

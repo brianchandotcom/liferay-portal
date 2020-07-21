@@ -20,6 +20,7 @@ import React, {useContext} from 'react';
 
 import AppContext from '../../../AppContext.es';
 import {getItem} from '../../../utils/client.es';
+import {getDataDefinitionFieldSet} from '../../../utils/dataDefinition.es';
 import {containsField} from '../../../utils/dataLayoutVisitor.es';
 
 const getName = ({name = {}}) => {
@@ -38,9 +39,10 @@ export default () => {
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
 		).then(({items: response}) => {
 			let items = response;
-			const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-				({customProperties: {ddmStructureId}}) =>
-					ddmStructureId == fieldSet.id
+
+			const dataDefinitionFieldSet = getDataDefinitionFieldSet(
+				dataDefinition.dataDefinitionFields,
+				fieldSet.id
 			);
 
 			const findLayoutById = ({id}) => id === dataLayout.id;

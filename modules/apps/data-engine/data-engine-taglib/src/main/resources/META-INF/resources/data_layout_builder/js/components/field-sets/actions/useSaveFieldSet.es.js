@@ -18,6 +18,7 @@ import AppContext from '../../../AppContext.es';
 import {UPDATE_DATA_DEFINITION, UPDATE_FIELDSETS} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {updateItem} from '../../../utils/client.es';
+import {getDataDefinitionFieldSet} from '../../../utils/dataDefinition.es';
 import {
 	containsField,
 	normalizeDataLayoutRows,
@@ -56,10 +57,6 @@ export default ({
 			name,
 		};
 
-		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-			({customProperties: {ddmStructureId}}) => ddmStructureId == id
-		);
-
 		const getDataDefinitionFields = () => {
 			const fields = dataDefinition.dataDefinitionFields;
 
@@ -86,6 +83,10 @@ export default ({
 			.then(() => {
 				if (dataDefinitionField) {
 					fieldName = dataDefinitionField.name;
+				const dataDefinitionFieldSet = getDataDefinitionFieldSet(
+					dataDefinition.dataDefinitionFields,
+					fieldSet.id
+				);
 
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
 						dataLayoutBuilder.dispatch('fieldEditedProperties', {

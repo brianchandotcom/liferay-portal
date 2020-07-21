@@ -80,6 +80,11 @@ export const getDataDefinitionField = (
 	return field;
 };
 
+export const getDataDefinitionFieldSet = (dataDefinitionFields, fieldSetId) =>
+	dataDefinitionFields.find(
+		({customProperties: {ddmStructureId}}) => ddmStructureId == fieldSetId
+	);
+
 export const getFieldLabel = (dataDefinition, fieldName) => {
 	const field = getDataDefinitionField(dataDefinition, fieldName);
 

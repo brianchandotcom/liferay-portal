@@ -85,7 +85,7 @@ public class AppBuilderAppWorkflowHandler
 			_ddlRecordLocalService.getRecord(classPK));
 
 		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-			companyId, groupId, getClassName(),
+			companyId, appBuilderApp.getGroupId(), getClassName(),
 			appBuilderApp.getAppBuilderAppId(), 0);
 	}
 

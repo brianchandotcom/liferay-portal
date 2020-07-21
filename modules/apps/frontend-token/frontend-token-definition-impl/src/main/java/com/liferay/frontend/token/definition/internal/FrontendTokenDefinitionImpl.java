@@ -14,28 +14,28 @@
 
 package com.liferay.frontend.token.definition.internal;
 
-import com.liferay.frontend.token.definition.TokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 
 /**
  * @author Iván Zaera
  */
-public class TokenDefinitionImpl implements TokenDefinition {
+public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 
-	public TokenDefinitionImpl(String rawTokenDefinition, String themeId) {
-		_rawTokenDefinition = rawTokenDefinition;
+	public FrontendTokenDefinitionImpl(String json, String themeId) {
+		_json = json;
 		_themeId = themeId;
+	}
+
+	@Override
+	public String getJSON() {
+		return _json;
 	}
 
 	public String getThemeId() {
 		return _themeId;
 	}
 
-	@Override
-	public String getTokenDefinitionJSON() {
-		return _rawTokenDefinition;
-	}
-
-	private final String _rawTokenDefinition;
+	private final String _json;
 	private final String _themeId;
 
 }

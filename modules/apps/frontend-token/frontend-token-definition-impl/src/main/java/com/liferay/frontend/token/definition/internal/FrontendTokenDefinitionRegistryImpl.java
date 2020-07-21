@@ -14,13 +14,12 @@
 
 package com.liferay.frontend.token.definition.internal;
 
-import com.liferay.frontend.token.definition.TokenDefinition;
-import com.liferay.frontend.token.definition.TokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,17 +47,18 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Iván Zaera
  */
-@Component(service = TokenDefinitionRegistry.class)
-public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
+@Component(service = FrontendTokenDefinitionRegistry.class)
+public class FrontendTokenDefinitionRegistryImpl
+	implements FrontendTokenDefinitionRegistry {
 
 	@Override
-	public TokenDefinition getThemeTokenDefinition(String themeId) {
-		return themeIdTokenDefinitionImplsMap.get(themeId);
+	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId) {
+		return themeIdFrontendTokenDefinitionImplsMap.get(themeId);
 	}
 
 	@Override
-	public Collection<TokenDefinition> getTokenDefinitions() {
-		return new ArrayList<>(bundleTokenDefinitionImplsMap.values());
+	public Collection<FrontendTokenDefinition> getFrontendTokenDefinitions() {
+		return new ArrayList<>(bundleFrontendTokenDefinitionImplsMap.values());
 	}
 
 	@Activate
@@ -71,21 +71,21 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 				public Bundle addingBundle(
 					Bundle bundle, BundleEvent bundleEvent) {
 
-					TokenDefinitionImpl tokenDefinitionImpl =
-						getTokenDefinitionImpl(bundle);
+					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
+						getFrontendTokenDefinitionImpl(bundle);
 
-					if (tokenDefinitionImpl == null) {
+					if (frontendTokenDefinitionImpl == null) {
 						return null;
 					}
 
-					synchronized (TokenDefinitionRegistryImpl.this) {
-						bundleTokenDefinitionImplsMap.put(
-							bundle, tokenDefinitionImpl);
+					synchronized (FrontendTokenDefinitionRegistryImpl.this) {
+						bundleFrontendTokenDefinitionImplsMap.put(
+							bundle, frontendTokenDefinitionImpl);
 
-						if (tokenDefinitionImpl.getThemeId() != null) {
-							themeIdTokenDefinitionImplsMap.put(
-								tokenDefinitionImpl.getThemeId(),
-								tokenDefinitionImpl);
+						if (frontendTokenDefinitionImpl.getThemeId() != null) {
+							themeIdFrontendTokenDefinitionImplsMap.put(
+								frontendTokenDefinitionImpl.getThemeId(),
+								frontendTokenDefinitionImpl);
 						}
 					}
 
@@ -105,13 +105,15 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 				public void removedBundle(
 					Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
 
-					synchronized (TokenDefinitionRegistryImpl.this) {
-						TokenDefinitionImpl tokenDefinitionImpl =
-							bundleTokenDefinitionImplsMap.remove(bundle1);
+					synchronized (FrontendTokenDefinitionRegistryImpl.this) {
+						FrontendTokenDefinitionImpl
+							frontendTokenDefinitionImpl =
+								bundleFrontendTokenDefinitionImplsMap.remove(
+									bundle1);
 
-						if (tokenDefinitionImpl.getThemeId() != null) {
-							themeIdTokenDefinitionImplsMap.remove(
-								tokenDefinitionImpl.getThemeId());
+						if (frontendTokenDefinitionImpl.getThemeId() != null) {
+							themeIdFrontendTokenDefinitionImplsMap.remove(
+								frontendTokenDefinitionImpl.getThemeId());
 						}
 					}
 				}
@@ -126,15 +128,25 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		bundleTracker.close();
 
 		synchronized (this) {
-			bundleTokenDefinitionImplsMap.clear();
-			themeIdTokenDefinitionImplsMap.clear();
+			bundleFrontendTokenDefinitionImplsMap.clear();
+			themeIdFrontendTokenDefinitionImplsMap.clear();
 		}
 	}
 
-	protected String getRawTokenDefinition(Bundle bundle) {
-		String tokenDefinitionPath = getTokenDefinitionPath(bundle);
+	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
+		Bundle bundle) {
 
-		URL url = bundle.getEntry(tokenDefinitionPath);
+		String json = getFrontendTokenDefinitionJSON(bundle);
+
+		if (json == null) {
+			return null;
+		}
+
+		return new FrontendTokenDefinitionImpl(json, getThemeId(bundle));
+	}
+
+	protected String getFrontendTokenDefinitionJSON(Bundle bundle) {
+		URL url = bundle.getEntry("WEB-INF/frontend-token-definition.json");
 
 		if (url == null) {
 			return null;
@@ -145,7 +157,8 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to read: " + tokenDefinitionPath, ioException);
+				"Unable to read: WEB-INF/frontend-token-definition.json",
+				ioException);
 		}
 	}
 
@@ -203,42 +216,15 @@ public class TokenDefinitionRegistryImpl implements TokenDefinitionRegistry {
 		}
 	}
 
-	protected TokenDefinitionImpl getTokenDefinitionImpl(Bundle bundle) {
-		String rawTokenDefinition = getRawTokenDefinition(bundle);
-
-		if (rawTokenDefinition == null) {
-			return null;
-		}
-
-		return new TokenDefinitionImpl(rawTokenDefinition, getThemeId(bundle));
-	}
-
-	protected String getTokenDefinitionPath(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		String tokenDefinitionPath = headers.get("Token-Definition-Path");
-
-		if (Validator.isNull(tokenDefinitionPath)) {
-			tokenDefinitionPath = "META-INF/token-definition.json";
-		}
-
-		if (tokenDefinitionPath.charAt(0) == '/') {
-			tokenDefinitionPath = tokenDefinitionPath.substring(1);
-		}
-
-		return tokenDefinitionPath;
-	}
-
-	protected Map<Bundle, TokenDefinitionImpl> bundleTokenDefinitionImplsMap =
-		new ConcurrentHashMap<>();
+	protected Map<Bundle, FrontendTokenDefinitionImpl>
+		bundleFrontendTokenDefinitionImplsMap = new ConcurrentHashMap<>();
 	protected BundleTracker<Bundle> bundleTracker;
 
 	@Reference
 	protected Portal portal;
 
-	protected Map<String, TokenDefinitionImpl> themeIdTokenDefinitionImplsMap =
-		new ConcurrentHashMap<>();
+	protected Map<String, FrontendTokenDefinitionImpl>
+		themeIdFrontendTokenDefinitionImplsMap = new ConcurrentHashMap<>();
 
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");

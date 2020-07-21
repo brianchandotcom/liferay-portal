@@ -163,4 +163,35 @@ describe('DatePicker', () => {
 
 		expect(handleFieldEdited).toHaveBeenCalled();
 	});
+
+	it('call the onChange callback with a valid date', async () => {
+		const onChange = jest.fn();
+
+		const {container, getAllByDisplayValue, getByLabelText} = render(
+			<DatePickerWithProvider
+				{...defaultDatePickerConfig}
+				onChange={onChange}
+			/>
+		);
+
+		userEvent.click(
+			container.querySelector('.date-picker-dropdown-toggle')
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		userEvent.click(getByLabelText('Select current date'));
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const date = moment().format('MM/DD/YYYY');
+
+		await wait(() => expect(getAllByDisplayValue(date)).toBeTruthy());
+
+		expect(onChange).toHaveBeenCalledWith({}, date);
+	});
 });

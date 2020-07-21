@@ -126,6 +126,10 @@ components:
                             readOnly: true
                             type: string
                         contentValue:
+                            # @review
+                            description:
+                                "optional field with the content of the image in Base64,
+                                can be embedded with nestedFields"
                             readOnly: true
                             type: string
                         imageId:
@@ -191,6 +195,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the image in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -330,6 +337,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 description:
@@ -913,6 +923,10 @@ components:
                                 format: uri
                                 type: string
                             contentValue:
+                                # @review
+                                description:
+                                    "optional field with the content of the image in Base64,
+                                    can be embedded with nestedFields"
                                 readOnly: true
                                 type: string
                             height:
@@ -948,6 +962,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 creator:
@@ -1438,6 +1455,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -1579,6 +1599,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -2611,6 +2634,9 @@ components:
                                 format: uri
                                 type: string
                             renderedContentValue:
+                                # @review
+                                description:
+                                    optional field with the rendered content, can be embedded with nestedFields
                                 type: string
                         type: object
                     readOnly: true
@@ -2977,6 +3003,9 @@ components:
                     readOnly: true
                     type: string
                 contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:

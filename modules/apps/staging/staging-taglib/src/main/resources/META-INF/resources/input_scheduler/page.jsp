@@ -18,7 +18,21 @@
 
 <ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
 	<li>
-		<liferay-ui:error exception="<%= com.liferay.portal.kernel.scheduler.SchedulerException.class %>" message="a-wrong-end-date-was-specified-the-scheduled-process-will-never-run" />
+		<liferay-ui:error exception="<%= SchedulerException.class %>">
+
+			<%
+			SchedulerException se = (SchedulerException)errorException;
+			%>
+
+			<c:choose>
+				<c:when test="<%= se.getType() == SchedulerException.INVALID_START_DATE %>">
+					<liferay-ui:message key="a-wrong-start-date-was-specified-the-scheduled-process-can-not-start-in-the-past" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="a-wrong-end-date-was-specified-the-scheduled-process-will-never-run" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:error>
 
 		<aui:input name="jobName" type="hidden" />
 
@@ -79,6 +93,7 @@
 								dayValue="<%= startDay %>"
 								disabled="<%= false %>"
 								firstDayOfWeek="<%= cal.getFirstDayOfWeek() - 1 %>"
+								firstEnabledDate="<%= new Date() %>"
 								monthParam="schedulerStartDateMonth"
 								monthValue="<%= startMonth %>"
 								name="schedulerStartDate"

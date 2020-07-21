@@ -86,7 +86,7 @@ function CompareCheckbox(props) {
 				checked={inCompare}
 				disabled={disabled && !inCompare}
 				label={
-					props.labelVisible ? Liferay.Language.get('compare') : null
+					props.label || null
 				}
 				onChange={handleCheckboxClick}
 			/>
@@ -99,7 +99,7 @@ CompareCheckbox.propTypes = {
 	inCompare: PropTypes.bool,
 	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		.isRequired,
-	labelVisible: PropTypes.bool,
+	label: PropTypes.string,
 	onUpdate: PropTypes.func,
 	pictureUrl: PropTypes.string
 };

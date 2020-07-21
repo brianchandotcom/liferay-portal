@@ -75,13 +75,13 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.CompareCheckboxTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>componentId</name>
+			<name>CPDefinitionId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>CPDefinitionId</name>
-			<required>true</required>
+			<name>label</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

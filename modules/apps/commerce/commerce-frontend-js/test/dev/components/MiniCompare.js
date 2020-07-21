@@ -27,36 +27,36 @@ miniCompareLauncher('miniCompare', 'mini-compare-root', {
 
 compareCheckboxLauncher('miniCompare1', 'compare-checkbox-root-1', {
 	itemId: '001',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });
 
 compareCheckboxLauncher('miniCompare2', 'compare-checkbox-root-2', {
 	itemId: '002',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });
 
 compareCheckboxLauncher('miniCompare3', 'compare-checkbox-root-3', {
 	itemId: '003',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });
 
 compareCheckboxLauncher('miniCompare4', 'compare-checkbox-root-4', {
 	itemId: '004',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });
 
 compareCheckboxLauncher('miniCompare5', 'compare-checkbox-root-5', {
 	itemId: '005',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });
 
 compareCheckboxLauncher('miniCompare6', 'compare-checkbox-root-6', {
 	itemId: '006',
-	labelVisible: true,
+	label: 'Compare',
 	pictureUrl: 'https://via.placeholder.com/150'
 });

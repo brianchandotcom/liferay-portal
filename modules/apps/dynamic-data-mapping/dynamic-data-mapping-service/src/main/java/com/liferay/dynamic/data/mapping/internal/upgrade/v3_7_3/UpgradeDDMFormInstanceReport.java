@@ -93,7 +93,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 		sb2.append("formInstanceId, data_) values (?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select formInstanceId, groupId, companyid, createDate, " +
+				"select formInstanceId, groupId, companyId, createDate, " +
 					"structureId from DDMFormInstance")) {
 
 			ResultSet rs1 = ps1.executeQuery();
@@ -136,7 +136,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 				long groupId = rs1.getLong("groupId");
 
-				long companyId = rs1.getLong("companyid");
+				long companyId = rs1.getLong("companyId");
 
 				Timestamp createDate = rs1.getTimestamp("createDate");
 

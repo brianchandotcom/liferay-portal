@@ -30,7 +30,7 @@ export default ({
 	DataLayout,
 	availableLanguageIds,
 	childrenContext,
-	fieldSet: fieldSetDefault,
+	fieldSet,
 }) => {
 	const [context, dispatch] = useContext(AppContext);
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -38,55 +38,51 @@ export default ({
 	const {state: childrenState} = childrenContext;
 
 	return (name) => {
-		let fieldName;
-		const {id} = fieldSetDefault;
-
 		const {
 			dataDefinition: {dataDefinitionFields},
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const fieldSet = {
-			...fieldSetDefault,
+		const normalizedFieldSet = {
+			...fieldSet,
 			availableLanguageIds,
 			dataDefinitionFields,
 			defaultDataLayout: {
-				...fieldSetDefault.defaultDataLayout,
+				...fieldSet.defaultDataLayout,
 				dataLayoutPages,
 			},
 			name,
 		};
 
-		const getDataDefinitionFields = () => {
-			const fields = dataDefinition.dataDefinitionFields;
-
-			return fields.map((ddField) => {
-				const {
-					customProperties: {ddmStructureId},
-				} = ddField;
-				if (ddmStructureId == id) {
-					return {
-						...ddField,
-						label: name,
-						nestedDataDefinitionFields: dataDefinitionFields,
-					};
-				}
-
-				return ddField;
-			});
-		};
-
 		return updateItem(
-			`/o/data-engine/v2.0/data-definitions/${id}`,
-			fieldSet
+			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}`,
+			normalizedFieldSet
 		)
 			.then(() => {
-				if (dataDefinitionField) {
-					fieldName = dataDefinitionField.name;
 				const dataDefinitionFieldSet = getDataDefinitionFieldSet(
 					dataDefinition.dataDefinitionFields,
 					fieldSet.id
 				);
+
+				const normalizedDataDefinitionFields = () =>
+					dataDefinition.dataDefinitionFields.map((field) => {
+						const {
+							customProperties: {ddmStructureId},
+						} = field;
+
+						if (ddmStructureId == fieldSet.id) {
+							return {
+								...field,
+								label: name,
+								nestedDataDefinitionFields: dataDefinitionFields,
+							};
+						}
+
+						return field;
+					});
+
+				if (dataDefinitionFieldSet) {
+					const fieldName = dataDefinitionFieldSet.name;
 
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
 						dataLayoutBuilder.dispatch('fieldEditedProperties', {
@@ -119,7 +115,7 @@ export default ({
 							payload: {
 								dataDefinition: {
 									...dataDefinition,
-									dataDefinitionFields: getDataDefinitionFields(),
+									dataDefinitionFields: normalizedDataDefinitionFields(),
 								},
 							},
 							type: UPDATE_DATA_DEFINITION,
@@ -130,7 +126,7 @@ export default ({
 						...context,
 						dataDefinition: {
 							...dataDefinition,
-							dataDefinitionFields: getDataDefinitionFields(),
+							dataDefinitionFields: normalizedDataDefinitionFields(),
 						},
 					});
 				}
@@ -141,8 +137,8 @@ export default ({
 				dispatch({
 					payload: {
 						fieldSets: fieldSets.map((field) => {
-							if (field.id === id) {
-								return fieldSet;
+							if (fieldSet.id === field.id) {
+								return normalizedFieldSet;
 							}
 
 							return field;
@@ -151,9 +147,6 @@ export default ({
 					type: UPDATE_FIELDSETS,
 				});
 
-				return Promise.resolve();
-			})
-			.then(() => {
 				successToast(Liferay.Language.get('fieldset-saved'));
 
 				return Promise.resolve();

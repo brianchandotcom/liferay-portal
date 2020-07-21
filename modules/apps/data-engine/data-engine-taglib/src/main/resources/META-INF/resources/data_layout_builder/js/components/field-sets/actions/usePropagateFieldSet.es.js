@@ -29,9 +29,37 @@ const getName = ({name = {}}) => {
 	return name[defaultLanguageId] || Liferay.Language.get('untitled');
 };
 
+const FieldInfo = ({label, value}) => (
+	<div>
+		<label>{`${label}:`}</label>
+		<span>{value}</span>
+	</div>
+);
+
+const FieldListItems = ({items, name}) => {
+	return items.map((item, index) => {
+		if (!item[name].length) {
+			return null;
+		}
+
+		return (
+			<div className="mb-4" key={index}>
+				<label>{getName(item.dataDefinition)}</label>
+
+				<ol>
+					{item[name].map((content, index) => (
+						<li key={index}>{getName(content)}</li>
+					))}
+				</ol>
+			</div>
+		);
+	});
+};
+
 export default () => {
 	const [{dataDefinition, dataLayout}] = useContext(AppContext);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
+
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	return ({fieldSet, isDeleteAction, modal, onPropagate}) => {
@@ -48,10 +76,10 @@ export default () => {
 			const findLayoutById = ({id}) => id === dataLayout.id;
 
 			if (items.length) {
-				if (dataDefinitionField) {
+				if (dataDefinitionFieldSet) {
 					const fieldInDataLayout = containsField(
 						dataLayout.dataLayoutPages,
-						dataDefinitionField.name
+						dataDefinitionFieldSet.name
 					);
 
 					items = items.map(({dataLayouts, ...item}) => {
@@ -59,6 +87,7 @@ export default () => {
 							const dataLayoutIndex = dataLayouts.findIndex(
 								findLayoutById
 							);
+
 							if (dataLayoutIndex === -1) {
 								dataLayouts.push(dataLayout);
 							}
@@ -82,10 +111,10 @@ export default () => {
 				}
 			}
 			else if (
-				dataDefinitionField &&
+				dataDefinitionFieldSet &&
 				containsField(
 					dataLayout.dataLayoutPages,
-					dataDefinitionField.name
+					dataDefinitionFieldSet.name
 				)
 			) {
 				items.push({dataDefinition, dataLayouts: [dataLayout]});
@@ -99,39 +128,6 @@ export default () => {
 			if (!isDeleteAction && (!items.length || !isFieldSetUsed)) {
 				return onPropagate(fieldSet);
 			}
-
-			const Items = ({name}) => {
-				return items.map((item, index) => {
-					if (!item[name].length) {
-						return null;
-					}
-
-					return (
-						<div className="mb-4" key={index}>
-							<label>{getName(item.dataDefinition)}</label>
-
-							<ol>
-								{item[name].map((content, index) => (
-									<li key={index}>{getName(content)}</li>
-								))}
-							</ol>
-						</div>
-					);
-				});
-			};
-
-			const FIELD_LABELS = {
-				label: Liferay.Language.get('label'),
-				name: Liferay.Language.get('name'),
-				type: Liferay.Language.get('type'),
-			};
-
-			const FieldInfo = ({label, value}) => (
-				<div>
-					<label>{`${FIELD_LABELS[label]}:`}</label>
-					<span>{value}</span>
-				</div>
-			);
 
 			return new Promise((resolve) => {
 				const {
@@ -178,16 +174,21 @@ export default () => {
 										displayType="secondary"
 									>
 										<ClayPanel.Body>
-											{dataDefinitionField && (
+											{dataDefinitionFieldSet && (
 												<FieldInfo
-													label="name"
+													label={Liferay.Language.get(
+														'name'
+													)}
 													value={
-														dataDefinitionField.name
+														dataDefinitionFieldSet.name
 													}
 												/>
 											)}
+
 											<FieldInfo
-												label="label"
+												label={Liferay.Language.get(
+													'label'
+												)}
 												value={
 													fieldSet.name[
 														defaultLanguageId
@@ -196,7 +197,9 @@ export default () => {
 											/>
 
 											<FieldInfo
-												label="type"
+												label={Liferay.Language.get(
+													'value'
+												)}
 												value={Liferay.Language.get(
 													'fieldset'
 												)}
@@ -214,7 +217,10 @@ export default () => {
 										displayType="secondary"
 									>
 										<ClayPanel.Body>
-											<Items name="dataLayouts" />
+											<FieldListItems
+												items={items}
+												name="dataLayouts"
+											/>
 										</ClayPanel.Body>
 									</ClayPanel>
 								)}
@@ -228,7 +234,10 @@ export default () => {
 										displayType="secondary"
 									>
 										<ClayPanel.Body>
-											<Items name="dataListViews" />
+											<FieldListItems
+												items={items}
+												name="dataListViews"
+											/>
 										</ClayPanel.Body>
 									</ClayPanel>
 								)}
@@ -271,6 +280,7 @@ export default () => {
 					},
 					type: 1,
 				};
+
 				resolve(dispatchModal(payload));
 			});
 		});

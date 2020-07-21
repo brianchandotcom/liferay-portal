@@ -146,25 +146,25 @@ const ModalContent = ({
 	});
 	const propagateFieldSet = usePropagateFieldSet();
 
-	const isDataLayoutChanged = () => {
-		const fieldNames = fieldSet.dataDefinitionFields.map(({name}) => name);
-
-		const [prevLayoutFields, actualLayoutFields] = [
-			fieldSet.defaultDataLayout.dataLayoutPages,
-			dataLayout.dataLayoutPages,
-		].map((layout) =>
-			fieldNames.filter((field) => containsField(layout, field))
-		);
-
-		return !!prevLayoutFields.filter(
-			(field) => !actualLayoutFields.includes(field)
-		).length;
-	};
-
 	const onSave = () => {
-		if (fieldSet) {
-			const containsRemovedFields = isDataLayoutChanged();
+		const hasRemovedField = () => {
+			const fieldNames = fieldSet.dataDefinitionFields.map(
+				({name}) => name
+			);
 
+			const [prevLayoutFields, actualLayoutFields] = [
+				fieldSet.defaultDataLayout.dataLayoutPages,
+				dataLayout.dataLayoutPages,
+			].map((layout) =>
+				fieldNames.filter((field) => containsField(layout, field))
+			);
+
+			return !!prevLayoutFields.filter(
+				(field) => !actualLayoutFields.includes(field)
+			).length;
+		};
+
+		if (fieldSet) {
 			propagateFieldSet({
 				fieldSet,
 				modal: {
@@ -173,7 +173,7 @@ const ModalContent = ({
 						'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
 					),
 					headerMessage: Liferay.Language.get('propagate-changes'),
-					...(containsRemovedFields && {
+					...(hasRemovedField() && {
 						warningMessage: Liferay.Language.get(
 							'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
 						),

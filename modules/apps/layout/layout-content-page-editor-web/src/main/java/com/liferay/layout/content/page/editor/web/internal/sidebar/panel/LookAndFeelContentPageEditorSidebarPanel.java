@@ -108,8 +108,7 @@ public class LookAndFeelContentPageEditorSidebarPanel
 
 	@Override
 	public boolean isVisible(
-		PermissionChecker permissionChecker, long plid,
-		boolean pageIsDisplayPage) {
+		PermissionChecker permissionChecker, long plid, int pageType) {
 
 		try {
 			if (LayoutPermissionUtil.contains(

@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -3602,7 +3603,8 @@ public class StagingImpl implements Staging {
 	}
 
 	protected ScheduleInformation getScheduleInformation(
-		PortletRequest portletRequest, long targetGroupId, boolean remote) {
+		PortletRequest portletRequest, long targetGroupId, boolean remote) 
+			throws SchedulerException{
 
 		ScheduleInformation scheduleInformation = new ScheduleInformation();
 
@@ -3611,6 +3613,14 @@ public class StagingImpl implements Staging {
 
 		Calendar startCalendar = ExportImportDateUtil.getCalendar(
 			portletRequest, "schedulerStartDate", true);
+
+		Calendar currentCalendar = Calendar.getInstance(startCalendar.getTimeZone());
+
+		if (startCalendar.before(currentCalendar)){
+			SchedulerException exception =  new SchedulerException();
+			exception.setType(SchedulerException.INVALID_START_DATE);
+			throw exception;
+		}
 
 		String cronText = SchedulerEngineHelperUtil.getCronText(
 			portletRequest, startCalendar, false, recurrenceType);

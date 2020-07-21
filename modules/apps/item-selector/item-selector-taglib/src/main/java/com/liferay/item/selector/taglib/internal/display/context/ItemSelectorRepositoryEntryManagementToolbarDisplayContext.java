@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -52,12 +51,16 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		RepositoryEntryBrowserDisplayContext
+			repositoryEntryBrowserDisplayContext) {
 
 		_httpServletRequest = httpServletRequest;
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_repositoryEntryBrowserDisplayContext =
+			repositoryEntryBrowserDisplayContext;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
@@ -72,7 +75,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
-							dropdownItem.setActive(_isEverywhereScopeFilter());
+							dropdownItem.setActive(
+								_repositoryEntryBrowserDisplayContext.
+									isSearchEverywhere());
 							dropdownItem.setHref(
 								_getPortletURL(), "scope", "everywhere");
 							dropdownItem.setLabel(
@@ -81,7 +86,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 						}
 					).add(
 						dropdownItem -> {
-							dropdownItem.setActive(!_isEverywhereScopeFilter());
+							dropdownItem.setActive(
+								!_repositoryEntryBrowserDisplayContext.
+									isSearchEverywhere());
 							dropdownItem.setHref(
 								_getPortletURL(), "scope", "current");
 							dropdownItem.setLabel(_getCurrentScopeLabel());
@@ -250,17 +257,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			"liferay-item-selector:repository-entry-browser:portletURL");
 	}
 
-	private boolean _isEverywhereScopeFilter() {
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -268,5 +264,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
+	private final RepositoryEntryBrowserDisplayContext
+		_repositoryEntryBrowserDisplayContext;
 
 }

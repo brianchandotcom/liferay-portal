@@ -35,6 +35,8 @@ boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-item-se
 String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:uploadURL");
 
+RepositoryEntryBrowserDisplayContext repositoryEntryBrowserDisplayContext = new RepositoryEntryBrowserDisplayContext(request);
+
 SearchContainer<?> searchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, emptyResultsMessage);
 
 String keywords = ParamUtil.getString(request, "keywords");
@@ -44,12 +46,6 @@ boolean showSearchInfo = false;
 if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
 }
-
-boolean searchEverywhere = false;
-
-if (Objects.equals(ParamUtil.getString(request, "scope"), "everywhere")) {
-	searchEverywhere = true;
-}
 %>
 
 <liferay-util:html-top>
@@ -57,7 +53,7 @@ if (Objects.equals(ParamUtil.getString(request, "scope"), "everywhere")) {
 </liferay-util:html-top>
 
 <%
-ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, repositoryEntryBrowserDisplayContext);
 %>
 
 <clay:management-toolbar
@@ -192,7 +188,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<c:if test="<%= searchEverywhere %>">
+							<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 								<liferay-ui:search-container-column-text
 									name="location"
 								>
@@ -255,7 +251,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								</a>
 							</liferay-ui:search-container-column-text>
 
-							<c:if test="<%= searchEverywhere %>">
+							<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 								<liferay-ui:search-container-column-text
 									name="location"
 								>
@@ -386,7 +382,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													icon="documents-and-media"
 													title="<%= title %>"
 												>
-													<c:if test="<%= searchEverywhere %>">
+													<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
@@ -416,7 +412,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
 												>
-													<c:if test="<%= searchEverywhere %>">
+													<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 														<liferay-frontend:vertical-card-footer>
 															<span class="text-secondary">
 																<clay:icon
@@ -466,7 +462,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</a>
 										</h5>
 
-										<c:if test="<%= searchEverywhere %>">
+										<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 											<h6 class="text-default">
 												<liferay-ui:message key="location" />:
 												<span class="text-secondary">
@@ -524,7 +520,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												<strong><%= title %></strong>
 											</h5>
 
-											<c:if test="<%= searchEverywhere %>">
+											<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 												<h6 class="text-default">
 													<liferay-ui:message key="location" />:
 													<span class="text-secondary">

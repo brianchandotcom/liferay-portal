@@ -78,8 +78,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public String getNavigation() {
 		return ParamUtil.getString(
-			liferayPortletRequest, getNavigationParam(),
-			"current-account-users");
+			liferayPortletRequest, getNavigationParam(), "valid-domain-users");
 	}
 
 	@Override
@@ -121,7 +120,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			return new String[0];
 		}
 
-		return new String[] {"current-account-users", "all-users"};
+		return new String[] {"valid-domain-users", "all-users"};
 	}
 
 	@Override

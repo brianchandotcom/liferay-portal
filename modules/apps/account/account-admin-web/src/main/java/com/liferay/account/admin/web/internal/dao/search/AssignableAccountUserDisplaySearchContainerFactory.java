@@ -80,7 +80,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			liferayPortletRequest, "accountRoleId");
 
 		String navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "current-account-users");
+			liferayPortletRequest, "navigation", "valid-domain-users");
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
@@ -162,7 +162,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 	private static String[] _getEmailAddressDomains(
 		long accountEntryId, String navigation) {
 
-		if (Objects.equals(navigation, "current-account-users")) {
+		if (Objects.equals(navigation, "valid-domain-users")) {
 			AccountEntry accountEntry =
 				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
 

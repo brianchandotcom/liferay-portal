@@ -12,28 +12,78 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useImperativeHandle, useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 
 import Sidebar from './components/Sidebar';
 
-const SidebarPanel = React.forwardRef(({onClose}, ref) => {
+const SidebarPanel = React.forwardRef(({View, fetchURL, onClose}, ref) => {
+	const CurrentView = useRef(View);
+
+	const [error, setError] = useState();
+	const [isLoading, setIsLoading] = useState();
 	const [isOpen, setIsOpen] = useState(true);
+	const [resourceData, setResourceData] = useState();
+
+	const getData = (fetchURL) => {
+		setIsLoading(true);
+
+		fetch(fetchURL, {
+			method: 'GET',
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				setError(data?.error);
+				setResourceData(data);
+				setIsLoading(false);
+			})
+			.catch(() => {
+				setError(Liferay.Language.get('an-unexpected-error-occurred'));
+				setResourceData(null);
+				setIsLoading(false);
+			});
+	};
+
+	useEffect(() => {
+		getData(fetchURL);
+	}, [fetchURL]);
+
+	useEffect(() => {
+		CurrentView.current = View;
+	}, [View]);
 
 	useImperativeHandle(ref, () => ({
 		close: () => setIsOpen(false),
-		open: () => setIsOpen(true),
+		open: (fetchURL, View) => {
+			CurrentView.current = View;
+
+			getData(fetchURL);
+
+			setIsOpen(true);
+		},
 	}));
 
 	const onCloseHandle = () => (onClose ? onClose() : setIsOpen(false));
 
 	return (
 		<Sidebar onClose={onCloseHandle} open={isOpen}>
-			<Sidebar.Header />
+			{isLoading ? (
+				<Sidebar.Body>
+					<ClayLoadingIndicator />
+				</Sidebar.Body>
+			) : error ? (
+				<>
+					<Sidebar.Header />
 
-			<Sidebar.Body>
-				<ClayLoadingIndicator />
-			</Sidebar.Body>
+					<ClayAlert displayType="danger" variant="stripe">
+						{error}
+					</ClayAlert>
+				</>
+			) : (
+				resourceData && <CurrentView.current {...resourceData} />
+			)}
 		</Sidebar>
 	);
 });

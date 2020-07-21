@@ -1,35 +1,24 @@
 @import 'atlas-variables';
 
 .page-editor__page-structure {
-	overflow: auto;
-	padding-left: 20px;
-	padding-right: 16px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 
-	.lfr-treeview {
-		&-node-list {
-			border-left: 1px solid $gray-300;
+	&__content {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		overflow: hidden;
+	}
 
-			&-item {
-				margin: 4px 0;
-				outline: none;
-				padding-left: 8px;
+	&__section {
+		flex-basis: 0;
+		flex-grow: 1;
+		overflow: auto;
+	}
 
-				&__button-icon {
-					background-color: $white;
-					color: $secondary;
-					height: 16px;
-					padding: 4px;
-					width: 16px;
-
-					&:hover {
-						background-color: $gray-100;
-					}
-				}
-
-				&__children {
-					padding-left: 16px;
-				}
-			}
-		}
+	&__section + &__section {
+		border-top: solid $gray-300 thin;
 	}
 }

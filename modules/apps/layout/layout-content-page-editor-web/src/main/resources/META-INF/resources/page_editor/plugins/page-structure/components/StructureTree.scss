@@ -1,0 +1,35 @@
+@import 'atlas-variables';
+
+.page-editor__page-structure__structure-tree {
+	overflow: auto;
+	padding-left: 20px;
+	padding-right: 16px;
+
+	.lfr-treeview {
+		&-node-list {
+			border-left: 1px solid $gray-300;
+
+			&-item {
+				margin: 4px 0;
+				outline: none;
+				padding-left: 8px;
+
+				&__button-icon {
+					background-color: $white;
+					color: $secondary;
+					height: 16px;
+					padding: 4px;
+					width: 16px;
+
+					&:hover {
+						background-color: $gray-100;
+					}
+				}
+
+				&__children {
+					padding-left: 16px;
+				}
+			}
+		}
+	}
+}

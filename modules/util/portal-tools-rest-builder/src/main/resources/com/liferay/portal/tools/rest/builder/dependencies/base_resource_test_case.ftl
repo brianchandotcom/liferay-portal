@@ -946,12 +946,21 @@ public abstract class Base${schemaName}ResourceTestCase {
 						Map<String, File> multipartFiles = getMultipartFiles();
 					</#if>
 
-					${schemaName} patch${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId(), randomPatch${schemaName}
-
-					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
-						, multipartFiles
-					</#if>
-
+					${schemaName} patch${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									post${schemaName}.getId()
+								<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+									post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+								<#else>
+									null
+								</#if>
+							</#if>
+						</#list>, randomPatch${schemaName}
+						<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
+							, multipartFiles
+						</#if>
 					);
 
 					${schemaName} expectedPatch${schemaName} = post${schemaName}.clone();

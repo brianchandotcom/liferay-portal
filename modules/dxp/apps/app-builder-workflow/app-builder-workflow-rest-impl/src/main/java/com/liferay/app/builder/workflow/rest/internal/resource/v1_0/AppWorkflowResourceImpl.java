@@ -132,7 +132,9 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 			deleteAppBuilderWorkflowTaskLinks(appId);
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			contextCompany.getCompanyId(), 0, AppBuilderApp.class.getName(),
+			contextCompany.getCompanyId(), 0,
+			ResourceActionsUtil.getCompositeModelName(
+				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
 			appId, 0);
 
 		return postAppWorkflow(appId, appWorkflow);

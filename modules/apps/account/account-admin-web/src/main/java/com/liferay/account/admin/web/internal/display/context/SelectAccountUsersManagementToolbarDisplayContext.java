@@ -79,6 +79,10 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
+		if (!isShowCreateButton()) {
+			return null;
+		}
+
 		return "SELECT_ACCOUNT_USERS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 

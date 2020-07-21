@@ -16,6 +16,8 @@ package com.liferay.portlet.social.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -32,6 +34,7 @@ import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
+import com.liferay.social.kernel.model.SocialActivityTable;
 
 import java.util.Date;
 import java.util.List;
@@ -538,9 +541,22 @@ public class SocialActivityLocalServiceImpl
 	public List<SocialActivity> getActivities(
 		long companyId, String className, int start, int end) {
 
-		return socialActivityPersistence.findByCompanyId_C(
-			companyId, classNameLocalService.getClassNameId(className), start,
-			end);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			SocialActivityTable.INSTANCE
+		).from(
+			SocialActivityTable.INSTANCE
+		).where(
+			SocialActivityTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				SocialActivityTable.INSTANCE.classNameId.eq(
+					classNameLocalService.getClassNameId(className))
+			)
+		).limit(
+			start, end
+		);
+
+		return socialActivityPersistence.dslQuery(dslQuery);
 	}
 
 	/**
@@ -668,8 +684,21 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getActivitiesCount(long companyId, String className) {
-		return socialActivityPersistence.countByCompanyId_C(
-			companyId, classNameLocalService.getClassNameId(className));
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			SocialActivityTable.INSTANCE
+		).where(
+			SocialActivityTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				SocialActivityTable.INSTANCE.classNameId.eq(
+					classNameLocalService.getClassNameId(className))
+			)
+		);
+
+		Long count = socialActivityPersistence.dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	/**

@@ -1,0 +1,46 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"backgroundFragmentImage": {
+					},
+					"fragmentLink": {
+						"href": {
+							"defaultFragmentInlineValue": {
+								"value": "${DISPLAY_PAGE_URL}"
+							},
+							"mapping": {
+								"fieldKey": "displayPageURL",
+								"itemReference": {
+									"className": "com.liferay.journal.model.JournalArticle",
+									"classPK": "${CLASS_PK}"
+								}
+							}
+						}
+					},
+					"layout": {
+						"borderWidth": 0,
+						"contentDisplay": "Block",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

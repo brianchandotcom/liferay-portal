@@ -1,0 +1,30 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentLink": {
+						"href": {
+							"defaultFragmentInlineValue": {
+								"value": "${DISPLAY_PAGE_URL}"
+							},
+							"mapping": {
+								"fieldKey": "displayPageURL",
+								"itemReference": {
+									"className": "com.liferay.journal.model.JournalArticle",
+									"classPK": "${CLASS_PK}"
+								}
+							}
+						}
+					}
+				},
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

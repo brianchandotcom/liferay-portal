@@ -30,9 +30,9 @@ public class ExtendedEntityPropertyFilter
 	extends SimpleBeanPropertyFilter implements PropertyFilter {
 
 	public ExtendedEntityPropertyFilter(
-		PropertyFilter baseFilter, Set<String> filteredFields) {
+		PropertyFilter basePropertyFilter, Set<String> filteredFields) {
 
-		_baseFilter = baseFilter;
+		_basePropertyFilter = basePropertyFilter;
 		_filteredFields = new HashSet<>(filteredFields);
 	}
 
@@ -47,7 +47,7 @@ public class ExtendedEntityPropertyFilter
 			return;
 		}
 
-		_baseFilter.serializeAsField(
+		_basePropertyFilter.serializeAsField(
 			object, jsonGenerator, serializerProvider, propertyWriter);
 	}
 
@@ -56,7 +56,7 @@ public class ExtendedEntityPropertyFilter
 		return !_filteredFields.contains(writer.getName());
 	}
 
-	private final PropertyFilter _baseFilter;
+	private final PropertyFilter _basePropertyFilter;
 	private final Set<String> _filteredFields;
 
 }

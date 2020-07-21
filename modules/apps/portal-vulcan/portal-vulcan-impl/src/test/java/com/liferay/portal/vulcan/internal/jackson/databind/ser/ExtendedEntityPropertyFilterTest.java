@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 
 import java.util.Collections;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,16 +35,14 @@ public class ExtendedEntityPropertyFilterTest {
 
 	@Before
 	public void setUp() {
-		_baseFilter = Mockito.mock(PropertyFilter.class);
-
-		Set<String> filteredFields = Collections.singleton("field1");
+		_basePropertyFilter = Mockito.mock(PropertyFilter.class);
 
 		_extendedEntityPropertyFilter = new ExtendedEntityPropertyFilter(
-			_baseFilter, filteredFields);
+			_basePropertyFilter, Collections.singleton("field1"));
 
 		_jsonGenerator = Mockito.mock(JsonGenerator.class);
-		_serializerProvider = Mockito.mock(SerializerProvider.class);
 		_propertyWriter = Mockito.mock(PropertyWriter.class);
+		_serializerProvider = Mockito.mock(SerializerProvider.class);
 	}
 
 	@Test
@@ -62,7 +59,7 @@ public class ExtendedEntityPropertyFilterTest {
 			object, _jsonGenerator, _serializerProvider, _propertyWriter);
 
 		Mockito.verify(
-			_baseFilter
+			_basePropertyFilter
 		).serializeAsField(
 			eq(object), eq(_jsonGenerator), eq(_serializerProvider),
 			eq(_propertyWriter)
@@ -80,10 +77,10 @@ public class ExtendedEntityPropertyFilterTest {
 		_extendedEntityPropertyFilter.serializeAsField(
 			new Object(), _jsonGenerator, _serializerProvider, _propertyWriter);
 
-		Mockito.verifyZeroInteractions(_baseFilter);
+		Mockito.verifyZeroInteractions(_basePropertyFilter);
 	}
 
-	private PropertyFilter _baseFilter;
+	private PropertyFilter _basePropertyFilter;
 	private ExtendedEntityPropertyFilter _extendedEntityPropertyFilter;
 	private JsonGenerator _jsonGenerator;
 	private PropertyWriter _propertyWriter;

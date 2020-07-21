@@ -513,7 +513,9 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.rateThumb(ratingResult = "Rate this as bad");
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "Rate this as bad");
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
@@ -523,7 +525,9 @@ definition {
 			ratingResult = "You have rated this as bad",
 			voteCount = "1");
 
-		Ratings.rateThumb(ratingResult = "Rate this as good");
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "Rate this as good");
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
@@ -545,7 +549,9 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.rateThumb(ratingResult = "Rate this as good");
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "Rate this as good");
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
@@ -555,7 +561,9 @@ definition {
 			ratingResult = "Rate this as bad",
 			voteCount = "0");
 
-		Ratings.rateThumb(ratingResult = "Rate this as bad");
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "Rate this as bad");
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",

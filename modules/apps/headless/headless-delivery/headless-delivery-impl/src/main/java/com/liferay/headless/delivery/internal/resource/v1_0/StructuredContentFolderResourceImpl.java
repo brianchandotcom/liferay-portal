@@ -79,7 +79,7 @@ public class StructuredContentFolderResourceImpl
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getStructuredContentFolderPage(
+		return _getStructuredContentFoldersPage(
 			assetLibraryId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -98,7 +98,7 @@ public class StructuredContentFolderResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getStructuredContentFolderPage(
+		return _getStructuredContentFoldersPage(
 			siteId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -284,7 +284,7 @@ public class StructuredContentFolderResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private Page<StructuredContentFolder> _getStructuredContentFolderPage(
+	private Page<StructuredContentFolder> _getStructuredContentFoldersPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {

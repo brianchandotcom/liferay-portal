@@ -98,7 +98,7 @@ public class TaxonomyVocabularyResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getTaxonomyVocabularyPage(
+		return _getTaxonomyVocabulariesPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -113,7 +113,7 @@ public class TaxonomyVocabularyResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getTaxonomyVocabularyPage(
+		return _getTaxonomyVocabulariesPage(
 			siteId, search, filter, pagination, sorts);
 	}
 
@@ -459,7 +459,7 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
-	private Page<TaxonomyVocabulary> _getTaxonomyVocabularyPage(
+	private Page<TaxonomyVocabulary> _getTaxonomyVocabulariesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

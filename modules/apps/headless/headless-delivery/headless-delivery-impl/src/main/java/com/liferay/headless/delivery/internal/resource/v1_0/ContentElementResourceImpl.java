@@ -64,7 +64,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentElementPage(
+		return _getContentElementsPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -81,7 +81,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		return _getContentElementPage(
+		return _getContentElementsPage(
 			siteId, search, filter, pagination, sorts);
 	}
 
@@ -166,7 +166,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		return searchContext;
 	}
 
-	private Page<ContentElement> _getContentElementPage(
+	private Page<ContentElement> _getContentElementsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

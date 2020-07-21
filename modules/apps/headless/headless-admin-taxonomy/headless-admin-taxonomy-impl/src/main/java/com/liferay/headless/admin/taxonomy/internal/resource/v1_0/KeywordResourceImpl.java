@@ -80,7 +80,7 @@ public class KeywordResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getKeywordPage(
+		return _getKeywordsPage(
 			assetLibraryId, search, filter, pagination, sorts);
 	}
 
@@ -134,7 +134,7 @@ public class KeywordResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getKeywordPage(siteId, search, filter, pagination, sorts);
+		return _getKeywordsPage(siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class KeywordResourceImpl
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
-	private Page<Keyword> _getKeywordPage(
+	private Page<Keyword> _getKeywordsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {

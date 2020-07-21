@@ -117,7 +117,7 @@ public class DocumentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getDocumentPage(
+		return _getDocumentsPage(
 			assetLibraryId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -187,7 +187,7 @@ public class DocumentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getDocumentPage(
+		return _getDocumentsPage(
 			siteId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -410,7 +410,7 @@ public class DocumentResourceImpl
 		);
 	}
 
-	private Page<Document> _getDocumentPage(
+	private Page<Document> _getDocumentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {

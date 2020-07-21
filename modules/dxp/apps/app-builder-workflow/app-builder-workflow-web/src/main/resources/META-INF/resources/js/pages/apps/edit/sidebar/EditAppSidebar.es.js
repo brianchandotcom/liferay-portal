@@ -41,7 +41,7 @@ export default function EditAppSidebar() {
 
 	const {
 		appWorkflowTransitions: [primaryAction, secondaryAction] = [],
-		appWorkflowDataLayoutLinks: [stepFormView] = [{}],
+		appWorkflowDataLayoutLinks = [{}],
 	} = currentStep;
 
 	const actionsInfo = [];
@@ -82,8 +82,16 @@ export default function EditAppSidebar() {
 					  ]
 					: [
 							{
-								...stepFormView,
 								label: Liferay.Language.get('form-view'),
+								name:
+									appWorkflowDataLayoutLinks.length > 0
+										? appWorkflowDataLayoutLinks
+												.map(({name}) => name)
+												.reduce(
+													(acc, cur) =>
+														`${acc}, ${cur}`
+												)
+										: '',
 							},
 					  ],
 			show: stepIndex !== steps.length - 1,

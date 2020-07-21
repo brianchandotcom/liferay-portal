@@ -120,16 +120,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_documentFolderResource.setContextCompany(testCompany);
-
-		DocumentFolderResource.Builder builder =
-			DocumentFolderResource.builder();
-
-		documentFolderResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -139,6 +130,15 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_documentFolderResource.setContextCompany(testCompany);
+
+		DocumentFolderResource.Builder builder =
+			DocumentFolderResource.builder();
+
+		documentFolderResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -2357,7 +2357,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected DocumentFolderResource documentFolderResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

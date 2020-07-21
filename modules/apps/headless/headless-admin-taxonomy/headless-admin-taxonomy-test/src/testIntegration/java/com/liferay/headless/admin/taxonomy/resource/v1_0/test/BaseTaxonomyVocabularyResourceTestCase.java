@@ -120,16 +120,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_taxonomyVocabularyResource.setContextCompany(testCompany);
-
-		TaxonomyVocabularyResource.Builder builder =
-			TaxonomyVocabularyResource.builder();
-
-		taxonomyVocabularyResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -139,6 +130,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_taxonomyVocabularyResource.setContextCompany(testCompany);
+
+		TaxonomyVocabularyResource.Builder builder =
+			TaxonomyVocabularyResource.builder();
+
+		taxonomyVocabularyResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -2015,7 +2015,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected TaxonomyVocabularyResource taxonomyVocabularyResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

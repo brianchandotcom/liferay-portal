@@ -120,15 +120,7 @@ public abstract class BaseKeywordResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_keywordResource.setContextCompany(testCompany);
-
-		KeywordResource.Builder builder = KeywordResource.builder();
-
-		keywordResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -138,6 +130,14 @@ public abstract class BaseKeywordResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_keywordResource.setContextCompany(testCompany);
+
+		KeywordResource.Builder builder = KeywordResource.builder();
+
+		keywordResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -1697,7 +1697,7 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected KeywordResource keywordResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

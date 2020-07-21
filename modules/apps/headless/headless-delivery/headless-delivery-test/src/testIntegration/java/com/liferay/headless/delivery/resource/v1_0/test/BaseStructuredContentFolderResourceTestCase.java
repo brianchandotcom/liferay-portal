@@ -120,16 +120,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_structuredContentFolderResource.setContextCompany(testCompany);
-
-		StructuredContentFolderResource.Builder builder =
-			StructuredContentFolderResource.builder();
-
-		structuredContentFolderResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -139,6 +130,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_structuredContentFolderResource.setContextCompany(testCompany);
+
+		StructuredContentFolderResource.Builder builder =
+			StructuredContentFolderResource.builder();
+
+		structuredContentFolderResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -2568,7 +2568,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	protected StructuredContentFolderResource structuredContentFolderResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

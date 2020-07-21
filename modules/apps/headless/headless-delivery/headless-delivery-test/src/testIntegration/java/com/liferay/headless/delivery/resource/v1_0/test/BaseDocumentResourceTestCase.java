@@ -123,15 +123,7 @@ public abstract class BaseDocumentResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_documentResource.setContextCompany(testCompany);
-
-		DocumentResource.Builder builder = DocumentResource.builder();
-
-		documentResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -141,6 +133,14 @@ public abstract class BaseDocumentResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_documentResource.setContextCompany(testCompany);
+
+		DocumentResource.Builder builder = DocumentResource.builder();
+
+		documentResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -2680,7 +2680,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected DocumentResource documentResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

@@ -123,16 +123,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_structuredContentResource.setContextCompany(testCompany);
-
-		StructuredContentResource.Builder builder =
-			StructuredContentResource.builder();
-
-		structuredContentResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -142,6 +133,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_structuredContentResource.setContextCompany(testCompany);
+
+		StructuredContentResource.Builder builder =
+			StructuredContentResource.builder();
+
+		structuredContentResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -3702,7 +3702,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContentResource structuredContentResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

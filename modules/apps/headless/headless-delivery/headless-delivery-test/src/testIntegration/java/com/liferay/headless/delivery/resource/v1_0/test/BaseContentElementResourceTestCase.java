@@ -115,16 +115,7 @@ public abstract class BaseContentElementResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_contentElementResource.setContextCompany(testCompany);
-
-		ContentElementResource.Builder builder =
-			ContentElementResource.builder();
-
-		contentElementResource = builder.locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -134,6 +125,15 @@ public abstract class BaseContentElementResourceTestCase {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_contentElementResource.setContextCompany(testCompany);
+
+		ContentElementResource.Builder builder =
+			ContentElementResource.builder();
+
+		contentElementResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -1319,7 +1319,7 @@ public abstract class BaseContentElementResourceTestCase {
 	}
 
 	protected ContentElementResource contentElementResource;
-	protected DepotEntry depotEntry;
+	protected DepotEntry testDepotEntry;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;

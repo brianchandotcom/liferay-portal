@@ -190,7 +190,7 @@ const DatePicker = ({
 					}
 
 					if (moment(value).isValid()) {
-						onChange(moment(value).format(dateMask));
+						onChange(moment(value).format(dateMask.toUpperCase()));
 					}
 				}}
 				ref={inputRef}

@@ -118,7 +118,7 @@
 		"styles": [
 			{
 				"dataType": "string",
-				"defaultValue": "mt-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "margin-top",
@@ -154,7 +154,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "mb-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "margin-bottom",
@@ -190,7 +190,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "ml-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "margin-left",
@@ -226,7 +226,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "mr-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "margin-right",
@@ -262,7 +262,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "pt-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "padding-top",
@@ -298,7 +298,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "pb-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "padding-bottom",
@@ -334,7 +334,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "pl-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "padding-left",
@@ -370,7 +370,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "pr-3",
+				"defaultValue": "3",
 				"dependencies": [
 				],
 				"label": "padding-right",

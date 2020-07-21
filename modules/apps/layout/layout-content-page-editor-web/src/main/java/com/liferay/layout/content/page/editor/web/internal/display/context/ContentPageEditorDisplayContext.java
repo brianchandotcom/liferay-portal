@@ -55,6 +55,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayou
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
+import com.liferay.layout.content.page.editor.web.internal.util.CommonStylesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -123,6 +124,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -204,6 +207,10 @@ public class ContentPageEditorDisplayContext {
 		_itemSelector = itemSelector;
 		_pageEditorConfiguration = pageEditorConfiguration;
 		_renderResponse = renderResponse;
+		_resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.layout.content.page.editor.web");
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceTracker = infoItemServiceTracker;
@@ -257,6 +264,11 @@ public class ContentPageEditorDisplayContext {
 					"/content_layout/change_style_book_entry")
 			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
+			).put(
+				"commonStyles",
+				CommonStylesUtil.getCommongStylesJSONArray(
+					_resourceBundleLoader.loadResourceBundle(
+						themeDisplay.getLocale()))
 			).put(
 				"containerItemFlexEnabled",
 				_ffLayoutContentPageEditorConfiguration.
@@ -2147,6 +2159,7 @@ public class ContentPageEditorDisplayContext {
 	private Layout _publishedLayout;
 	private String _redirect;
 	private final RenderResponse _renderResponse;
+	private final ResourceBundleLoader _resourceBundleLoader;
 	private List<Map<String, Object>> _sidebarPanels;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 

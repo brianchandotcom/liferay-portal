@@ -55,10 +55,13 @@ public class JournalArticleInfoItemFormProvider
 	@Override
 	public InfoForm getInfoForm() {
 		try {
-			return getInfoForm(0);
+			return _getInfoForm(
+				0,
+				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					JournalArticle.class.getName()));
 		}
-		catch (NoSuchClassTypeException noSuchClassTypeException) {
-			throw new RuntimeException(noSuchClassTypeException);
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			throw new RuntimeException(noSuchFormVariationException);
 		}
 	}
 

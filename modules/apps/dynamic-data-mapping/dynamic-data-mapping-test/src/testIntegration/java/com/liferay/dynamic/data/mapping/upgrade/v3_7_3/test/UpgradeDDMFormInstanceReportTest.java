@@ -103,10 +103,10 @@ public class UpgradeDDMFormInstanceReportTest {
 				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
-		DDMFormValues updateDDMFormValues =
+		DDMFormValues newDDMFormValues =
 			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 
-		updateDDMFormValues.addDDMFormFieldValue(
+		newDDMFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"text", new UnlocalizedValue("Draft Text")));
 
@@ -115,7 +115,7 @@ public class UpgradeDDMFormInstanceReportTest {
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
 			TestPropsValues.getUserId(),
 			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
-			updateDDMFormValues, serviceContext);
+			newDDMFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
@@ -162,17 +162,17 @@ public class UpgradeDDMFormInstanceReportTest {
 				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
-		DDMFormValues updateDDMFormValues =
+		DDMFormValues newDDMFormValues =
 			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 
-		updateDDMFormValues.addDDMFormFieldValue(
+		newDDMFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"text", new UnlocalizedValue("Approved Text 2")));
 
 		DDMFormInstanceRecordLocalServiceUtil.updateFormInstanceRecord(
 			TestPropsValues.getUserId(),
 			ddmFormInstanceRecord.getFormInstanceRecordId(), false,
-			updateDDMFormValues, serviceContext);
+			newDDMFormValues, serviceContext);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			DDMFormInstanceReportLocalServiceUtil.
@@ -315,7 +315,7 @@ public class UpgradeDDMFormInstanceReportTest {
 	}
 
 	@Test
-	public void testUpgradeWithNoFormInstanceReports() throws Exception {
+	public void testUpgradeWithNoDDMFormInstanceReports() throws Exception {
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
 				_createDDMForm(), _group, TestPropsValues.getUserId());

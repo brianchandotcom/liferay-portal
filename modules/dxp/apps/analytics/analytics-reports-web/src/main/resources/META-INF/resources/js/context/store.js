@@ -14,7 +14,6 @@ import React, {createContext, useCallback, useContext, useReducer} from 'react';
 const INITIAL_STATE = {
 	historicalWarning: false,
 	publishedToday: false,
-	readsEnabled: true,
 	warning: false,
 };
 

@@ -10,9 +10,8 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StoreContext} from '../context/store';
 import BasicInformation from './BasicInformation';
 import Chart from './Chart';
 import TotalCount from './TotalCount';
@@ -32,8 +31,6 @@ export default function Main({
 	totalViewsDataProvider,
 	trafficSources,
 }) {
-	const [{readsEnabled}] = useContext(StoreContext);
-
 	return (
 		<>
 			<BasicInformation
@@ -57,18 +54,14 @@ export default function Main({
 				)}
 			/>
 
-			{readsEnabled && (
-				<TotalCount
-					dataProvider={totalReadsDataProvider}
-					label={Liferay.Util.sub(
-						Liferay.Language.get('total-reads')
-					)}
-					popoverHeader={Liferay.Language.get('total-reads')}
-					popoverMessage={Liferay.Language.get(
-						'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
-					)}
-				/>
-			)}
+			<TotalCount
+				dataProvider={totalReadsDataProvider}
+				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
+				popoverHeader={Liferay.Language.get('total-reads')}
+				popoverMessage={Liferay.Language.get(
+					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
+				)}
+			/>
 
 			<Chart
 				dataProviders={chartDataProviders}

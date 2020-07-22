@@ -55,12 +55,12 @@ setupLocale(Liferay.ThemeDisplay.getLanguageId());
 export function formatNumber(number, delimit) {
 	let formattedNumber = number.toString();
 
-	const splittedFormattedNumber = formattedNumber.split('.');
+	const formattedNumberParts = formattedNumber.split('.');
 
-	const formattedDecimal = splittedFormattedNumber[1];
+	const formattedDecimal = formattedNumberParts[1];
 
 	const formattedInteger = numeral(
-		parseInt(splittedFormattedNumber[0], 10)
+		parseInt(formattedNumberParts[0], 10)
 	).format('0[,]0');
 
 	formattedNumber =

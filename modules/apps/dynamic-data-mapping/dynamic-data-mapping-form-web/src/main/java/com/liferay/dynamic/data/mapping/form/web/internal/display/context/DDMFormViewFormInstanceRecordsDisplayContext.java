@@ -391,15 +391,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public int getStatus(DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
-
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			ddmFormInstanceRecord.getFormInstanceRecordVersion();
-
-		return ddmFormInstanceRecordVersion.getStatus();
-	}
-
 	public int getTotalItems() {
 		SearchContainer<?> searchContainer = getSearch();
 

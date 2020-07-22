@@ -375,8 +375,6 @@ public class JournalManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
-		portletURL.setParameter(
-			"navigation", _journalDisplayContext.getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 		portletURL.setParameter(
@@ -460,8 +458,13 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		List<DropdownItem> filterNavigationDropdownItems =
-			super.getFilterNavigationDropdownItems();
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("keywords", StringPool.BLANK);
+
+		List<DropdownItem> filterNavigationDropdownItems = getDropdownItems(
+			getNavigationEntriesMap(), portletURL, getNavigationParam(),
+			getNavigation());
 
 		DropdownItem dropdownItem = new DropdownItem();
 

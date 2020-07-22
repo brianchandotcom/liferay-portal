@@ -38,7 +38,7 @@ public class DeletionModificationConflictInfo implements ConflictInfo {
 
 	@Override
 	public long getCTAutoResolutionInfoId() {
-		return _ctAutoResolutionInfoId;
+		return 0;
 	}
 
 	@Override
@@ -68,11 +68,6 @@ public class DeletionModificationConflictInfo implements ConflictInfo {
 		return false;
 	}
 
-	public void setCtAutoResolutionInfoId(long ctAutoResolutionInfoId) {
-		_ctAutoResolutionInfoId = ctAutoResolutionInfoId;
-	}
-
-	private long _ctAutoResolutionInfoId;
 	private final long _modelClassPK;
 
 }

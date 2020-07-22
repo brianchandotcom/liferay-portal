@@ -800,9 +800,7 @@
 			},
 			{
 				"dataType": "object",
-				"defaultValue": {
-					"cssClass": "shadow-none"
-				},
+				"defaultValue": "shadow-none",
 				"dependencies": [
 				],
 				"label": "shadow",
@@ -812,27 +810,19 @@
 				"validValues": [
 					{
 						"label": "none",
-						"value": {
-							"cssClass": "shadow-none"
-						}
+						"value": "shadow-none"
 					},
 					{
 						"label": "small",
-						"value": {
-							"cssClass": "shadow-sm"
-						}
+						"value": "shadow-sm"
 					},
 					{
 						"label": "regular",
-						"value": {
-							"cssClass": "shadow"
-						}
+						"value": "shadow"
 					},
 					{
 						"label": "large",
-						"value": {
-							"cssClass": "shadow-lg"
-						}
+						"value": "shadow-lg"
 					}
 				]
 			}

@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>ROLE_TITLE</td>
-	<td>//tr[contains(.,'${roleTitle}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 </tbody>

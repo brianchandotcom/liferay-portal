@@ -349,10 +349,13 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
+			key_roleTitle = "${roleTitle}",
 			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE",
 			value1 = "${roleTitle}");
 
-		Click(locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE");
+		Click(
+			key_roleTitle = "${roleTitle}",
+			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE");
 
 		Navigator.gotoNavItem(navItem = "Available");
 

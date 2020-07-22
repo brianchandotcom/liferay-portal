@@ -67,11 +67,11 @@ definition {
 			fieldFieldLabel = "Web Content",
 			fieldType = "Web Content");
 
-		DynamicDataMapping.editFieldTip(
+		DataEngine.editFieldTip(
 			fieldFieldLabel = "Web Content",
-			fieldTip = "Choose as many content pieces as you would like to feature.");
+			fieldHelp = "Choose as many content pieces as you would like to feature.");
 
-		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "Web Content");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Content List");
 

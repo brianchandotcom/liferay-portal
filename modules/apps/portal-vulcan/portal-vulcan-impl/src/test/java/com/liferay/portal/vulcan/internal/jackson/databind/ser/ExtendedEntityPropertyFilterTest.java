@@ -14,14 +14,17 @@
 
 package com.liferay.portal.vulcan.internal.jackson.databind.ser;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 
+import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
+
 import java.util.Collections;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +38,10 @@ public class ExtendedEntityPropertyFilterTest {
 
 	@Before
 	public void setUp() {
-		_basePropertyFilter = Mockito.mock(PropertyFilter.class);
+		_dynamicPropertyFilter = Mockito.mock(DynamicPropertyFilter.class);
 
-		_extendedEntityPropertyFilter = new ExtendedEntityPropertyFilter(
-			_basePropertyFilter, Collections.singleton("field1"));
+		_extendedEntityPropertyFilter = ExtendedEntityPropertyFilter.with(
+			_dynamicPropertyFilter);
 
 		_jsonGenerator = Mockito.mock(JsonGenerator.class);
 		_propertyWriter = Mockito.mock(PropertyWriter.class);
@@ -46,41 +49,89 @@ public class ExtendedEntityPropertyFilterTest {
 	}
 
 	@Test
-	public void testSerializeAsFieldWithOtherProperty() throws Exception {
-		Object object = new Object();
+	public void testSerializeAsFieldWithExtendedEntityWithEmptyFilteredProperties()
+		throws Exception {
 
-		Mockito.when(
-			_propertyWriter.getName()
-		).thenReturn(
-			"field2"
-		);
+		ExtendedEntity extendedEntity = ExtendedEntity.extend(
+			new Object(), null, Collections.emptySet());
 
 		_extendedEntityPropertyFilter.serializeAsField(
-			object, _jsonGenerator, _serializerProvider, _propertyWriter);
+			extendedEntity, _jsonGenerator, _serializerProvider,
+			_propertyWriter);
 
 		Mockito.verify(
-			_basePropertyFilter
+			_dynamicPropertyFilter, Mockito.never()
+		).addPropertyFilters(
+			any()
+		);
+		Mockito.verify(
+			_dynamicPropertyFilter
 		).serializeAsField(
-			eq(object), eq(_jsonGenerator), eq(_serializerProvider),
+			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
 			eq(_propertyWriter)
 		);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).clearPropertyFilters();
 	}
 
 	@Test
-	public void testSerializeAsFieldWithPropertyToFilter() throws Exception {
-		Mockito.when(
-			_propertyWriter.getName()
-		).thenReturn(
-			"field1"
-		);
+	public void testSerializeAsFieldWithExtendedEntityWithFilteredProperties()
+		throws Exception {
+
+		Set<String> filteredProperties = Collections.singleton("test");
+
+		ExtendedEntity extendedEntity = ExtendedEntity.extend(
+			new Object(), null, filteredProperties);
 
 		_extendedEntityPropertyFilter.serializeAsField(
-			new Object(), _jsonGenerator, _serializerProvider, _propertyWriter);
+			extendedEntity, _jsonGenerator, _serializerProvider,
+			_propertyWriter);
 
-		Mockito.verifyZeroInteractions(_basePropertyFilter);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).addPropertyFilters(
+			eq(filteredProperties)
+		);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).serializeAsField(
+			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
+			eq(_propertyWriter)
+		);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).clearPropertyFilters();
 	}
 
-	private PropertyFilter _basePropertyFilter;
+	@Test
+	public void testSerializeAsFieldWithExtendedEntityWithNullFilteredProperties()
+		throws Exception {
+
+		ExtendedEntity extendedEntity = ExtendedEntity.extend(
+			new Object(), null, null);
+
+		_extendedEntityPropertyFilter.serializeAsField(
+			extendedEntity, _jsonGenerator, _serializerProvider,
+			_propertyWriter);
+
+		Mockito.verify(
+			_dynamicPropertyFilter, Mockito.never()
+		).addPropertyFilters(
+			any()
+		);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).serializeAsField(
+			eq(extendedEntity), eq(_jsonGenerator), eq(_serializerProvider),
+			eq(_propertyWriter)
+		);
+		Mockito.verify(
+			_dynamicPropertyFilter
+		).clearPropertyFilters();
+	}
+
+	private DynamicPropertyFilter _dynamicPropertyFilter;
 	private ExtendedEntityPropertyFilter _extendedEntityPropertyFilter;
 	private JsonGenerator _jsonGenerator;
 	private PropertyWriter _propertyWriter;

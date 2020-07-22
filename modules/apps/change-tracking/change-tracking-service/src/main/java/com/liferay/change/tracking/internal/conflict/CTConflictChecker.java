@@ -402,16 +402,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		String primaryKeyName) {
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("SELECT ");
-		sb.append(primaryKeyName);
-		sb.append(" from ");
-		sb.append(ctPersistence.getTableName());
-		sb.append(" where ctCollectionId = ");
-		sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		String sql = sb.toString();
+		String sql = StringBundler.concat(
+			"SELECT ", primaryKeyName, " from ", ctPersistence.getTableName(),
+			" where ctCollectionId = ",
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
 
 		Set<Long> primaryKeys = new HashSet<>();
 

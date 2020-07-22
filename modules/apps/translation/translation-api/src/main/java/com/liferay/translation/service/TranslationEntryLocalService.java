@@ -15,8 +15,6 @@
 package com.liferay.translation.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.info.item.InfoItemClassPKReference;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -37,11 +35,9 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.translation.model.TranslationEntry;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -69,9 +65,8 @@ public interface TranslationEntryLocalService
 	 * Never modify or reference this interface directly. Always use {@link TranslationEntryLocalServiceUtil} to access the translation entry local service. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, InfoItemFieldValues infoItemFieldValues,
-			Locale targetLocale, ServiceContext serviceContext)
-		throws IOException;
+		long groupId, String className, long classPK, String languageId,
+		String content, String contentType, ServiceContext serviceContext);
 
 	/**
 	 * Adds the translation entry to the database. Also notifies the appropriate model listeners.
@@ -208,11 +203,11 @@ public interface TranslationEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TranslationEntry fetchTranslationEntry(
-		InfoItemClassPKReference infoItemClassPKReference, Locale locale);
+	public TranslationEntry fetchTranslationEntry(long translationEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TranslationEntry fetchTranslationEntry(long translationEntryId);
+	public TranslationEntry fetchTranslationEntry(
+		String className, long classPK, String languageId);
 
 	/**
 	 * Returns the translation entry matching the UUID and group.

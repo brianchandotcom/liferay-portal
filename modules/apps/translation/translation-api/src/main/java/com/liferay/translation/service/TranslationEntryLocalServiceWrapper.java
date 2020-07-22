@@ -35,15 +35,14 @@ public class TranslationEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId,
-				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-				java.util.Locale targetLocale,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws java.io.IOException {
+		addOrUpdateTranslationEntry(
+			long groupId, String className, long classPK, String languageId,
+			String content, String contentType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _translationEntryLocalService.addOrUpdateTranslationEntry(
-			groupId, infoItemFieldValues, targetLocale, serviceContext);
+			groupId, className, classPK, languageId, content, contentType,
+			serviceContext);
 	}
 
 	/**
@@ -239,19 +238,18 @@ public class TranslationEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
-		com.liferay.info.item.InfoItemClassPKReference infoItemClassPKReference,
-		java.util.Locale locale) {
-
-		return _translationEntryLocalService.fetchTranslationEntry(
-			infoItemClassPKReference, locale);
-	}
-
-	@Override
-	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
 		long translationEntryId) {
 
 		return _translationEntryLocalService.fetchTranslationEntry(
 			translationEntryId);
+	}
+
+	@Override
+	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
+		String className, long classPK, String languageId) {
+
+		return _translationEntryLocalService.fetchTranslationEntry(
+			className, classPK, languageId);
 	}
 
 	/**

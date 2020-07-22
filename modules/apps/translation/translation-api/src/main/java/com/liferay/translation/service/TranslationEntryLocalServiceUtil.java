@@ -38,15 +38,14 @@ public class TranslationEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId,
-				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-				java.util.Locale targetLocale,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws java.io.IOException {
+		addOrUpdateTranslationEntry(
+			long groupId, String className, long classPK, String languageId,
+			String content, String contentType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addOrUpdateTranslationEntry(
-			groupId, infoItemFieldValues, targetLocale, serviceContext);
+			groupId, className, classPK, languageId, content, contentType,
+			serviceContext);
 	}
 
 	/**
@@ -226,19 +225,17 @@ public class TranslationEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.translation.model.TranslationEntry
-		fetchTranslationEntry(
-			com.liferay.info.item.InfoItemClassPKReference
-				infoItemClassPKReference,
-			java.util.Locale locale) {
-
-		return getService().fetchTranslationEntry(
-			infoItemClassPKReference, locale);
-	}
-
-	public static com.liferay.translation.model.TranslationEntry
 		fetchTranslationEntry(long translationEntryId) {
 
 		return getService().fetchTranslationEntry(translationEntryId);
+	}
+
+	public static com.liferay.translation.model.TranslationEntry
+		fetchTranslationEntry(
+			String className, long classPK, String languageId) {
+
+		return getService().fetchTranslationEntry(
+			className, classPK, languageId);
 	}
 
 	/**

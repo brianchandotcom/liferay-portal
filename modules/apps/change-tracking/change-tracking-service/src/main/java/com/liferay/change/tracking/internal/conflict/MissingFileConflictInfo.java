@@ -43,7 +43,8 @@ public class MissingFileConflictInfo implements ConflictInfo {
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.get(
-			resourceBundle, "the-modification-cannot-be-completed-due-to-a-missing-file");
+			resourceBundle,
+			"the-modification-cannot-be-completed-due-to-a-missing-file");
 	}
 
 	@Override
@@ -73,4 +74,5 @@ public class MissingFileConflictInfo implements ConflictInfo {
 
 	private long _ctAutoResolutionInfoId;
 	private final long _modelClassPK;
+
 }

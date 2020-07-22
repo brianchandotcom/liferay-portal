@@ -276,34 +276,38 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			connection, primaryKeyName, ctPersistence.getTableName(),
 			unresolvedPrimaryKeys);
 
-		_modificationCTEntries.forEach((pk, ctEntry) -> {
-			long modelClassPK = ctEntry.getModelClassPK();
+		_modificationCTEntries.forEach(
+			(pk, ctEntry) -> {
+				long modelClassPK = ctEntry.getModelClassPK();
 
-			StringBundler sb = new StringBundler();
-			sb.append("SELECT * from ");
-			sb.append(ctPersistence.getTableName());
-			sb.append(" where ");
-			sb.append(primaryKeyName);
-			sb.append(" = ");
-			sb.append(modelClassPK);
-			sb.append((" AND ctCollectionId = "));
-			sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
+				StringBundler sb = new StringBundler(8);
 
-			String sql = sb.toString();
+				sb.append("SELECT * from ");
+				sb.append(ctPersistence.getTableName());
+				sb.append(" where ");
+				sb.append(primaryKeyName);
+				sb.append(" = ");
+				sb.append(modelClassPK);
+				sb.append(" AND ctCollectionId = ");
+				sb.append(CTConstants.CT_COLLECTION_ID_PRODUCTION);
 
-			try {
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);
-				ResultSet rs = preparedStatement.executeQuery();
+				String sql = sb.toString();
 
-				if(rs.next() == false) {
-					conflictInfos.add(
-						new MissingFileConflictInfo(modelClassPK));
+				try {
+					PreparedStatement preparedStatement =
+						connection.prepareStatement(sql);
+
+					ResultSet rs = preparedStatement.executeQuery();
+
+					if (rs.next() == false) {
+						conflictInfos.add(
+							new MissingFileConflictInfo(modelClassPK));
+					}
 				}
-			}
-			catch (SQLException sqlException) {
-				throw new ORMException(sqlException);
-			}
-		});
+				catch (SQLException sqlException) {
+					throw new ORMException(sqlException);
+				}
+			});
 	}
 
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(

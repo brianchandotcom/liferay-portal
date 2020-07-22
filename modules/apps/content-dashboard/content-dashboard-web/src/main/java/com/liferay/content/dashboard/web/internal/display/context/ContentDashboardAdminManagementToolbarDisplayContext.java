@@ -94,6 +94,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter(
+			"categoryId", (String)null);
+		clearResultsURL.setParameter(
 			"contentDashboardItemTypePayload", (String)null);
 		clearResultsURL.setParameter("authorIds", (String)null);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
@@ -387,6 +389,20 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		portletURL.setParameter(
 			"eventName",
 			_liferayPortletResponse.getNamespace() + "selectedCategory");
+
+		List<Long> assetCategoryIds =
+			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
+
+		Stream<Long> assetCategoryIdsStream = assetCategoryIds.stream();
+
+		portletURL.setParameter(
+			"selectedCategories",
+			assetCategoryIdsStream.map(
+				String::valueOf
+			).collect(
+				Collectors.joining(StringPool.COMMA)
+			));
+
 		portletURL.setParameter("singleSelect", Boolean.FALSE.toString());
 
 		ThemeDisplay themeDisplay =
@@ -397,11 +413,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			_assetVocabularyLocalService.getCompanyVocabularies(
 				themeDisplay.getCompanyId());
 
-		Stream<AssetVocabulary> stream = assetVocabularies.stream();
+		Stream<AssetVocabulary> assetVocabularyStream =
+			assetVocabularies.stream();
 
 		portletURL.setParameter(
 			"vocabularyIds",
-			stream.map(
+			assetVocabularyStream.map(
 				AssetVocabulary::getVocabularyId
 			).map(
 				String::valueOf
@@ -497,7 +514,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				PortletURL portletURL = getPortletURL();
 
-				portletURL.setParameter("assetCategoryIds", (String)null);
+				portletURL.setParameter("categoryId", (String)null);
 
 				dropdownItem.putData("redirectURL", String.valueOf(portletURL));
 

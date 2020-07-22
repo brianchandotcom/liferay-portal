@@ -65,4 +65,53 @@ definition {
 			templateScript = '''${Text.getData()}''');
 	}
 
+	@description = "This is a use case for LPS-116515. The Add FreeMarker button should be hidden when disable template creation in Dynamic Data Mapping."
+	@priority = "5"
+	test CannotAddTemplateWhenDisableTemplateCreation {
+		task ("Disable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.disableCheckbox(fieldName = "Enable Template Creation");
+
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				PortletEntry.update();
+			}
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				PortletEntry.save();
+			}
+		}
+
+		task ("Assert Add FreeMarker button doesn't present") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "chrome") {
+				MetalComponent.waitForManagementBar();
+			}
+
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("Enable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Enable Template Creation");
+
+			PortletEntry.update();
+		}
+	}
+
 }

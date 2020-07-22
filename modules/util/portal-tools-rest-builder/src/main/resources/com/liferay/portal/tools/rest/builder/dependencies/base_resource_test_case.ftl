@@ -2,6 +2,7 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
 <#assign
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 />
 
@@ -132,8 +133,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#if generateDepotEntry>
 			testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				Collections.singletonMap(LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				null, new ServiceContext() {
 					{
 						setCompanyId(testGroup.getCompanyId());
@@ -2141,13 +2141,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
+	protected Group irrelevantGroup;
+	protected Company testCompany;
 
 	<#if generateDepotEntry>
 		protected DepotEntry testDepotEntry;
 	</#if>
 
-	protected Group irrelevantGroup;
-	protected Company testCompany;
 	protected Group testGroup;
 
 	protected class GraphQLField {

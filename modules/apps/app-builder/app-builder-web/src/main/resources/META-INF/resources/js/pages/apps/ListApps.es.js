@@ -51,6 +51,7 @@ export default ({
 			action: (app) => (app.active ? undeployApp(app) : deployApp(app)),
 			name: ({active}) =>
 				DEPLOYMENT_ACTION[active ? 'undeploy' : 'deploy'],
+			show: ({appDeployments}) => appDeployments.length > 0,
 		},
 		{
 			action: ({id}) =>

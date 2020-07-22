@@ -53,31 +53,6 @@ const SidebarPanelInfoView = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
-	const formattedCreateDate = useMemo(
-		() => formatDate(createDate, languageTag),
-		[createDate, languageTag]
-	);
-
-	const formattedDisplayDate = useMemo(
-		() => formatDate(data['display-date']?.value, languageTag),
-		[data, languageTag]
-	);
-
-	const formattedExpirationDate = useMemo(
-		() => formatDate(data['expiration-date']?.value, languageTag),
-		[data, languageTag]
-	);
-
-	const formattedModifiedDate = useMemo(
-		() => formatDate(modifiedDate, languageTag),
-		[modifiedDate, languageTag]
-	);
-
-	const formattedReviewDate = useMemo(
-		() => formatDate(data['review-date']?.value, languageTag),
-		[data, languageTag]
-	);
-
 	const sortedViewURLS = useMemo(
 		() =>
 			viewURLs
@@ -244,23 +219,32 @@ const SidebarPanelInfoView = ({
 
 						{[
 							{
-								text: formattedDisplayDate,
+								text: formatDate(
+									data['display-date']?.value,
+									languageTag
+								),
 								title: Liferay.Language.get('display-date'),
 							},
 							{
-								text: formattedCreateDate,
+								text: formatDate(createDate, languageTag),
 								title: Liferay.Language.get('creation-date'),
 							},
 							{
-								text: formattedModifiedDate,
+								text: formatDate(modifiedDate, languageTag),
 								title: Liferay.Language.get('modified-date'),
 							},
 							{
-								text: formattedExpirationDate,
+								text: formatDate(
+									data['expiration-date']?.value,
+									languageTag
+								),
 								title: Liferay.Language.get('expiration-date'),
 							},
 							{
-								text: formattedReviewDate,
+								text: formatDate(
+									data['review-date']?.value,
+									languageTag
+								),
 								title: Liferay.Language.get('review-date'),
 							},
 							{
